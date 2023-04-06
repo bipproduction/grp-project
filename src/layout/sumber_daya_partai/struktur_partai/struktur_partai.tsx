@@ -1,9 +1,13 @@
-
+import NavbarStruktur from "./Navbar_struktur"
+import Search from "./Search"
 
 const StrukturPartai = () => {
-    return<>
-    Struktur Partai here
-    </>
+    return (
+        <>
+            <NavbarStruktur/>
+            <Search/>
+        </>
+    )
 }
 
 export default StrukturPartai
