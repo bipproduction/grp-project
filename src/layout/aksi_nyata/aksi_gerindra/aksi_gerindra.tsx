@@ -2,7 +2,7 @@
 
 const AksiGerindra = () => {
     return<>
-    Aksi Gerindra
+    Aksi Gerindra 
     </>
 }
 
