@@ -11,8 +11,21 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   name String
   email String @unique
   password String
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  MasterUserRole MasterUserRole @relation(fields: [masterUserRoleId], references: [id])
+  masterUserRoleId Int @default(3)
+}
+
+model MasterUserRole {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  User User[]
 }

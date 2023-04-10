@@ -1,0 +1,23 @@
+### POST USER 
+POST  http://localhost:3000/api/auth/user-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"amalia",
+    "email":"amalia@gmail.com",
+    "password":"123"
+}
+
+
+### UPDATE USER 
+POST  http://localhost:3000/api/auth/user-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"clgagzr7b0006ac0l2v7rtkvh",
+    "name":"amalia",
+    "email":"ar@gmail.com",
+    "password":"1234",
+    "active":true,
+    "masterUserRoleId":2
+}
