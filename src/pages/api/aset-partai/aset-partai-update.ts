@@ -35,6 +35,7 @@ const asetPartaiPost =async (req : NextApiRequest, res:NextApiResponse) => {
                 img : body.img
             }
         })
+        
 
         return res.status(201).json({success:true, message:"Data terupdate"})
         
