@@ -7,12 +7,12 @@ const asetPartaiPost =async (req : NextApiRequest, res:NextApiResponse) => {
         let body = req.body
         const aset = await client.asetPartai.findUnique({
             where : {
-                systemId: body.systemId
+                serialNumber: body.serialNumber
             }
         })
 
-        // cek systemId
-        if(aset) return res.status(209).json({success:false, message:"System ID telah digunakan."})
+        // cek serialNumber
+        if(aset) return res.status(209).json({success:false, message:"Serial number telah digunakan."})
 
         body.tglPembelian = new Date(body.tglPembelian)
         
@@ -20,7 +20,7 @@ const asetPartaiPost =async (req : NextApiRequest, res:NextApiResponse) => {
             data: body
         })
 
-        return res.status(201).json({body})
+        return res.status(201).json({success:true, message:"Data tersimpan"})
         
     } else{
         return res.status(204).end()

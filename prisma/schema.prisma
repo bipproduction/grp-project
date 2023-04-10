@@ -33,9 +33,8 @@ model MasterUserRole {
 
 model AsetPartai {
   id String @id @default(cuid())
-  systemId String @unique
   name String
-  serialNumber String
+  serialNumber String @unique
   pengguna String
   penanggungJawab String
   harga Float 
