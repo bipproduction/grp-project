@@ -1,0 +1,24 @@
+[
+    {
+      id: 1,
+      name: "APPSI",
+    },
+    {
+      id: 2,
+      name: "IPSI",
+    },
+    {
+      id: 3,
+      name: "HKTI",
+    },
+    {
+      id: 4,
+      name: "PEMUDA TANI",
+    },
+
+]
+
+
+
+
+
