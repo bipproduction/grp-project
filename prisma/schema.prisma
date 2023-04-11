@@ -80,3 +80,15 @@ model AsetPartai {
 //   userId String
 //   afiliatifId Int
 // }
+
+
+model UserMediaSosial{
+  id String @id @default(cuid())
+  name String
+  link String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  userId String
+  masterMediaSosialId Int
+}

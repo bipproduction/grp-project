@@ -133,3 +133,26 @@ Content-Type: application/json
 {
     "afiliatifId" : ""
 }
+
+### POST USER MEDIA SOSIAL
+POST http://localhost:3000/api/user-media-sosial/user-media-sosial-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name" : "",
+    "link" : "",
+    "userId" : "",
+    "masterMediaSosialId" : ""
+}
+
+### UPDATE USER MEDIA SOSIAL
+POST http://localhost:3000/api/user-media-sosial/user-media-sosial-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "link" : "",
+    "name" : "",
+    "userId" : "",
+    "masterMediaSosialId" : ""
+}

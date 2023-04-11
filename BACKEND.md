@@ -2,6 +2,8 @@
 
 *baca bismillah dlu biar lancar*
 
+*off = belum dieksekusi, baru kerangkanya aja coy*
+
 ----------------------------------
 
 - **User**     
@@ -20,3 +22,6 @@
 - **Anggota Afiliatif** (off)
      - tambah = api/anggota-afiliatif/anggota-afiliatif-post
      - update = api/anggota-afiliatif/anggota-afiliatif-update
+- **User Media Sosial** (off)
+     - tambah = api/user-media-sosial/user-media-sosial-post
+     - update = api/user-media-sosial/user-media-sosial-update
