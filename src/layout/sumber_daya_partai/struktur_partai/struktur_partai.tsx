@@ -1,11 +1,10 @@
-import NavbarStruktur from "./Navbar_struktur"
-import Search from "./Search"
+
+import StrukturPartaiTab from "./StrukturPartaiTab"
 
 const StrukturPartai = () => {
     return (
         <>
-            <NavbarStruktur/>
-            <Search/>
+            <StrukturPartaiTab/>
         </>
     )
 }

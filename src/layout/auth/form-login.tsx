@@ -24,7 +24,7 @@ const Login = () => {
                 <Container w={350}>
                   <TextInput placeholder="Email" radius={10} />
                   <TextInput mt={20} placeholder="Password" radius={10} />
-                  <Button mt={20} fullWidth radius={"lg"} component="a" href="../../../form_data_diri" bg={COLOR.coklat}>Login</Button>
+                  <Button mt={20} color="orange.9" fullWidth radius={"lg"} component="a" href="../../../formDataDiri/form_data_diri" bg={COLOR.coklat}>Login</Button>
                   <Box component="a" href="../../../register">
                   <Text style={{ cursor: "pointer" }} align="right" color="black"  mt={10} fz={10}><strong>Klik Disini,</strong> Untuk Daftar!</Text>
                   </Box>

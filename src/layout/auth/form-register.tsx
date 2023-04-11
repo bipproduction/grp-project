@@ -24,7 +24,7 @@ const Register = () => {
                             <TextInput placeholder="Username" radius={10} />
                             <TextInput mt={20} placeholder="Email" radius={10} />
                             <TextInput mt={20} placeholder="Password" radius={10} />
-                            <Button mt={20} fullWidth radius={"lg"} bg={COLOR.coklat}>Login</Button>
+                            <Button mt={20} color="orange.9" fullWidth radius={"lg"} bg={COLOR.coklat}>Registrasi</Button>
                         </Container>
                     </Stack>
                     {/* <Anchor href="../../dashboard">login</Anchor> */}
