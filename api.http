@@ -29,7 +29,6 @@ POST http://localhost:3000/api/aset-partai/aset-partai-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "systemId":"aaaa",
     "name":"Aset pertama",
     "serialNumber":"fj93ur893hi38hfjji",
     "pengguna":"AAA",
@@ -52,7 +51,6 @@ Content-Type: application/json
 
 {
     "id" :"clgal7f8h0000acoq2onpcis2",
-    "systemId":"abbba",
     "name":"Aset kedua",
     "serialNumber":"fdsfjldk",
     "pengguna":"BBBB",
@@ -66,4 +64,52 @@ Content-Type: application/json
     "kategori":"Utama",
     "deskripsi":"Percobaan Aset",
     "img":"gambar3.jpg"
+}
+
+
+### GET ONE ASET PARTAI 
+GET http://localhost:3000/api/aset-partai/aset-partai-get-one?id=clgal7f8h0000acoq2onpcis2 HTTP/1.1
+
+
+
+### POST DATA DIRI 
+POST http://localhost:3000/api/form-data-diri/data-diri-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : "",
+    "agamaId" : "",
+    "pekerjaanId" : "",
+    "provinceId" : "",
+    "kabkotId" : "",
+    "kecamatanId" : "",
+    "desaId" : "",
+    "nik" : "",
+    "tempatLahir" : "",
+    "tanggalLahir" : "",
+    "jenisKelamin" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "rtRw" : ""
+}
+
+
+### UPDATE DATA DIRI
+POST http://localhost:3000/api/form-data-diri/data-diri-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "agamaId" : "",
+    "pekerjaanId" : "",
+    "provinceId" : "",
+    "kabkotId" : "",
+    "kecamatanId" : "",
+    "desaId" : "",
+    "nik" : "",
+    "tempatLahir" : "",
+    "tanggalLahir" : "",
+    "jenisKelamin" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "rtRw" : ""
 }
