@@ -11,22 +11,25 @@ datasource db {
 }
 
 model User {
-  id               String         @id @default(cuid())
+  id               String             @id @default(cuid())
   name             String
-  email            String         @unique
+  email            String             @unique
   password         String
-  active           Boolean        @default(true)
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @default(now())
-  MasterUserRole   MasterUserRole @relation(fields: [masterUserRoleId], references: [id])
-  masterUserRoleId Int            @default(3)
+  active           Boolean            @default(true)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now()) @updatedAt
+  MasterUserRole   MasterUserRole     @relation(fields: [masterUserRoleId], references: [id])
+  masterUserRoleId Int                @default(3)
+  DataDiri         DataDiri?
+  AnggotaAfiliatif AnggotaAfiliatif[]
+  UserMediaSocial  UserMediaSocial[]
 }
 
 model MasterUserRole {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   User      User[]
 }
 
@@ -46,56 +49,65 @@ model AsetPartai {
   deskripsi       String
   img             String
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
 }
 
-// model DataDiri {
-//   id String @id @default(cuid())
-//   nik String @unique
-//   tempatLahir String
-//   tanggalLahir DateTime
-//   jenisKelamin String
-//   phoneNumber String
-//   alamat String
-//   rtRw String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @default(now())
+model DataDiri {
+  id                   String             @id @default(cuid())
+  nik                  String             @unique
+  tempatLahir          String
+  tanggalLahir         DateTime
+  phoneNumber          String
+  alamat               String
+  rtRw                 String
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @default(now()) @updatedAt
+  User                 User               @relation(fields: [userId], references: [id])
+  userId               String             @unique
+  MasterJenisKelamin   MasterJenisKelamin @relation(fields: [masterJenisKelaminId], references: [id])
+  masterJenisKelaminId Int
+  MasterAgama          MasterAgama        @relation(fields: [masterAgamaId], references: [id])
+  masterAgamaId        Int
+  MasterPekerjaan      MasterPekerjaan    @relation(fields: [masterPekerjaanId], references: [id])
+  masterPekerjaanId    Int
+  MasterProvince       MasterProvince     @relation(fields: [masterProvinceId], references: [id])
+  masterProvinceId     Int
+  MasterKabKot         MasterKabKot       @relation(fields: [masterKabKotId], references: [id])
+  masterKabKotId       Int
+  MasterKecamatan      MasterKecamatan    @relation(fields: [masterKecamatanId], references: [id])
+  masterKecamatanId    Int
+  MasterDesa           MasterDesa         @relation(fields: [masterDesaId], references: [id])
+  masterDesaId         Int
+}
 
-//   userId String
-//   agamaId Int
-//   pekerjaanId Int
-//   provinceId Int
-//   kabkotId Int
-//   kecamatanId Int
-//   desaId Int
-// }
+model AnggotaAfiliatif {
+  id                          String                    @id @default(cuid())
+  createdAt                   DateTime                  @default(now())
+  updatedAt                   DateTime                  @default(now()) @updatedAt
+  User                        User                      @relation(fields: [userId], references: [id])
+  userId                      String
+  MasterOrganisasiAfiliatif   MasterOrganisasiAfiliatif @relation(fields: [masterOrganisasiAfiliatifId], references: [id])
+  masterOrganisasiAfiliatifId Int
+}
 
-// model AnggotaAfiliatif{
-//   id String @id @default(cuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @default(now())
-
-//   userId String
-//   afiliatifId Int
-// }
-
-// model UserMediaSosial{
-//   id String @id @default(cuid())
-//   name String
-//   link String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @default(now())
-
-//   userId String
-//   masterMediaSosialId Int
-// }
+model UserMediaSocial {
+  id                  String            @id @default(cuid())
+  name                String
+  link                String
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @default(now()) @updatedAt
+  User                User              @relation(fields: [userId], references: [id])
+  userId              String
+  MasterMediaSocial   MasterMediaSocial @relation(fields: [masterMediaSocialId], references: [id])
+  masterMediaSocialId Int
+}
 
 // UMUM
 model MasterTingkatPengurus {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id            Int             @id @default(autoincrement())
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @default(now()) @updatedAt
   MasterJabatan MasterJabatan[]
 }
 
@@ -109,31 +121,35 @@ model MasterJabatan {
 }
 
 model MasterAgama {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  DataDiri  DataDiri[]
 }
 
 model MasterMediaSocial {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id              Int               @id @default(autoincrement())
+  name            String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now()) @updatedAt
+  UserMediaSocial UserMediaSocial[]
 }
 
 model MasterPekerjaan {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  DataDiri  DataDiri[]
 }
 
 model MasterJenisKelamin {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  DataDiri  DataDiri[]
 }
 
 // Wilayah
@@ -143,6 +159,8 @@ model MasterProvince {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @default(now()) @updatedAt
   MasterKabKot MasterKabKot[]
+  DataDiri     DataDiri[]
+  TpsDpt       TpsDpt[]
 }
 
 model MasterKabKot {
@@ -153,6 +171,8 @@ model MasterKabKot {
   provinceId       MasterProvince?   @relation(fields: [masterProvinceId], references: [id])
   MasterKecamatan  MasterKecamatan[]
   masterProvinceId Int?
+  DataDiri         DataDiri[]
+  TpsDpt           TpsDpt[]
 }
 
 model MasterKecamatan {
@@ -163,6 +183,8 @@ model MasterKecamatan {
   kabkotId       MasterKabKot? @relation(fields: [masterKabKotId], references: [id])
   MasterDesa     MasterDesa[]
   masterKabKotId Int?
+  Datadiri       DataDiri[]
+  TpsDpt         TpsDpt[]
 }
 
 model MasterDesa {
@@ -172,6 +194,8 @@ model MasterDesa {
   updatedAt         DateTime         @default(now()) @updatedAt
   kecamatanId       MasterKecamatan? @relation(fields: [masterKecamatanId], references: [id])
   masterKecamatanId Int?
+  DataDiri          DataDiri[]
+  TpsDpt            TpsDpt[]
 }
 
 model MasterStatusKeanggotaan {
@@ -256,10 +280,11 @@ model MasterKaderPartai {
 
 // ANGGOTA AFILIATIF
 model MasterOrganisasiAfiliatif {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id               Int                @id @default(autoincrement())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now()) @updatedAt
+  AnggotaAfiliatif AnggotaAfiliatif[]
 }
 
 // ASET PARTAI
@@ -342,6 +367,7 @@ model MasterNomorUrutTPS {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  TpsDpt    TpsDpt[]
 }
 
 //calon pemilih potensial
@@ -358,7 +384,22 @@ model MasterStatusAksiNyata {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-
 }
 
-
+model TpsDpt {
+  id                   String             @id @default(cuid())
+  MasterProvince       MasterProvince     @relation(fields: [masterProvinceId], references: [id])
+  masterProvinceId     Int
+  MasterKabKot         MasterKabKot       @relation(fields: [masterKabKotId], references: [id])
+  masterKabKotId       Int
+  MasterKecamatan      MasterKecamatan    @relation(fields: [masterKecamatanId], references: [id])
+  masterKecamatanId    Int
+  MasterDesa           MasterDesa         @relation(fields: [masterDesaId], references: [id])
+  masterDesaId         Int
+  MasterNomorUrutTPS   MasterNomorUrutTPS @relation(fields: [masterNomorUrutTPSId], references: [id])
+  masterNomorUrutTPSId Int
+  dptLakilaki          Int
+  dptPerempuan         Int
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @default(now()) @updatedAt
+}
