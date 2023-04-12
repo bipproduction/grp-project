@@ -1,26 +1,27 @@
 import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const dataDiriPost =async (req:NextApiRequest, res:NextApiResponse) => {
-    if (req.method==="POST") {
-        // let body = req.body
-        // const data = await client.dataDiri.findUnique({
-        //     where : {
-        //         nik : body.nik
-        //     }
-        // })
+const dataDiriPost = async (req: NextApiRequest, res: NextApiResponse) => {
 
-        // // cek nik
-        // if (data) return res.status(209).json({success:false, message:"NIK telah terdaftar"})
+    if (req.method === "POST") {
+        let body = req.body
+        const data = await client.dataDiri.findUnique({
+            where: {
+                nik: body.nik
+            }
+        })
 
-        // body.tanggalLahir = new Date(body.tanggalLahir)
+        // cek nik
+        if (data) return res.status(209).json({ success: false, message: "NIK telah terdaftar" })
 
-        // await client.dataDiri.create({
-        //     date: body
-        // })
+        body.tanggalLahir = new Date(body.tanggalLahir)
 
-        return res.status(201).json({success:true, message:"Data tersimpan"})
-    }else{
+        await client.dataDiri.create({
+            data: body
+        })
+
+        return res.status(201).json({ success: true, message: "Data tersimpan" })
+    } else {
         return res.status(204).end();
     }
 }

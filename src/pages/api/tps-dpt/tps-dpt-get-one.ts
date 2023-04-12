@@ -1,9 +1,9 @@
 import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const dataDiriGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
+const tpsDptGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query
-    const data = await client.dataDiri.findUnique({
+    const data = await client.tpsDpt.findUnique({
         where: {
             id: id as any
         }
@@ -14,4 +14,4 @@ const dataDiriGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(data)
 }
 
-export default dataDiriGetOne
+export default tpsDptGetOne

@@ -1,10 +1,10 @@
 import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const userMediaSosialPost = async (req: NextApiRequest, res: NextApiResponse) => {
+const tpsDptPost = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const body = req.body
-        await client.userMediaSocial.create({
+        await client.tpsDpt.create({
             data: body
         })
 
@@ -14,4 +14,4 @@ const userMediaSosialPost = async (req: NextApiRequest, res: NextApiResponse) =>
     }
 }
 
-export default userMediaSosialPost
+export default tpsDptPost

@@ -77,20 +77,20 @@ POST http://localhost:3000/api/form-data-diri/data-diri-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId" : "",
-    "agamaId" : "",
-    "pekerjaanId" : "",
-    "provinceId" : "",
-    "kabkotId" : "",
-    "kecamatanId" : "",
-    "desaId" : "",
-    "nik" : "",
-    "tempatLahir" : "",
-    "tanggalLahir" : "",
-    "jenisKelamin" : "",
-    "phoneNumber" : "",
-    "alamat" : "",
-    "rtRw" : ""
+    "nik" : "51710349000230",
+    "tempatLahir" : "Blitar",
+    "tanggalLahir" : "1999-12-07 00:00:00",
+    "phoneNumber" : "0884564854",
+    "alamat" : "Didalam rumah",
+    "rtRw" : "3/2",
+    "userId" : "clgagzr7b0006ac0l2v7rtkvh",
+    "masterJenisKelaminId" : 2,
+    "masterAgamaId" : 1,
+    "masterPekerjaanId" : 2,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1
 }
 
 
@@ -99,20 +99,25 @@ POST http://localhost:3000/api/form-data-diri/data-diri-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "agamaId" : "",
-    "pekerjaanId" : "",
-    "provinceId" : "",
-    "kabkotId" : "",
-    "kecamatanId" : "",
-    "desaId" : "",
-    "nik" : "",
-    "tempatLahir" : "",
-    "tanggalLahir" : "",
-    "jenisKelamin" : "",
-    "phoneNumber" : "",
-    "alamat" : "",
-    "rtRw" : ""
+    "id" : "clgd6cos00001acek6cfdspr2",
+    "nik" : "51710349000230",
+    "tempatLahir" : "Denpasar",
+    "tanggalLahir" : "1999-11-07 00:00:00",
+    "phoneNumber" : "0884564800",
+    "alamat" : "Didalam gedung",
+    "rtRw" : "2/2",
+    "userId" : "clgagzr7b0006ac0l2v7rtkvh",
+    "masterJenisKelaminId" : 1,
+    "masterAgamaId" : 1,
+    "masterPekerjaanId" : 2,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1
 }
+
+### GET ONE DATA DIRI
+GET http://localhost:3000/api/form-data-diri/data-diri-get-one?id=clgd6cos00001acek6cfdspr2 HTTP/1.1
 
 
 
@@ -121,17 +126,19 @@ POST http://localhost:3000/api/anggota-afiliatif/anggota-afiliatif-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":"",
-    "afiliatifId" : ""
+    "userId":"clgai6bto0005acoaueeildk6",
+    "masterOrganisasiAfiliatifId" : 1
 }
 
 
 ### UPDATE ANGGOTA AFILIATIF
-POST http://locahost:3000/api/anggota-afiliatif-anggota-afiliatif-update HTTP/1.1
+POST http://localhost:3000/api/anggota-afiliatif/anggota-afiliatif-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "afiliatifId" : ""
+    "id" : "clgd6s83b0003acek0jfalo9m",
+    "userId" : "clgai6bto0005acoaueeildk6",
+    "masterOrganisasiAfiliatifId" : 2
 }
 
 ### POST USER MEDIA SOSIAL
@@ -139,10 +146,10 @@ POST http://localhost:3000/api/user-media-sosial/user-media-sosial-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "name" : "",
-    "link" : "",
-    "userId" : "",
-    "masterMediaSosialId" : ""
+    "name" : "@username1",
+    "link" : "link ig",
+    "userId" : "clgai6bto0005acoaueeildk6",
+    "masterMediaSocialId" : 2
 }
 
 ### UPDATE USER MEDIA SOSIAL
@@ -150,9 +157,86 @@ POST http://localhost:3000/api/user-media-sosial/user-media-sosial-update HTTP/1
 Content-Type: application/json
 
 {
+    "id" : "clgda57ln0007ac4e3vwefg0b",
+    "link" : "link link",
+    "name" : "yup yup",
+    "userId" : "clgai6bto0005acoaueeildk6",
+    "masterMediaSocialId" :2
+}
+
+
+### POST TPS DPT
+POST http://localhost:3000/api/tps-dpt/tps-dpt-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1,
+    "masterNomorUrutTPSId" : 1,
+    "dptLakilaki" : 30,
+    "dptPerempuan" : 20
+}
+
+### UPDATE TPS DPT 
+POST http://localhost:3000/api/tps-dpt/tps-dpt-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgdckw0e0001acssioh31q6h",
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 2,
+    "masterNomorUrutTPSId" : 1,
+    "dptLakilaki" : 30,
+    "dptPerempuan" : 20
+}
+
+### POST CALON PEMILIH POTENSIAL
+POST http://localhost:3000/api/cpt/cpt-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "masterCalonPemilihPotensialId" : "",
+    "masterAgamaId" : "",
+    "masterPekerjaanId" : "",
+    "masterProvinceId" : "",
+    "masterKabKotId" : "",
+    "masterKecamatanId" : "",
+    "masterDesaId" : "",
+    "tpsID" : "",
+    "masterJenisKelamin" : "",
+    "nik" : "",
+    "nama" : "",
+    "email" : "",
+    "tanggalLahir" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "statusSosial" : ""
+}
+
+### UPDATE CALON PEMILIH POTENSIAL
+POST http://localhost:3000/api/cpt/cpt-update HTTP/1.1
+Content-Type: application/json
+
+{
     "id" : "",
-    "link" : "",
-    "name" : "",
-    "userId" : "",
-    "masterMediaSosialId" : ""
+    "masterCalonPemilihPotensialId" : "",
+    "masterAgamaId" : "",
+    "masterPekerjaanId" : "",
+    "masterProvinceId" : "",
+    "masterKabKotId" : "",
+    "masterKecamatanId" : "",
+    "masterDesaId" : "",
+    "tpsID" : "",
+    "masterJenisKelamin" : "",
+    "nik" : "",
+    "nama" : "",
+    "email" : "",
+    "tanggalLahir" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "statusSosial" : ""
 }
