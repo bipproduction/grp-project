@@ -1,8 +1,15 @@
+import { Box, Grid } from '@mantine/core'
 import React from 'react'
 
 const HomeHeader = () => {
   return (
-    <div>HomeHeader</div>
+    <Box>
+        {/* <Grid>
+            <Grid.Col md={}>
+
+            </Grid.Col>
+        </Grid> */}
+    </Box>
   )
 }
 
