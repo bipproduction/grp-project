@@ -1,0 +1,158 @@
+### POST USER 
+POST  http://localhost:3000/api/auth/user-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"amalia",
+    "email":"amalia@gmail.com",
+    "password":"123"
+}
+
+
+### UPDATE USER 
+POST  http://localhost:3000/api/auth/user-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"clgagzr7b0006ac0l2v7rtkvh",
+    "name":"amalia",
+    "email":"ar@gmail.com",
+    "password":"1234",
+    "active":true,
+    "masterUserRoleId":2
+}
+
+
+
+### POST ASET PARTAI
+POST http://localhost:3000/api/aset-partai/aset-partai-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Aset pertama",
+    "serialNumber":"fj93ur893hi38hfjji",
+    "pengguna":"AAA",
+    "penanggungJawab":"BBB",
+    "harga":60000,
+    "tglPembelian":"2023-04-10 00:00:00",
+    "lokasiPembelian":"Denpasar",
+    "garansi":"gafaranfdkslf",
+    "statusAset": false,
+    "keterangan":"Penambahan aset",
+    "kategori":"Utama",
+    "deskripsi":"Percobaan",
+    "img":"gambar1.jpg"
+}
+
+
+### UPDATE ASET PARTAI
+POST http://localhost:3000/api/aset-partai/aset-partai-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" :"clgal7f8h0000acoq2onpcis2",
+    "name":"Aset kedua",
+    "serialNumber":"fdsfjldk",
+    "pengguna":"BBBB",
+    "penanggungJawab":"AAAAa",
+    "harga":65000,
+    "tglPembelian":"2023-04-09 00:00:00",
+    "lokasiPembelian":"Tabanan",
+    "garansi":"garansinya",
+    "statusAset": false,
+    "keterangan":"Penambahann aset",
+    "kategori":"Utama",
+    "deskripsi":"Percobaan Aset",
+    "img":"gambar3.jpg"
+}
+
+
+### GET ONE ASET PARTAI 
+GET http://localhost:3000/api/aset-partai/aset-partai-get-one?id=clgal7f8h0000acoq2onpcis2 HTTP/1.1
+
+
+
+### POST DATA DIRI 
+POST http://localhost:3000/api/form-data-diri/data-diri-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : "",
+    "agamaId" : "",
+    "pekerjaanId" : "",
+    "provinceId" : "",
+    "kabkotId" : "",
+    "kecamatanId" : "",
+    "desaId" : "",
+    "nik" : "",
+    "tempatLahir" : "",
+    "tanggalLahir" : "",
+    "jenisKelamin" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "rtRw" : ""
+}
+
+
+### UPDATE DATA DIRI
+POST http://localhost:3000/api/form-data-diri/data-diri-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "agamaId" : "",
+    "pekerjaanId" : "",
+    "provinceId" : "",
+    "kabkotId" : "",
+    "kecamatanId" : "",
+    "desaId" : "",
+    "nik" : "",
+    "tempatLahir" : "",
+    "tanggalLahir" : "",
+    "jenisKelamin" : "",
+    "phoneNumber" : "",
+    "alamat" : "",
+    "rtRw" : ""
+}
+
+
+
+### POST ANGGOTA AFILIATIF
+POST http://localhost:3000/api/anggota-afiliatif/anggota-afiliatif-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":"",
+    "afiliatifId" : ""
+}
+
+
+### UPDATE ANGGOTA AFILIATIF
+POST http://locahost:3000/api/anggota-afiliatif-anggota-afiliatif-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "afiliatifId" : ""
+}
+
+### POST USER MEDIA SOSIAL
+POST http://localhost:3000/api/user-media-sosial/user-media-sosial-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name" : "",
+    "link" : "",
+    "userId" : "",
+    "masterMediaSosialId" : ""
+}
+
+### UPDATE USER MEDIA SOSIAL
+POST http://localhost:3000/api/user-media-sosial/user-media-sosial-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "link" : "",
+    "name" : "",
+    "userId" : "",
+    "masterMediaSosialId" : ""
+}
