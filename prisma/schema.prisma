@@ -11,18 +11,84 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
+  id               String         @id @default(cuid())
+  name             String
+  email            String         @unique
+  password         String
+  active           Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now())
+  MasterUserRole   MasterUserRole @relation(fields: [masterUserRoleId], references: [id])
+  masterUserRoleId Int            @default(3)
 }
 
 model MasterUserRole {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @default(now())
+  User      User[]
 }
+
+model AsetPartai {
+  id              String   @id @default(cuid())
+  name            String
+  serialNumber    String   @unique
+  pengguna        String
+  penanggungJawab String
+  harga           Float
+  tglPembelian    DateTime
+  lokasiPembelian String
+  garansi         String
+  statusAset      Boolean  @default(true)
+  keterangan      String
+  kategori        String
+  deskripsi       String
+  img             String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+}
+
+// model DataDiri {
+//   id String @id @default(cuid())
+//   nik String @unique
+//   tempatLahir String
+//   tanggalLahir DateTime
+//   jenisKelamin String
+//   phoneNumber String
+//   alamat String
+//   rtRw String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   agamaId Int
+//   pekerjaanId Int
+//   provinceId Int
+//   kabkotId Int
+//   kecamatanId Int
+//   desaId Int
+// }
+
+// model AnggotaAfiliatif{
+//   id String @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   afiliatifId Int
+// }
+
+// model UserMediaSosial{
+//   id String @id @default(cuid())
+//   name String
+//   link String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   masterMediaSosialId Int
+// }
 
 // UMUM
 model MasterTingkatPengurus {
@@ -229,6 +295,13 @@ model MasterTingkatEksekutif {
 }
 
 model MasterJabatanEksekutifProvinsi {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanEksekutifKabKot {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())

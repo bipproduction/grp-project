@@ -29,16 +29,16 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederMediaSocial).then(
       async (e) => e.status == 200
     );
-    const syncSeederPekerjaan = async () => 
+  const syncSeederPekerjaan = async () =>
     await fetch(apiSeeder.apiSeederPekerjaan).then(
-        async (e) => e.status == 200
-    )
+      async (e) => e.status == 200
+    );
 
   // status keanggotaan
   const syncSeederTingkatPengurus = async () =>
-  await fetch(apiSeeder.apiSeederTingkatPengurus).then(
-    async (e) => e.status == 200
-  );
+    await fetch(apiSeeder.apiSeederTingkatPengurus).then(
+      async (e) => e.status == 200
+    );
   const syncSeederStatusKeanggotaan = async () =>
     await fetch(apiSeeder.apiSeederStatusKenaggotaan).then(
       async (e) => e.status == 200
@@ -47,7 +47,7 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederKaderPartai).then(
       async (e) => e.status == 200
     );
-    const syncSeederSayapPartai = async () =>
+  const syncSeederSayapPartai = async () =>
     await fetch(apiSeeder.apiSeederSayapPartai).then(
       async (e) => e.status == 200
     );
@@ -86,6 +86,16 @@ const SeederDev = () => {
       async (e) => e.status == 200
     );
 
+  // aset partai
+  const syncSeederStatusAset = async () =>
+    await fetch(apiSeeder.apiSeederStatusAset).then(
+      async (e) => e.status == 200
+    );
+  const syncSeederKategoriAset = async () =>
+    await fetch(apiSeeder.apiSeederKategoriAset).then(
+      async (e) => e.status == 200
+    );
+
   // Peta Kekuatan
   const syncSeederPartaiPengusung = async () =>
     await fetch(apiSeeder.apiSeederPartaiPengusung).then(
@@ -96,6 +106,28 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederCalonPemilihPotensial).then(
       async (e) => e.status == 200
     );
+  // legislatif
+  const syncSeederTingkatLegislatif = async () =>
+    await fetch(apiSeeder.apiSeederTingkatLegislatif).then(
+      async (e) => e.status == 200
+    );
+    // ekeskutif
+    const syncSeederTingkatEksekutif = async () =>
+    await fetch(apiSeeder.apiSeederTingkatEksekutif).then(
+      async (e) => e.status == 200
+    );
+    const syncSeederStatusEksekutif = async () =>
+    await fetch(apiSeeder.apiSeederStatusEksekutif).then(
+      async (e) => e.status == 200
+    );
+    const syncSeederJabatanEksekutifProvinis = async () =>
+    await fetch(apiSeeder.apiSeederJabatanEksekutifProvinsi).then(
+      async (e) => e.status == 200
+    );
+    const syncSeederJabatanEksekutifKabkot = async () =>
+    await fetch(apiSeeder.apiSeederJabatanEksekutifKabkot).then(
+      async (e) => e.status == 200
+    );
 
   return (
     <>
@@ -104,23 +136,48 @@ const SeederDev = () => {
           <Text fw={"bold"}>Seeder For Database</Text>
         </Center>
         <Stack>
-          <Paper p={"lg"} bg={"cyan.1"}>
-            <Text>User</Text>
-            <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
-          </Paper>
-          <Box>
+          <Box bg={"gray.5"} p={"sm"}>
+            <Stack>
+              <Paper p={"lg"} bg={"cyan.1"}>
+                <Text>User</Text>
+                <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
+              </Paper>
+              <Paper bg={"grape.1"} p="lg">
+                <Text>Profile Umum</Text>
+                <Flex gap={"sm"}>
+                  <ButtonSync
+                    loadData={syncSeederAgama}
+                    name={"Sync Seeder Agama"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJenisKelamin}
+                    name={"Sync Seeder Jenis Kelamin"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederMediaSocial}
+                    name={"Sync Seeder Media Social"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederPekerjaan}
+                    name={"Sync Seeder Pekerjaan"}
+                  />
+                </Flex>
+              </Paper>
+            </Stack>
+          </Box>
+          <Box bg={"gray.5"} p={"sm"}>
+            <Stack>
             <Center>
               <Text>Sumber Daya Partai</Text>
             </Center>
-            <Stack>
-              <Paper bg={"gray.3"} p="lg">
+              <Paper bg={"red.2"} p="lg">
                 <Text>Status Keanggotaan</Text>
                 <Flex gap={"sm"} wrap="wrap">
-               <ButtonSync
+                  <ButtonSync
                     loadData={syncSeederTingkatPengurus}
                     name={"Sync Tingkat Pengurus"}
                   />
-                <ButtonSync
+                  <ButtonSync
                     loadData={syncSeederStatusKeanggotaan}
                     name={"Sync Status Keanggotaan"}
                   />
@@ -171,46 +228,68 @@ const SeederDev = () => {
                   />
                 </Flex>
               </Paper>
-
-              <Paper bg={"grape.1"} p="lg">
-                <Text>Profile Umum</Text>
+              <Paper bg={"orange.1"} p={"lg"}>
+                <Text>Aset Partai</Text>
                 <Flex gap={"sm"}>
                   <ButtonSync
-                    loadData={syncSeederAgama}
-                    name={"Sync Seeder Agama"}
+                    loadData={syncSeederStatusAset}
+                    name={"Sync Seeder Status Aset"}
                   />
                   <ButtonSync
-                    loadData={syncSeederJenisKelamin}
-                    name={"Sync Seeder Jenis Kelamin"}
-                  />
-                  <ButtonSync
-                    loadData={syncSeederMediaSocial}
-                    name={"Sync Seeder Media Social"}
-                  />
-                  <ButtonSync
-                    loadData={syncSeederPekerjaan}
-                    name={"Sync Seeder Pekerjaan"}
+                    loadData={syncSeederKategoriAset}
+                    name={"Sync Seeder Kategori Aset"}
                   />
                 </Flex>
               </Paper>
             </Stack>
           </Box>
-          <Box>
-            <Center>
-              <Text>Peta Kekuatan Partai</Text>
-            </Center>
-            <Paper bg={"lime.1"} p={"lg"}>
-              <Flex gap={"sm"}>
-                <ButtonSync
-                  loadData={syncSeederPartaiPengusung}
-                  name={"Sync Partai Pengusung"}
-                />
-                <ButtonSync
-                  loadData={syncSeederPemilihPotensial}
-                  name={"Sync Calon Pemilih Potensial"}
-                />
-              </Flex>
-            </Paper>
+          <Box bg={"gray.5"} p="sm">
+            <Stack>
+              <Center>
+                <Text>Peta Kekuatan Partai</Text>
+              </Center>
+              <Paper bg={"lime.1"} p={"lg"}>
+              <Text>Calmil dan Partai Pengusung</Text>
+
+                <Flex gap={"sm"}>
+                    <ButtonSync
+                      loadData={syncSeederPemilihPotensial}
+                      name={"Sync Calon Pemilih Potensial"}
+                    />
+                  <ButtonSync
+                    loadData={syncSeederPartaiPengusung}
+                    name={"Sync Partai Pengusung"}
+                  />
+                </Flex>
+              </Paper>
+              <Paper bg={"pink.1"} p={"lg"}>
+              <Text>Ekekutif & Legislatif</Text>
+
+                <Flex gap={"sm"}>
+                  <ButtonSync
+                    loadData={syncSeederTingkatLegislatif}
+                    name={"Sync Tingkat Legislatif"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederTingkatEksekutif}
+                    name={"Sync Tingkat Eksekutif"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederStatusEksekutif}
+                    name={"Sync Status Eksekutif"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifProvinis}
+                    name={"Sync J.Eksekutif Provinsi"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifKabkot}
+                    name={"Sync J.Eksekutif Kabupaten/Kota"}
+                  />
+                  
+                </Flex>
+              </Paper>
+            </Stack>
           </Box>
         </Stack>
       </Box>
