@@ -1,9 +1,13 @@
+import HomeHeader from "./HomeHeader"
+import HeaderMenuColored from "./HomeHeader"
 
 
 const LayoutHome = () => {
-    return<>
-    Home
-    </>
+    return(
+        <>
+        <HomeHeader/>
+        </>
+    )
 }
 
 export default LayoutHome

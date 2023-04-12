@@ -1,8 +1,9 @@
+import DataAset from "./DataAset"
 
 
 const AsetPartai = () => {
     return<>
-    Aset Partai
+    <DataAset/>
     </>
 }
 

@@ -1,8 +1,9 @@
+import KaderPartaiTab from "./KaderPartaiTab"
 
 
 const KaderPartai = () => {
     return<>
-    Kader Partai
+    <KaderPartaiTab/>
     </>
 }
 

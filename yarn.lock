@@ -262,6 +262,13 @@
     "@mantine/utils" "6.0.6"
     react-dropzone "14.2.3"
 
+"@mantine/ds@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@mantine/ds/-/ds-6.0.7.tgz#7a00e9cb0845ca35b168cbc284cbc4e9761ad4aa"
+  integrity sha512-xD9hYBRsNEaangEQzeZjTaRgyppk1F4IxYn1h/Qy4Wfpc/PM3VEs7nrrneahTDwlJ/YrFUXtcDf5y+UsJRfuxw==
+  dependencies:
+    "@mantine/utils" "6.0.7"
+
 "@mantine/form@^6.0.6":
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/@mantine/form/-/form-6.0.6.tgz#82e4e71ae6d4810eded8faecea9531bb24e210bf"
@@ -347,6 +354,11 @@
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.6.tgz#19bff743cf69c0c0b39664a633cb7827bc996833"
   integrity sha512-Pd+ZTJ3maXb1zihZzHpo00XLwcKEg+ZGLPFG5vg/YafLDDWIhgV6snTFVKsPb2cunVjOwzbKcvlmCHXBe97mTQ==
+
+"@mantine/utils@6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.7.tgz#fcbc9c809c33bd9c96fd12d7ca63d0c19550bafd"
+  integrity sha512-XMm66GNn9hXnc9s/twXzL9iqhzM8HLVOyuKDo4WUn/ZM6NEJYJJVcTTlSIXOPq9AWo8bI76vbAHkIry1aEbgmg==
 
 "@next/env@13.2.4":
   version "13.2.4"
@@ -2619,6 +2631,11 @@ react-remove-scroll@^2.5.5:
     tslib "^2.1.0"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
+
+react-simple-toasts@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/react-simple-toasts/-/react-simple-toasts-3.3.4.tgz#e55df4444f033ee40b7cd44c80cfc45f2219dbd7"
+  integrity sha512-vnw+/jNPlimlMd4d8uOQ5WI/hDwawBOsF6CbLn9wsuVBXL152WRvLCeZt/Wh47CLKSdzMBY6NlxSyekH4Jps3A==
 
 react-style-singleton@^2.2.1:
   version "2.2.1"

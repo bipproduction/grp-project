@@ -1,9 +1,12 @@
+import SayapPartaiTab from "./SayapPartaiTab"
 
 
 const SayaPartai = () => {
-    return<>
-    Sayap Partai
-    </>
+    return (
+        <>
+            <SayapPartaiTab />
+        </>
+    )
 }
 
 export default SayaPartai
