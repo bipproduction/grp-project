@@ -1,7 +1,7 @@
 
 const SuperAdmin = () => {
     return<>
-    Super Admin
+    super admin data
     </>
 }
 
