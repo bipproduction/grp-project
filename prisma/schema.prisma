@@ -403,3 +403,122 @@ model TpsDpt {
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @default(now()) @updatedAt
 }
+
+// model CalonPemilihPotensial {
+//   id String @id @default(cuid())
+//   masterCalonPemilihPotensialId Int
+//   masterAgamaId Int
+//   masterPekerjaanId Int
+//   masterProvinceId Int
+//   masterKabKotId Int
+//   masterKecamatanId Int
+//   masterDesaId Int
+//   tps (ini ke master apa ke data tps??)
+//   masterJenisKelaminId Int 
+//   nik String @unique
+//   nama String
+//   email String @unique
+//   tanggalLahir DateTime
+//   phoneNumber String
+//   alamat String
+//   statusSosial (???)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
+
+// model CPTMediaSocial{
+//   id                  String            @id @default(cuid())
+//   name                String
+//   link                String
+//   createdAt           DateTime          @default(now())
+//   updatedAt           DateTime          @default(now()) @updatedAt
+//   calonPemilihPotensialId              String
+//   masterMediaSocialId Int
+// }
+
+// model RencanaKunjunganPrabowo {
+//   id String @id @default(cuid())
+//   judul String
+//   tanggal DateTime
+//   img String
+//   statusKunjungan (????)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
+
+// model ListUndanganPrabowo{
+//   id String @id @default(cuid())
+//   rencanaKunjunganPrabowoId String
+//   nama String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
+
+// model RencanaKunjunganGerindra {
+//   id String @id @default(cuid())
+//   judul String
+//   tanggal DateTime
+//   img String
+//   statusKunjungan (????)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
+
+// model ListUndanganGerindra{
+//   id String @id @default(cuid())
+//   rencanaKunjunganGerindraId String
+//   nama String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
+
+// model Eksekutif{
+//   id String @id @default(cuid())
+//   userId String 
+//   masterProvinceId Int
+//   masterKabKotId Int
+//   masterLevelEksekutifId Int
+//   namaLembaga String
+//   masterJabatanId Int
+//   periode String
+//   alamatKantor String
+//   masterStatusEksekutif Int ??
+//   masterPartaiPengusung Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
+
+// model Legislatif{
+//   id String @id @default(cuid())
+//   masterProvinceId Int
+//   masterKabKotId Int
+//   masterLevelLegislatif Int
+//   jabatan String
+//   periode String
+//   noUrut Int
+//   dapil String
+//   cakupanWilayah String
+//   akd String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
+
+// model SumberDayaPartai {
+//   id String @id @default(cuid())
+//   userId String
+//   masterStatusKeanggotaanId Int
+//   masterTingkatPengurusId Int
+//   masterJabatanId Int
+//   masterSayapPartaiId Int
+//   masterKaderPartai Int
+//   masterProvinceId Int
+//   masterKabKotId Int
+//   masterKecamatan Int
+//   masterDesaId Int
+//   masterNegaraId Int
+//   alamatKantor String
+//   waAdmin String
+//   medsosDPD ????
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+// }
