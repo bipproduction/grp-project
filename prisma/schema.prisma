@@ -49,3 +49,46 @@ model AsetPartai {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
+
+// model DataDiri {
+//   id String @id @default(cuid())
+//   nik String @unique
+//   tempatLahir String
+//   tanggalLahir DateTime
+//   jenisKelamin String
+//   phoneNumber String
+//   alamat String
+//   rtRw String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   agamaId Int
+//   pekerjaanId Int
+//   provinceId Int
+//   kabkotId Int
+//   kecamatanId Int
+//   desaId Int
+// }
+
+
+// model AnggotaAfiliatif{
+//   id String @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   afiliatifId Int
+// }
+
+
+// model UserMediaSosial{
+//   id String @id @default(cuid())
+//   name String
+//   link String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+
+//   userId String
+//   masterMediaSosialId Int
+// }

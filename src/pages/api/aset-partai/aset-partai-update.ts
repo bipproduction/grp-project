@@ -1,7 +1,7 @@
 import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const asetPartaiPost =async (req : NextApiRequest, res:NextApiResponse) => {
+const asetPartaiUpdate =async (req : NextApiRequest, res:NextApiResponse) => {
     
     if (req.method==="POST"){
         let body = req.body
@@ -44,4 +44,4 @@ const asetPartaiPost =async (req : NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export default asetPartaiPost
+export default asetPartaiUpdate
