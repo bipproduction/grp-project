@@ -1,9 +1,12 @@
 
+import StrukturPartaiTab from "./StrukturPartaiTab"
 
 const StrukturPartai = () => {
-    return<>
-    Struktur Partai here
-    </>
+    return (
+        <>
+            <StrukturPartaiTab/>
+        </>
+    )
 }
 
 export default StrukturPartai
