@@ -111,21 +111,40 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederTingkatLegislatif).then(
       async (e) => e.status == 200
     );
-    // ekeskutif
-    const syncSeederTingkatEksekutif = async () =>
+  // ekeskutif
+  const syncSeederTingkatEksekutif = async () =>
     await fetch(apiSeeder.apiSeederTingkatEksekutif).then(
       async (e) => e.status == 200
     );
-    const syncSeederStatusEksekutif = async () =>
+  const syncSeederStatusEksekutif = async () =>
     await fetch(apiSeeder.apiSeederStatusEksekutif).then(
       async (e) => e.status == 200
     );
-    const syncSeederJabatanEksekutifProvinis = async () =>
+  const syncSeederJabatanEksekutifProvinis = async () =>
     await fetch(apiSeeder.apiSeederJabatanEksekutifProvinsi).then(
       async (e) => e.status == 200
     );
-    const syncSeederJabatanEksekutifKabkot = async () =>
+  const syncSeederJabatanEksekutifKabkot = async () =>
     await fetch(apiSeeder.apiSeederJabatanEksekutifKabkot).then(
+      async (e) => e.status == 200
+    );
+  const syncSeederJabatanEksekutifKota = async () =>
+    await fetch(apiSeeder.apiSeederJabatanEksekutifKota).then(
+      async (e) => e.status == 200
+    );
+  const syncSeederJabatanEksekutifKabupaten = async () =>
+    await fetch(apiSeeder.apiSeederJabatanEksekutifKabupaten).then(
+      async (e) => e.status == 200
+    );
+  // no urut TPS
+  const syncSeederNomorUrutTps = async () =>
+    await fetch(apiSeeder.apiSeederNomorUrutTps).then(
+      async (e) => e.status == 200
+    );
+
+  // Aksi Nyata
+  const syncSeederStatusAksiNyata = async () =>
+    await fetch(apiSeeder.apiSeederStatusAksiNyata).then(
       async (e) => e.status == 200
     );
 
@@ -133,16 +152,21 @@ const SeederDev = () => {
     <>
       <Box>
         <Center m={"lg"}>
-          <Text fw={"bold"}>Seeder For Database</Text>
+          <Text fw={"bold"} fz={30}>
+            Seeder For Database
+          </Text>
         </Center>
         <Stack>
-          <Box bg={"gray.5"} p={"sm"}>
+          <Box bg={"gray.3"} p={"sm"}>
             <Stack>
+              <Center>
+                <Text fz={20}>User & Profile</Text>
+              </Center>
               <Paper p={"lg"} bg={"cyan.1"}>
                 <Text>User</Text>
                 <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
               </Paper>
-              <Paper bg={"grape.1"} p="lg">
+              <Paper bg={"cyan.1"} p="lg">
                 <Text>Profile Umum</Text>
                 <Flex gap={"sm"}>
                   <ButtonSync
@@ -165,12 +189,12 @@ const SeederDev = () => {
               </Paper>
             </Stack>
           </Box>
-          <Box bg={"gray.5"} p={"sm"}>
+          <Box bg={"gray.3"} p={"sm"}>
             <Stack>
-            <Center>
-              <Text>Sumber Daya Partai</Text>
-            </Center>
-              <Paper bg={"red.2"} p="lg">
+              <Center>
+                <Text fz={20}>Sumber Daya Partai</Text>
+              </Center>
+              <Paper bg={"red.1"} p="lg">
                 <Text>Status Keanggotaan</Text>
                 <Flex gap={"sm"} wrap="wrap">
                   <ButtonSync
@@ -195,7 +219,7 @@ const SeederDev = () => {
                   />
                 </Flex>
               </Paper>
-              <Paper bg={"blue.1"} p="lg">
+              <Paper bg={"red.1"} p="lg">
                 <Text>Tingkat Partai</Text>
                 <Flex gap={"sm"} wrap="wrap">
                   <ButtonSync
@@ -228,7 +252,7 @@ const SeederDev = () => {
                   />
                 </Flex>
               </Paper>
-              <Paper bg={"orange.1"} p={"lg"}>
+              <Paper bg={"red.1"} p={"lg"}>
                 <Text>Aset Partai</Text>
                 <Flex gap={"sm"}>
                   <ButtonSync
@@ -243,50 +267,84 @@ const SeederDev = () => {
               </Paper>
             </Stack>
           </Box>
-          <Box bg={"gray.5"} p="sm">
+          <Box bg={"gray.3"} p="sm">
             <Stack>
               <Center>
-                <Text>Peta Kekuatan Partai</Text>
+                <Text fz={20}>Peta Kekuatan Partai</Text>
               </Center>
-              <Paper bg={"lime.1"} p={"lg"}>
-              <Text>Calmil dan Partai Pengusung</Text>
+              <Paper bg={"green.1"} p={"lg"}>
+                <Text>Calmil dan Partai Pengusung</Text>
 
                 <Flex gap={"sm"}>
-                    <ButtonSync
-                      loadData={syncSeederPemilihPotensial}
-                      name={"Sync Calon Pemilih Potensial"}
-                    />
+                  <ButtonSync
+                    loadData={syncSeederPemilihPotensial}
+                    name={"Sync Calon Pemilih Potensial"}
+                  />
                   <ButtonSync
                     loadData={syncSeederPartaiPengusung}
                     name={"Sync Partai Pengusung"}
                   />
                 </Flex>
               </Paper>
-              <Paper bg={"pink.1"} p={"lg"}>
-              <Text>Ekekutif & Legislatif</Text>
+              <Paper bg={"green.1"} p={"lg"}>
+                <Text>Legislatif</Text>
 
-                <Flex gap={"sm"}>
+                <Flex gap={"sm"} wrap={"wrap"}>
                   <ButtonSync
                     loadData={syncSeederTingkatLegislatif}
                     name={"Sync Tingkat Legislatif"}
                   />
+
                   <ButtonSync
-                    loadData={syncSeederTingkatEksekutif}
-                    name={"Sync Tingkat Eksekutif"}
+                    loadData={syncSeederNomorUrutTps}
+                    name={"Sync No Urut TPS"}
                   />
+                </Flex>
+              </Paper>
+              <Paper bg={"green.1"} p={"lg"}>
+                <Text>Ekekutif</Text>
+                <Flex gap={"sm"} wrap="wrap">
+
+                <ButtonSync
+                  loadData={syncSeederTingkatEksekutif}
+                  name={"Sync Tingkat Eksekutif"}
+                />
+                <ButtonSync
+                  loadData={syncSeederStatusEksekutif}
+                  name={"Sync Status Eksekutif"}
+                />
+                <ButtonSync
+                  loadData={syncSeederJabatanEksekutifProvinis}
+                  name={"Sync J.Eksekutif Provinsi"}
+                />
+                <ButtonSync
+                  loadData={syncSeederJabatanEksekutifKabkot}
+                  name={"Sync J.Eksekutif Kabupaten/Kota"}
+                />
+                <ButtonSync
+                  loadData={syncSeederJabatanEksekutifKota}
+                  name={"Sync J.Eksekutif Kota"}
+                />
+                <ButtonSync
+                  loadData={syncSeederJabatanEksekutifKabupaten}
+                  name={"Sync J.Eksekutif Kabupaten"}
+                />
+                </Flex>
+
+              </Paper>
+            </Stack>
+          </Box>
+          <Box bg={"gray.3"} p={"sm"}>
+            <Stack>
+              <Center>
+                <Text fz={20}>Aksi Nyata</Text>
+              </Center>
+              <Paper bg={"teal.1"} p={"lg"}>
+                <Flex>
                   <ButtonSync
-                    loadData={syncSeederStatusEksekutif}
-                    name={"Sync Status Eksekutif"}
+                    loadData={syncSeederStatusAksiNyata}
+                    name={"Sync Status Aksi Nyata"}
                   />
-                  <ButtonSync
-                    loadData={syncSeederJabatanEksekutifProvinis}
-                    name={"Sync J.Eksekutif Provinsi"}
-                  />
-                  <ButtonSync
-                    loadData={syncSeederJabatanEksekutifKabkot}
-                    name={"Sync J.Eksekutif Kabupaten/Kota"}
-                  />
-                  
                 </Flex>
               </Paper>
             </Stack>
@@ -324,6 +382,8 @@ const ButtonSync = ({ loadData, name, disable, bg }: ModelLoadData) => {
         bg={bg ?? ""}
         disabled={isLoading}
         w={250}
+        radius={30}
+        variant={"outline"}
         leftIcon={isLoading && <Loader color={"orange"} />}
         onClick={load}
       >
