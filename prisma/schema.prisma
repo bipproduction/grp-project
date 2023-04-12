@@ -181,6 +181,13 @@ model MasterStatusKeanggotaan {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model MasterNegara {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
 // STRUKTUR PARTAI
 model MasterStrukturPartai {
   id        Int      @id @default(autoincrement())
