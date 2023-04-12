@@ -11,43 +11,42 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
-  name String
-  email String @unique
-  password String
-  active Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  MasterUserRole MasterUserRole @relation(fields: [masterUserRoleId], references: [id])
-  masterUserRoleId Int @default(3)
+  id               String         @id @default(cuid())
+  name             String
+  email            String         @unique
+  password         String
+  active           Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now())
+  MasterUserRole   MasterUserRole @relation(fields: [masterUserRoleId], references: [id])
+  masterUserRoleId Int            @default(3)
 }
 
 model MasterUserRole {
-  id Int @id @default(autoincrement())
-  name String
+  id        Int      @id @default(autoincrement())
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  User User[]
+  User      User[]
 }
 
-
 model AsetPartai {
-  id String @id @default(cuid())
-  name String
-  serialNumber String @unique
-  pengguna String
+  id              String   @id @default(cuid())
+  name            String
+  serialNumber    String   @unique
+  pengguna        String
   penanggungJawab String
-  harga Float 
-  tglPembelian DateTime
+  harga           Float
+  tglPembelian    DateTime
   lokasiPembelian String
-  garansi String
-  statusAset Boolean @default(true)
-  keterangan String
-  kategori String
-  deskripsi String
-  img String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  garansi         String
+  statusAset      Boolean  @default(true)
+  keterangan      String
+  kategori        String
+  deskripsi       String
+  img             String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
 }
 
 // model DataDiri {
@@ -71,7 +70,6 @@ model AsetPartai {
 //   desaId Int
 // }
 
-
 // model AnggotaAfiliatif{
 //   id String @id @default(cuid())
 //   createdAt DateTime @default(now())
@@ -80,7 +78,6 @@ model AsetPartai {
 //   userId String
 //   afiliatifId Int
 // }
-
 
 // model UserMediaSosial{
 //   id String @id @default(cuid())
@@ -92,3 +89,273 @@ model AsetPartai {
 //   userId String
 //   masterMediaSosialId Int
 // }
+
+// UMUM
+model MasterTingkatPengurus {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  MasterJabatan MasterJabatan[]
+}
+
+model MasterJabatan {
+  id                      Int                    @id @default(autoincrement())
+  name                    String
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @default(now()) @updatedAt
+  tingkatPengurusid       MasterTingkatPengurus? @relation(fields: [masterTingkatPengurusId], references: [id])
+  masterTingkatPengurusId Int?
+}
+
+model MasterAgama {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterMediaSocial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterPekerjaan {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJenisKelamin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// Wilayah
+model MasterProvince {
+  id           Int            @id @default(autoincrement())
+  name         String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  MasterKabKot MasterKabKot[]
+}
+
+model MasterKabKot {
+  id               Int               @id @default(autoincrement())
+  name             String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
+  provinceId       MasterProvince?   @relation(fields: [masterProvinceId], references: [id])
+  MasterKecamatan  MasterKecamatan[]
+  masterProvinceId Int?
+}
+
+model MasterKecamatan {
+  id             Int           @id @default(autoincrement())
+  name           String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+  kabkotId       MasterKabKot? @relation(fields: [masterKabKotId], references: [id])
+  MasterDesa     MasterDesa[]
+  masterKabKotId Int?
+}
+
+model MasterDesa {
+  id                Int              @id @default(autoincrement())
+  name              String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @default(now()) @updatedAt
+  kecamatanId       MasterKecamatan? @relation(fields: [masterKecamatanId], references: [id])
+  masterKecamatanId Int?
+}
+
+model MasterStatusKeanggotaan {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// STRUKTUR PARTAI
+model MasterStrukturPartai {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanDewanPembina {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanDewanPimpinanPusat {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanDewanPimpinanDaerah {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanDewanPimpinanCabang {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanPimpinanAnakCabang {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanPimpinanRanting {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanPerwakilanPartaiDiluarNegeri {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// SAYAP PARTAI
+model MasterSayapPartai {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// KADER PARTAI
+model MasterKaderPartai {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// ANGGOTA AFILIATIF
+model MasterOrganisasiAfiliatif {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// ASET PARTAI
+model MasterStatusAset {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterKategoriAset {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// PETA KEKUATAN
+model MasterPartaiPengusung {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// eksekutif
+model MasterTingkatEksekutif {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanEksekutifProvinsi {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanEksekutifKabKot {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanEksekutifKabupaten {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterJabatanEksekutifKota {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MasterStatusEksekutif {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+// legislatif
+model MasterTingkatLegislatif {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+//nomor urut TPS
+model MasterNomorUrutTPS {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+//calon pemilih potensial
+model MasterCalonPemilihPotensial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+//AKSI NYATA
+model MasterStatusAksiNyata {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
