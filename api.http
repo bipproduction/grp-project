@@ -240,3 +240,102 @@ Content-Type: application/json
     "alamat" : "",
     "statusSosial" : ""
 }
+
+### POST RENCANA KUNJUNGAN PRABOWO 
+POST  http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "judul" : "",
+    "tanggal" : "",
+    "img" : "",
+    "statusKunjungan" : ""
+}
+
+
+### UPDATE RENCANA KUNJUNGAN PRABOWO
+POST http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "judul" : "",
+    "tanggal":"",
+    "img" : "",
+    "statusKunjungan" : ""
+}
+
+### GET ONE RENCANA KUNJUNGAN PRABOWO 
+GET http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id= HTTP/1.1
+
+### POST RENCANA KUNJUNGAN GERINDRA
+POST http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "judul" : "",
+    "tanggal" : "",
+    "img" : "",
+    "statusKunjungan" : ""
+}
+
+
+### UPDATE RENCANA KUNJUNGAN GERINDRA
+POST http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "judul" : "",
+    "tanggal":"",
+    "img" : "",
+    "statusKunjungan" : ""
+}
+
+### GET ONE RENCANA KUNJUNGAN GERINDRA
+GET http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id= HTTP/1.1
+
+
+### POST LIST UNDANGAN PRABOWO
+POST http://localhost:3000/api/list-undangan-prabowo/list-undangan-prabowo-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "rencanaKunjunganPrabowoId" : "",
+    "nama" : ""
+}
+
+### UPDATE LIST UNDANGAN PRABOWO
+POST http://localhost:3000/api/list-undangan-prabowo/list-undangan-prabowo-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "rencanaKunjunganPrabowoId" : "",
+     "nama" : ""
+}
+
+### GET ONE LIST UNDANGAN PRABOWO
+GET http://localhost:3000/api/list-undangan-prabowo/list-undanga-prabowo-get-one?id HTTP/1.1
+
+### POST LIST UNDANGAN GERINDRA
+POST http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "rencanaKunjunganGerindraId" : "", 
+    "nama" : ""
+}
+
+### UPDATE LIST UNDANGAN GERINDRA
+POST http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "",
+    "rencanaKunjunganGerindraId" : "",
+    "nama" : ""
+}
+
+### GET ONE LIST UNDANGAN GERINDRA
+GET http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-get-one?id HTTP/1.1
