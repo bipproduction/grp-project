@@ -30,3 +30,23 @@
      - update = api/tps-dpt/tps-dpt-update
      - get one = api/tps-dpt/tps-dpt-get-one
      - get all = api/tps-dpt/tps-dpt-get-all
+- **Rencana Kunjungan Prabowo** (off)
+     - tambah = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
+     - update = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
+     - get one = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one
+     - get all = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all
+- **List Undangan Prabowo** (off)
+     - tambah = api/list-undangan-prabowo/list-undangan-prabowo-post
+     - update = api/list-undangan-prabowo/list-undangan-prabowo-update
+     - get one = api/list-undangan-prabowo/list-undangan-prabowo-get-one
+     - get all = api/list-undangan-prabowo/list-undangan-prabowo-get-all
+- **Rencana Kunjungan Gerindra** (off)
+     - tambah = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post
+     - update = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update
+     - get one = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one
+     - get all = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-all
+- **List Undangan Gerindra** (off)
+     - tambah = api/list-undangan-gerindra/list-undangan-gerindra-post
+     - update = api/list-undangan-gerindra/list-undangan-gerindra-update
+     - get one = api/list-undangan-gerindra/list-undangan-gerindra-get-one
+     - get all = api/list-undangan-gerindra/list-undangan-gerindra-get-all
