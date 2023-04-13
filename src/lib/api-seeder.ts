@@ -36,6 +36,14 @@ export const apiSeeder = {
 "apiSeederStatusEksekutif":"/api/seeder/peta-kekuatan/api-seeder-status-eksekutif",
 "apiSeederJabatanEksekutifProvinsi":"/api/seeder/peta-kekuatan/api-seeder-jabatan-eksekutif-provinsi",
 "apiSeederJabatanEksekutifKabkot":"/api/seeder/peta-kekuatan/api-seeder-jabatan-eksekutif-kabkot",
+"apiSeederJabatanEksekutifKota":"/api/seeder/peta-kekuatan/api-seeder-jabatan-eksekutif-kota",
+"apiSeederJabatanEksekutifKabupaten":"/api/seeder/peta-kekuatan/api-seeder-jabatan-eksekutif-kabupaten",
+"apiSeederNomorUrutTps":"/api/seeder/peta-kekuatan/api-seeder-nomor-urut-tps",
+
+// Aksi Nyata
+"apiSeederStatusAksiNyata":"/api/seeder/aksi-nyata/api-seeder-status-kunjungan",
+
+
 
 
 
