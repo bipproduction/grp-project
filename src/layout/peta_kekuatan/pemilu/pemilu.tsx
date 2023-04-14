@@ -1,9 +1,7 @@
 
 const Pemilu = () => {
     return<>
-    Pemilu
-
-    
+pemilu
     </>
 }
 

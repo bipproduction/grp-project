@@ -1,9 +1,12 @@
+import DataAksiGerindra from "./DataAksiGerindra"
 
 
 const AksiGerindra = () => {
-    return<>
-    Aksi Gerindra 
-    </>
+    return(
+        <>
+        <DataAksiGerindra/>
+        </>
+    )
 }
 
 export default AksiGerindra
