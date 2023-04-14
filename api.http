@@ -14,7 +14,7 @@ POST  http://localhost:3000/api/auth/user-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":"clgagzr7b0006ac0l2v7rtkvh",
+    "id":"clgg1bp040000acyjqn2nvilc",
     "name":"amalia",
     "email":"ar@gmail.com",
     "password":"1234",
@@ -37,9 +37,9 @@ Content-Type: application/json
     "tglPembelian":"2023-04-10 00:00:00",
     "lokasiPembelian":"Denpasar",
     "garansi":"gafaranfdkslf",
-    "statusAset": false,
+    "masterStatusAsetId": 1,
     "keterangan":"Penambahan aset",
-    "kategori":"Utama",
+    "masterKategoriAsetId":2,
     "deskripsi":"Percobaan",
     "img":"gambar1.jpg"
 }
@@ -50,7 +50,7 @@ POST http://localhost:3000/api/aset-partai/aset-partai-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" :"clgal7f8h0000acoq2onpcis2",
+    "id" :"clgg1q07l0001acoj9nt4mmyn",
     "name":"Aset kedua",
     "serialNumber":"fdsfjldk",
     "pengguna":"BBBB",
@@ -59,16 +59,16 @@ Content-Type: application/json
     "tglPembelian":"2023-04-09 00:00:00",
     "lokasiPembelian":"Tabanan",
     "garansi":"garansinya",
-    "statusAset": false,
+    "masterStatusAsetId": 2,
     "keterangan":"Penambahann aset",
-    "kategori":"Utama",
+    "masterKategoriAsetId":3,
     "deskripsi":"Percobaan Aset",
     "img":"gambar3.jpg"
 }
 
 
 ### GET ONE ASET PARTAI 
-GET http://localhost:3000/api/aset-partai/aset-partai-get-one?id=clgal7f8h0000acoq2onpcis2 HTTP/1.1
+GET http://localhost:3000/api/aset-partai/aset-partai-get-one?id=clgg1q07l0001acoj9nt4mmyn HTTP/1.1
 
 
 
@@ -83,7 +83,7 @@ Content-Type: application/json
     "phoneNumber" : "0884564854",
     "alamat" : "Didalam rumah",
     "rtRw" : "3/2",
-    "userId" : "clgagzr7b0006ac0l2v7rtkvh",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
     "masterJenisKelaminId" : 2,
     "masterAgamaId" : 1,
     "masterPekerjaanId" : 2,
@@ -99,14 +99,14 @@ POST http://localhost:3000/api/form-data-diri/data-diri-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "clgd6cos00001acek6cfdspr2",
+    "id" : "clgg1wgtc0007acoj2klqof5y",
     "nik" : "51710349000230",
     "tempatLahir" : "Denpasar",
     "tanggalLahir" : "1999-11-07 00:00:00",
     "phoneNumber" : "0884564800",
     "alamat" : "Didalam gedung",
     "rtRw" : "2/2",
-    "userId" : "clgagzr7b0006ac0l2v7rtkvh",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
     "masterJenisKelaminId" : 1,
     "masterAgamaId" : 1,
     "masterPekerjaanId" : 2,
@@ -117,7 +117,7 @@ Content-Type: application/json
 }
 
 ### GET ONE DATA DIRI
-GET http://localhost:3000/api/form-data-diri/data-diri-get-one?id=clgd6cos00001acek6cfdspr2 HTTP/1.1
+GET http://localhost:3000/api/form-data-diri/data-diri-get-one?id=clgg1wgtc0007acoj2klqof5y HTTP/1.1
 
 
 
@@ -126,7 +126,7 @@ POST http://localhost:3000/api/anggota-afiliatif/anggota-afiliatif-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":"clgai6bto0005acoaueeildk6",
+    "userId":"clgg1bp040000acyjqn2nvilc",
     "masterOrganisasiAfiliatifId" : 1
 }
 
@@ -136,28 +136,28 @@ POST http://localhost:3000/api/anggota-afiliatif/anggota-afiliatif-update HTTP/1
 Content-Type: application/json
 
 {
-    "id" : "clgd6s83b0003acek0jfalo9m",
-    "userId" : "clgai6bto0005acoaueeildk6",
+    "id" : "clgg1ye9b000bacojkbnz7xyc",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
     "masterOrganisasiAfiliatifId" : 2
 }
 
 ### POST USER MEDIA SOSIAL
-POST http://localhost:3000/api/user-media-sosial/user-media-sosial-post HTTP/1.1
+POST http://localhost:3000/api/auth/user-media-sosial/user-media-sosial-post HTTP/1.1
 Content-Type: application/json
 
 {
     "name" : "@username1",
     "link" : "link ig",
-    "userId" : "clgai6bto0005acoaueeildk6",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
     "masterMediaSocialId" : 2
 }
 
 ### UPDATE USER MEDIA SOSIAL
-POST http://localhost:3000/api/user-media-sosial/user-media-sosial-update HTTP/1.1
+POST http://localhost:3000/api/auth/user-media-sosial/user-media-sosial-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "clgda57ln0007ac4e3vwefg0b",
+    "id" : "clgg204z3000dacojpnjlkwaj",
     "link" : "link link",
     "name" : "yup yup",
     "userId" : "clgai6bto0005acoaueeildk6",
@@ -166,7 +166,7 @@ Content-Type: application/json
 
 
 ### POST TPS DPT
-POST http://localhost:3000/api/tps-dpt/tps-dpt-post HTTP/1.1
+POST http://localhost:3000/api/peta-kekuatan/tps-dpt/tps-dpt-post HTTP/1.1
 Content-Type: application/json
 
 {
@@ -180,162 +180,358 @@ Content-Type: application/json
 }
 
 ### UPDATE TPS DPT 
-POST http://localhost:3000/api/tps-dpt/tps-dpt-update HTTP/1.1
+POST http://localhost:3000/api/peta-kekuatan/tps-dpt/tps-dpt-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "clgdckw0e0001acssioh31q6h",
+    "id" : "clgg21vsq000facoj6giunh0q",
     "masterProvinceId" : 1,
     "masterKabKotId" : 1,
     "masterKecamatanId" : 1,
-    "masterDesaId" : 2,
+    "masterDesaId" : 1,
     "masterNomorUrutTPSId" : 1,
     "dptLakilaki" : 30,
     "dptPerempuan" : 20
 }
 
 ### POST CALON PEMILIH POTENSIAL
-POST http://localhost:3000/api/cpt/cpt-post HTTP/1.1
+POST http://localhost:3000/api/peta-kekuatan/cpt/cpt-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "masterCalonPemilihPotensialId" : "",
-    "masterAgamaId" : "",
-    "masterPekerjaanId" : "",
-    "masterProvinceId" : "",
-    "masterKabKotId" : "",
-    "masterKecamatanId" : "",
-    "masterDesaId" : "",
-    "tpsID" : "",
-    "masterJenisKelamin" : "",
-    "nik" : "",
-    "nama" : "",
-    "email" : "",
-    "tanggalLahir" : "",
-    "phoneNumber" : "",
-    "alamat" : "",
-    "statusSosial" : ""
+    "masterCalonPemilihPotensialId" : 1,
+    "masterAgamaId" : 1,
+    "masterPekerjaanId" : 1,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1,
+    "masterNomorUrutTPSId" : 1,
+    "masterJenisKelaminId" : 1,
+    "nik" : "12345123456",
+    "nama" : "Amalia Dwi",
+    "email" : "amaliadwi@gmail.com",
+    "tanggalLahir" : "1999-12-07",
+    "phoneNumber" : "0898978678",
+    "alamat" : "Panjer",
+    "statusSosial" : "Kaya"
 }
 
 ### UPDATE CALON PEMILIH POTENSIAL
-POST http://localhost:3000/api/cpt/cpt-update HTTP/1.1
+POST http://localhost:3000/api/peta-kekuatan/cpt/cpt-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "",
-    "masterCalonPemilihPotensialId" : "",
-    "masterAgamaId" : "",
-    "masterPekerjaanId" : "",
-    "masterProvinceId" : "",
-    "masterKabKotId" : "",
-    "masterKecamatanId" : "",
-    "masterDesaId" : "",
-    "tpsID" : "",
-    "masterJenisKelamin" : "",
-    "nik" : "",
-    "nama" : "",
-    "email" : "",
-    "tanggalLahir" : "",
-    "phoneNumber" : "",
-    "alamat" : "",
-    "statusSosial" : ""
+    "id" : "clgg3zo4d000hacojn3jwol9m",
+    "masterCalonPemilihPotensialId" : 1,
+    "masterAgamaId" : 1,
+    "masterPekerjaanId" : 1,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1,
+    "masterNomorUrutTPSId" : 1,
+    "masterJenisKelaminId" : 2,
+    "nik" : "4568893487",
+    "nama" : "Amalia Dwi",
+    "email" : "amalia@gmail.com",
+    "tanggalLahir" : "2000-12-07",
+    "phoneNumber" : "0898978678",
+    "alamat" : "Panjer",
+    "statusSosial" : "Kaya"
 }
 
+### GET ONE CALON PEMILIH POTENSIAL
+GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-one?id=clgg3zo4d000hacojn3jwol9m HTTP/1.1
+
 ### POST RENCANA KUNJUNGAN PRABOWO 
-POST  http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post HTTP/1.1
+POST  http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "judul" : "",
-    "tanggal" : "",
-    "img" : "",
-    "statusKunjungan" : ""
+    "judul" : "Rencana pertama",
+    "tanggal" : "2000-12-09",
+    "img" : "gambar 1",
+    "masterStatusAksiNyataId" : 1
 }
 
 
 ### UPDATE RENCANA KUNJUNGAN PRABOWO
-POST http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "",
-    "judul" : "",
-    "tanggal":"",
-    "img" : "",
-    "statusKunjungan" : ""
+    "id" : "clgg535m0000lacoj048rhdwq",
+    "judul" : "Rencana pertama",
+    "tanggal" : "2000-12-09",
+    "img" : "gambar 1",
+    "masterStatusAksiNyataId" : 2
 }
 
 ### GET ONE RENCANA KUNJUNGAN PRABOWO 
-GET http://localhost:3000/api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id= HTTP/1.1
+GET http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id=clgg535m0000lacoj048rhdwq HTTP/1.1
 
 ### POST RENCANA KUNJUNGAN GERINDRA
-POST http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "judul" : "",
-    "tanggal" : "",
-    "img" : "",
-    "statusKunjungan" : ""
+    "judul" : "Rencana acara pertama",
+    "tanggal" : "2000-12-23",
+    "img" : "gambar",
+    "masterStatusAksiNyataId" : 2
 }
 
 
 ### UPDATE RENCANA KUNJUNGAN GERINDRA
-POST http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "",
-    "judul" : "",
-    "tanggal":"",
-    "img" : "",
-    "statusKunjungan" : ""
+    "id" : "clgg57z58000nacojhyuond4a",
+    "judul" : "rencana kedua",
+    "tanggal":"2000-12-25",
+    "img" : "gambar 2",
+    "masterStatusAksiNyataId" : 1
 }
 
 ### GET ONE RENCANA KUNJUNGAN GERINDRA
-GET http://localhost:3000/api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id= HTTP/1.1
+GET http://localhost:3000/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id=clgg57z58000nacojhyuond4a HTTP/1.1
 
 
 ### POST LIST UNDANGAN PRABOWO
-POST http://localhost:3000/api/list-undangan-prabowo/list-undangan-prabowo-post HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "rencanaKunjunganPrabowoId" : "",
-    "nama" : ""
+    "rencanaKunjunganPrabowoId" : "clgg535m0000lacoj048rhdwq",
+    "nama" : "Amalia"
 }
 
 ### UPDATE LIST UNDANGAN PRABOWO
-POST http://localhost:3000/api/list-undangan-prabowo/list-undangan-prabowo-update HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "",
-    "rencanaKunjunganPrabowoId" : "",
-     "nama" : ""
+    "id" : "clgg5my4u000racojdjomebyf",
+    "rencanaKunjunganPrabowoId" : "clgg535m0000lacoj048rhdwq",
+    "nama" : "Dwi"
 }
 
 ### GET ONE LIST UNDANGAN PRABOWO
-GET http://localhost:3000/api/list-undangan-prabowo/list-undanga-prabowo-get-one?id HTTP/1.1
+GET http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-one?id=clgg5my4u000racojdjomebyf HTTP/1.1
 
 ### POST LIST UNDANGAN GERINDRA
-POST http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-post HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "rencanaKunjunganGerindraId" : "", 
-    "nama" : ""
+    "rencanaKunjunganGerindraId" : "clgg57z58000nacojhyuond4a", 
+    "nama" : "Ketua yayasan"
 }
 
 ### UPDATE LIST UNDANGAN GERINDRA
-POST http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-update HTTP/1.1
+POST http://localhost:3000/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "",
-    "rencanaKunjunganGerindraId" : "",
-    "nama" : ""
+    "id" : "clgg5rnch000tacojru0y5759",
+    "rencanaKunjunganGerindraId" : "clgg57z58000nacojhyuond4a",
+    "nama" : "wakil ketua yayasan"
 }
 
 ### GET ONE LIST UNDANGAN GERINDRA
-GET http://localhost:3000/api/list-undangan-gerindra/list-undangan-gerindra-get-one?id HTTP/1.1
+GET http://localhost:3000/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-one?id=clgg5rnch000tacojru0y5759 HTTP/1.1
+
+
+### POST EKSEKUTIF
+POST http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterTingkatEksekutifId" : 1,
+    "masterJabatanEksekutifProvinsiId" : 1,
+    "masterJabatanEksekutifKabKotId" : 1,
+    "masterJabatanEksekutifKabupatenId" : 1,
+    "masterJabatanEksekutifKotaId" : 1,
+    "masterStatusEksekutifId" : 1,
+    "namaLembaga" : "Wakil",
+    "periode" : "2019",
+    "alamatKantor" : "Jalan Pegangsaan Timur"
+}
+
+### UPDATE EKSEKUTIF
+POST http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgg6z68b000vacojpc6wo1tb",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterTingkatEksekutifId" : 2,
+    "masterJabatanEksekutifProvinsiId" : 1,
+    "masterJabatanEksekutifKabKotId" : 1,
+    "masterJabatanEksekutifKabupatenId" : 1,
+    "masterJabatanEksekutifKotaId" : 1,
+    "masterStatusEksekutifId" : 1,
+    "namaLembaga" : "Wakil",
+    "periode" : "2019",
+    "alamatKantor" : "Jalan Pegangsaan Barat"
+}
+
+
+### GET ONE EKSEKUTIF
+GET http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-get-one?id=clgg6z68b000vacojpc6wo1tb HTTP/1.1
+
+
+
+### POST LEGISLATIF
+POST http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterTingkatLegislatifId" : 1,
+    "jabatan" : "Ketua",
+    "periode" : "2019",
+    "noUrut" : 1,
+    "dapil" : "Bali",
+    "cakupanWilayah" : "Nasional",
+    "akd" : "asdf"
+}
+
+
+### UPDATE LEGISLATIF
+POST http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgg7u2y5000xacoj0cjcchsw",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterTingkatLegislatifId" : 1,
+    "jabatan" : "WAKIL",
+    "periode" : "2019",
+    "noUrut" : 2,
+    "dapil" : "Bali",
+    "cakupanWilayah" : "Nasional",
+    "akd" : "asdf"
+}
+
+### GET ONE LEGISLATIF
+GET http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-get-one?id=clgg7u2y5000xacoj0cjcchsw HTTP/1.1
+
+
+
+### POST PARTAI PENGUSUNG EKSEKUTIF
+POST http://localhost:3000/api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "eksekutifId" : "clgg6z68b000vacojpc6wo1tb",
+    "masterPartaiPengusungId" : 1
+}
+
+
+### UPDATE PARTAI PENGUSUNG EKSEKUTIF
+POST http://localhost:3000/api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgg8a2mp000zacojoeesyv2y",
+    "eksekutifId" : "clgg6z68b000vacojpc6wo1tb",
+    "masterPartaiPengusungId" : 2
+}
+
+
+
+### POST DPD DPC MEDIA SOSIAL 
+POST http://localhost:3000/api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "masterMediaSocialId" : 2,
+    "sumberDayaPartaiId" : "clgg9oijk0017acoj2t8ort8m",
+    "name" : "username insert",
+    "link" : "link sosmednyaaa"
+}
+
+
+### UPDATE DPD DPC MEDIA SOSIAL 
+POST http://localhost:3000/api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgg9qb860019acojl95lm5if",
+    "masterMediaSocialId" : 3,
+    "sumberDayaPartaiId" : "clgg9oijk0017acoj2t8ort8m",
+    "name" : "username update",
+    "link" : "link sosmednya "
+}
+
+
+
+### POST SUMBER DAYA PARTAI / KEANGGOTAAN
+POST http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterStatusKeanggotaanId" : 1,
+    "masterTingkatPengurusId" : 1,
+    "masterJabatanId" : 1,
+    "masterJabatanDewanPembinaId" : 1,
+    "masterJabatanDewanPimpinanPusatId" : 1,
+    "masterJabatanDewanPimpinanDaerahId" : 1,
+    "masterJabatanDewanPimpinanCabangId" : 1,
+    "masterJabatanPimpinanAnakCabangId" : 1,
+    "masterJabatanPimpinanRantingId" : 1,
+    "masterJabatanPerwakilanPartaiDiLuarNegeriId" : 1,
+    "masterSayapPartaiId" : 1,
+    "masterKaderPartaiId" : 1,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1,
+    "masterNegaraId" : 1,
+    "alamatKantor" : "Panjer",
+    "waAdmin" : "0984937483927"
+}
+
+### UPDATE SUMBER DAYA PARTAI / KEANGGOTAAN
+POST http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-update HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clgg9oijk0017acoj2t8ort8m",
+    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "masterStatusKeanggotaanId" : 1,
+    "masterTingkatPengurusId" : 1,
+    "masterJabatanId" : 1,
+    "masterJabatanDewanPembinaId" : 1,
+    "masterJabatanDewanPimpinanPusatId" : 1,
+    "masterJabatanDewanPimpinanDaerahId" : 1,
+    "masterJabatanDewanPimpinanCabangId" : 1,
+    "masterJabatanPimpinanAnakCabangId" : 1,
+    "masterJabatanPimpinanRantingId" : 1,
+    "masterJabatanPerwakilanPartaiDiLuarNegeriId" : 1,
+    "masterSayapPartaiId" : 1,
+    "masterKaderPartaiId" : 1,
+    "masterProvinceId" : 1,
+    "masterKabKotId" : 1,
+    "masterKecamatanId" : 1,
+    "masterDesaId" : 1,
+    "masterNegaraId" : 1,
+    "alamatKantor" : "Panjer",
+    "waAdmin" : "0984937483900"
+}
+
+### GET ONE SUMBER DAYA PARTAI / KEANGGOTAAN
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clgg9oijk0017acoj2t8ort8m HTTP/1.1

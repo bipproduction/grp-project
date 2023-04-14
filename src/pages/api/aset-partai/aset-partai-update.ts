@@ -28,9 +28,9 @@ const asetPartaiUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 harga: body.harga,
                 tglPembelian: body.tglPembelian,
                 garansi: body.garansi,
-                statusAset: body.statusAset,
+                masterStatusAsetId: body.statusAset,
                 keterangan: body.keterangan,
-                kategori: body.kategori,
+                masterKategoriAsetId: body.kategori,
                 deskripsi: body.deskripsi,
                 img: body.img
             }
