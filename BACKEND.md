@@ -12,41 +12,67 @@
 - **Aset Partai**
      - tambah = api/aset-partai/aset-partai-post
      - update = api/aset-partai/aset-partai-update
-     - get one = api/aset-partai/aset-partai-get-one
+     - get one = api/aset-partai/aset-partai-get-one?id=
      - get all = api/aset-partai/aset-partai-get-all
 - **Data Diri**
      - tambah = api/form-data-diri/data-diri-post
      - update = api/form-data-diri/data-diri-update
-     - get one = api/form-data-diri/data-diri-get-one
+     - get one = api/form-data-diri/data-diri-get-one?id=
      - get all = api/form-data-diri/data-diri-get-all
 - **Anggota Afiliatif**
      - tambah = api/anggota-afiliatif/anggota-afiliatif-post
      - update = api/anggota-afiliatif/anggota-afiliatif-update
 - **User Media Sosial**
-     - tambah = api/user-media-sosial/user-media-sosial-post
-     - update = api/user-media-sosial/user-media-sosial-update
+     - tambah = api/auth/user-media-sosial/user-media-sosial-post
+     - update = api/auth/user-media-sosial/user-media-sosial-update
 - **TPS/DPT**
-     - tambah = api/tps-dpt/tps-dpt-post
-     - update = api/tps-dpt/tps-dpt-update
-     - get one = api/tps-dpt/tps-dpt-get-one
-     - get all = api/tps-dpt/tps-dpt-get-all
-- **Rencana Kunjungan Prabowo** (off)
-     - tambah = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
-     - update = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
-     - get one = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one
-     - get all = api/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all
-- **List Undangan Prabowo** (off)
-     - tambah = api/list-undangan-prabowo/list-undangan-prabowo-post
-     - update = api/list-undangan-prabowo/list-undangan-prabowo-update
-     - get one = api/list-undangan-prabowo/list-undangan-prabowo-get-one
-     - get all = api/list-undangan-prabowo/list-undangan-prabowo-get-all
-- **Rencana Kunjungan Gerindra** (off)
-     - tambah = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post
-     - update = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update
-     - get one = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one
-     - get all = api/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-all
-- **List Undangan Gerindra** (off)
-     - tambah = api/list-undangan-gerindra/list-undangan-gerindra-post
-     - update = api/list-undangan-gerindra/list-undangan-gerindra-update
-     - get one = api/list-undangan-gerindra/list-undangan-gerindra-get-one
-     - get all = api/list-undangan-gerindra/list-undangan-gerindra-get-all
+     - tambah = api/peta-kekuatan/tps-dpt/tps-dpt-post
+     - update = api/peta-kekuatan/tps-dpt/tps-dpt-update
+     - get one = api/peta-kekuatan/tps-dpt/tps-dpt-get-one?id=
+     - get all = api/peta-kekuatan/tps-dpt/tps-dpt-get-all
+- **Rencana Kunjungan Prabowo**
+     - tambah = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
+     - update = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
+     - get one = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id=
+     - get all = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all
+- **List Undangan Prabowo**
+     - tambah = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-post
+     - update = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update
+     - get one = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-one?id=
+     - get all = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-all
+- **Rencana Kunjungan Gerindra**
+     - tambah = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post
+     - update = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update
+     - get one = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id=
+     - get all = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-all
+- **List Undangan Gerindra** 
+     - tambah = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post
+     - update = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update
+     - get one = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-one?id=
+     - get all = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-all
+- **Calon Pemilih Potensial**
+     - tambah = api/peta-kekuatan/cpt/cpt-post
+     - update = api/peta-kekuatan/cpt/cpt-update
+     - get one = api/peta-kekuatan/cpt/cpt-get-one?id=
+     - get all = api/peta-kekuatan/cpt/cpt-get-all
+- **Eksekutif**
+     - tambah = api/peta-kekuatan/eksekutif/eksekutif-post
+     - update = api/peta-kekuatan/eksekutif/eksekutif-update
+     - get one = api/peta-kekuatan/eksekutif/eksekutif-get-one?id=
+     - get all = api/peta-kekuatan/eksekutif/eksekutif-get-all
+- **Legislatif**
+     - tambah = api/peta-kekuatan/legislatif/legislatif-post
+     - update = api/peta-kekuatan/legislatif/legislatif-update
+     - get one = api/peta-kekuatan/legislatif/legislatif-get-one?id=
+     - get all = api/peta-kekuatan/legislatif/legislatif-get-all
+- **Partai Pengusung Eksekutif**
+     - tambah = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-post
+     - update = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-update
+- **DPD DPC Media Sosial**
+     - tambah = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-post
+     - update = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-update
+- **Sumber Daya Partai**
+     - tambah = api/sumber-daya-partai/sumber-daya-partai-post
+     - update = api/sumber-daya-partai/sumber-daya-partai-update
+     - get one = api/sumber-daya-partai/sumber-daya-partai-get-one?id=
+     - get all = api/sumber-daya-partai/sumber-daya-partai-get-all
