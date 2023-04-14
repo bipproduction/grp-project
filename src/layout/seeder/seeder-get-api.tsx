@@ -19,6 +19,7 @@ const SeederGetApi = () => {
         <Table m={"lg"} p="lg" withBorder withColumnBorders striped>
           <thead>
             <tr>
+              {/* <th>No</th> */}
               <th>Menu</th>
               <th>Title</th>
               <th>API-GET</th>
@@ -27,6 +28,7 @@ const SeederGetApi = () => {
           <tbody>
             {ApiGetAll.map((e, i) => (
               <tr key={i}>
+                {/* <td>{i++}</td> */}
                 <td>{e.dir}</td>
                 <td>{e.title}</td>
                 <td>

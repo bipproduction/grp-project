@@ -43,6 +43,10 @@ export const apiSeeder = {
 // Aksi Nyata
 "apiSeederStatusAksiNyata":"/api/seeder/aksi-nyata/api-seeder-status-kunjungan",
 
+//Wilayah
+"apiSeederNamaNegara":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-negara",
+"apiSeederNamaProvinsi":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-provinsi"
+
 
 
 
