@@ -1,176 +1,162 @@
 [
   {
-    "id": 1,
     "dir": "Profile",
-    "title": "User",
+    "title": "User Role",
     "api": "http://localhost:3000/api/get/api-get-user-role"
   },
   {
-    "id": 2,
     "dir": "Profile",
     "title": "Agama",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-agama"
   },
   {
-    "id": 3,
     "dir": "Profile",
     "title": "Pekerjaan",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-pekerjaan"
   },
   {
-    "id": 4,
-    "dir": "Profile",
-    "title": "Pekerjaan",
-    "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-pekerjaan"
-  },
-  {
-    "id": 5,
     "dir": "Profile",
     "title": "Media Social",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-media-social"
   },
   {
-    "id": 6,
     "dir": "Profile",
     "title": "Jenis Kelamin",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jenis-kelamin"
   },
   {
-    "id": 7,
     "dir": "Status Keanggotaan",
     "title": "Status Keanggotaan Partai",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-status-keanggotaan"
   },
   {
-    "id": 8,
     "dir": "Status Keanggotaan",
     "title": "Tingkat Pengurus",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-tingkat-pengurus"
   },
   {
-    "id": 9,
     "dir": "Status Keanggotaan",
     "title": "Kader Partai",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-kader-partai"
   },
   {
-    "id": 10,
     "dir": "Status Keanggotaan",
     "title": "Sayap Partai",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-sayap-partai"
   },
   {
-    "id": 11,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Dewan Pembina",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina"
   },
   {
-    "id": 12,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Dewan Pimpinan Cabang",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang"
   },
   {
-    "id": 13,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Dewan Pimpinan Daerah",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-daerah"
   },
   {
-    "id": 14,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Dewan Pimpinan Pusat",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-pusat"
   },
   {
-    "id": 15,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Perwakilan Di Luar Negeri",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri"
   },
   {
-    "id": 16,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Pimpinan Anak Cabang",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang"
   },
   {
-    "id": 17,
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Pimpinan Ranting",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-ranting"
   },
   {
-    "id": 18,
     "dir": "Tingkat Pengurus",
     "title": "Organisasi Afiliatif",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-organisasi-afiliatif"
   },
   {
-    "id": 19,
     "dir": "Peta Kekuatan",
     "title": "Kategori Calon Pemilih Potensial",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-calon-pemilih-potensial"
   },
   {
-    "id": 20,
     "dir": "Peta Kekuatan",
     "title": "No Urut TPS",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-nomor-urut-tps"
   },
   {
-    "id": 21,
     "dir": "Peta Kekuatan",
     "title": "Partai Pengusung",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-partai-pengusung"
   },
   {
-    "id": 22,
     "dir": "Eksekutif & Legislatif",
     "title": "Tingkat Legislatif",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-tingkat-legislatif"
   },
   {
-    "id": 23,
     "dir": "Eksekutif & Legislatif",
     "title": "Tingkat Eksekutif",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-tingkat-eksekutif"
   },
   {
-    "id": 24,
     "dir": "Eksekutif & Legislatif",
     "title": "Status Eksekutif",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-status-eksekutif"
   },
   {
-    "id": 25,
     "dir": "Eksekutif & Legislatif",
     "title": "Jabatan Eksekutif Provinsi",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-jabatan-eksekutif-provinsi"
   },
   {
-    "id": 26,
     "dir": "Eksekutif & Legislatif",
     "title": "Jabatan Eksekutif Kota",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-jabatan-eksekutif-kota"
   },
   {
-    "id": 27,
     "dir": "Eksekutif & Legislatif",
     "title": "Jabatan Eksekutif Kabupaten",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-jabatan-eksekutif-kabupaten"
   },
   {
-    "id": 28,
     "dir": "Eksekutif & Legislatif",
     "title": "Jabatan Eksekutif Kab/Kot",
     "api": "http://localhost:3000/api/get/peta-kekuatan/api-get-jabatan-eksekutif-kabkot"
   },
   {
-    "id": 29,
     "dir": "Aksi Nyata",
     "title": "Status Aksi Nyata",
     "api": "http://localhost:3000/api/get/aksi-nyata/api-get-status-kunjungan"
+  },
+  {
+    "dir": "Sumber D.P - Aset",
+    "title": "Status Aset",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-status-aset"
+  },
+  {
+    "dir": "Sumber D.P - Aset",
+    "title": "Kategori Aset",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-kategori-aset"
+  },
+  {
+    "dir": "Wilayah",
+    "title": "Nama Negara",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-negara"
+  },
+  {
+    "dir": "Wilayah",
+    "title": "Nama Provinsi",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
   }
 ]

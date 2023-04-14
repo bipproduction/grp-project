@@ -148,6 +148,16 @@ const SeederDev = () => {
       async (e) => e.status == 200
     );
 
+  // Wilayah
+  const syncSeederNegara = async () =>
+    await fetch(apiSeeder.apiSeederNamaNegara).then(
+      async (e) => e.status == 200
+    );
+    const syncSeederProvinsi = async () =>
+    await fetch(apiSeeder.apiSeederNamaProvinsi).then(
+      async (e) => e.status == 200
+    );
+
   return (
     <>
       <Box>
@@ -184,6 +194,19 @@ const SeederDev = () => {
                   <ButtonSync
                     loadData={syncSeederPekerjaan}
                     name={"Sync Seeder Pekerjaan"}
+                  />
+                </Flex>
+              </Paper>
+              <Paper bg={"cyan.1"} p="lg">
+                <Text>Negara & Wilayah</Text>
+                <Flex gap={"sm"}>
+                  <ButtonSync
+                    loadData={syncSeederNegara}
+                    name={"Sync Seeder Negara"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederProvinsi}
+                    name={"Sync Seeder Provinsi"}
                   />
                 </Flex>
               </Paper>
@@ -304,33 +327,31 @@ const SeederDev = () => {
               <Paper bg={"green.1"} p={"lg"}>
                 <Text>Ekekutif</Text>
                 <Flex gap={"sm"} wrap="wrap">
-
-                <ButtonSync
-                  loadData={syncSeederTingkatEksekutif}
-                  name={"Sync Tingkat Eksekutif"}
-                />
-                <ButtonSync
-                  loadData={syncSeederStatusEksekutif}
-                  name={"Sync Status Eksekutif"}
-                />
-                <ButtonSync
-                  loadData={syncSeederJabatanEksekutifProvinis}
-                  name={"Sync J.Eksekutif Provinsi"}
-                />
-                <ButtonSync
-                  loadData={syncSeederJabatanEksekutifKabkot}
-                  name={"Sync J.Eksekutif Kabupaten/Kota"}
-                />
-                <ButtonSync
-                  loadData={syncSeederJabatanEksekutifKota}
-                  name={"Sync J.Eksekutif Kota"}
-                />
-                <ButtonSync
-                  loadData={syncSeederJabatanEksekutifKabupaten}
-                  name={"Sync J.Eksekutif Kabupaten"}
-                />
+                  <ButtonSync
+                    loadData={syncSeederTingkatEksekutif}
+                    name={"Sync Tingkat Eksekutif"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederStatusEksekutif}
+                    name={"Sync Status Eksekutif"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifProvinis}
+                    name={"Sync J.Eksekutif Provinsi"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifKabkot}
+                    name={"Sync J.Eksekutif Kabupaten/Kota"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifKota}
+                    name={"Sync J.Eksekutif Kota"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederJabatanEksekutifKabupaten}
+                    name={"Sync J.Eksekutif Kabupaten"}
+                  />
                 </Flex>
-
               </Paper>
             </Stack>
           </Box>
