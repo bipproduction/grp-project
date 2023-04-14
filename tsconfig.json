@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx", "src/pages/info-api.mdx"],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Ketua "
+    },
+    {
+        "id": 2,
+        "name": "Wakil Ketua "
+    },
+    {
+        "id": 3,
+        "name": "Sekretaris "
+    },
+    {
+        "id": 4,
+        "name": "Wakil Sekretaris "
+    },
+    {
+        "id": 5,
+        "name": "Bendahara "
+    },
+    {
+        "id": 6,
+        "name": "Wakil Bendahara "
+    },
+    {
+        "id": 7,
+        "name": "Biro"
+    }
+]
