@@ -1,6 +1,8 @@
+import DataLegislatif from "./DataLegislatif"
+
 const Legislatif = () => {
     return<>
-    Legislatif
+    <DataLegislatif/>
     </>
 }
 

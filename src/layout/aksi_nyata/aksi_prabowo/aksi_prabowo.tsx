@@ -1,7 +1,11 @@
+import DataAksiPrabowo from "./DataAksiPrabowo"
+
 const AksiPrabowo = () => {
-    return<>
-    Aksi Prabowo
-    </>
+    return (
+        <>
+            <DataAksiPrabowo />
+        </>
+    )
 }
 
 export default AksiPrabowo

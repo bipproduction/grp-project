@@ -3,7 +3,8 @@ const COLOR = {
     abuabu: "#D9D2CE",
     orange: "#E77617",
     abu2: "#AEAEAE",
-    hitam1: "#525252"
+    hitam1: "#525252",
+    biru: "#332B50"
 
 }
 export default COLOR

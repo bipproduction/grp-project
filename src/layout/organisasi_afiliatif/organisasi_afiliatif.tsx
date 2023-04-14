@@ -1,8 +1,9 @@
+import DataOrganisasiAfiliatif from "./DataOrganisasiAfiliatif"
 
 
 const OrganisasiAfiliatif = () => {
     return<>
-    Organisai Afiliatif
+   <DataOrganisasiAfiliatif/>
     </>
 }
 
