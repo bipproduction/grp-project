@@ -12,10 +12,17 @@ const Register = () => {
             h={'100vh'}
         >
             <Center pt={130}>
-                <Box bg={COLOR.orange} h={500} w={500} sx={{
+                <Box bg={COLOR.orange} h={530} w={500} sx={{
                     borderRadius: 10
                 }}>
-                    <Text pt={10} ta={"center"} color="white" fz={60}>Garuda</Text>
+                    <Box>
+                        <Center>
+                            <Text fz={60} mt={5} fw={700} color="white">Garuda</Text>
+                        </Center>
+                        <Center>
+                            <Text mb={10} color="white">Resource Planning</Text>
+                        </Center>
+                    </Box>
                     <Center pt={10}>
                         <Image src={"logo.png"} width={200} />
                     </Center>
