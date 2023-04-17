@@ -60,11 +60,11 @@ const EchatDesa = () => {
                     <Box pt={10}>
                         <Text fw={700} fz={25} ta={"center"}>Total DPT: 200</Text>
                     </Box>
-                    <Center>
+                    {/* <Center>
                         <Box w={150}>
                             <Button mt={20} color='orange.9' fullWidth radius={"xl"} m={5} bg={COLOR.orange}>Detail</Button>
                         </Box>
-                    </Center>
+                    </Center> */}
                 </Box>
                 <Box sx={{
                     backgroundColor: "#8BB18D",
@@ -80,11 +80,11 @@ const EchatDesa = () => {
                     <Box pt={10}>
                         <Text fw={700} fz={25} ta={"center"}>Total DPT: 200</Text>
                     </Box>
-                    <Center>
+                    {/* <Center>
                         <Box w={150}>
                             <Button mt={20} color='orange.9' fullWidth radius={"xl"} m={5} bg={COLOR.orange}>Detail</Button>
                         </Box>
-                    </Center>
+                    </Center> */}
                 </Box>
             </SimpleGrid>
         </>

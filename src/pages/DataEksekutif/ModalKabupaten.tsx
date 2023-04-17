@@ -17,7 +17,7 @@ const ModalKabupaten = () => {
                 </Paper>
                 <Box pt={20} pb={10}>
                     <Group>
-                        <ActionIcon>
+                        <ActionIcon component='a' href='../../../dashboard'>
                             <BsArrowLeftCircle color={COLOR.orange} size="2.125rem" />
                         </ActionIcon>
                         <Box w={150}>
@@ -35,7 +35,7 @@ const ModalKabupaten = () => {
                     <Box pt={5}>
                         <Menu position="bottom-start" offset={3} width={300}>
                             <Menu.Target>
-                                <Input pt={10} radius={'md'} component='button'>Provinsi</Input>
+                                <Input pt={10} radius={'md'} component='button'>Kabupaten / Kota</Input>
                             </Menu.Target>
 
                             <Menu.Dropdown>

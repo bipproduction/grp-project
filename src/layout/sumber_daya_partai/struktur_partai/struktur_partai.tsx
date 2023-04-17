@@ -1,10 +1,11 @@
 
+import DataStrukturPartai from "./DataStrukturPartai"
 import StrukturPartaiTab from "./StrukturPartaiTab"
 
 const StrukturPartai = () => {
     return (
         <>
-            <StrukturPartaiTab/>
+        <DataStrukturPartai/>
         </>
     )
 }

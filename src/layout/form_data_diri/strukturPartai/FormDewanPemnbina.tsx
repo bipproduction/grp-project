@@ -71,8 +71,15 @@ const FormDewanPemnbina = () => {
                                             ]}
                                             />
                                         </Box>
+                                        <Box w={200}>
+                                            <Button component='a' href='../../../Home/HomeUser' sx={{
+                                                position: 'absolute',
+                                                bottom: '40px',
+                                                left: '130px',
+                                            }} radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
+                                            </Button>
+                                        </Box>
                                     </Stack>
-
                                 </Flex>
                             </Group>
                         </Grid.Col>

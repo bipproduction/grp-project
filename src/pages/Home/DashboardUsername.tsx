@@ -43,6 +43,9 @@ import StatusKeanggotaan from "@/layout/username/profile/StatusKeanggotaan";
 import KTA from "@/layout/username/KTA/KTA";
 import { FiLogOut } from "react-icons/fi";
 import COLOR from "../../../fun/WARNA";
+import { useHookstate } from "@hookstate/core";
+import { gSelectedPage, gSelectedPage2 } from "@/xg_state.ts/g_selected_page";
+import { useShallowEffect } from "@mantine/hooks";
 
 const listSidebar = [
   {
@@ -77,9 +80,24 @@ const listSidebar = [
 const DashboardUsername = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  // const SelectedView = signal<string>('');
+
   const [select, setSelect] = useState('')
 
+  const lSelectedPage = useHookstate(gSelectedPage2)
+  // const SelectedView = signal<string>('');
+  // const [select, setSelect] = useState('')
+  useShallowEffect(() => {
+    const page = localStorage.getItem('selected_page')
+    if(page){
+      lSelectedPage.set(page)
+    }
+  }, [])
+
+
+  const onSelectedPage = (page: string) => {
+    localStorage.setItem('selected_page', page)
+    lSelectedPage.set(page)
+  }
   return (
     <>
       <AppShell
@@ -124,16 +142,16 @@ const DashboardUsername = () => {
                       <Menu.Dropdown p={20}>
                         <Text mt={10} fw={700}>USER 1</Text>
                         <Text mt={5}>Usersatu@gmail.com</Text>
-                        {/* <Center>
-                    <Button ta={'center'} mt={20} bg={COLOR.orange} color='orange' radius={20}>Lihat Profile</Button>
-                  </Center> */}
+                        <Center>
+                    <Button ta={'center'} mt={20} bg={COLOR.orange} component="a" href="../../../Home/HomeUser" color='orange' radius={20}>Home</Button>
+                  </Center>
                       </Menu.Dropdown>
                     </Menu>
                     <ThemeIcon variant="light" color={COLOR.coklat}>
                       <AiFillSetting size={40} color='white' />
                     </ThemeIcon>
                     <ThemeIcon variant="light" color={COLOR.coklat}>
-                      <Center component="a" href="../../../Home/HomeUser" style={{ cursor: "pointer" }}>
+                      <Center component="a" href="../../../" style={{ cursor: "pointer" }}>
                         <FiLogOut size={25} color='white' />
                       </Center>
                     </ThemeIcon>
@@ -153,12 +171,12 @@ const DashboardUsername = () => {
                   {e.child.map((v, i) => (
                     <Paper key={`${v.id}${i}`}>
                       <NavLink
-                        c={select == v.name ? "blue" : "dark"}
+                        c={lSelectedPage.value == v.name ? "blue" : "dark"}
                         label={v.name}
                         onClick={() => {
                           setOpened(false);
                           // SelectedView.value == v.name;
-                          setSelect(v.name)
+                          onSelectedPage(v.name)
                         }}
                       />
                     </Paper>
@@ -172,7 +190,7 @@ const DashboardUsername = () => {
       >
         {listSidebar.map((e) =>
           e.child.map((v) => (
-            <Box hidden={v.name != select} key={v.id} >
+            <Box hidden={v.name != lSelectedPage.value} key={v.id} >
               {<v.view />}
             </Box>
           ))

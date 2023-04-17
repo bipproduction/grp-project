@@ -36,8 +36,8 @@ const DataPartai = () => {
                                     <Menu.Dropdown>
                                         <Menu.Item component="a" href="../../../formDataDiri/strukturPartai/StrukturPartai" >Struktur Partai</Menu.Item>
                                         <Menu.Item component="a" href="../../../formDataDiri/sayapPartai/SayapPartai">Sayap Partai</Menu.Item>
-                                        <Menu.Item component="a" href="../../../formDataDiri/KaderPartai">Kader Partai</Menu.Item>
-                                        <Menu.Item component="a" href="../../../formDataDiri/AnggotaPartai">Anggota Partai</Menu.Item>
+                                        <Menu.Item component="a" href="../../../formDataDiri/kaderPartai/KaderPartai">Kader Partai</Menu.Item>
+                                        <Menu.Item component="a" href="../../../formDataDiri/anggotaPartai/AnggotaPartai">Anggota Partai</Menu.Item>
                                     </Menu.Dropdown>
                                 </Menu>
 

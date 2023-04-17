@@ -1,11 +1,106 @@
-import React from 'react'
-import { Box, Button, Flex, Grid, Group, Paper, Text, TextInput } from "@mantine/core"
+import React, { useState } from 'react'
+import { ActionIcon, Box, Button, Flex, Grid, Group, Modal, Pagination, Paper, Table, Text, TextInput } from "@mantine/core"
 import COLOR from "../../../../fun/WARNA"
 import { warna } from '@/styles/warna'
-import { AiFillFilter, AiOutlineDownload, AiOutlineSave, AiOutlineSearch, AiOutlineUpload } from 'react-icons/ai'
+import { AiFillFilter, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineDelete, AiOutlineDownload, AiOutlineEdit, AiOutlineSave, AiOutlineSearch, AiOutlineUpload } from 'react-icons/ai'
+import { useDisclosure } from '@mantine/hooks'
+import StrukturPartaiTab from './StrukturPartaiTab'
 
+const elements = [
+    {
+        nama: "Gede Adi",
+        tingkatPengurus: "DPC",
+        jabatan: "Ketua",
+        nik: "35101080211",
+        tempatLahir: "Padang Sambian Klod",
+        tgl: "12-06-2000",
+        email: "Gedeadi@gmail",
+        phoneNumber: 1298289110,
+        medsos: "gedeadi32",
+    },
+    {
+        nama: "Surya",
+        tingkatPengurus: "DPP",
+        jabatan: "Ketua",
+        nik: "35101080211",
+        tempatLahir: "Padang Sambian Klod",
+        tgl: "12-06-2000",
+        email: "Gedeadi@gmail",
+        phoneNumber: 1298289110,
+        medsos: "gedeadi32",
+    },
+    {
+        nama: "Iqbal",
+        tingkatPengurus: "PAC",
+        jabatan: "Ketua",
+        nik: "35101080211",
+        tempatLahir: "Padang Sambian Klod",
+        tgl: "12-06-2000",
+        email: "Gedeadi@gmail",
+        phoneNumber: 1298289110,
+        medsos: "gedeadi32",
+    },
+    {
+        nama: "Ayu Sinta",
+        tingkatPengurus: "DPC",
+        jabatan: "Ketua",
+        nik: "35101080211",
+        tempatLahir: "Padang Sambian Klod",
+        tgl: "12-06-2000",
+        email: "Gedeadi@gmail",
+        phoneNumber: 1298289110,
+        medsos: "gedeadi32",
+    },
+    {
+        nama: "Putu Adi",
+        tingkatPengurus: "DPC",
+        jabatan: "Ketua",
+        nik: "35101080211",
+        tempatLahir: "Padang Sambian Klod",
+        tgl: "12-06-2000",
+        email: "Gedeadi@gmail",
+        phoneNumber: 1298289110,
+        medsos: "gedeadi32",
+    },
+
+];
 
 const DataStrukturPartai = () => {
+    const [opened, {open, close}] = useDisclosure(false)
+    const [activePage, setActivePage] = useState(1)
+
+    const rows = elements.map((element) => (
+        <tr key={element.nama}>
+            <td>{element.nama}</td>
+            <td>{element.tingkatPengurus}</td>
+            <td>{element.jabatan}</td>
+            <td>{element.nik}</td>
+            <td>{element.tempatLahir}</td>
+            <td>{element.tgl}</td>
+            <td>{element.email}</td>
+            <td>{element.phoneNumber}</td>
+            <td>{element.medsos}</td>
+            <td>
+                <Group>
+                    <Modal
+                    opened={opened}
+                    onClose={close}
+                    fullScreen
+                    >
+                        <StrukturPartaiTab/>
+                    </Modal>
+                    <ActionIcon color="orange.9" size="xl" onClick={open}>
+                        <AiOutlineEdit size={20} />
+                    </ActionIcon>
+                    <ActionIcon color="orange.9" size="xl">
+                        <AiOutlineDelete size={20} />
+                    </ActionIcon>
+                </Group>
+            </td>
+        </tr>
+    ));
+
+
   return (
     <>
     <Paper p={2} pt={3.5} pb={3.5} sx={{
@@ -37,6 +132,36 @@ const DataStrukturPartai = () => {
                     </Grid.Col>
                 </Grid>
             </Box>
+            <Box pt={20}>
+                <Box
+                    sx={{
+                        // backgroundColor: COLOR.abuabu,
+                        borderRadius: 10,
+                        padding: 10
+                    }} pb={20}
+                >
+                    <Table  striped highlightOnHover withBorder>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Tingkat Pengurus</th>
+                                <th>Jabatan</th>
+                                <th>NIK</th>
+                                <th>Tempat Lahir</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Medsos</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </Table>
+                    <Group position='right' pt={20} pb={20}>
+                    <Pagination value={activePage} onChange={setActivePage} color='orange.9' total={10} size="lg" radius="md"/>
+                    </Group>
+                </Box>
+                </Box>
     </>
   )
 }

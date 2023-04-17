@@ -45,7 +45,7 @@ const KabupatenEksekutif = () => {
                     onClose={close}
                     fullScreen
                     >
-                        <EditKabupatenEksekutif/>
+                        <TambahPetaKekuatan/>
                     </Modal>
                     <ActionIcon color="orange.9" size="xl" onClick={open}>
                         <AiOutlineEdit size={20} />
@@ -60,27 +60,36 @@ const KabupatenEksekutif = () => {
     return (
         <>
             <Box>
+            <Box>
                 <Grid>
                     <Grid.Col md={4} lg={4}>
                         <TextInput mt={5} icon={<AiOutlineSearch size={20} />} placeholder='Search' radius={"md"} />
                     </Grid.Col>
                     <Grid.Col md={8} lg={8}>
                         <Group position='right'>
+                            <Modal
+                                opened={opened}
+                                onClose={close}
+                                fullScreen
+                            >
+                                <TambahPetaKekuatan/>
+                            </Modal>
                             <Box w={150}>
                                 <Button color='orange.9' fullWidth radius={"xl"} onClick={open} m={5} bg={COLOR.orange}>Tambah</Button>
                             </Box>
                         </Group>
                     </Grid.Col>
                 </Grid>
+            </Box>
                 <Box pt={20}>
                 <Box
                     sx={{
-                        backgroundColor: COLOR.abuabu,
+                        // backgroundColor: COLOR.abuabu,
                         borderRadius: 10,
-                        padding: 30
+                        padding: 10
                     }} pb={20}
                 >
-                    <Table horizontalSpacing="xl" verticalSpacing="xs">
+                    <Table  striped highlightOnHover withBorder>
                         <thead>
                             <tr>
                                 <th>Jabatan Eksekutif</th>

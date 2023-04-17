@@ -23,7 +23,7 @@ const FormOrganisasiAfiliatif = () => {
                       backgroundColor: COLOR.abuabu
                     }}>
                       <Text fw={700} fz={40} color={COLOR.hitam1}>Form Data Diri</Text>
-                      <Text fz={12} component="a" href="../../../formDataDiri/organisasiAfiliatif/OrganisasiAfiliatif" >Jika Termasuk Organisasi Afiliatif, <strong>Klik Disini !</strong></Text>
+                      <Text fz={12} component="a" href="../../../formDataDiri/DataPartai" >Jika Bukan Organisasi Afiliatif, <strong>Klik Disini !</strong></Text>
 
                       <Group>
                         <Text color={COLOR.coklat}>**</Text>
@@ -40,6 +40,14 @@ const FormOrganisasiAfiliatif = () => {
                   </Stack>
 
                 </Flex>
+                <Box w={200}>
+                  <Button component='a' href='../../../Home/HomeUser' sx={{
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '130px',
+                  }} radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
+                  </Button>
+                </Box>
               </Group>
             </Grid.Col>
             <Grid.Col xs={6} sm={6} md={6} lg={6} xl={6}>
