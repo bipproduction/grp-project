@@ -40,31 +40,38 @@ import {
   import SaksiPileg from "@/layout/sistem_pelaporan_pemilu/saksi_pileg/saksi_pileg";
 import COLOR from "../../fun/WARNA";
 import { FiLogOut } from "react-icons/fi";
+import { useShallowEffect } from "@mantine/hooks";
+import { useHookstate } from "@hookstate/core";
+import { gSelectedPage, gSelectedPage3 } from "@/xg_state.ts/g_selected_page";
+import StrukturSuperAdmin from "@/layout/super_admin/struktur_partai/struktur_partai";
+import SayaPartaiSuperAdmin from "@/layout/super_admin/sayap_partai/sayap_partai";
+import KaderPartaiSuperAdmin from "@/layout/super_admin/kader_partai/kader_partai";
+import AnggotaPartaiSuperAdmin from "@/layout/super_admin/anggota_partai/anggota_partai";
   
   const listSidebar = [
     {
       id: 1,
-      name: "Sumber Daya Partai",
+      name: "Database Partai",
       child: [
         {
           id: 1,
           name: "Data Struktur Partai",
-          view: StrukturPartai,
+          view: StrukturSuperAdmin,
         },
         {
           id: 2,
           name: "Data Sayap Partai",
-          view: SayaPartai,
+          view: SayaPartaiSuperAdmin,
         },
         {
           id: 3,
           name: "Data Kader Partai",
-          view: KaderPartai,
+          view: KaderPartaiSuperAdmin,
         },
         {
           id: 4,
           name: "Data Anggota Partai",
-          view: AnggotaPartai
+          view: AnggotaPartaiSuperAdmin
         },
       ],
     },
@@ -73,8 +80,20 @@ import { FiLogOut } from "react-icons/fi";
   const DashboardSuperAdmin = () => {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
-    const SelectedView = signal<string>('');
-    const [select, setSelect] = useState('')
+  const lSelectedPage = useHookstate(gSelectedPage3)
+    // const SelectedView = signal<string>('');
+    // const [select, setSelect] = useState('')
+    useShallowEffect(() => {
+      const page = localStorage.getItem('selected_page')
+      if(page){
+        lSelectedPage.set(page)
+      }
+    }, [])
+  
+    const onSelectedPage = (page: string) => {
+      localStorage.setItem('selected_page', page)
+      lSelectedPage.set(page)
+    }
   
     return (
       <>
@@ -129,10 +148,10 @@ import { FiLogOut } from "react-icons/fi";
                 <AiFillSetting size={40} color='white' />
               </ThemeIcon>
               <ThemeIcon variant="light" color={COLOR.coklat}>
-                <Box component="a" href="../../../Home/HomeUser" style={{cursor: "pointer"}}>
-                <FiLogOut size={40} color='white' />
-                </Box>
-              </ThemeIcon>
+                      <Center component="a" href="../../../" style={{ cursor: "pointer" }}>
+                        <FiLogOut size={25} color='white' />
+                      </Center>
+                    </ThemeIcon>
             </Group>
 
           </Group>
@@ -150,12 +169,12 @@ import { FiLogOut } from "react-icons/fi";
                   {e.child.map((v, i) => (
                     <Paper key={`${v.id}${i}`}>
                       <NavLink
-                        c={select == v.name ? "blue" : "dark"}
+                        c={lSelectedPage.value == v.name ? "blue" : "dark"}
                         label={v.name}
                         onClick={() => {
                           setOpened(false);
                           // SelectedView.value == v.name;
-                          setSelect(v.name)
+                          onSelectedPage(v.name)
                         }}
                       />
                     </Paper>
@@ -169,7 +188,7 @@ import { FiLogOut } from "react-icons/fi";
       >
         {listSidebar.map((e) =>
           e.child.map((v) => (
-            <Box hidden={v.name != select} key={v.id} >
+            <Box hidden={v.name != lSelectedPage.value} key={v.id} >
               {<v.view />}
             </Box>
           ))

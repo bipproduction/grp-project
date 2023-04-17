@@ -34,7 +34,7 @@ const FormSayapPartai_Pusat = () => {
                           {/* <Button mt={20} radius={"md"} fullWidth bg={COLOR.coklat} color="orange.9">Pilih Status Keanggotaan</Button> */}
                         </Menu.Target>
                         <Menu.Dropdown>
-                        <Menu.Item component="a" href="../../../formDataDiri/strukturPartai/StrukturPartai" >Struktur Partai</Menu.Item>
+                          <Menu.Item component="a" href="../../../formDataDiri/strukturPartai/StrukturPartai" >Struktur Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/sayapPartai/SayapPartai">Sayap Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/kaderPartai/KaderPartai">Kader Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/anggotaPartai/AnggotaPartai">Anggota Partai</Menu.Item>
@@ -84,6 +84,14 @@ const FormSayapPartai_Pusat = () => {
                   </Stack>
 
                 </Flex>
+                <Box w={200}>
+                  <Button component='a' href='../../../Home/HomeUser' sx={{
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '130px',
+                  }} radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
+                  </Button>
+                </Box>
               </Group>
             </Grid.Col>
             <Grid.Col xs={6} sm={6} md={6} lg={6} xl={6}>

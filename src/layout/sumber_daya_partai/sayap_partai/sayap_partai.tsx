@@ -1,10 +1,11 @@
+import DataSayapPartai from "./DataSayapPartai"
 import SayapPartaiTab from "./SayapPartaiTab"
 
 
 const SayaPartai = () => {
     return (
         <>
-            <SayapPartaiTab />
+            <DataSayapPartai/>
         </>
     )
 }
