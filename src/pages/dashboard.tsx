@@ -172,7 +172,7 @@ const listSidebar = [
 const Dashboard = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const SelectedView = signal<string>('');
+  // const SelectedView = signal<string>('');
   const [select, setSelect] = useState('')
 
   return (
@@ -278,7 +278,7 @@ const Dashboard = () => {
       >
         {listSidebar.map((e) =>
           e.child.map((v) => (
-            <Box hidden={v.name != select} key={v.id} >
+            <Box hidden={v.name != select } key={v.id}  >
               {<v.view />}
             </Box>
           ))

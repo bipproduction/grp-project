@@ -77,7 +77,7 @@ const listSidebar = [
 const DashboardUsername = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const SelectedView = signal<string>('');
+  // const SelectedView = signal<string>('');
   const [select, setSelect] = useState('')
 
   return (

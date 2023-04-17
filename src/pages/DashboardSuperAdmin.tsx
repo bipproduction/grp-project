@@ -73,7 +73,7 @@ import { FiLogOut } from "react-icons/fi";
   const DashboardSuperAdmin = () => {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
-    const SelectedView = signal<string>('');
+    // const SelectedView = signal<string>('');
     const [select, setSelect] = useState('')
   
     return (

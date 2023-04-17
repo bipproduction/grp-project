@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx", "src/pages/info-api.mdx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx", "src/pages/info-api.mdx", "src/pages/api/get/data-dukcapil.ts", "seeder_coba.js"],
   "exclude": ["node_modules"]
 }
