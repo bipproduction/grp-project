@@ -18,7 +18,7 @@ const PageDPRDKab = () => {
                 </Paper>
                 <Box pt={20} pb={10}>
                     <Group>
-                        <ActionIcon>
+                        <ActionIcon component='a' href='../../../dashboard'>
                             <BsArrowLeftCircle color={COLOR.orange} size="2.125rem" />
                         </ActionIcon>
                         <Box w={150}>

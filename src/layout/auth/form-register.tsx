@@ -24,7 +24,7 @@ const Register = () => {
                         </Center>
                     </Box>
                     <Center pt={10}>
-                        <Image src={"logo.png"} width={200} />
+                        <Image src={"logo.png"} width={200} alt="a" />
                     </Center>
                     <Stack pt={20}>
                         <Container w={350}>
@@ -32,6 +32,9 @@ const Register = () => {
                             <TextInput mt={20} placeholder="Email" radius={10} />
                             <TextInput mt={20} placeholder="Password" radius={10} />
                             <Button mt={20} color="orange.9" fullWidth radius={"lg"} bg={COLOR.coklat}>Registrasi</Button>
+                            <Box component="a" href="../../../">
+                                <Text style={{ cursor: "pointer" }} align="right" color="black" mt={10} fz={10}><strong>Klik Disini,</strong> Untuk Login!</Text>
+                            </Box>
                         </Container>
                     </Stack>
                     {/* <Anchor href="../../dashboard">login</Anchor> */}
