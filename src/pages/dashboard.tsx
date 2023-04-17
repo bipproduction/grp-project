@@ -182,6 +182,9 @@ const listSidebar = [
 const Dashboard = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
+  const [select, setSelect] = useState('')
+
   const lSelectedPage = useHookstate(gSelectedPage)
   // const SelectedView = signal<string>('');
   // const [select, setSelect] = useState('')
@@ -192,6 +195,7 @@ const Dashboard = () => {
       lSelectedPage.set(page)
     }
   }, [])
+
 
   const onSelectedPage = (page: string) => {
     localStorage.setItem('selected_page', page)
@@ -305,7 +309,9 @@ const Dashboard = () => {
 
         {listSidebar.map((e) =>
           e.child.map((v) => (
+
             <Box hidden={v.name != lSelectedPage.value} key={v.id} >
+
               {<v.view />}
             </Box>
           ))

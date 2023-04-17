@@ -80,6 +80,9 @@ const listSidebar = [
 const DashboardUsername = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
+  const [select, setSelect] = useState('')
+
   const lSelectedPage = useHookstate(gSelectedPage2)
   // const SelectedView = signal<string>('');
   // const [select, setSelect] = useState('')
@@ -89,6 +92,7 @@ const DashboardUsername = () => {
       lSelectedPage.set(page)
     }
   }, [])
+
 
   const onSelectedPage = (page: string) => {
     localStorage.setItem('selected_page', page)

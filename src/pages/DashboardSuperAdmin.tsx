@@ -80,6 +80,9 @@ import AnggotaPartaiSuperAdmin from "@/layout/super_admin/anggota_partai/anggota
   const DashboardSuperAdmin = () => {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
+
+    const [select, setSelect] = useState('')
+
   const lSelectedPage = useHookstate(gSelectedPage3)
     // const SelectedView = signal<string>('');
     // const [select, setSelect] = useState('')
@@ -94,6 +97,7 @@ import AnggotaPartaiSuperAdmin from "@/layout/super_admin/anggota_partai/anggota
       localStorage.setItem('selected_page', page)
       lSelectedPage.set(page)
     }
+
   
     return (
       <>
