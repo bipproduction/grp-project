@@ -52,6 +52,14 @@ const FormKaderPartai = () => {
                   </Stack>
 
                 </Flex>
+                <Box w={200}>
+                  <Button component='a' href='../../../Home/HomeUser' sx={{
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '130px',
+                  }} radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
+                  </Button>
+                </Box>
               </Group>
             </Grid.Col>
             <Grid.Col xs={6} sm={6} md={6} lg={6} xl={6}>

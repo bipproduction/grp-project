@@ -2,9 +2,10 @@ import { Box, Button, Text, TextInput, Space, Anchor, NavLink, Container, Center
 import COLOR from "../../../fun/WARNA";
 import { useDisclosure } from '@mantine/hooks';
 import Register from "./form-register";
+import { useForm } from "@mantine/form";
+import toast, { toastConfig } from "react-simple-toasts";
 
 const Login = () => {
-  const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
       <BackgroundImage

@@ -1,9 +1,10 @@
 import AnggotaPartaiTab from "./AnggotaPartaiTab"
+import DataAnggotaPartai from "./DataAnggotaPartai"
 
 
 const AnggotaPartai = () => {
     return<>
-    <AnggotaPartaiTab/>
+    <DataAnggotaPartai/>
     </>
 }
 

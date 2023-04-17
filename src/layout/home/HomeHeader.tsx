@@ -37,18 +37,20 @@ const HomeHeader = () => {
                 </Group>
               </Menu.Target>
               <Menu.Dropdown p={20}>
-                  <Text mt={10} fw={700}>USER 1</Text>
-                  <Text mt={5}>Usersatu@gmail.com</Text>
-                  <Center  >
-                  <Button component="a" href="../../../Home/DashboardUsername" style={{cursor: "pointer"}} ta={'center'} mt={20} bg={COLOR.orange} color='orange' radius={20}>Lihat Profile</Button>
-                  </Center>
+                <Text mt={10} fw={700}>USER 1</Text>
+                <Text mt={5}>Usersatu@gmail.com</Text>
+                <Center  >
+                  <Button component="a" href="../../../Home/DashboardUsername" style={{ cursor: "pointer" }} ta={'center'} mt={20} bg={COLOR.orange} color='orange' radius={20}>Lihat Profile</Button>
+                </Center>
               </Menu.Dropdown>
             </Menu>
             <ThemeIcon variant="light" color={COLOR.coklat}>
               <AiFillSetting size={40} color='white' />
             </ThemeIcon>
             <ThemeIcon variant="light" color={COLOR.coklat}>
-              <FiLogOut size={40} color='white' />
+              <Center component="a" href="../../../" style={{ cursor: "pointer" }}>
+                <FiLogOut size={25} color='white' />
+              </Center>
             </ThemeIcon>
           </Group>
 

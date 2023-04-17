@@ -42,6 +42,11 @@ import COLOR from "../../fun/WARNA";
 import { FiLogOut } from "react-icons/fi";
 import DataPilpres2019 from "@/layout/peta_kekuatan/pemilu/DataPilpres2019/DataPilpres2019";
 import KomparasiData from "@/layout/peta_kekuatan/pemilu/KomparasiData/KomparasiData";
+import DashboardAdmin from "@/layout/dashboardAdmin/DashboardAdmin";
+import { gSelectedPage} from "@/xg_state.ts/g_selected_page";
+import { useHookstate } from "@hookstate/core";
+import { useShallowEffect } from "@mantine/hooks";
+// import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
   {
@@ -50,6 +55,11 @@ const listSidebar = [
     child: [
       {
         id: 1,
+        name: "Dashboard",
+        view: DashboardAdmin,
+      },
+      {
+        id: 2,
         name: "Data Struktur Partai",
         view: StrukturPartai,
       },
@@ -59,17 +69,17 @@ const listSidebar = [
         view: SayaPartai,
       },
       {
-        id: 3,
+        id: 4,
         name: "Data Kader Partai",
         view: KaderPartai,
       },
       {
-        id: 4,
+        id: 5,
         name: "Data Anggota Partai",
         view: AnggotaPartai
       },
       {
-        id: 5,
+        id: 6,
         name: "Data Aset Partai",
         view: AsetPartai
       },
@@ -172,9 +182,21 @@ const listSidebar = [
 const Dashboard = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const SelectedView = signal<string>('');
-  const [select, setSelect] = useState('')
+  const lSelectedPage = useHookstate(gSelectedPage)
+  // const SelectedView = signal<string>('');
+  // const [select, setSelect] = useState('')
 
+  useShallowEffect(() => {
+    const page = localStorage.getItem('selected_page')
+    if(page){
+      lSelectedPage.set(page)
+    }
+  }, [])
+
+  const onSelectedPage = (page: string) => {
+    localStorage.setItem('selected_page', page)
+    lSelectedPage.set(page)
+  }
   return (
     <>
       <AppShell
@@ -228,43 +250,47 @@ const Dashboard = () => {
                       <AiFillSetting size={40} color='white' />
                     </ThemeIcon>
                     <ThemeIcon variant="light" color={COLOR.coklat}>
-                      <FiLogOut size={40} color='white' />
+                      <Center component="a" href="../../../" style={{ cursor: "pointer" }}>
+                        <FiLogOut size={25} color='white' />
+                      </Center>
                     </ThemeIcon>
                   </Group>
 
                 </Group>
               </Header>
             </Box>
-
-
             <Navbar.Section>{
               <Text><AiFillApple size={15} />Admin</Text>
 
             }</Navbar.Section>
             <Navbar.Section grow mt="md" component={ScrollArea}>
               {listSidebar.map((e, i) => (
-                <NavLink key={e.id} label={e.name}>
+                <NavLink key={e.id} label={e.name} defaultOpened={true}>
                   {e.child.map((v, i) => (
                     <Paper key={`${v.id}${i}`}>
-                      {v.child ? <NavLink label={v.name}>
+                      {v.child ? <NavLink label={v.name} >
                         {v.child.map((vv, ii) => <NavLink
                           key={ii}
-                          c={select == v.name ? "blue" : "dark"}
+                          c={lSelectedPage.value == v.name ? "blue" : "dark"}
                           label={vv.name}
                           onClick={() => {
                             setOpened(false);
                             // SelectedView.value == v.name;
-                            setSelect(v.name)
+                            // setSelect(v.name)
+                            // lSelectedPage.set(vv.name)
+                            onSelectedPage(v.name)
                           }}
                         />)}
                       </NavLink> : <NavLink
                         key={i}
-                        c={select == v.name ? "blue" : "dark"}
+                        c={lSelectedPage.value == v.name ? "blue" : "dark"}
                         label={v.name}
                         onClick={() => {
                           setOpened(false);
                           // SelectedView.value == v.name;
-                          setSelect(v.name)
+                          // setSelect(v.name)
+                          // lSelectedPage.set(v.name)
+                          onSelectedPage(v.name)
                         }}
                       />}
                     </Paper>
@@ -276,14 +302,17 @@ const Dashboard = () => {
           </Navbar>
         }
       >
+
         {listSidebar.map((e) =>
           e.child.map((v) => (
-            <Box hidden={v.name != select} key={v.id} >
+            <Box hidden={v.name != lSelectedPage.value} key={v.id} >
               {<v.view />}
             </Box>
           ))
         )}
+        {/* Dashboard */}
       </AppShell>
+       
     </>
   );
 };

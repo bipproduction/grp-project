@@ -1,9 +1,101 @@
-import { Button, Grid, Group, Paper, Text } from "@mantine/core"
+import { ActionIcon, Box, Button, Grid, Group, Pagination, Paper, Table, Text } from "@mantine/core"
 import COLOR from "../../../../fun/WARNA"
-import { AiFillFilter, AiOutlineSave } from "react-icons/ai"
+import { AiFillFilter, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineSave } from "react-icons/ai"
+import { useState } from "react";
 
+
+const elements = [
+    {
+        namaPro: "Bali",
+        namaKab: "Denpasar",
+        namaKac: "Denpasar Barat",
+        namaDesa: "Padang Sambian Klod",
+        noTPS: "12",
+        nama: "Ibrahim",
+        jenisKelamin: "Laki Laki",
+        email: "user@gmail",
+        phoneNumber: 1298289110,
+    },
+    {
+        namaPro: "Bali",
+        namaKab: "Denpasar",
+        namaKac: "Denpasar Barat",
+        namaDesa: "Padang Sambian Klod",
+        noTPS: "12",
+        nama: "Ibrahim",
+        jenisKelamin: "Laki Laki",
+        email: "user@gmail",
+        phoneNumber: 1298289110,
+    },
+    {
+        namaPro: "Bali",
+        namaKab: "Denpasar",
+        namaKac: "Denpasar Barat",
+        namaDesa: "Padang Sambian Klod",
+        noTPS: "12",
+        nama: "Ibrahim",
+        jenisKelamin: "Laki Laki",
+        email: "user@gmail",
+        phoneNumber: 1298289110,
+    },
+    {
+        namaPro: "Bali",
+        namaKab: "Denpasar",
+        namaKac: "Denpasar Barat",
+        namaDesa: "Padang Sambian Klod",
+        noTPS: "12",
+        nama: "Ibrahim",
+        jenisKelamin: "Laki Laki",
+        email: "user@gmail",
+        phoneNumber: 1298289110,
+    },
+    {
+        namaPro: "Bali",
+        namaKab: "Denpasar",
+        namaKac: "Denpasar Barat",
+        namaDesa: "Padang Sambian Klod",
+        noTPS: "12",
+        nama: "Ibrahim",
+        jenisKelamin: "Laki Laki",
+        email: "user@gmail",
+        phoneNumber: 1298289110,
+    },
+
+];
 
 const SaksiPilpres = () => {
+    const [activePage, setActivePage] = useState(1)
+
+    const rows = elements.map((element) => (
+        <tr key={element.namaPro}>
+            <td>{element.namaPro}</td>
+            <td>{element.namaKab}</td>
+            <td>{element.namaKac}</td>
+            <td>{element.namaDesa}</td>
+            <td>{element.noTPS}</td>
+            <td>{element.nama}</td>
+            <td>{element.jenisKelamin}</td>
+            <td>{element.email}</td>
+            <td>{element.phoneNumber}</td>
+            <td>
+                <Group>
+                    {/* <Modal
+                    opened={opened}
+                    onClose={close}
+                    fullScreen
+                    >
+                        <TambahDataCalonPotensial/>
+                    </Modal> */}
+                    <ActionIcon color="green" size="xl">
+                        <AiOutlineCheckCircle size={20} />
+                    </ActionIcon>
+                    <ActionIcon color="orange.9" size="xl">
+                        <AiOutlineCloseCircle size={20} />
+                    </ActionIcon>
+                </Group>
+            </td>
+        </tr>
+    ));
     return(
         <>
         <Paper p={2} pt={3.5} pb={3.5} sx={{
@@ -22,6 +114,36 @@ const SaksiPilpres = () => {
                     </Grid.Col>
                 </Grid>
             </Paper>
+            <Box pt={20}>
+                <Box
+                    sx={{
+                        // backgroundColor: COLOR.abuabu,
+                        borderRadius: 10,
+                        padding: 10
+                    }} pb={20}
+                >
+                    <Table  striped highlightOnHover withBorder>
+                        <thead>
+                            <tr>
+                                <th>Nama Provinsi</th>
+                                <th>Nama Kabupaten</th>
+                                <th>Nama Kecamatan</th>
+                                <th>Nama Desa</th>
+                                <th>No TPS</th>
+                                <th>Namaa</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </Table>
+                    <Group position='right' pt={20} pb={20}>
+                    <Pagination value={activePage} onChange={setActivePage} color='orange.9' total={10} size="lg" radius="md"/>
+                    </Group>
+                </Box>
+                </Box>
         </>
     )
 }

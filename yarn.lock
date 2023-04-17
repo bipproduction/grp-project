@@ -209,6 +209,11 @@
     aria-hidden "^1.1.3"
     tabbable "^6.0.1"
 
+"@hookstate/core@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@hookstate/core/-/core-4.0.1.tgz#6744380e96ce13fe3488c926c1cbae93bbea0ff6"
+  integrity sha512-Uh2D8Z0z/pqOJ7t+SfC+2sj13JQcB4yFhtL+T1choCaBxTSlgOS/CKRBohgJ4cjTKoxOmTT8uSQysu3gUjX+Gw==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -521,7 +526,7 @@
   resolved "https://registry.yarnpkg.com/@preact/signals-core/-/signals-core-1.3.0.tgz#0d7368f6f41a1223271d816af529525973c214ab"
   integrity sha512-M+M3ZOtd1dtV/uasyk4SZu1vbfEJ4NeENv0F7F12nijZYedB5wSgbtZcuACyssnTznhF4ctUyrR0dZHuHfyWKA==
 
-"@preact/signals-react@^1.2.2":
+"@preact/signals-react@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@preact/signals-react/-/signals-react-1.3.1.tgz#c0c67d27cbf90fef62067dab05fe7692ab91d65a"
   integrity sha512-YHWoGAT2Mmv2OGlGx7CCCbaLjAH/InV9ytGAR+esX8Y0HJmMAw51QlqGYOD5GPA5LwimV7Ht1x7KEIegDZIoxg==
@@ -2064,6 +2069,11 @@ globrex@^0.1.2:
   resolved "https://registry.yarnpkg.com/globrex/-/globrex-0.1.2.tgz#dd5d9ec826232730cd6793a5e33a9302985e6098"
   integrity sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==
 
+goober@^2.1.10:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.12.tgz#6c1645314ac9a68fe76408e1f502c63df8a39042"
+  integrity sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q==
+
 gopd@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.0.1.tgz#29ff76de69dac7489b7c0918a5788e56477c332c"
@@ -3354,6 +3364,13 @@ react-dropzone@14.2.3:
     attr-accept "^2.2.2"
     file-selector "^0.6.0"
     prop-types "^15.8.1"
+
+react-hot-toast@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.4.0.tgz#b91e7a4c1b6e3068fc599d3d83b4fb48668ae51d"
+  integrity sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==
+  dependencies:
+    goober "^2.1.10"
 
 react-icons@^4.8.0:
   version "4.8.0"

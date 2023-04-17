@@ -34,7 +34,7 @@ const FormSayapPartai_Cabang = () => {
                           {/* <Button mt={20} radius={"md"} fullWidth bg={COLOR.coklat} color="orange.9">Pilih Status Keanggotaan</Button> */}
                         </Menu.Target>
                         <Menu.Dropdown>
-                        <Menu.Item component="a" href="../../../formDataDiri/strukturPartai/StrukturPartai" >Struktur Partai</Menu.Item>
+                          <Menu.Item component="a" href="../../../formDataDiri/strukturPartai/StrukturPartai" >Struktur Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/sayapPartai/SayapPartai">Sayap Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/kaderPartai/KaderPartai">Kader Partai</Menu.Item>
                           <Menu.Item component="a" href="../../../formDataDiri/anggotaPartai/AnggotaPartai">Anggota Partai</Menu.Item>
@@ -91,6 +91,11 @@ const FormSayapPartai_Cabang = () => {
                       <TextInput radius={"md"} mt={10} placeholder="Nomor WA Admin" label="**" />
                       <TextInput radius={"md"} mt={10} placeholder="Add Media Social" label="**" />
 
+                <Box w={200} pl={30} pt={10} ta={'center'}>
+                  <Button component='a' href='../../../Home/HomeUser'
+                    radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
+                  </Button>
+                </Box>
                     </Box>
                   </Stack>
 
