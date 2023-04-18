@@ -1,8 +1,11 @@
-import { BackgroundImage, Box, Center, Checkbox, Container, Flex, Grid, Group, Image, Paper, ScrollArea, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core"
+import { BackgroundImage, Box, Button, Center, Checkbox, Container, Flex, Grid, Group, Image, Paper, ScrollArea, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core"
 import COLOR from "../../../fun/WARNA"
 import { DateInput } from '@mantine/dates';
 
 const FormDataDiri = () => {
+    const dataDiri = async () => {
+        const req = await fetch(`api/auth/form-data`)
+    }
     return <>
         {/* <BackgroundImage
             src="../BG.png"
@@ -28,7 +31,7 @@ const FormDataDiri = () => {
                                             <Text color={COLOR.coklat}>**</Text>
                                             <Text fz={12}>Wajib diisi</Text>
                                         </Group>
-                                        <ScrollArea h={650}>
+                                        <ScrollArea h={650} sx={{ scrollbarGutter: "auto" }}>
                                             <TextInput radius={"md"} mt={10} placeholder="NIK" label="**" />
                                             <TextInput radius={"md"} mt={10} placeholder="Nama" label="**" />
                                             <TextInput radius={"md"} mt={10} placeholder="Email" label="**" />
@@ -67,12 +70,17 @@ const FormDataDiri = () => {
                                             ]} radius={"md"} mt={10} placeholder="Kecamatan" label="**" />
                                             <TextInput radius={"md"} mt={10} placeholder="Desa / Cabang" label="**" />
                                             <TextInput radius={"md"} mt={10} placeholder="RT - __, RW - __" label="**" />
-                                            <Group pt={40} position="right">
-                                                <Text component="a" href="../../../formDataDiri/DataPartai">Data Lengkap</Text>
+                                            <Group pt={20}>
                                                 <Box >
                                                     <Checkbox />
                                                 </Box>
+                                                <Text fz={12} >Data Lengkap</Text>
                                             </Group>
+                                            <Center pt={20}>
+                                                <Box w={120}>
+                                                    <Button component="a" href="../../../formDataDiri/DataPartai" fullWidth radius={"xl"} bg={COLOR.coklat} color="orange.9">Simpan</Button>
+                                                </Box>
+                                            </Center>
                                         </ScrollArea>
                                     </Box>
                                 </Stack>
