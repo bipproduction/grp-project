@@ -58,7 +58,7 @@ const Kegiatan = () => {
             backgroundColor: COLOR.coklat
         }} className={classes.card}>
             <AspectRatio ratio={1920 / 1080}>
-                <Image src={article.image} radius={10} />
+                <Image src={article.image} radius={10} alt='a' />
             </AspectRatio>
             <Text pt={10} color='white' fz={13} className={classes.title} mt={5}>
                 {article.description}

@@ -5,7 +5,7 @@ const Content = () => {
   return (
     <>
       <Group pt={20} p={5}>
-        <Image src="/../gerindra.png" />
+        <Image src="/../gerindra.png" alt='a'/>
       </Group>
       <Box p={10} pt={30} pb={40}>
         <Text fw={700} fz={20}>GARUDA RESOURCE PLANNING</Text>

@@ -40,7 +40,7 @@ const HomeHeader = () => {
                 <Text mt={10} fw={700}>USER 1</Text>
                 <Text mt={5}>Usersatu@gmail.com</Text>
                 <Center  >
-                  <Button component="a" href="../../../Home/DashboardUsername" style={{ cursor: "pointer" }} ta={'center'} mt={20} bg={COLOR.orange} color='orange' radius={20}>Lihat Profile</Button>
+                  <Button component="a" href="../../../home/dashboard-username" style={{ cursor: "pointer" }} ta={'center'} mt={20} bg={COLOR.orange} color='orange' radius={20}>Lihat Profile</Button>
                 </Center>
               </Menu.Dropdown>
             </Menu>

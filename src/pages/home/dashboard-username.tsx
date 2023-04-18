@@ -139,7 +139,7 @@ const DashboardUsername = () => {
                         <Text mt={10} fw={700}>USER 1</Text>
                         <Text mt={5}>Usersatu@gmail.com</Text>
                         <Center>
-                    <Button ta={'center'} mt={20} bg={COLOR.orange} component="a" href="../../../Home/HomeUser" color='orange' radius={20}>Home</Button>
+                    <Button ta={'center'} mt={20} bg={COLOR.orange} component="a" href="../../../home/home-user" color='orange' radius={20}>Home</Button>
                   </Center>
                       </Menu.Dropdown>
                     </Menu>

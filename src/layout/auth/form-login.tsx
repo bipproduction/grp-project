@@ -27,7 +27,7 @@ const Login = () => {
               </Box>
               {/* <Text pt={10} ta={"center"} color="white" fz={60}>Garuda</Text> */}
               <Center pt={10}>
-                <Image src={"logo.png"} width={200} />
+                <Image src={"logo.png"} width={200} alt="a" />
               </Center>
               <Stack pt={20}>
                 <Container w={350}>

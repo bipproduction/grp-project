@@ -92,7 +92,7 @@ const FormSayapPartai_Cabang = () => {
                       <TextInput radius={"md"} mt={10} placeholder="Add Media Social" label="**" />
 
                 <Box w={200} pl={30} pt={10} ta={'center'}>
-                  <Button component='a' href='../../../Home/HomeUser'
+                  <Button component='a' href='../../../home/home-user'
                     radius={'xl'} bg={COLOR.coklat} color='orange.9'>Simpan
                   </Button>
                 </Box>
@@ -111,7 +111,7 @@ const FormSayapPartai_Cabang = () => {
                 >
                   <Box pt={250}>
                     <Center>
-                      <Image display={"block"} width={400} src={"/../logo.png"} />
+                      <Image display={"block"} width={400} src={"/../logo.png"} alt='a'/>
                     </Center>
                   </Box>
 
