@@ -4,8 +4,39 @@ import { useDisclosure } from '@mantine/hooks';
 import Register from "./form-register";
 import { useForm } from "@mantine/form";
 import toast, { toastConfig } from "react-simple-toasts";
+import { sUser } from "@/xg_state.ts/g_selected_page";
 
 const Login = () => {
+  const formLogin = useForm({
+    initialValues: {
+      data: {
+        email: "",
+        password: ""
+      }
+    }
+  })
+
+  const onLogin = () => {
+    if(Object.values(formLogin.values.data).includes(""))
+      return toast("data tidak boleh kosong")
+      fetch("api/auth/user-post", {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formLogin.values.data),
+      }).then(async (v) => {
+        if (v.status == 201) {
+          const data = await v.json()
+          localStorage.setItem("user", JSON.stringify(data))
+          sUser.value = data
+        } else {
+          toast("Email dan Password Salah")
+        }
+      })
+  }
+
+
   return (
     <>
       <BackgroundImage
@@ -31,9 +62,10 @@ const Login = () => {
               </Center>
               <Stack pt={20}>
                 <Container w={350}>
-                  <TextInput placeholder="Email" radius={10} />
-                  <TextInput mt={20} placeholder="Password" radius={10} />
-                  <Button mt={20} color="orange.9" fullWidth radius={"lg"} component="a" href="../../../formDataDiri/form_data_diri" bg={COLOR.coklat}>Login</Button>
+                {/* component="a" href="../../../formDataDiri/form_data_diri" */}
+                  <TextInput {...formLogin.getInputProps("data.email")} placeholder="Email" radius={10} />
+                  <TextInput {...formLogin.getInputProps("data.password")} mt={20} placeholder="Password" radius={10} />
+                  <Button mt={20} color="orange.9" fullWidth radius={"lg"} onClick={onLogin} bg={COLOR.coklat}>Login</Button>
                   <Box component="a" href="../../../register">
                     <Text style={{ cursor: "pointer" }} align="right" color="black" mt={10} fz={10}><strong>Klik Disini,</strong> Untuk Daftar!</Text>
                   </Box>
