@@ -1,0 +1,184 @@
+[
+  {
+    "id": 120,
+    "name": "ACEH",
+    "kabKot": [
+      {
+        "id": 120,
+        "provId": 120,
+        "name": "ACEH SELATAN",
+        "kec": [
+          {
+            "id": 507,
+            "kabKotId": 120,
+            "name": "BAKONGAN",
+            "kel": [
+              { "id": 7141, "kecId": 507, "name": "KEUDE BAKONGAN" },
+              { "id": 7142, "kecId": 507, "name": "UJUNG MANGKI" },
+              { "id": 7143, "kecId": 507, "name": "UJUNG PADANG" },
+              { "id": 7144, "kecId": 507, "name": "KAMPONG DRIEN" },
+              { "id": 7145, "kecId": 507, "name": "DARUL IKHSAN" },
+              { "id": 7146, "kecId": 507, "name": "PADANG BERAHAN" },
+              { "id": 7147, "kecId": 507, "name": "GAMPONG BARO" }
+            ]
+          },
+          {
+            "id": 508,
+            "kabKotId": 120,
+            "name": "KLUET UTARA",
+            "kel": [
+              { "id": 7148, "kecId": 508, "name": "FAJAR HARAPAN" },
+              { "id": 7149, "kecId": 508, "name": "KRUENG BATEE" },
+              { "id": 7150, "kecId": 508, "name": "PASI KUALA ASAHAN" },
+              { "id": 7151, "kecId": 508, "name": "GUNUNG PULO" },
+              { "id": 7152, "kecId": 508, "name": "PULO IE I" },
+              { "id": 7153, "kecId": 508, "name": "JAMBO MANYANG" },
+              { "id": 7154, "kecId": 508, "name": "SIMPANG EMPAT" },
+              { "id": 7155, "kecId": 508, "name": "LIMAU PURUT" },
+              { "id": 7156, "kecId": 508, "name": "PULO KAMBING" },
+              { "id": 7157, "kecId": 508, "name": "KAMPUNG PAYA" },
+              { "id": 7158, "kecId": 508, "name": "KRUENG BATU" },
+              { "id": 7159, "kecId": 508, "name": "KRUENG KLUET" },
+              { "id": 7160, "kecId": 508, "name": "ALUR MAS" },
+              { "id": 7161, "kecId": 508, "name": "KAMPUNG TINGGI" },
+              { "id": 7162, "kecId": 508, "name": "RUAK" },
+              { "id": 7163, "kecId": 508, "name": "SIMPANG LHEE" },
+              { "id": 7164, "kecId": 508, "name": "SUAG GEURINGGENG" },
+              { "id": 7165, "kecId": 508, "name": "PASI KUALA BAKU" },
+              { "id": 7166, "kecId": 508, "name": "KEDAI PADANG" }
+            ]
+          },
+          {
+            "id": 509,
+            "kabKotId": 120,
+            "name": "KLUET SELATAN",
+            "kel": [
+              { "id": 7167, "kecId": 509, "name": "KOTAFAJAR" },
+              { "id": 7168, "kecId": 509, "name": "GUNUNG PUDUNG" },
+              { "id": 7169, "kecId": 509, "name": "SUAQ BAKONG" },
+              { "id": 7170, "kecId": 509, "name": "RANTAU BENUANG" },
+              { "id": 7171, "kecId": 509, "name": "BARAT DAYA" },
+              { "id": 7172, "kecId": 509, "name": "SIALANG" },
+              { "id": 7173, "kecId": 509, "name": "KAPEH" },
+              { "id": 7174, "kecId": 509, "name": "PULO IE" },
+              { "id": 7175, "kecId": 509, "name": "KEDAI RUNDING" },
+              { "id": 7176, "kecId": 509, "name": "KEDAI KANDANG" },
+              { "id": 7177, "kecId": 509, "name": "LUAR" },
+              { "id": 7178, "kecId": 509, "name": "UJONG" },
+              { "id": 7179, "kecId": 509, "name": "JUA" },
+              { "id": 7180, "kecId": 509, "name": "PASI MEURAPAT" },
+              { "id": 7181, "kecId": 509, "name": "UJUNG PASIR" },
+              { "id": 7182, "kecId": 509, "name": "GEULUMBUK" },
+              { "id": 7183, "kecId": 509, "name": "PASIE LEMBANG" }
+            ]
+          },
+          {
+            "id": 510,
+            "kabKotId": 120,
+            "name": "LABUHAN HAJI",
+            "kel": [
+              { "id": 7184, "kecId": 510, "name": "UJUNG PADANG" },
+              { "id": 7185, "kecId": 510, "name": "INDRA DAMAI" },
+              { "id": 7186, "kecId": 510, "name": "BAKAU HULU" },
+              { "id": 7187, "kecId": 510, "name": "PADANG BAKU" },
+              { "id": 7188, "kecId": 510, "name": "MANGGIS HARAPAN" },
+              { "id": 7189, "kecId": 510, "name": "PASAR LAMA" },
+              { "id": 7190, "kecId": 510, "name": "APHA" },
+              { "id": 7191, "kecId": 510, "name": "UJUNG BATU" },
+              { "id": 7192, "kecId": 510, "name": "PAWOH" },
+              { "id": 7193, "kecId": 510, "name": "DALAM" },
+              { "id": 7194, "kecId": 510, "name": "KOTA PALAK" },
+              { "id": 7195, "kecId": 510, "name": "CACANG" },
+              { "id": 7196, "kecId": 510, "name": "TENGOH PISANG" },
+              { "id": 7197, "kecId": 510, "name": "PISANG" },
+              { "id": 7198, "kecId": 510, "name": "HULU PISANG" },
+              { "id": 7199, "kecId": 510, "name": "TENGAH BARU" }
+            ]
+          },
+          {
+            "id": 511,
+            "kabKotId": 120,
+            "name": "MEUKEK",
+            "kel": [
+              { "id": 7200, "kecId": 511, "name": "LEMBAH BARU" },
+              { "id": 7201, "kecId": 511, "name": "PADANG BARU" },
+              { "id": 7202, "kecId": 511, "name": "KUTA BULOH II" },
+              { "id": 7203, "kecId": 511, "name": "KUTA BULOH I" },
+              { "id": 7204, "kecId": 511, "name": "IE DINGIN" },
+              { "id": 7205, "kecId": 511, "name": "DRIEN JALO" },
+              { "id": 7206, "kecId": 511, "name": "JAMBO PAPEUN" },
+              { "id": 7207, "kecId": 511, "name": "BUKET MAS" },
+              { "id": 7208, "kecId": 511, "name": "BLANG KUALA" },
+              { "id": 7209, "kecId": 511, "name": "ROT TEUNGOH" },
+              { "id": 7210, "kecId": 511, "name": "ALUE BARO" },
+              { "id": 7211, "kecId": 511, "name": "LADANG TUHA" },
+              { "id": 7212, "kecId": 511, "name": "LHOK MAMPLAM" },
+              { "id": 7213, "kecId": 511, "name": "ARON TUNGGAI" },
+              { "id": 7214, "kecId": 511, "name": "BLANG TEUNGOH" },
+              { "id": 7215, "kecId": 511, "name": "BLANG BLADEH" },
+              { "id": 7216, "kecId": 511, "name": "IE BUBOH" },
+              { "id": 7217, "kecId": 511, "name": "KEUDAI MEUKEK" },
+              { "id": 7218, "kecId": 511, "name": "KOTA BARO" },
+              { "id": 7219, "kecId": 511, "name": "TANJUNG HARAPAN" },
+              { "id": 7220, "kecId": 511, "name": "LABUHAN TAROK" },
+              { "id": 7221, "kecId": 511, "name": "LHOK AMAN" },
+              { "id": 7222, "kecId": 511, "name": "ALUE MEUTUWAH" }
+            ]
+          },
+          {
+            "id": 512,
+            "kabKotId": 120,
+            "name": "SAMADUA",
+            "kel": [
+              { "id": 7223, "kecId": 512, "name": "LADANG BARO" },
+              { "id": 7224, "kecId": 512, "name": "LABUHAN TAROK II" },
+              { "id": 7225, "kecId": 512, "name": "DALAM" },
+              { "id": 7226, "kecId": 512, "name": "SUBARANG" },
+              { "id": 7227, "kecId": 512, "name": "KUTA BARO" },
+              { "id": 7228, "kecId": 512, "name": "GUNUNG KETEK" },
+              { "id": 7229, "kecId": 512, "name": "LADANG PANTON LUAS" },
+              { "id": 7230, "kecId": 512, "name": "MADAT" },
+              { "id": 7231, "kecId": 512, "name": "ALU SEUMIRAH" },
+              { "id": 7232, "kecId": 512, "name": "TENGAH" },
+              { "id": 7233, "kecId": 512, "name": "GUNUNG CUT" },
+              { "id": 7234, "kecId": 512, "name": "ALUR PINANG" },
+              { "id": 7235, "kecId": 512, "name": "KUTA BLANG" },
+              { "id": 7236, "kecId": 512, "name": "BATEE TUNGGAL" },
+              { "id": 7237, "kecId": 512, "name": "UJUNG TANAH" },
+              { "id": 7238, "kecId": 512, "name": "UJUNG KAMPUNG" },
+              { "id": 7239, "kecId": 512, "name": "JILATANG" },
+              { "id": 7240, "kecId": 512, "name": "LUAR" },
+              { "id": 7241, "kecId": 512, "name": "LUBUK LAYU" },
+              { "id": 7242, "kecId": 512, "name": "SUAQ HULU" },
+              { "id": 7243, "kecId": 512, "name": "TAMPANG" },
+              { "id": 7244, "kecId": 512, "name": "PAYONAN GADANG" },
+              { "id": 7245, "kecId": 512, "name": "GADANG" },
+              { "id": 7246, "kecId": 512, "name": "BARU" },
+              { "id": 7247, "kecId": 512, "name": "LADANG KASIK PUTIH" },
+              { "id": 7248, "kecId": 512, "name": "AIR SIALANG HILIR." },
+              { "id": 7249, "kecId": 512, "name": "AIR SIALANG HULU" },
+              { "id": 7250, "kecId": 512, "name": "AIR SIALANG TENGAH" }
+            ]
+          },
+          {
+            "id": 513,
+            "kabKotId": 120,
+            "name": "SAWANG",
+            "kel": [
+              { "id": 7251, "kecId": 513, "name": "BALAI" },
+              { "id": 7252, "kecId": 513, "name": "ARAFAH" },
+              { "id": 7253, "kecId": 513, "name": "SIKULAT" },
+              { "id": 7254, "kecId": 513, "name": "SAWANG I" },
+              { "id": 7255, "kecId": 513, "name": "MEULIGO" },
+              { "id": 7256, "kecId": 513, "name": "LHOK PAWOH" },
+              { "id": 7257, "kecId": 513, "name": "SAWANG II" },
+              { "id": 7258, "kecId": 513, "name": "UJUNG KARANG" },
+              { "id": 7259, "kecId": 513, "name": "TRIENG MEUDEURO BAROH" },
+              { "id": 7260, "kecId": 513, "name": "TRIENG MEUDEURO TUNONG" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
