@@ -1,0 +1,1743 @@
+{
+  "displayFieldName": "giskemendagri.gisadmin.Desa_Spasial_22092017.kode201701",
+  "fieldAliases": {
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.objectid": "objectid",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.kode201701": "kode201701",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.desa201701": "desa201701",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.kec201701": "kec201701",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.kab201701": "kab201701",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.prov201701": "prov201701",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.no_kode": "no_kode",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.objectid": "objectid",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_prop": "no_prop",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kab": "no_kab",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kec": "no_kec",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kel": "no_kel",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_desa_": "kode_desa_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_prop_": "nama_prop_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kab_s": "nama_kab_s",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kec_s": "nama_kec_s",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kel_s": "nama_kel_s",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_pen": "jumlah_pen",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_kk": "jumlah_kk",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.luas_wilay": "luas_wilay",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepadatan_": "kepadatan_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perpindaha": "perpindaha",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_men": "jumlah_men",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perubahan_": "perubahan_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wajib_ktp": "wajib_ktp",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field1": "field1",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field2": "field2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.islam": "islam",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kristen": "kristen",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.katholik": "katholik",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.hindu": "hindu",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.budha": "budha",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.konghucu": "konghucu",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepercayaa": "kepercayaa",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field3": "field3",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field4": "field4",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pria": "pria",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wanita": "wanita",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field5": "field5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field6": "field6",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_kawi": "belum_kawi",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kawin": "kawin",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_hidu": "cerai_hidu",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_mati": "cerai_mati",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field7": "field7",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field8": "field8",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u0": "u0",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u5": "u5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u10": "u10",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u15": "u15",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u20": "u20",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u25": "u25",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u30": "u30",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u35": "u35",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u40": "u40",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u45": "u45",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u50": "u50",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u55": "u55",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u60": "u60",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u65": "u65",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u70": "u70",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u75": "u75",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field9": "field9",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field10": "field10",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn1": "lahir_thn1",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb": "lahir_seb",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn2": "lahir_thn2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb2": "lahir_seb2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn3": "lahir_thn3",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb3": "lahir_seb3",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuha": "pertumbuha",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh2": "pertumbuh2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh3": "pertumbuh3",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field11": "field11",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field12": "field12",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidikan": "pendidikan",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika2": "pendidika2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika3": "pendidika3",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika4": "pendidika4",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika5": "pendidika5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika6": "pendidika6",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field13": "field13",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field14": "field14",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_belu": "tidak_belu",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tama": "belum_tama",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tamat_sd": "tamat_sd",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.sltp": "sltp",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.slta": "slta",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_i_": "diploma_i_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_ii": "diploma_ii",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_iv": "diploma_iv",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_ii": "strata_ii",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_iii": "strata_iii",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field15": "field15",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field16": "field16",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a": "a",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b": "b",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab": "ab",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o": "o",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_": "a_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_2": "a_2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_": "b_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_2": "b_2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_": "ab_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_2": "ab_2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_": "o_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_2": "o_2",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_di_k": "tidak_di_k",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field17": "field17",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field18": "field18",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tida": "belum_tida",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.aparatur_p": "aparatur_p",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_pen": "tenaga_pen",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wiraswasta": "wiraswasta",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertanian_": "pertanian_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nelayan": "nelayan",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.agama_dan_": "agama_dan_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pelajar_ma": "pelajar_ma",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_kes": "tenaga_kes",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pensiunan": "pensiunan",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lainnya": "lainnya",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field19": "field19",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field20": "field20",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.generated_": "generated_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field21": "field21",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field22": "field22",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_kel": "kode_kel",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field23": "field23",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field24": "field24",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p01_belum_": "p01_belum_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p02_mengur": "p02_mengur",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p03_pelaja": "p03_pelaja",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p04_pensiu": "p04_pensiu",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p05_pegawa": "p05_pegawa",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p06_tentar": "p06_tentar",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p07_kepoli": "p07_kepoli",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p08_perdag": "p08_perdag",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p09_petani": "p09_petani",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p10_petern": "p10_petern",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p11_nelaya": "p11_nelaya",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p12_indust": "p12_indust",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p13_konstr": "p13_konstr",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p14_transp": "p14_transp",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p15_karyaw": "p15_karyaw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p16_karyaw": "p16_karyaw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p17_karyaw": "p17_karyaw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p18_karyaw": "p18_karyaw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p19_buruh_": "p19_buruh_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p20_buruh_": "p20_buruh_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p21_buruh_": "p21_buruh_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p22_buruh_": "p22_buruh_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p23_pemban": "p23_pemban",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p24_tukang": "p24_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p25_tukang": "p25_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p26_tukang": "p26_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p27_tukang": "p27_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p28_tukang": "p28_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p29_tukang": "p29_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p30_tukang": "p30_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p31_tukang": "p31_tukang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p32_penata": "p32_penata",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p33_penata": "p33_penata",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p34_penata": "p34_penata",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p35_mekani": "p35_mekani",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p36_senima": "p36_senima",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p37_tabib": "p37_tabib",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p38_paraji": "p38_paraji",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p39_peranc": "p39_peranc",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p40_penter": "p40_penter",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p41_imam_m": "p41_imam_m",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p42_pendet": "p42_pendet",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p43_pastor": "p43_pastor",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p44_wartaw": "p44_wartaw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p45_ustadz": "p45_ustadz",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p46_juru_m": "p46_juru_m",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p47_promot": "p47_promot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p48_anggot": "p48_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p49_anggot": "p49_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p50_anggot": "p50_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p51_presid": "p51_presid",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p52_wakil_": "p52_wakil_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p53_anggot": "p53_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p54_anggot": "p54_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p55_duta_b": "p55_duta_b",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p56_gubern": "p56_gubern",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p57_wakil_": "p57_wakil_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p58_bupati": "p58_bupati",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p59_wakil_": "p59_wakil_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p60_waliko": "p60_waliko",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p61_wakil_": "p61_wakil_",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p62_anggot": "p62_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p63_anggot": "p63_anggot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p64_dosen": "p64_dosen",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p65_guru": "p65_guru",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p66_pilot": "p66_pilot",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p67_pengac": "p67_pengac",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p68_notari": "p68_notari",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p69_arsite": "p69_arsite",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p70_akunta": "p70_akunta",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p71_konsul": "p71_konsul",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p72_dokter": "p72_dokter",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p73_bidan": "p73_bidan",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p74_perawa": "p74_perawa",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p75_apotek": "p75_apotek",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p76_psikia": "p76_psikia",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p77_penyia": "p77_penyia",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p78_penyia": "p78_penyia",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p79_pelaut": "p79_pelaut",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p80_peneli": "p80_peneli",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p81_sopir": "p81_sopir",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p82_pialan": "p82_pialan",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p83_parano": "p83_parano",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p84_pedaga": "p84_pedaga",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p85_perang": "p85_perang",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p86_kepala": "p86_kepala",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p87_biaraw": "p87_biaraw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p88_wirasw": "p88_wirasw",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p89_lainny": "p89_lainny",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_oid": "test_luas_desa_oid",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kode201701": "test_luas_desa_kode201701",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_desa201701": "test_luas_desa_desa201701",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kec201701": "test_luas_desa_kec201701",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kab201701": "test_luas_desa_kab201701",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_prov201701": "test_luas_desa_prov201701",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_no_kode": "test_luas_desa_no_kode",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_luas": "test_luas_desa_luas",
+    "giskemendagri.gisadmin.Desa_Spasial_22092017.data": "data",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f4_18_tahun_pendidikan_khusus": "f4_18_tahun_pendidikan_khusus",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f5_6_tahun_paud": "f5_6_tahun_paud",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f7_12_tahun_sd": "f7_12_tahun_sd",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f12_15_tahun_smp": "f12_15_tahun_smp",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f16_18_tahun_sma": "f16_18_tahun_sma",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn4": "lahir_thn4",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn5": "lahir_thn5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn6": "lahir_thn6",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb4": "lahir_seb4",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb5": "lahir_seb5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb6": "lahir_seb6",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh4": "pertumbuh4",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh5": "pertumbuh5",
+    "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jml_rek_wktp": "jml_rek_wktp"
+  },
+  "fields": [
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.objectid",
+      "type": "esriFieldTypeOID",
+      "alias": "objectid"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.kode201701",
+      "type": "esriFieldTypeString",
+      "alias": "kode201701",
+      "length": 10
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.desa201701",
+      "type": "esriFieldTypeString",
+      "alias": "desa201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.kec201701",
+      "type": "esriFieldTypeString",
+      "alias": "kec201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.kab201701",
+      "type": "esriFieldTypeString",
+      "alias": "kab201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.prov201701",
+      "type": "esriFieldTypeString",
+      "alias": "prov201701",
+      "length": 50
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.no_kode",
+      "type": "esriFieldTypeDouble",
+      "alias": "no_kode"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.objectid",
+      "type": "esriFieldTypeInteger",
+      "alias": "objectid"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_prop",
+      "type": "esriFieldTypeSingle",
+      "alias": "no_prop"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kab",
+      "type": "esriFieldTypeSingle",
+      "alias": "no_kab"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kec",
+      "type": "esriFieldTypeSingle",
+      "alias": "no_kec"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kel",
+      "type": "esriFieldTypeDouble",
+      "alias": "no_kel"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_desa_",
+      "type": "esriFieldTypeString",
+      "alias": "kode_desa_",
+      "length": 10
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_prop_",
+      "type": "esriFieldTypeString",
+      "alias": "nama_prop_",
+      "length": 26
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kab_s",
+      "type": "esriFieldTypeString",
+      "alias": "nama_kab_s",
+      "length": 27
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kec_s",
+      "type": "esriFieldTypeString",
+      "alias": "nama_kec_s",
+      "length": 31
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kel_s",
+      "type": "esriFieldTypeString",
+      "alias": "nama_kel_s",
+      "length": 34
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_pen",
+      "type": "esriFieldTypeDouble",
+      "alias": "jumlah_pen"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_kk",
+      "type": "esriFieldTypeDouble",
+      "alias": "jumlah_kk"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.luas_wilay",
+      "type": "esriFieldTypeSingle",
+      "alias": "luas_wilay"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepadatan_",
+      "type": "esriFieldTypeSingle",
+      "alias": "kepadatan_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perpindaha",
+      "type": "esriFieldTypeSingle",
+      "alias": "perpindaha"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_men",
+      "type": "esriFieldTypeDouble",
+      "alias": "jumlah_men"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perubahan_",
+      "type": "esriFieldTypeDouble",
+      "alias": "perubahan_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wajib_ktp",
+      "type": "esriFieldTypeDouble",
+      "alias": "wajib_ktp"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field1",
+      "type": "esriFieldTypeString",
+      "alias": "field1",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field2",
+      "type": "esriFieldTypeString",
+      "alias": "field2",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.islam",
+      "type": "esriFieldTypeDouble",
+      "alias": "islam"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kristen",
+      "type": "esriFieldTypeDouble",
+      "alias": "kristen"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.katholik",
+      "type": "esriFieldTypeDouble",
+      "alias": "katholik"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.hindu",
+      "type": "esriFieldTypeDouble",
+      "alias": "hindu"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.budha",
+      "type": "esriFieldTypeDouble",
+      "alias": "budha"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.konghucu",
+      "type": "esriFieldTypeDouble",
+      "alias": "konghucu"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepercayaa",
+      "type": "esriFieldTypeDouble",
+      "alias": "kepercayaa"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field3",
+      "type": "esriFieldTypeString",
+      "alias": "field3",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field4",
+      "type": "esriFieldTypeString",
+      "alias": "field4",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pria",
+      "type": "esriFieldTypeDouble",
+      "alias": "pria"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wanita",
+      "type": "esriFieldTypeDouble",
+      "alias": "wanita"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field5",
+      "type": "esriFieldTypeString",
+      "alias": "field5",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field6",
+      "type": "esriFieldTypeString",
+      "alias": "field6",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_kawi",
+      "type": "esriFieldTypeDouble",
+      "alias": "belum_kawi"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kawin",
+      "type": "esriFieldTypeDouble",
+      "alias": "kawin"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_hidu",
+      "type": "esriFieldTypeDouble",
+      "alias": "cerai_hidu"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_mati",
+      "type": "esriFieldTypeDouble",
+      "alias": "cerai_mati"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field7",
+      "type": "esriFieldTypeString",
+      "alias": "field7",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field8",
+      "type": "esriFieldTypeString",
+      "alias": "field8",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u0",
+      "type": "esriFieldTypeDouble",
+      "alias": "u0"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u5",
+      "type": "esriFieldTypeDouble",
+      "alias": "u5"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u10",
+      "type": "esriFieldTypeDouble",
+      "alias": "u10"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u15",
+      "type": "esriFieldTypeDouble",
+      "alias": "u15"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u20",
+      "type": "esriFieldTypeDouble",
+      "alias": "u20"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u25",
+      "type": "esriFieldTypeDouble",
+      "alias": "u25"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u30",
+      "type": "esriFieldTypeDouble",
+      "alias": "u30"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u35",
+      "type": "esriFieldTypeDouble",
+      "alias": "u35"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u40",
+      "type": "esriFieldTypeDouble",
+      "alias": "u40"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u45",
+      "type": "esriFieldTypeDouble",
+      "alias": "u45"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u50",
+      "type": "esriFieldTypeDouble",
+      "alias": "u50"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u55",
+      "type": "esriFieldTypeDouble",
+      "alias": "u55"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u60",
+      "type": "esriFieldTypeDouble",
+      "alias": "u60"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u65",
+      "type": "esriFieldTypeDouble",
+      "alias": "u65"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u70",
+      "type": "esriFieldTypeDouble",
+      "alias": "u70"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u75",
+      "type": "esriFieldTypeDouble",
+      "alias": "u75"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field9",
+      "type": "esriFieldTypeString",
+      "alias": "field9",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field10",
+      "type": "esriFieldTypeString",
+      "alias": "field10",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn1",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_thn1"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn2",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_thn2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb2",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn3",
+      "type": "esriFieldTypeSingle",
+      "alias": "lahir_thn3"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb3",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb3"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuha",
+      "type": "esriFieldTypeSingle",
+      "alias": "pertumbuha"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh2",
+      "type": "esriFieldTypeSingle",
+      "alias": "pertumbuh2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh3",
+      "type": "esriFieldTypeSingle",
+      "alias": "pertumbuh3"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field11",
+      "type": "esriFieldTypeString",
+      "alias": "field11",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field12",
+      "type": "esriFieldTypeString",
+      "alias": "field12",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidikan",
+      "type": "esriFieldTypeDouble",
+      "alias": "pendidikan"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika2",
+      "type": "esriFieldTypeDouble",
+      "alias": "pendidika2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika3",
+      "type": "esriFieldTypeDouble",
+      "alias": "pendidika3"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika4",
+      "type": "esriFieldTypeSingle",
+      "alias": "pendidika4"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika5",
+      "type": "esriFieldTypeSingle",
+      "alias": "pendidika5"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika6",
+      "type": "esriFieldTypeSingle",
+      "alias": "pendidika6"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field13",
+      "type": "esriFieldTypeString",
+      "alias": "field13",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field14",
+      "type": "esriFieldTypeString",
+      "alias": "field14",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_belu",
+      "type": "esriFieldTypeDouble",
+      "alias": "tidak_belu"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tama",
+      "type": "esriFieldTypeDouble",
+      "alias": "belum_tama"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tamat_sd",
+      "type": "esriFieldTypeDouble",
+      "alias": "tamat_sd"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.sltp",
+      "type": "esriFieldTypeDouble",
+      "alias": "sltp"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.slta",
+      "type": "esriFieldTypeDouble",
+      "alias": "slta"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_i_",
+      "type": "esriFieldTypeDouble",
+      "alias": "diploma_i_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_ii",
+      "type": "esriFieldTypeDouble",
+      "alias": "diploma_ii"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_iv",
+      "type": "esriFieldTypeDouble",
+      "alias": "diploma_iv"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_ii",
+      "type": "esriFieldTypeDouble",
+      "alias": "strata_ii"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_iii",
+      "type": "esriFieldTypeSingle",
+      "alias": "strata_iii"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field15",
+      "type": "esriFieldTypeString",
+      "alias": "field15",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field16",
+      "type": "esriFieldTypeString",
+      "alias": "field16",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a",
+      "type": "esriFieldTypeDouble",
+      "alias": "a"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b",
+      "type": "esriFieldTypeDouble",
+      "alias": "b"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab",
+      "type": "esriFieldTypeDouble",
+      "alias": "ab"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o",
+      "type": "esriFieldTypeDouble",
+      "alias": "o"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_",
+      "type": "esriFieldTypeDouble",
+      "alias": "a_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_2",
+      "type": "esriFieldTypeDouble",
+      "alias": "a_2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_",
+      "type": "esriFieldTypeDouble",
+      "alias": "b_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_2",
+      "type": "esriFieldTypeSingle",
+      "alias": "b_2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_",
+      "type": "esriFieldTypeSingle",
+      "alias": "ab_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_2",
+      "type": "esriFieldTypeSingle",
+      "alias": "ab_2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_",
+      "type": "esriFieldTypeDouble",
+      "alias": "o_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_2",
+      "type": "esriFieldTypeDouble",
+      "alias": "o_2"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_di_k",
+      "type": "esriFieldTypeDouble",
+      "alias": "tidak_di_k"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field17",
+      "type": "esriFieldTypeString",
+      "alias": "field17",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field18",
+      "type": "esriFieldTypeString",
+      "alias": "field18",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tida",
+      "type": "esriFieldTypeDouble",
+      "alias": "belum_tida"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.aparatur_p",
+      "type": "esriFieldTypeDouble",
+      "alias": "aparatur_p"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_pen",
+      "type": "esriFieldTypeDouble",
+      "alias": "tenaga_pen"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wiraswasta",
+      "type": "esriFieldTypeDouble",
+      "alias": "wiraswasta"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertanian_",
+      "type": "esriFieldTypeDouble",
+      "alias": "pertanian_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nelayan",
+      "type": "esriFieldTypeDouble",
+      "alias": "nelayan"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.agama_dan_",
+      "type": "esriFieldTypeSingle",
+      "alias": "agama_dan_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pelajar_ma",
+      "type": "esriFieldTypeDouble",
+      "alias": "pelajar_ma"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_kes",
+      "type": "esriFieldTypeSingle",
+      "alias": "tenaga_kes"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pensiunan",
+      "type": "esriFieldTypeDouble",
+      "alias": "pensiunan"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lainnya",
+      "type": "esriFieldTypeDouble",
+      "alias": "lainnya"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field19",
+      "type": "esriFieldTypeString",
+      "alias": "field19",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field20",
+      "type": "esriFieldTypeString",
+      "alias": "field20",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.generated_",
+      "type": "esriFieldTypeString",
+      "alias": "generated_",
+      "length": 20
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field21",
+      "type": "esriFieldTypeString",
+      "alias": "field21",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field22",
+      "type": "esriFieldTypeString",
+      "alias": "field22",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_kel",
+      "type": "esriFieldTypeString",
+      "alias": "kode_kel",
+      "length": 10
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field23",
+      "type": "esriFieldTypeString",
+      "alias": "field23",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field24",
+      "type": "esriFieldTypeString",
+      "alias": "field24",
+      "length": 1
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p01_belum_",
+      "type": "esriFieldTypeDouble",
+      "alias": "p01_belum_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p02_mengur",
+      "type": "esriFieldTypeDouble",
+      "alias": "p02_mengur"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p03_pelaja",
+      "type": "esriFieldTypeDouble",
+      "alias": "p03_pelaja"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p04_pensiu",
+      "type": "esriFieldTypeDouble",
+      "alias": "p04_pensiu"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p05_pegawa",
+      "type": "esriFieldTypeDouble",
+      "alias": "p05_pegawa"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p06_tentar",
+      "type": "esriFieldTypeDouble",
+      "alias": "p06_tentar"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p07_kepoli",
+      "type": "esriFieldTypeDouble",
+      "alias": "p07_kepoli"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p08_perdag",
+      "type": "esriFieldTypeDouble",
+      "alias": "p08_perdag"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p09_petani",
+      "type": "esriFieldTypeDouble",
+      "alias": "p09_petani"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p10_petern",
+      "type": "esriFieldTypeSingle",
+      "alias": "p10_petern"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p11_nelaya",
+      "type": "esriFieldTypeDouble",
+      "alias": "p11_nelaya"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p12_indust",
+      "type": "esriFieldTypeDouble",
+      "alias": "p12_indust"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p13_konstr",
+      "type": "esriFieldTypeDouble",
+      "alias": "p13_konstr"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p14_transp",
+      "type": "esriFieldTypeSingle",
+      "alias": "p14_transp"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p15_karyaw",
+      "type": "esriFieldTypeDouble",
+      "alias": "p15_karyaw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p16_karyaw",
+      "type": "esriFieldTypeDouble",
+      "alias": "p16_karyaw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p17_karyaw",
+      "type": "esriFieldTypeSingle",
+      "alias": "p17_karyaw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p18_karyaw",
+      "type": "esriFieldTypeDouble",
+      "alias": "p18_karyaw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p19_buruh_",
+      "type": "esriFieldTypeDouble",
+      "alias": "p19_buruh_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p20_buruh_",
+      "type": "esriFieldTypeDouble",
+      "alias": "p20_buruh_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p21_buruh_",
+      "type": "esriFieldTypeDouble",
+      "alias": "p21_buruh_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p22_buruh_",
+      "type": "esriFieldTypeSingle",
+      "alias": "p22_buruh_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p23_pemban",
+      "type": "esriFieldTypeSingle",
+      "alias": "p23_pemban"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p24_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p24_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p25_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p25_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p26_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p26_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p27_tukang",
+      "type": "esriFieldTypeDouble",
+      "alias": "p27_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p28_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p28_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p29_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p29_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p30_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p30_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p31_tukang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p31_tukang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p32_penata",
+      "type": "esriFieldTypeSingle",
+      "alias": "p32_penata"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p33_penata",
+      "type": "esriFieldTypeSingle",
+      "alias": "p33_penata"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p34_penata",
+      "type": "esriFieldTypeSingle",
+      "alias": "p34_penata"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p35_mekani",
+      "type": "esriFieldTypeSingle",
+      "alias": "p35_mekani"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p36_senima",
+      "type": "esriFieldTypeSingle",
+      "alias": "p36_senima"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p37_tabib",
+      "type": "esriFieldTypeSingle",
+      "alias": "p37_tabib"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p38_paraji",
+      "type": "esriFieldTypeSingle",
+      "alias": "p38_paraji"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p39_peranc",
+      "type": "esriFieldTypeSingle",
+      "alias": "p39_peranc"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p40_penter",
+      "type": "esriFieldTypeSingle",
+      "alias": "p40_penter"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p41_imam_m",
+      "type": "esriFieldTypeSingle",
+      "alias": "p41_imam_m"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p42_pendet",
+      "type": "esriFieldTypeSingle",
+      "alias": "p42_pendet"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p43_pastor",
+      "type": "esriFieldTypeSingle",
+      "alias": "p43_pastor"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p44_wartaw",
+      "type": "esriFieldTypeSingle",
+      "alias": "p44_wartaw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p45_ustadz",
+      "type": "esriFieldTypeSingle",
+      "alias": "p45_ustadz"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p46_juru_m",
+      "type": "esriFieldTypeSingle",
+      "alias": "p46_juru_m"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p47_promot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p47_promot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p48_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p48_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p49_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p49_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p50_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p50_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p51_presid",
+      "type": "esriFieldTypeSingle",
+      "alias": "p51_presid"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p52_wakil_",
+      "type": "esriFieldTypeSingle",
+      "alias": "p52_wakil_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p53_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p53_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p54_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p54_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p55_duta_b",
+      "type": "esriFieldTypeSingle",
+      "alias": "p55_duta_b"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p56_gubern",
+      "type": "esriFieldTypeSingle",
+      "alias": "p56_gubern"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p57_wakil_",
+      "type": "esriFieldTypeSingle",
+      "alias": "p57_wakil_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p58_bupati",
+      "type": "esriFieldTypeSingle",
+      "alias": "p58_bupati"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p59_wakil_",
+      "type": "esriFieldTypeSingle",
+      "alias": "p59_wakil_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p60_waliko",
+      "type": "esriFieldTypeSingle",
+      "alias": "p60_waliko"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p61_wakil_",
+      "type": "esriFieldTypeSingle",
+      "alias": "p61_wakil_"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p62_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p62_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p63_anggot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p63_anggot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p64_dosen",
+      "type": "esriFieldTypeSingle",
+      "alias": "p64_dosen"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p65_guru",
+      "type": "esriFieldTypeDouble",
+      "alias": "p65_guru"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p66_pilot",
+      "type": "esriFieldTypeSingle",
+      "alias": "p66_pilot"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p67_pengac",
+      "type": "esriFieldTypeSingle",
+      "alias": "p67_pengac"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p68_notari",
+      "type": "esriFieldTypeSingle",
+      "alias": "p68_notari"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p69_arsite",
+      "type": "esriFieldTypeSingle",
+      "alias": "p69_arsite"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p70_akunta",
+      "type": "esriFieldTypeSingle",
+      "alias": "p70_akunta"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p71_konsul",
+      "type": "esriFieldTypeSingle",
+      "alias": "p71_konsul"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p72_dokter",
+      "type": "esriFieldTypeSingle",
+      "alias": "p72_dokter"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p73_bidan",
+      "type": "esriFieldTypeSingle",
+      "alias": "p73_bidan"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p74_perawa",
+      "type": "esriFieldTypeSingle",
+      "alias": "p74_perawa"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p75_apotek",
+      "type": "esriFieldTypeSingle",
+      "alias": "p75_apotek"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p76_psikia",
+      "type": "esriFieldTypeSingle",
+      "alias": "p76_psikia"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p77_penyia",
+      "type": "esriFieldTypeSingle",
+      "alias": "p77_penyia"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p78_penyia",
+      "type": "esriFieldTypeSingle",
+      "alias": "p78_penyia"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p79_pelaut",
+      "type": "esriFieldTypeDouble",
+      "alias": "p79_pelaut"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p80_peneli",
+      "type": "esriFieldTypeSingle",
+      "alias": "p80_peneli"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p81_sopir",
+      "type": "esriFieldTypeSingle",
+      "alias": "p81_sopir"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p82_pialan",
+      "type": "esriFieldTypeSingle",
+      "alias": "p82_pialan"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p83_parano",
+      "type": "esriFieldTypeSingle",
+      "alias": "p83_parano"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p84_pedaga",
+      "type": "esriFieldTypeDouble",
+      "alias": "p84_pedaga"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p85_perang",
+      "type": "esriFieldTypeSingle",
+      "alias": "p85_perang"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p86_kepala",
+      "type": "esriFieldTypeSingle",
+      "alias": "p86_kepala"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p87_biaraw",
+      "type": "esriFieldTypeSingle",
+      "alias": "p87_biaraw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p88_wirasw",
+      "type": "esriFieldTypeDouble",
+      "alias": "p88_wirasw"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p89_lainny",
+      "type": "esriFieldTypeDouble",
+      "alias": "p89_lainny"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_oid",
+      "type": "esriFieldTypeInteger",
+      "alias": "test_luas_desa_oid"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kode201701",
+      "type": "esriFieldTypeString",
+      "alias": "test_luas_desa_kode201701",
+      "length": 10
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_desa201701",
+      "type": "esriFieldTypeString",
+      "alias": "test_luas_desa_desa201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kec201701",
+      "type": "esriFieldTypeString",
+      "alias": "test_luas_desa_kec201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kab201701",
+      "type": "esriFieldTypeString",
+      "alias": "test_luas_desa_kab201701",
+      "length": 150
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_prov201701",
+      "type": "esriFieldTypeString",
+      "alias": "test_luas_desa_prov201701",
+      "length": 50
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_no_kode",
+      "type": "esriFieldTypeDouble",
+      "alias": "test_luas_desa_no_kode"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_luas",
+      "type": "esriFieldTypeDouble",
+      "alias": "test_luas_desa_luas"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Spasial_22092017.data",
+      "type": "esriFieldTypeString",
+      "alias": "data",
+      "length": 50
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f4_18_tahun_pendidikan_khusus",
+      "type": "esriFieldTypeDouble",
+      "alias": "f4_18_tahun_pendidikan_khusus"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f5_6_tahun_paud",
+      "type": "esriFieldTypeDouble",
+      "alias": "f5_6_tahun_paud"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f7_12_tahun_sd",
+      "type": "esriFieldTypeDouble",
+      "alias": "f7_12_tahun_sd"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f12_15_tahun_smp",
+      "type": "esriFieldTypeDouble",
+      "alias": "f12_15_tahun_smp"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f16_18_tahun_sma",
+      "type": "esriFieldTypeDouble",
+      "alias": "f16_18_tahun_sma"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn4",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_thn4"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn5",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_thn5"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn6",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_thn6"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb4",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb4"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb5",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb5"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb6",
+      "type": "esriFieldTypeDouble",
+      "alias": "lahir_seb6"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh4",
+      "type": "esriFieldTypeDouble",
+      "alias": "pertumbuh4"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh5",
+      "type": "esriFieldTypeDouble",
+      "alias": "pertumbuh5"
+    },
+    {
+      "name": "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jml_rek_wktp",
+      "type": "esriFieldTypeDouble",
+      "alias": "jml_rek_wktp"
+    }
+  ],
+  "features": [
+    {
+      "attributes": {
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.objectid": 83455,
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.kode201701": "1101012001",
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.desa201701": "KEUDE BAKONGAN",
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.kec201701": null,
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.kab201701": null,
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.prov201701": null,
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.no_kode": 1101012,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.objectid": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_prop": 11,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kab": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kec": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.no_kel": 2001,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_desa_": "1101012001",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_prop_": "ACEH",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kab_s": "ACEH SELATAN",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kec_s": "BAKONGAN",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nama_kel_s": "KEUDE BAKONGAN",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_pen": 1231,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_kk": 389,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.luas_wilay": 5.55,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepadatan_": 221.8,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perpindaha": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jumlah_men": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.perubahan_": 1159,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wajib_ktp": 881,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field1": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field2": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.islam": 1227,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kristen": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.katholik": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.hindu": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.budha": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.konghucu": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kepercayaa": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field3": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field4": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pria": 611,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wanita": 620,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field5": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field6": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_kawi": 646,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kawin": 499,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_hidu": 15,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.cerai_mati": 71,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field7": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field8": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u0": 90,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u5": 115,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u10": 107,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u15": 106,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u20": 118,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u25": 85,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u30": 82,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u35": 86,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u40": 102,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u45": 89,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u50": 68,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u55": 70,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u60": 54,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u65": 23,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u70": 15,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.u75": 21,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field9": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field10": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn1": 21,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb": 1173,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn2": 19,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb2": 1149,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn3": 14,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb3": 1168,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuha": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh2": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh3": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field11": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field12": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidikan": 46,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika2": 131,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika3": 69,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika4": 64,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika5": 70,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pendidika6": 114,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field13": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field14": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_belu": 223,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tama": 138,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tamat_sd": 199,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.sltp": 147,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.slta": 343,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_i_": 20,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_ii": 39,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.diploma_iv": 120,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_ii": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.strata_iii": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field15": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field16": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a": 32,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b": 34,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab": 10,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o": 130,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.a_2": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.b_2": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.ab_2": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.o_2": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tidak_di_k": 1024,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field17": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field18": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.belum_tida": 266,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.aparatur_p": 111,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_pen": 17,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.wiraswasta": 175,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertanian_": 41,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.nelayan": 31,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.agama_dan_": 7,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pelajar_ma": 334,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.tenaga_kes": 3,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pensiunan": 17,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lainnya": 229,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field19": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field20": "0",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.generated_": "30 Juni 2022",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field21": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field22": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.kode_kel": "1101012001",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field23": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.field24": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p01_belum_": 329,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p02_mengur": 249,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p03_pelaja": 380,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p04_pensiu": 9,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p05_pegawa": 103,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p06_tentar": 8,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p07_kepoli": 8,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p08_perdag": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p09_petani": 34,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p10_petern": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p11_nelaya": 37,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p12_indust": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p13_konstr": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p14_transp": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p15_karyaw": 9,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p16_karyaw": 5,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p17_karyaw": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p18_karyaw": 29,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p19_buruh_": 9,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p20_buruh_": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p21_buruh_": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p22_buruh_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p23_pemban": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p24_tukang": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p25_tukang": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p26_tukang": 3,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p27_tukang": 17,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p28_tukang": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p29_tukang": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p30_tukang": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p31_tukang": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p32_penata": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p33_penata": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p34_penata": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p35_mekani": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p36_senima": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p37_tabib": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p38_paraji": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p39_peranc": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p40_penter": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p41_imam_m": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p42_pendet": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p43_pastor": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p44_wartaw": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p45_ustadz": 8,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p46_juru_m": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p47_promot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p48_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p49_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p50_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p51_presid": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p52_wakil_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p53_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p54_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p55_duta_b": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p56_gubern": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p57_wakil_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p58_bupati": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p59_wakil_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p60_waliko": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p61_wakil_": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p62_anggot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p63_anggot": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p64_dosen": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p65_guru": 18,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p66_pilot": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p67_pengac": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p68_notari": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p69_arsite": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p70_akunta": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p71_konsul": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p72_dokter": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p73_bidan": 3,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p74_perawa": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p75_apotek": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p76_psikia": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p77_penyia": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p78_penyia": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p79_pelaut": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p80_peneli": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p81_sopir": 19,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p82_pialan": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p83_parano": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p84_pedaga": 28,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p85_perang": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p86_kepala": 1,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p87_biaraw": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p88_wirasw": 95,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.p89_lainny": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_oid": 23,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kode201701": "1101012001",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_desa201701": "KEUDE BAKONGAN",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kec201701": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_kab201701": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_prov201701": " ",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_no_kode": 110101,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.test_luas_desa_luas": 5.54647281,
+        "giskemendagri.gisadmin.Desa_Spasial_22092017.data": "Data Baru",
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f4_18_tahun_pendidikan_khusus": 331,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f5_6_tahun_paud": 52,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f7_12_tahun_sd": 124,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f12_15_tahun_smp": 65,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.f16_18_tahun_sma": 69,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn4": 21,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn5": 24,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_thn6": 4,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb4": 1182,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb5": 1203,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.lahir_seb6": 1227,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh4": 2,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.pertumbuh5": 0,
+        "giskemendagri.gisadmin.Desa_Tabel_26092017_2.jml_rek_wktp": 842
+      }
+    }
+  ],
+  "exceededTransferLimit": true
+}
