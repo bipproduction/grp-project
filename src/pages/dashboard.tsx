@@ -298,7 +298,15 @@ const Dashboard = () => {
                 </NavLink>
               ))}
             </Navbar.Section>
-            <Navbar.Section>{<Text>Footer</Text>}</Navbar.Section>
+            <Navbar.Section>
+              {
+                <Box pt={20}>
+                  <Group>
+                  <Text color="gray">version 1.0</Text>
+                  </Group>
+                </Box>
+              }
+            </Navbar.Section>
           </Navbar>
         }
       >

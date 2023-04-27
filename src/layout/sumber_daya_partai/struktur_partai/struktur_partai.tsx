@@ -1,13 +1,12 @@
-
-import DataStrukturPartai from "./DataStrukturPartai"
-import StrukturPartaiTab from "./StrukturPartaiTab"
+import DataStrukturPartai from "./DataStrukturPartai";
+import StrukturPartaiTab from "./StrukturPartaiTab";
 
 const StrukturPartai = () => {
-    return (
-        <>
-        <DataStrukturPartai/>
-        </>
-    )
-}
+  return (
+    <>
+      <DataStrukturPartai />
+    </>
+  );
+};
 
-export default StrukturPartai
+export default StrukturPartai;

@@ -1,13 +1,12 @@
-import DataSayapPartai from "./DataSayapPartai"
-import SayapPartaiTab from "./SayapPartaiTab"
-
+import DataSayapPartai from "./DataSayapPartai";
+import SayapPartaiTab from "./SayapPartaiTab";
 
 const SayaPartai = () => {
-    return (
-        <>
-            <DataSayapPartai/>
-        </>
-    )
-}
+  return (
+    <>
+      <DataSayapPartai />
+    </>
+  );
+};
 
-export default SayaPartai
+export default SayaPartai;

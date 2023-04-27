@@ -1,13 +1,12 @@
-
-import DataStrukturPartai from "./DataStrukturPartai"
-import StrukturPartaiTab from "./StrukturPartaiTab"
+import DataStrukturPartai from "./DataStrukturPartai";
+import StrukturPartaiTab from "./StrukturPartaiTab";
 
 const StrukturSuperAdmin = () => {
-    return (
-        <>
-        <DataStrukturPartai/>
-        </>
-    )
-}
+  return (
+    <>
+      <DataStrukturPartai />
+    </>
+  );
+};
 
-export default StrukturSuperAdmin
+export default StrukturSuperAdmin;

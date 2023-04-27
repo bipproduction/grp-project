@@ -3,7 +3,7 @@ import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { PropsWithChildren } from "react";
 import { useShallowEffect } from "@mantine/hooks";
-import { sUser } from "@/xg_state.ts/g_selected_page";
+// import { sUser } from "@/xg_state.ts/g_selected_page";
 import Login from "@/layout/auth/form-login";
 import _ from "lodash";
 
@@ -28,29 +28,29 @@ export default function App(props: AppProps) {
           colorScheme: "light",
         }}
       >
-        <Authrovider>
+        {/* <Authrovider> */}
           <Component {...pageProps} />
-        </Authrovider>
+        {/* </Authrovider> */}
       </MantineProvider>
     </>
   );
 }
 
-const Authrovider = ({ children }: PropsWithChildren) => {
-  useShallowEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      sUser.value = {};
-    } else {
-      sUser.value = JSON.parse(user);
-    }
-  }, []);
-  if (sUser.value == null) return <></>;
-  if (_.isEmpty(sUser.value))
-    return (
-      <>
-        <Login />
-      </>
-    );
-  return <>{children}</>;
-};
+// const Authrovider = ({ children }: PropsWithChildren) => {
+//   useShallowEffect(() => {
+//     const user = localStorage.getItem("user");
+//     if (!user) {
+//       sUser.value = {};
+//     } else {
+//       sUser.value = JSON.parse(user);
+//     }
+//   }, []);
+//   if (sUser.value == null) return <></>;
+//   if (_.isEmpty(sUser.value))
+//     return (
+//       <>
+//         <Login />
+//       </>
+//     );
+//   return <>{children}</>;
+// };

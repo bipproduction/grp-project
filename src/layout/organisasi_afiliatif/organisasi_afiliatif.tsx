@@ -1,10 +1,11 @@
-import DataOrganisasiAfiliatif from "./DataOrganisasiAfiliatif"
-
+import DataOrganisasiAfiliatif from "./DataOrganisasiAfiliatif";
 
 const OrganisasiAfiliatif = () => {
-    return<>
-   <DataOrganisasiAfiliatif/>
+  return (
+    <>
+      <DataOrganisasiAfiliatif />
     </>
-}
+  );
+};
 
-export default OrganisasiAfiliatif
+export default OrganisasiAfiliatif;

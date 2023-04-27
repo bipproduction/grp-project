@@ -1,10 +1,11 @@
-import DataAset from "./DataAset"
-
+import DataAset from "./DataAset";
 
 const AsetPartaiSuperAdmin = () => {
-    return<>
-    <DataAset/>
+  return (
+    <>
+      <DataAset />
     </>
-}
+  );
+};
 
-export default AsetPartaiSuperAdmin
+export default AsetPartaiSuperAdmin;

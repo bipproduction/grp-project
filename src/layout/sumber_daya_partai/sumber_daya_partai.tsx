@@ -1,10 +1,11 @@
-import StrukturPartai from "./struktur_partai/struktur_partai"
-
+import StrukturPartai from "./struktur_partai/struktur_partai";
 
 const SumberDayaPartai = () => {
-    return<>
-    <StrukturPartai/>
+  return (
+    <>
+      <StrukturPartai />
     </>
-}
+  );
+};
 
-export default SumberDayaPartai
+export default SumberDayaPartai;

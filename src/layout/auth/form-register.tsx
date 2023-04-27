@@ -42,15 +42,15 @@ const Register = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formRegister.values.data)
-    }).then(v => {
-        if(v.status == 201) {
-            toast("Successfully")
-            router.reload()
-        } else {
-            toast("Email Telah digunakan")
-        }
-    })
+      body: JSON.stringify(formRegister.values.data),
+    }).then((v) => {
+      if (v.status == 201) {
+        toast("Successfully");
+        router.reload();
+      } else {
+        toast("Email Telah digunakan");
+      }
+    });
   };
 
   return (
@@ -82,9 +82,23 @@ const Register = () => {
             </Center>
             <Stack pt={20}>
               <Container w={350}>
-                <TextInput {...formRegister.getInputProps("data.name")} placeholder="Username" radius={10} />
-                <TextInput {...formRegister.getInputProps("data.email")} mt={20} placeholder="Email" radius={10} />
-                <TextInput {...formRegister.getInputProps("data.password")} mt={20} placeholder="Password" radius={10} />
+                <TextInput
+                  {...formRegister.getInputProps("data.name")}
+                  placeholder="Username"
+                  radius={10}
+                />
+                <TextInput
+                  {...formRegister.getInputProps("data.email")}
+                  mt={20}
+                  placeholder="Email"
+                  radius={10}
+                />
+                <TextInput
+                  {...formRegister.getInputProps("data.password")}
+                  mt={20}
+                  placeholder="Password"
+                  radius={10}
+                />
                 <Button
                   mt={20}
                   color="orange.9"
