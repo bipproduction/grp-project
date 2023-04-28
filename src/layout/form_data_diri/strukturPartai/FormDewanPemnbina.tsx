@@ -72,7 +72,7 @@ const FormDewanPemnbina = () => {
                                             />
                                         </Box>
                                         <Box w={200}>
-                                            <Button component='a' href='../../../home/home-user' sx={{
+                                            <Button component='a' href='../../../home/home_user' sx={{
                                                 position: 'absolute',
                                                 bottom: '40px',
                                                 left: '130px',

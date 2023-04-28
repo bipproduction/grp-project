@@ -104,7 +104,7 @@ const FormAnggotaPartai = () => {
                 <Box w={200}>
                   <Button
                     component="a"
-                    href="../../../home/home-user"
+                    href="../../../home/home_user"
                     sx={{
                       position: "absolute",
                       bottom: "40px",

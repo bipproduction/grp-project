@@ -218,7 +218,7 @@ const FormSayapPartai_Cabang = () => {
                       <Box w={200} pl={30} pt={10} ta={"center"}>
                         <Button
                           component="a"
-                          href="../../../home/home-user"
+                          href="../../../home/home_user"
                           radius={"xl"}
                           bg={COLOR.coklat}
                           color="orange.9"
