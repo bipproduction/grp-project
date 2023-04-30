@@ -103,16 +103,17 @@ const Login = () => {
                   >
                     Login
                   </Button>
-                  <Box>
+                  <Box component="a" href="../../register">
                     <Text
                       style={{ cursor: "pointer" }}
                       align="right"
                       color="black"
                       mt={10}
                       fz={10}
+                      
                     >
-                      Untuk Daftar!
-                      <ButtonRegister />
+                      <strong>Klik disini </strong>Untuk Daftar!
+                      {/* <ButtonRegister /> */}
                     </Text>
                   </Box>
                 </Container>
@@ -126,19 +127,19 @@ const Login = () => {
   );
 };
 
-const ButtonRegister = () => {
-  const [open, setOpen] = useDisclosure(false);
-  return (
-    <>
-      <Button variant="subtle" onClick={setOpen.open} color="dark" size="xs">
-        Register
-      </Button>
-      <Modal fullScreen
-        transitionProps={{ transition: 'fade', duration: 200 }} opened={open} onClose={setOpen.close}>
-        <Register />
-      </Modal>
-    </>
-  );
-};
+// const ButtonRegister = () => {
+//   const [open, setOpen] = useDisclosure(false);
+//   return (
+//     <>
+//       <Button variant="subtle" onClick={setOpen.open} color="dark" size="xs">
+//         Register
+//       </Button>
+//       <Modal fullScreen
+//         transitionProps={{ transition: 'fade', duration: 200 }} opened={open} onClose={setOpen.close}>
+//         <Register />
+//       </Modal>
+//     </>
+//   );
+// };
 
 export default Login;

@@ -71,7 +71,7 @@ const HomeHeader = () => {
                 <Center>
                   <Button
                     component="a"
-                    href="../../../home/dashboard_username"
+                    href="../../../Home/DashboardUsername"
                     style={{ cursor: "pointer" }}
                     ta={"center"}
                     mt={20}
