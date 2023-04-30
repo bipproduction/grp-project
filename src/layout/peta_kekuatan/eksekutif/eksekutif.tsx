@@ -1,12 +1,11 @@
-import DataEksekutif from "./DataEksekutif"
-
+import DataEksekutif from "./DataEksekutif";
 
 const Eksekutif = () => {
-    return(
-        <>
-        <DataEksekutif/>
-        </>
-    )
-}
+  return (
+    <>
+      <DataEksekutif />
+    </>
+  );
+};
 
-export default Eksekutif
+export default Eksekutif;

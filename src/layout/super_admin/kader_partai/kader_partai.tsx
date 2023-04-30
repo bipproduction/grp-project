@@ -1,11 +1,12 @@
-import DataKaderPartai from "./DataKaderPartai"
-import KaderPartaiTab from "./KaderPartaiTab"
-
+import DataKaderPartai from "./DataKaderPartai";
+import KaderPartaiTab from "./KaderPartaiTab";
 
 const KaderPartaiSuperAdmin = () => {
-    return<>
-    <DataKaderPartai/>
+  return (
+    <>
+      <DataKaderPartai />
     </>
-}
+  );
+};
 
-export default KaderPartaiSuperAdmin
+export default KaderPartaiSuperAdmin;

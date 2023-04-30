@@ -1,11 +1,12 @@
-import AnggotaPartaiTab from "./AnggotaPartaiTab"
-import DataAnggotaPartai from "./DataAnggotaPartai"
-
+import AnggotaPartaiTab from "./AnggotaPartaiTab";
+import DataAnggotaPartai from "./DataAnggotaPartai";
 
 const AnggotaPartaiSuperAdmin = () => {
-    return<>
-    <DataAnggotaPartai/>
+  return (
+    <>
+      <DataAnggotaPartai />
     </>
-}
+  );
+};
 
-export default AnggotaPartaiSuperAdmin
+export default AnggotaPartaiSuperAdmin;

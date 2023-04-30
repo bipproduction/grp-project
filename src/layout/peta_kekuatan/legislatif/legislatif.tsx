@@ -1,9 +1,11 @@
-import DataLegislatif from "./DataLegislatif"
+import DataLegislatif from "./DataLegislatif";
 
 const Legislatif = () => {
-    return<>
-    <DataLegislatif/>
+  return (
+    <>
+      <DataLegislatif />
     </>
-}
+  );
+};
 
-export default Legislatif
+export default Legislatif;

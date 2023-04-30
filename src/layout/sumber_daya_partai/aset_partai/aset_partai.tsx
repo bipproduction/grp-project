@@ -1,10 +1,11 @@
-import DataAset from "./DataAset"
-
+import DataAset from "./DataAset";
 
 const AsetPartai = () => {
-    return<>
-    <DataAset/>
+  return (
+    <>
+      <DataAset />
     </>
-}
+  );
+};
 
-export default AsetPartai
+export default AsetPartai;

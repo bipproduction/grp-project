@@ -35,7 +35,7 @@
     "@tiptap/react": "^2.0.2",
     "@tiptap/starter-kit": "^2.0.2",
     "@types/lodash": "^4.14.192",
-    "@types/node": "18.15.11",
+    "@types/node": "^18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
     "dayjs": "^1.11.7",
@@ -46,13 +46,16 @@
     "eslint-config-next": "13.2.4",
     "lodash": "^4.17.21",
     "next": "13.2.4",
+    "prisma": "^4.12.0",
     "node-fetch": "^3.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-simple-toasts": "^3.3.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "use-sync-external-store": "^1.2.0"
     "simple-json-db": "^2.0.0",
-    "typescript": "5.0.3"
   }
 }

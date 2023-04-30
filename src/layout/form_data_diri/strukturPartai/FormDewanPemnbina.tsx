@@ -92,7 +92,7 @@ const FormDewanPemnbina = () => {
                                 >
                                     <Box pt={250}>
                                         <Center>
-                                            <Image display={"block"} width={400} src={"/../logo.png"} />
+                                            <Image display={"block"} width={400} src={"/../logo.png"} alt='a' />
                                         </Center>
                                     </Box>
 

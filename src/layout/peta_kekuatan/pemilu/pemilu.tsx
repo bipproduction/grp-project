@@ -1,8 +1,5 @@
-
 const Pemilu = () => {
-    return<>
-pemilu
-    </>
-}
+  return <>pemilu</>;
+};
 
-export default Pemilu
+export default Pemilu;
