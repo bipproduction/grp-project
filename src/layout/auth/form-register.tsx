@@ -33,30 +33,30 @@ const Register = () => {
     },
   });
 
-  // const onRegister = () => {
-  //   if (Object.values(formRegister.values.data).includes("")) {
-  //     return toast("Lengkapi Data diri");
-  //   }
-  //   fetch("api/auth/user-update", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(formRegister.values.data),
-  //   }).then((v) => {
-  //     if (v.status == 201) {
-  //       toast("Successfully");
-  //       router.reload();
-  //     } else {
-  //       toast("Email Telah digunakan");
-  //     }
-  //   });
-  // };
+  const onRegister = () => {
+    if (Object.values(formRegister.values.data).includes("")) {
+      return toast("Lengkapi Data diri");
+    }
+    fetch("api/auth/user-post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formRegister.values.data),
+    }).then((v) => {
+      if (v.status == 201) {
+        toast("Successfully");
+        router.reload();
+      } else {
+        toast("Email Telah digunakan");
+      }
+    });
+  };
 
   return (
     <>
       <BackgroundImage src="BG.png" h={"100vh"}>
-        <Center pt={130}>
+        <Center pt={100}>
           <Box
             bg={COLOR.orange}
             h={530}
@@ -105,7 +105,7 @@ const Register = () => {
                   fullWidth
                   radius={"lg"}
                   bg={COLOR.coklat}
-                  // onClick={onRegister}
+                  onClick={onRegister}
                 >
                   Registrasi
                 </Button>
