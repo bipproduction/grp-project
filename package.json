@@ -56,6 +56,6 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "use-sync-external-store": "^1.2.0"
-    "simple-json-db": "^2.0.0",
+    "simple-json-db": "^2.0.0"
   }
 }
