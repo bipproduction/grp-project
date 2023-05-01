@@ -34,6 +34,7 @@ const DataDukcapil = async () => {
         kel,
       };
     });
+    console.log(offset)
 
     const newData = _(result)
       .groupBy("prov")
@@ -78,7 +79,7 @@ const DataDukcapil = async () => {
       })
       .value();
       const dataJSON = JSON.stringify(newData)
-      fs.writeFileSync("./realDukcapil.json" , dataJSON)
+      fs.writeFileSync("./data_dukcapil.json" , dataJSON)
       
   }
   
