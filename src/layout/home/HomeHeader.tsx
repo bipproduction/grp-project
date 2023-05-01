@@ -22,8 +22,15 @@ import { FiLogOut } from "react-icons/fi";
 import Content from "./Content";
 import Kegiatan from "./Kegiatan";
 import ContactUs from "./Contact";
+import { sUser } from "@/xg_state.ts/g_selected_page";
+import { Router } from "next/router";
 
 const HomeHeader = () => {
+  
+  const onLogOut = () => {
+    localStorage.removeItem('user')
+    sUser.value = {}
+  }
   return (
     <Box>
       <Header height={70} bg={COLOR.coklat}>
@@ -65,9 +72,9 @@ const HomeHeader = () => {
               </Menu.Target>
               <Menu.Dropdown p={20}>
                 <Text mt={10} fw={700}>
-                  USER 1
+                  {sUser.value?.name}
                 </Text>
-                <Text mt={5}>Usersatu@gmail.com</Text>
+                <Text mt={5}>{sUser.value?.email}</Text>
                 <Center>
                   <Button
                     component="a"
@@ -89,11 +96,10 @@ const HomeHeader = () => {
             </ThemeIcon>
             <ThemeIcon variant="light" color={COLOR.coklat}>
               <Center
-                component="a"
-                href="../../../"
+                
                 style={{ cursor: "pointer" }}
               >
-                <FiLogOut size={25} color="white" />
+                <FiLogOut size={25} color="white" onClick={onLogOut} />
               </Center>
             </ThemeIcon>
           </Group>

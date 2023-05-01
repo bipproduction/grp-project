@@ -37,7 +37,7 @@ const Register = () => {
     if (Object.values(formRegister.values.data).includes("")) {
       return toast("Lengkapi Data diri");
     }
-    fetch("api/auth/user-post", {
+    fetch("api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

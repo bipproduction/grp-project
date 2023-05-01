@@ -31,14 +31,14 @@ const Login = () => {
   const onLogin = () => {
     if (Object.values(formLogin.values.data).includes(""))
       return toast("data tidak boleh kosong");
-    fetch("api/auth/user-post", {
+    fetch("api/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formLogin.values.data),
     }).then(async (v) => {
-      if (v.status == 201) {
+      if (v.status === 200) {
         const data = await v.json();
         localStorage.setItem("user", JSON.stringify(data));
         sUser.value = data;

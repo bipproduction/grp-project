@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const signin =async (req:NextApiRequest, res:NextApiResponse) => {
     if(req.method==="POST"){
         const body = req.body
+        console.log(body)
         const data = await client.user.findFirstOrThrow({
             where : {
                 AND : {
