@@ -11,7 +11,7 @@ let idKabkot = 0;
 let idKec = 0;
 let idKel = 0;
 
-const DataDukcapil = async () => {
+const DataDukcapil = async () => { 
   for (let i = offset; i < length; i++) {
     const count = i + 1;
     const data = await fetch(
