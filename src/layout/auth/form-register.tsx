@@ -33,25 +33,25 @@ const Register = () => {
     },
   });
 
-  const onRegister = () => {
-    if (Object.values(formRegister.values.data).includes("")) {
-      return toast("Lengkapi Data diri");
-    }
-    fetch("api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formRegister.values.data),
-    }).then((v) => {
-      if (v.status == 201) {
-        toast("Successfully");
-        router.reload();
-      } else {
-        toast("Email Telah digunakan");
-      }
-    });
-  };
+  // const onRegister = () => {
+  //   if (Object.values(formRegister.values.data).includes("")) {
+  //     return toast("Lengkapi Data diri");
+  //   }
+  //   fetch("api/auth/signup", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(formRegister.values.data),
+  //   }).then((v) => {
+  //     if (v.status == 201) {
+  //       toast("Successfully");
+  //       router.reload();
+  //     } else {
+  //       toast("Email Telah digunakan");
+  //     }
+  //   });
+  // };
 
   return (
     <>
@@ -105,7 +105,7 @@ const Register = () => {
                   fullWidth
                   radius={"lg"}
                   bg={COLOR.coklat}
-                  onClick={onRegister}
+                  // onClick={onRegister}
                 >
                   Registrasi
                 </Button>
