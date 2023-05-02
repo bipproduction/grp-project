@@ -99,8 +99,7 @@ import AnggotaPartaiSuperAdmin from "@/layout/super_admin/anggota_partai/anggota
     }
 
   
-    return (
-      <>
+    return <>
             <AppShell
         styles={{
           main: {
@@ -199,7 +198,6 @@ import AnggotaPartaiSuperAdmin from "@/layout/super_admin/anggota_partai/anggota
         )}
       </AppShell>
       </>
-    );
   };
   
   export default DashboardSuperAdmin;

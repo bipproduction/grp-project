@@ -29,29 +29,29 @@ export default function App(props: AppProps) {
           colorScheme: "light",
         }}
       >
-        <Authrovider>
+        {/* <Authrovider> */}
           <Component {...pageProps} />
-        </Authrovider>
+        {/* </Authrovider> */}
       </MantineProvider>
     </>
   );
 }
 
-const Authrovider = ({ children }: PropsWithChildren) => {
-  useShallowEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      sUser.value = {};
-    } else {
-      sUser.value = JSON.parse(user);
-    }
-  }, []);
-  if (sUser.value == null) return <></>;
-  if (_.isEmpty(sUser.value))
-    return (
-      <>
-        <Login/>
-      </>
-    );
-  return <>{children}</>;
-};
+// const Authrovider = ({ children }: PropsWithChildren) => {
+//   useShallowEffect(() => {
+//     const user = localStorage.getItem("user");
+//     if (!user) {
+//       sUser.value = {};
+//     } else {
+//       sUser.value = JSON.parse(user);
+//     }
+//   }, []);
+//   if (sUser.value == null) return <></>;
+//   if (_.isEmpty(sUser.value))
+//     return (
+//       <>
+//         <Login/>
+//       </>
+//     );
+//   return <>{children}</>;
+// };

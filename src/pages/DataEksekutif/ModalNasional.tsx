@@ -5,8 +5,7 @@ import { AiFillBackward } from 'react-icons/ai'
 import { BsArrowLeftCircle } from "react-icons/bs";
 
 const ModalNasional = () => {
-    return (
-        <>
+    return <>
             <Box p={30}>
 
                 <Paper p={2} pt={14} pb={14} sx={{
@@ -79,7 +78,6 @@ const ModalNasional = () => {
             </Box>
 
         </>
-    )
 }
 
 export default ModalNasional

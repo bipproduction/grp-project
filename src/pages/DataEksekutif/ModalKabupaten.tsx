@@ -5,8 +5,7 @@ import { AiFillBackward } from 'react-icons/ai'
 import { BsArrowLeftCircle } from "react-icons/bs";
 
 const ModalKabupaten = () => {
-    return (
-        <>
+    return <>
             <Box p={30}>
 
                 <Paper p={2} pt={14} pb={14} sx={{
@@ -94,7 +93,6 @@ const ModalKabupaten = () => {
             </Box>
 
         </>
-    )
 }
 
 export default ModalKabupaten

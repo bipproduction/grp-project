@@ -19,8 +19,8 @@ export default function Home() {
   }
   return (
     <>
-    <FormDataDiri/>
-    {/* <LayoutDefault/> */}
+    {/* <FormDataDiri/> */}
+    <LayoutDefault/>
     {/* <Flex
         direction={{ base: 'column', sm: 'row' }}
         gap={{ base: 'sm', sm: 'lg' }}

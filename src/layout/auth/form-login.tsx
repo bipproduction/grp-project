@@ -28,25 +28,25 @@ const Login = () => {
     },
   });
 
-  const onLogin = () => {
-    if (Object.values(formLogin.values.data).includes(""))
-      return toast("data tidak boleh kosong");
-    fetch("api/auth/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formLogin.values.data),
-    }).then(async (v) => {
-      if (v.status === 200) {
-        const data = await v.json();
-        localStorage.setItem("user", JSON.stringify(data));
-        sUser.value = data;
-      } else {
-        toast("Email dan Password Salah");
-      }
-    });
-  };
+  // const onLogin = () => {
+  //   if (Object.values(formLogin.values.data).includes(""))
+  //     return toast("data tidak boleh kosong");
+  //   fetch("api/auth/signin", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(formLogin.values.data),
+  //   }).then(async (v) => {
+  //     if (v.status === 200) {
+  //       const data = await v.json();
+  //       localStorage.setItem("user", JSON.stringify(data));
+  //       sUser.value = data;
+  //     } else {
+  //       toast("Email dan Password Salah");
+  //     }
+  //   });
+  // };
 
   return (
     <>
@@ -97,7 +97,7 @@ const Login = () => {
                     color="orange.9"
                     fullWidth
                     radius={"lg"}
-                    onClick={onLogin}
+                    // onClick={onLogin}
                     // component="a" href="../../../formDataDiri/form_data_diri"
                     bg={COLOR.coklat}
                   >
