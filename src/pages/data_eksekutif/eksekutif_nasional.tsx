@@ -1,6 +1,6 @@
 import React from 'react';
 
-function EksekutifNasional() {
+const EksekutifNasional = () => {
   return (
     <>
       EksekutifNasional

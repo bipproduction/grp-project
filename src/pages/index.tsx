@@ -7,16 +7,16 @@ import Dashboard from './dashboard'
 import Login from '@/layout/auth/form-login'
 import apiSeederAgama from './api/seeder/sumber-daya-partai/api-seeder-agama'
 import { Avatar, Flex, Group, Menu, Text } from '@mantine/core'
-import { sUser } from '@/xg_state.ts/g_selected_page'
+// import { sUser } from '@/xg_state.ts/g_selected_page'
 import FormDataDiri from '@/layout/form_data_diri/form_data_diri'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const onLogOut = () => {
-    localStorage.removeItem('user')
-    sUser.value = {}
-  }
+  // const onLogOut = () => {
+  //   localStorage.removeItem('user')
+  //   sUser.value = {}
+  // }
   return (
     <>
     {/* <FormDataDiri/> */}

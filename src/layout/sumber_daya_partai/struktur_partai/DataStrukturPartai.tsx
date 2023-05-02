@@ -31,6 +31,7 @@ import StrukturPartaiTab from "./StrukturPartaiTab";
 
 const elements = [
   {
+    id:1,
     nama: "Gede Adi",
     tingkatPengurus: "DPC",
     jabatan: "Ketua",
@@ -42,6 +43,7 @@ const elements = [
     medsos: "gedeadi32",
   },
   {
+    id:2,
     nama: "Surya",
     tingkatPengurus: "DPP",
     jabatan: "Ketua",
@@ -53,6 +55,7 @@ const elements = [
     medsos: "gedeadi32",
   },
   {
+    id:3,
     nama: "Iqbal",
     tingkatPengurus: "PAC",
     jabatan: "Ketua",
@@ -64,6 +67,7 @@ const elements = [
     medsos: "gedeadi32",
   },
   {
+    id:4,
     nama: "Ayu Sinta",
     tingkatPengurus: "DPC",
     jabatan: "Ketua",
@@ -75,6 +79,7 @@ const elements = [
     medsos: "gedeadi32",
   },
   {
+    id:5,
     nama: "Putu Adi",
     tingkatPengurus: "DPC",
     jabatan: "Ketua",
@@ -92,7 +97,7 @@ const DataStrukturPartai = () => {
   const [activePage, setActivePage] = useState(1);
 
   const rows = elements.map((element) => (
-    <tr key={element.nama}>
+    <tr key={element.id}>
       <td>{element.nama}</td>
       <td>{element.tingkatPengurus}</td>
       <td>{element.jabatan}</td>

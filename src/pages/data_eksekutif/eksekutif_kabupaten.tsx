@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Eksekutif_kabupaten() {
+const  Eksekutifkabupaten = () => {
   return (
     <>
       Eksekutif_kabupaten
@@ -8,4 +8,4 @@ function Eksekutif_kabupaten() {
   );
 }
 
-export default Eksekutif_kabupaten;
+export default Eksekutifkabupaten;

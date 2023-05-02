@@ -3,7 +3,7 @@ import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { PropsWithChildren } from "react";
 import { useShallowEffect } from "@mantine/hooks";
-import { sUser } from "@/xg_state.ts/g_selected_page";
+// import { sUser } from "@/xg_state.ts/g_selected_page";
 import Login from "@/layout/auth/form-login";
 import _ from "lodash";
 import Register from "@/layout/auth/form-register";

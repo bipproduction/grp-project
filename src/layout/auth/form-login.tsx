@@ -16,7 +16,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Register from "./form-register";
 import { useForm } from "@mantine/form";
 import toast, { toastConfig } from "react-simple-toasts";
-import { sUser } from "@/xg_state.ts/g_selected_page";
+// import { sUser } from "@/xg_state.ts/g_selected_page";
 
 const Login = () => {
   const formLogin = useForm({
