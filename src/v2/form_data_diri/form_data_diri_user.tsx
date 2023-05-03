@@ -18,8 +18,15 @@ import React from "react";
 import COLOR from "../../../fun/WARNA";
 import { DateInput } from "@mantine/dates";
 import { Form, isNotEmpty, useForm } from "@mantine/form";
+import { useRouter } from "next/router";
 
 const FormDataDiriUser = () => {
+  const router = useRouter()
+
+  function dataDiriPartai() {
+    router.push("/v2/form-data-partai")
+  }
+
   const formDataDiri = useForm({
     initialValues: {
         nik: "",
@@ -253,6 +260,7 @@ const FormDataDiriUser = () => {
                                 bg={COLOR.merah}
                                 color="orange.9"
                                 type="submit"
+                                // onClick={dataDiriPartai}
                               >
                                 Simpan
                               </Button>

@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   BackgroundImage,
   Box,
   Button,
@@ -7,6 +8,7 @@ import {
   Container,
   Group,
   Image,
+  Input,
   Menu,
   ScrollArea,
   Select,
@@ -18,8 +20,15 @@ import {
 import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
+import { useRouter } from "next/router";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 function OrganisasiAfiliatif() {
+  const router = useRouter()
+
+  function kembali() {
+    router.push("/v2/form-data-partai")
+  }
   return (
     <WrapperDataDiriPartai>
     <BackgroundImage src="../../BG.png" h={"100vh"}>
@@ -46,66 +55,14 @@ function OrganisasiAfiliatif() {
                       Form Data Diri
                     </Text>
                     <Text fz={10}>
-                      Jika Termasuk Organisasi Afiliatif,{" "}
-                      <strong>
-                        {" "}
-                        <Link
-                          href={"/v2/form-data-partai/organisasi-afiliatif"}
-                        >
-                          Klik Disini !
-                        </Link>
-                      </strong>
-                    </Text>
-                    <Text fz={11} mb={20}>
-                      * Wajib diisi
-                    </Text>
+                        Jika Bukan Organisasi Afiliatif,{" "}
+                        <strong style={{cursor: "pointer"}} onClick={kembali}>Klik disini ! </strong>
+                      </Text>
+                      <Text fz={11} mb={20}>
+                        * Wajib diisi
+                      </Text>
                   </Box>
-                  <Menu width={245}>
-                    <Menu.Target>
-                      <Button
-                        radius={"md"}
-                        color="orange.9"
-                        bg={COLOR.merah}
-                        fullWidth
-                      >
-                        Kader Partai
-                      </Button>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Item>
-                        <Link
-                          style={{ textDecoration: 0, color: "#000000" }}
-                          href={"/v2/form-data-partai/struktur-partai"}
-                        >
-                          Struktur Partai
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Link
-                          style={{ textDecoration: 0, color: "#000000" }}
-                          href={"/v2/form-data-partai/sayap-partai"}
-                        >
-                          Sayap Partai
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Link
-                          style={{ textDecoration: 0, color: "#000000" }}
-                          href={"/v2/form-data-partai/kader-partai"}
-                        >
-                          Kader Partai
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Link
-                          style={{ textDecoration: 0, color: "#000000" }}
-                          href={"/v2/form-data-partai/anggota-partai"}
-                        >
-                          Anggota Partai
-                        </Link>
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
+                  <Button fullWidth radius={"md"} color="orange.9" bg={COLOR.merah}>Organisasi Afiliatif</Button>
                   <Select
                         label="Pilih Tingkat Kader"
                         mt={10}

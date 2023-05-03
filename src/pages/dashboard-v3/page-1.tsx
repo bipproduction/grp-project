@@ -1,4 +1,5 @@
-import WrapperDahboard from "@/wraper/wrapper_dahboard";
+
+import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import { ActionIcon, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,12 +12,12 @@ function Page1() {
     router.push("/dashboard-v3");
   }
   return (
-    <WrapperDahboard>
+    <WrapperDataDiriPartai>
       <ActionIcon onClick={kembali}>
         <MdArrowBack />
       </ActionIcon>
       <Title>Ini Page 1</Title>
-    </WrapperDahboard>
+    </WrapperDataDiriPartai>
   );
 }
 

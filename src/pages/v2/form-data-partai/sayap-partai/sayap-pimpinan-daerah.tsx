@@ -18,8 +18,14 @@ import {
 import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
+import { useRouter } from "next/router";
 
 function SayapPimpinanDaerah() {
+  const router = useRouter()
+
+  function afiliatif() {
+    router.push("/v2/form-data-partai/organisasi-afiliatif")
+  }
   return (
     <WrapperDataDiriPartai>
       <BackgroundImage src="../../../BG.png" h={"100vh"}>
@@ -47,14 +53,7 @@ function SayapPimpinanDaerah() {
                       </Text>
                       <Text fz={10}>
                         Jika Termasuk Organisasi Afiliatif,{" "}
-                        <strong>
-                          {" "}
-                          <Link
-                            href={"/v2/form-data-partai/organisasi-afiliatif"}
-                          >
-                            Klik Disini !
-                          </Link>
-                        </strong>
+                        <strong style={{cursor: "pointer"}} onClick={afiliatif}>Klik disini ! </strong>
                       </Text>
                       <Text fz={11} mb={20}>
                         * Wajib diisi

@@ -18,8 +18,14 @@ import {
 } from "@mantine/core";
 import COLOR from "../../../../fun/WARNA";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function FormDataPartai() {
+  const router = useRouter()
+
+  function afiliatif() {
+    router.push("/v2/form-data-partai/organisasi-afiliatif")
+  }
   return (
     <WrapperDataDiriPartai>
       <BackgroundImage src="../../BG.png" h={"100vh"}>
@@ -47,7 +53,7 @@ function FormDataPartai() {
                       </Text>
                       <Text fz={10}>
                         Jika Termasuk Organisasi Afiliatif,{" "}
-                        <strong> <Link href={"/v2/form-data-partai/organisasi-afiliatif"}>Klik Disini !</Link></strong>
+                        <strong style={{cursor: "pointer"}} onClick={afiliatif}>Klik disini ! </strong>
                       </Text>
                       <Text fz={11} mb={20}>
                         * Wajib diisi
