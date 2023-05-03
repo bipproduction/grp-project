@@ -1,30 +1,41 @@
 import client from '@/lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const signin =async (req:NextApiRequest, res:NextApiResponse) => {
-    if(req.method==="POST"){
+const signin = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (req.method === "POST") {
         const body = req.body
         console.log(body)
         const data = await client.user.findFirst({
-            where : {
-                AND : {
-                    email : body.email,
-                    password : body.password,
-                    active : true
-                }
+            where: {
+                OR: [
+                    {
+                        AND: {
+                            email: body.email,
+                            password: body.password,
+                            active: true
+                        }
+                    },
+                    {
+                        AND: {
+                            username: body.email,
+                            password: body.password,
+                            active: true
+                        }
+                    }
+                ]
             },
-            select : {
-                username : true,
-                id : true,
-                masterUserRoleId : true,
-                email : true
+            select: {
+                username: true,
+                id: true,
+                masterUserRoleId: true,
+                email: true
             }
         })
 
         if (data) return res.status(200).json(data)
 
         return res.status(204).end()
-    }else{
+    } else {
         return res.status(204).end()
     }
 }

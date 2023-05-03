@@ -17,7 +17,7 @@
 - **Data Diri**
      - tambah = api/form-data-diri/data-diri-post
      - update = api/form-data-diri/data-diri-update
-     - get one = api/form-data-diri/data-diri-get-one?id=
+     - get one = api/form-data-diri/data-diri-get-one?id= (yg dipake adalah userId)
      - get all = api/form-data-diri/data-diri-get-all
 - **Anggota Afiliatif**
      - tambah = api/anggota-afiliatif/anggota-afiliatif-post

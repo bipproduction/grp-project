@@ -263,7 +263,10 @@ const DashboardAdminV2 = () => {
                       <AiFillSetting size={40} color='white' style={{ cursor: "pointer" }} />
                     </ThemeIcon>
                     <ThemeIcon variant="light" color={COLOR.merah}>
-                      <Center component="a" style={{ cursor: "pointer" }}>
+                      <Center component="a" style={{ cursor: "pointer" }} onClick={() => {
+                        localStorage.removeItem("user_id");
+                        sUser.value = {}
+                      }}>
                         <FiLogOut size={25} color='white' />
                       </Center>
                     </ThemeIcon>
