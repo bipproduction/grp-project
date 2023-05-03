@@ -114,7 +114,7 @@ function StrukturPimpinanRanting() {
                           bg={"white"}
                           fullWidth
                         >
-                          <Text color="dark">Pimpinan Anak Cabang</Text>
+                          <Text color="dark">Pimpinan Ranting</Text>
                         </Button>
                       </Menu.Target>
                       <Menu.Dropdown>
@@ -197,6 +197,7 @@ function StrukturPimpinanRanting() {
                         mt={10}
                         placeholder="Provinsi"
                         label="Provinsi"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -206,6 +207,7 @@ function StrukturPimpinanRanting() {
                         mt={10}
                         placeholder="Kabupaten / Kota"
                         label="Kabupaten / Kota"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -215,6 +217,7 @@ function StrukturPimpinanRanting() {
                         mt={10}
                         placeholder="Kecamatan"
                         label="Kecamatan"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -224,6 +227,7 @@ function StrukturPimpinanRanting() {
                         mt={10}
                         placeholder="Desa / Kelurahan"
                         label="Desa / Kelurahan"
+                        withAsterisk
                       />
                   <Select
                     label="Jabatan"

@@ -114,7 +114,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                           bg={"white"}
                           fullWidth
                         >
-                          <Text color="dark">Pimpinan Anak Cabang</Text>
+                          <Text color="dark">Perwakilan Partai Luar Negeri</Text>
                         </Button>
                       </Menu.Target>
                       <Menu.Dropdown>
@@ -199,6 +199,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                         mt={10}
                         placeholder="Negara"
                         label="Negara"
+                        withAsterisk
                       />
                   <Select
                     label="Jabatan"

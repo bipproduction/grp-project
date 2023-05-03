@@ -193,6 +193,7 @@ function SayapPimpinanDaerah() {
                       mt={10}
                       placeholder="Provinsi"
                       label="Provinsi"
+                      withAsterisk
                     />
                     <Select
                       label="Jabatan"

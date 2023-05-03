@@ -191,6 +191,7 @@ function SayapPimpinanCabang() {
                       mt={10}
                       placeholder="Provinsi"
                       label="Provinsi"
+                      withAsterisk
                     />
                     <Select
                       data={[{ value: "Denpasar", label: "Denpasar" }]}
@@ -198,6 +199,7 @@ function SayapPimpinanCabang() {
                       mt={10}
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
+                      withAsterisk
                     />
                     <Select
                       label="Jabatan"

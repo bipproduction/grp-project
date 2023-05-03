@@ -197,6 +197,7 @@ function StrukturPimpinanCabang() {
                         mt={10}
                         placeholder="Provinsi"
                         label="Provinsi"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -206,6 +207,7 @@ function StrukturPimpinanCabang() {
                         mt={10}
                         placeholder="Kabupaten / Kota"
                         label="Kabupaten / Kota"
+                        withAsterisk
                       />
                   <Select
                     label="Jabatan"

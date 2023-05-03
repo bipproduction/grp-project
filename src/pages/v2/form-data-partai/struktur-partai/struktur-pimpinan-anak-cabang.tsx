@@ -197,6 +197,7 @@ function StrukturPimpinanAnakCabang() {
                         mt={10}
                         placeholder="Provinsi"
                         label="Provinsi"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -206,6 +207,7 @@ function StrukturPimpinanAnakCabang() {
                         mt={10}
                         placeholder="Kabupaten / Kota"
                         label="Kabupaten / Kota"
+                        withAsterisk
                       />
                   <Select
                         data={[
@@ -215,6 +217,7 @@ function StrukturPimpinanAnakCabang() {
                         mt={10}
                         placeholder="Kecamatan"
                         label="Kecamatan"
+                        withAsterisk
                       />
                   <Select
                     label="Jabatan"
