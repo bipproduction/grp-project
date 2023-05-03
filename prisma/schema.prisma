@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id               String             @id @default(cuid())
-  name             String
+  username         String             @unique
   email            String             @unique
   password         String
   active           Boolean            @default(true)
@@ -60,6 +60,7 @@ model AsetPartai {
 model DataDiri {
   id                   String             @id @default(cuid())
   nik                  String             @unique
+  name                 String
   tempatLahir          String
   tanggalLahir         DateTime
   phoneNumber          String

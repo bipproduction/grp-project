@@ -4,14 +4,23 @@ import { NextApiRequest, NextApiResponse } from "next";
 const userPost = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const body = req.body
-        const user = await client.user.findUnique({
+        const userEmail = await client.user.findUnique({
             where: {
                 email: body.email
             }
         })
 
+        const userName = await client.user.findUnique({
+            where : {
+                username:body.username
+            }
+        })
+
+        //cek username
+        if(userName) return res.status(209).json({success:false, message:"Username telah digunakan."})
+
         // cek email
-        if (user) return res.status(209).json({ success: false, message: "Email telah digunakan." })
+        if (userEmail) return res.status(209).json({ success: false, message: "Email telah digunakan." })
 
         await client.user.create({
             data: body
