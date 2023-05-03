@@ -205,7 +205,6 @@ const FormDataDiriUser = () => {
                           <Select
                             data={[{ value: "Bali", label: "Bali" }]}
                             radius={"md"}
-                            mt={10}
                             placeholder="Provinsi"
                             label="Provinsi"
                             withAsterisk

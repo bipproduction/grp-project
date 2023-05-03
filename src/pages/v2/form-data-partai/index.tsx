@@ -1,3 +1,4 @@
+import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import {
   BackgroundImage,
   Box,
@@ -5,11 +6,8 @@ import {
   Center,
   Checkbox,
   Container,
-  Flex,
-  Grid,
   Group,
   Image,
-  Input,
   Menu,
   ScrollArea,
   Select,
@@ -17,15 +15,13 @@ import {
   Stack,
   Text,
   TextInput,
-  UnstyledButton,
 } from "@mantine/core";
-import { DateInput } from "@mantine/dates";
-import { AiOutlineDownCircle } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
+import Link from "next/link";
 
-const FormStrukturPartai = () => {
+function FormDataPartai() {
   return (
-    <>
+    <WrapperDataDiriPartai>
       <BackgroundImage src="../../BG.png" h={"100vh"}>
         <Box>
           <Stack>
@@ -51,7 +47,7 @@ const FormStrukturPartai = () => {
                       </Text>
                       <Text fz={10}>
                         Jika Termasuk Organisasi Afiliatif,{" "}
-                        <strong>Klik Disini !</strong>
+                        <strong> <Link href={"/v2/form-data-partai/organisasi-afiliatif"}>Klik Disini !</Link></strong>
                       </Text>
                       <Text fz={11} mb={20}>
                         * Wajib diisi
@@ -69,10 +65,18 @@ const FormStrukturPartai = () => {
                         </Button>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item>Struktur Partai</Menu.Item>
-                        <Menu.Item>Sayap Partai</Menu.Item>
-                        <Menu.Item>Kader Partai</Menu.Item>
-                        <Menu.Item>Anggota Partai</Menu.Item>
+                        <Menu.Item>
+                          <Link style={{textDecoration: 0, color: "#000000"}} href={"/v2/form-data-partai/struktur-partai"}>Struktur Partai</Link>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Link style={{textDecoration: 0, color: "#000000"}} href={"/v2/form-data-partai/sayap-partai"}>Sayap Partai</Link>
+                          </Menu.Item>
+                        <Menu.Item>
+                          <Link style={{textDecoration: 0, color: "#000000"}} href={"/v2/form-data-partai/kader-partai"}>Kader Partai</Link>                        
+                          </Menu.Item>
+                        <Menu.Item>
+                          <Link style={{textDecoration: 0, color: "#000000"}} href={"/v2/form-data-partai/anggota-partai"}>Anggota Partai</Link>                         
+                          </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                     <TextInput
@@ -100,8 +104,8 @@ const FormStrukturPartai = () => {
           </Stack>
         </Box>
       </BackgroundImage>
-    </>
+    </WrapperDataDiriPartai>
   );
-};
+}
 
-export default FormStrukturPartai;
+export default FormDataPartai;
