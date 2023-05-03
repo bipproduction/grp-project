@@ -7,7 +7,7 @@ import { sUser } from "@/s_state/s_user"
 import { useRouter } from "next/router"
 
 
-const FormSignIn = () => {
+const FormSignIn = ({onSignUp}: {onSignUp: () => void}) => {
     const formLogin = useForm({
         initialValues : {
             data : {
@@ -90,12 +90,12 @@ const FormSignIn = () => {
                                     color="orange.9"
                                     fullWidth
                                     radius={"lg"}
-                                    bg={COLOR.coklat}
+                                    bg={COLOR.merah}
                                     onClick={onLogin}
                                 >
                                     Login
                                 </Button>
-                                <Box component="a" href="signup">
+                                <Box component="a" onClick={onSignUp}>
                                     <Text
                                         style={{ cursor: "pointer" }}
                                         align="right"

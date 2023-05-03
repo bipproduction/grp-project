@@ -19,7 +19,7 @@ model User {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   MasterUserRole   MasterUserRole     @relation(fields: [masterUserRoleId], references: [id])
-  masterUserRoleId Int                @default(3)
+  masterUserRoleId Int                @default(1)
   DataDiri         DataDiri?
   AnggotaAfiliatif AnggotaAfiliatif[]
   UserMediaSocial  UserMediaSocial[]

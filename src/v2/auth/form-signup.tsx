@@ -1,12 +1,14 @@
-import { BackgroundImage, Box, Button, Center, Container, Image, PasswordInput, Stack, Text, TextInput } from "@mantine/core"
+import { BackgroundImage, Box, Button, Center, Container, Image, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core"
 import COLOR from "../../../fun/WARNA"
 import { useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 
 const FormSignUp = () => {
+    const [email, setEmail] = useState<string>()
     const router = useRouter();
     const formRegister = useForm({
         initialValues: {
@@ -22,27 +24,31 @@ const FormSignUp = () => {
     });
 
     const onRegister = () => {
+
         if (Object.values(formRegister.values.data).includes("")) {
             return toast("Lengkapi Data diri");
         }
-        // if (Object.values(formRegister.values.validate.email) == null) {
-        //     return toast("Invalid email");
-        // }
-        // fetch(api.apiAuthSignUp, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(formRegister.values.data),
-        // }).then(async (res) => {
-        //     const data = await res.json();
-        //     if (res.status === 201) {
-        //         toast("Sukses. Silahkan lakukan login");
-        //         router.replace("signin")
-        //     } else {
-        //         toast(data.message);
-        //     }
-        // });
+
+
+        if (formRegister.values.validate.email(formRegister.values.data.email) != null) {
+            return toast("Invalid email");
+        }
+
+        fetch(api.apiAuthSignUp, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formRegister.values.data),
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.status === 201) {
+                toast("Sukses. Silahkan lakukan login");
+                router.reload();
+            } else {
+                toast(data.message);
+            }
+        });
     };
     return <>
         <BackgroundImage src="../BG.png" h={"100vh"}>
@@ -94,7 +100,7 @@ const FormSignUp = () => {
                                 color="orange.9"
                                 fullWidth
                                 radius={"lg"}
-                                bg={COLOR.coklat}
+                                bg={COLOR.merah}
                                 onClick={onRegister}
                             >
                                 Registrasi

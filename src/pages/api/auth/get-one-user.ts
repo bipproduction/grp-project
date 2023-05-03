@@ -6,6 +6,11 @@ const getOneUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const data = await client.user.findUnique({
         where : {
             id : id as any
+        },
+        select : {
+            email : true,
+            username : true,
+            masterUserRoleId : true,
         }
     })
 

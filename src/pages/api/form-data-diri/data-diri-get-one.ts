@@ -5,7 +5,7 @@ const dataDiriGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query
     const data = await client.dataDiri.findUnique({
         where: {
-            id: id as any
+            userId: id as any
         }
     })
 
