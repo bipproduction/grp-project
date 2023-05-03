@@ -5,7 +5,7 @@ const signin =async (req:NextApiRequest, res:NextApiResponse) => {
     if(req.method==="POST"){
         const body = req.body
         console.log(body)
-        const data = await client.user.findFirstOrThrow({
+        const data = await client.user.findFirst({
             where : {
                 AND : {
                     email : body.email,
@@ -14,16 +14,16 @@ const signin =async (req:NextApiRequest, res:NextApiResponse) => {
                 }
             },
             select : {
-                name : true,
+                username : true,
                 id : true,
                 masterUserRoleId : true,
                 email : true
             }
         })
 
-        if(data) return res.status(200).json(data)
+        if (data) return res.status(200).json(data)
 
-        return res.status(204).json({success:false, message:"Akun tidak terdaftar"})
+        return res.status(204).end()
     }else{
         return res.status(204).end()
     }

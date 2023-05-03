@@ -7,6 +7,11 @@ import { sUser } from "@/xg_state.ts/g_selected_page";
 import Login from "@/layout/auth/form-login";
 import _ from "lodash";
 import Register from "@/layout/auth/form-register";
+import DashboardV2 from "./v2/dashboard";
+import SignIn from "./v2/signin";
+import { api } from "@/lib/api-backend";
+import SignUp from "./v2/signup";
+import FormSignUp from "@/v2/auth/form-signup";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -29,29 +34,27 @@ export default function App(props: AppProps) {
           colorScheme: "light",
         }}
       >
-        {/* <Authrovider> */}
+        <Authrovider>
           <Component {...pageProps} />
-        {/* </Authrovider> */}
+        </Authrovider>
       </MantineProvider>
     </>
   );
 }
 
-// const Authrovider = ({ children }: PropsWithChildren) => {
-//   useShallowEffect(() => {
-//     const user = localStorage.getItem("user");
-//     if (!user) {
-//       sUser.value = {};
-//     } else {
-//       sUser.value = JSON.parse(user);
-//     }
-//   }, []);
-//   if (sUser.value == null) return <></>;
-//   if (_.isEmpty(sUser.value))
-//     return (
-//       <>
-//         <Login/>
-//       </>
-//     );
-//   return <>{children}</>;
-// };
+const Authrovider = ({ children }: PropsWithChildren) => {
+  useShallowEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    fetch(api.apiGetOneUser + `?id=${userId}`)
+      .then((v) => v.json())
+      .then((v) => (sUser.value = v));
+  }, []);
+  if (sUser.value == undefined) return <>{JSON.stringify(sUser.value)} </>;
+  if (_.isEmpty(sUser.value))
+    return (
+      <>
+        {<SignUp/>}
+      </>
+    );
+  return <>{children}</>;
+};

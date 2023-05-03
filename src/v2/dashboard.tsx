@@ -63,6 +63,8 @@ import SaksiPilegV2 from "./sistem_pelaporan_pemilu/saksi_pileg/saksi_pileg";
 import AksiPrabowoV2 from "./aksi_nyata/aksi_prabowo/aksi_prabowo";
 import AksiGerindraV2 from "./aksi_nyata/aksi_gerindra/aksi_gerindra";
 import OrganisasiAfiliatifV2 from "./organisasi_afiliatif/organisasi_afiliatif";
+import { sUser } from "@/s_state/s_user";
+import { useRouter } from "next/router";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -205,6 +207,7 @@ const DashboardAdminV2 = () => {
   //   localStorage.setItem('selected_page', page)
   //   lSelectedPage.set(page)
   // }
+  const router = useRouter();
   return (
     <>
       <AppShell
@@ -252,12 +255,16 @@ const DashboardAdminV2 = () => {
                 </NavLink>
               ))}
             </Navbar.Section>
-            <Navbar.Section>{<Text>Footer</Text>}</Navbar.Section>
+            <Navbar.Section>{<Text component="a" style={{ cursor: "pointer" }} onClick={() => {
+              localStorage.removeItem("user_id");
+              sUser.value = {};
+              router.replace("signin");
+            }}>Logout</Text>}</Navbar.Section>
           </Navbar>
         }
       >
         {listSidebar.map((e) =>
-          e.child.map((v,i) => (
+          e.child.map((v, i) => (
             <Box hidden={v.name != select} key={`${v.id}${i}`}>
               {<v.view />}
             </Box>
