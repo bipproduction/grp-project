@@ -20,6 +20,7 @@ import COLOR from "../../../../fun/WARNA";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+
 function FormDataPartai() {
   const router = useRouter()
 

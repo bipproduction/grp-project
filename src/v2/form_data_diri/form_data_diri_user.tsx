@@ -139,6 +139,7 @@ const FormDataDiriUser = () => {
                             placeholder="Jenis Kelamin"
                             label="Jenis Kelamin"
                             radius={"md"}
+                            withAsterisk
                             data={[
                               { value: "laki", label: "Laki-Laki" },
                               { value: "perempuan", label: "Perempuan" },
