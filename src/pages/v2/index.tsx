@@ -15,8 +15,8 @@ const Home = () => {
         const dataDiri = fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
             .then(async (res) => {
                 if (res.status === 200) {
-                    //ke home dashboard user
-                    //router.replace("/v2/form_data_diri");
+                    //ke home home user
+                    router.replace("/v2/home_user");
                 } else {
                     router.replace("/v2/form_data_diri");
                 }
