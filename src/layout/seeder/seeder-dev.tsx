@@ -13,9 +13,13 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 
 const SeederDev = () => {
-  // User
+  // User Role
   const syncUserRole = async () =>
     await fetch(apiSeeder.apiUserRole).then(async (e) => e.status == 200);
+
+  // User
+  const syncUser =async () => 
+    await fetch(apiSeeder.apiUserSeeder).then(async (e) => e.status == 200);
 
   // Sumber Daya Partai
   // profile Umum
@@ -153,7 +157,7 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederNamaNegara).then(
       async (e) => e.status == 200
     );
-    const syncSeederProvinsi = async () =>
+  const syncSeederProvinsi = async () =>
     await fetch(apiSeeder.apiSeederNamaProvinsi).then(
       async (e) => e.status == 200
     );
@@ -174,7 +178,10 @@ const SeederDev = () => {
               </Center>
               <Paper p={"lg"} bg={"cyan.1"}>
                 <Text>User</Text>
-                <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
+                <Flex gap={"sm"}>
+                  <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
+                  <ButtonSync loadData={syncUser} name={"Sync User"} />
+                </Flex>
               </Paper>
               <Paper bg={"cyan.1"} p="lg">
                 <Text>Profile Umum</Text>

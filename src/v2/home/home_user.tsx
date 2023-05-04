@@ -4,6 +4,7 @@ import { sUser } from "@/s_state/s_user"
 import { AiFillSetting } from "react-icons/ai"
 import { FiLogOut } from "react-icons/fi"
 import { useForm } from "@mantine/form"
+import { useWindowScroll } from "@mantine/hooks"
 
 const HomeUserV2 = () => {
     const mockdata = [
@@ -39,6 +40,8 @@ const HomeUserV2 = () => {
         },
     ];
 
+    const [scroll, scrollTo] = useWindowScroll();
+
     const useStyles = createStyles((theme) => ({
         card: {
             transition: "transform 150ms ease, box-shadow 150ms ease",
@@ -52,6 +55,12 @@ const HomeUserV2 = () => {
         title: {
             fontFamily: `Greycliff CF, ${theme.fontFamily}`,
             fontWeight: 600,
+        },
+
+        btn: {
+            "&:hover": {
+                color: COLOR.merah,
+            },
         },
     }));
 
@@ -110,16 +119,16 @@ const HomeUserV2 = () => {
                         </Text>
                     </Flex>
                     <Group sx={{ height: "100%" }} spacing={0}>
-                        <Button variant="subtle" color="gray.0">
+                        <Button variant="subtle" color="gray.0" className={classes.btn} onClick={() => scrollTo({ y: 100 })}>
                             Home
                         </Button>
-                        <Button variant="subtle" color="gray.0">
+                        <Button variant="subtle" color="gray.0" className={classes.btn} onClick={() => scrollTo({ y: 800 })}>
                             About
                         </Button>
-                        <Button variant="subtle" color="gray.0">
+                        <Button variant="subtle" color="gray.0" className={classes.btn} onClick={() => scrollTo({ y: 1350 })}>
                             Blog
                         </Button>
-                        <Button variant="subtle" color="gray.0">
+                        <Button variant="subtle" color="gray.0" className={classes.btn} onClick={() => scrollTo({ y: 2000 })}>
                             Contact Us
                         </Button>
                     </Group>
@@ -138,7 +147,7 @@ const HomeUserV2 = () => {
                                 <Center>
                                     <Button
                                         component="a"
-                                        href="/v2/dashboard_user"
+                                        href="/v2/dashboard-user"
                                         style={{ cursor: "pointer" }}
                                         ta={"center"}
                                         mt={20}
@@ -176,6 +185,10 @@ const HomeUserV2 = () => {
             <Group pt={20} p={5}>
                 <Image src="/../gerindra.png" alt="a" />
             </Group>
+
+
+
+            {/* ABOUT */}
             <Box p={10} pt={30} pb={40}>
                 <Text fw={700} fz={20}>
                     GARUDA RESOURCE PLANNING
@@ -218,7 +231,7 @@ const HomeUserV2 = () => {
 
 
 
-            {/* ABOUT */}
+            {/* BLOG */}
             <Box>
                 {/* {JSON.stringify(sUser.value)} */}
                 <SimpleGrid p={10} cols={3} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>

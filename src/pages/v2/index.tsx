@@ -7,7 +7,7 @@ const Home = () => {
 
     if (sUser.value.masterUserRoleId == "3") {// user role == super admin
         //harusnya ke dashboard  super admin (blm dibuat)
-        router.replace("/v2/dashboard");
+        router.replace("/v2/dashboard-super-admin");
     } else if (sUser.value.masterUserRoleId == "2") {// user role == admin
         router.replace("/v2/dashboard");
     } else {// user role == user
@@ -16,7 +16,7 @@ const Home = () => {
             .then(async (res) => {
                 if (res.status === 200) {
                     //ke home home user
-                    router.replace("/v2/home-user");
+                    router.replace("/v2/home");
                 } else {
                     router.replace("/v2/form-data-diri");
                 }

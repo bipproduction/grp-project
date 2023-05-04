@@ -6,6 +6,11 @@
   },
   {
     "dir": "Profile",
+    "title": "User",
+    "api": "http://localhost:3000/api/get/api-get-user"
+  },
+  {
+    "dir": "Profile",
     "title": "Agama",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-agama"
   },
