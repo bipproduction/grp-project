@@ -20,7 +20,7 @@ const userUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 id: body.id
             },
             data: {
-                name: body.name,
+                username: body.name,
                 email: body.email,
                 password: body.password,
                 active: body.active,
