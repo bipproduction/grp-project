@@ -17,9 +17,16 @@ import {
 import React from "react";
 import COLOR from "../../../fun/WARNA";
 import { DateInput } from "@mantine/dates";
-import { Form, isNotEmpty, useForm } from "@mantine/form";
+import { Form, isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { useRouter } from "next/router";
 
 const FormDataDiriUser = () => {
+  const router = useRouter()
+
+  function dataDiriPartai() {
+    router.push("/v2/form-data-partai")
+  }
+
   const formDataDiri = useForm({
     initialValues: {
         nik: "",
@@ -45,7 +52,7 @@ const FormDataDiriUser = () => {
       validate: {
         nik: isNotEmpty('Tidak Boleh Kosong'),
         name: isNotEmpty('Tidak Boleh Kosong'),
-        email: isNotEmpty('Tidak Boleh Kosong'),
+        email: isEmail('Invalid email'),
         tempatLahir: isNotEmpty('Tidak Boleh Kosong'),
         tanggalLahir: isNotEmpty('Tidak Boleh Kosong'),
         jenisKelamin: isNotEmpty('Tidak Boleh Kosong'),
@@ -132,6 +139,7 @@ const FormDataDiriUser = () => {
                             placeholder="Jenis Kelamin"
                             label="Jenis Kelamin"
                             radius={"md"}
+                            withAsterisk
                             data={[
                               { value: "laki", label: "Laki-Laki" },
                               { value: "perempuan", label: "Perempuan" },
@@ -205,7 +213,6 @@ const FormDataDiriUser = () => {
                           <Select
                             data={[{ value: "Bali", label: "Bali" }]}
                             radius={"md"}
-                            mt={10}
                             placeholder="Provinsi"
                             label="Provinsi"
                             withAsterisk
@@ -244,7 +251,7 @@ const FormDataDiriUser = () => {
                             withAsterisk
                             label="RT/RW"
                             radius={"md"}
-                            {...formDataDiri.getInputProps('email')}
+                            {...formDataDiri.getInputProps('rtrw')}
                           />
                           <Center pt={20}>
                             <Box w={150}>
@@ -254,6 +261,7 @@ const FormDataDiriUser = () => {
                                 bg={COLOR.merah}
                                 color="orange.9"
                                 type="submit"
+                                onClick={dataDiriPartai}
                               >
                                 Simpan
                               </Button>
