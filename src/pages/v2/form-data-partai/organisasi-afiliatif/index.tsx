@@ -16,6 +16,8 @@ import {
   Stack,
   Text,
   TextInput,
+  createStyles,
+  rem,
 } from "@mantine/core";
 import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
@@ -23,60 +25,77 @@ import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
 import { IoArrowBackCircle } from "react-icons/io5";
 
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    minHeight: rem(764),
+    backgroundColor: COLOR.hitam,
+  },
+}));
+
 function OrganisasiAfiliatif() {
-  const router = useRouter()
+  const { classes } = useStyles();
+  const router = useRouter();
 
   function kembali() {
-    router.push("/v2/form-data-partai")
+    router.push("/v2/form-data-partai");
   }
   return (
     <WrapperDataDiriPartai>
-    <BackgroundImage src="../../BG.png" h={"100vh"}>
-      <Box>
-        <Stack>
-          <Box>
-            <SimpleGrid
-              cols={4}
-              breakpoints={[
-                { maxWidth: 980, cols: 2, spacing: "xl" },
-                { maxWidth: 755, cols: 1, spacing: "xl" },
-              ]}
-            >
-              <Box>
-                <Box
-                  p={50}
-                  h={763}
-                  sx={{
-                    backgroundColor: COLOR.abuabu,
-                  }}
-                >
-                  <Box>
-                    <Text fw={700} fz={30}>
-                      Form Data Diri
-                    </Text>
-                    <Text fz={10}>
+      <Box className={classes.wrapper}>
+        <Box>
+          <Stack>
+            <Box>
+              <SimpleGrid
+                cols={4}
+                breakpoints={[
+                  { maxWidth: 980, cols: 2, spacing: "xl" },
+                  { maxWidth: 755, cols: 1, spacing: "xl" },
+                ]}
+              >
+                <Box>
+                  <Box
+                    p={50}
+                    h={790}
+                    sx={{
+                      backgroundColor: COLOR.abuabu,
+                    }}
+                  >
+                    <Box>
+                      <Text fw={700} fz={30}>
+                        Form Data Diri
+                      </Text>
+                      <Text fz={10}>
                         Jika Bukan Organisasi Afiliatif,{" "}
-                        <strong style={{cursor: "pointer"}} onClick={kembali}>Klik disini ! </strong>
+                        <strong style={{ cursor: "pointer" }} onClick={kembali}>
+                          Klik disini !{" "}
+                        </strong>
                       </Text>
                       <Text fz={11} mb={20}>
                         * Wajib diisi
                       </Text>
-                  </Box>
-                  <Button fullWidth radius={"md"} color="orange.9" bg={COLOR.merah}>Organisasi Afiliatif</Button>
-                  <Select
-                        label="Pilih Tingkat Kader"
-                        mt={10}
-                        radius={"md"}
-                        withAsterisk
-                        placeholder="Pilih Tingkat Kader"
-                        data={[
-                          { value: "APPSI ", label: "APPSI " },
-                          { value: "IPSI ", label: "IPSI " },
-                          { value: "HKTI", label: "HKTI" },
-                          { value: "PEMUDA TANI", label: "PEMUDA TANI" },
-                        ]}
-                      />
-                      <Center pt={20}>
+                    </Box>
+                    <Button
+                      fullWidth
+                      radius={"md"}
+                      color="orange.9"
+                      bg={COLOR.merah}
+                    >
+                      Organisasi Afiliatif
+                    </Button>
+                    <Select
+                      label="Pilih Tingkat Kader"
+                      mt={10}
+                      radius={"md"}
+                      withAsterisk
+                      placeholder="Pilih Tingkat Kader"
+                      data={[
+                        { value: "APPSI ", label: "APPSI " },
+                        { value: "IPSI ", label: "IPSI " },
+                        { value: "HKTI", label: "HKTI" },
+                        { value: "PEMUDA TANI", label: "PEMUDA TANI" },
+                      ]}
+                    />
+                    <Center pt={20}>
                       <Box w={350}>
                         <Button
                           sx={{
@@ -93,26 +112,26 @@ function OrganisasiAfiliatif() {
                         </Button>
                       </Box>
                     </Center>
+                  </Box>
                 </Box>
-              </Box>
-              <Box></Box>
-              <Box>
-                <Container pt={300}>
-                  <Image
-                    right={40}
-                    width={300}
-                    src="../.././logo.png"
-                    alt="image data diri"
-                  />
-                </Container>
-              </Box>
-              <Box></Box>
-            </SimpleGrid>
-          </Box>
-        </Stack>
+                <Box></Box>
+                <Box>
+                  <Container pt={300}>
+                    <Image
+                      right={40}
+                      width={300}
+                      src="../.././logo.png"
+                      alt="image data diri"
+                    />
+                  </Container>
+                </Box>
+                <Box></Box>
+              </SimpleGrid>
+            </Box>
+          </Stack>
+        </Box>
       </Box>
-    </BackgroundImage>
-  </WrapperDataDiriPartai>
+    </WrapperDataDiriPartai>
   );
 }
 

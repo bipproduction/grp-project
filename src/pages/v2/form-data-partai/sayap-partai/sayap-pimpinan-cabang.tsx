@@ -14,13 +14,23 @@ import {
   Stack,
   Text,
   TextInput,
+  createStyles,
+  rem,
 } from "@mantine/core";
 import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
 
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    minHeight: rem(764),
+    backgroundColor: COLOR.hitam,
+  },
+}));
+
 function SayapPimpinanCabang() {
+  const { classes } = useStyles();
   const router = useRouter()
 
   function afiliatif() {
@@ -28,7 +38,7 @@ function SayapPimpinanCabang() {
   }
   return (
     <WrapperDataDiriPartai>
-      <BackgroundImage src="../../../BG.png" h={"100vh"}>
+      <Box className={classes.wrapper}>
         <Box>
           <Stack>
             <Box>
@@ -42,7 +52,7 @@ function SayapPimpinanCabang() {
                 <Box>
                   <Box
                     p={50}
-                    h={763}
+                    h={790}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -280,7 +290,7 @@ function SayapPimpinanCabang() {
             </Box>
           </Stack>
         </Box>
-      </BackgroundImage>
+      </Box>
     </WrapperDataDiriPartai>
   );
 }

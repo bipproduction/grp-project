@@ -13,14 +13,25 @@ import {
   Stack,
   Text,
   TextInput,
+  createStyles,
+  rem,
 } from "@mantine/core";
 import React from "react";
 import COLOR from "../../../fun/WARNA";
 import { DateInput } from "@mantine/dates";
 import { Form, isEmail, isNotEmpty, useForm } from "@mantine/form";
 import { useRouter } from "next/router";
+import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
+
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    minHeight: rem(764),
+    backgroundColor: COLOR.hitam,
+  },
+}));
 
 const FormDataDiriUser = () => {
+  const { classes } = useStyles();
   const router = useRouter()
 
   function dataDiriPartai() {
@@ -73,7 +84,8 @@ const FormDataDiriUser = () => {
   });
   return (
     <>
-      <BackgroundImage src="../../BG.png" h={"100vh"}>
+    <WrapperDataDiriPartai>
+    <Box className={classes.wrapper}>
         <Box>
           <Stack>
             <Box>
@@ -87,6 +99,7 @@ const FormDataDiriUser = () => {
                 <Box>
                   <Box
                     p={50}
+                    h={790}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -287,7 +300,8 @@ const FormDataDiriUser = () => {
             </Box>
           </Stack>
         </Box>
-      </BackgroundImage>
+    </Box>
+    </WrapperDataDiriPartai>
     </>
   );
 };
