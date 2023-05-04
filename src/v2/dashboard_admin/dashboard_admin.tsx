@@ -52,16 +52,18 @@ const DashAdmin = () => {
             <Grid.Col span={4}>
               <Group position="right">
                 <Button
-                  w={150}
+                  w={100}
                   bg={COLOR.merah}
+                  color={"orange"}
                   radius={50}
                   leftIcon={<AiOutlineSave />}
                 >
                   Save
                 </Button>
                 <Button
-                  w={150}
+                  w={100}
                   bg={COLOR.merah}
+                  color={"orange"}
                   radius={50}
                   leftIcon={<CiFilter />}
                 >
