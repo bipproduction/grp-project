@@ -29,17 +29,10 @@ import EditKTAV2 from "./edit_kta";
           }}
         >
           <Grid>
-            <Grid.Col span={8}>
-              <Text mt={10} ml={10}>
-                Edit Data Profile
+            <Grid.Col span={12}>
+              <Text mt={5} mb={5} ml={10}>
+                Kartu Tanda Anggota
               </Text>
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Group position="right" pr={10} p={5}>
-                <Button color="orange.9" radius={"xl"} bg={COLOR.merah}>
-                  Reset
-                </Button>
-              </Group>
             </Grid.Col>
           </Grid>
         </Paper>
@@ -55,7 +48,7 @@ import EditKTAV2 from "./edit_kta";
                 radius={10}
                 maw={500}
                 mx="auto"
-                src={"/../KTA.png"}
+                src={"/../KTAV2.png"}
                 alt="a"
               />
             </Center>

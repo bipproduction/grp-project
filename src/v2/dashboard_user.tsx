@@ -66,7 +66,7 @@ const LayoutDashboardUserV2 = () => {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
 
-    const [select, setSelect] = useState("Dashboard");
+    const [select, setSelect] = useState("Data Profile");
 
     const lSelectedPage = useHookstate(gSelectedPage);
     // const SelectedView = signal<string>('');
@@ -154,7 +154,7 @@ const LayoutDashboardUserV2 = () => {
                             {
                                 <Flex align={"center"} gap={"lg"}>
                                     <FaCircle size={25} color={COLOR.merah} />
-                                    <Text>USERNAME</Text>
+                                    <Text>{sUser.value?.username}</Text>
                                 </Flex>
                             }
                         </Navbar.Section>

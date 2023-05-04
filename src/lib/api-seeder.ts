@@ -1,6 +1,10 @@
 export const apiSeeder = {
-// USER
+// USER ROLE
 "apiUserRole":"/api/seeder/api-seeder-user-role",
+
+//User
+"apiUserSeeder":"api/seeder/api-seeder-user",
+
 // Sumber Daya Partai
 // status keanggotaan
 "apiSeederKaderPartai":"/api/seeder/sumber-daya-partai/api-seeder-kader-partai",
