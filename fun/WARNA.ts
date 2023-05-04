@@ -4,6 +4,7 @@ const COLOR = {
     abuabu: "#D9D2CE",
     hitam: "#25262B",
     ungu: "#0099CA",
+    coklat: '#83281C'
 
 }
 export default COLOR
