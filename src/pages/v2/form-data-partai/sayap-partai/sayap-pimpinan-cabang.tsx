@@ -246,6 +246,7 @@ function SayapPimpinanCabang() {
                       withAsterisk
                       placeholder="Nomor WA Admin"
                       label="Nomor WA Admin"
+                      type="number"
                     />
                     <TextInput
                       radius={"md"}

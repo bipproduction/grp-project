@@ -118,6 +118,7 @@ const FormDataDiriUser = () => {
                             mt={10}
                             label="NIK"
                             radius={"md"}
+                            type="number"
                             {...formDataDiri.getInputProps('nik')}
                           />
                           <TextInput
@@ -164,6 +165,7 @@ const FormDataDiriUser = () => {
                             withAsterisk
                             label="Nomor Handphone"
                             radius={"md"}
+                            type="number"
                             {...formDataDiri.getInputProps('phoneNumber')}
                           />
                           <TextInput
@@ -264,6 +266,7 @@ const FormDataDiriUser = () => {
                             withAsterisk
                             label="RT/RW"
                             radius={"md"}
+                            type="number"
                             {...formDataDiri.getInputProps('rtrw')}
                           />
                           <Center pt={20}>
