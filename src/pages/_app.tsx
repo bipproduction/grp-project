@@ -13,6 +13,8 @@ import SignUp from "./v2/signup";
 import FormSignUp from "@/v2/auth/form-signup";
 import { Modak } from "next/font/google";
 import { sUser } from "@/s_state/s_user";
+import { useRouter } from "next/router";
+
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -45,19 +47,22 @@ export default function App(props: AppProps) {
 
 const Authrovider = ({ children }: PropsWithChildren) => {
   const [isSignup, setIsSignup] = useState(false)
-
+  const router = useRouter()
 
   useShallowEffect(() => {
     const user = localStorage.getItem("user_id")
+    console.log(user)
     if (!user) {
       sUser.value = []
     } else {
-      fetch(api.apiGetOneUser + `?id=${user}`)
-        .then((v) => v.json())
-        .then((v) => (sUser.value = v));
+      sUser.value = JSON.parse(user)
+      // fetch(api.apiGetOneUser + `?id=${user}`)
+      //   .then((v) => v.json())
+      //   .then((v) => (sUser.value = v));
       // sUser.value = user
     }
   }, [])
+
 
   if (sUser.value == undefined) return <></>;
   if (_.isEmpty(sUser.value))
