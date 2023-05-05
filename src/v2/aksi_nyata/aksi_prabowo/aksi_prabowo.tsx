@@ -1,7 +1,8 @@
+import { ViewAksiPrabowoV2 } from "./view_aksi_prabowo"
 
 const AksiPrabowoV2 = () => {
     return <>
-    Aksi Prbwo
+    <ViewAksiPrabowoV2/>
     </>
 }
 
