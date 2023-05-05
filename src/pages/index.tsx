@@ -9,6 +9,7 @@ import apiSeederAgama from './api/seeder/sumber-daya-partai/api-seeder-agama'
 import { Avatar, Flex, Group, Menu, Text } from '@mantine/core'
 import { sUser } from '@/xg_state.ts/g_selected_page'
 import FormDataDiri from '@/layout/form_data_diri/form_data_diri'
+import HomeV2 from './v2'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,9 +20,10 @@ export default function Home() {
   }
   return (
     <>
-    {/* <FormDataDiri/> */}
-    <LayoutDefault/>
-    {/* <Flex
+      <HomeV2 />
+      {/* <FormDataDiri/> */}
+      {/* <LayoutDefault/> */}
+      {/* <Flex
         direction={{ base: 'column', sm: 'row' }}
         gap={{ base: 'sm', sm: 'lg' }}
         justify={{ sm: 'flex-end' }}
@@ -34,8 +36,8 @@ export default function Home() {
                 <Avatar radius="xl" />
                 <Text fw={700}>{sUser.value?.name}</Text>
               </Group> */}
-              {/* <Button variant='subtle'></Button> */}
-            {/* </Menu.Target>
+      {/* <Button variant='subtle'></Button> */}
+      {/* </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={onLogOut} color='red'>Logout</Menu.Item>
             </Menu.Dropdown>

@@ -7,12 +7,12 @@ import { sUser } from "@/s_state/s_user"
 import { useRouter } from "next/router"
 
 
-const FormSignIn = ({onSignUp}: {onSignUp: () => void}) => {
+const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
     const formLogin = useForm({
-        initialValues : {
-            data : {
-                email : "",
-                password : "",
+        initialValues: {
+            data: {
+                email: "",
+                password: "",
             },
         },
     })
@@ -36,9 +36,9 @@ const FormSignIn = ({onSignUp}: {onSignUp: () => void}) => {
                 sUser.value = data;
                 toast("Success");
                 router.reload();
-              } else {
+            } else {
                 toast("Email atau password salah");
-              }
+            }
         });
     };
 
@@ -54,18 +54,31 @@ const FormSignIn = ({onSignUp}: {onSignUp: () => void}) => {
                             borderRadius: 10,
                         }}
                     >
-                        <Box>
-                            <Center>
-                                <Text fz={60} mt={5} fw={700} color="white">
-                                    Garuda
-                                </Text>
-                            </Center>
-                            <Center>
-                                <Text mb={10} color="white">
-                                    Resource Planning
-                                </Text>
-                            </Center>
-                        </Box>
+                        <div style={{
+                            color: COLOR.orange
+                        }} onClick={() => {
+                            const data = {
+                                username: "",
+                                email: "",
+                                masterUserRoleId: ""
+                            }
+                            sUser.value = data
+                            localStorage.setItem("user_id", JSON.stringify(data))
+                        }}>tekan sini</div>
+                        <Stack>
+                            <Box>
+                                <Center>
+                                    <Text fz={60} mt={5} fw={700} color="white">
+                                        Garuda
+                                    </Text>
+                                </Center>
+                                <Center>
+                                    <Text mb={10} color="white">
+                                        Resource Planning
+                                    </Text>
+                                </Center>
+                            </Box>
+                        </Stack>
                         {/* <Text pt={10} ta={"center"} color="white" fz={60}>Garuda</Text> */}
                         <Center pt={10}>
                             <Image src={"../logo.png"} width={200} alt="a" />
