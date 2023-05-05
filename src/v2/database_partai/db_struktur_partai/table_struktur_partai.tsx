@@ -1,4 +1,4 @@
-import WarpPage from "@/v2/my-wrap";
+
 import {
   Box,
   Button,
