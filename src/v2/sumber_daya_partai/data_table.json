@@ -21,7 +21,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 2,
@@ -45,7 +47,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 3,
@@ -69,7 +73,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 4,
@@ -93,7 +99,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 5,
@@ -117,7 +125,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 6,
@@ -141,7 +151,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 7,
@@ -165,7 +177,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 8,
@@ -189,7 +203,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 9,
@@ -213,7 +229,9 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   },
   {
     "id": 10,
@@ -237,6 +255,8 @@
     "twitter": "okefami",
     "tiktok": "yoakufami",
     "tingkat_pengurus": "Depan Pimpinan Pusat",
-    "jabatan": "ketua umum"
+    "jabatan": "ketua umum",
+    "sayap_partai": "Papera",
+    "kader_partai": "Manggala"
   }
 ]
