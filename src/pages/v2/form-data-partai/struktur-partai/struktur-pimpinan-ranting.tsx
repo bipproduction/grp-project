@@ -21,6 +21,8 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -30,6 +32,32 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanRanting() {
+
+  const formStrukturPartai = useForm({
+    initialValues: {
+      provinsi: "",
+      kabupaten: "",
+      kecamatan: "",
+      desa: "",
+      jabatan: "",
+
+    },
+    validate: {
+      provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      desa: isNotEmpty("Tidak Boleh Kosong"),
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Struktur Partai");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
   const router = useRouter();
 
@@ -207,6 +235,7 @@ function StrukturPimpinanRanting() {
                       </Menu>
                     </Box>
                     <Select
+                    {...formStrukturPartai.getInputProps("provinsi")}
                       data={[{ value: "Bali", label: "Bali" }]}
                       radius={"md"}
                       mt={10}
@@ -215,6 +244,7 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("kabupaten")}
                       data={[{ value: "Denpasar", label: "Denpasar" }]}
                       radius={"md"}
                       mt={10}
@@ -223,6 +253,7 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("kecamatan")}
                       data={[
                         { value: "Denpasar Barat", label: "Denpasar Barat" },
                       ]}
@@ -233,6 +264,7 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("desa")}
                       data={[
                         {
                           value: "Padang sambian Klod",
@@ -246,6 +278,7 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -280,6 +313,7 @@ function StrukturPimpinanRanting() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>

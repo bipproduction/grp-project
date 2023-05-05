@@ -36,6 +36,9 @@ function AnggotaPartai() {
   function afiliatif() {
     router.push("/v2/form-data-partai/organisasi-afiliatif");
   }
+  function dashboardUser() {
+    router.push("/v2/home");
+  }
   return (
     <WrapperDataDiriPartai>
       <Box className={classes.wrapper}>
@@ -132,6 +135,7 @@ function AnggotaPartai() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={dashboardUser}
                         >
                           Simpan
                         </Button>

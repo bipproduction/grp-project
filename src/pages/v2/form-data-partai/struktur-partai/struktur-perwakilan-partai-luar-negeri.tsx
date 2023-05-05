@@ -21,6 +21,8 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -30,6 +32,25 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPerwakilanPartaiLuarNegeri() {
+
+    const formStrukturPartai = useForm({
+    initialValues: {
+      negara: "",
+      jabatan: "",
+    },
+    validate: {
+      negara: isNotEmpty("Tidak Boleh Kosong"),
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Struktur Partai");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
   const router = useRouter();
 
@@ -209,6 +230,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       </Menu>
                     </Box>
                     <Select
+                    {...formStrukturPartai.getInputProps("negara")}
                       data={[
                         { value: "Malaysia", label: "Malaysia" },
                         { value: "Jepang", label: "Jepang" },
@@ -221,6 +243,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -255,6 +278,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>

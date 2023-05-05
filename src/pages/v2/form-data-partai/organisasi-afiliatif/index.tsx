@@ -24,6 +24,8 @@ import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_di
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -33,6 +35,24 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function OrganisasiAfiliatif() {
+
+  const formStrukturPartai = useForm({
+    initialValues: {
+      afiliatif: "",
+    },
+    validate: {
+      afiliatif: isNotEmpty("Tidak Boleh Kosong"),
+
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Organisasi Afiliatif");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
   const router = useRouter();
 
@@ -83,11 +103,12 @@ function OrganisasiAfiliatif() {
                       Organisasi Afiliatif
                     </Button>
                     <Select
-                      label="Pilih Tingkat Kader"
+                    {...formStrukturPartai.getInputProps("afiliatif")}
+                      label="Pilih Nama Organisasi Afilliatif"
                       mt={10}
                       radius={"md"}
                       withAsterisk
-                      placeholder="Pilih Tingkat Kader"
+                      placeholder="Pilih Nama Organisasi Afilliatif"
                       data={[
                         { value: "APPSI ", label: "APPSI " },
                         { value: "IPSI ", label: "IPSI " },
@@ -107,6 +128,7 @@ function OrganisasiAfiliatif() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>
