@@ -163,5 +163,20 @@
     "dir": "Wilayah",
     "title": "Nama Provinsi",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+  },
+  {
+    "dir": "Wilayah",
+    "title": "Nama Kabupaten Kota",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+  },
+  {
+    "dir": "Wilayah",
+    "title": "Nama Kecamatan",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+  },
+  {
+    "dir": "Wilayah",
+    "title": "Nama Desa",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/wilayah/api-get-desa"
   }
 ]

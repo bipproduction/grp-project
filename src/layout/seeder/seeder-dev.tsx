@@ -18,7 +18,7 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiUserRole).then(async (e) => e.status == 200);
 
   // User
-  const syncUser =async () => 
+  const syncUser = async () =>
     await fetch(apiSeeder.apiUserSeeder).then(async (e) => e.status == 200);
 
   // Sumber Daya Partai
@@ -162,6 +162,21 @@ const SeederDev = () => {
       async (e) => e.status == 200
     );
 
+  const syncSeederKabKot = async () =>
+    await fetch(apiSeeder.apiSeederNamaKabKot).then(
+      async (e) => e.status == 200
+    );
+
+  const syncSeederKecamatan = async () =>
+    await fetch(apiSeeder.apiSeederNamaKecamatan).then(
+      async (e) => e.status == 200
+    );
+
+  const syncSeederDesa = async () =>
+    await fetch(apiSeeder.apiSeederNamaDesa).then(
+      async (e) => e.status == 200
+    );
+
   return (
     <>
       <Box>
@@ -214,6 +229,18 @@ const SeederDev = () => {
                   <ButtonSync
                     loadData={syncSeederProvinsi}
                     name={"Sync Seeder Provinsi"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederKabKot}
+                    name={"Sync Seeder Kabupaten Kota"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederKecamatan}
+                    name={"Sync Seeder Kecamatan"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederDesa}
+                    name={"Sync Seeder Desa"}
                   />
                 </Flex>
               </Paper>

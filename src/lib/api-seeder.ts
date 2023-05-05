@@ -49,7 +49,11 @@ export const apiSeeder = {
 
 //Wilayah
 "apiSeederNamaNegara":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-negara",
-"apiSeederNamaProvinsi":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-provinsi"
+"apiSeederNamaProvinsi":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-provinsi",
+"apiSeederNamaKabKot":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-kabkot",
+"apiSeederNamaKecamatan":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-kecamatan",
+"apiSeederNamaDesa":"/api/seeder/sumber-daya-partai/wilayah/api-seeder-desa"
+
 
 
 
