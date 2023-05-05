@@ -1,7 +1,8 @@
+import TableSayapPartaiV2 from "./table_sayap_partai"
 
 const SayapPartaiV2 = () => {
     return <>
-    SypP
+    <TableSayapPartaiV2/>
     </>
 }
 

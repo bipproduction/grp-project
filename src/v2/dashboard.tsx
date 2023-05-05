@@ -192,7 +192,7 @@ const DashboardAdminV2 = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
 
-  const [select, setSelect] = useState("Dashboard");
+  const [select, setSelect] = useState("Data Eksekutif");
 
   const lSelectedPage = useHookstate(gSelectedPage);
   // const SelectedView = signal<string>('');

@@ -19,13 +19,13 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 
-const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
-  const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
-  const [tingkatPengurus, setTingkatPengurus] = useState<any | []>([]);
+const EditAnggotaPartaiV2 = ({ thisClosed }: any) => {
+  const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([
+    "Struktur Partai",
+  ]);
 
   useShallowEffect(() => {
     loadStatusKenaggotaan();
-    loadTingkatPengurus();
   }, []);
 
   async function loadStatusKenaggotaan() {
@@ -38,16 +38,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
       );
   }
 
-  async function loadTingkatPengurus() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/api-get-tingkat-pengurus"
-    )
-      .then((res) => res.json())
-      .then((val) =>
-        setTingkatPengurus(Object.values(val).map((e: any) => e.name))
-      );
-  }
-
   return (
     <>
       <Box>
@@ -55,7 +45,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
           <Grid>
             <Grid.Col span={8}>
               <Text size={20} fw={"bold"}>
-                Edit Data Struktur Partai
+                Edit Data Anggota Partai
               </Text>
             </Grid.Col>
           </Grid>
@@ -242,20 +232,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       nothingFound="No options"
                       data={statusKeanggotaan}
                     />
-
-                    <Select
-                      label="**"
-                      placeholder="Pilih Tingkat Pengurus"
-                      nothingFound="No options"
-                      data={tingkatPengurus}
-                    />
-
-                    <Select
-                      label="**"
-                      placeholder="Pilih Jabatan"
-                      nothingFound="No options"
-                      data={[]}
-                    />
                   </Flex>
                 </Box>
               </Paper>
@@ -267,4 +243,4 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
   );
 };
 
-export default EditStrukturPartaiV2;
+export default EditAnggotaPartaiV2;

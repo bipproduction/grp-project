@@ -26,10 +26,11 @@ import {
 } from "react-icons/ai";
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
-import EditStrukturPartaiV2 from "./edit_struktur_partai";
-import dataTable from "../data_table.json";
 
-const TableStruktutPartaiV2 = () => {
+import dataTable from "../data_table.json";
+import EditSayapPartaiV2 from "./edit_sayap_partai";
+
+const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
 
@@ -38,6 +39,7 @@ const TableStruktutPartaiV2 = () => {
       <th>No</th>
       <th>Nama</th>
       <th>NIK</th>
+      <th>Nama Sayap</th>
       <th>Tingkat Pengurus</th>
       <th>Jabatan</th>
       <th>Email</th>
@@ -66,6 +68,7 @@ const TableStruktutPartaiV2 = () => {
       <td>{i + 1}</td>
       <td>{e.name}</td>
       <td>{e.nik}</td>
+      <td>{e.sayap_partai}</td>
       <td>{e.tingkat_pengurus}</td>
       <td>{e.jabatan}</td>
       <td>{e.email}</td>
@@ -120,14 +123,14 @@ const TableStruktutPartaiV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditStrukturPartaiV2 thisClosed={close} />
+        <EditSayapPartaiV2 thisClosed={close} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
               <Text size={20} fw={"bold"}>
-                Data Struktur Partai
+                Data Sayap Partai
               </Text>
             </Grid.Col>
             <Grid.Col span={4}>
@@ -203,4 +206,4 @@ const TableStruktutPartaiV2 = () => {
   );
 };
 
-export default TableStruktutPartaiV2;
+export default TableSayapPartaiV2
