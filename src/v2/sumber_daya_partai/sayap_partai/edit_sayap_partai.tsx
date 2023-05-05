@@ -19,14 +19,22 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 
-const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
+const EditSayapPartaiV2 = ({ thisClosed }: any) => {
   const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
   const [tingkatPengurus, setTingkatPengurus] = useState<any | []>([]);
+  const [namaSayap, setNamaSayap] = useState<any | []>([]);
 
   useShallowEffect(() => {
     loadStatusKenaggotaan();
     loadTingkatPengurus();
+    loadNamaSayap();
   }, []);
+
+  async function loadNamaSayap() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-sayap-partai")
+      .then((res) => res.json())
+      .then((val) => setNamaSayap(Object.values(val).map((e: any) => e.name)));
+  }
 
   async function loadStatusKenaggotaan() {
     const res = await fetch(
@@ -55,13 +63,13 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
           <Grid>
             <Grid.Col span={8}>
               <Text size={20} fw={"bold"}>
-                Edit Data Struktur Partai
+                Edit Data Sayap Partai
               </Text>
             </Grid.Col>
           </Grid>
         </Paper>
         <Box>
-          {/* {JSON.stringify(statusKeanggotaan)} */}
+          {/* {JSON.stringify(namaSayap)} */}
           <Flex gap="md" pt={20}>
             <Box w={100}>
               <Button
@@ -83,7 +91,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={() => {
+                onClick={()=> {
                   buttonReset()
                 }}
               >
@@ -245,6 +253,13 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
 
                     <Select
                       label="**"
+                      placeholder="Pilih Nama Sayap"
+                      nothingFound="No options"
+                      data={namaSayap}
+                    />
+
+                    <Select
+                      label="**"
                       placeholder="Pilih Tingkat Pengurus"
                       nothingFound="No options"
                       data={tingkatPengurus}
@@ -267,4 +282,4 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
   );
 };
 
-export default EditStrukturPartaiV2;
+export default EditSayapPartaiV2;

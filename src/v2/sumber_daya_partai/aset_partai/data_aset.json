@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "nama_aset": "Mobil",
+    "Serial_number": "S44NR5KQ4K4",
+    "Status_aset": "bergerak",
+    "Keterangan_Aset": "baik, siap pakai",
+    "Kategori": "roda 4",
+    "Deskripsi_Barang": "mobil Inova, warna hitam, ban serep ready",
+    "Penguna": "Marcel",
+    "Penanggung_Jawab": "Lisa",
+    "Harga": 135000000,
+    "Tanggal_Pembelian": "1-1-2021",
+    "Lokasi_Pembelian": "Denpasar",
+    "Garansi": "2 tahun"
+  },
+  {
+    "id": 2,
+    "nama_aset": "Motor",
+    "Serial_number": "44J383238R",
+    "Status_aset": "bergerak",
+    "Keterangan_Aset": "beli second pabrik",
+    "Kategori": "roda 2",
+    "Deskripsi_Barang": "motor vario, warna stiker biru",
+    "Penguna": "Ino",
+    "Penanggung_Jawab": "Lisa",
+    "Harga": 12000,
+    "Tanggal_Pembelian": "2-4-2018",
+    "Lokasi_Pembelian": "Denpasar",
+    "Garansi": "6 Bulan"
+  },
+  {
+    "id": 3,
+    "nama_aset": "Mobil",
+    "Serial_number": "KR24M2FF2",
+    "Status_aset": "bergerak",
+    "Keterangan_Aset": "baik, sudah ganti oli",
+    "Kategori": "roda 4",
+    "Deskripsi_Barang": "mobil Carry, warna merah, ban serep ready",
+    "Penguna": "Ayu",
+    "Penanggung_Jawab": "Marcel",
+    "Harga": 125678000,
+    "Tanggal_Pembelian": "3-9-2021",
+    "Lokasi_Pembelian": "Denpasar",
+    "Garansi": "0"
+  },
+  {
+    "id": 4,
+    "nama_aset": "Motor",
+    "Serial_number": "53F4F4F2R",
+    "Status_aset": "bergerak",
+    "Keterangan_Aset": "lampu depan mati",
+    "Kategori": "roda 2",
+    "Deskripsi_Barang": "motor beat, knalpot brong",
+    "Penguna": "Lukman",
+    "Penanggung_Jawab": "Lisa",
+    "Harga": 12000,
+    "Tanggal_Pembelian": "28-4-2019",
+    "Lokasi_Pembelian": "Denpasar",
+    "Garansi": "0"
+  },
+  {
+    "id": 5,
+    "nama_aset": "Mobil",
+    "Serial_number": "3FE2F2EFWE",
+    "Status_aset": "bergerak",
+    "Keterangan_Aset": "kurang baik",
+    "Kategori": "roda 4",
+    "Deskripsi_Barang": "mobil Carry, warna hitam, ban belakang mudah lepas",
+    "Penguna": "Agi",
+    "Penanggung_Jawab": "Lisa",
+    "Harga": 90550000,
+    "Tanggal_Pembelian": "3-8-2002",
+    "Lokasi_Pembelian": "Denpasar",
+    "Garansi": "1 Bulan"
+  }
+]
+
