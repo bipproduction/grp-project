@@ -21,6 +21,8 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -30,6 +32,31 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanDaerah() {
+
+  const formStrukturPartai = useForm({
+    initialValues: {
+      provinsi: "",
+      jabatan: "",
+      alamatKantor: "",
+      nomorWA: "",
+      medsos: ""
+    },
+    validate: {
+      provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+      alamatKantor: isNotEmpty("Tidak Boleh Kosong"),
+      nomorWA: isNotEmpty("Tidak Boleh Kosong"),
+      medsos: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Struktur Partai");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
   const router = useRouter();
 
@@ -207,6 +234,7 @@ function StrukturPimpinanDaerah() {
                       </Menu>
                     </Box>
                     <Select
+                    {...formStrukturPartai.getInputProps("provinsi")}
                       data={[
                         { value: "Bali", label: "Bali" },
                         { value: "Jawa timur", label: "Jawa Timur" },
@@ -218,6 +246,7 @@ function StrukturPimpinanDaerah() {
                       withAsterisk
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -252,6 +281,7 @@ function StrukturPimpinanDaerah() {
                       ]}
                     />
                     <TextInput
+                    {...formStrukturPartai.getInputProps("alamatKantor")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -259,6 +289,7 @@ function StrukturPimpinanDaerah() {
                       label="Alamat Kantor"
                     />
                     <TextInput
+                    {...formStrukturPartai.getInputProps("nomorWA")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -267,6 +298,7 @@ function StrukturPimpinanDaerah() {
                       type="number"
                     />
                     <TextInput
+                    {...formStrukturPartai.getInputProps("medsos")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -285,6 +317,7 @@ function StrukturPimpinanDaerah() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>

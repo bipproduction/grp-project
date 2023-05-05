@@ -21,6 +21,8 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -30,11 +32,32 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function KaderPartai() {
+
+  const formKaderPartai = useForm({
+    initialValues: {
+      jabatan: "",
+    },
+    validate: {
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formKaderPartai.values).includes("")) {
+      return toast("Lengkapi Data Kader Partai");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
   const router = useRouter();
 
   function afiliatif() {
     router.push("/v2/form-data-partai/organisasi-afiliatif");
+  }
+
+  function dashboardUser() {
+    router.push("/v2/home");
   }
   return (
     <WrapperDataDiriPartai>
@@ -121,6 +144,7 @@ function KaderPartai() {
                       </Menu.Dropdown>
                     </Menu>
                     <Select
+                    {...formKaderPartai.getInputProps("jabatan")}
                       label="Pilih Tingkat Kader"
                       mt={10}
                       radius={"md"}
@@ -134,6 +158,7 @@ function KaderPartai() {
                         { value: "PRATAMA", label: "PRATAMA" },
                         { value: "PENGGERAK", label: "PENGGERAK" },
                       ]}
+                      
                     />
                     <Center pt={20}>
                       <Box w={350}>
@@ -147,6 +172,7 @@ function KaderPartai() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>

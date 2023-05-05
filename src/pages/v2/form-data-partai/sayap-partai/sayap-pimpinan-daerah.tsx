@@ -21,6 +21,8 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -30,11 +32,37 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function SayapPimpinanDaerah() {
+  const formStrukturPartai = useForm({
+    initialValues: {
+      sayapPartai: "",
+      provinsi: "",
+      jabatan: "",
+      alamatKantor: "",
+      nomorWA: "",
+      medsos: "",
+    },
+    validate: {
+      sayapPartai: isNotEmpty("Tidak Boleh Kosong"),
+      provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+      alamatKantor: isNotEmpty("Tidak Boleh Kosong"),
+      nomorWA: isNotEmpty("Tidak Boleh Kosong"),
+      medsos: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Sayap Partai");
+    }
+    router.replace("/v2/home");
+  };
+
   const { classes } = useStyles();
-  const router = useRouter()
+  const router = useRouter();
 
   function afiliatif() {
-    router.push("/v2/form-data-partai/organisasi-afiliatif")
+    router.push("/v2/form-data-partai/organisasi-afiliatif");
   }
   return (
     <WrapperDataDiriPartai>
@@ -63,7 +91,12 @@ function SayapPimpinanDaerah() {
                       </Text>
                       <Text fz={10}>
                         Jika Termasuk Organisasi Afiliatif,{" "}
-                        <strong style={{cursor: "pointer"}} onClick={afiliatif}>Klik disini ! </strong>
+                        <strong
+                          style={{ cursor: "pointer" }}
+                          onClick={afiliatif}
+                        >
+                          Klik disini !{" "}
+                        </strong>
                       </Text>
                       <Text fz={11} mb={20}>
                         * Wajib diisi
@@ -172,6 +205,7 @@ function SayapPimpinanDaerah() {
                       </Menu>
                     </Box>
                     <Select
+                      {...formStrukturPartai.getInputProps("sayapPartai")}
                       label="Pilih Sayap Partai"
                       mt={10}
                       radius={"md"}
@@ -195,6 +229,7 @@ function SayapPimpinanDaerah() {
                       ]}
                     />
                     <Select
+                      {...formStrukturPartai.getInputProps("provinsi")}
                       data={[
                         { value: "Bali", label: "Bali" },
                         { value: "Jawa timur", label: "Jawa Timur" },
@@ -206,6 +241,7 @@ function SayapPimpinanDaerah() {
                       withAsterisk
                     />
                     <Select
+                      {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -239,28 +275,31 @@ function SayapPimpinanDaerah() {
                         },
                       ]}
                     />
-                                      <TextInput
-                        radius={"md"}
-                        mt={10}
-                        withAsterisk
-                        placeholder="Alamat Kantor"
-                        label="Alamat Kantor"
-                      />
-                      <TextInput
-                        radius={"md"}
-                        mt={10}
-                        withAsterisk
-                        placeholder="Nomor WA Admin"
-                        label="Nomor WA Admin"
-                        type="number"
-                      />
-                      <TextInput
-                        radius={"md"}
-                        mt={10}
-                        withAsterisk
-                        placeholder="Add Media Social"
-                        label="Add Media Social"
-                      />
+                    <TextInput
+                    {...formStrukturPartai.getInputProps("alamatKantor")}
+                      radius={"md"}
+                      mt={10}
+                      withAsterisk
+                      placeholder="Alamat Kantor"
+                      label="Alamat Kantor"
+                    />
+                    <TextInput
+                    {...formStrukturPartai.getInputProps("nomorWA")}
+                      radius={"md"}
+                      mt={10}
+                      withAsterisk
+                      placeholder="Nomor WA Admin"
+                      label="Nomor WA Admin"
+                      type="number"
+                    />
+                    <TextInput
+                    {...formStrukturPartai.getInputProps("medsos")}
+                      radius={"md"}
+                      mt={10}
+                      withAsterisk
+                      placeholder="Add Media Social"
+                      label="Add Media Social"
+                    />
                     <Center pt={20}>
                       <Box w={350}>
                         <Button
@@ -273,6 +312,7 @@ function SayapPimpinanDaerah() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>
