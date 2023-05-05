@@ -189,86 +189,41 @@ function StrukturPimpinanCabang() {
                     </Menu>
                     <Box mt={20}>
                       <Menu>
-                        <Menu.Target>
-                          <Button
-                            radius={"md"}
-                            color="gray.4"
-                            bg={"white"}
-                            fullWidth
+                      <Menu.Target>
+                          <UnstyledButton
+                            className={classes.user}
+                            pr={20}
+                            pl={20}
                           >
-                            <Text color="dark">Dewan Pimpinan Cabang</Text>
-                          </Button>
+                            <Group>
+                              <div style={{ flex: 1 }}>
+                                <Text size="sm">Dewan Pimpinan Cabang</Text>
+                              </div>
+                              <IoChevronDownCircle size="1.3rem" />
+                            </Group>
+                          </UnstyledButton>
                         </Menu.Target>
                         <Menu.Dropdown>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-dewan-pembina"
-                              }
-                            >
-                              Dewan Pembina
-                            </Link>
+                          <Menu.Item onClick={strukturDewanPembina}>
+                            Dewan Pembina
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-pimpinan-pusat"
-                              }
-                            >
-                              Dewan Pimpinan Pusat
-                            </Link>
+                          <Menu.Item onClick={strukturPimpinanPusat}>
+                            Dewan Pimpinan Pusat
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-pimpinan-daerah"
-                              }
-                            >
-                              Dewan Pimpinan Daerah
-                            </Link>
+                          <Menu.Item onClick={strukturPimpinanDaerah}>
+                            Dewan Pimpinan Daerah
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-pimpinan-cabang"
-                              }
-                            >
-                              Dewan Pimpinan Cabang
-                            </Link>
+                          <Menu.Item onClick={strukturPimpinanCabang}>
+                            Dewan Pimpinan Cabang
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-pimpinan-anak-cabang"
-                              }
-                            >
-                              Pimpinan Anak Cabang
-                            </Link>
+                          <Menu.Item onClick={strukturPimpinanAnakCabang}>
+                            Pimpinan Anak Cabang
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-pimpinan-ranting"
-                              }
-                            >
-                              Pimpinan Ranting
-                            </Link>
+                          <Menu.Item onClick={strukturPimpinanRanting}>
+                            Pimpinan Ranting
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/struktur-partai/struktur-perwakilan-partai-luar-negeri"
-                              }
-                            >
-                              Perwakilan Partai di Luar Negeri
-                            </Link>
+                          <Menu.Item onClick={strukturPerwakilanLuarNegeri}>
+                            Perwakilan Partai di Luar Negeri
                           </Menu.Item>
                         </Menu.Dropdown>
                       </Menu>
