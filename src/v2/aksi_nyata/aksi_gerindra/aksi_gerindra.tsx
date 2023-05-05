@@ -1,8 +1,9 @@
+import { ViewAksiGerindraV2 } from "./view_aksi_gerindra"
 
 
 const AksiGerindraV2 = () => {
     return <>
-    Aksi Grndr
+        <ViewAksiGerindraV2 />
     </>
 }
 
