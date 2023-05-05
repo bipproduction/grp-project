@@ -1,8 +1,10 @@
+import { ViewEksekutifV2 } from "./view_eksekutif"
+
 
 
 const EksekutifV2 = () => {
     return <>
-    eksekutif v2
+    <ViewEksekutifV2/>
     </>
 }
 

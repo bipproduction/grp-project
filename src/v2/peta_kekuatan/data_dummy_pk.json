@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "Nama": "Susi",
+        "NIK": 13311413313,
+        "Nama_kementrian": "Perikanan Dan Kelautan",
+        "Jabatan_eksekutif": "Ketua ",
+        "Periode": "2 Tahun ",
+        "Alamat_tinggal": "Tangerang",
+        "Alamat_kantor": "Jalan Sudirman, Jakarta",
+        "Email": "susi@gmail.com",
+        "Media_social": "-"
+    },
+    {
+        "id": 2,
+        "Nama": "Susi",
+        "NIK": 13311413313,
+        "Nama_kementrian": "Perikanan Dan Kelautan",
+        "Jabatan_eksekutif": "Ketua ",
+        "Periode": "2 Tahun ",
+        "Alamat_tinggal": "Tangerang",
+        "Alamat_kantor": "Jalan Sudirman, Jakarta",
+        "Email": "susi@gmail.com",
+        "Media_social": "-"
+    }
+    
+]
+
