@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "nama": "Ali",
+        "nama_organisasi": "Gerindra",
+        "nik": "35101080211",
+        "tempat_lahir": "Padang Sambian Klod",
+        "tgl_lahir":"12-06-2000",
+        "email":"user@gmail.com",
+        "tlp":"08978968123",
+        "medsos":"ali_"
+    },
+    {
+        "id": 1,
+        "nama": "Ali",
+        "nama_organisasi": "Gerindra",
+        "nik": "35101080211",
+        "tempat_lahir": "Padang Sambian Klod",
+        "tgl_lahir":"12-06-2000",
+        "email":"user@gmail.com",
+        "tlp":"08978968123",
+        "medsos":"ali_"
+    }
+]
+
