@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   TextInput,
+  UnstyledButton,
   createStyles,
   rem,
 } from "@mantine/core";
@@ -23,7 +24,7 @@ import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
-import { IoArrowBackCircle } from "react-icons/io5";
+import { IoArrowBackCircle, IoChevronDownCircle } from "react-icons/io5";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 
@@ -32,17 +33,24 @@ const useStyles = createStyles((theme) => ({
     minHeight: rem(764),
     backgroundColor: COLOR.hitam,
   },
+  user: {
+    display: "block",
+    width: "100%",
+    padding: 7,
+    borderRadius: 8,
+    color: "white",
+
+    backgroundColor: COLOR.merah,
+  },
 }));
 
 function OrganisasiAfiliatif() {
-
   const formStrukturPartai = useForm({
     initialValues: {
       afiliatif: "",
     },
     validate: {
       afiliatif: isNotEmpty("Tidak Boleh Kosong"),
-
     },
   });
 
@@ -94,16 +102,15 @@ function OrganisasiAfiliatif() {
                         * Wajib diisi
                       </Text>
                     </Box>
-                    <Button
-                      fullWidth
-                      radius={"md"}
-                      color="orange.9"
-                      bg={COLOR.merah}
-                    >
-                      Organisasi Afiliatif
-                    </Button>
+                    <UnstyledButton className={classes.user} pr={20} pl={20}>
+                      <Group>
+                        <div style={{ flex: 1 }}>
+                          <Text size="sm">Organisasi Afiliatif</Text>
+                        </div>
+                      </Group>
+                    </UnstyledButton>
                     <Select
-                    {...formStrukturPartai.getInputProps("afiliatif")}
+                      {...formStrukturPartai.getInputProps("afiliatif")}
                       label="Pilih Nama Organisasi Afilliatif"
                       mt={10}
                       radius={"md"}
