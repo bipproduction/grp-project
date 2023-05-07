@@ -5,6 +5,8 @@ import { AiFillSetting } from "react-icons/ai"
 import { FiLogOut } from "react-icons/fi"
 import { useForm } from "@mantine/form"
 import { useWindowScroll } from "@mantine/hooks"
+import { constant } from "lodash"
+import { useRouter } from "next/router"
 
 const HomeUserV2 = () => {
     const mockdata = [
@@ -99,6 +101,17 @@ const HomeUserV2 = () => {
         },
     });
 
+    const router = useRouter();
+
+    let link_dashboard ="";
+    if (sUser.value.masterUserRoleId == "1") {
+         link_dashboard = "/v2/dashboard-user";
+    } else if (sUser.value.masterUserRoleId == "2") {
+        link_dashboard = "/v2/dashboard";
+    } else if (sUser.value.masterUserRoleId == "3") {
+        link_dashboard = "/v2/dashboard-super-admin";
+    }
+
     return <>
         {/* HEADER */}
         <Box>
@@ -147,13 +160,13 @@ const HomeUserV2 = () => {
                                 <Center>
                                     <Button
                                         component="a"
-                                        href="/v2/dashboard-user"
                                         style={{ cursor: "pointer" }}
                                         ta={"center"}
                                         mt={20}
                                         bg={COLOR.orange}
                                         color="orange"
                                         radius={20}
+                                        onClick={()=>{router.push(link_dashboard)}}
                                     >
                                         Lihat Profile
                                     </Button>

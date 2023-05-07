@@ -6,7 +6,10 @@ import { useRouter } from "next/router";
 
 const DashboardV2 = () => {
     const router = useRouter();
-    if ( sUser.value.masterUserRoleId != "2") router.replace("/v2/");
+    console.log("yoo ini dashboard admin")
+    //if ( sUser.value.masterUserRoleId != "2") router.replace("/v2/");
+
+    // return<>ini dashboard admin</>
 
     return <>
         <DashboardAdminV2 />

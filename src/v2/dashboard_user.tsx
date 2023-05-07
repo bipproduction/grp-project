@@ -17,6 +17,7 @@ import {
     Center,
     Button,
     Grid,
+    ActionIcon,
 } from "@mantine/core";
 import { useState } from "react";
 import { AiFillApple, AiFillSetting } from "react-icons/ai";
@@ -30,6 +31,7 @@ import { useRouter } from "next/router";
 import KTAV2 from "./dashboard_user/kta";
 import DataProfileV2 from "./dashboard_user/profile";
 import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
+import { IoArrowBackCircle } from "react-icons/io5";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -84,6 +86,9 @@ const LayoutDashboardUserV2 = () => {
     //   lSelectedPage.set(page)
     // }
     const router = useRouter();
+    function home() {
+        router.push("/v2/home");
+    }
     return (
         <>
             <AppShell
@@ -151,6 +156,12 @@ const LayoutDashboardUserV2 = () => {
                         </Box>
 
                         <Navbar.Section>
+                            <Group pb={30} onClick={home} style={{ cursor: 'pointer' }}>
+                                <ActionIcon>
+                                    <IoArrowBackCircle size={90} color={COLOR.merah} />
+                                </ActionIcon>
+                                <Text onClick={home}>Home</Text>
+                            </Group>
                             {
                                 <Flex align={"center"} gap={"lg"}>
                                     <FaCircle size={25} color={COLOR.merah} />

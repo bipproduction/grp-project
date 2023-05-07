@@ -53,7 +53,8 @@ const Authrovider = ({ children }: PropsWithChildren) => {
   const [isSignup, setIsSignup] = useState(false)
 
   useShallowEffect(() => {
-    const user = localStorage.getItem("user_id")
+    const user = localStorage.getItem("user_id");
+    //console.table(user)
     if (!user) {
       sUser.value = []
     }
@@ -62,7 +63,7 @@ const Authrovider = ({ children }: PropsWithChildren) => {
       fetch(api.apiGetOneUser + `?id=${user}`)
         .then((v) => v.json())
         .then((v) => (sUser.value = v));
-      sUser.value = user
+      //sUser.value = user
     }
   }, [])
 
@@ -84,7 +85,6 @@ const Authrovider = ({ children }: PropsWithChildren) => {
 const DevSeeder = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const dev = router.query.dev;
-  console.log();
 
   if (router.query.dev == undefined) router.query.dev = "false";
   if (dev == "true") return <SeederEnd />
