@@ -284,7 +284,7 @@ const HomeUserV2 = () => {
                                     align="center"
                                     color={COLOR.merah}
                                 >
-                                    Get in touch
+                                    Hubungi kami
                                 </Title>
 
                                 <SimpleGrid
@@ -293,15 +293,15 @@ const HomeUserV2 = () => {
                                     breakpoints={[{ maxWidth: "sm", cols: 1 }]}
                                 >
                                     <TextInput
-                                        label="Name"
-                                        placeholder="Your name"
+                                        label="Nama"
+                                        placeholder="Nama anda"
                                         name="name"
                                         variant="filled"
                                         {...form.getInputProps("name")}
                                     />
                                     <TextInput
                                         label="Email"
-                                        placeholder="Your email"
+                                        placeholder="Email anda"
                                         name="email"
                                         variant="filled"
                                         {...form.getInputProps("email")}
@@ -309,8 +309,8 @@ const HomeUserV2 = () => {
                                 </SimpleGrid>
 
                                 <TextInput
-                                    label="Subject"
-                                    placeholder="Subject"
+                                    label="Subjek"
+                                    placeholder="Subjek"
                                     mt="md"
                                     name="subject"
                                     variant="filled"
@@ -318,8 +318,8 @@ const HomeUserV2 = () => {
                                 />
                                 <Textarea
                                     mt="md"
-                                    label="Message"
-                                    placeholder="Your message"
+                                    label="Pesan"
+                                    placeholder="Pesan anda"
                                     maxRows={10}
                                     minRows={5}
                                     autosize
@@ -335,7 +335,7 @@ const HomeUserV2 = () => {
                                         bg={COLOR.merah}
                                         color="orange.9"
                                     >
-                                        Send message
+                                        Kirim Pesan
                                     </Button>
                                 </Group>
                             </form>
