@@ -1,10 +1,11 @@
 import React from 'react';
+import TableAnggotaPartaiV2 from './table_anggota_partai';
 
 function DbAnggotaPartai() {
   return (
-    <div>
-      DbAnggotaPartai
-    </div>
+    <>
+    <TableAnggotaPartaiV2/>
+    </>
   );
 }
 

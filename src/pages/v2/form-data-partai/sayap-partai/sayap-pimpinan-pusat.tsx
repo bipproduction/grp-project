@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,28 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function SayapPimpinanPusat() {
+  const [jabatan, setJabatan] = useState<any | []>([])
+  const [sayap, setSayap] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadJabatan()
+    loadSayapPartai()
+  },[])
+
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-pusat")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
+  async function loadSayapPartai() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-sayap-partai")
+      .then((res) => res.json())
+      .then((val) =>
+        setSayap(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -207,22 +231,7 @@ function SayapPimpinanPusat() {
                       radius={"md"}
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
-                      data={[
-                        { value: "PAPERA ", label: "PAPERA " },
-                        { value: "TIDAR ", label: "TIDAR " },
-                        { value: "JARI RAYA", label: "JARI RAYA" },
-                        { value: "SATRIA", label: "SATRIA" },
-                        { value: "GEMIRA", label: "GEMIRA" },
-                        { value: "KESIRA", label: "KESIRA" },
-                        { value: "GEKIRA", label: "GEKIRA" },
-                        { value: "GEMA SADHANA", label: "GEMA SADHANA" },
-                        { value: "PIRA", label: "PIRA" },
-                        { value: "SEGARA", label: "SEGARA" },
-                        { value: "PETIR", label: "PETIR" },
-                        { value: "PPIR", label: "PPIR" },
-                        { value: "BGM", label: "BGM" },
-                        { value: "GMI", label: "GMI" },
-                      ]}
+                      data={sayap}
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -231,30 +240,7 @@ function SayapPimpinanPusat() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua Umum", label: "Ketua Umum" },
-                        {
-                          value: "Wakil Ketua Umum ",
-                          label: "Wakil Ketua Umum ",
-                        },
-                        { value: "Ketua Bidang", label: "Ketua Bidang" },
-                        {
-                          value: "Sekretaris Jenderal",
-                          label: "Sekretaris Jenderal",
-                        },
-                        {
-                          value: "Wakil Sekretaris Jenderal",
-                          label: "Wakil Sekretaris Jenderal",
-                        },
-                        {
-                          value: "Bendahara Umum ",
-                          label: "Bendahara Umum ",
-                        },
-                        {
-                          value: "Wakil Bendahara Umum",
-                          label: "Wakil Bendahara Umum",
-                        },
-                      ]}
+                      data={jabatan}
                     />
                     <Center pt={20}>
                       <Box w={350}>

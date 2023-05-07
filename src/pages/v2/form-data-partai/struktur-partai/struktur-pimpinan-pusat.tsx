@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanPusat() {
+  const [jabatan, setJabatan] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadJabatan()
+  },[])
+
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-pusat")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
   const formStrukturPartai = useForm({
     initialValues: {
       jabatan: "",
@@ -225,30 +240,7 @@ function StrukturPimpinanPusat() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua Umum", label: "Ketua Umum" },
-                        {
-                          value: "Wakil Ketua Umum ",
-                          label: "Wakil Ketua Umum ",
-                        },
-                        { value: "Ketua Bidang", label: "Ketua Bidang" },
-                        {
-                          value: "Sekretaris Jenderal",
-                          label: "Sekretaris Jenderal",
-                        },
-                        {
-                          value: "Wakil Sekretaris Jenderal",
-                          label: "Wakil Sekretaris Jenderal",
-                        },
-                        {
-                          value: "Bendahara Umum ",
-                          label: "Bendahara Umum ",
-                        },
-                        {
-                          value: "Wakil Bendahara Umum",
-                          label: "Wakil Bendahara Umum",
-                        },
-                      ]}
+                      data={jabatan}
                     />
                     <Center pt={20}>
                       <Box w={350}>

@@ -1,10 +1,11 @@
 import React from 'react';
+import TableSayapPartaiV2 from './table_sayap_partai';
 
 function DbSayapPartai() {
   return (
-    <div>
-      DbSayapPartai
-    </div>
+    <>
+    <TableSayapPartaiV2/>
+    </>
   );
 }
 

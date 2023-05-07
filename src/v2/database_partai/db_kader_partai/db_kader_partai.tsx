@@ -1,10 +1,11 @@
 import React from 'react';
+import TableKaderPartaiV2 from './table_kader_partai';
 
 function DbKaderPartai() {
   return (
-    <div>
-      DbKaderPartai
-    </div>
+    <>
+    <TableKaderPartaiV2/>
+    </>
   );
 }
 

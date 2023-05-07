@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,46 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function SayapPimpinanCabang() {
+  const [jabatan, setJabatan] = useState<any | []>([])
+  const [provinsi, setProvinsi] = useState<any | []>([]);
+  const [sayap, setSayap] = useState<any | []>([])
+  const [kabupaten, setKabupaten] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadSayapPartai()
+    loadProvinsi()
+    loadKabupaten()
+    loadJabatan()
+  },[])
+
+  async function loadProvinsi() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+    )
+      .then((res) => res.json())
+      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
+  }
+  async function loadKabupaten() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+    )
+      .then((res) => res.json())
+      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
+  }
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
+  async function loadSayapPartai() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-sayap-partai")
+      .then((res) => res.json())
+      .then((val) =>
+        setSayap(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -211,26 +253,11 @@ function SayapPimpinanCabang() {
                       radius={"md"}
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
-                      data={[
-                        { value: "PAPERA ", label: "PAPERA " },
-                        { value: "TIDAR ", label: "TIDAR " },
-                        { value: "JARI RAYA", label: "JARI RAYA" },
-                        { value: "SATRIA", label: "SATRIA" },
-                        { value: "GEMIRA", label: "GEMIRA" },
-                        { value: "KESIRA", label: "KESIRA" },
-                        { value: "GEKIRA", label: "GEKIRA" },
-                        { value: "GEMA SADHANA", label: "GEMA SADHANA" },
-                        { value: "PIRA", label: "PIRA" },
-                        { value: "SEGARA", label: "SEGARA" },
-                        { value: "PETIR", label: "PETIR" },
-                        { value: "PPIR", label: "PPIR" },
-                        { value: "BGM", label: "BGM" },
-                        { value: "GMI", label: "GMI" },
-                      ]}
+                      data={sayap}
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("provinsi")}
-                      data={[{ value: "Bali", label: "Bali" }]}
+                      data={provinsi}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
@@ -239,7 +266,7 @@ function SayapPimpinanCabang() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("kabupaten")}
-                      data={[{ value: "Denpasar", label: "Denpasar" }]}
+                      data={kabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"
@@ -253,21 +280,7 @@ function SayapPimpinanCabang() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua ", label: "Ketua " },
-                        { value: "Wakil Ketua ", label: "Wakil Ketua " },
-                        { value: "Sekretaris", label: "Sekretaris" },
-                        {
-                          value: "Wakil Sekretaris",
-                          label: "Wakil Sekretaris",
-                        },
-                        { value: "Bendahara", label: "Bendahara" },
-                        {
-                          value: "Wakil Bendahara",
-                          label: "Wakil Bendahara",
-                        },
-                        { value: "Divisi", label: "Divisi" },
-                      ]}
+                      data={jabatan}
                     />
                     <TextInput
                     {...formStrukturPartai.getInputProps("alamatKantor")}
