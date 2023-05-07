@@ -1,21 +1,23 @@
 import { Box, Button, Group, ScrollArea, Table } from "@mantine/core";
 // const data_dummy = require("../data_dummy_pk")
-import myData from "../data_dummy_pk.json";
+import myData from "../../data_dummy_pk.json";
 
-export const TableEksekutifNasionalV2 = () => {
+export const TableEksekutifProvinsiV2 = () => {
   const tbHead = (
     <tr>
       <th>No</th>
       <th>Nama</th>
       <th>NIK</th>
-      <th>Nama Kementrian</th>
+      <th>Provinsi</th>
       <th>Jabatan Eksekutif</th>
       <th>Periode</th>
       <th>Alamat Tinggal/Domisili</th>
       <th>Alamat Kantor</th>
       <th>Email</th>
       <th>Media Social</th>
-      <th><Group position="center">Aksi</Group></th>
+      <th>
+        <Group position="center">Aksi</Group>
+      </th>
     </tr>
   );
 
@@ -24,8 +26,8 @@ export const TableEksekutifNasionalV2 = () => {
       <td>{i + 1}</td>
       <td>{e.Nama}</td>
       <td>{e.NIK}</td>
-      <td>{e.Nama_kementrian}</td>
-      <td>{e.Jabatan_eksekutif}</td>
+      <td>{e.Provinsi}</td>
+      <td>{e.Jab_prov}</td>
       <td>{e.Periode}</td>
       <td>{e.Alamat_tinggal}</td>
       <td>{e.Alamat_kantor}</td>
