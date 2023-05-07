@@ -1,7 +1,8 @@
+import { ViewTabulasiDataV2 } from "./view_tabulasi_data"
 
 const TabulasiDataV2 = () => {
     return <>
-    tabulas v2
+        <ViewTabulasiDataV2 />
     </>
 }
 

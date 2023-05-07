@@ -14,6 +14,7 @@ import FormSignUp from "@/v2/auth/form-signup";
 import { Modak } from "next/font/google";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
+import SeederEnd from "./seeder";
 
 
 export default function App(props: AppProps) {
@@ -37,9 +38,12 @@ export default function App(props: AppProps) {
           colorScheme: "light",
         }}
       >
-        <Authrovider>
-          <Component {...pageProps} />
-        </Authrovider>
+        <DevSeeder>
+          <Authrovider>
+            <Component {...pageProps} />
+          </Authrovider>
+        </DevSeeder>
+
       </MantineProvider>
     </>
   );
@@ -47,19 +51,18 @@ export default function App(props: AppProps) {
 
 const Authrovider = ({ children }: PropsWithChildren) => {
   const [isSignup, setIsSignup] = useState(false)
-  const router = useRouter()
 
   useShallowEffect(() => {
     const user = localStorage.getItem("user_id")
-    console.log(user)
     if (!user) {
       sUser.value = []
-    } else {
-      sUser.value = JSON.parse(user)
-      // fetch(api.apiGetOneUser + `?id=${user}`)
-      //   .then((v) => v.json())
-      //   .then((v) => (sUser.value = v));
-      // sUser.value = user
+    }
+    else {
+      //sUser.value = JSON.parse(user)
+      fetch(api.apiGetOneUser + `?id=${user}`)
+        .then((v) => v.json())
+        .then((v) => (sUser.value = v));
+      sUser.value = user
     }
   }, [])
 
@@ -75,6 +78,18 @@ const Authrovider = ({ children }: PropsWithChildren) => {
     );
 
   return <>{children}</>;
+};
+
+
+const DevSeeder = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
+  const dev = router.query.dev;
+  console.log();
+
+  if (router.query.dev == undefined) router.query.dev = "false";
+  if (dev == "true") return <SeederEnd />
+
+  return <>{children}</>
 };
 
 

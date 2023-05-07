@@ -35,7 +35,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
                 localStorage.setItem("user_id", data.id);
                 sUser.value = data;
                 toast("Success");
-                router.reload();
+                //router.reload();
             } else {
                 toast("Email atau password salah");
             }
@@ -54,17 +54,18 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
                             borderRadius: 10,
                         }}
                     >
-                        <div style={{
+                        {/* <div style={{
                             color: COLOR.orange
                         }} onClick={() => {
+                            localStorage.setItem("user_id", "dev");
                             const data = {
                                 username: "",
                                 email: "",
-                                masterUserRoleId: ""
+                                masterUserRoleId: "1"
                             }
-                            sUser.value = data
-                            localStorage.setItem("user_id", JSON.stringify(data))
-                        }}>tekan sini</div>
+                            sUser.value = data;
+                            //localStorage.setItem("user_id", JSON.stringify(data));
+                        }}>tekan sini</div> */}
                         <Stack>
                             <Box>
                                 <Center>

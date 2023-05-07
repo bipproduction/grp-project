@@ -1,8 +1,9 @@
+import { ViewSaksiPilpresV2 } from "./view_saksi_pilpres"
 
 
 const SaksiPilpresV2 = () => {
     return <>
-    pilpres v2
+        <ViewSaksiPilpresV2 />
     </>
 }
 

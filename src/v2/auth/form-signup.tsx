@@ -44,7 +44,7 @@ const FormSignUp = () => {
             const data = await res.json();
             if (res.status === 201) {
                 toast("Sukses. Silahkan lakukan login");
-                router.reload();
+                //router.reload();
             } else {
                 toast(data.message);
             }
