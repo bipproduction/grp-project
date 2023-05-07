@@ -27,6 +27,8 @@ import { useRouter } from "next/router";
 import { IoArrowBackCircle, IoChevronDownCircle } from "react-icons/io5";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -45,6 +47,21 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function OrganisasiAfiliatif() {
+
+  const [afiliatif, setAfiliatif] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadAfiliatif()
+  },[])
+
+  async function loadAfiliatif() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-organisasi-afiliatif")
+      .then((res) => res.json())
+      .then((val) =>
+        setAfiliatif(Object.values(val).map((e: any) => e.name))
+      );
+  }
+
   const formStrukturPartai = useForm({
     initialValues: {
       afiliatif: "",
@@ -116,12 +133,7 @@ function OrganisasiAfiliatif() {
                       radius={"md"}
                       withAsterisk
                       placeholder="Pilih Nama Organisasi Afilliatif"
-                      data={[
-                        { value: "APPSI ", label: "APPSI " },
-                        { value: "IPSI ", label: "IPSI " },
-                        { value: "HKTI", label: "HKTI" },
-                        { value: "PEMUDA TANI", label: "PEMUDA TANI" },
-                      ]}
+                      data={afiliatif}
                     />
                     <Center pt={20}>
                       <Box w={350}>

@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,48 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanAnakCabang() {
+  const [provinsi, setProvinsi] = useState<any | []>([]);
+  const [kabupaten, setKabupaten] = useState<any | []>([]);
+  const [kecamatan, setKecamatan] = useState<any | []>([]);
+  const [jabatan, setJabatan] = useState<any | []>([]);
+
+  useShallowEffect(() => {
+    loadProvinsi();
+    loadKabupaten();
+    loadKecamatan();
+    loadJabatan()
+  }, []);
+
+  async function loadProvinsi() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+    )
+      .then((res) => res.json())
+      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
+  }
+
+  async function loadKabupaten() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+    )
+      .then((res) => res.json())
+      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
+  }
+
+  async function loadKecamatan() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+    )
+      .then((res) => res.json())
+      .then((val) => setKecamatan(Object.values(val).map((e: any) => e.name)));
+  }
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -226,7 +270,7 @@ function StrukturPimpinanAnakCabang() {
                     </Box>
                     <Select
                     {...formStrukturPartai.getInputProps("provinsi")}
-                      data={[{ value: "Bali", label: "Bali" }]}
+                      data={provinsi}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
@@ -235,7 +279,7 @@ function StrukturPimpinanAnakCabang() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("kabupaten")}
-                      data={[{ value: "Denpasar", label: "Denpasar" }]}
+                      data={kabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"
@@ -244,9 +288,7 @@ function StrukturPimpinanAnakCabang() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("kecamatan")}
-                      data={[
-                        { value: "Denpasar Barat", label: "Denpasar Barat" },
-                      ]}
+                      data={kecamatan}
                       radius={"md"}
                       mt={10}
                       placeholder="Kecamatan"
@@ -260,21 +302,7 @@ function StrukturPimpinanAnakCabang() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua ", label: "Ketua " },
-                        { value: "Wakil Ketua ", label: "Wakil Ketua " },
-                        { value: "Sekretaris", label: "Sekretaris" },
-                        {
-                          value: "Wakil Sekretaris",
-                          label: "Wakil Sekretaris",
-                        },
-                        { value: "Bendahara", label: "Bendahara" },
-                        {
-                          value: "Wakil Bendahara",
-                          label: "Wakil Bendahara",
-                        },
-                        { value: "Unit", label: "Unit" },
-                      ]}
+                      data={jabatan}
                     />
 
                     <Center pt={20}>

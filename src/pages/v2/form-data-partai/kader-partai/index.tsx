@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function KaderPartai() {
+  const [kader, setKader] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadKader()
+  },[])
+
+  async function loadKader() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-kader-partai")
+      .then((res) => res.json())
+      .then((val) =>
+        setKader(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
   const formKaderPartai = useForm({
     initialValues: {
@@ -157,14 +172,7 @@ function KaderPartai() {
                       radius={"md"}
                       withAsterisk
                       placeholder="Pilih Tingkat Kader"
-                      data={[
-                        { value: "MANGGALA ", label: "MANGGALA " },
-                        { value: "UTAMA ", label: "UTAMA " },
-                        { value: "MADYA", label: "MADYA" },
-                        { value: "MUDA", label: "MUDA" },
-                        { value: "PRATAMA", label: "PRATAMA" },
-                        { value: "PENGGERAK", label: "PENGGERAK" },
-                      ]}
+                      data={kader}
                       
                     />
                     <Center pt={20}>

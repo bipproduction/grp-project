@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,55 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanRanting() {
+  const [provinsi, setProvinsi] = useState<any | []>([]);
+  const [kabupaten, setKabupaten] = useState<any | []>([]);
+  const [kecamatan, setKecamatan] = useState<any | []>([]);
+  const [desa, setDesa] = useState<any | []>([]);
+  const [jabatan, setJabatan] = useState<any | []>([]);
+
+  useShallowEffect(() => {
+    loadProvinsi();
+    loadKabupaten();
+    loadKecamatan();
+    loadDesa();
+    loadJabatan()
+  }, []);
+
+  async function loadProvinsi() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+    )
+      .then((res) => res.json())
+      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
+  }
+
+  async function loadKabupaten() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+    )
+      .then((res) => res.json())
+      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
+  }
+
+  async function loadKecamatan() {
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+    )
+      .then((res) => res.json())
+      .then((val) => setKecamatan(Object.values(val).map((e: any) => e.name)));
+  }
+  async function loadDesa() {
+    const res = await fetch("/api/get/sumber-daya-partai/wilayah/api-get-desa")
+      .then((res) => res.json())
+      .then((val) => setDesa(Object.values(val).map((e: any) => e.name)));
+  }
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-ranting")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -229,7 +280,7 @@ function StrukturPimpinanRanting() {
                     </Box>
                     <Select
                     {...formStrukturPartai.getInputProps("provinsi")}
-                      data={[{ value: "Bali", label: "Bali" }]}
+                      data={provinsi}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
@@ -238,7 +289,7 @@ function StrukturPimpinanRanting() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("kabupaten")}
-                      data={[{ value: "Denpasar", label: "Denpasar" }]}
+                      data={kabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"
@@ -247,9 +298,7 @@ function StrukturPimpinanRanting() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("kecamatan")}
-                      data={[
-                        { value: "Denpasar Barat", label: "Denpasar Barat" },
-                      ]}
+                      data={kecamatan}
                       radius={"md"}
                       mt={10}
                       placeholder="Kecamatan"
@@ -258,12 +307,7 @@ function StrukturPimpinanRanting() {
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("desa")}
-                      data={[
-                        {
-                          value: "Padang sambian Klod",
-                          label: "Padang sambian Klod",
-                        },
-                      ]}
+                      data={desa}
                       radius={"md"}
                       mt={10}
                       placeholder="Desa / Kelurahan"
@@ -277,21 +321,7 @@ function StrukturPimpinanRanting() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua ", label: "Ketua " },
-                        { value: "Wakil Ketua ", label: "Wakil Ketua " },
-                        { value: "Sekretaris", label: "Sekretaris" },
-                        {
-                          value: "Wakil Sekretaris",
-                          label: "Wakil Sekretaris",
-                        },
-                        { value: "Bendahara", label: "Bendahara" },
-                        {
-                          value: "Wakil Bendahara",
-                          label: "Wakil Bendahara",
-                        },
-                        { value: "Kelompok", label: "Kelompok" },
-                      ]}
+                      data={jabatan}
                     />
 
                     <Center pt={20}>

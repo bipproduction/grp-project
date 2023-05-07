@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,21 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturDewanPembina() {
+  const [jabatan, setJabatan] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadJabatan()
+  },[])
+
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
+
+
   const formStrukturPartai = useForm({
     initialValues: {
       jabatan: "",
@@ -224,52 +241,7 @@ function StrukturDewanPembina() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        {
-                          value: "Ketua Dewan Pembina",
-                          label: "Ketua Dewan Pembina",
-                        },
-                        {
-                          value: "Wakil Ketua Dewan Pembina ",
-                          label: "Wakil Ketua Dewan Pembina ",
-                        },
-                        {
-                          value: "Sekretaris Dewan Pembina ",
-                          label: "Sekretaris Dewan Pembina ",
-                        },
-                        {
-                          value: "Anggota Dewan Pembina",
-                          label: "Anggota Dewan Pembina",
-                        },
-                        {
-                          value: "Ketua Dewan Penasihat",
-                          label: "Ketua Dewan Penasihat",
-                        },
-                        {
-                          value: "Wakil Ketua Dewan Penasihat ",
-                          label: "Wakil Ketua Dewan Penasihat ",
-                        },
-                        {
-                          value: "Anggota Dewan Penasihat",
-                          label: "Anggota Dewan Penasihat",
-                        },
-                        {
-                          value: "Ketua Dewan Pakar",
-                          label: "Ketua Dewan Pakar",
-                        },
-                        {
-                          value: "Wakil Ketua Dewan Pakar",
-                          label: "Wakil Ketua Dewan Pakar",
-                        },
-                        {
-                          value: "Sekretaris Dewan Pakar",
-                          label: "Sekretaris Dewan Pakar",
-                        },
-                        {
-                          value: "Anggota Dewan Pakar",
-                          label: "Anggota Dewan Pakar",
-                        },
-                      ]}
+                      data={jabatan}
                     />
                     <Center pt={20}>
                       <Box w={350}>

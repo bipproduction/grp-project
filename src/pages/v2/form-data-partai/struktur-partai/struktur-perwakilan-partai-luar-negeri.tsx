@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 import { isNotEmpty, useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
 import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -43,6 +45,28 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPerwakilanPartaiLuarNegeri() {
+  const [jabatan, setJabatan] = useState<any | []>([])
+  const [negara, setNegara] = useState<any | []>([])
+
+  useShallowEffect(() => {
+    loadJabatan()
+    loadNegara()
+  },[])
+
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
+  async function loadNegara() {
+    const res = await fetch("/api/get/sumber-daya-partai/wilayah/api-get-negara")
+      .then((res) => res.json())
+      .then((val) =>
+        setNegara(Object.values(val).map((e: any) => e.name))
+      );
+  }
 
     const formStrukturPartai = useForm({
     initialValues: {
@@ -222,11 +246,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                     </Box>
                     <Select
                     {...formStrukturPartai.getInputProps("negara")}
-                      data={[
-                        { value: "Malaysia", label: "Malaysia" },
-                        { value: "Jepang", label: "Jepang" },
-                        { value: "Korea Selatan", label: "Korea Selatan" },
-                      ]}
+                      data={negara}
                       radius={"md"}
                       mt={10}
                       placeholder="Negara"
@@ -240,21 +260,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua ", label: "Ketua " },
-                        { value: "Wakil Ketua ", label: "Wakil Ketua " },
-                        { value: "Sekretaris", label: "Sekretaris" },
-                        {
-                          value: "Wakil Sekretaris",
-                          label: "Wakil Sekretaris",
-                        },
-                        { value: "Bendahara", label: "Bendahara" },
-                        {
-                          value: "Wakil Bendahara",
-                          label: "Wakil Bendahara",
-                        },
-                        { value: "Biro", label: "Biro" },
-                      ]}
+                      data={jabatan}
                     />
 
                     <Center pt={20}>
