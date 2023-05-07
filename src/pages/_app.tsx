@@ -55,11 +55,11 @@ const Authrovider = ({ children }: PropsWithChildren) => {
     if (!user) {
       sUser.value = []
     } else {
-      //sUser.value = JSON.parse(user)
-      fetch(api.apiGetOneUser + `?id=${user}`)
-        .then((v) => v.json())
-        .then((v) => (sUser.value = v));
-      sUser.value = user
+      sUser.value = JSON.parse(user)
+      // fetch(api.apiGetOneUser + `?id=${user}`)
+      //   .then((v) => v.json())
+      //   .then((v) => (sUser.value = v));
+      // sUser.value = user
     }
   }, [])
 
