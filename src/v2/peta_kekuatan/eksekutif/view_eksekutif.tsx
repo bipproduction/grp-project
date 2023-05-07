@@ -3,7 +3,9 @@ import { Box, Button, Grid, Group, Paper, Tabs, Text } from "@mantine/core";
 import { AiOutlineSave } from "react-icons/ai";
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
-import { EksekutifNasionalV2 } from "./eksekutif_nasional";
+import { EksekutifKabKotV2 } from "./kabkot/eksekutif_kabkot";
+import { EksekutifNasionalV2 } from "./nasional/eksekutif_nasional";
+import { EksekutifProvinsiV2 } from "./provisi/eksekutif_provinsi";
 
 export const ViewEksekutifV2 = () => {
   return (
@@ -49,6 +51,12 @@ export const ViewEksekutifV2 = () => {
             </Tabs.List>
             <Tabs.Panel value="1">
               <EksekutifNasionalV2 />
+            </Tabs.Panel>
+            <Tabs.Panel value="2">
+              <EksekutifProvinsiV2/>
+            </Tabs.Panel>
+            <Tabs.Panel value="3">
+              <EksekutifKabKotV2/>
             </Tabs.Panel>
           </Tabs>
         </Box>
