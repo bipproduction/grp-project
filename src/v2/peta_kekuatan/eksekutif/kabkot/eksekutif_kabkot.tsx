@@ -2,6 +2,7 @@ import { Box, Button, Grid, Group, Table, TextInput } from "@mantine/core";
 import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahEksekutifV2 } from "../tambah_eksekutif";
+import { TableEksekutifKabKotV2 } from "./table_eksekutif_kabkot";
 
 export const EksekutifKabKotV2 = () => {
   return (
@@ -22,7 +23,7 @@ export const EksekutifKabKotV2 = () => {
             </Grid.Col>
           </Grid>
         </Box>
-        <EksekutifKabKotV2/>
+        <TableEksekutifKabKotV2/>
       </Box>
     </>
   );
