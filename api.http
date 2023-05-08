@@ -556,3 +556,19 @@ Content-Type: application/json
     "email":"amalia@gmail.com",
     "password":"123"
 }
+
+
+
+
+###### GET WILAYAH PROVINSI
+GET http://localhost:3000/api/master/master-provinsi-get-all HTTP/1.1
+
+###### GET WILAYAH KABKOT
+GET http://localhost:3000/api/master/master-kabkot-get-by-provinsi?idProvinsi=2 HTTP/1.1
+
+### GET WILAYAH KECAMATAN
+GET http://localhost:3000/api/master/master-kecamatan-get-by-kabkot?idKabkot=3 HTTP/1.1
+
+
+### GET WILAYAH DESA
+GET http://localhost:3000/api/master/master-desa-get-by-kecamatan?idKecamatan=3 HTTP/1.1
