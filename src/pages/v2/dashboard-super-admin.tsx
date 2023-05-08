@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const DashboardSuperAdminV2 = () => {
     const router = useRouter();
     //if (sUser.value == undefined) return <></>;
-    //if (sUser.value.masterUserRoleId != "3") router.replace("/v2/");
+    if (sUser.value.masterUserRoleId != "3") router.replace("/");
     
     return <>
         <LayoutDashboarSuperdAdminV2 />
