@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
+import _, { functions, get, identity } from "lodash";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -42,6 +43,7 @@ const FormDataDiriUser = () => {
   const [desa, setDesa] = useState<any | []>([]);
   const [pekerjaan, setPekerjaan] = useState<any | []>([]);
   const { classes } = useStyles();
+  const [nameValue, setNameValue] = useState<string>("");
 
   useShallowEffect(() => {
     loadJenisKelamin();
@@ -52,6 +54,8 @@ const FormDataDiriUser = () => {
     loadDesa();
     loadPekerjaan();
   }, []);
+
+
 
   async function loadJenisKelamin() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-jenis-kelamin")
@@ -69,29 +73,38 @@ const FormDataDiriUser = () => {
 
   async function loadProvinsi() {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+      `/api/master/master-provinsi-get-all`
+      // "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
     )
       .then((res) => res.json())
       .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
+      console.log(provinsi)
   }
 
   async function loadKabupaten() {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
-    )
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+      `/api/master/master-kabkot-get-by-provinsi?idProvinsi=1`
+      )
       .then((res) => res.json())
       .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
-  }
+      console.log(setKabupaten)
+    }
 
   async function loadKecamatan() {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      `/api/master/master-kecamatan-get-by-kabkot?idKabkot=1`
     )
       .then((res) => res.json())
       .then((val) => setKecamatan(Object.values(val).map((e: any) => e.name)));
   }
   async function loadDesa() {
-    const res = await fetch("/api/get/sumber-daya-partai/wilayah/api-get-desa")
+    const res = await fetch
+    (
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      `/api/master/master-desa-get-by-kecamatan?idKecamatan=3`
+    )
       .then((res) => res.json())
       .then((val) => setDesa(Object.values(val).map((e: any) => e.name)));
   }
@@ -318,6 +331,10 @@ const FormDataDiriUser = () => {
                                 withAsterisk
                                 searchable
                                 {...formDataDiri.getInputProps("provinsi")}
+                                // onChange={()=>{
+                                //   console.log(provinsi)
+                                //   //loadKabupaten(provinsi);
+                                // }}
                               />
                               <Select
                                 data={kabupaten}
