@@ -1,8 +1,8 @@
-
+import { ViewTPSdanDPTV2 } from "./view_tps_dpt"
 
 const TpsDanDptV2 = () => {
     return <>
-    tps v2
+    <ViewTPSdanDPTV2/>
     </>
 }
 

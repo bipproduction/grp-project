@@ -1,7 +1,8 @@
+import { ViewLegislatifV2 } from "./view_legislatif"
 
 const LegislatifV2 = () => {
     return <>
-    ini legislatif
+    <ViewLegislatifV2/>
     </>
 }
 
