@@ -105,7 +105,7 @@ const FormSignUp = () => {
                             >
                                 Registrasi
                             </Button>
-                            <Box component="a" href="signin">
+                            <Box component="a" href="/">
                                 <Text
                                     style={{ cursor: "pointer" }}
                                     align="right"

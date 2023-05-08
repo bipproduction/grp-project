@@ -5,6 +5,8 @@ import { AiFillSetting } from "react-icons/ai"
 import { FiLogOut } from "react-icons/fi"
 import { useForm } from "@mantine/form"
 import { useWindowScroll } from "@mantine/hooks"
+import { constant } from "lodash"
+import { useRouter } from "next/router"
 
 const HomeUserV2 = () => {
     const mockdata = [
@@ -99,6 +101,17 @@ const HomeUserV2 = () => {
         },
     });
 
+    const router = useRouter();
+
+    let link_dashboard ="";
+    if (sUser.value.masterUserRoleId == "1") {
+         link_dashboard = "/v2/dashboard-user";
+    } else if (sUser.value.masterUserRoleId == "2") {
+        link_dashboard = "/v2/dashboard";
+    } else if (sUser.value.masterUserRoleId == "3") {
+        link_dashboard = "/v2/dashboard-super-admin";
+    }
+
     return <>
         {/* HEADER */}
         <Box>
@@ -147,13 +160,13 @@ const HomeUserV2 = () => {
                                 <Center>
                                     <Button
                                         component="a"
-                                        href="/v2/dashboard-user"
                                         style={{ cursor: "pointer" }}
                                         ta={"center"}
                                         mt={20}
                                         bg={COLOR.orange}
                                         color="orange"
                                         radius={20}
+                                        onClick={()=>{router.push(link_dashboard)}}
                                     >
                                         Lihat Profile
                                     </Button>
@@ -271,7 +284,7 @@ const HomeUserV2 = () => {
                                     align="center"
                                     color={COLOR.merah}
                                 >
-                                    Get in touch
+                                    Hubungi kami
                                 </Title>
 
                                 <SimpleGrid
@@ -280,15 +293,15 @@ const HomeUserV2 = () => {
                                     breakpoints={[{ maxWidth: "sm", cols: 1 }]}
                                 >
                                     <TextInput
-                                        label="Name"
-                                        placeholder="Your name"
+                                        label="Nama"
+                                        placeholder="Nama anda"
                                         name="name"
                                         variant="filled"
                                         {...form.getInputProps("name")}
                                     />
                                     <TextInput
                                         label="Email"
-                                        placeholder="Your email"
+                                        placeholder="Email anda"
                                         name="email"
                                         variant="filled"
                                         {...form.getInputProps("email")}
@@ -296,8 +309,8 @@ const HomeUserV2 = () => {
                                 </SimpleGrid>
 
                                 <TextInput
-                                    label="Subject"
-                                    placeholder="Subject"
+                                    label="Subjek"
+                                    placeholder="Subjek"
                                     mt="md"
                                     name="subject"
                                     variant="filled"
@@ -305,8 +318,8 @@ const HomeUserV2 = () => {
                                 />
                                 <Textarea
                                     mt="md"
-                                    label="Message"
-                                    placeholder="Your message"
+                                    label="Pesan"
+                                    placeholder="Pesan anda"
                                     maxRows={10}
                                     minRows={5}
                                     autosize
@@ -322,7 +335,7 @@ const HomeUserV2 = () => {
                                         bg={COLOR.merah}
                                         color="orange.9"
                                     >
-                                        Send message
+                                        Kirim Pesan
                                     </Button>
                                 </Group>
                             </form>

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 const SignUp = () => {
     const router = useRouter();
     // if (sUser.value == undefined) return <></>;
-    if (sUser.value != undefined || !_.isEmpty(sUser.value)) router.replace("/v2/");
+    //if (sUser.value != undefined || !_.isEmpty(sUser.value)) router.replace("/v2/");
     return <>
         <FormSignUp />
     </>

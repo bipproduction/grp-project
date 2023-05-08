@@ -48,7 +48,7 @@ import EditKTAV2 from "./edit_kta";
                 radius={10}
                 maw={500}
                 mx="auto"
-                src={"/../KTAV2.png"}
+                src={"/../KTANEWV2.png"}
                 alt="a"
               />
             </Center>
