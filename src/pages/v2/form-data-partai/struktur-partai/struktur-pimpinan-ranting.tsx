@@ -45,47 +45,47 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanRanting() {
-  const [provinsi, setProvinsi] = useState<any | []>([]);
-  const [kabupaten, setKabupaten] = useState<any | []>([]);
-  const [kecamatan, setKecamatan] = useState<any | []>([]);
-  const [desa, setDesa] = useState<any | []>([]);
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
   const [jabatan, setJabatan] = useState<any | []>([]);
 
   useShallowEffect(() => {
     loadProvinsi();
-    loadKabupaten();
-    loadKecamatan();
-    loadDesa();
     loadJabatan()
   }, []);
 
-  async function loadProvinsi() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
-    )
-      .then((res) => res.json())
-      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
-  }
+  const loadProvinsi = async () => {
+    const res = await fetch(`/api/master/master-provinsi-get-all`);
+    const ProviniData = await res.json();
+    console.log(ProviniData);
+    setProvinsi(ProviniData);
+  };
 
-  async function loadKabupaten() {
+  const loadKabupaten = async (idProvinsi: string) => {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
+      `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
     )
       .then((res) => res.json())
-      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
-  }
+      .then(setKabupaten);
+  };
 
-  async function loadKecamatan() {
+  async function loadKecamatan(idKabkot: string) {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      `/api/master/master-kecamatan-get-by-kabkot` + `?idKabkot=${idKabkot}`
     )
       .then((res) => res.json())
-      .then((val) => setKecamatan(Object.values(val).map((e: any) => e.name)));
+      .then(setKecamatan);
   }
-  async function loadDesa() {
-    const res = await fetch("/api/get/sumber-daya-partai/wilayah/api-get-desa")
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      `/api/master/master-desa-get-by-kecamatan` + `?idKecamatan=${idKecamatan}`
+    )
       .then((res) => res.json())
-      .then((val) => setDesa(Object.values(val).map((e: any) => e.name)));
+      .then(setDesa);
   }
   async function loadJabatan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-ranting")
@@ -279,8 +279,12 @@ function StrukturPimpinanRanting() {
                       </Menu>
                     </Box>
                     <Select
-                    {...formStrukturPartai.getInputProps("provinsi")}
-                      data={provinsi}
+                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      data={provinsi.map((pro) => ({
+                        value: pro.id,
+                        label: pro.name
+                      }))}
+                      onChange={loadKabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
@@ -288,8 +292,12 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("kabupaten")}
-                      data={kabupaten}
+                    // {...formStrukturPartai.getInputProps("kabupaten")}
+                      data={kabupaten.map((kab) => ({
+                        value: kab.id,
+                        label: kab.name
+                      }))}
+                      onChange={loadKecamatan}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"
@@ -297,8 +305,12 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("kecamatan")}
-                      data={kecamatan}
+                    // {...formStrukturPartai.getInputProps("kecamatan")}
+                      data={kecamatan.map((kec) => ({
+                        value: kec.id,
+                        label: kec.name
+                      }))}
+                      onChange={loadDesa}
                       radius={"md"}
                       mt={10}
                       placeholder="Kecamatan"
@@ -306,8 +318,11 @@ function StrukturPimpinanRanting() {
                       withAsterisk
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("desa")}
-                      data={desa}
+                    // {...formStrukturPartai.getInputProps("desa")}
+                      data={desa.map((des) => ({
+                        value: des.id,
+                        label: des.name
+                      }))}
                       radius={"md"}
                       mt={10}
                       placeholder="Desa / Kelurahan"

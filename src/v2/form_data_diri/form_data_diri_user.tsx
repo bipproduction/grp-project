@@ -17,7 +17,7 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import COLOR from "../../../fun/WARNA";
 import { DateInput } from "@mantine/dates";
 import { Form, isEmail, isNotEmpty, useForm } from "@mantine/form";
@@ -25,7 +25,8 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _, { functions, get, identity } from "lodash";
+import _, { functions, get, identity, lowerCase, values } from "lodash";
+import $ from "jquery";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -37,10 +38,12 @@ const useStyles = createStyles((theme) => ({
 const FormDataDiriUser = () => {
   const [jenisKelamin, setJenisKelamin] = useState<any | []>([]);
   const [agama, setAgama] = useState<any | []>([]);
-  const [provinsi, setProvinsi] = useState<any | []>([]);
-  const [kabupaten, setKabupaten] = useState<any | []>([]);
-  const [kecamatan, setKecamatan] = useState<any | []>([]);
-  const [desa, setDesa] = useState<any | []>([]);
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  // const [provinsi, setProvinsi] = useState([]);
+  // const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
   const [pekerjaan, setPekerjaan] = useState<any | []>([]);
   const { classes } = useStyles();
   const [nameValue, setNameValue] = useState<string>("");
@@ -49,13 +52,17 @@ const FormDataDiriUser = () => {
     loadJenisKelamin();
     loadAgama();
     loadProvinsi();
-    loadKabupaten();
-    loadKecamatan();
-    loadDesa();
+    // loadDesa();
     loadPekerjaan();
   }, []);
 
 
+
+  // useShallowEffect(() => {
+  //     fetch(`/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${provinsi.map((v) => v.id)}`)
+  //       .then((v) => v.json())
+  //       .then(setKabupaten);
+  // }, []);
 
   async function loadJenisKelamin() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-jenis-kelamin")
@@ -71,42 +78,36 @@ const FormDataDiriUser = () => {
       .then((val) => setAgama(Object.values(val).map((e: any) => e.name)));
   }
 
-  async function loadProvinsi() {
+  const loadProvinsi = async () => {
+    const res = await fetch(`/api/master/master-provinsi-get-all`);
+    const ProviniData = await res.json();
+    console.log(ProviniData);
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
     const res = await fetch(
-      `/api/master/master-provinsi-get-all`
-      // "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+      `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
     )
       .then((res) => res.json())
-      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
-      console.log(provinsi)
-  }
+      .then(setKabupaten);
+  };
 
-  async function loadKabupaten() {
-    const res = await fetch(
-      // "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
-      `/api/master/master-kabkot-get-by-provinsi?idProvinsi=1`
-      )
-      .then((res) => res.json())
-      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
-      console.log(setKabupaten)
-    }
-
-  async function loadKecamatan() {
+  async function loadKecamatan(idKabkot: string) {
     const res = await fetch(
       // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
-      `/api/master/master-kecamatan-get-by-kabkot?idKabkot=1`
+      `/api/master/master-kecamatan-get-by-kabkot` + `?idKabkot=${idKabkot}`
     )
       .then((res) => res.json())
-      .then((val) => setKecamatan(Object.values(val).map((e: any) => e.name)));
+      .then(setKecamatan);
   }
-  async function loadDesa() {
-    const res = await fetch
-    (
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
       // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
-      `/api/master/master-desa-get-by-kecamatan?idKecamatan=3`
+      `/api/master/master-desa-get-by-kecamatan` + `?idKecamatan=${idKecamatan}`
     )
       .then((res) => res.json())
-      .then((val) => setDesa(Object.values(val).map((e: any) => e.name)));
+      .then(setDesa);
   }
   async function loadPekerjaan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-pekerjaan")
@@ -169,11 +170,11 @@ const FormDataDiriUser = () => {
     }
     router.replace("/v2/form-data-partai");
   };
-  console.log(onDataPartai);
+  // console.log(onDataPartai);
   const [data, setData] = useState([
-    { value: 'Pegawai Negeri', label: 'Pegawai Negeri' },
-    { value: 'Swasta', label: 'Swasta' },
-    { value: 'Pengajar', label: 'Pengajar' },
+    { value: "Pegawai Negeri", label: "Pegawai Negeri" },
+    { value: "Swasta", label: "Swasta" },
+    { value: "Pengajar", label: "Pengajar" },
   ]);
   return (
     <>
@@ -323,39 +324,51 @@ const FormDataDiriUser = () => {
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("alamat")}
                               />
+                              {/* {JSON.stringify(kabupaten)} */}
                               <Select
-                                data={provinsi}
+                                data={provinsi.map((pro) => ({
+                                  value: pro.id,
+                                  label: pro.name,
+                                }))}
                                 radius={"md"}
                                 placeholder="Provinsi"
                                 label="Provinsi"
                                 withAsterisk
                                 searchable
-                                {...formDataDiri.getInputProps("provinsi")}
-                                // onChange={()=>{
-                                //   console.log(provinsi)
-                                //   //loadKabupaten(provinsi);
-                                // }}
+                                onChange={loadKabupaten}
+                                // {...formDataDiri.getInputProps("provinsi")}
                               />
                               <Select
-                                data={kabupaten}
+                                data={kabupaten.map((v) => ({
+                                  value: v.id,
+                                  label: v.name,
+                                }))}
                                 radius={"md"}
                                 placeholder="Kabupaten / Kota"
                                 label="Kabupaten / Kota"
                                 withAsterisk
                                 searchable
-                                {...formDataDiri.getInputProps("kabupaten")}
+                                onChange={loadKecamatan}
+                                // {...formDataDiri.getInputProps("kabupaten")}
                               />
                               <Select
-                                data={kecamatan}
+                                data={kecamatan.map((v) => ({
+                                  value: v.id,
+                                  label: v.name,
+                                }))}
                                 radius={"md"}
                                 placeholder="Kecamatan"
                                 label="Kecamatan"
                                 withAsterisk
                                 searchable
-                                {...formDataDiri.getInputProps("kecamatan")}
+                                onChange={loadDesa}
+                                // {...formDataDiri.getInputProps("kecamatan")}
                               />
                               <Select
-                                data={desa}
+                                data={desa.map((des) => ({
+                                  value: des.id,
+                                  label: des.name
+                                }))}
                                 radius={"md"}
                                 placeholder="Desa"
                                 label="Desa"

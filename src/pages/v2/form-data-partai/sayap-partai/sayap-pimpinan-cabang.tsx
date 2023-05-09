@@ -46,31 +46,31 @@ const useStyles = createStyles((theme) => ({
 
 function SayapPimpinanCabang() {
   const [jabatan, setJabatan] = useState<any | []>([])
-  const [provinsi, setProvinsi] = useState<any | []>([]);
+  const [provinsi, setProvinsi] = useState<any[]>([]);
   const [sayap, setSayap] = useState<any | []>([])
-  const [kabupaten, setKabupaten] = useState<any | []>([])
+  const [kabupaten, setKabupaten] = useState<any[]>([])
 
   useShallowEffect(() => {
     loadSayapPartai()
     loadProvinsi()
-    loadKabupaten()
+    // loadKabupaten()
     loadJabatan()
   },[])
 
-  async function loadProvinsi() {
+  const loadProvinsi = async () => {
+    const res = await fetch(`/api/master/master-provinsi-get-all`);
+    const ProviniData = await res.json();
+    console.log(ProviniData);
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
     const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
+      `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
     )
       .then((res) => res.json())
-      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
-  }
-  async function loadKabupaten() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-kabkot"
-    )
-      .then((res) => res.json())
-      .then((val) => setKabupaten(Object.values(val).map((e: any) => e.name)));
-  }
+      .then(setKabupaten);
+  };
   async function loadJabatan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang")
       .then((res) => res.json())
@@ -256,8 +256,12 @@ function SayapPimpinanCabang() {
                       data={sayap}
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("provinsi")}
-                      data={provinsi}
+                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      data={provinsi.map((pro) => ({
+                        value: pro.id,
+                        label: pro.name
+                      }))}
+                      onChange={loadKabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
@@ -265,8 +269,11 @@ function SayapPimpinanCabang() {
                       withAsterisk
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("kabupaten")}
-                      data={kabupaten}
+                    // {...formStrukturPartai.getInputProps("kabupaten")}
+                      data={kabupaten.map((kab) => ({
+                        value: kab.id,
+                        label: kab.name
+                      }))}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"

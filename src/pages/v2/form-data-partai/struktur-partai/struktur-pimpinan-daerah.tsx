@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturPimpinanDaerah() {
 
-  const [provinsi, setProvinsi] = useState<any | []>([]);
+  const [provinsi, setProvinsi] = useState<any[]>([]);
   const [jabatan, setJabatan] = useState<any | []>([])
 
   useShallowEffect(() => {
@@ -54,13 +54,12 @@ function StrukturPimpinanDaerah() {
     loadJabatan()
   },[])
 
-  async function loadProvinsi() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/wilayah/api-get-provinsi"
-    )
-      .then((res) => res.json())
-      .then((val) => setProvinsi(Object.values(val).map((e: any) => e.name)));
-  }
+  const loadProvinsi = async () => {
+    const res = await fetch(`/api/master/master-provinsi-get-all`);
+    const ProviniData = await res.json();
+    console.log(ProviniData);
+    setProvinsi(ProviniData);
+  };
   async function loadJabatan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-daerah")
       .then((res) => res.json())
@@ -253,8 +252,11 @@ function StrukturPimpinanDaerah() {
                       </Menu>
                     </Box>
                     <Select
-                    {...formStrukturPartai.getInputProps("provinsi")}
-                      data={provinsi}
+                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      data={provinsi.map((pro) => ({
+                        value: pro.id,
+                        label: pro.name,
+                      }))}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
