@@ -15,8 +15,34 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
+    const formTambahRencanaKunjungan = useForm({
+        initialValues: {
+            data: {
+                judul: '',
+                tanggalKunjungan: '',
+                potretKunjungan: '',
+                statusKunjungan: '',
+            },
+        },
+    });
+
+    const onAdd = () => {
+        console.log(formTambahRencanaKunjungan.values.data);
+        if (Object.values(formTambahRencanaKunjungan.values.data).includes("")) {
+            return toast("Lengkapi Data");
+        }
+
+        // disini pengaplikasian api
+
+        buttonSimpan();
+        thisClosed();
+
+    }
+
     return (
         <>
             <Box>
@@ -43,19 +69,21 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" />
+                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahRencanaKunjungan.getInputProps("data.judul")} />
+                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahRencanaKunjungan.getInputProps("data.tanggalKunjungan")} />
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
+                                    {...formTambahRencanaKunjungan.getInputProps("data.potretKunjungan")}
                                 />
                                 <Select
                                     data={["Pending", "Sedang Berjalan", "Berhasil", "Batal"]}
                                     placeholder={"Pilih Status Kunjungan"}
                                     label={"**"}
+                                    {...formTambahRencanaKunjungan.getInputProps("data.statusKunjungan")}
                                 />
 
                                 <Group position="left" pt={20}>
@@ -64,10 +92,7 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                                         color="orange.9"
                                         bg={COLOR.orange}
                                         radius={"xl"}
-                                        onClick={() => {
-                                            buttonSimpan();
-                                            thisClosed();
-                                        }}
+                                        onClick={onAdd}
                                     >
                                         Simpan
                                     </Button>

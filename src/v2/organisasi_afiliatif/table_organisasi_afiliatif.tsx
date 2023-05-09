@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Group, Modal, ScrollArea, Table, TextInput } from "@mantine/core";
 import myData from "./data_dummy_oa.json";
 import { useDisclosure } from "@mantine/hooks";
+import EditOrganisasiAfiliatifV2 from "./edit_organisasi_afiliatif";
 
 export const TableOrganisasiAfiliatifV2 = () => {
     const tbHead = (
@@ -55,6 +56,19 @@ export const TableOrganisasiAfiliatifV2 = () => {
 
     return (
         <>
+            {/* Edit Modal */}
+            <Modal
+                opened={opened}
+                onClose={close}
+                size="100%"
+                // fullScreen
+                overlayProps={{
+                    // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
+                    opacity: 0.1,
+                }}
+            >
+                <EditOrganisasiAfiliatifV2 thisClosed={close} />
+            </Modal>
             <Box pt={20}>
                 <ScrollArea>
                     <Table withBorder horizontalSpacing={"lg"}>

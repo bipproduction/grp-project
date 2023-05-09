@@ -15,8 +15,31 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
 
 const EditListUndanganPrabowoV2 = ({ thisClosed }: any) => {
+    const formEditListUndangan = useForm({
+        initialValues: {
+            data: {
+                judul: '',
+                tanggalKunjungan: '',
+                nama: '',
+            },
+        },
+    });
+
+    const onEdit = () => {
+        console.log(formEditListUndangan.values.data);
+        if (Object.values(formEditListUndangan.values.data).includes("")) {
+            return toast("Lengkapi Data");
+        }
+        // disini pengaplikasian api
+
+        buttonSimpan();
+        thisClosed();
+    }
+
     return (
         <>
             <Box>
@@ -43,10 +66,10 @@ const EditListUndanganPrabowoV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" />
-                                <TextInput placeholder="Nama Tamu Undangan" label="**" />
-                                <TextInput placeholder="Tambah List Undangan" mt={20}/>
+                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditListUndangan.getInputProps("data.judul")} />
+                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formEditListUndangan.getInputProps("data.tanggalKunjungan")} />
+                                <TextInput placeholder="Nama Tamu Undangan" label="**" {...formEditListUndangan.getInputProps("data.nama")} />
+                                <TextInput placeholder="Tambah List Undangan" mt={20} />
 
                                 <Group position="left" pt={20}>
                                     <Button
@@ -54,10 +77,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed }: any) => {
                                         color="orange.9"
                                         bg={COLOR.orange}
                                         radius={"xl"}
-                                        onClick={() => {
-                                            buttonSimpan();
-                                            thisClosed();
-                                        }}
+                                        onClick={onEdit}
                                     >
                                         Simpan
                                     </Button>
