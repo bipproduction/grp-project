@@ -18,6 +18,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
 
 const EditSayapPartaiV2 = ({ thisClosed }: any) => {
   const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
@@ -56,6 +57,55 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
       );
   }
 
+  const formEditSayapPartai = useForm({
+    initialValues: {
+      data: {
+        nik: '',
+        nama: '',
+        email: '',
+        tempatLahir: '',
+        tanggalLahir: '',
+        jenisKelamin: '',
+        phoneNumber: '',
+        instagram: '',
+        facebook: '',
+        tiktok: '',
+        twitter: '',
+        agama: '',
+        pekerjaan: '',
+        alamat: '',
+        provinsi: '',
+        kabkot: '',
+        kecamatan: '',
+        desa: '',
+        rtrw: '',
+        statusKeanggotaan: '',
+        sayap: '',
+        tingkatPengurus: '',
+        jabatan: '',
+      },
+      validate: {
+        email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      },
+    },
+  });
+
+  const onEdit = () => {
+    console.log(formEditSayapPartai.values.data)
+    if (Object.values(formEditSayapPartai.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+
+    if (formEditSayapPartai.values.validate.email(formEditSayapPartai.values.data.email) != null) {
+      return toast("Invalid email");
+    }
+
+    //disini pengaplikasian api
+
+    buttonSimpan();
+    thisClosed();
+  }
+
   return (
     <>
       <Box>
@@ -77,10 +127,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={() => {
-                  buttonSimpan();
-                  thisClosed();
-                }}
+                onClick={onEdit}
               >
                 Simpan
               </Button>
@@ -91,8 +138,9 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={()=> {
-                  buttonReset()
+                onClick={() => {
+                  formEditSayapPartai.reset();
+                  buttonReset();
                 }}
               >
                 Reset
@@ -118,11 +166,11 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <TextInput placeholder="NIK" label="**" />
-                    <TextInput placeholder="Nama" label="**" />
-                    <TextInput placeholder="Email" label="**" />
-                    <TextInput placeholder="Tempat Lahir" label="**" />
-                    <DateInput placeholder="Tanggal Lahir" label="**" />
+                    <NumberInput placeholder="NIK" label="**" {...formEditSayapPartai.getInputProps("data.nik")} />
+                    <TextInput placeholder="Nama" label="**" {...formEditSayapPartai.getInputProps("data.nama")} />
+                    <TextInput placeholder="Email" label="**" {...formEditSayapPartai.getInputProps("data.email")} />
+                    <TextInput placeholder="Tempat Lahir" label="**" {...formEditSayapPartai.getInputProps("data.tempatLahir")} />
+                    <DateInput placeholder="Tanggal Lahir" label="**" {...formEditSayapPartai.getInputProps("data.tanggalLahir")} />
                     <Select
                       data={[
                         { value: "laki", label: "Laki-Laki" },
@@ -130,32 +178,36 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       ]}
                       placeholder="Jenis Kelamin"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.jenisKelamin")}
                     />
-                    <NumberInput placeholder="Nomor Telepon" label="**" />
-
+                    <NumberInput placeholder="Nomor Telepon" label="**" {...formEditSayapPartai.getInputProps("data.phoneNumber")} />
                     <TextInput
                       radius={"md"}
                       mt={10}
-                      placeholder="Instargram"
+                      placeholder="Instagram"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.instagram")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Facebook"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.facebook")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="TikTok"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.tiktok")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Twitter"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.twitter")}
                     />
                     <Select
                       data={[
@@ -170,18 +222,21 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Agama"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.agama")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Pekerjaan"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.pekerjaan")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Alamat"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.alamat")}
                     />
                     <Select
                       data={[
@@ -192,6 +247,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Provinsi"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.provinsi")}
                     />
                     <Select
                       data={[
@@ -202,6 +258,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Kabupaten / Kota"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.kabkot")}
                     />
                     <Select
                       data={[
@@ -212,18 +269,21 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Kecamatan"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.kecamatan")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Desa / Cabang"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.desa")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="RT - __, RW - __"
                       label="**"
+                      {...formEditSayapPartai.getInputProps("data.rtrw")}
                     />
                   </Flex>
                 </Box>
@@ -233,7 +293,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
               <Paper bg={COLOR.abuabu} p={20}>
                 <Flex direction={"column"}>
                   <Text fz={20} fw={"bold"}>
-                    Status ke Anggotaan
+                    Status Keanggotaan
                   </Text>
                   <Text fz={10}>
                     <Text span c={"red"}>
@@ -249,6 +309,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
                       data={statusKeanggotaan}
+                      {...formEditSayapPartai.getInputProps("data.statusKeanggotaan")}
                     />
 
                     <Select
@@ -256,6 +317,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Nama Sayap"
                       nothingFound="No options"
                       data={namaSayap}
+                      {...formEditSayapPartai.getInputProps("data.sayap")}
                     />
 
                     <Select
@@ -263,13 +325,18 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Tingkat Pengurus"
                       nothingFound="No options"
                       data={tingkatPengurus}
+                      {...formEditSayapPartai.getInputProps("data.tingkatPengurus")}
                     />
 
                     <Select
                       label="**"
                       placeholder="Pilih Jabatan"
                       nothingFound="No options"
-                      data={[]}
+                      data={[
+                        { value: "Ketua", label: "Ketua" },
+                        { value: "Wakil Ketua", label: "Wakil Ketua" },
+                      ]}
+                      {...formEditSayapPartai.getInputProps("data.jabatan")}
                     />
                   </Flex>
                 </Box>

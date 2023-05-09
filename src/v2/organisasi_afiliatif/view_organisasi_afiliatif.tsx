@@ -50,22 +50,6 @@ export const ViewOrganisasiAfiliatifV2 = () => {
                                 radius={"md"}
                             />
                         </Grid.Col>
-                        <Grid.Col md={8} lg={8}>
-                            <Group position="right">
-                                <Button
-                                    color="orange.9"
-                                    leftIcon={<AiFillPlusCircle size={20} />}
-                                    radius={"xl"}
-                                    m={5}
-                                    bg={COLOR.orange}
-                                    onClick={() => {
-                                        open();
-                                    }}
-                                >
-                                    Tambah
-                                </Button>
-                            </Group>
-                        </Grid.Col>
                     </Grid>
                 </Box>
                 <TableOrganisasiAfiliatifV2 />
