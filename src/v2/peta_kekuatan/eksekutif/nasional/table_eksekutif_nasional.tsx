@@ -2,6 +2,7 @@ import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
+import { EditEksekutifNasionalV2 } from "./edit_eksekutif_nasional";
 
 export const TableEksekutifNasionalV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -60,7 +61,7 @@ export const TableEksekutifNasionalV2 = () => {
   return (
     <>
       <Modal opened={opened} onClose={close}>
-        ok
+        <EditEksekutifNasionalV2 thisClosed={close} />
       </Modal>
       <Box pt={20}>
         <ScrollArea>

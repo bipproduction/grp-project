@@ -14,6 +14,9 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { useState } from "react";
+import { FormTambahEksekutifNasionalV2 } from "./nasional/form_tambah_nasional";
+import { FormTambahEksekutifProvinsiV2 } from "./provisi/form_tambah_provinsi";
+import { FormTambahEksekutifKabKotV2 } from "./kabkot/form_tambah_kabkot";
 
 export const TambahEksekutifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -21,7 +24,7 @@ export const TambahEksekutifV2 = () => {
   return (
     <>
       <Modal opened={opened} onClose={close} size={"lg"}>
-        <TambahDataEksekutif thisClosed={close} />
+        <TambahDataEksekutif tutupModal={close} />
       </Modal>
       <Group position="right">
         <Button
@@ -41,11 +44,9 @@ export const TambahEksekutifV2 = () => {
   );
 };
 
-const TambahDataEksekutif = ({ thisClosed }: any) => {
+const TambahDataEksekutif = ({ tutupModal }: any) => {
   const [dataEks, setEks] = useState<any | []>([]);
-  const [value, setValue] = useState<string | null>(null);
-  const [nas, setNas] = useState();
-  const [prov, setProv] = useState();
+  const [value, setValue] = useState<any>();
 
   useShallowEffect(() => {
     loadLevelEksekutif();
@@ -58,11 +59,11 @@ const TambahDataEksekutif = ({ thisClosed }: any) => {
   }
   return (
     <>
-      {JSON.stringify(dataEks)}
+      {/* {JSON.stringify(dataEks)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
               <Text size={20} fw={"bold"}>
                 Tambah Data Eksekutif
               </Text>
@@ -70,55 +71,55 @@ const TambahDataEksekutif = ({ thisClosed }: any) => {
           </Grid>
         </Paper>
         <Box pt={20}>
-          <Button
-            w={100}
-            color="orange.9"
-            bg={COLOR.orange}
-            radius={"xl"}
-            onClick={() => {
-              buttonSimpan();
-              thisClosed();
-            }}
-          >
-            Simpan
-          </Button>
-        </Box>
-        <Box pt={20}>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
+              <Text fz={10}>
+                <Text span c={"red"}>
+                  **
+                </Text>{" "}
+                Wajib diisi
+              </Text>
               <Select
+                label={"**"}
                 data={dataEks}
                 onChange={(val) => {
                   // console.log(val)
-                  if (val !== "Provinsi" && val !== "Kabupaten/Kota") {
-                    if (val !== "Nasional" && val !== "Kabupaten/Kota") {
-                      if (val !== "Provinsi" && val !== "Nasional") {
-                        console.log("Page Kabupaten");
-                      } else {
-                        console.log("Ini Salah");
-                      }
-                    } else {
-                      console.log("Page Nasional");
-                      setNas
-                    }
+                  if (val == "Nasional") {
+                    setValue(
+                      <FormTambahEksekutifNasionalV2
+                        setNilai={val}
+                        tutupModal={tutupModal}
+                      />
+                    );
                   } else {
-                    console.log("Page Provinsi");
+                    if (val == "Provinsi") {
+                      setValue(
+                        <FormTambahEksekutifProvinsiV2
+                          setNilai={val}
+                          tutupModal={tutupModal}
+                        />
+                      );
+                    } else {
+                      if (val == "Kabupaten / Kota") {
+                        setValue(
+                          <FormTambahEksekutifKabKotV2
+                            setNilai={val}
+                            tutupModal={tutupModal}
+                          />
+                        );
+                      } else {
+                        console.log("Semua Salah");
+                      }
+                    }
                   }
                 }}
                 placeholder={"Level Eksekutif"}
               />
             </Grid.Col>
           </Grid>
+          {value && <Box>{value}</Box>}
         </Box>
       </Box>
-    </>
-  );
-};
-
-const FormEksNasional = () => {
-  return (
-    <>
-      <Box>form nasional</Box>
     </>
   );
 };
