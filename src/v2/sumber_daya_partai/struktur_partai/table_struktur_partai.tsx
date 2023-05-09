@@ -94,8 +94,7 @@ const TableStruktutPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
-               
-                open()
+              open();
             }}
           >
             Edit
@@ -188,7 +187,7 @@ const TableStruktutPartaiV2 = () => {
           </Grid>
         </Box>
         <Box>
-          <ScrollArea py={20} >
+          <ScrollArea py={20}>
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
