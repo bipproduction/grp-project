@@ -90,15 +90,15 @@ function StrukturPimpinanAnakCabang() {
 
   const formStrukturPartai = useForm({
     initialValues: {
-      provinsi: "",
-      kabupaten: "",
-      kecamatan: "",
+      // provinsi: "",
+      // kabupaten: "",
+      // kecamatan: "",
       jabatan: "",
     },
     validate: {
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
-      kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
     },
   });
@@ -295,7 +295,7 @@ function StrukturPimpinanAnakCabang() {
                       withAsterisk
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("kecamatan")}
+                    // {...formStrukturPartai.getInputProps("kecamatan")}
                       data={kecamatan.map((kec) => ({
                         value: kec.id,
                         label: kec.name

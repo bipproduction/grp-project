@@ -20,7 +20,7 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { useState } from "react";
-import { AiFillApple, AiFillSetting } from "react-icons/ai";
+import { AiFillApple, AiFillHome, AiFillSetting } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
 import {} from "react-icons/io";
 import COLOR from "../../fun/WARNA";
@@ -139,13 +139,14 @@ const LayoutDashboarSuperdAdminV2 = () => {
                         </Center> */}
                       </Menu.Dropdown>
                     </Menu>
-                    {/* <ThemeIcon variant="light" color={COLOR.merah}>
-                      <AiFillSetting
+                    <ThemeIcon variant="light" color={COLOR.merah}>
+                      <AiFillHome
+                      onClick={home}
                         size={40}
                         color="white"
                         style={{ cursor: "pointer" }}
                       />
-                    </ThemeIcon> */}
+                    </ThemeIcon>
                     <ThemeIcon variant="light" color={COLOR.merah}>
                       <Center
                         component="a"
@@ -164,12 +165,12 @@ const LayoutDashboarSuperdAdminV2 = () => {
             </Box>
 
             <Navbar.Section>
-              <Group pb={30} onClick={home} style={{cursor: 'pointer'}}>
+              {/* <Group pb={30} onClick={home} style={{cursor: 'pointer'}}>
                 <ActionIcon>
                   <IoArrowBackCircle size={90} color={COLOR.merah} />
                 </ActionIcon>
                 <Text  onClick={home}>Home</Text>
-              </Group>
+              </Group> */}
               {
                 <Flex align={"center"} gap={"lg"}>
                   <FaCircle size={25} color={COLOR.merah} />

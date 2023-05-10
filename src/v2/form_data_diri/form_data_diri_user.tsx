@@ -56,8 +56,6 @@ const FormDataDiriUser = () => {
     loadPekerjaan();
   }, []);
 
-
-
   // useShallowEffect(() => {
   //     fetch(`/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${provinsi.map((v) => v.id)}`)
   //       .then((v) => v.json())
@@ -136,10 +134,10 @@ const FormDataDiriUser = () => {
       agama: "",
       pekerjaan: "",
       alamat: "",
-      provinsi: "",
-      kabupaten: "",
-      kecamatan: "",
-      desa: "",
+      // provinsi: "",
+      // kabupaten: "",
+      // kecamatan: "",
+      // desa: "",
       rtrw: "",
     },
     validate: {
@@ -157,10 +155,10 @@ const FormDataDiriUser = () => {
       agama: isNotEmpty("Tidak Boleh Kosong"),
       pekerjaan: isNotEmpty("Tidak Boleh Kosong"),
       alamat: isNotEmpty("Tidak Boleh Kosong"),
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
-      kecamatan: isNotEmpty("Tidak Boleh Kosong"),
-      desa: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      // desa: isNotEmpty("Tidak Boleh Kosong"),
       rtrw: isNotEmpty("Tidak Boleh Kosong"),
     },
   });
@@ -171,11 +169,11 @@ const FormDataDiriUser = () => {
     router.replace("/v2/form-data-partai");
   };
   // console.log(onDataPartai);
-  const [data, setData] = useState([
-    { value: "Pegawai Negeri", label: "Pegawai Negeri" },
-    { value: "Swasta", label: "Swasta" },
-    { value: "Pengajar", label: "Pengajar" },
-  ]);
+  // const [data, setData] = useState([
+  //   { value: "Pegawai Negeri", label: "Pegawai Negeri" },
+  //   { value: "Swasta", label: "Swasta" },
+  //   { value: "Pengajar", label: "Pengajar" },
+  // ]);
   return (
     <>
       <WrapperDataDiriPartai>
@@ -302,20 +300,20 @@ const FormDataDiriUser = () => {
                                 withAsterisk
                                 {...formDataDiri.getInputProps("agama")}
                               />
-                              <MultiSelect
+                              <Select
                                 radius={"md"}
                                 placeholder="Pekerjaan"
                                 label="Pekerjaan"
-                                data={data}
+                                data={[
+                                  {
+                                    value: "Pegawai Negeri",
+                                    label: "Pegawai Negeri",
+                                  },
+                                  { value: "Swasta", label: "Swasta" },
+                                  { value: "Pengajar", label: "Pengajar" },
+                                ]}
                                 {...formDataDiri.getInputProps("pekerjaan")}
-                                searchable
-                                creatable
-                                getCreateLabel={(query) => `+ Create ${query}`}
-                                onCreate={(query) => {
-                                  const item = { value: query, label: query };
-                                  setData((current) => [...current, item]);
-                                  return item;
-                                }}
+
                               />
                               <TextInput
                                 placeholder="Alamat"
@@ -335,8 +333,8 @@ const FormDataDiriUser = () => {
                                 label="Provinsi"
                                 withAsterisk
                                 searchable
-                                onChange={loadKabupaten}
                                 // {...formDataDiri.getInputProps("provinsi")}
+                                onChange={loadKabupaten}
                               />
                               <Select
                                 data={kabupaten.map((v) => ({
@@ -348,8 +346,8 @@ const FormDataDiriUser = () => {
                                 label="Kabupaten / Kota"
                                 withAsterisk
                                 searchable
-                                onChange={loadKecamatan}
                                 // {...formDataDiri.getInputProps("kabupaten")}
+                                onChange={loadKecamatan}
                               />
                               <Select
                                 data={kecamatan.map((v) => ({
@@ -361,20 +359,20 @@ const FormDataDiriUser = () => {
                                 label="Kecamatan"
                                 withAsterisk
                                 searchable
-                                onChange={loadDesa}
                                 // {...formDataDiri.getInputProps("kecamatan")}
+                                onChange={loadDesa}
                               />
                               <Select
                                 data={desa.map((des) => ({
                                   value: des.id,
-                                  label: des.name
+                                  label: des.name,
                                 }))}
                                 radius={"md"}
                                 placeholder="Desa"
                                 label="Desa"
                                 withAsterisk
                                 searchable
-                                {...formDataDiri.getInputProps("desa")}
+                                // {...formDataDiri.getInputProps("desa")}
                               />
                               <TextInput
                                 placeholder="RT/RW"
