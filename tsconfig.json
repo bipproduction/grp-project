@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx", "src/pages/info-api.mdx", "src/pages/api/get/data-dukcapil.ts", "seeder_coba.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/formDataDiri/sayapPartai/SayapPartai_JayaRaya_AnakCabang.tsx", "src/pages/info-api.mdx", "src/pages/api/get/data-dukcapil.ts", "seeder_coba.js", "zseeders/seeder_desa.ts", "zseeders/seeder_negara.ts", "zseeders/seeder_kabkot.ts", "zseeders/seeder_kecamatan.ts", "zmakuro.ts"],
   "exclude": ["node_modules"]
 }
