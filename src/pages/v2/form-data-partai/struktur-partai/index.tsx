@@ -61,25 +61,35 @@ function StrukturPartai() {
     router.push("/v2/form-data-partai/anggota-partai");
   }
   function strukturDewanPembina() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-dewan-pembina")
+    router.push("/v2/form-data-partai/struktur-partai/struktur-dewan-pembina");
   }
   function strukturPimpinanPusat() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-pusat")
+    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-pusat");
   }
   function strukturPimpinanDaerah() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-daerah")
+    router.push(
+      "/v2/form-data-partai/struktur-partai/struktur-pimpinan-daerah"
+    );
   }
   function strukturPimpinanCabang() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-cabang")
+    router.push(
+      "/v2/form-data-partai/struktur-partai/struktur-pimpinan-cabang"
+    );
   }
   function strukturPimpinanAnakCabang() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-anak-cabang")
+    router.push(
+      "/v2/form-data-partai/struktur-partai/struktur-pimpinan-anak-cabang"
+    );
   }
   function strukturPimpinanRanting() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-pimpinan-ranting")
+    router.push(
+      "/v2/form-data-partai/struktur-partai/struktur-pimpinan-ranting"
+    );
   }
   function strukturPerwakilanLuarNegeri() {
-    router.push("/v2/form-data-partai/struktur-partai/struktur-perwakilan-partai-luar-negeri")
+    router.push(
+      "/v2/form-data-partai/struktur-partai/struktur-perwakilan-partai-luar-negeri"
+    );
   }
   return (
     <WrapperDataDiriPartai>
@@ -96,8 +106,9 @@ function StrukturPartai() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -152,40 +163,40 @@ function StrukturPartai() {
                     <Box mt={20}>
                       <Menu>
                         <Menu.Target>
-                        <UnstyledButton
-                          className={classes.user}
-                          pr={20}
-                          pl={20}
-                        >
-                          <Group>
-                            <div style={{ flex: 1 }}>
-                              <Text size="sm">Pilih Tingkat Pengurus</Text>
-                            </div>
-                            <IoChevronDownCircle size="1.3rem" />
-                          </Group>
-                        </UnstyledButton>
+                          <UnstyledButton
+                            className={classes.user}
+                            pr={20}
+                            pl={20}
+                          >
+                            <Group>
+                              <div style={{ flex: 1 }}>
+                                <Text size="sm">Pilih Tingkat Pengurus</Text>
+                              </div>
+                              <IoChevronDownCircle size="1.3rem" />
+                            </Group>
+                          </UnstyledButton>
                         </Menu.Target>
                         <Menu.Dropdown>
                           <Menu.Item onClick={strukturDewanPembina}>
-                              Dewan Pembina
+                            Dewan Pembina
                           </Menu.Item>
                           <Menu.Item onClick={strukturPimpinanPusat}>
-                              Dewan Pimpinan Pusat
+                            Dewan Pimpinan Pusat
                           </Menu.Item>
                           <Menu.Item onClick={strukturPimpinanDaerah}>
-                              Dewan Pimpinan Daerah
+                            Dewan Pimpinan Daerah
                           </Menu.Item>
                           <Menu.Item onClick={strukturPimpinanCabang}>
-                              Dewan Pimpinan Cabang
+                            Dewan Pimpinan Cabang
                           </Menu.Item>
                           <Menu.Item onClick={strukturPimpinanAnakCabang}>
-                              Pimpinan Anak Cabang
+                            Pimpinan Anak Cabang
                           </Menu.Item>
                           <Menu.Item onClick={strukturPimpinanRanting}>
-                              Pimpinan Ranting
+                            Pimpinan Ranting
                           </Menu.Item>
                           <Menu.Item onClick={strukturPerwakilanLuarNegeri}>
-                              Perwakilan Partai di Luar Negeri
+                            Perwakilan Partai di Luar Negeri
                           </Menu.Item>
                         </Menu.Dropdown>
                       </Menu>

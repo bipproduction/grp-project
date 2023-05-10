@@ -77,8 +77,9 @@ function AnggotaPartai() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}

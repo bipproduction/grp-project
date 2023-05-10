@@ -45,14 +45,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPimpinanDaerah() {
-
   const [provinsi, setProvinsi] = useState<any[]>([]);
-  const [jabatan, setJabatan] = useState<any | []>([])
+  const [jabatan, setJabatan] = useState<any | []>([]);
 
   useShallowEffect(() => {
-    loadProvinsi()
-    loadJabatan()
-  },[])
+    loadProvinsi();
+    loadJabatan();
+  }, []);
 
   const loadProvinsi = async () => {
     const res = await fetch(`/api/master/master-provinsi-get-all`);
@@ -61,13 +60,12 @@ function StrukturPimpinanDaerah() {
     setProvinsi(ProviniData);
   };
   async function loadJabatan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-daerah")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-daerah"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setJabatan(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setJabatan(Object.values(val).map((e: any) => e.name)));
   }
-
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -75,7 +73,7 @@ function StrukturPimpinanDaerah() {
       jabatan: "",
       alamatKantor: "",
       nomorWA: "",
-      medsos: ""
+      medsos: "",
     },
     validate: {
       // provinsi: isNotEmpty("Tidak Boleh Kosong"),
@@ -157,8 +155,9 @@ function StrukturPimpinanDaerah() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -181,7 +180,7 @@ function StrukturPimpinanDaerah() {
                       </Text>
                     </Box>
                     <Menu width={245}>
-                    <Menu.Target>
+                      <Menu.Target>
                         <UnstyledButton
                           className={classes.user}
                           pr={20}
@@ -212,7 +211,7 @@ function StrukturPimpinanDaerah() {
                     </Menu>
                     <Box mt={20}>
                       <Menu>
-                      <Menu.Target>
+                        <Menu.Target>
                           <UnstyledButton
                             className={classes.user}
                             pr={20}
@@ -252,7 +251,7 @@ function StrukturPimpinanDaerah() {
                       </Menu>
                     </Box>
                     <Select
-                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      // {...formStrukturPartai.getInputProps("provinsi")}
                       data={provinsi.map((pro) => ({
                         value: pro.id,
                         label: pro.name,
@@ -265,7 +264,7 @@ function StrukturPimpinanDaerah() {
                       searchable
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("jabatan")}
+                      {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -275,7 +274,7 @@ function StrukturPimpinanDaerah() {
                       searchable
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("alamatKantor")}
+                      {...formStrukturPartai.getInputProps("alamatKantor")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -283,7 +282,7 @@ function StrukturPimpinanDaerah() {
                       label="Alamat Kantor"
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("nomorWA")}
+                      {...formStrukturPartai.getInputProps("nomorWA")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -292,7 +291,7 @@ function StrukturPimpinanDaerah() {
                       type="number"
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("medsos")}
+                      {...formStrukturPartai.getInputProps("medsos")}
                       radius={"md"}
                       mt={10}
                       withAsterisk

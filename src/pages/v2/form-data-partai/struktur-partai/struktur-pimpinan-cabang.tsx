@@ -46,14 +46,14 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturPimpinanCabang() {
   const [provinsi, setProvinsi] = useState<any[]>([]);
-  const [kabupaten, setKabupaten] = useState<any[]>([])
-  const [jabatan, setJabatan] = useState<any | []>([])
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [jabatan, setJabatan] = useState<any | []>([]);
 
   useShallowEffect(() => {
-    loadProvinsi()
+    loadProvinsi();
     // loadKabupaten()
-    loadJabatan()
-  },[])
+    loadJabatan();
+  }, []);
 
   const loadProvinsi = async () => {
     const res = await fetch(`/api/master/master-provinsi-get-all`);
@@ -69,11 +69,11 @@ function StrukturPimpinanCabang() {
       .then(setKabupaten);
   };
   async function loadJabatan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setJabatan(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setJabatan(Object.values(val).map((e: any) => e.name)));
   }
 
   const formStrukturPartai = useForm({
@@ -83,7 +83,7 @@ function StrukturPimpinanCabang() {
       jabatan: "",
       alamatKantor: "",
       nomorWA: "",
-      medsos: ""
+      medsos: "",
     },
     validate: {
       // provinsi: isNotEmpty("Tidak Boleh Kosong"),
@@ -166,8 +166,9 @@ function StrukturPimpinanCabang() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -190,7 +191,7 @@ function StrukturPimpinanCabang() {
                       </Text>
                     </Box>
                     <Menu width={245}>
-                    <Menu.Target>
+                      <Menu.Target>
                         <UnstyledButton
                           className={classes.user}
                           pr={20}
@@ -221,7 +222,7 @@ function StrukturPimpinanCabang() {
                     </Menu>
                     <Box mt={20}>
                       <Menu>
-                      <Menu.Target>
+                        <Menu.Target>
                           <UnstyledButton
                             className={classes.user}
                             pr={20}
@@ -261,10 +262,10 @@ function StrukturPimpinanCabang() {
                       </Menu>
                     </Box>
                     <Select
-                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      // {...formStrukturPartai.getInputProps("provinsi")}
                       data={provinsi.map((pro) => ({
                         value: pro.id,
-                        label: pro.name
+                        label: pro.name,
                       }))}
                       onChange={loadKabupaten}
                       radius={"md"}
@@ -275,10 +276,10 @@ function StrukturPimpinanCabang() {
                       searchable
                     />
                     <Select
-                    // {...formStrukturPartai.getInputProps("kabupaten")}
+                      // {...formStrukturPartai.getInputProps("kabupaten")}
                       data={kabupaten.map((kab) => ({
                         value: kab.id,
-                        label: kab.name
+                        label: kab.name,
                       }))}
                       radius={"md"}
                       mt={10}
@@ -288,7 +289,7 @@ function StrukturPimpinanCabang() {
                       searchable
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("jabatan")}
+                      {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
@@ -298,7 +299,7 @@ function StrukturPimpinanCabang() {
                       searchable
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("alamatKantor")}
+                      {...formStrukturPartai.getInputProps("alamatKantor")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -306,7 +307,7 @@ function StrukturPimpinanCabang() {
                       label="Alamat Kantor"
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("nomorWA")}
+                      {...formStrukturPartai.getInputProps("nomorWA")}
                       radius={"md"}
                       mt={10}
                       withAsterisk
@@ -315,7 +316,7 @@ function StrukturPimpinanCabang() {
                       type="number"
                     />
                     <TextInput
-                    {...formStrukturPartai.getInputProps("medsos")}
+                      {...formStrukturPartai.getInputProps("medsos")}
                       radius={"md"}
                       mt={10}
                       withAsterisk

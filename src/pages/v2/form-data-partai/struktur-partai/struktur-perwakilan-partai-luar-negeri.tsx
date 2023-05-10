@@ -45,30 +45,30 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPerwakilanPartaiLuarNegeri() {
-  const [jabatan, setJabatan] = useState<any | []>([])
-  const [negara, setNegara] = useState<any | []>([])
+  const [jabatan, setJabatan] = useState<any | []>([]);
+  const [negara, setNegara] = useState<any | []>([]);
 
   useShallowEffect(() => {
-    loadJabatan()
-    loadNegara()
-  },[])
+    loadJabatan();
+    loadNegara();
+  }, []);
 
   async function loadJabatan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setJabatan(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setJabatan(Object.values(val).map((e: any) => e.name)));
   }
   async function loadNegara() {
-    const res = await fetch("/api/get/sumber-daya-partai/wilayah/api-get-negara")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/wilayah/api-get-negara"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setNegara(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setNegara(Object.values(val).map((e: any) => e.name)));
   }
 
-    const formStrukturPartai = useForm({
+  const formStrukturPartai = useForm({
     initialValues: {
       negara: "",
       jabatan: "",
@@ -150,8 +150,9 @@ function StrukturPerwakilanPartaiLuarNegeri() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -174,7 +175,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       </Text>
                     </Box>
                     <Menu width={245}>
-                    <Menu.Target>
+                      <Menu.Target>
                         <UnstyledButton
                           className={classes.user}
                           pr={20}
@@ -205,7 +206,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                     </Menu>
                     <Box mt={20}>
                       <Menu>
-                      <Menu.Target>
+                        <Menu.Target>
                           <UnstyledButton
                             className={classes.user}
                             pr={20}
@@ -213,7 +214,9 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                           >
                             <Group>
                               <div style={{ flex: 1 }}>
-                                <Text size="sm">Perwakilan Partai Luar Negeri</Text>
+                                <Text size="sm">
+                                  Perwakilan Partai Luar Negeri
+                                </Text>
                               </div>
                               <IoChevronDownCircle size="1.3rem" />
                             </Group>
@@ -245,7 +248,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       </Menu>
                     </Box>
                     <Select
-                    {...formStrukturPartai.getInputProps("negara")}
+                      {...formStrukturPartai.getInputProps("negara")}
                       data={negara}
                       radius={"md"}
                       mt={10}
@@ -255,7 +258,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       searchable
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("jabatan")}
+                      {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
