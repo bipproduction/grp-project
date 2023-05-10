@@ -343,7 +343,7 @@ const FormDataDiriUser = () => {
                                 withAsterisk
                                 searchable
                                 // {...formDataDiri.getInputProps("provinsi")}
-                                onChange={((val) => console.log(val))}
+                                onChange={loadKabupaten}
                               />
                               <Select
                                 data={kabupaten.map((v) => ({
