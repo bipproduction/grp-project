@@ -14,6 +14,8 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { useState } from "react";
+import { FormTambahLegislatifDprRiV2 } from "./dpr_ri/form_tambah_dpr_ri";
+import { FormTambahLegislatifDprdProvinsiV2 } from "./dprd_provinsi/form_tambah_dprd_provinsi";
 
 export const TambahLegislatifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -21,7 +23,7 @@ export const TambahLegislatifV2 = () => {
   return (
     <>
       <Modal opened={opened} onClose={close} size={"lg"}>
-        <TambahDataLegislatif thisClosed={close} />
+        <TambahDataLegislatif tutupModal={close} />
       </Modal>
       <Group position="right">
         <Button
@@ -41,11 +43,9 @@ export const TambahLegislatifV2 = () => {
   );
 };
 
-const TambahDataLegislatif = ({ thisClosed }: any) => {
+const TambahDataLegislatif = ({ tutupModal }: any) => {
   const [dataEks, setEks] = useState<any | []>([]);
-  const [value, setValue] = useState<string | null>(null);
-  const [nas, setNas] = useState();
-  const [prov, setProv] = useState();
+  const [value, setValue] = useState<any>(null);
 
   useShallowEffect(() => {
     loadLevelEksekutif();
@@ -59,66 +59,92 @@ const TambahDataLegislatif = ({ thisClosed }: any) => {
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
-      <Box>
+      <Box pt={10}>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
               <Text size={20} fw={"bold"}>
                 Tambah Data Legislatif
               </Text>
             </Grid.Col>
           </Grid>
         </Paper>
-        <Box pt={20}>
-          <Button
-            w={100}
-            color="orange.9"
-            bg={COLOR.orange}
-            radius={"xl"}
-            onClick={() => {
-              buttonSimpan();
-              thisClosed();
-            }}
-          >
-            Simpan
-          </Button>
-        </Box>
-        <Box pt={20}>
+        <Box pt={25}>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
+              <Text fz={10}>
+                <Text span c={"red"}>
+                  **
+                </Text>{" "}
+                Wajib diisi
+              </Text>
               <Select
+                label={"Pilih Tingkat Legislatif"}
+                withAsterisk
                 data={dataEks}
                 onChange={(val) => {
-                  console.log(val)
-                //   if (val !== "Provinsi" && val !== "Kabupaten/Kota") {
-                //     if (val !== "Nasional" && val !== "Kabupaten/Kota") {
-                //       if (val !== "Provinsi" && val !== "Nasional") {
-                //         console.log("Page Kabupaten");
-                //       } else {
-                //         console.log("Ini Salah");
-                //       }
-                //     } else {
-                //       console.log("Page Nasional");
-                //       setNas
-                //     }
-                //   } else {
-                //     console.log("Page Provinsi");
-                //   }
+                  if (val == "DPR RI") {
+                    setValue(
+                      <FormTambahLegislatifDprRiV2
+                        tutupModal={tutupModal}
+                        setNilai={val}
+                      />
+                    );
+                  } else {
+                    if (val == "DPRD Provinsi") {
+                      setValue(
+                        <FormTambahLegislatifDprdProvinsiV2
+                          tutupModal={tutupModal}
+                          setNilai={val}
+                        />
+                      );
+                    } else {
+                      if (val == "DPRD Kabupaten / Kota") {
+                        setValue("DPRD Kab");
+                      } else {
+                        setValue("Semua Salah");
+                      }
+                    }
+                  }
                 }}
-                placeholder={"Level Legislatif"}
+                // onChange={(val) => {
+                //   // console.log(val)
+                //   if (val == "Nasional") {
+                //     setValue(
+                //       <FormTambahEksekutifNasionalV2
+                //         setNilai={val}
+                //         tutupModal={tutupModal}
+                //       />
+                //     );
+                //   } else {
+                //     if (val == "Provinsi") {
+                //       setValue(
+                //         <FormTambahEksekutifProvinsiV2
+                //           setNilai={val}
+                //           tutupModal={tutupModal}
+                //         />
+                //       );
+                //     } else {
+                //       if (val == "Kabupaten / Kota") {
+                //         setValue(
+                //           <FormTambahEksekutifKabKotV2
+                //             setNilai={val}
+                //             tutupModal={tutupModal}
+                //           />
+                //         );
+                //       } else {
+                //         console.log("Semua Salah");
+                //       }
+                //     }
+                //   }
+                // }}
+                placeholder={"Tingkat Legislatif"}
               />
             </Grid.Col>
           </Grid>
+          {value && <Box>{value}</Box>}
         </Box>
       </Box>
-    </>
-  );
-};
-
-const FormEksNasional = () => {
-  return (
-    <>
-      <Box>form nasional</Box>
     </>
   );
 };

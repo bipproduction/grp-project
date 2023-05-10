@@ -1,5 +1,9 @@
 import { api } from "@/lib/api-backend";
+import { _loadKabkot } from "@/load_data/load_kabkot";
+import { _loadProvinsi } from "@/load_data/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
+import { sKabkot } from "@/s_state/s_kabkot";
+import { sProvinsi } from "@/s_state/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
   Box,
@@ -17,8 +21,8 @@ import COLOR from "../../../../../fun/WARNA";
 
 export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
   const [value, setValue] = useState<any>();
-  const [prov, setProv] = useState<any []>([]);
-  const [kab, setKab] = useState<any []>([]);
+  // const [prov, setProv] = useState<any[]>([]);
+  // const [kab, setKab] = useState<any[]>([]);
 
   const [dataJab, setJab] = useState<any>([]);
   const [dataStatus, setStatus] = useState<any>([]);
@@ -27,7 +31,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
   const [isKabupaten, setKabupaten] = useState<any>([]);
 
   useShallowEffect(() => {
-    loadDataProvinsi();
+    _loadProvinsi();
     loadJabatanKabkot();
     loadStatus();
     loadDataPartai();
@@ -35,21 +39,19 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
     loadJabatanKabupaten();
   }, []);
 
-  async function loadDataProvinsi() {
-    const res = await fetch(
-      api.apiMasterProvinsiGetAll
-    )
-      .then((res) => res.json())
-      .then(setProv);
-  }
+  // async function loadDataProvinsi() {
+  //   const res = await fetch(api.apiMasterProvinsiGetAll)
+  //     .then((res) => res.json())
+  //     .then(setProv);
+  // }
 
-  async function laodDataKabupaten(idProvinsi : string){
-    const res = await fetch(
-        api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
-    )
-    .then((res) => res.json())
-    .then(setKab)
-  }
+  // async function laodDataKabupaten(idProvinsi: string) {
+  //   const res = await fetch(
+  //     api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+  //   )
+  //     .then((res) => res.json())
+  //     .then(setKab);
+  // }
 
   async function loadJabatanKabkot() {
     const res = await fetch(
@@ -93,8 +95,8 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
 
   return (
     <>
-    {/* {JSON.stringify(isKota)}
-    {JSON.stringify(isKabupaten)} */}
+      {/* {JSON.stringify(sProvinsi.value.map((e) => e.name))} */}
+      {/* {JSON.stringify(sKabkot.value.map((e) => e.name))} */}
       <Box>
         <Flex direction={"column"}>
           {/* <TextInput placeholder="Nama Kementrian Lembaga" label="**" /> */}
@@ -106,40 +108,46 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
               //   console.log(val);
               if (val == "Walikota") {
                 setValue(
-                   <Select data={isKota} placeholder={"Pilih Jabatan"} label="**"/>
+                  <Select
+                    data={isKota}
+                    placeholder={"Pilih Jabatan"}
+                    label="**"
+                  />
                 );
               } else {
                 setValue(
-                    <Select data={isKabupaten} placeholder={"Pilih Jabatan"} label="**"/>
-                )
+                  <Select
+                    data={isKabupaten}
+                    placeholder={"Pilih Jabatan"}
+                    label="**"
+                  />
+                );
               }
             }}
           />
           {value && <>{value}</>}
 
-          <Select 
-          label={"**"} 
-          placeholder={"Pilih Provinsi"} 
-          data={prov.map((e) => ({
-            value: e.id,
-            label: e.name
-
-          }))}
-          onChange={
-            laodDataKabupaten
-          }
-          
+          <Select
+            searchable
+            label={"**"}
+            placeholder={"Pilih Provinsi"}
+            data={sProvinsi.value.map((e) => ({
+              value: e.id,
+              label: e.name,
+            }))}
+            onChange={_loadKabkot}
           />
 
-          <Select 
-          label={"**"} 
-          placeholder={"Pilih Kab"} 
-          data={kab.map((e) => ({
-            value: e.id,
-            label: e.name
-
-          }))}
+          <Select
           
+          
+            searchable
+            label={"**"}
+            placeholder={"Pilih Kab"}
+            data={sKabkot.value.map((e) => ({
+              value: e.id,
+              label: e.name,
+            }))}
           />
 
           <TextInput placeholder="Periode" label="**" />
