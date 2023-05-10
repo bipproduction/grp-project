@@ -290,6 +290,7 @@ function StrukturPimpinanRanting() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kabupaten")}
@@ -303,6 +304,7 @@ function StrukturPimpinanRanting() {
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kecamatan")}
@@ -316,6 +318,7 @@ function StrukturPimpinanRanting() {
                       placeholder="Kecamatan"
                       label="Kecamatan"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("desa")}
@@ -328,6 +331,7 @@ function StrukturPimpinanRanting() {
                       placeholder="Desa / Kelurahan"
                       label="Desa / Kelurahan"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -337,6 +341,7 @@ function StrukturPimpinanRanting() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
 
                     <Center pt={20}>

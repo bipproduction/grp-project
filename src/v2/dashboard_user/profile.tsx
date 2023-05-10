@@ -61,10 +61,18 @@ const DataProfileV2 = () => {
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
-
-              <TextInput radius={"md"} mt={10} placeholder="3510101212990003" label="NIK" required  readOnly disabled />
-              <TextInput radius={"md"} mt={10} placeholder="Moh Alif Al Lukman" label="Nama" required readOnly disabled />
-              <TextInput radius={"md"} mt={10} placeholder="allukman.lukman99@gmail.com" label="Email" required readOnly disabled />
+              <Box mt={20}>
+                <Text fz={15}>NIK</Text>
+                <Text fw={700}>3510101212990003</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Nama</Text>
+                <Text fw={700}>Moh Alif Al Lukman</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Email</Text>
+                <Text fw={700}>allukman.lukman99@gmail.com</Text>
+              </Box>
               <TextInput
                 radius={"md"}
                 mt={10}

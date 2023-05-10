@@ -261,6 +261,7 @@ function SayapPimpinanAnakCabang() {
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
                       data={sayap}
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("provinsi")}
@@ -274,6 +275,7 @@ function SayapPimpinanAnakCabang() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kabupaten")}
@@ -287,6 +289,7 @@ function SayapPimpinanAnakCabang() {
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kecamatan")}
@@ -299,6 +302,7 @@ function SayapPimpinanAnakCabang() {
                       placeholder="Kecamatan"
                       label="Kecamatan"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -308,6 +312,7 @@ function SayapPimpinanAnakCabang() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <Center pt={20}>
                       <Box w={350}>

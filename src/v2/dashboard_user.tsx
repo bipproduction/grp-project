@@ -18,9 +18,10 @@ import {
   Button,
   Grid,
   ActionIcon,
+  Tooltip,
 } from "@mantine/core";
 import { useState } from "react";
-import { AiFillApple, AiFillHome, AiFillSetting } from "react-icons/ai";
+import { AiFillApple, AiFillHome, AiFillSetting, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
 import COLOR from "../../fun/WARNA";
 import { FiLogOut } from "react-icons/fi";
@@ -32,6 +33,7 @@ import KTAV2 from "./dashboard_user/kta";
 import DataProfileV2 from "./dashboard_user/profile";
 import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { MdAlternateEmail } from "react-icons/md";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -118,6 +120,8 @@ const LayoutDashboardUserV2 = () => {
                     direction="column"
                     wrap="wrap"
                     pl={20}
+                    onClick={home}
+                    style={{cursor: "pointer"}}
                   >
                     <Text fz={25} color="white">
                       GARUDA
@@ -129,40 +133,49 @@ const LayoutDashboardUserV2 = () => {
                   <Group pr={20}>
                     <Menu>
                       <Menu.Target>
+                      <Tooltip label="Profile">
                         <Group style={{ cursor: "pointer" }}>
                           <Avatar radius="xl" />
                         </Group>
+                      </Tooltip>
                       </Menu.Target>
-                      <Menu.Dropdown p={20}>
-                        <Text mt={10} fw={700}>
-                          {sUser.value?.username}
-                        </Text>
-                        <Text mt={5}>{sUser.value?.email}</Text>
-                        {/* <Center >
-                                                    <Button ta={'center'} mt={20} bg={COLOR.orange} color="orange" radius={20}>Lihat Profile</Button>
-                                                </Center> */}
+                      <Menu.Dropdown>
+                      <Menu.Item>
+                          <Group>
+                            <ActionIcon>
+                              <AiOutlineUser color="black" size="1.3rem" />
+                            </ActionIcon>
+                            <Text fw={700}>{sUser.value?.username}</Text>
+                          </Group>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Group>
+                            <ActionIcon>
+                              <MdAlternateEmail color="black" size="1.3rem" />
+                            </ActionIcon>
+                            <Text>{sUser.value?.email}</Text>
+                          </Group>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Group
+                          onClick={() => {
+                            localStorage.removeItem("user_id");
+                            sUser.value = {};
+                          }}
+                          >
+                            <ActionIcon>
+                              <AiOutlineLogout color="red" size="1.3rem" />
+                            </ActionIcon>
+                            <Text
+                              
+                              color="red"
+                            >
+                              Logout
+                            </Text>
+                          </Group>
+                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
-                    <ThemeIcon variant="light" color={COLOR.merah}>
-                      <AiFillHome
-                        onClick={home}
-                        size={40}
-                        color="white"
-                        style={{ cursor: "pointer" }}
-                      />
-                    </ThemeIcon>
-                    <ThemeIcon variant="light" color={COLOR.merah}>
-                      <Center
-                        component="a"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          localStorage.removeItem("user_id");
-                          sUser.value = {};
-                        }}
-                      >
-                        <FiLogOut size={25} color="white" />
-                      </Center>
-                    </ThemeIcon>
                   </Group>
                 </Group>
               </Header>

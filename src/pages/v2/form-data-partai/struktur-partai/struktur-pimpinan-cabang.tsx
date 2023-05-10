@@ -272,6 +272,7 @@ function StrukturPimpinanCabang() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kabupaten")}
@@ -284,6 +285,7 @@ function StrukturPimpinanCabang() {
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -293,6 +295,7 @@ function StrukturPimpinanCabang() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <TextInput
                     {...formStrukturPartai.getInputProps("alamatKantor")}

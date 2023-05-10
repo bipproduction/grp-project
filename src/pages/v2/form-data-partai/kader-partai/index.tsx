@@ -173,7 +173,7 @@ function KaderPartai() {
                       withAsterisk
                       placeholder="Pilih Tingkat Kader"
                       data={kader}
-                      
+                      searchable
                     />
                     <Center pt={20}>
                       <Box w={350}>
