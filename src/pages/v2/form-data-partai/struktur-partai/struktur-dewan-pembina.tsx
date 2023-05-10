@@ -242,6 +242,7 @@ function StrukturDewanPembina() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <Center pt={20}>
                       <Box w={350}>

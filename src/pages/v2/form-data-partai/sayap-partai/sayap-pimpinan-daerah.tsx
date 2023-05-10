@@ -246,6 +246,7 @@ function SayapPimpinanDaerah() {
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
                       data={sayap}
+                      searchable
                     />
                     <Select
                       // {...formStrukturPartai.getInputProps("provinsi")}
@@ -258,6 +259,7 @@ function SayapPimpinanDaerah() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                       {...formStrukturPartai.getInputProps("jabatan")}
@@ -267,6 +269,7 @@ function SayapPimpinanDaerah() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <TextInput
                     {...formStrukturPartai.getInputProps("alamatKantor")}

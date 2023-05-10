@@ -192,6 +192,7 @@ const FormDataDiriUser = () => {
                     <Box
                       p={50}
                       h={790}
+                      w={400}
                       sx={{
                         backgroundColor: COLOR.abuabu,
                       }}

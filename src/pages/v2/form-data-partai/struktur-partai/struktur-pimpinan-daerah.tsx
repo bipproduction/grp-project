@@ -262,6 +262,7 @@ function StrukturPimpinanDaerah() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -271,6 +272,7 @@ function StrukturPimpinanDaerah() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <TextInput
                     {...formStrukturPartai.getInputProps("alamatKantor")}

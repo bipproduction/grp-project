@@ -134,6 +134,7 @@ function OrganisasiAfiliatif() {
                       withAsterisk
                       placeholder="Pilih Nama Organisasi Afilliatif"
                       data={afiliatif}
+                      searchable
                     />
                     <Center pt={20}>
                       <Box w={350}>

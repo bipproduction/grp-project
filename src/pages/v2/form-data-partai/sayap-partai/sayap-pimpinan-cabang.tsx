@@ -246,6 +246,7 @@ function SayapPimpinanCabang() {
                         </Menu.Dropdown>
                       </Menu>
                     </Box>
+
                     <Select
                     {...formStrukturPartai.getInputProps("sayapPartai")}
                       label="Pilih Sayap Partai"
@@ -254,6 +255,7 @@ function SayapPimpinanCabang() {
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
                       data={sayap}
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("provinsi")}
@@ -267,6 +269,7 @@ function SayapPimpinanCabang() {
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     // {...formStrukturPartai.getInputProps("kabupaten")}
@@ -279,6 +282,7 @@ function SayapPimpinanCabang() {
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -288,6 +292,7 @@ function SayapPimpinanCabang() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
                     <TextInput
                     {...formStrukturPartai.getInputProps("alamatKantor")}

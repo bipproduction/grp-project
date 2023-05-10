@@ -252,6 +252,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       placeholder="Negara"
                       label="Negara"
                       withAsterisk
+                      searchable
                     />
                     <Select
                     {...formStrukturPartai.getInputProps("jabatan")}
@@ -261,6 +262,7 @@ function StrukturPerwakilanPartaiLuarNegeri() {
                       radius={"md"}
                       placeholder="Jabatan"
                       data={jabatan}
+                      searchable
                     />
 
                     <Center pt={20}>
