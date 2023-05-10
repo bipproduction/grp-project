@@ -15,7 +15,7 @@ export const ViewSaksiPilegV2 = () => {
                                 Data Saksi Pileg
                             </Text>
                         </Grid.Col>
-                        <Grid.Col span={4}>
+                        {/* <Grid.Col span={4}>
                             <Group position="right">
                                 <Button
                                     w={100}
@@ -36,7 +36,7 @@ export const ViewSaksiPilegV2 = () => {
                                     Fillter
                                 </Button>
                             </Group>
-                        </Grid.Col>
+                        </Grid.Col> */}
                     </Grid>
                 </Paper>
                 <TableSaksiPilegV2 />

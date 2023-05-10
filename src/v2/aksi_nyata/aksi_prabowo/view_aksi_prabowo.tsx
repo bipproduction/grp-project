@@ -17,7 +17,7 @@ export const ViewAksiPrabowoV2 = () => {
                                 Aksi Nyata Prabowo
                             </Text>
                         </Grid.Col>
-                        <Grid.Col span={4}>
+                        {/* <Grid.Col span={4}>
                             <Group position="right">
                                 <Button
                                     w={100}
@@ -38,7 +38,7 @@ export const ViewAksiPrabowoV2 = () => {
                                     Fillter
                                 </Button>
                             </Group>
-                        </Grid.Col>
+                        </Grid.Col> */}
                     </Grid>
                 </Paper>
                 <Box pt={20}>
