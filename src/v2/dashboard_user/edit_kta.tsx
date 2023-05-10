@@ -30,16 +30,16 @@ import COLOR from "../../../fun/WARNA";
         >
           <Grid>
             <Grid.Col span={8}>
-              <Text mt={10} ml={10}>
+              <Text mt={10} mb={10} ml={10}>
                 Edit Data Profile
               </Text>
             </Grid.Col>
             <Grid.Col span={4}>
-              <Group position="right" pr={10} p={5}>
+              {/* <Group position="right" pr={10} p={5}>
                 <Button color="orange.9" radius={"xl"} bg={COLOR.merah}>
                   Reset
                 </Button>
-              </Group>
+              </Group> */}
             </Grid.Col>
           </Grid>
         </Paper>
@@ -161,7 +161,7 @@ import COLOR from "../../../fun/WARNA";
               <TextInput
                 radius={"md"}
                 mt={10}
-                placeholder="Desa / Cabang"
+                placeholder="Desa"
                 label="**"
               />
               <TextInput

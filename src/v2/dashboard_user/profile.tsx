@@ -203,7 +203,13 @@ const DataProfileV2 = () => {
         </Grid.Col>
       </Grid>
       <Flex gap="md" pt={20}>
-        <Modal opened={opened} onClose={close} fullScreen>
+        <Modal opened={opened} onClose={close}         
+        size="100%"
+        // fullScreen
+        overlayProps={{
+          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
+          opacity: 0.1,
+        }}>
           <EditKTAV2 />
         </Modal>
         <Box w={150}>
