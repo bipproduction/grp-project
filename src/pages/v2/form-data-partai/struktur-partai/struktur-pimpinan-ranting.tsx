@@ -97,18 +97,18 @@ function StrukturPimpinanRanting() {
 
   const formStrukturPartai = useForm({
     initialValues: {
-      provinsi: "",
-      kabupaten: "",
-      kecamatan: "",
-      desa: "",
+      // provinsi: "",
+      // kabupaten: "",
+      // kecamatan: "",
+      // desa: "",
       jabatan: "",
 
     },
     validate: {
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
-      kecamatan: isNotEmpty("Tidak Boleh Kosong"),
-      desa: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      // desa: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
     },
   });

@@ -79,7 +79,7 @@ function SayapPimpinanDaerah() {
   const formStrukturPartai = useForm({
     initialValues: {
       sayapPartai: "",
-      provinsi: "",
+      // provinsi: "",
       jabatan: "",
       alamatKantor: "",
       nomorWA: "",
@@ -87,7 +87,7 @@ function SayapPimpinanDaerah() {
     },
     validate: {
       sayapPartai: isNotEmpty("Tidak Boleh Kosong"),
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
       alamatKantor: isNotEmpty("Tidak Boleh Kosong"),
       nomorWA: isNotEmpty("Tidak Boleh Kosong"),

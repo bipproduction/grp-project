@@ -101,16 +101,16 @@ function SayapPimpinanAnakCabang() {
   const formStrukturPartai = useForm({
     initialValues: {
       sayapPartai: "",
-      provinsi: "",
-      kabupaten: "",
-      kecamatan: "",
+      // provinsi: "",
+      // kabupaten: "",
+      // kecamatan: "",
       jabatan: "",
     },
     validate: {
       sayapPartai: isNotEmpty("Tidak Boleh Kosong"),
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
-      kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
     },
   });
