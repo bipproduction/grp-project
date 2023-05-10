@@ -133,14 +133,14 @@ const LayoutDashboardUserV2 = () => {
                                             <Menu.Dropdown p={20}>
                                                 <Text mt={10} fw={700}>{sUser.value?.username}</Text>
                                                 <Text mt={5}>{sUser.value?.email}</Text>
-                                                <Center >
+                                                {/* <Center >
                                                     <Button ta={'center'} mt={20} bg={COLOR.orange} color="orange" radius={20}>Lihat Profile</Button>
-                                                </Center>
+                                                </Center> */}
                                             </Menu.Dropdown>
                                         </Menu>
-                                        <ThemeIcon variant="light" color={COLOR.merah}>
+                                        {/* <ThemeIcon variant="light" color={COLOR.merah}>
                                             <AiFillSetting size={40} color='white' style={{ cursor: "pointer" }} />
-                                        </ThemeIcon>
+                                        </ThemeIcon> */}
                                         <ThemeIcon variant="light" color={COLOR.merah}>
                                             <Center component="a" style={{ cursor: "pointer" }} onClick={() => {
                                                 localStorage.removeItem("user_id");

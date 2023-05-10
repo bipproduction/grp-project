@@ -57,62 +57,70 @@ const DataProfileV2 = () => {
               <Text fz={22} color={"#525252"} fw={700}>
                 Data Profile
               </Text>
-              <Group>
-                <Text color={COLOR.merah}>**</Text>
+              {/* <Group>
+                <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
-              </Group>
+              </Group> */}
 
-              <TextInput radius={"md"} mt={10} placeholder="NIK" label="**" readOnly />
-              <TextInput radius={"md"} mt={10} placeholder="Nama" label="**" readOnly />
-              <TextInput radius={"md"} mt={10} placeholder="Email" label="**" readOnly />
+              <TextInput radius={"md"} mt={10} placeholder="3510101212990003" label="NIK" required  readOnly disabled />
+              <TextInput radius={"md"} mt={10} placeholder="Moh Alif Al Lukman" label="Nama" required readOnly disabled />
+              <TextInput radius={"md"} mt={10} placeholder="allukman.lukman99@gmail.com" label="Email" required readOnly disabled />
               <TextInput
                 radius={"md"}
                 mt={10}
-                placeholder="Tempat Lahir"
-                label="**"
+                placeholder="Kalimantan Tengah"
+                label="Tempat Lahir"
                 readOnly
+                disabled
+                required
               />
               <DateInput
                 radius={"md"}
                 mt={10}
-                placeholder="Tanggal Lahir"
-                label="**"
+                placeholder="12 Desember 1999"
+                label="Tanggal Lahir"
                 readOnly
-              />
-              <Select
-                radius={"md"}
-                data={[
-                  { value: "laki", label: "Laki-Laki" },
-                  { value: "perempuan", label: "Perempuan" },
-                ]}
-                mt={10}
-                placeholder="Jenis Kelamin"
-                label="**"
-                readOnly
+                disabled
+                required
               />
               <TextInput
                 radius={"md"}
                 mt={10}
-                placeholder="Nomor Handphone"
-                label="**"
+                placeholder="Laki - Laki"
+                label="Jenis Kelamin"
                 readOnly
+                disabled
+                required
               />
               <TextInput
                 radius={"md"}
                 mt={10}
-                placeholder="Instargram"
-                label="**"
+                placeholder="087701790942"
+                label="Nomor Handphone"
                 readOnly
+                disabled
+                required
               />
               <TextInput
                 radius={"md"}
                 mt={10}
-                placeholder="Facebook"
-                label="**"
+                placeholder="Allukman12"
+                label="Instargram"
                 readOnly
+                disabled
+                required
               />
-              <TextInput radius={"md"} mt={10} placeholder="TikTok" label="**" readOnly />
-              <TextInput radius={"md"} mt={10} placeholder="Twitter" label="**" readOnly />
+              <TextInput
+                radius={"md"}
+                mt={10}
+                placeholder="Allukman"
+                label="Facebook"
+                readOnly
+                disabled
+                required
+              />
+              <TextInput radius={"md"} mt={10} placeholder="Allukman" label="TikTok" required readOnly  disabled/>
+              <TextInput radius={"md"} mt={10} placeholder="Allukman" label="Twitter" required readOnly  disabled/>
             </Box>
           </Box>
         </Grid.Col>
@@ -127,74 +135,68 @@ const DataProfileV2 = () => {
                 borderRadius: 10,
               }}
             >
-              <Group mt={35}>
-                <Text color={COLOR.merah}>**</Text>
+              {/* <Group mt={35}>
+                <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
-              </Group>
+              </Group> */}
 
-              <Select readOnly
-                data={[
-                  { value: "islam", label: "Islam" },
-                  { value: "Protestan", label: "Protestan" },
-                  { value: "Katolik", label: "Katolik" },
-                  { value: "Hindu", label: "Hindu" },
-                  { value: "Buddha", label: "Buddha" },
-                  { value: "Khonghucu", label: "Khonghucu" },
-                ]}
+              <TextInput readOnly
                 radius={"md"}
                 mt={10}
-                placeholder="Agama"
-                label="**"
+                placeholder="Islam"
+                label="Agama"
+                disabled
+                required
               />
               <TextInput readOnly
                 radius={"md"}
                 mt={10}
-                placeholder="Pekerjaan"
-                label="**"
+                placeholder="Programmer"
+                label="Pekerjaan"
+                disabled
+                required
               />
-              <TextInput radius={"md"} mt={10} placeholder="Alamat" label="**" readOnly />
-              <Select
+              <TextInput radius={"md"} mt={10} placeholder="Jl.Gunung Anthena 1 No 11 A" label="Alamat" readOnly disabled required />
+              <TextInput
                 readOnly
-                data={[
-                  { value: "Bali", label: "Bali" },
-                  { value: "Jawa timur", label: "Jawa Timur" },
-                ]}
+                disabled
                 radius={"md"}
                 mt={10}
-                placeholder="Provinsi"
-                label="**"
-              />
-              <Select readOnly
-                data={[
-                  { value: "Banyuwangi", label: "Banyuwangi" },
-                  { value: "Malang", label: "Malang" },
-                ]}
-                radius={"md"}
-                mt={10}
-                placeholder="Kabupaten / Kota"
-                label="**"
-              />
-              <Select readOnly
-                data={[
-                  { value: "Geteng", label: "Genteng" },
-                  { value: "Glenmore", label: "Glenmore" },
-                ]}
-                radius={"md"}
-                mt={10}
-                placeholder="Kecamatan"
-                label="**"
+                placeholder="Bali"
+                label="Provinsi"
+                required
               />
               <TextInput readOnly
                 radius={"md"}
                 mt={10}
-                placeholder="Desa / Cabang"
-                label="**"
+                placeholder="Denpasar"
+                label="Kabupaten / Kota"
+                disabled
+                required
               />
               <TextInput readOnly
                 radius={"md"}
                 mt={10}
-                placeholder="RT - __, RW - __"
-                label="**"
+                placeholder="Denpasar Barat"
+                label="Kecamatan"
+                disabled
+                required
+              />
+              <TextInput readOnly
+                radius={"md"}
+                mt={10}
+                placeholder="Padang Sambian Klod"
+                label="Desa"
+                disabled
+                required
+              />
+              <TextInput readOnly
+                radius={"md"}
+                mt={10}
+                placeholder="0000"
+                label="RT/RW"
+                disabled
+                required
               />
             </Box>
           </Box>

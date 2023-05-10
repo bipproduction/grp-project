@@ -139,13 +139,13 @@ const LayoutDashboarSuperdAdminV2 = () => {
                         </Center> */}
                       </Menu.Dropdown>
                     </Menu>
-                    <ThemeIcon variant="light" color={COLOR.merah}>
+                    {/* <ThemeIcon variant="light" color={COLOR.merah}>
                       <AiFillSetting
                         size={40}
                         color="white"
                         style={{ cursor: "pointer" }}
                       />
-                    </ThemeIcon>
+                    </ThemeIcon> */}
                     <ThemeIcon variant="light" color={COLOR.merah}>
                       <Center
                         component="a"
