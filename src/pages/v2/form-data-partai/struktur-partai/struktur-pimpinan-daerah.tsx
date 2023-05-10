@@ -71,14 +71,14 @@ function StrukturPimpinanDaerah() {
 
   const formStrukturPartai = useForm({
     initialValues: {
-      provinsi: "",
+      // provinsi: "",
       jabatan: "",
       alamatKantor: "",
       nomorWA: "",
       medsos: ""
     },
     validate: {
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
       alamatKantor: isNotEmpty("Tidak Boleh Kosong"),
       nomorWA: isNotEmpty("Tidak Boleh Kosong"),

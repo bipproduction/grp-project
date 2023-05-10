@@ -78,16 +78,16 @@ function StrukturPimpinanCabang() {
 
   const formStrukturPartai = useForm({
     initialValues: {
-      provinsi: "",
-      kabupaten: "",
+      // provinsi: "",
+      // kabupaten: "",
       jabatan: "",
       alamatKantor: "",
       nomorWA: "",
       medsos: ""
     },
     validate: {
-      provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
       jabatan: isNotEmpty("Tidak Boleh Kosong"),
       alamatKantor: isNotEmpty("Tidak Boleh Kosong"),
       nomorWA: isNotEmpty("Tidak Boleh Kosong"),
