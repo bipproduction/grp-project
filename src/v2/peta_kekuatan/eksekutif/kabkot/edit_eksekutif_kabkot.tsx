@@ -108,7 +108,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
           <Grid>
             <Grid.Col span={12}>
               <Text size={20} fw={"bold"}>
-                Edit Data Eksekutif Provinsi
+                Edit Data Eksekutif Kabupaten / Kota
               </Text>
             </Grid.Col>
           </Grid>
