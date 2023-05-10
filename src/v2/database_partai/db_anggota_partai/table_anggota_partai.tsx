@@ -116,7 +116,7 @@ const TableAnggotaPartaiV2 = () => {
               </Text>
             </Grid.Col>
             <Grid.Col span={4}>
-              <Group position="right">
+              {/* <Group position="right">
                 <Button
                   w={100}
                   bg={COLOR.merah}
@@ -135,7 +135,7 @@ const TableAnggotaPartaiV2 = () => {
                 >
                   Fillter
                 </Button>
-              </Group>
+              </Group> */}
             </Grid.Col>
           </Grid>
         </Paper>

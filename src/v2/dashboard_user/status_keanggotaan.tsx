@@ -9,6 +9,7 @@ import {
   Paper,
   Select,
   Text,
+  TextInput,
 } from "@mantine/core";
 import React from "react";
 import COLOR from "../../../fun/WARNA";
@@ -36,17 +37,13 @@ const StatusKeanggotaanV2 = () => {
 
       <Grid>
         <Grid.Col span={6}>
-          <Select
+          <TextInput
             radius={"md"}
             mt={20}
-            placeholder="Status Keanggotaan"
-            label={"**"}
-            data={[
-              { value: "Struktur Partai", label: "Struktur Partai" },
-              { value: "Sayap Partai", label: "Sayap Partai" },
-              { value: "Kader Partai", label: "Kader Partai" },
-              { value: "Anggota Partai", label: "Anggota Partai" },
-            ]}
+            placeholder="Struktur Partai"
+            label="Status Keanggotaan"
+            required
+            disabled
           />
         </Grid.Col>
         {/* <Button mt={20} radius={"md"} fullWidth bg={COLOR.coklat} color="orange.9">Pilih Status Keanggotaan</Button> */}
