@@ -48,7 +48,7 @@ const KTAV2 = () => {
               radius={10}
               maw={500}
               mx="auto"
-              src={"/../KTANEWV2.png"}
+              src={"/../KTANew10.png"}
               alt="a"
             />
           </Center>

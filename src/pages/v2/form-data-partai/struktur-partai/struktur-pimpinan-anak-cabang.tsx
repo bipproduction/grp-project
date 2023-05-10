@@ -54,7 +54,7 @@ function StrukturPimpinanAnakCabang() {
     loadProvinsi();
     // loadKabupaten();
     // loadKecamatan();
-    loadJabatan()
+    loadJabatan();
   }, []);
 
   const loadProvinsi = async () => {
@@ -81,11 +81,11 @@ function StrukturPimpinanAnakCabang() {
       .then(setKecamatan);
   }
   async function loadJabatan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setJabatan(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setJabatan(Object.values(val).map((e: any) => e.name)));
   }
 
   const formStrukturPartai = useForm({
@@ -174,8 +174,9 @@ function StrukturPimpinanAnakCabang() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -198,7 +199,7 @@ function StrukturPimpinanAnakCabang() {
                       </Text>
                     </Box>
                     <Menu width={245}>
-                    <Menu.Target>
+                      <Menu.Target>
                         <UnstyledButton
                           className={classes.user}
                           pr={20}
@@ -229,7 +230,7 @@ function StrukturPimpinanAnakCabang() {
                     </Menu>
                     <Box mt={20}>
                       <Menu>
-                      <Menu.Target>
+                        <Menu.Target>
                           <UnstyledButton
                             className={classes.user}
                             pr={20}
@@ -269,10 +270,10 @@ function StrukturPimpinanAnakCabang() {
                       </Menu>
                     </Box>
                     <Select
-                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      // {...formStrukturPartai.getInputProps("provinsi")}
                       data={provinsi.map((pro) => ({
                         value: pro.id,
-                        label : pro.name
+                        label: pro.name,
                       }))}
                       onChange={loadKabupaten}
                       radius={"md"}
@@ -283,10 +284,10 @@ function StrukturPimpinanAnakCabang() {
                       searchable
                     />
                     <Select
-                    // {...formStrukturPartai.getInputProps("kabupaten")}
+                      // {...formStrukturPartai.getInputProps("kabupaten")}
                       data={kabupaten.map((kab) => ({
                         value: kab.id,
-                        label: kab.name
+                        label: kab.name,
                       }))}
                       onChange={loadKecamatan}
                       radius={"md"}
@@ -297,10 +298,10 @@ function StrukturPimpinanAnakCabang() {
                       searchable
                     />
                     <Select
-                    // {...formStrukturPartai.getInputProps("kecamatan")}
+                      // {...formStrukturPartai.getInputProps("kecamatan")}
                       data={kecamatan.map((kec) => ({
                         value: kec.id,
-                        label: kec.name
+                        label: kec.name,
                       }))}
                       radius={"md"}
                       mt={10}
@@ -310,7 +311,7 @@ function StrukturPimpinanAnakCabang() {
                       searchable
                     />
                     <Select
-                    {...formStrukturPartai.getInputProps("jabatan")}
+                      {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}

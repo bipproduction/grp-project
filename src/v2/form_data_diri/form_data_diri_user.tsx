@@ -6,6 +6,7 @@ import {
   Checkbox,
   Container,
   Group,
+  Header,
   Image,
   MultiSelect,
   ScrollArea,
@@ -41,6 +42,7 @@ const FormDataDiriUser = () => {
   const [provinsi, setProvinsi] = useState<any[]>([]);
   // const [provinsi, setProvinsi] = useState([]);
   // const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [listKabupaten, setListKabupaten] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
   const [desa, setDesa] = useState<any[]>([]);
@@ -79,9 +81,14 @@ const FormDataDiriUser = () => {
   const loadProvinsi = async () => {
     const res = await fetch(`/api/master/master-provinsi-get-all`);
     const ProviniData = await res.json();
-    console.log(ProviniData);
     setProvinsi(ProviniData);
   };
+
+  // const kabupatenlist = async () => {
+  //   const res = await fetch(`/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${undefined}`);
+  //   const ProviniData = await res.json();
+  //   setListKabupaten(ProviniData);
+  // }
 
   const loadKabupaten = async (idProvinsi: string) => {
     const res = await fetch(
@@ -190,19 +197,21 @@ const FormDataDiriUser = () => {
                 >
                   <Box>
                     <Box
-                      p={50}
+                      p={30}
                       h={790}
                       w={400}
                       sx={{
                         backgroundColor: COLOR.abuabu,
                       }}
                     >
-                      <Box>
+                      <Box sx={{ position: "sticky", top: 0 }}>
                         <Text fw={700} fz={30}>
                           Form Data Diri
                         </Text>
                         <Text mb={20}>* Wajib diisi</Text>
-                        <ScrollArea h={571} scrollbarSize={0}>
+                      </Box>
+                      <Box>
+                        <ScrollArea h={630} scrollbarSize={0}>
                           <Box
                             component="form"
                             maw={400}
@@ -314,7 +323,6 @@ const FormDataDiriUser = () => {
                                   { value: "Pengajar", label: "Pengajar" },
                                 ]}
                                 {...formDataDiri.getInputProps("pekerjaan")}
-
                               />
                               <TextInput
                                 placeholder="Alamat"
@@ -323,7 +331,7 @@ const FormDataDiriUser = () => {
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("alamat")}
                               />
-                              {/* {JSON.stringify(kabupaten)} */}
+                              {/* {JSON.stringify(provinsi)} */}
                               <Select
                                 data={provinsi.map((pro) => ({
                                   value: pro.id,
@@ -335,7 +343,7 @@ const FormDataDiriUser = () => {
                                 withAsterisk
                                 searchable
                                 // {...formDataDiri.getInputProps("provinsi")}
-                                onChange={loadKabupaten}
+                                onChange={((val) => console.log(val))}
                               />
                               <Select
                                 data={kabupaten.map((v) => ({

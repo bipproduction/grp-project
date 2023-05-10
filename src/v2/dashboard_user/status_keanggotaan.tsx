@@ -37,14 +37,12 @@ const StatusKeanggotaanV2 = () => {
 
       <Grid>
         <Grid.Col span={6}>
-          <TextInput
-            radius={"md"}
-            mt={20}
-            placeholder="Struktur Partai"
-            label="Status Keanggotaan"
-            required
-            disabled
-          />
+          <Box mt={30}>
+          <Box mt={10}>
+            <Text fz={15}>Status Keanggotaan</Text>
+            <Text fw={700}>Struktur Partai</Text>
+          </Box>
+          </Box>
         </Grid.Col>
         {/* <Button mt={20} radius={"md"} fullWidth bg={COLOR.coklat} color="orange.9">Pilih Status Keanggotaan</Button> */}
       </Grid>

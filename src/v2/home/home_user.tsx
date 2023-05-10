@@ -145,7 +145,7 @@ const HomeUserV2 = () => {
     <>
       {/* HEADER */}
       <Box>
-        <Header height={70} bg={COLOR.merah}>
+        <Header height={70} bg={COLOR.merah} sx={{position: "sticky", top: 0}}>
           <Group position="apart" sx={{ height: "100%" }}>
             <Flex
               justify="flex-start"

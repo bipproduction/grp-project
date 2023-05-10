@@ -73,62 +73,35 @@ const DataProfileV2 = () => {
                 <Text fz={15}>Email</Text>
                 <Text fw={700}>allukman.lukman99@gmail.com</Text>
               </Box>
-              <TextInput
-                radius={"md"}
-                mt={10}
-                placeholder="Kalimantan Tengah"
-                label="Tempat Lahir"
-                readOnly
-                disabled
-                required
-              />
-              <DateInput
-                radius={"md"}
-                mt={10}
-                placeholder="12 Desember 1999"
-                label="Tanggal Lahir"
-                readOnly
-                disabled
-                required
-              />
-              <TextInput
-                radius={"md"}
-                mt={10}
-                placeholder="Laki - Laki"
-                label="Jenis Kelamin"
-                readOnly
-                disabled
-                required
-              />
-              <TextInput
-                radius={"md"}
-                mt={10}
-                placeholder="087701790942"
-                label="Nomor Handphone"
-                readOnly
-                disabled
-                required
-              />
-              <TextInput
-                radius={"md"}
-                mt={10}
-                placeholder="Allukman12"
-                label="Instargram"
-                readOnly
-                disabled
-                required
-              />
-              <TextInput
-                radius={"md"}
-                mt={10}
-                placeholder="Allukman"
-                label="Facebook"
-                readOnly
-                disabled
-                required
-              />
-              <TextInput radius={"md"} mt={10} placeholder="Allukman" label="TikTok" required readOnly  disabled/>
-              <TextInput radius={"md"} mt={10} placeholder="Allukman" label="Twitter" required readOnly  disabled/>
+              <Box mt={10}>
+                <Text fz={15}>Tempat Lahir</Text>
+                <Text fw={700}>Kalimantan Tengah</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Tanggal Lahir</Text>
+                <Text fw={700}>12 Desember 1999</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Jenis Kelamin</Text>
+                <Text fw={700}>Laki - Laki</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Nomor Handphone</Text>
+                <Text fw={700}>087701790942</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Instargram</Text>
+                <Text fw={700}>Allukman12</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Facebook</Text>
+                <Text fw={700}>Allukman</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>TikTok</Text>
+                <Text fw={700}>Allukman</Text>
+              </Box>
+              {/* BATAS */}
             </Box>
           </Box>
         </Grid.Col>
@@ -138,6 +111,7 @@ const DataProfileV2 = () => {
               p={20}
               pl={30}
               pr={30}
+              pt={65}
               sx={{
                 backgroundColor: COLOR.abuabu,
                 borderRadius: 10,
@@ -147,77 +121,61 @@ const DataProfileV2 = () => {
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
-
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="Islam"
-                label="Agama"
-                disabled
-                required
-              />
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="Programmer"
-                label="Pekerjaan"
-                disabled
-                required
-              />
-              <TextInput radius={"md"} mt={10} placeholder="Jl.Gunung Anthena 1 No 11 A" label="Alamat" readOnly disabled required />
-              <TextInput
-                readOnly
-                disabled
-                radius={"md"}
-                mt={10}
-                placeholder="Bali"
-                label="Provinsi"
-                required
-              />
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="Denpasar"
-                label="Kabupaten / Kota"
-                disabled
-                required
-              />
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="Denpasar Barat"
-                label="Kecamatan"
-                disabled
-                required
-              />
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="Padang Sambian Klod"
-                label="Desa"
-                disabled
-                required
-              />
-              <TextInput readOnly
-                radius={"md"}
-                mt={10}
-                placeholder="0000"
-                label="RT/RW"
-                disabled
-                required
-              />
+              <Box mt={10}>
+                <Text fz={15}>Twitter</Text>
+                <Text fw={700}>Allukman</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Agama</Text>
+                <Text fw={700}>Islam</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Pekerjaan</Text>
+                <Text fw={700}>Programmer</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Alamat</Text>
+                <Text fw={700}>Jl.Gunung Anthena 1 No 11 A</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Alamat</Text>
+                <Text fw={700}>Jl.Gunung Anthena 1 No 11 A</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Provinsi</Text>
+                <Text fw={700}>Bali</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Kabupaten / Kota</Text>
+                <Text fw={700}>Denpasar</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Kecamatan</Text>
+                <Text fw={700}>Denpasar Barat</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Desa</Text>
+                <Text fw={700}>Padang Sambian Klod</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>RT/RW</Text>
+                <Text fw={700}>0000</Text>
+              </Box>
             </Box>
           </Box>
         </Grid.Col>
       </Grid>
       <Flex gap="md" pt={20}>
-        <Modal opened={opened} onClose={close}         
-        size="100%"
-        // fullScreen
-        overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
-          opacity: 0.1,
-        }}>
+        <Modal
+          opened={opened}
+          onClose={close}
+          size="100%"
+          // fullScreen
+          overlayProps={{
+            // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
+            opacity: 0.1,
+          }}
+        >
           <EditKTAV2 />
         </Modal>
         <Box w={150}>
@@ -231,18 +189,7 @@ const DataProfileV2 = () => {
             Edit KTA
           </Button>
         </Box>
-        <Box w={150}>
-          <Button
-            fullWidth
-            color="orange.9"
-            bg={COLOR.orange}
-            radius={"xl"}
-          >
-            Simpan
-          </Button>
-        </Box>
       </Flex>
-
     </>
   );
 };

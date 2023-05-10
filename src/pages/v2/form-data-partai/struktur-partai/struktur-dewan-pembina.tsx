@@ -45,20 +45,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturDewanPembina() {
-  const [jabatan, setJabatan] = useState<any | []>([])
+  const [jabatan, setJabatan] = useState<any | []>([]);
 
   useShallowEffect(() => {
-    loadJabatan()
-  },[])
+    loadJabatan();
+  }, []);
 
   async function loadJabatan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setJabatan(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setJabatan(Object.values(val).map((e: any) => e.name)));
   }
-
 
   const formStrukturPartai = useForm({
     initialValues: {
@@ -140,8 +139,9 @@ function StrukturDewanPembina() {
               >
                 <Box>
                   <Box
-                    p={50}
+                    p={30}
                     h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
