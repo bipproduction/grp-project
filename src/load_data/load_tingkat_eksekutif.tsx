@@ -1,7 +1,7 @@
-import { sListEksekutif } from "@/s_state/s_list_eksekutif";
+import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 import { apiGetMaster } from "../lib/api-get-master";
 
-export const loadTingkatEksekutif = async () =>
+export const _loadTingkatEksekutif = async () =>
   fetch(apiGetMaster.apiGetTingkatEksekutif)
     .then((e) => e.json())
-    .then((e) => console.log((sListEksekutif.value = e)));
+    .then((e) => ((sListEksekutif.value = e)));

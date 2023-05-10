@@ -12,15 +12,30 @@ export const FormTambahEksekutifNasionalV2 = ({
       {/* {JSON.stringify(setNilai)} */}
       <Box>
         <Flex direction={"column"}>
-          <TextInput placeholder="Nama Kementrian Lembaga" label="**" />
-          <TextInput placeholder="Jabatan" label="**" />
-          <TextInput placeholder="Periode" label="**" />
-          <TextInput placeholder="Nama" label=" " />
-          <TextInput placeholder="NIK" label=" " />
-          <TextInput placeholder="Email" label="**" />
-          <TextInput placeholder="Alamat Tinggal / Domisili" label="**" />
-          <TextInput placeholder="Alamat Kantor" label="**" />
-          <TextInput placeholder="Media Sosial" label=" " />
+          <TextInput
+            placeholder="Nama Kementrian Lembaga"
+            label="Nama Kementrian Lembaga"
+            withAsterisk
+          />
+          <TextInput placeholder="Jabatan" label="Jabatan" withAsterisk />
+          <TextInput placeholder="Periode" label="Periode" withAsterisk />
+          <TextInput placeholder="Nama" label="Nama" withAsterisk />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk />
+          <TextInput placeholder="Email" label="*Email*" withAsterisk />
+          <TextInput
+            placeholder="Alamat Tinggal / Domisili"
+            label="*Alamat Tinggal / Domisili*"
+            withAsterisk
+          />
+          <TextInput
+            placeholder="Alamat Kantor"
+            label="*Alamat Kantor*"
+            withAsterisk
+          />
+          <TextInput placeholder="Facebook" label="Facebook" />
+          <TextInput placeholder="Instagram" label="Instagram" />
+          <TextInput placeholder="TikTok" label="TikTok" />
+          <TextInput placeholder="Twitter" label="Twitter" />
           <Box pt={20}>
             <Button
               w={100}

@@ -1,4 +1,7 @@
+import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { ModelProvinsi } from "@/model/model_wilayah";
 import { Box, Button, Grid, Group, Paper, Tabs, Text } from "@mantine/core";
+import { useShallowEffect } from "@mantine/hooks";
 
 import { AiOutlineSave } from "react-icons/ai";
 import { CiFilter } from "react-icons/ci";
@@ -11,8 +14,11 @@ import { LegislatifRIV2 } from "./dpr_ri/legislatif_ri";
 // import { EksekutifProvinsiV2 } from "./provisi/eksekutif_provinsi";
 
 export const ViewLegislatifV2 = () => {
+  
   return (
     <>
+      
+
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>

@@ -17,6 +17,8 @@ import { useState } from "react";
 import { FormTambahEksekutifNasionalV2 } from "./nasional/form_tambah_nasional";
 import { FormTambahEksekutifProvinsiV2 } from "./provisi/form_tambah_provinsi";
 import { FormTambahEksekutifKabKotV2 } from "./kabkot/form_tambah_kabkot";
+import { _loadTingkatEksekutif } from "@/load_data/load_tingkat_eksekutif";
+import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 
 export const TambahEksekutifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -45,22 +47,17 @@ export const TambahEksekutifV2 = () => {
 };
 
 const TambahDataEksekutif = ({ tutupModal }: any) => {
-  const [dataEks, setEks] = useState<any | []>([]);
   const [value, setValue] = useState<any>();
 
   useShallowEffect(() => {
-    loadLevelEksekutif();
+   
+    _loadTingkatEksekutif()
   }, []);
 
-  async function loadLevelEksekutif() {
-    const res = await fetch("/api/get/peta-kekuatan/api-get-tingkat-eksekutif")
-      .then((res) => res.json())
-      .then((val) => setEks(Object.values(val).map((e: any) => e.name)));
-  }
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
-      <Box>
+      <Box p={10}>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={12}>
@@ -70,7 +67,7 @@ const TambahDataEksekutif = ({ tutupModal }: any) => {
             </Grid.Col>
           </Grid>
         </Paper>
-        <Box pt={20}>
+        <Box pt={25}>
           <Grid>
             <Grid.Col span={12}>
               <Text fz={10}>
@@ -80,8 +77,16 @@ const TambahDataEksekutif = ({ tutupModal }: any) => {
                 Wajib diisi
               </Text>
               <Select
-                label={"**"}
-                data={dataEks}
+                label={"Pilih Tingkat Eksekutif"}
+                withAsterisk
+                data={sListEksekutif.value.map((e) => ({
+                  value: e.name,
+                  label: e.name
+                 
+                }))}
+                // onChange={(val) => {
+                //   console.log(val)
+                // }}
                 onChange={(val) => {
                   // console.log(val)
                   if (val == "Nasional") {
@@ -113,7 +118,7 @@ const TambahDataEksekutif = ({ tutupModal }: any) => {
                     }
                   }
                 }}
-                placeholder={"Level Eksekutif"}
+                placeholder={"Tingkat Eksekutif"}
               />
             </Grid.Col>
           </Grid>

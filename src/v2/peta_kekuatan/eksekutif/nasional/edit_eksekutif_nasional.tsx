@@ -1,5 +1,5 @@
 import { apiGetMaster } from "@/lib/api-get-master";
-import { sListEksekutif } from "@/s_state/s_list_eksekutif";
+import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
   Box,
