@@ -58,7 +58,7 @@ const TambahDataLegislatif = ({ thisClosed }: any) => {
   }
   return (
     <>
-      {JSON.stringify(dataEks)}
+      {/* {JSON.stringify(dataEks)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>

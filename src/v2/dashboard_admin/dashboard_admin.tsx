@@ -49,7 +49,7 @@ const DashAdmin = () => {
             <Grid.Col span={8}>
               <Text size={20} fw={"bold"}>Dashboard Admin</Text>
             </Grid.Col>
-            <Grid.Col span={4}>
+            {/* <Grid.Col span={4}>
               <Group position="right">
                 <Button
                   w={100}
@@ -70,7 +70,7 @@ const DashAdmin = () => {
                   Fillter
                 </Button>
               </Group>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Paper>
         <Box>

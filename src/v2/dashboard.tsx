@@ -26,7 +26,7 @@ import { useState } from "react";
 import Pemilu from "@/layout/peta_kekuatan/pemilu/pemilu";
 import Eksekutif from "@/layout/peta_kekuatan/eksekutif/eksekutif";
 import { signal } from "@preact/signals-react";
-import { AiFillApple, AiFillSetting } from "react-icons/ai";
+import { AiFillApple, AiFillHome, AiFillSetting } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
 import KaderPartai from "@/layout/sumber_daya_partai/kader_partai/kader_partai";
 import AnggotaPartai from "@/layout/sumber_daya_partai/anggota_partai/anggota_partai";
@@ -262,27 +262,20 @@ const DashboardAdminV2 = () => {
                       </Menu.Target>
                       <Menu.Dropdown p={20}>
                         <Text mt={10} fw={700}>
-                          USER 1
+                          {sUser.value?.username}
                         </Text>
-                        <Text mt={5}>Usersatu@gmail.com</Text>
-                        <Center>
-                          <Button
-                            ta={"center"}
-                            mt={20}
-                            bg={COLOR.orange}
-                            color="orange"
-                            radius={20}
-                          >
-                            Lihat Profile
-                          </Button>
-                        </Center>
+                        <Text mt={5}>{sUser.value?.email}</Text>
+                        {/* <Center >
+                          <Button ta={'center'} mt={20} bg={COLOR.orange} color="orange" radius={20}>Lihat Profile</Button>
+                        </Center> */}
                       </Menu.Dropdown>
                     </Menu>
                     <ThemeIcon variant="light" color={COLOR.merah}>
-                      <AiFillSetting
+                      <AiFillHome
                         size={40}
                         color="white"
                         style={{ cursor: "pointer" }}
+                        onClick={home}
                       />
                     </ThemeIcon>
                     <ThemeIcon variant="light" color={COLOR.merah}>
@@ -303,12 +296,12 @@ const DashboardAdminV2 = () => {
             </Box>
 
             <Navbar.Section>
-              <Group pb={30} onClick={home} style={{ cursor: "pointer" }}>
+              {/* <Group pb={30} onClick={home} style={{ cursor: "pointer" }}>
                 <ActionIcon>
                   <IoArrowBackCircle size={90} color={COLOR.merah} />
                 </ActionIcon>
                 <Text onClick={home}>Home</Text>
-              </Group>
+              </Group> */}
               {
                 <Flex align={"center"} gap={"lg"}>
                   <FaCircle size={25} color={COLOR.merah} />

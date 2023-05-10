@@ -1,8 +1,12 @@
-import { Box, Button, Group, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
+import { EditEksekutifProvinsiV2 } from "./edit_eksekutif_provinsi";
 
 export const TableEksekutifProvinsiV2 = () => {
+  const [opened, {open, close}] = useDisclosure(false)
   const tbHead = (
     <tr>
       <th>No</th>
@@ -56,6 +60,13 @@ export const TableEksekutifProvinsiV2 = () => {
 
   return (
     <>
+    <Modal
+    opened={opened}
+    onClose={close}
+    >
+      <EditEksekutifProvinsiV2 thisClosed={close}/>
+
+    </Modal>
       <Box pt={20}>
         <ScrollArea>
           <Table withBorder horizontalSpacing={"lg"}>

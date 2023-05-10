@@ -128,7 +128,7 @@ const TableKaderPartaiV2 = () => {
                 Data Kader Partai
               </Text>
             </Grid.Col>
-            <Grid.Col span={4}>
+            {/* <Grid.Col span={4}>
               <Group position="right">
                 <Button
                   w={100}
@@ -149,7 +149,7 @@ const TableKaderPartaiV2 = () => {
                   Fillter
                 </Button>
               </Group>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Paper>
         <Box pt={20}>

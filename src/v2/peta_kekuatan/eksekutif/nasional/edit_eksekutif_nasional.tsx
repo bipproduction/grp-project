@@ -1,18 +1,22 @@
 import { apiGetMaster } from "@/lib/api-get-master";
 import { sListEksekutif } from "@/s_state/s_list_eksekutif";
 import { buttonSimpan } from "@/v2/component/button-toast";
-import { Box, Button, Grid, Paper, Select, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Paper,
+  Select,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
 export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
   const [dataEks, setEks] = useState<any | []>([]);
-  const [valueNas, setValueNas] = useState<string>();
-  const [valueProv, setValueProv] = useState<string>();
-  const [valueKab, setValueKab] = useState<string>();
-
-
 
   useShallowEffect(() => {
     loadLevelEksekutif();
@@ -25,7 +29,7 @@ export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
   }
   return (
     <>
-    {JSON.stringify(dataEks)}
+      {/* {JSON.stringify(dataEks)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -37,44 +41,36 @@ export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
           </Grid>
         </Paper>
         <Box pt={20}>
-          <Button
-            w={100}
-            color="orange.9"
-            bg={COLOR.orange}
-            radius={"xl"}
-            onClick={() => {
-              buttonSimpan();
-              thisClosed();
-            }}
-          >
-            Simpan
-          </Button>
-        </Box>
-        <Box pt={20}>
-          <Grid>
-            <Grid.Col span={8}>
-              <Select
-                data={dataEks}
-                onChange={(val) => {
-                  if(val == "Nasional"){
-                    setValueNas("Nasss");
-                  } else {
-                    if (val == "Provinsi") {
-                      setValueNas("Provv");
-                    } else {
-                      if (val == "Kabupaten / Kota") {
-                        setValueNas("Kabkot")
-                      } else {
-                        console.log("semua salah")
-                      }
-                    }
-                  }
+          <Flex direction={"column"}>
+            <Select
+            placeholder="Tingkat Eksekutif"
+            data={dataEks}
+            label="**"
+            />
+            <TextInput placeholder="Nama Kementrian Lembaga" label="**" />
+            <TextInput placeholder="Jabatan" label="**" />
+            <TextInput placeholder="Periode" label="**" />
+            <TextInput placeholder="Nama" label=" " />
+            <TextInput placeholder="NIK" label=" " />
+            <TextInput placeholder="Email" label="**" />
+            <TextInput placeholder="Alamat Tinggal / Domisili" label="**" />
+            <TextInput placeholder="Alamat Kantor" label="**" />
+            <TextInput placeholder="Media Sosial" label=" " />
+            <Box pt={20}>
+              <Button
+                w={100}
+                color="orange.9"
+                bg={COLOR.orange}
+                radius={"xl"}
+                onClick={() => {
+                  buttonSimpan();
+                  thisClosed();
                 }}
-                placeholder={"Level Eksekutif"}
-              />
-            </Grid.Col>
-          </Grid>
-          {valueNas && <Box>{valueNas}</Box>}
+              >
+                Simpan
+              </Button>
+            </Box>
+          </Flex>
         </Box>
       </Box>
     </>

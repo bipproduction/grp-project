@@ -33,7 +33,7 @@ export const ViewTPSdanDPTV2 = () => {
                   Data TPS & DPT
                 </Text>
               </Grid.Col>
-              <Grid.Col span={4}>
+              {/* <Grid.Col span={4}>
                 <Group position="right">
                   <Button
                     w={100}
@@ -54,7 +54,7 @@ export const ViewTPSdanDPTV2 = () => {
                     Fillter
                   </Button>
                 </Group>
-              </Grid.Col>
+              </Grid.Col> */}
             </Grid>
           </Paper>
           <Box pt={20}>
