@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _, { functions, get, identity, lowerCase, values } from "lodash";
+import _, { functions, get, identity, lowerCase, set, values } from "lodash";
 import $ from "jquery";
 
 const useStyles = createStyles((theme) => ({
@@ -45,6 +45,14 @@ const FormDataDiriUser = () => {
   const [listKabupaten, setListKabupaten] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
     id: "",
     name: "",
   });
@@ -119,8 +127,17 @@ const FormDataDiriUser = () => {
       // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
       `/api/master/master-kecamatan-get-by-kabkot` + `?idKabkot=${idKabkot}`
     )
-      .then((res) => res.json())
-      .then(setKecamatan);
+    .then((res) => res.json())
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setKecamatan(val);
+        setSelectedKecamatan({});
+      } else {
+        setKecamatan([]);
+      }
+    });
+      // .then((res) => res.json())
+      // .then(setKecamatan);
   }
   async function loadDesa(idKecamatan: string) {
     const res = await fetch(
@@ -128,7 +145,14 @@ const FormDataDiriUser = () => {
       `/api/master/master-desa-get-by-kecamatan` + `?idKecamatan=${idKecamatan}`
     )
       .then((res) => res.json())
-      .then(setDesa);
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      })
   }
   async function loadPekerjaan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-pekerjaan")
@@ -354,7 +378,7 @@ const FormDataDiriUser = () => {
                                   label: pro.name,
                                 }))}
                                 radius={"md"}
-                                value={selectedKabupaten.name}
+                                value={selectedProvince.name}
                                 placeholder={selectedProvince.name}
                                 label="Provinsi"
                                 withAsterisk
@@ -369,33 +393,19 @@ const FormDataDiriUser = () => {
                                   }
                                 }}
                               />
-
-                              {/* <Button
-                                onClick={() => {
-                                  setKabupaten([]);
-                                }}
-                              >
-                                kosongkan kabupaten
-                              </Button> */}
-                              {/* {
-                                kabupaten.find(
-                                  (v2) =>
-                                    Number(v2.id) == Number(selectedKabupaten)
-                                )?.name
-                              } */}
-
+                              {/* {JSON.stringify(selectedKabupaten.name)} */}
                               <Select
                                 key={Math.random()}
                                 // defaultValue={selectedKabupaten.name}
-                                placeholder={selectedKabupaten.name}
                                 data={
                                   _.isEmpty(kabupaten)
-                                    ? []
-                                    : kabupaten.map((v) => ({
-                                        value: v.id,
-                                        label: v.name,
-                                      }))
+                                  ? []
+                                  : kabupaten.map((v) => ({
+                                    value: v.id,
+                                    label: v.name,
+                                  }))
                                 }
+                                placeholder={selectedKabupaten.name}
                                 value={selectedKabupaten.name}
                                 radius={"md"}
                                 label="Kabupaten / Kota"
@@ -409,26 +419,50 @@ const FormDataDiriUser = () => {
                                   loadKecamatan(val!);
                                 }}
                               />
+                              {/* {JSON.stringify(selectedKecamatan.name)} */}
                               <Select
-                                data={kecamatan.map((v) => ({
-                                  value: v.id,
-                                  label: v.name,
-                                }))}
+                                key={Math.random()}
+                                data={
+                                  _.isEmpty(kecamatan)
+                                  ? []
+                                  : kecamatan.map((val) => ({
+                                    value: val.id,
+                                    label: val.name,
+                                  }))
+                                }
                                 radius={"md"}
-                                placeholder="Kecamatan"
+                                placeholder={selectedKecamatan.name}
+                                value={selectedKecamatan.name}
                                 label="Kecamatan"
                                 withAsterisk
                                 searchable
                                 // {...formDataDiri.getInputProps("kecamatan")}
-                                onChange={loadDesa}
+                                onChange={(val) => {
+                                  setSelectedKecamatan(
+                                    kecamatan.find((v) => v.id == val)
+                                    )
+                                  loadDesa(val!)
+                                }}
                               />
+                              {/* {JSON.stringify(selectedDesa.name)} */}
                               <Select
-                                data={desa.map((des) => ({
-                                  value: des.id,
-                                  label: des.name,
-                                }))}
+                              key={Math.random()}
+                              data={
+                                _.isEmpty(desa)
+                                ? []
+                                : desa.map((val) => ({
+                                  value: val.id,
+                                  label: val.name,
+                                }))
+                              }
+                              onChange={(val) => {
+                                setSelectedDesa(
+                                  desa.find((v) => v.id == val)
+                                )
+                              }}
                                 radius={"md"}
-                                placeholder="Desa"
+                                placeholder={selectedDesa.name}
+                                value={selectedDesa.name}
                                 label="Desa"
                                 withAsterisk
                                 searchable
