@@ -1,4 +1,5 @@
 import { apiGetMaster } from "@/lib/api-get-master";
+import { _loadTingkatEksekutif } from "@/load_data/load_tingkat_eksekutif";
 import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
@@ -16,17 +17,10 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
 export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
-  const [dataEks, setEks] = useState<any | []>([]);
-
   useShallowEffect(() => {
-    loadLevelEksekutif();
+    _loadTingkatEksekutif();
   }, []);
 
-  async function loadLevelEksekutif() {
-    const res = await fetch(apiGetMaster.apiGetTingkatEksekutif)
-      .then((res) => res.json())
-      .then((val) => setEks(Object.values(val).map((e: any) => e.name)));
-  }
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
@@ -40,22 +34,42 @@ export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
             </Grid.Col>
           </Grid>
         </Paper>
-        <Box pt={20}>
+
+        <Box>
           <Flex direction={"column"}>
-            <Select
+            {/* <Select
             placeholder="Tingkat Eksekutif"
-            data={dataEks}
-            label="**"
+            data={sListEksekutif.value.map((e) => ({
+              value: e.id,
+              label: e.name,
+            }))}
+            label="Tingkat Eksekutif"
+            withAsterisk
+            /> */}
+            <TextInput
+              placeholder="Nama Kementrian Lembaga"
+              label="Nama Kementrian Lembaga"
+              withAsterisk
             />
-            <TextInput placeholder="Nama Kementrian Lembaga" label="**" />
-            <TextInput placeholder="Jabatan" label="**" />
-            <TextInput placeholder="Periode" label="**" />
-            <TextInput placeholder="Nama" label=" " />
-            <TextInput placeholder="NIK" label=" " />
-            <TextInput placeholder="Email" label="**" />
-            <TextInput placeholder="Alamat Tinggal / Domisili" label="**" />
-            <TextInput placeholder="Alamat Kantor" label="**" />
-            <TextInput placeholder="Media Sosial" label=" " />
+            <TextInput placeholder="Jabatan" label="Jabatan" withAsterisk />
+            <TextInput placeholder="Periode" label="Periode" withAsterisk />
+            <TextInput placeholder="Nama" label="Nama" withAsterisk />
+            <TextInput placeholder="NIK" label="NIK" withAsterisk />
+            <TextInput placeholder="Email" label="*Email*" withAsterisk />
+            <TextInput
+              placeholder="Alamat Tinggal / Domisili"
+              label="*Alamat Tinggal / Domisili*"
+              withAsterisk
+            />
+            <TextInput
+              placeholder="Alamat Kantor"
+              label="*Alamat Kantor*"
+              withAsterisk
+            />
+            <TextInput placeholder="Facebook" label="Facebook" />
+            <TextInput placeholder="Instagram" label="Instagram" />
+            <TextInput placeholder="TikTok" label="TikTok" />
+            <TextInput placeholder="Twitter" label="Twitter" />
             <Box pt={20}>
               <Button
                 w={100}

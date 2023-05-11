@@ -1,5 +1,6 @@
 import { apiGetMaster } from "@/lib/api-get-master";
 import {
+  sJabatanEksekutifKabKot,
   sJabatanEksekutifKabupaten,
   sJabatanEksekutifKota,
   sJabatanEksekutifProvinsi,
@@ -19,3 +20,8 @@ export const _loadJabatanEksekutifKota = () =>
   fetch(apiGetMaster.apiGetJabatanEksekutifKota)
     .then((e) => e.json())
     .then((e) => (sJabatanEksekutifKota.value = e));
+
+export const _loadJabatanEksekutifKabKot = () =>
+  fetch(apiGetMaster.apiGetJabatanEksekutifKabKot)
+    .then((e) => e.json())
+    .then((e) => (sJabatanEksekutifKabKot.value = e));

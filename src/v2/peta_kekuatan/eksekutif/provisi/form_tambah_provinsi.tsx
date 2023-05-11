@@ -27,9 +27,6 @@ export const FormTambahEksekutifProvinsiV2 = ({
   tutupModal,
   setNilai,
 }: any) => {
-  const [dataJab, setJab] = useState<any>([]);
-  const [dataStatus, setStatus] = useState<any>([]);
-  const [dataPartai, setPartai] = useState<any>([]);
 
   useShallowEffect(() => {
     _loadProvinsi();
