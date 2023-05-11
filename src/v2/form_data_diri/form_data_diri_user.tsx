@@ -44,11 +44,20 @@ const FormDataDiriUser = () => {
   // const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [listKabupaten, setListKabupaten] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+
   const [kecamatan, setKecamatan] = useState<any[]>([]);
   const [desa, setDesa] = useState<any[]>([]);
   const [pekerjaan, setPekerjaan] = useState<any | []>([]);
   const { classes } = useStyles();
   const [nameValue, setNameValue] = useState<string>("");
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
 
   useShallowEffect(() => {
     loadJenisKelamin();
@@ -95,7 +104,14 @@ const FormDataDiriUser = () => {
       `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
     )
       .then((res) => res.json())
-      .then(setKabupaten);
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
   };
 
   async function loadKecamatan(idKabkot: string) {
@@ -331,32 +347,67 @@ const FormDataDiriUser = () => {
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("alamat")}
                               />
-                              {/* {JSON.stringify(provinsi)} */}
+
                               <Select
                                 data={provinsi.map((pro) => ({
                                   value: pro.id,
                                   label: pro.name,
                                 }))}
                                 radius={"md"}
-                                placeholder="Provinsi"
+                                value={selectedKabupaten.name}
+                                placeholder={selectedProvince.name}
                                 label="Provinsi"
                                 withAsterisk
                                 searchable
                                 // {...formDataDiri.getInputProps("provinsi")}
-                                onChange={loadKabupaten}
+                                onChange={(val) => {
+                                  if (val) {
+                                    setSelectedProvince(
+                                      provinsi.find((v) => v.id == val)
+                                    );
+                                    loadKabupaten(val);
+                                  }
+                                }}
                               />
+
+                              {/* <Button
+                                onClick={() => {
+                                  setKabupaten([]);
+                                }}
+                              >
+                                kosongkan kabupaten
+                              </Button> */}
+                              {/* {
+                                kabupaten.find(
+                                  (v2) =>
+                                    Number(v2.id) == Number(selectedKabupaten)
+                                )?.name
+                              } */}
+
                               <Select
-                                data={kabupaten.map((v) => ({
-                                  value: v.id,
-                                  label: v.name,
-                                }))}
+                                key={Math.random()}
+                                // defaultValue={selectedKabupaten.name}
+                                placeholder={selectedKabupaten.name}
+                                data={
+                                  _.isEmpty(kabupaten)
+                                    ? []
+                                    : kabupaten.map((v) => ({
+                                        value: v.id,
+                                        label: v.name,
+                                      }))
+                                }
+                                value={selectedKabupaten.name}
                                 radius={"md"}
-                                placeholder="Kabupaten / Kota"
                                 label="Kabupaten / Kota"
                                 withAsterisk
                                 searchable
                                 // {...formDataDiri.getInputProps("kabupaten")}
-                                onChange={loadKecamatan}
+                                onChange={(val) => {
+                                  setSelectedKabupaten(
+                                    kabupaten.find((v) => v.id == val)
+                                  );
+                                  loadKecamatan(val!);
+                                }}
                               />
                               <Select
                                 data={kecamatan.map((v) => ({

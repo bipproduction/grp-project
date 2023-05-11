@@ -145,7 +145,11 @@ const HomeUserV2 = () => {
     <>
       {/* HEADER */}
       <Box>
-        <Header height={70} bg={COLOR.merah} sx={{position: "sticky", top: 0}}>
+        <Header
+          height={70}
+          bg={COLOR.merah}
+          sx={{ position: "sticky", top: 0 }}
+        >
           <Group position="apart" sx={{ height: "100%" }}>
             <Flex
               justify="flex-start"
@@ -207,17 +211,13 @@ const HomeUserV2 = () => {
                 <Menu.Dropdown>
                   <Menu.Item>
                     <Group>
-                      <ActionIcon>
-                        <AiOutlineUser color="black" size="1.3rem" />
-                      </ActionIcon>
+                      <AiOutlineUser color="black" size="1.3rem" />
                       <Text fw={700}>{sUser.value?.username}</Text>
                     </Group>
                   </Menu.Item>
                   <Menu.Item>
                     <Group>
-                      <ActionIcon>
-                        <MdAlternateEmail color="black" size="1.3rem" />
-                      </ActionIcon>
+                      <MdAlternateEmail color="black" size="1.3rem" />
                       <Text>{sUser.value?.email}</Text>
                     </Group>
                   </Menu.Item>
@@ -227,9 +227,7 @@ const HomeUserV2 = () => {
                         router.push(link_dashboard);
                       }}
                     >
-                      <ActionIcon>
-                        <AiOutlineProfile color="black" size="1.3rem" />
-                      </ActionIcon>
+                      <AiOutlineProfile color="black" size="1.3rem" />
                       <Text>Lihat Profile</Text>
                     </Group>
                   </Menu.Item>
@@ -240,9 +238,7 @@ const HomeUserV2 = () => {
                         sUser.value = {};
                       }}
                     >
-                      <ActionIcon>
-                        <AiOutlineLogout color="red" size="1.3rem" />
-                      </ActionIcon>
+                      <AiOutlineLogout color="red" size="1.3rem" />
                       <Text color="red">Logout</Text>
                     </Group>
                   </Menu.Item>

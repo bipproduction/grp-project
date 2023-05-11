@@ -142,17 +142,13 @@ const LayoutDashboardUserV2 = () => {
                       <Menu.Dropdown>
                       <Menu.Item>
                           <Group>
-                            <ActionIcon>
                               <AiOutlineUser color="black" size="1.3rem" />
-                            </ActionIcon>
                             <Text fw={700}>{sUser.value?.username}</Text>
                           </Group>
                         </Menu.Item>
                         <Menu.Item>
                           <Group>
-                            <ActionIcon>
                               <MdAlternateEmail color="black" size="1.3rem" />
-                            </ActionIcon>
                             <Text>{sUser.value?.email}</Text>
                           </Group>
                         </Menu.Item>
@@ -163,11 +159,8 @@ const LayoutDashboardUserV2 = () => {
                             sUser.value = {};
                           }}
                           >
-                            <ActionIcon>
                               <AiOutlineLogout color="red" size="1.3rem" />
-                            </ActionIcon>
                             <Text
-                              
                               color="red"
                             >
                               Logout
