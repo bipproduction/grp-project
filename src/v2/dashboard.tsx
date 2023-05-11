@@ -18,6 +18,9 @@ import {
   Button,
   Grid,
   ActionIcon,
+  MediaQuery,
+  Burger,
+  Tooltip,
 } from "@mantine/core";
 import SumberDayaPartai from "@/layout/sumber_daya_partai/sumber_daya_partai";
 import StrukturPartai from "@/layout/sumber_daya_partai/struktur_partai/struktur_partai";
@@ -26,7 +29,13 @@ import { useState } from "react";
 import Pemilu from "@/layout/peta_kekuatan/pemilu/pemilu";
 import Eksekutif from "@/layout/peta_kekuatan/eksekutif/eksekutif";
 import { signal } from "@preact/signals-react";
-import { AiFillApple, AiFillHome, AiFillSetting } from "react-icons/ai";
+import {
+  AiFillApple,
+  AiFillHome,
+  AiFillSetting,
+  AiOutlineLogout,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
 import KaderPartai from "@/layout/sumber_daya_partai/kader_partai/kader_partai";
 import AnggotaPartai from "@/layout/sumber_daya_partai/anggota_partai/anggota_partai";
@@ -69,6 +78,7 @@ import OrganisasiAfiliatifV2 from "./organisasi_afiliatif/organisasi_afiliatif";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { MdAlternateEmail } from "react-icons/md";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -226,7 +236,7 @@ const DashboardAdminV2 = () => {
                 : theme.colors.gray[0],
           },
         }}
-        navbarOffsetBreakpoint="sm"
+        navbarOffsetBreakpoint="md"
         asideOffsetBreakpoint="sm"
         navbar={
           <Navbar
@@ -236,79 +246,10 @@ const DashboardAdminV2 = () => {
             width={{ sm: 200, lg: 280 }}
             bg={COLOR.abuabu}
           >
-            <Box>
-              <Header height={70} bg={COLOR.merah}>
-                <Group position="apart" sx={{ height: "100%" }}>
-                  <Flex
-                    justify="flex-start"
-                    align="flex-start"
-                    direction="column"
-                    wrap="wrap"
-                    pl={20}
-                  >
-                    <Text fz={25} color="white">
-                      GARUDA
-                    </Text>
-                    <Text fz={15} color="white">
-                      RESOURCE PLANNING
-                    </Text>
-                  </Flex>
-                  <Group pr={20}>
-                    <Menu>
-                      <Menu.Target>
-                        <Group style={{ cursor: "pointer" }}>
-                          <Avatar radius="xl" />
-                        </Group>
-                      </Menu.Target>
-                      <Menu.Dropdown p={20}>
-                        <Text mt={10} fw={700}>
-                          {sUser.value?.username}
-                        </Text>
-                        <Text mt={5}>{sUser.value?.email}</Text>
-                        {/* <Center >
-                          <Button ta={'center'} mt={20} bg={COLOR.orange} color="orange" radius={20}>Lihat Profile</Button>
-                        </Center> */}
-                      </Menu.Dropdown>
-                    </Menu>
-                    <ThemeIcon variant="light" color={COLOR.merah}>
-                      <AiFillHome
-                        size={40}
-                        color="white"
-                        style={{ cursor: "pointer" }}
-                        onClick={home}
-                      />
-                    </ThemeIcon>
-                    <ThemeIcon variant="light" color={COLOR.merah}>
-                      <Center
-                        component="a"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          localStorage.removeItem("user_id");
-                          sUser.value = {};
-                        }}
-                      >
-                        <FiLogOut size={25} color="white" />
-                      </Center>
-                    </ThemeIcon>
-                  </Group>
-                </Group>
-              </Header>
-            </Box>
-
-            <Navbar.Section>
-              {/* <Group pb={30} onClick={home} style={{ cursor: "pointer" }}>
-                <ActionIcon>
-                  <IoArrowBackCircle size={90} color={COLOR.merah} />
-                </ActionIcon>
-                <Text onClick={home}>Home</Text>
-              </Group> */}
-              {
-                <Flex align={"center"} gap={"lg"}>
-                  <FaCircle size={25} color={COLOR.merah} />
-                  <Text>ADMIN</Text>
-                </Flex>
-              }
-            </Navbar.Section>
+            <Flex align={"center"} gap={"lg"}>
+              <FaCircle size={25} color={COLOR.merah} />
+              <Text fw={"bold"}>ADMIN</Text>
+            </Flex>
             <Navbar.Section grow mt="md" component={ScrollArea}>
               {listSidebar.map((e, i) => (
                 <NavLink
@@ -347,6 +288,144 @@ const DashboardAdminV2 = () => {
               }
             </Navbar.Section>
           </Navbar>
+        }
+        header={
+          <Header height={{ base: 70, md: 70 }} p="md" bg={COLOR.merah}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="lg"
+                  color={theme.colors.gray[6]}
+                  mr="xl"
+                />
+              </MediaQuery>
+              <Box w={"100%"}>
+                <Group position="apart">
+                  <Flex
+                    justify="flex-start"
+                    align="flex-start"
+                    direction="column"
+                    wrap="wrap"
+                    onClick={home}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Text fz={25} color="white">
+                      GARUDA
+                    </Text>
+                    <Text fz={15} color="white">
+                      RESOURCE PLANNING
+                    </Text>
+                  </Flex>
+
+                  <Menu position="bottom-end" withArrow>
+                    <Menu.Target >
+                      
+                        <Group style={{ cursor: "pointer" }} >
+                          <Avatar radius="xl" />
+                        </Group>
+                      
+                    </Menu.Target>
+                    <Menu.Dropdown >
+                      <Menu.Item>
+                        <Group>
+                          <AiOutlineUser color="black" size="1.3rem" />
+                          <Text fw={700}>{sUser.value?.username}</Text>
+                        </Group>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <Group>
+                          <MdAlternateEmail color="black" size="1.3rem" />
+
+                          <Text>{sUser.value?.email}</Text>
+                        </Group>
+                      </Menu.Item>
+                      <Menu.Divider/>
+                      <Menu.Item>
+                        <Group
+                          onClick={() => {
+                            localStorage.removeItem("user_id");
+                            sUser.value = {};
+                          }}
+                        >
+                          <AiOutlineLogout color="red" size="1.3rem" />
+
+                          <Text color="red">Logout</Text>
+                        </Group>
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </Group>
+              </Box>
+              {/* <Grid>
+                  <Group position="apart" sx={{ height: "100%" }}>
+                    <Flex
+                      justify="flex-start"
+                      align="flex-start"
+                      direction="column"
+                      wrap="wrap"
+                      pl={20}
+                    >
+                      <Text fz={25} color="white">
+                        GARUDA
+                      </Text>
+                      <Text fz={15} color="white">
+                        RESOURCE PLANNING
+                      </Text>
+                    </Flex>
+                    <Grid>
+                      <Group pr={20}>
+                        <Menu>
+                          <Menu.Target>
+                            <Group style={{ cursor: "pointer" }}>
+                              <Avatar radius="xl" />
+                            </Group>
+                          </Menu.Target>
+                          <Menu.Dropdown p={20} bg={COLOR.ungu}>
+                            <Menu.Item>
+                              <Text mt={10} fw={700}>
+                                {sUser.value?.username}
+                              </Text>
+                              <Text mt={5}>{sUser.value?.email}</Text>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <ThemeIcon variant="light" color={COLOR.merah}>
+                                <AiFillHome
+                                  size={40}
+                                  color="white"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={home}
+                                />
+                              </ThemeIcon>
+                              <ThemeIcon variant="light" color={COLOR.merah}>
+                                <Center
+                                  component="a"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => {
+                                    localStorage.removeItem("user_id");
+                                    sUser.value = {};
+                                  }}
+                                >
+                                  <FiLogOut size={25} color="white" />
+                                </Center>
+                              </ThemeIcon>
+                            </Menu.Item>
+                          </Menu.Dropdown>
+                        </Menu>
+                      </Group>
+                    </Grid>
+                  </Group>
+                </Grid> */}
+            </div>
+          </Header>
         }
       >
         {listSidebar.map((e) =>
