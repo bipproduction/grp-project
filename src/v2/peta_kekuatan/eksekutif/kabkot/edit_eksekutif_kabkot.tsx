@@ -16,9 +16,9 @@ import {
 } from "@/s_state/eksekutif/s_jabatan_eksekutif";
 import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 import { sStatusEksekutif } from "@/s_state/eksekutif/s_status_eksekutif";
-import { sKabkot } from "@/s_state/s_kabkot";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import { sListPartaiPengusung } from "@/s_state/s_list_partai_pengusung";
-import { sProvinsi } from "@/s_state/s_provinsi";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
   Box,
@@ -115,8 +115,8 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
             <Select
               withAsterisk
               searchable
-              label={"Pilih Kab"}
-              placeholder={"Pilih Kab"}
+              label={"Pilih Kabupaten"}
+              placeholder={"Pilih Kabupaten"}
               data={sKabkot.value.map((e) => ({
                 value: e.id,
                 label: e.name,

@@ -3,6 +3,7 @@ import {
   Button,
   Grid,
   Group,
+  Modal,
   Pagination,
   Paper,
   ScrollArea,
@@ -10,6 +11,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import {
   AiFillPlusCircle,
   AiOutlineDownload,
@@ -20,10 +22,21 @@ import {
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSProvinsiV2 } from "./chart_provinsi";
+import { TambahDataTPSdanDPTV2 } from "./tambah_data_tps_dpt";
 
 export const ViewTPSdanDPTV2 = () => {
+  const [opened, {open,close}] = useDisclosure(false)
   return (
     <>
+    <Modal
+    opened={opened}
+    onClose={() => close()}
+    >
+      <TambahDataTPSdanDPTV2 
+      thisClosed={close}
+      />
+
+    </Modal>
       <Box>
         <Box>
           <Paper bg={COLOR.abuabu} p={10}>
@@ -69,7 +82,7 @@ export const ViewTPSdanDPTV2 = () => {
               </Grid.Col>
               <Grid.Col md={8} lg={8}>
                 <Group position="right">
-                  <Button
+                  {/* <Button
                     color="orange.9"
                     leftIcon={<AiOutlineDownload size={20} />}
                     radius={"xl"}
@@ -85,13 +98,14 @@ export const ViewTPSdanDPTV2 = () => {
                     bg={COLOR.orange}
                   >
                     Import File
-                  </Button>
+                  </Button> */}
                   <Button
                     leftIcon={<AiFillPlusCircle size={20} />}
                     radius={"xl"}
                     m={5}
                     bg={COLOR.orange}
                     color="orange.9"
+                    onClick={open}
                   >
                     Tambah
                   </Button>

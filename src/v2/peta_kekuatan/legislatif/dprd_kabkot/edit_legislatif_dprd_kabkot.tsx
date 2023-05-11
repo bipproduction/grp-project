@@ -1,7 +1,7 @@
 import { _loadKabkot } from "@/load_data/load_kabkot";
 import { _loadProvinsi } from "@/load_data/load_provinsi";
-import { sKabkot } from "@/s_state/s_kabkot";
-import { sProvinsi } from "@/s_state/s_provinsi";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import { Box, Button, Flex, Grid, Paper, Select, Text, TextInput } from "@mantine/core"
 import { DateInput } from "@mantine/dates";
