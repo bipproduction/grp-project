@@ -1,4 +1,6 @@
+import { _loadProvinsi } from "@/load_data/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import {
   ActionIcon,
   Box,
@@ -24,24 +26,23 @@ import { ChartTPSKabKotV2 } from "./chart_kabkot";
 
 export const ChartTPSProvinsiV2 = () => {
   const [opt, setOpt] = useState<EChartsOption>({});
-  const [dataProv, setProv] = useState<ModelProvinsi[]>([]);
   const [opened, { open, close }] = useDisclosure(false);
 
   useShallowEffect(() => {
     loadData();
-    loadProvinsi();
+    _loadProvinsi()
   }, []);
 
-  async function loadProvinsi() {
-    const data = await fetch(
-      `/api/get/sumber-daya-partai/wilayah/api-get-provinsi`
-    )
-      .then((data) => data.json())
-      .then((val) => {
-        // console.log(val);
-        setProv(val);
-      });
-  }
+  // async function loadProvinsi() {
+  //   const data = await fetch(
+  //     `/api/get/sumber-daya-partai/wilayah/api-get-provinsi`
+  //   )
+  //     .then((data) => data.json())
+  //     .then((val) => {
+  //       // console.log(val);
+  //       setProv(val);
+  //     });
+  // }
 
   const loadData = () => {
     const option: EChartsOption = {
@@ -117,7 +118,7 @@ export const ChartTPSProvinsiV2 = () => {
         </SimpleGrid>
       </Modal>
       {/* {JSON.stringify(dataProv)} */}
-      {dataProv.map((e) => (
+      {sProvinsi.value.map((e) => (
         <Box
           key={e.id}
           sx={{

@@ -1,8 +1,12 @@
-import { Box, Button, Group, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../data_legis_dummy.json";
+import { EditLegislatifDprRiV2 } from "./edit_legislatif_dpr_ri";
 
 export const TableLegislatifRIV2 = () => {
+  const [opened, {open, close}] = useDisclosure(false)
+
   const tbHead = (
     <tr>
       <th>No</th>
@@ -68,6 +72,15 @@ export const TableLegislatifRIV2 = () => {
 
   return (
     <>
+    <Modal
+    opened={opened}
+    onClose={close}
+    >
+      <EditLegislatifDprRiV2
+      thisClosed={close}
+      />
+
+    </Modal>
       <Box pt={20}>
         <ScrollArea>
           <Table withBorder horizontalSpacing={"lg"}>

@@ -1,5 +1,7 @@
+import { _loadKabkot } from "@/load_data/load_kabkot";
 import { _loadProvinsi } from "@/load_data/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
@@ -8,7 +10,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
-export const FormTambahLegislatifDprdProvinsiV2 = ({
+export const FormTambahLegislatifDprdKabkotV2 = ({
   tutupModal,
   setNilai,
 }: any) => {
@@ -18,7 +20,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
 
   return (
     <>
-      
+      {/* {JSON.stringify(sListProvinsi.value)} */}
       <Box>
         <Flex direction={"column"}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
@@ -35,6 +37,17 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
             placeholder="Pilih Provinsi"
             label="Pilih Provinsi"
             data={sProvinsi.value.map((v) => ({
+              label: v.name,
+              value: v.id,
+            }))}
+            onChange={_loadKabkot}
+          />
+
+          <Select
+            withAsterisk
+            placeholder="Pilih Kabupaten"
+            label="Pilih Kabupaten"
+            data={sKabkot.value.map((v) => ({
               label: v.name,
               value: v.id,
             }))}

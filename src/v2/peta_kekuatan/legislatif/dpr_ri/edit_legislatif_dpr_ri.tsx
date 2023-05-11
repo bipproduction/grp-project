@@ -1,45 +1,39 @@
-import { _loadProvinsi } from "@/load_data/load_provinsi";
-import { ModelProvinsi } from "@/model/model_wilayah";
-import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
-import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Paper,
+  Select,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useShallowEffect } from "@mantine/hooks";
-import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
-export const FormTambahLegislatifDprdProvinsiV2 = ({
-  tutupModal,
-  setNilai,
-}: any) => {
-  useShallowEffect(() => {
-    _loadProvinsi();
-  }, []);
-
+export const EditLegislatifDprRiV2 = ({ thisClosed }: any) => {
   return (
     <>
-      
       <Box>
-        <Flex direction={"column"}>
+        <Paper bg={COLOR.abuabu} p={10}>
+          <Grid>
+            <Grid.Col span={12}>
+              <Text size={20} fw={"bold"}>
+                Edit Data Legislatif DPR RI
+              </Text>
+            </Grid.Col>
+          </Grid>
+        </Paper>
+        <Flex direction={"column"} pt={20}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
           <TextInput placeholder="Nama" label="Nama" withAsterisk />
           <Select
-            placeholder="Nomoe Urut"
+            placeholder="Nomor Urut"
             label="Nomor Urut"
             data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
             withAsterisk
           />
-
-          <Select
-            withAsterisk
-            placeholder="Pilih Provinsi"
-            label="Pilih Provinsi"
-            data={sProvinsi.value.map((v) => ({
-              label: v.name,
-              value: v.id,
-            }))}
-          />
-
           <TextInput placeholder="Dapil" label="Dapil" withAsterisk />
           <TextInput
             placeholder="Cakupan Wilayah"
@@ -84,7 +78,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
               radius={"xl"}
               onClick={() => {
                 buttonSimpan();
-                tutupModal();
+                thisClosed();
               }}
             >
               Simpan

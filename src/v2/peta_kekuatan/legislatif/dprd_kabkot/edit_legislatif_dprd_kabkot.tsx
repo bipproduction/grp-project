@@ -1,25 +1,31 @@
+import { _loadKabkot } from "@/load_data/load_kabkot";
 import { _loadProvinsi } from "@/load_data/load_provinsi";
-import { ModelProvinsi } from "@/model/model_wilayah";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
-import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
+import { Box, Button, Flex, Grid, Paper, Select, Text, TextInput } from "@mantine/core"
 import { DateInput } from "@mantine/dates";
 import { useShallowEffect } from "@mantine/hooks";
-import { useState } from "react";
-import COLOR from "../../../../../fun/WARNA";
+import COLOR from "../../../../../fun/WARNA"
 
-export const FormTambahLegislatifDprdProvinsiV2 = ({
-  tutupModal,
-  setNilai,
-}: any) => {
-  useShallowEffect(() => {
-    _loadProvinsi();
-  }, []);
 
-  return (
-    <>
-      
-      <Box>
+
+export const EditLegislatifDprdKabkotV2 = ({thisClosed}: any) => {
+    useShallowEffect(() => {
+        _loadProvinsi();
+      }, []);
+    return<>
+    <Box>
+    <Paper bg={COLOR.abuabu} p={10}>
+          <Grid>
+            <Grid.Col span={12}>
+              <Text size={20} fw={"bold"}>
+                Edit Data Legislatif DPRD KabKot
+              </Text>
+            </Grid.Col>
+          </Grid>
+        </Paper>
+        <Box>
         <Flex direction={"column"}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
           <TextInput placeholder="Nama" label="Nama" withAsterisk />
@@ -35,6 +41,17 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
             placeholder="Pilih Provinsi"
             label="Pilih Provinsi"
             data={sProvinsi.value.map((v) => ({
+              label: v.name,
+              value: v.id,
+            }))}
+            onChange={_loadKabkot}
+          />
+
+          <Select
+            withAsterisk
+            placeholder="Pilih Kabupaten"
+            label="Pilih Kabupaten"
+            data={sKabkot.value.map((v) => ({
               label: v.name,
               value: v.id,
             }))}
@@ -84,7 +101,8 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
               radius={"xl"}
               onClick={() => {
                 buttonSimpan();
-                tutupModal();
+                thisClosed()
+                
               }}
             >
               Simpan
@@ -92,6 +110,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
           </Box>
         </Flex>
       </Box>
+
+    </Box>
     </>
-  );
-};
+}
