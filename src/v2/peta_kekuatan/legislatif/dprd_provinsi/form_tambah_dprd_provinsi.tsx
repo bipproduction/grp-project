@@ -1,6 +1,6 @@
 import { _loadProvinsi } from "@/load_data/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
-import {sProvinsi } from "@/s_state/s_provinsi";
+import { sProvinsi } from "@/s_state/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
@@ -12,15 +12,13 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
   tutupModal,
   setNilai,
 }: any) => {
-  
   useShallowEffect(() => {
     _loadProvinsi();
   }, []);
 
-
   return (
     <>
-      {/* {JSON.stringify(sListProvinsi.value)} */}
+      
       <Box>
         <Flex direction={"column"}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
@@ -28,13 +26,14 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
           <Select
             placeholder="Nomoe Urut"
             label="Nomor Urut"
-            data={["1", "2", "3", "4", "5"]}
+            data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
             withAsterisk
           />
-        
+
           <Select
-          placeholder="Provinsi"
-          label="Provinsi"
+            withAsterisk
+            placeholder="Pilih Provinsi"
+            label="Pilih Provinsi"
             data={sProvinsi.value.map((v) => ({
               label: v.name,
               value: v.id,

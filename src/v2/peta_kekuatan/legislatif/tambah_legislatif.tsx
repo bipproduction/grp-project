@@ -16,6 +16,7 @@ import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { useState } from "react";
 import { FormTambahLegislatifDprRiV2 } from "./dpr_ri/form_tambah_dpr_ri";
 import { FormTambahLegislatifDprdProvinsiV2 } from "./dprd_provinsi/form_tambah_dprd_provinsi";
+import { FormTambahLegislatifDprdKabkotV2 } from "./dprd_kabkot/form_tambah_dprd_kabkot";
 
 export const TambahLegislatifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -100,7 +101,13 @@ const TambahDataLegislatif = ({ tutupModal }: any) => {
                       );
                     } else {
                       if (val == "DPRD Kabupaten / Kota") {
-                        setValue("DPRD Kab");
+                        setValue(
+                          <FormTambahLegislatifDprdKabkotV2
+                          tutupModal={tutupModal}
+                          setNilai={val}
+                          />
+
+                        );
                       } else {
                         setValue("Semua Salah");
                       }

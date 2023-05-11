@@ -1,23 +1,58 @@
+import { _loadKabkot } from "@/load_data/load_kabkot";
+import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { ModelProvinsi } from "@/model/model_wilayah";
+import { sKabkot } from "@/s_state/s_kabkot";
+import { sProvinsi } from "@/s_state/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
+import { useShallowEffect } from "@mantine/hooks";
+import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
-export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
+export const FormTambahLegislatifDprdKabkotV2 = ({
+  tutupModal,
+  setNilai,
+}: any) => {
+  useShallowEffect(() => {
+    _loadProvinsi();
+  }, []);
+
   return (
     <>
+      {/* {JSON.stringify(sListProvinsi.value)} */}
       <Box>
         <Flex direction={"column"}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
           <TextInput placeholder="Nama" label="Nama" withAsterisk />
           <Select
-            placeholder="Nomor Urut"
+            placeholder="Nomoe Urut"
             label="Nomor Urut"
-            data={
-              ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
-            }
+            data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
             withAsterisk
           />
+
+          <Select
+            withAsterisk
+            placeholder="Pilih Provinsi"
+            label="Pilih Provinsi"
+            data={sProvinsi.value.map((v) => ({
+              label: v.name,
+              value: v.id,
+            }))}
+            onChange={_loadKabkot}
+          />
+
+          <Select
+            withAsterisk
+            placeholder="Pilih Kabupaten"
+            label="Pilih Kabupaten"
+            data={sKabkot.value.map((v) => ({
+              label: v.name,
+              value: v.id,
+            }))}
+          />
+
           <TextInput placeholder="Dapil" label="Dapil" withAsterisk />
           <TextInput
             placeholder="Cakupan Wilayah"

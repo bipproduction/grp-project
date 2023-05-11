@@ -1,21 +1,37 @@
 import { buttonSimpan } from "@/v2/component/button-toast";
-import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Paper,
+  Select,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
 
-export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
+export const EditLegislatifDprRiV2 = ({ thisClosed }: any) => {
   return (
     <>
       <Box>
-        <Flex direction={"column"}>
+        <Paper bg={COLOR.abuabu} p={10}>
+          <Grid>
+            <Grid.Col span={12}>
+              <Text size={20} fw={"bold"}>
+                Edit Data Legislatif DPR RI
+              </Text>
+            </Grid.Col>
+          </Grid>
+        </Paper>
+        <Flex direction={"column"} pt={20}>
           <TextInput placeholder="NIK" label="NIK" withAsterisk />
           <TextInput placeholder="Nama" label="Nama" withAsterisk />
           <Select
             placeholder="Nomor Urut"
             label="Nomor Urut"
-            data={
-              ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
-            }
+            data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
             withAsterisk
           />
           <TextInput placeholder="Dapil" label="Dapil" withAsterisk />
@@ -62,7 +78,7 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
               radius={"xl"}
               onClick={() => {
                 buttonSimpan();
-                tutupModal();
+                thisClosed();
               }}
             >
               Simpan
