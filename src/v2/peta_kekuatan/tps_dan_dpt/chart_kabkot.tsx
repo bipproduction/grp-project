@@ -1,4 +1,7 @@
+import { api } from "@/lib/api-backend";
+import { _loadKabkot } from "@/load_data/load_kabkot";
 import { ModelKabKot } from "@/model/model_wilayah";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import {
   ActionIcon,
   Box,
@@ -7,10 +10,13 @@ import {
   Flex,
   Group,
   List,
+  Loader,
   Modal,
   Paper,
   SimpleGrid,
+  Stack,
   Text,
+  Title,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { EChartsOption } from "echarts";
@@ -21,26 +27,17 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSKecamatanV2 } from "./chart_kecamatan";
 
-export const ChartTPSKabKotV2 = () => {
+export const ChartTPSKabKotV2 = ({ idProv }: { idProv: any }) => {
   const [opt, setOpt] = useState<EChartsOption>({});
-  const [dataKab, setKab] = useState<ModelKabKot[]>([]);
-  const [opened, { open, close }] = useDisclosure(false);
+  const [listKabupaten, setLisistKabupaten] = useState<any[]>();
 
   useShallowEffect(() => {
     loadData();
-    loadKabKot();
+    fetch(api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProv}`)
+      .then((v) => v.json())
+      .then(setLisistKabupaten);
+    // _loadKabkot(idProv)
   }, []);
-
-  async function loadKabKot() {
-    const data = await fetch(
-      `/api/get/sumber-daya-partai/wilayah/api-get-provinsi`
-    )
-      .then((data) => data.json())
-      .then((val) => {
-        // console.log(val);
-        setKab(val);
-      });
-  }
 
   const loadData = () => {
     const option: EChartsOption = {
@@ -78,18 +75,78 @@ export const ChartTPSKabKotV2 = () => {
     setOpt(option);
   };
 
+  if (!listKabupaten) {
+    return (
+      <>
+        <Center h={"100vh"} w={"100%"}>
+          <Loader color={"red"} />
+        </Center>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* {JSON.stringify(listKabupaten)} */}
+        {listKabupaten!.map((e) => (
+          <Box
+            key={e.id}
+            sx={{
+              backgroundColor: "#A3A6EB",
+              borderRadius: 10,
+              padding: 20,
+            }}
+          >
+            <Flex direction={"column"}>
+              <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
+                {e.name}
+              </Text>
+              <Box pl={10}>
+                <Text size={15}>Jumlah TPS:</Text>
+                <List>
+                  <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>
+                    Total DPT : 10.421
+                  </List.Item>
+                </List>
+              </Box>
+            </Flex>
+            <EChartsReact style={{ height: 300 }} option={opt} />
+            <Center>
+              <TombolHalamanKecamatan e={e} />
+            </Center>
+          </Box>
+        ))}
+      </>
+    );
+  }
+};
+
+function TombolHalamanKecamatan({ e }: { e: any }) {
+  const [opened, setOpen] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} fullScreen>
+      <Button
+        radius={50}
+        //   bg={COLOR.orange}
+        color="orange.9"
+        variant={"outline"}
+        leftIcon={<FaRegListAlt />}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        Detail
+      </Button>
+      <Modal opened={opened} onClose={setOpen.close} fullScreen>
+        {/* {JSON.stringify(e)} */}
         <Paper>
           <Group>
             <ActionIcon>
               <IoArrowBackCircle
                 size={30}
                 color={COLOR.merah}
-                onClick={() => {
-                  close();
-                }}
+                onClick={setOpen.close}
               />
             </ActionIcon>
           </Group>
@@ -110,50 +167,9 @@ export const ChartTPSKabKotV2 = () => {
             { maxWidth: 755, cols: 1, spacing: "xl" },
           ]}
         >
-          <ChartTPSKecamatanV2 />
+          <ChartTPSKecamatanV2 idKabkot={e.id} />
         </SimpleGrid>
       </Modal>
-      {/* {JSON.stringify(dataKab)} */}
-      {dataKab.map((e) => (
-        <Box
-          key={e.id}
-          sx={{
-            backgroundColor: "#A3A6EB",
-            borderRadius: 10,
-            padding: 20,
-          }}
-        >
-          <Flex direction={"column"}>
-            <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
-              {e.name}
-            </Text>
-            <Box pl={10}>
-              <Text size={15}>Jumlah TPS:</Text>
-              <List>
-                <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>Total DPT : 10.421</List.Item>
-              </List>
-            </Box>
-          </Flex>
-          <EChartsReact style={{ height: 300 }} option={opt} />
-          <Center>
-            <Button
-              radius={50}
-              //   bg={COLOR.orange}
-              color="orange.9"
-              variant={"outline"}
-              leftIcon={<FaRegListAlt />}
-              onClick={() => {
-                open();
-              }}
-            >
-              Detail
-            </Button>
-          </Center>
-        </Box>
-      ))}
-      ;
     </>
   );
-};
+}

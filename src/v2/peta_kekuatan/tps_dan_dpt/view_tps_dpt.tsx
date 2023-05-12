@@ -25,18 +25,12 @@ import { ChartTPSProvinsiV2 } from "./chart_provinsi";
 import { TambahDataTPSdanDPTV2 } from "./tambah_data_tps_dpt";
 
 export const ViewTPSdanDPTV2 = () => {
-  const [opened, {open,close}] = useDisclosure(false)
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-    <Modal
-    opened={opened}
-    onClose={() => close()}
-    >
-      <TambahDataTPSdanDPTV2 
-      thisClosed={close}
-      />
-
-    </Modal>
+      <Modal opened={opened} onClose={() => close()}>
+        <TambahDataTPSdanDPTV2 thisClosed={close} />
+      </Modal>
       <Box>
         <Box>
           <Paper bg={COLOR.abuabu} p={10}>
@@ -78,6 +72,7 @@ export const ViewTPSdanDPTV2 = () => {
                   icon={<AiOutlineSearch size={20} />}
                   placeholder="Search"
                   radius={"md"}
+                  onChange={(val) => console.log(val.target.value)}
                 />
               </Grid.Col>
               <Grid.Col md={8} lg={8}>
@@ -114,16 +109,15 @@ export const ViewTPSdanDPTV2 = () => {
             </Grid>
           </Box>
           <Box>
-          <SimpleGrid
-            mt={20}
-            cols={2}
-            breakpoints={[
-              { maxWidth: 980, cols: 2, spacing: "xl" },
-              { maxWidth: 755, cols: 1, spacing: "xl" },
-            ]}
-          >
-            <ChartTPSProvinsiV2/>
-
+            <SimpleGrid
+              mt={20}
+              cols={2}
+              breakpoints={[
+                { maxWidth: 980, cols: 2, spacing: "xl" },
+                { maxWidth: 755, cols: 1, spacing: "xl" },
+              ]}
+            >
+              <ChartTPSProvinsiV2 />
             </SimpleGrid>
           </Box>
         </Box>

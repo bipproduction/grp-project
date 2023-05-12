@@ -1,3 +1,4 @@
+import { _loadKabkot } from "@/load_data/load_kabkot";
 import { _loadProvinsi } from "@/load_data/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
@@ -10,10 +11,12 @@ import {
   Grid,
   Group,
   List,
+  Loader,
   Modal,
   Paper,
   SimpleGrid,
   Text,
+  Title,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { EChartsOption } from "echarts";
@@ -26,23 +29,11 @@ import { ChartTPSKabKotV2 } from "./chart_kabkot";
 
 export const ChartTPSProvinsiV2 = () => {
   const [opt, setOpt] = useState<EChartsOption>({});
-  const [opened, { open, close }] = useDisclosure(false);
 
   useShallowEffect(() => {
     loadData();
-    _loadProvinsi()
+    _loadProvinsi();
   }, []);
-
-  // async function loadProvinsi() {
-  //   const data = await fetch(
-  //     `/api/get/sumber-daya-partai/wilayah/api-get-provinsi`
-  //   )
-  //     .then((data) => data.json())
-  //     .then((val) => {
-  //       // console.log(val);
-  //       setProv(val);
-  //     });
-  // }
 
   const loadData = () => {
     const option: EChartsOption = {
@@ -79,31 +70,88 @@ export const ChartTPSProvinsiV2 = () => {
 
     setOpt(option);
   };
+  if (!sProvinsi) {
+    return (
+      <>
+        <Center h={"100vh"} w={"100%"}>
+          <Loader color={"red"} />
+        </Center>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* {JSON.stringify(dataProv)} */}
+        {sProvinsi.value.map((e) => (
+          <Box
+            key={e.id}
+            sx={{
+              backgroundColor: COLOR.abuabu,
+              borderRadius: 10,
+              padding: 20,
+            }}
+          >
+            <Flex direction={"column"}>
+              <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
+                {e.name}
+              </Text>
+              <Box pl={10}>
+                <Text size={15}>Jumlah TPS:</Text>
+                <List>
+                  <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>
+                    Total DPT : 10.421
+                  </List.Item>
+                </List>
+              </Box>
+            </Flex>
+            <EChartsReact style={{ height: 300 }} option={opt} />
+            <Center>
+              <TombolHalamKabupaten e={e} />
+            </Center>
+          </Box>
+        ))}
+      </>
+    );
+  }
+};
+
+function TombolHalamKabupaten({ e }: { e: any }) {
+  const [open, setOpen] = useDisclosure(false);
 
   return (
     <>
-      <Modal opened={opened} onClose={close} fullScreen>
+      <Button
+        radius={50}
+        // bg={COLOR.orange}
+        color="orange.9"
+        variant={"outline"}
+        leftIcon={<FaRegListAlt />}
+        onClick={setOpen.open}
+      >
+        Detail
+      </Button>
+      <Modal opened={open} onClose={setOpen.close} fullScreen>
         <Paper>
-          
-            <Group>
-              <ActionIcon>
-                <IoArrowBackCircle
-                  size={30}
-                  color={COLOR.merah}
-                  onClick={() => {
-                    close();
-                  }}
-                />
-              </ActionIcon>
-            </Group>
-            <Group position="center">
-              <Center>
-                <Text fw={"bold"} fz={30} c={COLOR.merah}>
-                  Kabupaten / Kota
-                </Text>
-              </Center>
-            </Group>
-          
+          <Group>
+            <ActionIcon>
+              <IoArrowBackCircle
+                size={30}
+                color={COLOR.merah}
+                onClick={() => {
+                  setOpen.close();
+                }}
+              />
+            </ActionIcon>
+          </Group>
+          <Group position="center">
+            <Center>
+              <Text fw={"bold"} fz={30} c={COLOR.merah}>
+                Kabupaten / Kota
+              </Text>
+            </Center>
+          </Group>
         </Paper>
 
         <SimpleGrid
@@ -114,50 +162,11 @@ export const ChartTPSProvinsiV2 = () => {
             { maxWidth: 755, cols: 1, spacing: "xl" },
           ]}
         >
-          <ChartTPSKabKotV2 />
+          {/* <Title>Ini adimana</Title> */}
+          {/* {JSON.stringify(e)} */}
+          <ChartTPSKabKotV2 idProv={e.id} />
         </SimpleGrid>
       </Modal>
-      {/* {JSON.stringify(dataProv)} */}
-      {sProvinsi.value.map((e) => (
-        <Box
-          key={e.id}
-          sx={{
-            backgroundColor: COLOR.abuabu,
-            borderRadius: 10,
-            padding: 20,
-          }}
-        >
-          <Flex direction={"column"}>
-            <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
-              {e.name}
-            </Text>
-            <Box pl={10}>
-              <Text size={15}>Jumlah TPS:</Text>
-              <List>
-                <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>Total DPT : 10.421</List.Item>
-              </List>
-            </Box>
-          </Flex>
-          <EChartsReact style={{ height: 300 }} option={opt} />
-          <Center>
-            <Button
-              radius={50}
-              // bg={COLOR.orange}
-              color="orange.9"
-              variant={"outline"}
-              leftIcon={<FaRegListAlt />}
-              onClick={() => {
-                open();
-              }}
-            >
-              Detail
-            </Button>
-          </Center>
-        </Box>
-      ))}
-      ;
     </>
   );
-};
+}

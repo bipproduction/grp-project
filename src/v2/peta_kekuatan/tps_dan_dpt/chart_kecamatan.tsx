@@ -1,3 +1,4 @@
+import { api } from "@/lib/api-backend";
 import { ModelKecamatan } from "@/model/model_wilayah";
 import {
   ActionIcon,
@@ -7,6 +8,7 @@ import {
   Flex,
   Group,
   List,
+  Loader,
   Modal,
   Paper,
   SimpleGrid,
@@ -21,26 +23,16 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSDesaV2 } from "./chart_desa";
 
-export const ChartTPSKecamatanV2 = () => {
+export const ChartTPSKecamatanV2 = ({ idKabkot }: { idKabkot: any }) => {
   const [opt, setOpt] = useState<EChartsOption>({});
-  const [dataKec, setKec] = useState<ModelKecamatan[]>([]);
-  const [opened, { open, close }] = useDisclosure(false);
+  const [listKecamatan, setListKecamatan] = useState<any[]>();
 
   useShallowEffect(() => {
     loadData();
-    loadKecamatan();
-  }, []);
-
-  async function loadKecamatan() {
-    const data = await fetch(
-      `/api/get/sumber-daya-partai/wilayah/api-get-provinsi`
-    )
+    fetch(api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`)
       .then((data) => data.json())
-      .then((val) => {
-        // console.log(val);
-        setKec(val);
-      });
-  }
+      .then(setListKecamatan);
+  }, []);
 
   const loadData = () => {
     const option: EChartsOption = {
@@ -78,9 +70,71 @@ export const ChartTPSKecamatanV2 = () => {
     setOpt(option);
   };
 
+  if (!listKecamatan) {
+    return (
+      <>
+        <Center h={"100vh"} w={"100%"}>
+          <Loader color={"red"} />
+        </Center>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* {JSON.stringify(dataKec)} */}
+        {listKecamatan!.map((e) => (
+          <Box
+            key={e.id}
+            sx={{
+              backgroundColor: "#E5A37D",
+              borderRadius: 10,
+              padding: 20,
+            }}
+          >
+            <Flex direction={"column"}>
+              <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
+                {e.name}
+              </Text>
+              <Box pl={10}>
+                <Text size={15}>Jumlah TPS:</Text>
+                <List>
+                  <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>
+                    Total DPT : 10.421
+                  </List.Item>
+                </List>
+              </Box>
+            </Flex>
+            <EChartsReact style={{ height: 300 }} option={opt} />
+            <Center>
+              <TombolHalamanDesa e={e} />
+            </Center>
+          </Box>
+        ))}
+      </>
+    );
+  }
+};
+
+function TombolHalamanDesa({ e }: { e: any }) {
+  const [opened, setOpen] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} fullScreen>
+      <Button
+        radius={50}
+        //   bg={COLOR.orange}
+        color="orange.9"
+        variant={"outline"}
+        leftIcon={<FaRegListAlt />}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        Detail
+      </Button>
+      <Modal opened={opened} onClose={setOpen.open} fullScreen>
+        {/* {JSON.stringify(e)} */}
         <Paper>
           <Group>
             <ActionIcon>
@@ -88,7 +142,7 @@ export const ChartTPSKecamatanV2 = () => {
                 size={30}
                 color={COLOR.merah}
                 onClick={() => {
-                  close();
+                  setOpen.close();
                 }}
               />
             </ActionIcon>
@@ -110,50 +164,9 @@ export const ChartTPSKecamatanV2 = () => {
             { maxWidth: 755, cols: 1, spacing: "xl" },
           ]}
         >
-          <ChartTPSDesaV2/>
+          <ChartTPSDesaV2 idKecamatan={e.id} />
         </SimpleGrid>
       </Modal>
-      {/* {JSON.stringify(dataKec)} */}
-      {dataKec.map((e) => (
-        <Box
-          key={e.id}
-          sx={{
-            backgroundColor: "#E5A37D",
-            borderRadius: 10,
-            padding: 20,
-          }}
-        >
-          <Flex direction={"column"}>
-            <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
-              {e.name}
-            </Text>
-            <Box pl={10}>
-              <Text size={15}>Jumlah TPS:</Text>
-              <List>
-                <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
-                <List.Item sx={{ fontSize: 12 }}>Total DPT : 10.421</List.Item>
-              </List>
-            </Box>
-          </Flex>
-          <EChartsReact style={{ height: 300 }} option={opt} />
-          <Center>
-            <Button
-              radius={50}
-              //   bg={COLOR.orange}
-              color="orange.9"
-              variant={"outline"}
-              leftIcon={<FaRegListAlt />}
-              onClick={() => {
-                open();
-              }}
-            >
-              Detail
-            </Button>
-          </Center>
-        </Box>
-      ))}
-      ;
     </>
   );
-};
+}
