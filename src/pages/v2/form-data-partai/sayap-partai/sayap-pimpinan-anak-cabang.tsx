@@ -14,21 +14,153 @@ import {
   Stack,
   Text,
   TextInput,
+  UnstyledButton,
+  createStyles,
+  rem,
 } from "@mantine/core";
 import Link from "next/link";
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import COLOR from "../../../../../fun/WARNA";
 import { useRouter } from "next/router";
+import { isNotEmpty, useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
+import { IoChevronDownCircle } from "react-icons/io5";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
+
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    minHeight: rem(764),
+    backgroundColor: COLOR.hitam,
+  },
+  user: {
+    display: "block",
+    width: "100%",
+    padding: 7,
+    borderRadius: 8,
+    color: "white",
+
+    backgroundColor: COLOR.merah,
+  },
+}));
 
 function SayapPimpinanAnakCabang() {
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [jabatan, setJabatan] = useState<any | []>([]);
+  const [sayap, setSayap] = useState<any | []>([]);
+
+
+  useShallowEffect(() => {
+    loadProvinsi();
+    // loadKabupaten();
+    // loadKecamatan();
+    loadJabatan()
+    loadSayapPartai()
+  }, []);
+
+  const loadProvinsi = async () => {
+    const res = await fetch(`/api/master/master-provinsi-get-all`);
+    const ProviniData = await res.json();
+    console.log(ProviniData);
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(setKabupaten);
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      `/api/master/master-kecamatan-get-by-kabkot` + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(setKecamatan);
+  }
+  async function loadJabatan() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang")
+      .then((res) => res.json())
+      .then((val) =>
+        setJabatan(Object.values(val).map((e: any) => e.name))
+      );
+  }
+  async function loadSayapPartai() {
+    const res = await fetch("/api/get/sumber-daya-partai/api-get-sayap-partai")
+      .then((res) => res.json())
+      .then((val) =>
+        setSayap(Object.values(val).map((e: any) => e.name))
+      );
+  }
+
+  const formStrukturPartai = useForm({
+    initialValues: {
+      sayapPartai: "",
+      // provinsi: "",
+      // kabupaten: "",
+      // kecamatan: "",
+      jabatan: "",
+    },
+    validate: {
+      sayapPartai: isNotEmpty("Tidak Boleh Kosong"),
+      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
+      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
+      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
+      jabatan: isNotEmpty("Tidak Boleh Kosong"),
+    },
+  });
+
+  const onDataPartai = () => {
+    if (Object.values(formStrukturPartai.values).includes("")) {
+      return toast("Lengkapi Data Sayap Partai");
+    }
+    router.replace("/v2/home");
+  };
+
+  const { classes } = useStyles();
   const router = useRouter()
 
   function afiliatif() {
     router.push("/v2/form-data-partai/organisasi-afiliatif")
   }
+  function strukturPartai() {
+    router.push("/v2/form-data-partai/struktur-partai");
+  }
+  function sayapPartai() {
+    router.push("/v2/form-data-partai/sayap-partai");
+  }
+  function kaderPartai() {
+    router.push("/v2/form-data-partai/kader-partai");
+  }
+  function anggotaPartai() {
+    router.push("/v2/form-data-partai/anggota-partai");
+  }
+  function sayapPimpinanPusat() {
+    router.push("/v2/form-data-partai/sayap-partai/sayap-pimpinan-pusat");
+  }
+  function sayapPimpinanDaerah() {
+    router.push(
+      "/v2/form-data-partai/sayap-partai/sayap-pimpinan-daerah"
+    );
+  }
+  function sayapPimpinanCabang() {
+    router.push(
+      "/v2/form-data-partai/sayap-partai/sayap-pimpinan-cabang"
+    );
+  }
+  function sayapPimpinanAnakCabang() {
+    router.push(
+      "/v2/form-data-partai/sayap-partai/sayap-pimpinan-anak-cabang"
+    );
+  }
   return (
     <WrapperDataDiriPartai>
-      <BackgroundImage src="../../../BG.png" h={"100vh"}>
+      <Box className={classes.wrapper}>
         <Box>
           <Stack>
             <Box>
@@ -41,8 +173,9 @@ function SayapPimpinanAnakCabang() {
               >
                 <Box>
                   <Box
-                    p={50}
-                    h={763}
+                    p={30}
+                    h={790}
+                    w={400}
                     sx={{
                       backgroundColor: COLOR.abuabu,
                     }}
@@ -60,177 +193,127 @@ function SayapPimpinanAnakCabang() {
                       </Text>
                     </Box>
                     <Menu width={245}>
-                      <Menu.Target>
-                        <Button
-                          radius={"md"}
-                          color="orange.9"
-                          bg={COLOR.merah}
-                          fullWidth
+                    <Menu.Target>
+                        <UnstyledButton
+                          className={classes.user}
+                          pr={20}
+                          pl={20}
                         >
-                          Sayap Partai
-                        </Button>
+                          <Group>
+                            <div style={{ flex: 1 }}>
+                              <Text size="sm">Sayap Partai</Text>
+                            </div>
+                            <IoChevronDownCircle size="1.3rem" />
+                          </Group>
+                        </UnstyledButton>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item>
-                          <Link
-                            style={{ textDecoration: 0, color: "#000000" }}
-                            href={"/v2/form-data-partai/struktur-partai"}
-                          >
-                            Struktur Partai
-                          </Link>
+                        <Menu.Item onClick={strukturPartai}>
+                          Struktur Partai
                         </Menu.Item>
-                        <Menu.Item>
-                          <Link
-                            style={{ textDecoration: 0, color: "#000000" }}
-                            href={"/v2/form-data-partai/sayap-partai"}
-                          >
-                            Sayap Partai
-                          </Link>
+                        <Menu.Item onClick={sayapPartai}>
+                          Sayap Partai
                         </Menu.Item>
-                        <Menu.Item>
-                          <Link
-                            style={{ textDecoration: 0, color: "#000000" }}
-                            href={"/v2/form-data-partai/kader-partai"}
-                          >
-                            Kader Partai
-                          </Link>
+                        <Menu.Item onClick={kaderPartai}>
+                          Kader Partai
                         </Menu.Item>
-                        <Menu.Item>
-                          <Link
-                            style={{ textDecoration: 0, color: "#000000" }}
-                            href={"/v2/form-data-partai/anggota-partai"}
-                          >
-                            Anggota Partai
-                          </Link>
+                        <Menu.Item onClick={anggotaPartai}>
+                          Anggota Partai
                         </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                     <Box mt={20}>
-                      <Menu>
+                    <Menu width={245}>
                         <Menu.Target>
-                          <Button
-                            radius={"md"}
-                            color="gray.4"
-                            bg={"white"}
-                            fullWidth
+                        <UnstyledButton
+                            className={classes.user}
+                            pr={20}
+                            pl={20}
                           >
-                            <Text color="dark">Pimpinan Anak Cabang</Text>
-                          </Button>
+                            <Group>
+                              <div style={{ flex: 1 }}>
+                                <Text size="sm">Pimpinan Anak Cabang</Text>
+                              </div>
+                              <IoChevronDownCircle size="1.3rem" />
+                            </Group>
+                          </UnstyledButton>
                         </Menu.Target>
                         <Menu.Dropdown>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/sayap-partai/sayap-pimpinan-pusat"
-                              }
-                            >
-                              Dewan Pimpinan Pusat
-                            </Link>
+                        <Menu.Item onClick={sayapPimpinanPusat}>
+                            Dewan Pimpinan Pusat
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/sayap-partai/sayap-pimpinan-daerah"
-                              }
-                            >
-                              Dewan Pimpinan Daerah
-                            </Link>
+                          <Menu.Item onClick={sayapPimpinanDaerah}>
+                            Dewan Pimpinan Daerah
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/sayap-partai/sayap-pimpinan-cabang"
-                              }
-                            >
-                              Dewan Pimpinan Cabang
-                            </Link>
+                          <Menu.Item onClick={sayapPimpinanCabang}>
+                            Dewan Pimpinan Cabang
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              style={{ textDecoration: 0, color: "#000000" }}
-                              href={
-                                "/v2/form-data-partai/sayap-partai/sayap-pimpinan-anak-cabang"
-                              }
-                            >
-                              Pimpinan Anak Cabang
-                            </Link>
+                          <Menu.Item onClick={sayapPimpinanAnakCabang}>
+                            Pimpinan Anak Cabang
                           </Menu.Item>
                         </Menu.Dropdown>
                       </Menu>
                     </Box>
                     <Select
+                    {...formStrukturPartai.getInputProps("sayapPartai")}
                       label="Pilih Sayap Partai"
                       mt={10}
                       radius={"md"}
                       withAsterisk
                       placeholder="Pilih Sayap Partai"
-                      data={[
-                        { value: "PAPERA ", label: "PAPERA " },
-                        { value: "TIDAR ", label: "TIDAR " },
-                        { value: "JARI RAYA", label: "JARI RAYA" },
-                        { value: "SATRIA", label: "SATRIA" },
-                        { value: "GEMIRA", label: "GEMIRA" },
-                        { value: "KESIRA", label: "KESIRA" },
-                        { value: "GEKIRA", label: "GEKIRA" },
-                        { value: "GEMA SADHANA", label: "GEMA SADHANA" },
-                        { value: "PIRA", label: "PIRA" },
-                        { value: "SEGARA", label: "SEGARA" },
-                        { value: "PETIR", label: "PETIR" },
-                        { value: "PPIR", label: "PPIR" },
-                        { value: "BGM", label: "BGM" },
-                        { value: "GMI", label: "GMI" },
-                      ]}
+                      data={sayap}
+                      searchable
                     />
                     <Select
-                      data={[{ value: "Bali", label: "Bali" }]}
+                    // {...formStrukturPartai.getInputProps("provinsi")}
+                      data={provinsi.map((pro) => ({
+                        value: pro.id,
+                        label: pro.name
+                      }))}
+                      onChange={loadKabupaten}
                       radius={"md"}
                       mt={10}
                       placeholder="Provinsi"
                       label="Provinsi"
                       withAsterisk
+                      searchable
                     />
                     <Select
-                      data={[{ value: "Denpasar", label: "Denpasar" }]}
+                    // {...formStrukturPartai.getInputProps("kabupaten")}
+                      data={kabupaten.map((kab) => ({
+                        value: kab.id,
+                        label: kab.name
+                      }))}
+                      onChange={loadKecamatan}
                       radius={"md"}
                       mt={10}
                       placeholder="Kabupaten / Kota"
                       label="Kabupaten / Kota"
                       withAsterisk
+                      searchable
                     />
                     <Select
-                      data={[
-                        { value: "Denpasar Barat", label: "Denpasar Barat" },
-                      ]}
+                    // {...formStrukturPartai.getInputProps("kecamatan")}
+                      data={kecamatan.map((kec) => ({
+                        value: kec.id,
+                        label: kec.name
+                      }))}
                       radius={"md"}
                       mt={10}
                       placeholder="Kecamatan"
                       label="Kecamatan"
                       withAsterisk
+                      searchable
                     />
                     <Select
+                    {...formStrukturPartai.getInputProps("jabatan")}
                       label="Jabatan"
                       withAsterisk
                       mt={10}
                       radius={"md"}
                       placeholder="Jabatan"
-                      data={[
-                        { value: "Ketua ", label: "Ketua " },
-                        { value: "Wakil Ketua ", label: "Wakil Ketua " },
-                        { value: "Sekretaris", label: "Sekretaris" },
-                        {
-                          value: "Wakil Sekretaris",
-                          label: "Wakil Sekretaris",
-                        },
-                        { value: "Bendahara", label: "Bendahara" },
-                        {
-                          value: "Wakil Bendahara",
-                          label: "Wakil Bendahara",
-                        },
-                        { value: "Unit", label: "Unit" },
-                      ]}
+                      data={jabatan}
+                      searchable
                     />
                     <Center pt={20}>
                       <Box w={350}>
@@ -244,6 +327,7 @@ function SayapPimpinanAnakCabang() {
                           bg={COLOR.merah}
                           color="orange.9"
                           type="submit"
+                          onClick={onDataPartai}
                         >
                           Simpan
                         </Button>
@@ -267,7 +351,7 @@ function SayapPimpinanAnakCabang() {
             </Box>
           </Stack>
         </Box>
-      </BackgroundImage>
+      </Box>
     </WrapperDataDiriPartai>
   );
 }

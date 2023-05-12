@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "judul": "Kunjungan Seminar",
+        "status": "Pending",
+        "tanggal": "12-05-2023",
+        "img": "Dalam Rangka Memperingati Hari Pahlawan"
+    },
+    {
+        "id": 2,
+        "judul": "Kunjungan Bakti Sosial",
+        "status": "Berhasil",
+        "tanggal": "10-05-2023",
+        "img": "Dalam Rangka Memperingati Hari Pahlawan"
+    }
+    
+]
+

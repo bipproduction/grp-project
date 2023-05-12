@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "kabupaten": "Denpasar",
+        "kecamatan": "Denpasar Barat",
+        "desa": "Dauh Puri Klod",
+        "nama": "Andika",
+        "alamat": "Jl. Serma Made",
+        "jenis_kelamin": "Laki-laki",
+        "email": "andika@gmail.com",
+        "tlp": "0890889786767",
+        "medsos": "-"
+    },
+    {
+        "id": 2,
+        "kabupaten": "Denpasar",
+        "kecamatan": "Denpasar Timur",
+        "desa": "Kesiman",
+        "nama": "Putra",
+        "alamat": "Jalan Bakung No. 71",
+        "jenis_kelamin": "Laki-laki",
+        "email": "putra@gmail.com",
+        "tlp": "0890889786767",
+        "medsos": "-"
+    }
+]

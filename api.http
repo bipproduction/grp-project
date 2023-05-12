@@ -545,3 +545,30 @@ Content-Type: application/json
 
 ### GET ONE SUMBER DAYA PARTAI / KEANGGOTAAN
 GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clgg9oijk0017acoj2t8ort8m HTTP/1.1
+
+
+###SEEDER USER ROLE
+POST  http://localhost:3000/api/seeder/api-seeder-user HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"amaliaz",
+    "email":"amalia@gmail.com",
+    "password":"123"
+}
+
+
+
+
+###### GET WILAYAH PROVINSI
+GET http://localhost:3000/api/master/master-provinsi-get-all HTTP/1.1
+
+###### GET WILAYAH KABKOT
+GET http://localhost:3000/api/master/master-kabkot-get-by-provinsi?idProvinsi=5 HTTP/1.1
+
+### GET WILAYAH KECAMATAN
+GET http://localhost:3000/api/master/master-kecamatan-get-by-kabkot?idKabkot=2 HTTP/1.1
+
+
+### GET WILAYAH DESA
+GET http://localhost:3000/api/master/master-desa-get-by-kecamatan?idKecamatan=3 HTTP/1.1

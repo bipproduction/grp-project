@@ -18,6 +18,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
 
 const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
   const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
@@ -48,6 +49,55 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
       );
   }
 
+  const formEditStrukturPartai = useForm({
+    initialValues: {
+      data: {
+        nik: '',
+        nama: '',
+        email: '',
+        tempatLahir: '',
+        tanggalLahir: '',
+        jenisKelamin: '',
+        phoneNumber: '',
+        instagram: '',
+        facebook: '',
+        tiktok: '',
+        twitter: '',
+        agama: '',
+        pekerjaan: '',
+        alamat: '',
+        provinsi: '',
+        kabkot: '',
+        kecamatan: '',
+        desa: '',
+        rtrw: '',
+        statusKeanggotaan: '',
+        tingkatPengurus: '',
+        jabatan: '',
+      },
+      validate: {
+        email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      },
+    },
+  });
+
+  const onEdit = () => {
+    console.log(formEditStrukturPartai.values.data)
+    if (Object.values(formEditStrukturPartai.values.data).includes("")) {
+      return toast("Lengkapi Data diri");
+    }
+
+    if (formEditStrukturPartai.values.validate.email(formEditStrukturPartai.values.data.email) != null) {
+      return toast("Invalid email");
+    }
+
+    //disini pengaplikasian api
+
+    buttonSimpan();
+    thisClosed();
+
+  }
+
   return (
     <>
       <Box>
@@ -69,10 +119,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={() => {
-                  buttonSimpan();
-                  thisClosed();
-                }}
+                onClick={thisClosed}
               >
                 Simpan
               </Button>
@@ -83,9 +130,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={() => {
-                  buttonReset()
-                }}
               >
                 Reset
               </Button>
@@ -110,11 +154,11 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <TextInput placeholder="NIK" label="**" />
-                    <TextInput placeholder="Nama" label="**" />
-                    <TextInput placeholder="Email" label="**" />
-                    <TextInput placeholder="Tempat Lahir" label="**" />
-                    <DateInput placeholder="Tanggal Lahir" label="**" />
+                    <NumberInput placeholder="NIK" label="**" {...formEditStrukturPartai.getInputProps("data.nik")} />
+                    <TextInput placeholder="Nama" label="**" {...formEditStrukturPartai.getInputProps("data.nama")} />
+                    <TextInput placeholder="Email" label="**" {...formEditStrukturPartai.getInputProps("data.email")} />
+                    <TextInput placeholder="Tempat Lahir" label="**" {...formEditStrukturPartai.getInputProps("data.tempatLahir")} />
+                    <DateInput placeholder="Tanggal Lahir" label="**" {...formEditStrukturPartai.getInputProps("data.tanggalLahir")} />
                     <Select
                       data={[
                         { value: "laki", label: "Laki-Laki" },
@@ -122,32 +166,36 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       ]}
                       placeholder="Jenis Kelamin"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.jenisKelamin")}
                     />
-                    <NumberInput placeholder="Nomor Telepon" label="**" />
-
+                    <NumberInput placeholder="Nomor Telepon" label="**" {...formEditStrukturPartai.getInputProps("data.phoneNumber")} />
                     <TextInput
                       radius={"md"}
                       mt={10}
-                      placeholder="Instargram"
+                      placeholder="Instagram"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.instagram")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Facebook"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.facebook")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="TikTok"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.tiktok")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Twitter"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.twitter")}
                     />
                     <Select
                       data={[
@@ -162,18 +210,21 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Agama"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.agama")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Pekerjaan"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.pekerjaan")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Alamat"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.alamat")}
                     />
                     <Select
                       data={[
@@ -184,6 +235,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Provinsi"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.provinsi")}
                     />
                     <Select
                       data={[
@@ -194,6 +246,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Kabupaten / Kota"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.kabkot")}
                     />
                     <Select
                       data={[
@@ -204,18 +257,21 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       mt={10}
                       placeholder="Kecamatan"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.kecamatan")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="Desa / Cabang"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.desa")}
                     />
                     <TextInput
                       radius={"md"}
                       mt={10}
                       placeholder="RT - __, RW - __"
                       label="**"
+                      {...formEditStrukturPartai.getInputProps("data.rtrw")}
                     />
                   </Flex>
                 </Box>
@@ -225,7 +281,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
               <Paper bg={COLOR.abuabu} p={20}>
                 <Flex direction={"column"}>
                   <Text fz={20} fw={"bold"}>
-                    Status ke Anggotaan
+                    Status Keanggotaan
                   </Text>
                   <Text fz={10}>
                     <Text span c={"red"}>
@@ -241,6 +297,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
                       data={statusKeanggotaan}
+                      {...formEditStrukturPartai.getInputProps("data.statusKeanggotaan")}
                     />
 
                     <Select
@@ -248,13 +305,18 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Tingkat Pengurus"
                       nothingFound="No options"
                       data={tingkatPengurus}
+                      {...formEditStrukturPartai.getInputProps("data.tingkatPengurus")}
                     />
 
                     <Select
                       label="**"
                       placeholder="Pilih Jabatan"
                       nothingFound="No options"
-                      data={[]}
+                      data={[
+                        { value: "Ketua", label: "Ketua" },
+                        { value: "Wakil Ketua", label: "Wakil Ketua" },
+                      ]}
+                      {...formEditStrukturPartai.getInputProps("data.jabatan")}
                     />
                   </Flex>
                 </Box>

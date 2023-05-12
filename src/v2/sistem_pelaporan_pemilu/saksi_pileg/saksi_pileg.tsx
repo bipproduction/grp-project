@@ -1,7 +1,8 @@
+import { ViewSaksiPilegV2 } from "./view_saksi_pileg"
 
-const SaksiPilegV2  = () => {
+const SaksiPilegV2 = () => {
     return <>
-    pilpres v2
+        <ViewSaksiPilegV2 />
     </>
 }
 

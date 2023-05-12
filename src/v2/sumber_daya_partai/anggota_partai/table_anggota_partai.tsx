@@ -128,7 +128,7 @@ const TableAnggotaPartaiV2 = () => {
                 Data Anggota Partai
               </Text>
             </Grid.Col>
-            <Grid.Col span={4}>
+            {/* <Grid.Col span={4}>
               <Group position="right">
                 <Button
                   w={100}
@@ -149,7 +149,7 @@ const TableAnggotaPartaiV2 = () => {
                   Fillter
                 </Button>
               </Group>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Paper>
         <Box pt={20}>
@@ -162,7 +162,7 @@ const TableAnggotaPartaiV2 = () => {
                 radius={"md"}
               />
             </Grid.Col>
-            <Grid.Col md={8} lg={8}>
+            {/* <Grid.Col md={8} lg={8}>
               <Group position="right">
                 <Button
                   color="orange.9"
@@ -182,7 +182,7 @@ const TableAnggotaPartaiV2 = () => {
                   Import File
                 </Button>
               </Group>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Box>
         <Box>

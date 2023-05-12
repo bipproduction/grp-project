@@ -13,9 +13,13 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 
 const SeederDev = () => {
-  // User
+  // User Role
   const syncUserRole = async () =>
     await fetch(apiSeeder.apiUserRole).then(async (e) => e.status == 200);
+
+  // User
+  const syncUser = async () =>
+    await fetch(apiSeeder.apiUserSeeder).then(async (e) => e.status == 200);
 
   // Sumber Daya Partai
   // profile Umum
@@ -153,8 +157,23 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederNamaNegara).then(
       async (e) => e.status == 200
     );
-    const syncSeederProvinsi = async () =>
+  const syncSeederProvinsi = async () =>
     await fetch(apiSeeder.apiSeederNamaProvinsi).then(
+      async (e) => e.status == 200
+    );
+
+  const syncSeederKabKot = async () =>
+    await fetch(apiSeeder.apiSeederNamaKabKot).then(
+      async (e) => e.status == 200
+    );
+
+  const syncSeederKecamatan = async () =>
+    await fetch(apiSeeder.apiSeederNamaKecamatan).then(
+      async (e) => e.status == 200
+    );
+
+  const syncSeederDesa = async () =>
+    await fetch(apiSeeder.apiSeederNamaDesa).then(
       async (e) => e.status == 200
     );
 
@@ -174,7 +193,10 @@ const SeederDev = () => {
               </Center>
               <Paper p={"lg"} bg={"cyan.1"}>
                 <Text>User</Text>
-                <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
+                <Flex gap={"sm"}>
+                  <ButtonSync loadData={syncUserRole} name={"Sync User Role"} />
+                  <ButtonSync loadData={syncUser} name={"Sync User"} />
+                </Flex>
               </Paper>
               <Paper bg={"cyan.1"} p="lg">
                 <Text>Profile Umum</Text>
@@ -207,6 +229,18 @@ const SeederDev = () => {
                   <ButtonSync
                     loadData={syncSeederProvinsi}
                     name={"Sync Seeder Provinsi"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederKabKot}
+                    name={"Sync Seeder Kabupaten Kota"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederKecamatan}
+                    name={"Sync Seeder Kecamatan"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederDesa}
+                    name={"Sync Seeder Desa"}
                   />
                 </Flex>
               </Paper>

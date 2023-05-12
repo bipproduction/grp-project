@@ -1,6 +1,6 @@
 import client from '@/lib/prisma_db';
 import { NextApiRequest, NextApiResponse } from 'next';
-import namaProvinsi from "../../../../../../bin/seeder/sumber_daya_partai/wilayah/provinsi.json"
+import namaProvinsi from "../../../../../../bin/seeder/sumber_daya_partai/wilayah/provinsi_temp.json"
 
 const seederProvinsi = async () => {
     for(let e of namaProvinsi){
