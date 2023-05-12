@@ -162,7 +162,7 @@ const TableKaderPartaiV2 = () => {
                 radius={"md"}
               />
             </Grid.Col>
-            <Grid.Col md={8} lg={8}>
+            {/* <Grid.Col md={8} lg={8}>
               <Group position="right">
                 <Button
                   color="orange.9"
@@ -182,7 +182,7 @@ const TableKaderPartaiV2 = () => {
                   Import File
                 </Button>
               </Group>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </Box>
         <Box>

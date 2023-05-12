@@ -1,7 +1,7 @@
-import { _loadDesa } from "@/load_data/load_desa";
-import { _loadKabkot } from "@/load_data/load_kabkot";
-import { _loadKecamatan } from "@/load_data/load_kecamatan";
-import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { _loadDesa } from "@/load_data/wilayah/load_desa";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { _loadKecamatan } from "@/load_data/wilayah/load_kecamatan";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { sDesa } from "@/s_state/wilayah/s_desa";
 import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import { sKecamatan } from "@/s_state/wilayah/s_kecamatan";

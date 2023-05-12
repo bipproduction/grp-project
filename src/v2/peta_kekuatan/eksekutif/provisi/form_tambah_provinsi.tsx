@@ -1,8 +1,8 @@
 import { api } from "@/lib/api-backend";
-import { _loadJabatanEksekutifProvinisi } from "@/load_data/load_jabatan_eksekutif";
+import { _loadJabatanEksekutifProvinisi } from "@/load_data/eksekutif/load_jabatan_eksekutif";
 import { _loadListPartai } from "@/load_data/load_list_partai";
-import { _loadProvinsi } from "@/load_data/load_provinsi";
-import { _loadStatusEksekutif } from "@/load_data/load_status_eksekutif";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { _loadStatusEksekutif } from "@/load_data/eksekutif/load_status_eksekutif";
 import { ModelProvinsi } from "@/model/model_wilayah";
 import { sJabatanEksekutifProvinsi } from "@/s_state/eksekutif/s_jabatan_eksekutif";
 import { sStatusEksekutif } from "@/s_state/eksekutif/s_status_eksekutif";

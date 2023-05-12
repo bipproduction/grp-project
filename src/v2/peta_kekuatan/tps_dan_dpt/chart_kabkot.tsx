@@ -1,5 +1,5 @@
 import { api } from "@/lib/api-backend";
-import { _loadKabkot } from "@/load_data/load_kabkot";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
 import { ModelKabKot } from "@/model/model_wilayah";
 import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import {

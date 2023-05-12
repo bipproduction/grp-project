@@ -3,11 +3,11 @@ import {
   _loadJabatanEksekutifKabKot,
   _loadJabatanEksekutifKabupaten,
   _loadJabatanEksekutifKota,
-} from "@/load_data/load_jabatan_eksekutif";
-import { _loadKabkot } from "@/load_data/load_kabkot";
+} from "@/load_data/eksekutif/load_jabatan_eksekutif";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
 import { _loadListPartai } from "@/load_data/load_list_partai";
-import { _loadProvinsi } from "@/load_data/load_provinsi";
-import { _loadStatusEksekutif } from "@/load_data/load_status_eksekutif";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { _loadStatusEksekutif } from "@/load_data/eksekutif/load_status_eksekutif";
 import { ModelProvinsi } from "@/model/model_wilayah";
 import {
   sJabatanEksekutifKabKot,

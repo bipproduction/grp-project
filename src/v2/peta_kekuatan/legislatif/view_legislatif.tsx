@@ -1,4 +1,4 @@
-import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
 import { Box, Button, Grid, Group, Paper, Tabs, Text } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";

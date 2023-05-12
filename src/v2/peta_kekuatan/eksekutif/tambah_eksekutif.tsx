@@ -17,7 +17,7 @@ import { useState } from "react";
 import { FormTambahEksekutifNasionalV2 } from "./nasional/form_tambah_nasional";
 import { FormTambahEksekutifProvinsiV2 } from "./provisi/form_tambah_provinsi";
 import { FormTambahEksekutifKabKotV2 } from "./kabkot/form_tambah_kabkot";
-import { _loadTingkatEksekutif } from "@/load_data/load_tingkat_eksekutif";
+import { _loadTingkatEksekutif } from "@/load_data/eksekutif/load_tingkat_eksekutif";
 import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 
 export const TambahEksekutifV2 = () => {

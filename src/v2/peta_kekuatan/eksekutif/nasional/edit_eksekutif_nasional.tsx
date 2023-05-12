@@ -1,5 +1,5 @@
 import { apiGetMaster } from "@/lib/api-get-master";
-import { _loadTingkatEksekutif } from "@/load_data/load_tingkat_eksekutif";
+import { _loadTingkatEksekutif } from "@/load_data/eksekutif/load_tingkat_eksekutif";
 import { sListEksekutif } from "@/s_state/eksekutif/s_list_eksekutif";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
