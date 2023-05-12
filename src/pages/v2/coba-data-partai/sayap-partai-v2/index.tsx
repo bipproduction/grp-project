@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
-export function SayapPartaiV2({ setNilai }: any) {
+const  SayapPartaiV2 = ({ setNilai }: any) => {
   const [value, setValue] = useState<any>();
   return (
     <>
@@ -373,3 +373,4 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
     </>
   );
 };
+export default SayapPartaiV2

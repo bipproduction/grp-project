@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 
-export function StrukturPartaiV2({ setNilai }: any) {
+const StrukturPartaiV2 = ({ setNilai }: any) => {
   const [value, setValue] = useState<any>();
   return (
     <>
@@ -519,3 +519,4 @@ const PerwakilanPartaiLuarNegeri = ({ set }: { set: any }) => {
     </>
   );
 };
+export default StrukturPartaiV2

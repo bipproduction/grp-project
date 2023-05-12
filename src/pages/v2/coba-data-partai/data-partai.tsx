@@ -40,10 +40,10 @@ const useStyles = createStyles((theme) => ({
 }));
 import WrapperDataDiriPartai from "@/v2/wrapper_data_diri_partai/wrapper_data_diri_partai";
 import { useState } from "react";
-import { StrukturPartaiV2 } from "./struktur-partai-v2";
 import KaderPartaiV2 from "./kader-partai-v2";
 import AnggotaPartaiV2 from "./anggota-partai-v2";
-import { SayapPartaiV2 } from "./sayap-partai-v2";
+import StrukturPartaiV2 from "./struktur-partai-v2";
+import SayapPartaiV2 from "./sayap-partai-v2";
 
 
 const DataPartai = () => {
