@@ -16,14 +16,13 @@ import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
 import SeederEnd from "./seeder";
 
-
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>GRP</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -43,53 +42,53 @@ export default function App(props: AppProps) {
             <Component {...pageProps} />
           </Authrovider>
         </DevSeeder>
-
       </MantineProvider>
     </>
   );
 }
 
 const Authrovider = ({ children }: PropsWithChildren) => {
-  const [isSignup, setIsSignup] = useState(false)
+  const [isSignup, setIsSignup] = useState(false);
 
   useShallowEffect(() => {
     const user = localStorage.getItem("user_id");
     //console.table(user)
     if (!user) {
-      sUser.value = []
-    }
-    else {
+      sUser.value = [];
+    } else {
       //sUser.value = JSON.parse(user)
       fetch(api.apiGetOneUser + `?id=${user}`)
         .then((v) => v.json())
         .then((v) => (sUser.value = v));
       //sUser.value = user
     }
-  }, [])
-
+  }, []);
 
   if (sUser.value == undefined) return <></>;
   if (_.isEmpty(sUser.value))
     return (
       <Stack>
-        {isSignup ? <SignUp /> : <SignIn onSignUp={() => {
-          setIsSignup(true)
-        }} />}
+        {isSignup ? (
+          <SignUp />
+        ) : (
+          <SignIn
+            onSignUp={() => {
+              setIsSignup(true);
+            }}
+          />
+        )}
       </Stack>
     );
 
   return <>{children}</>;
 };
 
-
 const DevSeeder = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const dev = router.query.dev;
 
   if (router.query.dev == undefined) router.query.dev = "false";
-  if (dev == "true") return <SeederEnd />
+  if (dev == "true") return <SeederEnd />;
 
-  return <>{children}</>
+  return <>{children}</>;
 };
-
-

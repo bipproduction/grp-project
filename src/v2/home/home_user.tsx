@@ -36,6 +36,7 @@ import { useForm } from "@mantine/form";
 import { useWindowScroll } from "@mantine/hooks";
 import { constant } from "lodash";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const HomeUserV2 = () => {
   const mockdata = [

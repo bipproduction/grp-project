@@ -48,6 +48,7 @@ import DbKaderPartai from "./database_partai/db_kader_partai/db_kader_partai";
 import DbAnggotaPartai from "./database_partai/db_anggota_partai/db_anggota_partai";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
+import Head from "next/head";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -144,13 +145,13 @@ const LayoutDashboarSuperdAdminV2 = () => {
                       <Menu.Dropdown>
                         <Menu.Item>
                           <Group>
-                              <AiOutlineUser color="black" size="1.3rem" />
+                            <AiOutlineUser color="black" size="1.3rem" />
                             <Text fw={700}>{sUser.value?.username}</Text>
                           </Group>
                         </Menu.Item>
                         <Menu.Item>
                           <Group>
-                              <MdAlternateEmail color="black" size="1.3rem" />
+                            <MdAlternateEmail color="black" size="1.3rem" />
                             <Text>{sUser.value?.email}</Text>
                           </Group>
                         </Menu.Item>
@@ -161,7 +162,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
                               sUser.value = {};
                             }}
                           >
-                              <AiOutlineLogout color="red" size="1.3rem" />
+                            <AiOutlineLogout color="red" size="1.3rem" />
                             <Text color="red">Logout</Text>
                           </Group>
                         </Menu.Item>

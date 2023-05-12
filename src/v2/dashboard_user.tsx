@@ -21,7 +21,13 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useState } from "react";
-import { AiFillApple, AiFillHome, AiFillSetting, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
+import {
+  AiFillApple,
+  AiFillHome,
+  AiFillSetting,
+  AiOutlineLogout,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
 import COLOR from "../../fun/WARNA";
 import { FiLogOut } from "react-icons/fi";
@@ -34,6 +40,7 @@ import DataProfileV2 from "./dashboard_user/profile";
 import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
+import Head from "next/head";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -121,7 +128,7 @@ const LayoutDashboardUserV2 = () => {
                     wrap="wrap"
                     pl={20}
                     onClick={home}
-                    style={{cursor: "pointer"}}
+                    style={{ cursor: "pointer" }}
                   >
                     <Text fz={25} color="white">
                       GARUDA
@@ -133,38 +140,34 @@ const LayoutDashboardUserV2 = () => {
                   <Group pr={20}>
                     <Menu>
                       <Menu.Target>
-                      <Tooltip label="Profile">
-                        <Group style={{ cursor: "pointer" }}>
-                          <Avatar radius="xl" />
-                        </Group>
-                      </Tooltip>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                            <Avatar radius="xl" />
+                          </Group>
+                        </Tooltip>
                       </Menu.Target>
                       <Menu.Dropdown>
-                      <Menu.Item>
+                        <Menu.Item>
                           <Group>
-                              <AiOutlineUser color="black" size="1.3rem" />
+                            <AiOutlineUser color="black" size="1.3rem" />
                             <Text fw={700}>{sUser.value?.username}</Text>
                           </Group>
                         </Menu.Item>
                         <Menu.Item>
                           <Group>
-                              <MdAlternateEmail color="black" size="1.3rem" />
+                            <MdAlternateEmail color="black" size="1.3rem" />
                             <Text>{sUser.value?.email}</Text>
                           </Group>
                         </Menu.Item>
                         <Menu.Item>
                           <Group
-                          onClick={() => {
-                            localStorage.removeItem("user_id");
-                            sUser.value = {};
-                          }}
+                            onClick={() => {
+                              localStorage.removeItem("user_id");
+                              sUser.value = {};
+                            }}
                           >
-                              <AiOutlineLogout color="red" size="1.3rem" />
-                            <Text
-                              color="red"
-                            >
-                              Logout
-                            </Text>
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
                           </Group>
                         </Menu.Item>
                       </Menu.Dropdown>

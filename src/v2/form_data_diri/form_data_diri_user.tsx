@@ -1,14 +1,9 @@
 import {
-  BackgroundImage,
   Box,
   Button,
   Center,
-  Checkbox,
   Container,
-  Group,
-  Header,
   Image,
-  MultiSelect,
   ScrollArea,
   Select,
   SimpleGrid,
@@ -21,13 +16,12 @@ import {
 import React, { useEffect, useState } from "react";
 import COLOR from "../../../fun/WARNA";
 import { DateInput } from "@mantine/dates";
-import { Form, isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _, { functions, get, identity, lowerCase, set, values } from "lodash";
-import $ from "jquery";
+import _ from "lodash";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -101,12 +95,6 @@ const FormDataDiriUser = () => {
     setProvinsi(ProviniData);
   };
 
-  // const kabupatenlist = async () => {
-  //   const res = await fetch(`/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${undefined}`);
-  //   const ProviniData = await res.json();
-  //   setListKabupaten(ProviniData);
-  // }
-
   const loadKabupaten = async (idProvinsi: string) => {
     const res = await fetch(
       `/api/master/master-kabkot-get-by-provinsi` + `?idProvinsi=${idProvinsi}`
@@ -127,17 +115,17 @@ const FormDataDiriUser = () => {
       // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
       `/api/master/master-kecamatan-get-by-kabkot` + `?idKabkot=${idKabkot}`
     )
-    .then((res) => res.json())
-    .then(async (val) => {
-      if (!_.isEmpty(val)) {
-        setKecamatan(val);
-        setSelectedKecamatan({});
-      } else {
-        setKecamatan([]);
-      }
-    });
-      // .then((res) => res.json())
-      // .then(setKecamatan);
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
   }
   async function loadDesa(idKecamatan: string) {
     const res = await fetch(
@@ -152,7 +140,7 @@ const FormDataDiriUser = () => {
         } else {
           setDesa([]);
         }
-      })
+      });
   }
   async function loadPekerjaan() {
     const res = await fetch("/api/get/sumber-daya-partai/api-get-pekerjaan")
@@ -167,60 +155,43 @@ const FormDataDiriUser = () => {
 
   const formDataDiri = useForm({
     initialValues: {
-      nik: "",
-      name: "",
-      email: "",
-      tempatLahir: "",
-      tanggalLahir: "",
-      jenisKelamin: "",
-      phoneNumber: "",
-      instagram: "",
-      facebook: "",
-      tiktok: "",
-      twitter: "",
-      agama: "",
-      pekerjaan: "",
-      alamat: "",
-      // provinsi: "",
-      // kabupaten: "",
-      // kecamatan: "",
-      // desa: "",
-      rtrw: "",
-    },
-    validate: {
-      nik: isNotEmpty("Tidak Boleh Kosong"),
-      name: isNotEmpty("Tidak Boleh Kosong"),
-      email: isEmail("Invalid email"),
-      tempatLahir: isNotEmpty("Tidak Boleh Kosong"),
-      tanggalLahir: isNotEmpty("Tidak Boleh Kosong"),
-      jenisKelamin: isNotEmpty("Tidak Boleh Kosong"),
-      phoneNumber: isNotEmpty("Tidak Boleh Kosong"),
-      instagram: isNotEmpty("Tidak Boleh Kosong"),
-      facebook: isNotEmpty("Tidak Boleh Kosong"),
-      tiktok: isNotEmpty("Tidak Boleh Kosong"),
-      twitter: isNotEmpty("Tidak Boleh Kosong"),
-      agama: isNotEmpty("Tidak Boleh Kosong"),
-      pekerjaan: isNotEmpty("Tidak Boleh Kosong"),
-      alamat: isNotEmpty("Tidak Boleh Kosong"),
-      // provinsi: isNotEmpty("Tidak Boleh Kosong"),
-      // kabupaten: isNotEmpty("Tidak Boleh Kosong"),
-      // kecamatan: isNotEmpty("Tidak Boleh Kosong"),
-      // desa: isNotEmpty("Tidak Boleh Kosong"),
-      rtrw: isNotEmpty("Tidak Boleh Kosong"),
+      data: {
+        nik: "",
+        name: "",
+        email: "",
+        tempatLahir: "",
+        tanggalLahir: "",
+        jenisKelamin: "",
+        phoneNumber: "",
+        instagram: "",
+        facebook: "",
+        tiktok: "",
+        twitter: "",
+        agama: "",
+        pekerjaan: "",
+        alamat: "",
+        provinsi: "",
+        kabkot: "",
+        kecamatan: "",
+        desa: "",
+        rtrw: "",
+      },
+      validate: {
+        email: (value: string) =>
+          /^\S+@\S+$/.test(value) ? null : "Invalid email",
+      },
     },
   });
   const onDataPartai = () => {
-    if (Object.values(formDataDiri.values).includes("")) {
+    if (Object.values(formDataDiri.values.data).includes("")) {
       return toast("Lengkapi Data diri");
+    }
+    if (
+      formDataDiri.values.validate.email(formDataDiri.values.data.email) != null) {
+      return toast("Invalid email");
     }
     router.replace("/v2/form-data-partai");
   };
-  // console.log(onDataPartai);
-  // const [data, setData] = useState([
-  //   { value: "Pegawai Negeri", label: "Pegawai Negeri" },
-  //   { value: "Swasta", label: "Swasta" },
-  //   { value: "Pengajar", label: "Pengajar" },
-  // ]);
   return (
     <>
       <WrapperDataDiriPartai>
@@ -266,35 +237,40 @@ const FormDataDiriUser = () => {
                                 label="NIK"
                                 radius={"md"}
                                 type="number"
-                                {...formDataDiri.getInputProps("nik")}
+                                {...formDataDiri.getInputProps("data.nik")}
                               />
                               <TextInput
                                 placeholder="Nama"
                                 withAsterisk
                                 label="Nama"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("name")}
+                                {...formDataDiri.getInputProps("data.name")}
                               />
                               <TextInput
                                 placeholder="Email"
                                 withAsterisk
                                 label="Email"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("email")}
+                                {...formDataDiri.getInputProps("data.email")}
                               />
                               <TextInput
                                 placeholder="Tempat Lahir"
                                 withAsterisk
                                 label="Tempat Lahir"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("tempatLahir")}
+                                {...formDataDiri.getInputProps(
+                                  "data.tempatLahir"
+                                )}
                               />
                               <DateInput
                                 placeholder="Tanggal Lahir"
                                 withAsterisk
+                                // rightSection={<AiOutlineCalendar size="1.3rem" />}
                                 label="Tanggal Lahir"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("tanggalLahir")}
+                                {...formDataDiri.getInputProps(
+                                  "data.tanggalLahir"
+                                )}
                               />
                               <Select
                                 placeholder="Jenis Kelamin"
@@ -303,7 +279,9 @@ const FormDataDiriUser = () => {
                                 withAsterisk
                                 searchable
                                 data={jenisKelamin}
-                                {...formDataDiri.getInputProps("jenisKelamin")}
+                                {...formDataDiri.getInputProps(
+                                  "data.jenisKelamin"
+                                )}
                               />
                               <TextInput
                                 placeholder="Nomor Handphone"
@@ -311,35 +289,43 @@ const FormDataDiriUser = () => {
                                 label="Nomor Handphone"
                                 radius={"md"}
                                 type="number"
-                                {...formDataDiri.getInputProps("phoneNumber")}
+                                {...formDataDiri.getInputProps(
+                                  "data.phoneNumber"
+                                )}
                               />
                               <TextInput
                                 placeholder="Instagram"
                                 withAsterisk
+                                // rightSection={<AiOutlineInstagram size="1.3rem" />}
                                 label="Instagram"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("instagram")}
+                                {...formDataDiri.getInputProps(
+                                  "data.instagram"
+                                )}
                               />
                               <TextInput
                                 placeholder="Facebook"
                                 withAsterisk
                                 label="Facebook"
+                                // rightSection={<AiOutlineFacebook size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("facebook")}
+                                {...formDataDiri.getInputProps("data.facebook")}
                               />
                               <TextInput
                                 placeholder="Tiktok"
                                 withAsterisk
                                 label="Tiktok"
+                                // rightSection={<BsTiktok size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("tiktok")}
+                                {...formDataDiri.getInputProps("data.tiktok")}
                               />
                               <TextInput
                                 placeholder="Twitter"
                                 withAsterisk
                                 label="Twitter"
+                                // rightSection={<AiOutlineTwitter size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("twitter")}
+                                {...formDataDiri.getInputProps("data.twitter")}
                               />
                               <Select
                                 data={agama}
@@ -348,7 +334,7 @@ const FormDataDiriUser = () => {
                                 label="Agama"
                                 searchable
                                 withAsterisk
-                                {...formDataDiri.getInputProps("agama")}
+                                {...formDataDiri.getInputProps("data.agama")}
                               />
                               <Select
                                 radius={"md"}
@@ -362,28 +348,32 @@ const FormDataDiriUser = () => {
                                   { value: "Swasta", label: "Swasta" },
                                   { value: "Pengajar", label: "Pengajar" },
                                 ]}
-                                {...formDataDiri.getInputProps("pekerjaan")}
+                                {...formDataDiri.getInputProps(
+                                  "data.pekerjaan"
+                                )}
                               />
                               <TextInput
                                 placeholder="Alamat"
                                 withAsterisk
                                 label="Alamat"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("alamat")}
+                                {...formDataDiri.getInputProps("data.alamat")}
                               />
-
                               <Select
                                 data={provinsi.map((pro) => ({
                                   value: pro.id,
                                   label: pro.name,
                                 }))}
                                 radius={"md"}
-                                value={selectedProvince.name}
+                                // {...formDataDiri.getInputProps("data.provinsi")}
+                                // onClick={() =>
+                                //   console.log(selectedProvince.name)
+                                // }
                                 placeholder={selectedProvince.name}
+                                value={selectedProvince.name}
                                 label="Provinsi"
                                 withAsterisk
                                 searchable
-                                // {...formDataDiri.getInputProps("provinsi")}
                                 onChange={(val) => {
                                   if (val) {
                                     setSelectedProvince(
@@ -392,26 +382,26 @@ const FormDataDiriUser = () => {
                                     loadKabupaten(val);
                                   }
                                 }}
+                                // onChange={selectedProvince}
                               />
                               {/* {JSON.stringify(selectedKabupaten.name)} */}
                               <Select
                                 key={Math.random()}
-                                // defaultValue={selectedKabupaten.name}
                                 data={
                                   _.isEmpty(kabupaten)
-                                  ? []
-                                  : kabupaten.map((v) => ({
-                                    value: v.id,
-                                    label: v.name,
-                                  }))
+                                    ? []
+                                    : kabupaten.map((v) => ({
+                                        value: v.id,
+                                        label: v.name,
+                                      }))
                                 }
+                                // {...formDataDiri.getInputProps("data.kabkot")}
                                 placeholder={selectedKabupaten.name}
                                 value={selectedKabupaten.name}
                                 radius={"md"}
                                 label="Kabupaten / Kota"
                                 withAsterisk
                                 searchable
-                                // {...formDataDiri.getInputProps("kabupaten")}
                                 onChange={(val) => {
                                   setSelectedKabupaten(
                                     kabupaten.find((v) => v.id == val)
@@ -424,49 +414,53 @@ const FormDataDiriUser = () => {
                                 key={Math.random()}
                                 data={
                                   _.isEmpty(kecamatan)
-                                  ? []
-                                  : kecamatan.map((val) => ({
-                                    value: val.id,
-                                    label: val.name,
-                                  }))
+                                    ? []
+                                    : kecamatan.map((val) => ({
+                                        value: val.id,
+                                        label: val.name,
+                                      }))
                                 }
                                 radius={"md"}
                                 placeholder={selectedKecamatan.name}
+                                // {...formDataDiri.getInputProps(
+                                //   "data.kecamatan"
+                                // )}
                                 value={selectedKecamatan.name}
                                 label="Kecamatan"
                                 withAsterisk
                                 searchable
-                                // {...formDataDiri.getInputProps("kecamatan")}
                                 onChange={(val) => {
                                   setSelectedKecamatan(
                                     kecamatan.find((v) => v.id == val)
-                                    )
-                                  loadDesa(val!)
+                                  );
+                                  loadDesa(val!);
                                 }}
                               />
                               {/* {JSON.stringify(selectedDesa.name)} */}
                               <Select
-                              key={Math.random()}
-                              data={
-                                _.isEmpty(desa)
-                                ? []
-                                : desa.map((val) => ({
-                                  value: val.id,
-                                  label: val.name,
-                                }))
-                              }
-                              onChange={(val) => {
-                                setSelectedDesa(
-                                  desa.find((v) => v.id == val)
-                                )
-                              }}
+                                key={Math.random()}
+                                data={
+                                  _.isEmpty(desa)
+                                    ? []
+                                    : desa.map((val) => ({
+                                        value: val.id,
+                                        label: val.name,
+                                      }))
+                                }
                                 radius={"md"}
                                 placeholder={selectedDesa.name}
+                                // {...formDataDiri.getInputProps(
+                                //   "data.desa"
+                                // )}
                                 value={selectedDesa.name}
                                 label="Desa"
                                 withAsterisk
+                                onChange={(val) => {
+                                  setSelectedDesa(
+                                    desa.find((v) => v.id == val)
+                                  );
+                                }}
                                 searchable
-                                // {...formDataDiri.getInputProps("desa")}
                               />
                               <TextInput
                                 placeholder="RT/RW"
@@ -474,7 +468,7 @@ const FormDataDiriUser = () => {
                                 label="RT/RW"
                                 radius={"md"}
                                 type="number"
-                                {...formDataDiri.getInputProps("rtrw")}
+                                {...formDataDiri.getInputProps("data.rtrw")}
                               />
                               <Center pt={20}>
                                 <Box w={150}>
@@ -484,7 +478,10 @@ const FormDataDiriUser = () => {
                                     bg={COLOR.merah}
                                     color="orange.9"
                                     type="submit"
-                                    onClick={onDataPartai}
+                                    onClick={() =>
+                                      console.log(formDataDiri.values)
+                                    }
+                                    // onClick={onDataPartai}
                                   >
                                     Simpan
                                   </Button>
