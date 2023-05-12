@@ -1,4 +1,4 @@
-import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {

@@ -1,5 +1,5 @@
-import { _loadKabkot } from "@/load_data/load_kabkot";
-import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { sKabkot } from "@/s_state/wilayah/s_kabkot";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";

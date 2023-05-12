@@ -17,6 +17,8 @@ import { useState } from "react";
 import { FormTambahLegislatifDprRiV2 } from "./dpr_ri/form_tambah_dpr_ri";
 import { FormTambahLegislatifDprdProvinsiV2 } from "./dprd_provinsi/form_tambah_dprd_provinsi";
 import { FormTambahLegislatifDprdKabkotV2 } from "./dprd_kabkot/form_tambah_dprd_kabkot";
+import { _loadTingkatLegislatif } from "@/load_data/legislatif/laod_tingkat_legislatif";
+import { sTingkatLegislatif } from "@/s_state/legislatif/s_tingkat_legislatif";
 
 export const TambahLegislatifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -45,18 +47,13 @@ export const TambahLegislatifV2 = () => {
 };
 
 const TambahDataLegislatif = ({ tutupModal }: any) => {
-  const [dataEks, setEks] = useState<any | []>([]);
+ 
   const [value, setValue] = useState<any>(null);
 
   useShallowEffect(() => {
-    loadLevelEksekutif();
+    _loadTingkatLegislatif()
   }, []);
 
-  async function loadLevelEksekutif() {
-    const res = await fetch("/api/get/peta-kekuatan/api-get-tingkat-legislatif")
-      .then((res) => res.json())
-      .then((val) => setEks(Object.values(val).map((e: any) => e.name)));
-  }
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
@@ -82,7 +79,10 @@ const TambahDataLegislatif = ({ tutupModal }: any) => {
               <Select
                 label={"Pilih Tingkat Legislatif"}
                 withAsterisk
-                data={dataEks}
+                data={sTingkatLegislatif.value.map((e) => ({
+                  value: e.name,
+                  label: e.name,
+                }))}
                 onChange={(val) => {
                   if (val == "DPR RI") {
                     setValue(

@@ -1,5 +1,5 @@
-import { _loadKabkot } from "@/load_data/load_kabkot";
-import { _loadProvinsi } from "@/load_data/load_provinsi";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { ModelProvinsi } from "@/model/model_wilayah";
 import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import {

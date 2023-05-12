@@ -1,4 +1,4 @@
-import { sProvinsi } from "../s_state/wilayah/s_provinsi";
+import { sProvinsi } from "../../s_state/wilayah/s_provinsi";
 import { api } from "@/lib/api-backend";
 
 export const _loadProvinsi = () =>

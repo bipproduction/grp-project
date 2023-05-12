@@ -1,4 +1,4 @@
-import { sKecamatan } from '../s_state/wilayah/s_kecamatan';
+import { sKecamatan } from '../../s_state/wilayah/s_kecamatan';
 import { api } from "@/lib/api-backend";
 
 

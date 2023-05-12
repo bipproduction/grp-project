@@ -1,3 +1,17 @@
+import { _loadKategoriPemilihPotensial } from "@/load_data/load_kategori_pemilih_potensial";
+import { _loadListNoTps } from "@/load_data/load_list_no_tps";
+import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+import { _loadDesa } from "@/load_data/wilayah/load_desa";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { _loadKecamatan } from "@/load_data/wilayah/load_kecamatan";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { sKategoriPemilihPotensial } from "@/s_state/s_kategori_pemilih_potensial";
+import { sListNoTPS } from "@/s_state/s_list_no_tps";
+import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
+import { sDesa } from "@/s_state/wilayah/s_desa";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
+import { sKecamatan } from "@/s_state/wilayah/s_kecamatan";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
   Box,
@@ -15,9 +29,21 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
+import { useShallowEffect } from "@mantine/hooks";
+import _ from "lodash";
+import { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 
 const TambahCPTV2 = ({ thisClosed }: any) => {
+  const [kerja, setKerja] = useState<any[]>([]);
+
+  useShallowEffect(() => {
+    _loadKategoriPemilihPotensial();
+    _loadProvinsi();
+    _loadListNoTps();
+    _loadListPekerjaan();
+  }, []);
+
   return (
     <>
       <Box>
@@ -59,77 +85,132 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
             >
               <Box>
                 <Select
-                  data={[
-                    { value: "Kategori A1", label: "Kategori A1" },
-                    { value: "Kategori A2", label: "Kategori A2" },
-                    { value: "Kategori A3", label: "Kategori A3" },
-                  ]}
+                  data={sKategoriPemilihPotensial.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
                   radius={"md"}
                   mt={10}
                   placeholder="Pilih Kategori Calon Pemilik Potensial"
-                  label="**"
+                  label="Pilih Kategori Calon Pemilik Potensial"
+                  withAsterisk
                 />
+                <Box sx={{ fontSize: 10 }} pl={10}>
+                  <Text>
+                    A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
+                  </Text>
+                  <Text>
+                    A2 : Pemilih Potensial (Keluarga, Saudara, Tentangga)
+                  </Text>
+                  <Text>
+                    A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)
+                  </Text>
+                </Box>
                 <Select
-                  data={[
-                    { value: "Bali", label: "Bali" },
-                    { value: "Jawa timur", label: "Jawa Timur" },
-                  ]}
+                  data={sProvinsi.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                    
+                  }))}
+                  onChange={_loadKabkot}
                   radius={"md"}
                   mt={10}
-                  placeholder="Provinsi"
-                  label="**"
+                  placeholder="Pilih Provinsi"
+                  label="Pilih Provinsi"
+                  searchable
+                  clearable
+                  withAsterisk
                 />
                 <Select
-                  data={[
-                    { value: "Banyuwangi", label: "Banyuwangi" },
-                    { value: "Malang", label: "Malang" },
-                  ]}
+                  data={sKabkot.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
+                  onChange={_loadKecamatan}
                   radius={"md"}
                   mt={10}
-                  placeholder="Kabupaten / Kota"
-                  label="**"
+                  placeholder="Pilih Kabupaten / Kota"
+                  label="Pilih Kabupaten / Kota"
+                  withAsterisk
+                  searchable
+                  clearable
                 />
                 <Select
-                  data={[
-                    { value: "Geteng", label: "Genteng" },
-                    { value: "Glenmore", label: "Glenmore" },
-                  ]}
+                  data={sKecamatan.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
+                  onChange={_loadDesa}
                   radius={"md"}
                   mt={10}
-                  placeholder="Kecamatan"
-                  label="**"
+                  placeholder="Pilih Kecamatan"
+                  label="Pilih Kecamatan"
+                  withAsterisk
+                  searchable
+                  clearable
                 />
                 <Select
-                  data={[
-                    { value: "Tulungrejo", label: "Tulungrejo" },
-                    { value: "Wadung", label: "Wadung" },
-                  ]}
+                  data={sDesa.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
                   radius={"md"}
                   mt={10}
-                  placeholder="Desa"
-                  label="**"
+                  placeholder="Pilih Desa"
+                  label="Pilih Desa"
+                  withAsterisk
+                  searchable
+                  clearable
                 />
                 <Select
-                  data={[
-                    { value: "TPS 1", label: "TPS 1" },
-                    { value: "TPS 2", label: "TPS 2" },
-                    { value: "TPS 3", label: "TPS 3" },
-                    { value: "TPS 4", label: "TPS 4" },
-                    { value: "TPS 5", label: "TPS 5" },
-                  ]}
+                  data={sListNoTPS.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
                   radius={"md"}
                   mt={10}
-                  placeholder="TPS 01 -50"
-                  label="**"
+                  placeholder="NO TPS"
+                  label="TPS 01 -50"
+                  withAsterisk
+                  searchable
+                  clearable
+                  nothingFound="Tidak Ditemukan"
                 />
-                <TextInput radius={"md"} mt={10} placeholder="NIK" label="**" />
-                <TextInput radius={"md"} mt={10} placeholder="Nama" label="**" />
-                <TextInput radius={"md"} mt={10} placeholder="Email" label="**" />
                 <TextInput
                   radius={"md"}
                   mt={10}
+                  placeholder="NIK"
+                  label="NIK"
+                  withAsterisk
+                />
+
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Nama"
+                  label="Nama"
+                  withAsterisk
+                />
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Email"
+                  label="Email"
+                  withAsterisk
+                />
+                <Select
+                  data={sListPekerjaan.value.map((e) => ({
+                    value: e.id,
+                    label: e.name,
+                  }))}
+                  radius={"md"}
+                  mt={10}
                   placeholder="Pekerjaan"
-                  label="**"
+                  label="Pekerjaan"
+                  clearable
+                  nothingFound="Tidak Ditemukan"
+                  searchable
+                  withAsterisk
                 />
               </Box>
             </Box>
@@ -146,7 +227,8 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   radius={"md"}
                   mt={10}
                   placeholder="Tanggal Lahir"
-                  label="**"
+                  label="Tanggal Lahir"
+                  withAsterisk
                 />
                 <Select
                   radius={"md"}
@@ -156,37 +238,58 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   ]}
                   mt={10}
                   placeholder="Jenis Kelamin"
-                  label="**"
+                  label="Jenis Kelamin"
+                  withAsterisk
                 />
-                <TextInput radius={"md"} mt={10} placeholder="Alamat" label="**" />
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Alamat"
+                  label="Alamat"
+                  withAsterisk
+                />
                 <TextInput
                   radius={"md"}
                   mt={10}
                   placeholder="Nomor Handphone"
-                  label="**"
-                />
-                <TextInput
-                  radius={"md"}
-                  mt={10}
-                  placeholder="Instargram"
-                  label="**"
+                  label="Nomor Handphone"
+                  withAsterisk
                 />
                 <TextInput
                   radius={"md"}
                   mt={10}
                   placeholder="Facebook"
-                  label="**"
+                  label="Facebook"
                 />
-                <TextInput radius={"md"} mt={10} placeholder="TikTok" label="**" />
-                <TextInput radius={"md"} mt={10} placeholder="Twitter" label="**" />
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Instargram"
+                  label="Instargram"
+                />
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="TikTok"
+                  label="TikTok"
+                />
+                <TextInput
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Twitter"
+                  label="Twitter"
+                />
                 <Center>
-                  <Box w={200} mt={20}>
+                  <Box  mt={20}>
                     <Button
-                      ta={"center"}
-                      fullWidth
+                      w={100}
+                      color="orange.9"
+                      bg={COLOR.orange}
                       radius={"xl"}
-                      color="gray"
-                      bg={COLOR.coklat}
+                      onClick={() => {
+                        buttonSimpan();
+                        thisClosed();
+                      }}
                     >
                       Simpan
                     </Button>
