@@ -21,7 +21,8 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _ from "lodash";
+import _, { values } from "lodash";
+import { data } from "jquery";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -31,6 +32,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const FormDataDiriUser = () => {
+  const [value, setValue] = useState("")
   const [jenisKelamin, setJenisKelamin] = useState<any | []>([]);
   const [agama, setAgama] = useState<any | []>([]);
   const [provinsi, setProvinsi] = useState<any[]>([]);
@@ -359,16 +361,13 @@ const FormDataDiriUser = () => {
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("data.alamat")}
                               />
+                              {/* {JSON.stringify(selectedProvince)} */}
                               <Select
                                 data={provinsi.map((pro) => ({
                                   value: pro.id,
                                   label: pro.name,
                                 }))}
                                 radius={"md"}
-                                // {...formDataDiri.getInputProps("data.provinsi")}
-                                // onClick={() =>
-                                //   console.log(selectedProvince.name)
-                                // }
                                 placeholder={selectedProvince.name}
                                 value={selectedProvince.name}
                                 label="Provinsi"
@@ -381,10 +380,12 @@ const FormDataDiriUser = () => {
                                     );
                                     loadKabupaten(val);
                                   }
+                                  formDataDiri.values.data.provinsi = val!
                                 }}
+                              
                                 // onChange={selectedProvince}
                               />
-                              {/* {JSON.stringify(selectedKabupaten.name)} */}
+                              {/* {JSON.stringify(selectedKabupaten)} */}
                               <Select
                                 key={Math.random()}
                                 data={
@@ -407,6 +408,7 @@ const FormDataDiriUser = () => {
                                     kabupaten.find((v) => v.id == val)
                                   );
                                   loadKecamatan(val!);
+                                  formDataDiri.values.data.kabkot = val!
                                 }}
                               />
                               {/* {JSON.stringify(selectedKecamatan.name)} */}
@@ -434,6 +436,7 @@ const FormDataDiriUser = () => {
                                     kecamatan.find((v) => v.id == val)
                                   );
                                   loadDesa(val!);
+                                  formDataDiri.values.data.kecamatan = val!
                                 }}
                               />
                               {/* {JSON.stringify(selectedDesa.name)} */}
@@ -459,6 +462,7 @@ const FormDataDiriUser = () => {
                                   setSelectedDesa(
                                     desa.find((v) => v.id == val)
                                   );
+                                  formDataDiri.values.data.desa = val!
                                 }}
                                 searchable
                               />

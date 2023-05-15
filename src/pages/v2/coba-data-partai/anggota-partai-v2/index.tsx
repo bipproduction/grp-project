@@ -18,6 +18,7 @@ function AnggotaPartaiV2({setNilai}: any) {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() => console.log(setNilai)}
           >
             Simpan
           </Button>

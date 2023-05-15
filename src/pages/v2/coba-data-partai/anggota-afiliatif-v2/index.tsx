@@ -23,6 +23,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoChevronDownCircle } from "react-icons/io5";
 import COLOR from "../../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
+import { useShallowEffect } from "@mantine/hooks";
+import { _loadOrganisasiAfiliatif } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
+import { sOrganisasiAfiliatif } from "@/s_state/organisasi_afiliatif/s_organisasi_afiliatif";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -46,6 +50,19 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
   function kembali() {
     router.push("/v2/coba-data-partai/data-partai");
   }
+
+  useShallowEffect(() => {
+    _loadOrganisasiAfiliatif()
+  },[])
+
+  const formAnggotaAfiliatif = useForm({
+    initialValues: {
+      data: {
+        tingkatPengurus: "",
+        afiliatif: ""
+      }
+    }
+  })
   return (
     <>
       <WrapperDataDiriPartai>
@@ -89,6 +106,9 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                             </Text>
                           </Box>
                           <Select
+                            onChange={(val) => {
+                              formAnggotaAfiliatif.values.data.tingkatPengurus =val!
+                            }}
                             radius={"md"}
                             label="Pilih Tingkat Pengurus"
                             placeholder="Pilih Tingkat Pengurus"
@@ -98,12 +118,18 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                             //   console.log(val)
                           />
                           <Select
+                          onChange={(val) => {
+                            formAnggotaAfiliatif.values.data.afiliatif =val!
+                          }}
+                          data={sOrganisasiAfiliatif.value.map((val) => ({
+                            value: val.id,
+                            label: val.name
+                          }))}
                             radius={"md"}
                             mt={10}
                             label="Pilih Nama Organisasi Afilliatif"
                             placeholder="Pilih Nama Organisasi Afilliatif"
                             withAsterisk
-                            data={["APR", "APP", "PPRI"]}
                             // onChange={(val) => {
                             //   console.log(val)
                           />
@@ -120,6 +146,7 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                                 color="orange.9"
                                 type="submit"
                                 // onClick={onDataPartai}
+                                onClick={() => console.log(formAnggotaAfiliatif.values)}
                               >
                                 Simpan
                               </Button>

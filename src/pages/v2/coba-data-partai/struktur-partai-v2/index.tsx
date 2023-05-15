@@ -9,9 +9,139 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
+import { useForm } from "@mantine/form";
+import toast from "react-simple-toasts";
+import { useRouter } from "next/router";
+import { useShallowEffect } from "@mantine/hooks";
+import {
+  _loadJabatanDewanPembina,
+  _loadJabatanDewanPimpinanCabang,
+  _loadJabatanDewanPimpinanDaerah,
+  _loadJabatanDewanPimpinanPusat,
+  _loadJabatanPimpinanAnakCabang,
+  _loadJabatanPimpinanRanting,
+  _loadJabtanPerwakilanLuarNegeri,
+} from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import {
+  sJabatanDewanPembina,
+  sJabatanDewanPimpinanCabang,
+  sJabatanDewanPimpinanDaerah,
+  sJabatanDewanPimpinanPusat,
+  sJabatanPerwakilanLuarNegeri,
+  sJabatanPimpinanAnakCabang,
+  sJabatanPimpinanRanting,
+} from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
+import _ from "lodash";
+import { api } from "@/lib/api-backend";
+import { sNegara } from "@/s_state/negara/s_negara";
+import { _loadNegara } from "@/load_data/negara/load_negara";
 
 const StrukturPartaiV2 = ({ setNilai }: any) => {
+  const formTingkatPengurus = useForm({
+    initialValues: {
+      data: {
+        tingkatPengurus: "",
+      },
+    },
+  });
+  const onDataPartai = () => {
+    if (Object.values(formTingkatPengurus.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    router.replace("v2/home");
+  };
   const [value, setValue] = useState<any>();
+  const router = useRouter();
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
+    id: "",
+    name: "",
+  });
+
+  const loadProvinsi = async () => {
+    const res = await fetch(api.apiMasterProvinsiGetAll);
+    const ProviniData = await res.json();
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
+  }
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    _loadJabatanDewanPembina();
+    _loadJabatanDewanPimpinanPusat();
+    _loadJabatanDewanPimpinanDaerah();
+    _loadJabatanDewanPimpinanCabang();
+    _loadJabatanPimpinanAnakCabang();
+    _loadJabatanPimpinanRanting();
+    _loadJabtanPerwakilanLuarNegeri();
+    _loadProvinsi();
+    loadProvinsi();
+    _loadNegara()
+  }, []);
+
   return (
     <>
       <Select
@@ -31,25 +161,39 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
         ]}
         onChange={(val) => {
           if (val == "Dewan Pembina") {
-            setValue(<DewanPembina set={val} />);
+            setValue(
+              <DewanPembina set={val} setNilai={setNilai} />
+              // {...formTingkatPengurus.getInputProps("data.tingkatPengurus")}
+            );
           } else {
             if (val === "Dewan Pimpinan Pusat") {
-              setValue(<DewanPimpinanPusat set={val} />);
+              setValue(<DewanPimpinanPusat set={val} setNilai={setNilai} />);
             } else {
               if (val === "Dewan Pimpinan Daerah") {
-                setValue(<DewanPimpinanDaerah set={val} />);
+                setValue(<DewanPimpinanDaerah set={val} setNilai={setNilai} />);
               } else {
                 if (val === "Dewan Pimpinan Cabang") {
-                  setValue(<DewanPimpinanCabang set={val} />);
+                  setValue(
+                    <DewanPimpinanCabang set={val} setNilai={setNilai} />
+                  );
                 } else {
                   if (val === "Pimpinan Anak Cabang") {
-                    setValue(<PimpinanAnakCabang set={val} />);
+                    setValue(
+                      <PimpinanAnakCabang set={val} setNilai={setNilai} />
+                    );
                   } else {
                     if (val === "Pimpinan Ranting") {
-                      setValue(<PimpinanRanting set={val} />);
+                      setValue(
+                        <PimpinanRanting set={val} setNilai={setNilai} />
+                      );
                     } else {
                       if (val === "Perwakilan Partai di Luar Negeri") {
-                        setValue(<PerwakilanPartaiLuarNegeri set={val} />);
+                        setValue(
+                          <PerwakilanPartaiLuarNegeri
+                            set={val}
+                            setNilai={setNilai}
+                          />
+                        );
                       }
                     }
                   }
@@ -62,9 +206,25 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
       {value && <Box>{value}</Box>}
     </>
   );
-}
+};
 
-const DewanPembina = ({ set }: { set: any }) => {
+const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
+  const router = useRouter();
+  const [value, setValue] = useState("");
+
+  const formStrukturDewanPembina = useForm({
+    initialValues: {
+      data: {
+        jabatan: "",
+      },
+    },
+  });
+  const onDataPartai = () => {
+    if (Object.values(formStrukturDewanPembina.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    router.replace("v2/home");
+  };
   return (
     <>
       <Select
@@ -73,8 +233,16 @@ const DewanPembina = ({ set }: { set: any }) => {
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
-        data={["Ketua", "wakil Ketua"]}
         searchable
+        data={sJabatanDewanPembina.value.map((e) => ({
+          value: e.id,
+          label: e.name,
+        }))}
+        {...formStrukturDewanPembina.getInputProps("data.jabatan")}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturDewanPembina.values.data.jabatan = val!;
+        // }}
       />
       <Center pt={20}>
         <Box w={350}>
@@ -89,6 +257,10 @@ const DewanPembina = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            // onClick={() => console.log(setNilai, set,  value)}
+            onClick={() =>
+              console.log(formStrukturDewanPembina.values, setNilai, set)
+            }
           >
             Simpan
           </Button>
@@ -98,7 +270,17 @@ const DewanPembina = ({ set }: { set: any }) => {
   );
 };
 
-const DewanPimpinanPusat = ({ set }: { set: any }) => {
+const DewanPimpinanPusat = ({ set, setNilai }: { set: any; setNilai: any }) => {
+  const router = useRouter();
+  const [value, setValue] = useState("");
+
+  const formStrukturDewanPimpinanPusat = useForm({
+    initialValues: {
+      data: {
+        jabatan: "",
+      },
+    },
+  });
   return (
     <>
       <Select
@@ -107,8 +289,15 @@ const DewanPimpinanPusat = ({ set }: { set: any }) => {
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
-        data={["Ketua", "wakil Ketua"]}
+        data={sJabatanDewanPimpinanPusat.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         searchable
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturDewanPimpinanPusat.values.data.jabatan = val!;
+        }}
       />
       <Center pt={20}>
         <Box w={350}>
@@ -123,6 +312,9 @@ const DewanPimpinanPusat = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() =>
+              console.log(formStrukturDewanPimpinanPusat.values, setNilai, set)
+            }
           >
             Simpan
           </Button>
@@ -132,58 +324,101 @@ const DewanPimpinanPusat = ({ set }: { set: any }) => {
   );
 };
 
-const DewanPimpinanDaerah = ({ set }: { set: any }) => {
+const DewanPimpinanDaerah = ({
+  set,
+  setNilai,
+}: {
+  set: any;
+  setNilai: any;
+}) => {
+  const router = useRouter();
+  const [value, setValue] = useState("");
+
+  const formStrukturDewanPimpinanDaerah = useForm({
+    initialValues: {
+      data: {
+        provinsi: "",
+        jabatan: "",
+        alamatKantor: "",
+        nomorWA: "",
+        medsos: "",
+      },
+    },
+  });
   return (
     <>
       <Select
-        // {...formStrukturPartai.getInputProps("provinsi")}
+        // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
         // data={provinsi.map((pro) => ({
         //   value: pro.id,
         //   label: pro.name,
         // }))}
-        data={["Bali", "jawa Timur"]}
+        data={sProvinsi.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         radius={"md"}
         mt={10}
         placeholder="Provinsi"
         label="Provinsi"
         withAsterisk
         searchable
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturDewanPimpinanDaerah.values.data.provinsi = val!;
+        }}
       />
       <Select
-        // {...formStrukturPartai.getInputProps("jabatan")}
+        // {...formStrukturDewanPimpinanDaerah.getInputProps("data.jabatan")}
         label="Jabatan"
         withAsterisk
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        data={["Ketua", "Wakil Ketua"]}
+        data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         searchable
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturDewanPimpinanDaerah.values.data.jabatan = val!;
+        }}
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("alamatKantor")}
+        {...formStrukturDewanPimpinanDaerah.getInputProps("data.alamatKantor")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Alamat Kantor"
         label="Alamat Kantor"
+        // onChange={() => {
+        //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
+        // }}
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("nomorWA")}
+        {...formStrukturDewanPimpinanDaerah.getInputProps("data.nomorWA")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Nomor WA Admin"
         label="Nomor WA Admin"
         type="number"
+        // onChange={() => {
+        //   setValue(formStrukturDewanPimpinanDaerah.values.data.nomorWA)
+        // }}
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("medsos")}
+        {...formStrukturDewanPimpinanDaerah.getInputProps("data.medsos")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Add Media Social"
         label="Add Media Social"
+        // onChange={() => {
+        //   setValue(formStrukturDewanPimpinanDaerah.values.data.medsos)
+        // }}
       />
       <Center pt={20}>
         <Box w={350}>
@@ -198,6 +433,10 @@ const DewanPimpinanDaerah = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            // onClick={() => console.log(formStrukturDewanPimpinanDaerah.values)}
+            onClick={() =>
+              console.log(formStrukturDewanPimpinanDaerah.values, setNilai, set)
+            }
           >
             Simpan
           </Button>
@@ -207,51 +446,189 @@ const DewanPimpinanDaerah = ({ set }: { set: any }) => {
   );
 };
 
-const DewanPimpinanCabang = ({ set }: { set: any }) => {
+const DewanPimpinanCabang = ({
+  set,
+  setNilai,
+}: {
+  set: any;
+  setNilai: any;
+}) => {
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
+    id: "",
+    name: "",
+  });
+
+  const loadProvinsi = async () => {
+    const res = await fetch(api.apiMasterProvinsiGetAll);
+    const ProviniData = await res.json();
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
+  }
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadProvinsi()
+  },[])
+  const router = useRouter();
+  const [value, setValue] = useState("");
+  const formStrukturDewanPimpinanCabang = useForm({
+    initialValues: {
+      data: {
+        provinsi: "",
+        kabKot: "",
+        jabatan: "",
+        alamatKantor: "",
+        nomorWA: "",
+        medsos: "",
+      },
+    },
+  });
   return (
     <>
       <Select
-        // {...formStrukturPartai.getInputProps("provinsi")}
+        // {...formStrukturDewanPimpinanCabang.getInputProps("data.provinsi")}
         // data={provinsi.map((pro) => ({
         //   value: pro.id,
         //   label: pro.name,
         // }))}
         // onChange={loadKabupaten}
-        data={["Jawa Timur", "Bali"]}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturDewanPimpinanCabang.values.data.provinsi = val!;
+        // }}
+        onChange={(val) => {
+          if (val) {
+            setSelectedProvince(
+              provinsi.find((v) => v.id == val)
+            );
+            loadKabupaten(val);
+          }
+          formStrukturDewanPimpinanCabang.values.data.provinsi = val!
+        }}
+        data={provinsi.map((pro) => ({
+          value: pro.id,
+          label: pro.name,
+        }))}
         radius={"md"}
+        placeholder={selectedProvince.name}
+        value={selectedProvince.name}
         mt={10}
-        placeholder="Provinsi"
         label="Provinsi"
         withAsterisk
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("kabupaten")}
+        // {...formStrukturDewanPimpinanCabang.getInputProps("data.kabKot")}
         // data={kabupaten.map((kab) => ({
         //   value: kab.id,
         //   label: kab.name,
         // }))}
-        data={["Jawa Timur", "Bali"]}
+        key={Math.random()}
+        data={
+          _.isEmpty(kabupaten)
+            ? []
+            : kabupaten.map((v) => ({
+                value: v.id,
+                label: v.name,
+              }))
+        }
         radius={"md"}
         mt={10}
-        placeholder="Kabupaten / Kota"
+        placeholder={selectedKabupaten.name}
+        value={selectedKabupaten.name}
         label="Kabupaten / Kota"
         withAsterisk
         searchable
+        onChange={(val) => {
+          setSelectedKabupaten(
+            kabupaten.find((v) => v.id == val)
+          );
+          loadKecamatan(val!);
+          formStrukturDewanPimpinanCabang.values.data.kabKot = val!
+        }}
       />
       <Select
-        // {...formStrukturPartai.getInputProps("jabatan")}
+        // {...formStrukturDewanPimpinanCabang.getInputProps("data.jabatan")}
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturDewanPimpinanCabang.values.data.jabatan = val!;
+        }}
+        data={sJabatanDewanPimpinanCabang.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         label="Jabatan"
         withAsterisk
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        data={["Ketua", "Wakil Ketua"]}
         searchable
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("alamatKantor")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.alamatKantor")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -259,7 +636,7 @@ const DewanPimpinanCabang = ({ set }: { set: any }) => {
         label="Alamat Kantor"
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("nomorWA")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.nomorWA")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -268,7 +645,7 @@ const DewanPimpinanCabang = ({ set }: { set: any }) => {
         type="number"
       />
       <TextInput
-        // {...formStrukturPartai.getInputProps("medsos")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.medsos")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -288,6 +665,9 @@ const DewanPimpinanCabang = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() =>
+              console.log(formStrukturDewanPimpinanCabang.values, set, setNilai)
+            }
           >
             Simpan
           </Button>
@@ -296,7 +676,96 @@ const DewanPimpinanCabang = ({ set }: { set: any }) => {
     </>
   );
 };
-const PimpinanAnakCabang = ({ set }: { set: any }) => {
+const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
+    id: "",
+    name: "",
+  });
+
+  const loadProvinsi = async () => {
+    const res = await fetch(api.apiMasterProvinsiGetAll);
+    const ProviniData = await res.json();
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
+  }
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadProvinsi()
+  },[])
+  const [value, setValue] = useState("");
+  const formStrukturPimpinanAnakCabang = useForm({
+    initialValues: {
+      data: {
+        provinsi: "",
+        kabKot: "",
+        kecamatan: "",
+        jabatan: "",
+      },
+    },
+  });
   return (
     <>
       <Select
@@ -306,10 +775,27 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
         //   label: pro.name,
         // }))}
         // onChange={loadKabupaten}
-        data={["Bali", "Jawa Timur"]}
+        data={provinsi.map((pro) => ({
+          value: pro.id,
+          label: pro.name,
+        }))}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturPimpinanAnakCabang.values.data.provinsi = val!;
+        // }}
+        onChange={(val) => {
+          if (val) {
+            setSelectedProvince(
+              provinsi.find((v) => v.id == val)
+            )
+            loadKabupaten(val)
+          }
+          formStrukturPimpinanAnakCabang.values.data.provinsi = val!;
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Provinsi"
+        placeholder={selectedProvince.name}
+        value={selectedProvince.name}
         label="Provinsi"
         withAsterisk
         searchable
@@ -321,10 +807,30 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
         //   label: kab.name,
         // }))}
         // onChange={loadKecamatan}
-        data={["Bali", "Jawa Timur"]}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturPimpinanAnakCabang.values.data.kabKot = val!;
+        // }}
+        key={Math.random()}
+        data={
+          _.isEmpty(kabupaten)
+          ? []
+          : kabupaten.map((v) => ({
+            value: v.id,
+            label: v.name,
+          }))
+        }
+        onChange={(val) => {
+          setSelectedKabupaten(
+            kabupaten.find((v) => v.id == val)
+          )
+          loadKecamatan(val!)
+          formStrukturPimpinanAnakCabang.values.data.kabKot = val!
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Kabupaten / Kota"
+        placeholder={selectedKabupaten.name}
+        value={selectedKabupaten.name}
         label="Kabupaten / Kota"
         withAsterisk
         searchable
@@ -335,10 +841,30 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
         //   value: kec.id,
         //   label: kec.name,
         // }))}
-        data={["Bali", "Jawa Timur"]}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturPimpinanAnakCabang.values.data.kecamatan = val!;
+        // }}
+        key={Math.random()}
+        data={
+          _.isEmpty(kecamatan)
+          ? []
+          : kecamatan.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))
+        }
+        onChange={(val) => {
+          setSelectedKecamatan(
+            kecamatan.find((v) => v.id == val)
+          )
+          loadDesa(val!)
+          formStrukturPimpinanAnakCabang.values.data.kecamatan = val!;
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Kecamatan"
+        placeholder={selectedKecamatan.name}
+        value={selectedKecamatan.name}
         label="Kecamatan"
         withAsterisk
         searchable
@@ -351,8 +877,15 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        data={["Ketua", "Wakil Ketua"]}
+        data={sJabatanPimpinanAnakCabang.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         searchable
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturPimpinanAnakCabang.values.data.jabatan = val!;
+        }}
       />
 
       <Center pt={20}>
@@ -368,6 +901,9 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() =>
+              console.log(formStrukturPimpinanAnakCabang.values, set, setNilai)
+            }
           >
             Simpan
           </Button>
@@ -376,77 +912,233 @@ const PimpinanAnakCabang = ({ set }: { set: any }) => {
     </>
   );
 };
-const PimpinanRanting = ({ set }: { set: any }) => {
+const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
+    id: "",
+    name: "",
+  });
+
+  const loadProvinsi = async () => {
+    const res = await fetch(api.apiMasterProvinsiGetAll);
+    const ProviniData = await res.json();
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
+  }
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadProvinsi()
+  },[])
+  const router = useRouter();
+  const [value, setValue] = useState("");
+
+  const formStrukturPimpinanRanting = useForm({
+    initialValues: {
+      data: {
+        provinsi: "",
+        kabKot: "",
+        kecamatan: "",
+        jabatan: "",
+        desa: "",
+      },
+    },
+  });
   return (
     <>
       <Select
-        // {...formStrukturPartai.getInputProps("provinsi")}
+        // {...formStrukturPimpinanRanting.getInputProps("data.provinsi")}
+        data={provinsi.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
+        onChange={(val) => {
+          if (val) {
+            setSelectedProvince(
+              provinsi.find((v) => v.id == val)
+            )
+            loadKabupaten(val)
+            formStrukturPimpinanRanting.values.data.provinsi = val!;
+          }
+        }}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturPimpinanRanting.values.data.provinsi = val!;
+        // }}
         // data={provinsi.map((pro) => ({
         //   value: pro.id,
         //   label: pro.name
         // }))}
         // onChange={loadKabupaten}
-        data={["Jawa Timur", "Bali"]}
         radius={"md"}
         mt={10}
-        placeholder="Provinsi"
+        placeholder={selectedProvince.name}
+        value={selectedProvince.name}
         label="Provinsi"
         withAsterisk
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("kabupaten")}
+        // {...formStrukturPimpinanRanting.getInputProps("data.kabKot")}
+        // onChange={(val) => {
+        //   setValue(val!);
+        //   formStrukturPimpinanRanting.values.data.kabKot = val!;
+        // }}
         // data={kabupaten.map((kab) => ({
         //   value: kab.id,
         //   label: kab.name
         // }))}
         // onChange={loadKecamatan}
-        data={["Jawa Timur", "Bali"]}
+        key={Math.random()}
+        data={
+          _.isEmpty(kabupaten)
+          ? []
+          : kabupaten.map((val) => ({
+            value: val.id,
+            label: val.name
+          }))
+        }
+        onChange={(val) => {
+          setSelectedKabupaten(
+            kabupaten.find((v) => v.id == val)
+          )
+          loadKecamatan(val!)
+          formStrukturPimpinanRanting.values.data.kabKot = val!;
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Kabupaten / Kota"
+        placeholder={selectedKabupaten.name}
+        value={selectedKabupaten.name}
         label="Kabupaten / Kota"
         withAsterisk
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("kecamatan")}
-        // data={kecamatan.map((kec) => ({
-        //   value: kec.id,
-        //   label: kec.name
-        // }))}
-        // onChange={loadDesa}
-        data={["Jawa Timur", "Bali"]}
+        key={Math.random()}
+        data={
+          _.isEmpty(kecamatan)
+          ? []
+          : kecamatan.map((val) => ({
+            value: val.id,
+            label: val.name
+          }))
+        }
+        onChange={(val) => {
+          setSelectedKecamatan(
+            kecamatan.find((v) => v.id == val)
+          )
+          loadDesa(val!)
+          formStrukturPimpinanRanting.values.data.kecamatan = val!;
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Kecamatan"
+        placeholder={selectedKecamatan.name}
+        value={selectedKecamatan.name}
         label="Kecamatan"
         withAsterisk
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("desa")}
-        // data={desa.map((des) => ({
-        //   value: des.id,
-        //   label: des.name
-        // }))}
-        data={["Jawa Timur", "Bali"]}
+        key={Math.random()}
+        data={
+          _.isEmpty(desa)
+            ? []
+            : desa.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))
+        }
+        onChange={(val) => {
+          setSelectedDesa(
+            desa.find((v) => v.id == val)
+          );
+          formStrukturPimpinanRanting.values.data.desa = val!;
+        }}
         radius={"md"}
         mt={10}
-        placeholder="Desa / Kelurahan"
+        placeholder={selectedDesa.name}
+        value={selectedDesa.name}
         label="Desa / Kelurahan"
         withAsterisk
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("jabatan")}
+        // {...formStrukturPimpinanRanting.getInputProps("data.jabatan")}
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturPimpinanRanting.values.data.jabatan = val!;
+        }}
         label="Jabatan"
         withAsterisk
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        data={["Ketua", "Wakil Ketua"]}
+        data={sJabatanPimpinanRanting.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         searchable
       />
 
@@ -463,6 +1155,9 @@ const PimpinanRanting = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() =>
+              console.log(formStrukturPimpinanRanting.values, set, setNilai)
+            }
           >
             Simpan
           </Button>
@@ -472,13 +1167,36 @@ const PimpinanRanting = ({ set }: { set: any }) => {
   );
 };
 
-const PerwakilanPartaiLuarNegeri = ({ set }: { set: any }) => {
+const PerwakilanPartaiLuarNegeri = ({
+  set,
+  setNilai,
+}: {
+  set: any;
+  setNilai: any;
+}) => {
+  const [value, setValue] = useState("");
+  const router = useRouter();
+  const formPerwakilanLuarNegeri = useForm({
+    initialValues: {
+      data: {
+        negara: "",
+        jabatan: "",
+      },
+    },
+  });
   return (
     <>
       <Select
-        // {...formStrukturPartai.getInputProps("negara")}
+        // {...formPerwakilanLuarNegeri.getInputProps("data.negara")}
         // data={negara}
-        data={["Indonesia", "Malaysia"]}
+        onChange={(val) => {
+          setValue(val!);
+          formPerwakilanLuarNegeri.values.data.negara = val!;
+        }}
+        data={sNegara.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         radius={"md"}
         mt={10}
         placeholder="Negara"
@@ -487,14 +1205,21 @@ const PerwakilanPartaiLuarNegeri = ({ set }: { set: any }) => {
         searchable
       />
       <Select
-        // {...formStrukturPartai.getInputProps("jabatan")}
+        // {...formPerwakilanLuarNegeri.getInputProps("data.jabatan")}
+        onChange={(val) => {
+          setValue(val!);
+          formPerwakilanLuarNegeri.values.data.jabatan = val!;
+        }}
         label="Jabatan"
         withAsterisk
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        data={["Ketua", "Wakil Ketua"]}
+        data={sJabatanPerwakilanLuarNegeri.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         searchable
       />
 
@@ -511,6 +1236,9 @@ const PerwakilanPartaiLuarNegeri = ({ set }: { set: any }) => {
             color="orange.9"
             type="submit"
             // onClick={onDataPartai}
+            onClick={() =>
+              console.log(formPerwakilanLuarNegeri.values, set, setNilai)
+            }
           >
             Simpan
           </Button>
@@ -519,4 +1247,4 @@ const PerwakilanPartaiLuarNegeri = ({ set }: { set: any }) => {
     </>
   );
 };
-export default StrukturPartaiV2
+export default StrukturPartaiV2;
