@@ -4,7 +4,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const apiGetAgama = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const data = await client.masterAgama.findMany()
+    const data = await client.masterAgama.findMany({
+        where: {
+            active: true
+        }
+    })
     res.status(200).json(data)
 
 }

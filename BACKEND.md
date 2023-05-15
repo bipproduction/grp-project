@@ -1,9 +1,6 @@
 # Net Note - BackEnd
 
 *baca bismillah dlu biar lancar*
-
-*off = belum dieksekusi, baru kerangkanya aja coy*
-
 ----------------------------------
 
 - **User**     
@@ -14,6 +11,7 @@
      - update = api/aset-partai/aset-partai-update
      - get one = api/aset-partai/aset-partai-get-one?id=
      - get all = api/aset-partai/aset-partai-get-all
+     - search = api/aset-partai/aset-partai-search?search= (by name)
 - **Data Diri**
      - tambah = api/form-data-diri/data-diri-post
      - update = api/form-data-diri/data-diri-update
@@ -59,7 +57,7 @@
      - tambah = api/peta-kekuatan/eksekutif/eksekutif-post
      - update = api/peta-kekuatan/eksekutif/eksekutif-update
      - get one = api/peta-kekuatan/eksekutif/eksekutif-get-one?id=
-     - get all = api/peta-kekuatan/eksekutif/eksekutif-get-all
+     - get all = api/peta-kekuatan/eksekutif/eksekutif-get-all?tingkat= (by master tingkat eksekutif)
 - **Legislatif**
      - tambah = api/peta-kekuatan/legislatif/legislatif-post
      - update = api/peta-kekuatan/legislatif/legislatif-update

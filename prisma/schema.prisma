@@ -31,6 +31,7 @@ model User {
 model MasterUserRole {
   id        Int      @id @default(autoincrement())
   name      String
+  active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   User      User[]
@@ -53,6 +54,7 @@ model AsetPartai {
   masterKategoriAsetId Int
   deskripsi            String
   img                  String
+  active               Boolean            @default(true)
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @default(now()) @updatedAt
 }
@@ -66,6 +68,7 @@ model DataDiri {
   phoneNumber          String
   alamat               String
   rtRw                 String
+  active               Boolean            @default(true)
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @default(now()) @updatedAt
   User                 User               @relation(fields: [userId], references: [id])
@@ -88,6 +91,7 @@ model DataDiri {
 
 model AnggotaAfiliatif {
   id                          String                    @id @default(cuid())
+  active                      Boolean                   @default(true)
   createdAt                   DateTime                  @default(now())
   updatedAt                   DateTime                  @default(now()) @updatedAt
   User                        User                      @relation(fields: [userId], references: [id])
@@ -100,6 +104,7 @@ model UserMediaSocial {
   id                  String            @id @default(cuid())
   name                String
   link                String
+  active              Boolean           @default(true)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
   User                User              @relation(fields: [userId], references: [id])
@@ -112,6 +117,7 @@ model UserMediaSocial {
 model MasterTingkatPengurus {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   MasterJabatan    MasterJabatan[]
@@ -121,6 +127,7 @@ model MasterTingkatPengurus {
 model MasterJabatan {
   id                      Int                    @id @default(autoincrement())
   name                    String
+  active                  Boolean                @default(true)
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @default(now()) @updatedAt
   tingkatPengurusid       MasterTingkatPengurus? @relation(fields: [masterTingkatPengurusId], references: [id])
@@ -131,6 +138,7 @@ model MasterJabatan {
 model MasterAgama {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   DataDiri              DataDiri[]
@@ -140,6 +148,7 @@ model MasterAgama {
 model MasterMediaSocial {
   id                Int                 @id @default(autoincrement())
   name              String
+  active            Boolean             @default(true)
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @default(now()) @updatedAt
   UserMediaSocial   UserMediaSocial[]
@@ -150,6 +159,7 @@ model MasterMediaSocial {
 model MasterPekerjaan {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   DataDiri              DataDiri[]
@@ -159,6 +169,7 @@ model MasterPekerjaan {
 model MasterJenisKelamin {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   DataDiri              DataDiri[]
@@ -169,6 +180,7 @@ model MasterJenisKelamin {
 model MasterProvince {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   MasterKabKot          MasterKabKot[]
@@ -183,6 +195,7 @@ model MasterProvince {
 model MasterKabKot {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   provinceId            MasterProvince?         @relation(fields: [masterProvinceId], references: [id])
@@ -199,6 +212,7 @@ model MasterKabKot {
 model MasterKecamatan {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   kabkotId              MasterKabKot?           @relation(fields: [masterKabKotId], references: [id])
@@ -213,6 +227,7 @@ model MasterKecamatan {
 model MasterDesa {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   kecamatanId           MasterKecamatan?        @relation(fields: [masterKecamatanId], references: [id])
@@ -226,6 +241,7 @@ model MasterDesa {
 model MasterStatusKeanggotaan {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -234,6 +250,7 @@ model MasterStatusKeanggotaan {
 model MasterNegara {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -243,6 +260,7 @@ model MasterNegara {
 model MasterStrukturPartai {
   id        Int      @id @default(autoincrement())
   name      String
+  active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
@@ -250,6 +268,7 @@ model MasterStrukturPartai {
 model MasterJabatanDewanPembina {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -258,6 +277,7 @@ model MasterJabatanDewanPembina {
 model MasterJabatanDewanPimpinanPusat {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -266,6 +286,7 @@ model MasterJabatanDewanPimpinanPusat {
 model MasterJabatanDewanPimpinanDaerah {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -274,6 +295,7 @@ model MasterJabatanDewanPimpinanDaerah {
 model MasterJabatanDewanPimpinanCabang {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -282,6 +304,7 @@ model MasterJabatanDewanPimpinanCabang {
 model MasterJabatanPimpinanAnakCabang {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -290,6 +313,7 @@ model MasterJabatanPimpinanAnakCabang {
 model MasterJabatanPimpinanRanting {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -298,6 +322,7 @@ model MasterJabatanPimpinanRanting {
 model MasterJabatanPerwakilanPartaiDiluarNegeri {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -307,6 +332,7 @@ model MasterJabatanPerwakilanPartaiDiluarNegeri {
 model MasterSayapPartai {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -316,6 +342,7 @@ model MasterSayapPartai {
 model MasterKaderPartai {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
@@ -325,6 +352,7 @@ model MasterKaderPartai {
 model MasterOrganisasiAfiliatif {
   id               Int                @id @default(autoincrement())
   name             String
+  active           Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   AnggotaAfiliatif AnggotaAfiliatif[]
@@ -334,6 +362,7 @@ model MasterOrganisasiAfiliatif {
 model MasterStatusAset {
   id         Int          @id @default(autoincrement())
   name       String
+  active     Boolean      @default(true)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt
   AsetPartai AsetPartai[]
@@ -342,6 +371,7 @@ model MasterStatusAset {
 model MasterKategoriAset {
   id         Int          @id @default(autoincrement())
   name       String
+  active     Boolean      @default(true)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt
   AsetPartai AsetPartai[]
@@ -351,6 +381,7 @@ model MasterKategoriAset {
 model MasterPartaiPengusung {
   id                       Int                        @id @default(autoincrement())
   name                     String
+  active                   Boolean                    @default(true)
   createdAt                DateTime                   @default(now())
   updatedAt                DateTime                   @default(now()) @updatedAt
   PartaiPengusungEksekutif PartaiPengusungEksekutif[]
@@ -360,6 +391,7 @@ model MasterPartaiPengusung {
 model MasterTingkatEksekutif {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -368,6 +400,7 @@ model MasterTingkatEksekutif {
 model MasterJabatanEksekutifProvinsi {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -376,6 +409,7 @@ model MasterJabatanEksekutifProvinsi {
 model MasterJabatanEksekutifKabKot {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -384,6 +418,7 @@ model MasterJabatanEksekutifKabKot {
 model MasterJabatanEksekutifKabupaten {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -392,6 +427,7 @@ model MasterJabatanEksekutifKabupaten {
 model MasterJabatanEksekutifKota {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -400,6 +436,7 @@ model MasterJabatanEksekutifKota {
 model MasterStatusEksekutif {
   id        Int         @id @default(autoincrement())
   name      String
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now()) @updatedAt
   Eksekutif Eksekutif[]
@@ -409,6 +446,7 @@ model MasterStatusEksekutif {
 model MasterTingkatLegislatif {
   id         Int          @id @default(autoincrement())
   name       String
+  active     Boolean      @default(true)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt
   Legislatif Legislatif[]
@@ -418,6 +456,7 @@ model MasterTingkatLegislatif {
 model MasterNomorUrutTPS {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   TpsDpt                TpsDpt[]
@@ -428,6 +467,7 @@ model MasterNomorUrutTPS {
 model MasterCalonPemilihPotensial {
   id                    Int                     @id @default(autoincrement())
   name                  String
+  active                Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now()) @updatedAt
   CalonPemilihPotensial CalonPemilihPotensial[]
@@ -437,6 +477,7 @@ model MasterCalonPemilihPotensial {
 model MasterStatusAksiNyata {
   id                       Int                        @id @default(autoincrement())
   name                     String
+  active                   Boolean                    @default(true)
   createdAt                DateTime                   @default(now())
   updatedAt                DateTime                   @default(now()) @updatedAt
   RencanaKunjunganPrabowo  RencanaKunjunganPrabowo[]
@@ -457,6 +498,7 @@ model TpsDpt {
   masterNomorUrutTPSId Int
   dptLakilaki          Int
   dptPerempuan         Int
+  active               Boolean            @default(true)
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @default(now()) @updatedAt
 }
@@ -488,6 +530,7 @@ model CalonPemilihPotensial {
   phoneNumber                   String
   alamat                        String
   statusSosial                  String
+  active                        Boolean                     @default(true)
   createdAt                     DateTime                    @default(now())
   updatedAt                     DateTime                    @default(now()) @updatedAt
   CPTMediaSocial                CPTMediaSocial[]
@@ -497,6 +540,7 @@ model CPTMediaSocial {
   id                      String                @id @default(cuid())
   name                    String
   link                    String
+  active                  Boolean               @default(true)
   createdAt               DateTime              @default(now())
   updatedAt               DateTime              @default(now()) @updatedAt
   CalonPemilihPotensial   CalonPemilihPotensial @relation(fields: [calonPemilihPotensialId], references: [id])
@@ -512,6 +556,7 @@ model RencanaKunjunganPrabowo {
   img                     String
   MasterStatusAksiNyata   MasterStatusAksiNyata @relation(fields: [masterStatusAksiNyataId], references: [id])
   masterStatusAksiNyataId Int
+  active                  Boolean               @default(true)
   createdAt               DateTime              @default(now())
   updatedAt               DateTime              @default(now()) @updatedAt
   ListUndanganPrabowo     ListUndanganPrabowo[]
@@ -522,6 +567,7 @@ model ListUndanganPrabowo {
   RencanaKunjunganPrabowo   RencanaKunjunganPrabowo @relation(fields: [rencanaKunjunganPrabowoId], references: [id])
   rencanaKunjunganPrabowoId String
   nama                      String
+  active                    Boolean                 @default(true)
   createdAt                 DateTime                @default(now())
   updatedAt                 DateTime                @default(now())
 }
@@ -533,6 +579,7 @@ model RencanaKunjunganGerindra {
   img                     String
   MasterStatusAksiNyata   MasterStatusAksiNyata  @relation(fields: [masterStatusAksiNyataId], references: [id])
   masterStatusAksiNyataId Int
+  active                  Boolean                @default(true)
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @default(now()) @updatedAt
   ListUndanganGerindra    ListUndanganGerindra[]
@@ -543,100 +590,105 @@ model ListUndanganGerindra {
   RencanaKunjunganGerindra   RencanaKunjunganGerindra @relation(fields: [rencanaKunjunganGerindraId], references: [id])
   rencanaKunjunganGerindraId String
   nama                       String
+  active                     Boolean                  @default(true)
   createdAt                  DateTime                 @default(now())
   updatedAt                  DateTime                 @default(now())
 }
 
 model Eksekutif {
-  id                                String                          @id @default(cuid())
-  User                              User                            @relation(fields: [userId], references: [id])
+  id                                String                           @id @default(cuid())
+  User                              User                             @relation(fields: [userId], references: [id])
   userId                            String
-  MasterProvince                    MasterProvince                  @relation(fields: [masterProvinceId], references: [id])
-  masterProvinceId                  Int
-  MasterKabKot                      MasterKabKot                    @relation(fields: [masterKabKotId], references: [id])
-  masterKabKotId                    Int
-  MasterTingkatEksekutif            MasterTingkatEksekutif          @relation(fields: [masterTingkatEksekutifId], references: [id])
-  masterTingkatEksekutifId          Int
-  MasterJabatanEksekutifProvinsi    MasterJabatanEksekutifProvinsi  @relation(fields: [masterJabatanEksekutifProvinsiId], references: [id])
-  masterJabatanEksekutifProvinsiId  Int
-  MasterJabatanEksekutifKabKot      MasterJabatanEksekutifKabKot    @relation(fields: [masterJabatanEksekutifKabKotId], references: [id])
-  masterJabatanEksekutifKabKotId    Int
-  MasterJabatanEksekutifKabupaten   MasterJabatanEksekutifKabupaten @relation(fields: [masterJabatanEksekutifKabupatenId], references: [id])
-  masterJabatanEksekutifKabupatenId Int
-  MasterJabatanEksekutifKota        MasterJabatanEksekutifKota      @relation(fields: [masterJabatanEksekutifKotaId], references: [id])
-  masterJabatanEksekutifKotaId      Int
-  MasterStatusEksekutif             MasterStatusEksekutif           @relation(fields: [masterStatusEksekutifId], references: [id])
-  masterStatusEksekutifId           Int
-  namaLembaga                       String
+  MasterProvince                    MasterProvince?                  @relation(fields: [masterProvinceId], references: [id])
+  masterProvinceId                  Int?
+  MasterKabKot                      MasterKabKot?                    @relation(fields: [masterKabKotId], references: [id])
+  masterKabKotId                    Int?
+  MasterTingkatEksekutif            MasterTingkatEksekutif?          @relation(fields: [masterTingkatEksekutifId], references: [id])
+  masterTingkatEksekutifId          Int?
+  MasterJabatanEksekutifProvinsi    MasterJabatanEksekutifProvinsi?  @relation(fields: [masterJabatanEksekutifProvinsiId], references: [id])
+  masterJabatanEksekutifProvinsiId  Int?
+  MasterJabatanEksekutifKabKot      MasterJabatanEksekutifKabKot?    @relation(fields: [masterJabatanEksekutifKabKotId], references: [id])
+  masterJabatanEksekutifKabKotId    Int?
+  MasterJabatanEksekutifKabupaten   MasterJabatanEksekutifKabupaten? @relation(fields: [masterJabatanEksekutifKabupatenId], references: [id])
+  masterJabatanEksekutifKabupatenId Int?
+  MasterJabatanEksekutifKota        MasterJabatanEksekutifKota?      @relation(fields: [masterJabatanEksekutifKotaId], references: [id])
+  masterJabatanEksekutifKotaId      Int?
+  MasterStatusEksekutif             MasterStatusEksekutif?           @relation(fields: [masterStatusEksekutifId], references: [id])
+  masterStatusEksekutifId           Int?
+  namaLembaga                       String                           @default("")
+  jabatanNasional                   String                           @default("")
   periode                           String
   alamatKantor                      String
-  createdAt                         DateTime                        @default(now())
-  updatedAt                         DateTime                        @default(now()) @updatedAt
+  active                            Boolean                          @default(true)
+  createdAt                         DateTime                         @default(now())
+  updatedAt                         DateTime                         @default(now()) @updatedAt
   PartaiPengusungEksekutif          PartaiPengusungEksekutif[]
 }
 
 model Legislatif {
-  id                        String                  @id @default(cuid())
-  User                      User                    @relation(fields: [userId], references: [id])
+  id                        String                   @id @default(cuid())
+  User                      User                     @relation(fields: [userId], references: [id])
   userId                    String
-  MasterProvince            MasterProvince          @relation(fields: [masterProvinceId], references: [id])
-  masterProvinceId          Int
-  MasterKabKot              MasterKabKot            @relation(fields: [masterKabKotId], references: [id])
-  masterKabKotId            Int
-  MasterTingkatLegislatif   MasterTingkatLegislatif @relation(fields: [masterTingkatLegislatifId], references: [id])
-  masterTingkatLegislatifId Int
+  MasterProvince            MasterProvince?          @relation(fields: [masterProvinceId], references: [id])
+  masterProvinceId          Int?
+  MasterKabKot              MasterKabKot?            @relation(fields: [masterKabKotId], references: [id])
+  masterKabKotId            Int?
+  MasterTingkatLegislatif   MasterTingkatLegislatif? @relation(fields: [masterTingkatLegislatifId], references: [id])
+  masterTingkatLegislatifId Int?
   jabatan                   String
   periode                   String
   noUrut                    Int
   dapil                     String
   cakupanWilayah            String
   akd                       String
-  createdAt                 DateTime                @default(now())
-  updatedAt                 DateTime                @default(now()) @updatedAt
+  active                    Boolean                  @default(true)
+  createdAt                 DateTime                 @default(now())
+  updatedAt                 DateTime                 @default(now()) @updatedAt
 }
 
 model SumberDayaPartai {
-  id                                          String                                    @id @default(cuid())
-  User                                        User                                      @relation(fields: [userId], references: [id])
+  id                                          String                                     @id @default(cuid())
+  User                                        User                                       @relation(fields: [userId], references: [id])
   userId                                      String
-  MasterStatusKeanggotaan                     MasterStatusKeanggotaan                   @relation(fields: [masterStatusKeanggotaanId], references: [id])
-  masterStatusKeanggotaanId                   Int
-  MasterTingkatPengurus                       MasterTingkatPengurus                     @relation(fields: [masterTingkatPengurusId], references: [id])
-  masterTingkatPengurusId                     Int
-  MasterJabatan                               MasterJabatan                             @relation(fields: [masterJabatanId], references: [id])
-  masterJabatanId                             Int
-  MasterJabatanDewanPembina                   MasterJabatanDewanPembina                 @relation(fields: [masterJabatanDewanPembinaId], references: [id])
-  masterJabatanDewanPembinaId                 Int
-  MasterJabatanDewanPimpinanPusat             MasterJabatanDewanPimpinanPusat           @relation(fields: [masterJabatanDewanPimpinanPusatId], references: [id])
-  masterJabatanDewanPimpinanPusatId           Int
-  MasterJabatanDewanPimpinanDaerah            MasterJabatanDewanPimpinanDaerah          @relation(fields: [masterJabatanDewanPimpinanDaerahId], references: [id])
-  masterJabatanDewanPimpinanDaerahId          Int
-  MasterJabatanDewanPimpinanCabang            MasterJabatanDewanPimpinanCabang          @relation(fields: [masterJabatanDewanPimpinanCabangId], references: [id])
-  masterJabatanDewanPimpinanCabangId          Int
-  MasterJabatanPimpinanAnakCabang             MasterJabatanPimpinanAnakCabang           @relation(fields: [masterJabatanPimpinanAnakCabangId], references: [id])
-  masterJabatanPimpinanAnakCabangId           Int
-  MasterJabatanPimpinanRanting                MasterJabatanPimpinanRanting              @relation(fields: [masterJabatanPimpinanRantingId], references: [id])
-  masterJabatanPimpinanRantingId              Int
-  MasterJabatanPerwakilanPartaiDiLuarNegeri   MasterJabatanPerwakilanPartaiDiluarNegeri @relation(fields: [masterJabatanPerwakilanPartaiDiLuarNegeriId], references: [id])
-  masterJabatanPerwakilanPartaiDiLuarNegeriId Int
-  MasterSayapPartai                           MasterSayapPartai                         @relation(fields: [masterSayapPartaiId], references: [id])
-  masterSayapPartaiId                         Int
-  MasterKaderPartai                           MasterKaderPartai                         @relation(fields: [masterKaderPartaiId], references: [id])
-  masterKaderPartaiId                         Int
-  MasterProvince                              MasterProvince                            @relation(fields: [masterProvinceId], references: [id])
-  masterProvinceId                            Int
-  MasterKabKot                                MasterKabKot                              @relation(fields: [masterKabKotId], references: [id])
-  masterKabKotId                              Int
-  MasterKecamatan                             MasterKecamatan                           @relation(fields: [masterKecamatanId], references: [id])
-  masterKecamatanId                           Int
-  MasterDesa                                  MasterDesa                                @relation(fields: [masterDesaId], references: [id])
-  masterDesaId                                Int
-  MasterNegara                                MasterNegara                              @relation(fields: [masterNegaraId], references: [id])
-  masterNegaraId                              Int
+  MasterStatusKeanggotaan                     MasterStatusKeanggotaan?                   @relation(fields: [masterStatusKeanggotaanId], references: [id])
+  masterStatusKeanggotaanId                   Int?
+  MasterTingkatPengurus                       MasterTingkatPengurus?                     @relation(fields: [masterTingkatPengurusId], references: [id])
+  masterTingkatPengurusId                     Int?
+  MasterJabatan                               MasterJabatan?                             @relation(fields: [masterJabatanId], references: [id])
+  masterJabatanId                             Int?
+  MasterJabatanDewanPembina                   MasterJabatanDewanPembina?                 @relation(fields: [masterJabatanDewanPembinaId], references: [id])
+  masterJabatanDewanPembinaId                 Int?
+  MasterJabatanDewanPimpinanPusat             MasterJabatanDewanPimpinanPusat?           @relation(fields: [masterJabatanDewanPimpinanPusatId], references: [id])
+  masterJabatanDewanPimpinanPusatId           Int?
+  MasterJabatanDewanPimpinanDaerah            MasterJabatanDewanPimpinanDaerah?          @relation(fields: [masterJabatanDewanPimpinanDaerahId], references: [id])
+  masterJabatanDewanPimpinanDaerahId          Int?
+  MasterJabatanDewanPimpinanCabang            MasterJabatanDewanPimpinanCabang?          @relation(fields: [masterJabatanDewanPimpinanCabangId], references: [id])
+  masterJabatanDewanPimpinanCabangId          Int?
+  MasterJabatanPimpinanAnakCabang             MasterJabatanPimpinanAnakCabang?           @relation(fields: [masterJabatanPimpinanAnakCabangId], references: [id])
+  masterJabatanPimpinanAnakCabangId           Int?
+  MasterJabatanPimpinanRanting                MasterJabatanPimpinanRanting?              @relation(fields: [masterJabatanPimpinanRantingId], references: [id])
+  masterJabatanPimpinanRantingId              Int?
+  MasterJabatanPerwakilanPartaiDiLuarNegeri   MasterJabatanPerwakilanPartaiDiluarNegeri? @relation(fields: [masterJabatanPerwakilanPartaiDiLuarNegeriId], references: [id])
+  masterJabatanPerwakilanPartaiDiLuarNegeriId Int?
+  MasterSayapPartai                           MasterSayapPartai?                         @relation(fields: [masterSayapPartaiId], references: [id])
+  masterSayapPartaiId                         Int?
+  MasterKaderPartai                           MasterKaderPartai?                         @relation(fields: [masterKaderPartaiId], references: [id])
+  masterKaderPartaiId                         Int?
+  MasterProvince                              MasterProvince?                            @relation(fields: [masterProvinceId], references: [id])
+  masterProvinceId                            Int?
+  MasterKabKot                                MasterKabKot?                              @relation(fields: [masterKabKotId], references: [id])
+  masterKabKotId                              Int?
+  MasterKecamatan                             MasterKecamatan?                           @relation(fields: [masterKecamatanId], references: [id])
+  masterKecamatanId                           Int?
+  MasterDesa                                  MasterDesa?                                @relation(fields: [masterDesaId], references: [id])
+  masterDesaId                                Int?
+  MasterNegara                                MasterNegara?                              @relation(fields: [masterNegaraId], references: [id])
+  masterNegaraId                              Int?
   alamatKantor                                String
   waAdmin                                     String
-  createdAt                                   DateTime                                  @default(now())
-  updatedAt                                   DateTime                                  @default(now()) @updatedAt
+  active                                      Boolean                                    @default(true)
+  createdAt                                   DateTime                                   @default(now())
+  updatedAt                                   DateTime                                   @default(now()) @updatedAt
   DPDDPCMediaSocial                           DPDDPCMediaSocial[]
 }
 
@@ -646,6 +698,7 @@ model PartaiPengusungEksekutif {
   eksekutifId             String
   MasterPartaiPengusung   MasterPartaiPengusung @relation(fields: [masterPartaiPengusungId], references: [id])
   masterPartaiPengusungId Int
+  active                  Boolean               @default(true)
   createdAt               DateTime              @default(now())
   updatedAt               DateTime              @default(now()) @updatedAt
 }
@@ -658,6 +711,7 @@ model DPDDPCMediaSocial {
   sumberDayaPartaiId  String
   name                String
   link                String
+  active              Boolean           @default(true)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
 }

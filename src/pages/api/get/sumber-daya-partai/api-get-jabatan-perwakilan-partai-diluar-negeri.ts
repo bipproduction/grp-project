@@ -2,7 +2,11 @@ import client from '@/lib/prisma_db';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const apiGetJabatanPerwakilanLuarNegeri = async (req: NextApiRequest, res: NextApiResponse) => {
-    const data = await client.masterJabatanPerwakilanPartaiDiluarNegeri.findMany()
+    const data = await client.masterJabatanPerwakilanPartaiDiluarNegeri.findMany({
+        where: {
+            active: true
+        }
+    })
     res.status(200).json(data)
 
 }

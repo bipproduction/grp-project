@@ -5,7 +5,8 @@ const masterKabKotGetByProvinsi = async (req: NextApiRequest, res: NextApiRespon
     const { idProvinsi } = req.query
     const data = await client.masterKabKot.findMany({
         where: {
-            masterProvinceId: Number(idProvinsi)
+            masterProvinceId: Number(idProvinsi),
+            active: true
         }
     })
     return res.status(200).json(data)

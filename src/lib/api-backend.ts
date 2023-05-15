@@ -52,6 +52,7 @@ export const api = {
     "apiAsetPartaiGetOne": "/api/aset-partai/aset-partai-get-one",
     "apiAsetPartaiPost": "/api/aset-partai/aset-partai-post",
     "apiAsetPartaiUpdate": "/api/aset-partai/aset-partai-update",
+    "apiAsetPartaiSearch":"/api/aset-partai/aset-partai-search",
 
 
     // MEDIA SOSIAL USER

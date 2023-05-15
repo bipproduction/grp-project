@@ -2,9 +2,13 @@ import client from '@/lib/prisma_db';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 
-const apiGetKecamatan= async (req: NextApiRequest, res: NextApiResponse) => {
+const apiGetKecamatan = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const data = await client.masterKecamatan.findMany()
+    const data = await client.masterKecamatan.findMany({
+        where: {
+            active: true
+        }
+    })
     res.status(200).json(data)
 
 }
