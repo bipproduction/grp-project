@@ -15,6 +15,12 @@ export const apiGetMaster = {
     "apiGetJabatanPimpinanAnakCabang": "/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang" ,
     "apiGetJabatanPimpinanRanting": "/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-ranting" ,
     "apiGetJabatanPerwakilanLuarNegeri": "/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri" ,
+    
+    // Data Diri Partai
+    "apiSayapPartai": "/api/get/sumber-daya-partai/api-get-sayap-partai",
+    "apiNegara": "/api/get/sumber-daya-partai/wilayah/api-get-negara",
+    "apikaderPartai": "/api/get/sumber-daya-partai/api-get-kader-partai",
+    "apiOrganisasiAfiliatif": "/api/get/sumber-daya-partai/api-get-organisasi-afiliatif",
 
 
 
@@ -37,7 +43,8 @@ export const apiGetMaster = {
     // Daftar Pemilih Potensial
     "apiGetNoTPS": "/api/get/peta-kekuatan/api-get-nomor-urut-tps",
     "apiKategoriPemilihPotensial": "/api/get/peta-kekuatan/api-get-calon-pemilih-potensial",
-    "apiPekerjaan": "/api/get/sumber-daya-partai/api-get-pekerjaan"
+    "apiPekerjaan": "/api/get/sumber-daya-partai/api-get-pekerjaan",
+
 
 
 
