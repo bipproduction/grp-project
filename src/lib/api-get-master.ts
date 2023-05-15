@@ -1,4 +1,25 @@
 export const apiGetMaster = {
+    // Profile
+    "apiGetAgama": "/api/get/sumber-daya-partai/api-get-agama",
+
+
+
+    // SUMBER DAYA PARTAI
+    "apiGetStatusKeanggotaan": "/api/get/sumber-daya-partai/api-get-status-keanggotaan",
+    "apiGetTingkatPengurus": "/api/get/sumber-daya-partai/api-get-tingkat-pengurus",
+    // Struktur Partai
+    "apiGetJabatanDewanPembina": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina" ,
+    "apiGetJabatanDewanPimpinanPusat": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-pusat" ,
+    "apiGetJabatanDewanPimpinanDaerah": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-daerah" ,
+    "apiGetJabatanDewanPimpinanCabang": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-cabang" ,
+    "apiGetJabatanPimpinanAnakCabang": "/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-anak-cabang" ,
+    "apiGetJabatanPimpinanRanting": "/api/get/sumber-daya-partai/api-get-jabatan-pimpinan-ranting" ,
+    "apiGetJabatanPerwakilanLuarNegeri": "/api/get/sumber-daya-partai/api-get-jabatan-perwakilan-partai-diluar-negeri" ,
+
+
+
+
+
     // PETA KEKUATAN
     // Eksekutif
     "apiGetTingkatEksekutif" : "/api/get/peta-kekuatan/api-get-tingkat-eksekutif",
