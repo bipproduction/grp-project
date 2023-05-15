@@ -187,8 +187,8 @@ const TableStruktutPartaiV2 = () => {
           </Grid>
         </Box>
         <Box>
-          <ScrollArea py={20}>
-            <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
+          <ScrollArea py={20} >
+            <Table withBorder highlightOnHover >
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>

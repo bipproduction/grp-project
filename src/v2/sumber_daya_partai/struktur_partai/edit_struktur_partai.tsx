@@ -19,75 +19,103 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
+import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
+import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
+import { _loadTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
+import { sTingkatPengurus } from "@/s_state/sumber_daya_partai/s_tingkat_pengurus";
+import {
+  _loadJabatanDewanPembina,
+  _loadJabatanDewanPimpinanCabang,
+  _loadJabatanDewanPimpinanDaerah,
+  _loadJabatanDewanPimpinanPusat,
+  _loadJabatanPimpinanAnakCabang,
+  _loadJabatanPimpinanRanting,
+  _loadJabtanPerwakilanLuarNegeri,
+} from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import {
+  sJabatanDewanPembina,
+  sJabatanDewanPimpinanCabang,
+  sJabatanDewanPimpinanDaerah,
+  sJabatanDewanPimpinanPusat,
+  sJabatanPerwakilanLuarNegeri,
+  sJabatanPimpinanAnakCabang,
+  sJabatanPimpinanRanting,
+} from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
+import { _loadAgama } from "@/load_data/load_agama";
+import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
+import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
+import { _loadKecamatan } from "@/load_data/wilayah/load_kecamatan";
+import { sKecamatan } from "@/s_state/wilayah/s_kecamatan";
+import { sDesa } from "@/s_state/wilayah/s_desa";
+import { _loadDesa } from "@/load_data/wilayah/load_desa";
 
 const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
-  const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
-  const [tingkatPengurus, setTingkatPengurus] = useState<any | []>([]);
+  const [isJabatan, setJabatan] = useState<any>();
 
   useShallowEffect(() => {
-    loadStatusKenaggotaan();
-    loadTingkatPengurus();
+    _loadStatusKeanggotaan();
+    _loadTingkatPengurus();
+    _loadJabatanDewanPembina();
+    _loadJabatanDewanPimpinanPusat();
+    _loadJabatanDewanPimpinanDaerah();
+    _loadJabatanDewanPimpinanCabang();
+    _loadJabatanPimpinanAnakCabang();
+    _loadJabatanPimpinanRanting()
+    _loadJabtanPerwakilanLuarNegeri();
+    _loadAgama();
+    _loadListPekerjaan();
+    _loadProvinsi();
   }, []);
-
-  async function loadStatusKenaggotaan() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/api-get-status-keanggotaan"
-    )
-      .then((res) => res.json())
-      .then((val) =>
-        setStatusKeanggotaan(Object.values(val).map((e: any) => e.name))
-      );
-  }
-
-  async function loadTingkatPengurus() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/api-get-tingkat-pengurus"
-    )
-      .then((res) => res.json())
-      .then((val) =>
-        setTingkatPengurus(Object.values(val).map((e: any) => e.name))
-      );
-  }
 
   const formEditStrukturPartai = useForm({
     initialValues: {
       data: {
-        nik: '',
-        nama: '',
-        email: '',
-        tempatLahir: '',
-        tanggalLahir: '',
-        jenisKelamin: '',
-        phoneNumber: '',
-        instagram: '',
-        facebook: '',
-        tiktok: '',
-        twitter: '',
-        agama: '',
-        pekerjaan: '',
-        alamat: '',
-        provinsi: '',
-        kabkot: '',
-        kecamatan: '',
-        desa: '',
-        rtrw: '',
-        statusKeanggotaan: '',
-        tingkatPengurus: '',
-        jabatan: '',
+        nik: "",
+        nama: "",
+        email: "",
+        tempatLahir: "",
+        tanggalLahir: "",
+        jenisKelamin: "",
+        phoneNumber: "",
+        instagram: "",
+        facebook: "",
+        tiktok: "",
+        twitter: "",
+        agama: "",
+        pekerjaan: "",
+        alamat: "",
+        provinsi: "",
+        kabkot: "",
+        kecamatan: "",
+        desa: "",
+        rtrw: "",
+        statusKeanggotaan: "",
+        tingkatPengurus: "",
+        jabatan: "",
       },
       validate: {
-        email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        email: (value: string) =>
+          /^\S+@\S+$/.test(value) ? null : "Invalid email",
       },
     },
   });
 
   const onEdit = () => {
-    console.log(formEditStrukturPartai.values.data)
+    console.log(formEditStrukturPartai.values.data);
     if (Object.values(formEditStrukturPartai.values.data).includes("")) {
       return toast("Lengkapi Data diri");
     }
 
-    if (formEditStrukturPartai.values.validate.email(formEditStrukturPartai.values.data.email) != null) {
+    if (
+      formEditStrukturPartai.values.validate.email(
+        formEditStrukturPartai.values.data.email
+      ) != null
+    ) {
       return toast("Invalid email");
     }
 
@@ -95,8 +123,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
 
     buttonSimpan();
     thisClosed();
-
-  }
+  };
 
   return (
     <>
@@ -124,20 +151,16 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 Simpan
               </Button>
             </Box>
-            <Box w={100}>
+            {/* <Box w={100}>
               <Button
                 fullWidth
                 color="orange.9"
                 bg={COLOR.orange}
                 radius={"xl"}
-                onClick={() => {
-                  formEditStrukturPartai.reset();
-                  buttonReset()
-                }}
               >
                 Reset
               </Button>
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
 
@@ -158,124 +181,181 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <NumberInput placeholder="NIK" label="**" {...formEditStrukturPartai.getInputProps("data.nik")} />
-                    <TextInput placeholder="Nama" label="**" {...formEditStrukturPartai.getInputProps("data.nama")} />
-                    <TextInput placeholder="Email" label="**" {...formEditStrukturPartai.getInputProps("data.email")} />
-                    <TextInput placeholder="Tempat Lahir" label="**" {...formEditStrukturPartai.getInputProps("data.tempatLahir")} />
-                    <DateInput placeholder="Tanggal Lahir" label="**" {...formEditStrukturPartai.getInputProps("data.tanggalLahir")} />
+                    <NumberInput
+                      placeholder="NIK"
+                      label="NIK"
+                      {...formEditStrukturPartai.getInputProps("data.nik")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Nama"
+                      label="Nama"
+                      {...formEditStrukturPartai.getInputProps("data.nama")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Email"
+                      label="Email"
+                      {...formEditStrukturPartai.getInputProps("data.email")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Tempat Lahir"
+                      label="Tempat Lahir"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.tempatLahir"
+                      )}
+                      withAsterisk
+                    />
+                    <DateInput
+                      placeholder="Tanggal Lahir"
+                      label="Tanggal Lahir"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.tanggalLahir"
+                      )}
+                      withAsterisk
+                    />
                     <Select
                       data={[
-                        { value: "laki", label: "Laki-Laki" },
-                        { value: "perempuan", label: "Perempuan" },
+                        { value: "Laki-Laki", label: "Laki-Laki" },
+                        { value: "Perempuan", label: "Perempuan" },
                       ]}
                       placeholder="Jenis Kelamin"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.jenisKelamin")}
+                      label="Jenis Kelamin"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.jenisKelamin"
+                      )}
+                      withAsterisk
                     />
-                    <NumberInput placeholder="Nomor Telepon" label="**" {...formEditStrukturPartai.getInputProps("data.phoneNumber")} />
+                    <NumberInput
+                      placeholder="Nomor Telepon"
+                      label="Nomor Telepon"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.phoneNumber"
+                      )}
+                      withAsterisk
+                    />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Instagram"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.instagram")}
+                      label="Instagram"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.instagram"
+                      )}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Facebook"
-                      label="**"
+                      label="Facebook"
                       {...formEditStrukturPartai.getInputProps("data.facebook")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="TikTok"
-                      label="**"
+                      label="TikTok"
                       {...formEditStrukturPartai.getInputProps("data.tiktok")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Twitter"
-                      label="**"
+                      label="Twitter"
                       {...formEditStrukturPartai.getInputProps("data.twitter")}
+                      withAsterisk
                     />
                     <Select
-                      data={[
-                        { value: "islam", label: "Islam" },
-                        { value: "Protestan", label: "Protestan" },
-                        { value: "Katolik", label: "Katolik" },
-                        { value: "Hindu", label: "Hindu" },
-                        { value: "Buddha", label: "Buddha" },
-                        { value: "Khonghucu", label: "Khonghucu" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
+                      data={sAgama.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
                       placeholder="Agama"
-                      label="**"
+                      label="Pilih Agama"
                       {...formEditStrukturPartai.getInputProps("data.agama")}
+                      withAsterisk
                     />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
+                    <Select
+                      data={sListPekerjaan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
                       placeholder="Pekerjaan"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.pekerjaan")}
+                      label="Pilih Pekerjaan"
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.pekerjaan"
+                      )}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Alamat"
-                      label="**"
+                      label="Alamat"
                       {...formEditStrukturPartai.getInputProps("data.alamat")}
+                      withAsterisk
                     />
                     <Select
-                      data={[
-                        { value: "Bali", label: "Bali" },
-                        { value: "Jawa timur", label: "Jawa Timur" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Provinsi"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.provinsi")}
+                      data={sProvinsi.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Provinsi"
+                      label="Pilih Provinsi"
+                      onChange={(val: any) => {
+                        _loadKabkot(val);
+                        formEditStrukturPartai.values.data.provinsi = val!;
+                      }}
+                      // {...formEditStrukturPartai.getInputProps("data.provinsi")}
+                      withAsterisk
+                      searchable
+                      clearable
                     />
                     <Select
-                      data={[
-                        { value: "Banyuwangi", label: "Banyuwangi" },
-                        { value: "Malang", label: "Malang" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kabupaten / Kota"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.kabkot")}
+                      data={sKabkot.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Kabupaten / Kota"
+                      label="Pilih Kabupaten / Kota"
+                      onChange={(val: any) => {
+                        _loadKecamatan(val);
+                        formEditStrukturPartai.values.data.kabkot = val!;
+                      }}
+                      // {...formEditStrukturPartai.getInputProps("data.kabkot")}
+                      withAsterisk
+                      searchable
+                      clearable
                     />
                     <Select
-                      data={[
-                        { value: "Geteng", label: "Genteng" },
-                        { value: "Glenmore", label: "Glenmore" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kecamatan"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.kecamatan")}
+                      data={sKecamatan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Kecamatan"
+                      label="Pilih Kecamatan"
+                      onChange={(val: any) => {
+                        _loadDesa(val);
+                        formEditStrukturPartai.values.data.kecamatan = val!;
+                      }}
+                      withAsterisk
+                      searchable
+                      clearable
+                    />
+                    <Select
+                      data={sDesa.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Desa"
+                      label="Pilih Desa"
+                      onChange={(val: any) => {
+                        formEditStrukturPartai.values.data.desa = val!;
+                      }}
+                      withAsterisk
+                      searchable
+                      clearable
+                      // {...formEditStrukturPartai.getInputProps("data.desa")}
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Desa / Cabang"
-                      label="**"
-                      {...formEditStrukturPartai.getInputProps("data.desa")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="RT - __, RW - __"
-                      label="**"
+                      label="RT / RW"
                       {...formEditStrukturPartai.getInputProps("data.rtrw")}
+                      withAsterisk
                     />
                   </Flex>
                 </Box>
@@ -297,22 +377,203 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                 <Box>
                   <Flex direction={"column"}>
                     <Select
-                      label="**"
+                      label="Pilih Status Keanggotaan"
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
-                      data={statusKeanggotaan}
-                      {...formEditStrukturPartai.getInputProps("data.statusKeanggotaan")}
+                      withAsterisk
+                      data={sStatusKeanggotaan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      {...formEditStrukturPartai.getInputProps(
+                        "data.statusKeanggotaan"
+                      )}
                     />
-
+                    {/* <Text>
+                      {formEditStrukturPartai.values.data.tingkatPengurus}
+                    </Text> */}
                     <Select
-                      label="**"
+                      label="Pilih Tingkat Pengurus"
                       placeholder="Pilih Tingkat Pengurus"
                       nothingFound="No options"
-                      data={tingkatPengurus}
-                      {...formEditStrukturPartai.getInputProps("data.tingkatPengurus")}
+                      withAsterisk
+                      data={sTingkatPengurus.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      onChange={(val) => {
+                        // console.log(sTingkatPengurus.value)
+                        if (val == "1") {
+                          formEditStrukturPartai.values.data.tingkatPengurus =
+                            val!;
+                          setJabatan(
+                            <Select
+                              label="Pilih Jabatan D. Pembina"
+                              placeholder="Pilih Jabatan"
+                              nothingFound="No options"
+                              withAsterisk
+                              data={sJabatanDewanPembina.value.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))}
+                              onChange={(val) => {
+                                formEditStrukturPartai.values.data.jabatan =
+                                  val!;
+                              }}
+                            />
+                          );
+                        } else {
+                          if (val == "2") {
+                            formEditStrukturPartai.values.data.tingkatPengurus =
+                              val!;
+                            setJabatan(
+                              <Select
+                                label="Pilih Jabatan D. Pimpinan Pusat"
+                                placeholder="Pilih Jabatan"
+                                nothingFound="No options"
+                                withAsterisk
+                                data={sJabatanDewanPimpinanPusat.value.map(
+                                  (e) => ({
+                                    value: e.id,
+                                    label: e.name,
+                                  })
+                                )}
+                                onChange={(val) => {
+                                  formEditStrukturPartai.values.data.jabatan =
+                                    val!;
+                                }}
+                              />
+                            );
+                          } else {
+                            if (val == "3") {
+                              formEditStrukturPartai.values.data.tingkatPengurus =
+                                val!;
+                              setJabatan(
+                                <Select
+                                  label="Pilih Jabatan D. Pimpinan Daerah"
+                                  placeholder="Pilih Jabatan"
+                                  nothingFound="No options"
+                                  withAsterisk
+                                  data={sJabatanDewanPimpinanDaerah.value.map(
+                                    (e) => ({
+                                      value: e.id,
+                                      label: e.name,
+                                    })
+                                  )}
+                                  onChange={(val) => {
+                                    formEditStrukturPartai.values.data.jabatan =
+                                      val!;
+                                  }}
+                                />
+                              );
+                            } else {
+                              if (val == "4") {
+                                formEditStrukturPartai.values.data.tingkatPengurus =
+                                  val!;
+                                setJabatan(
+                                  <Select
+                                    label="Pilih Jabatan D. Pimpinan Cabang"
+                                    placeholder="Pilih Jabatan"
+                                    nothingFound="No options"
+                                    withAsterisk
+                                    data={sJabatanDewanPimpinanCabang.value.map(
+                                      (e) => ({
+                                        value: e.id,
+                                        label: e.name,
+                                      })
+                                    )}
+                                    onChange={(val) => {
+                                      formEditStrukturPartai.values.data.jabatan =
+                                        val!;
+                                    }}
+                                  />
+                                );
+                              } else {
+                                if (val == "5") {
+                                  formEditStrukturPartai.values.data.tingkatPengurus =
+                                    val!;
+                                  setJabatan(
+                                    <Select
+                                      label="Pilih Jabatan P. Anak Cabang"
+                                      placeholder="Pilih Jabatan"
+                                      nothingFound="No options"
+                                      withAsterisk
+                                      data={sJabatanPimpinanAnakCabang.value.map(
+                                        (e) => ({
+                                          value: e.id,
+                                          label: e.name,
+                                        })
+                                      )}
+                                      onChange={(val) => {
+                                        formEditStrukturPartai.values.data.jabatan =
+                                          val!;
+                                      }}
+                                    />
+                                  );
+                                } else {
+                                  if (val == "6") {
+                                    formEditStrukturPartai.values.data.tingkatPengurus =
+                                      val!;
+                                    setJabatan(
+                                      <Select
+                                        label="Pilih Jabatan P. Ranting"
+                                        placeholder="Pilih Jabatan"
+                                        nothingFound="No options"
+                                        withAsterisk
+                                        data={sJabatanPimpinanRanting.value.map(
+                                          (e) => ({
+                                            value: e.id,
+                                            label: e.name,
+                                          })
+                                        )}
+                                        onChange={(val) => {
+                                          formEditStrukturPartai.values.data.jabatan =
+                                            val!;
+                                        }}
+                                      />
+                                    );
+                                  } else {
+                                    if (val == "7") {
+                                      formEditStrukturPartai.values.data.tingkatPengurus =
+                                        val!;
+                                      setJabatan(
+                                        <Select
+                                          label="Pilih Jabatan P. Luar Negeri"
+                                          placeholder="Pilih Jabatan"
+                                          nothingFound="No options"
+                                          withAsterisk
+                                          data={sJabatanPerwakilanLuarNegeri.value.map(
+                                            (e) => ({
+                                              value: e.id,
+                                              label: e.name,
+                                            })
+                                          )}
+                                          onChange={(val) => {
+                                            formEditStrukturPartai.values.data.jabatan =
+                                              val!;
+                                          }}
+                                        />
+                                      );
+                                    } else {
+                                      setJabatan("Data Tidak Ada !");
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        // console.log(
+                        //   formEditStrukturPartai.values.data.tingkatPengurus = val
+                        // )
+                      }}
+                      // {...formEditStrukturPartai.getInputProps(
+                      //   "data.tingkatPengurus"
+                      // )}
                     />
+                    {isJabatan && isJabatan}
 
-                    <Select
+                    {/* <Select
                       label="**"
                       placeholder="Pilih Jabatan"
                       nothingFound="No options"
@@ -321,7 +582,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: any) => {
                         { value: "Wakil Ketua", label: "Wakil Ketua" },
                       ]}
                       {...formEditStrukturPartai.getInputProps("data.jabatan")}
-                    />
+                    /> */}
                   </Flex>
                 </Box>
               </Paper>
