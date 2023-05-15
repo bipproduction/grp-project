@@ -5,7 +5,8 @@ const masterDesaGetByKecamatan = async (req: NextApiRequest, res: NextApiRespons
     const { idKecamatan } = req.query
     const data = await client.masterDesa.findMany({
         where: {
-            masterKecamatanId: Number(idKecamatan)
+            masterKecamatanId: Number(idKecamatan),
+            active: true
         }
     })
     return res.status(200).json(data)

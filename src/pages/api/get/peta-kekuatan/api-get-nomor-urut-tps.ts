@@ -3,7 +3,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 
 const apiGetNomorUrutTPS = async (req: NextApiRequest, res: NextApiResponse) => {
-    const data = await client.masterNomorUrutTPS.findMany()
+    const data = await client.masterNomorUrutTPS.findMany({
+        where: {
+            active: true
+        }
+    })
     res.status(200).json(data)
 
 }

@@ -2,11 +2,11 @@ import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const {tingkat} = req.query;
+    const {tingkat, search} = req.query;
     const data = await client.eksekutif.findMany({
         where: {
             active: true,
-            masterTingkatEksekutifId: Number(tingkat)
+            masterTingkatEksekutifId: Number(tingkat),
         },
         select: {
             namaLembaga: true,
@@ -53,6 +53,9 @@ const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                     username: true,
                     email: true,
                     DataDiri: {
+                        // where : {
+                        //     name : search as string
+                        // },
                         select: {
                             name: true,
                             nik: true,
@@ -60,9 +63,6 @@ const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                         }
                     },
                     UserMediaSocial: {
-                        where: {
-                            active: true
-                        },
                         select: {
                             name: true,
                             link: true,
