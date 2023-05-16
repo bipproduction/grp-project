@@ -1,6 +1,7 @@
 export const apiGetMaster = {
     // Profile
     "apiGetAgama": "/api/get/sumber-daya-partai/api-get-agama",
+    "apiGetJenisKelamin": "/api/get/sumber-daya-partai/api-get-jenis-kelamin",
 
 
 
