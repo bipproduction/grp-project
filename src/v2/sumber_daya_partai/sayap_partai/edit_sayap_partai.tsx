@@ -19,6 +19,20 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
+import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
+import { _loadAgama } from "@/load_data/load_agama";
+import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
+import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
+import { _loadKabkot } from "@/load_data/wilayah/load_kabkot";
+import { sKabkot } from "@/s_state/wilayah/s_kabkot";
+import { _loadKecamatan } from "@/load_data/wilayah/load_kecamatan";
+import { sKecamatan } from "@/s_state/wilayah/s_kecamatan";
+import { _loadDesa } from "@/load_data/wilayah/load_desa";
+import { sDesa } from "@/s_state/wilayah/s_desa";
+import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
 
 const EditSayapPartaiV2 = ({ thisClosed }: any) => {
   const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
@@ -26,9 +40,11 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
   const [namaSayap, setNamaSayap] = useState<any | []>([]);
 
   useShallowEffect(() => {
-    loadStatusKenaggotaan();
-    loadTingkatPengurus();
-    loadNamaSayap();
+    _loadStatusKeanggotaan()
+    _loadStatusKeanggotaan();
+    _loadAgama();
+    _loadListPekerjaan();
+    _loadProvinsi();
   }, []);
 
   async function loadNamaSayap() {
@@ -60,43 +76,48 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
   const formEditSayapPartai = useForm({
     initialValues: {
       data: {
-        nik: '',
-        nama: '',
-        email: '',
-        tempatLahir: '',
-        tanggalLahir: '',
-        jenisKelamin: '',
-        phoneNumber: '',
-        instagram: '',
-        facebook: '',
-        tiktok: '',
-        twitter: '',
-        agama: '',
-        pekerjaan: '',
-        alamat: '',
-        provinsi: '',
-        kabkot: '',
-        kecamatan: '',
-        desa: '',
-        rtrw: '',
-        statusKeanggotaan: '',
-        sayap: '',
-        tingkatPengurus: '',
-        jabatan: '',
+        nik: "",
+        nama: "",
+        email: "",
+        tempatLahir: "",
+        tanggalLahir: "",
+        jenisKelamin: "",
+        phoneNumber: "",
+        instagram: "",
+        facebook: "",
+        tiktok: "",
+        twitter: "",
+        agama: "",
+        pekerjaan: "",
+        alamat: "",
+        provinsi: "",
+        kabkot: "",
+        kecamatan: "",
+        desa: "",
+        rtrw: "",
+        statusKeanggotaan: "",
+        sayap: "",
+        tingkatPengurus: "",
+        jabatan: "",
       },
       validate: {
-        email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        email: (value: string) =>
+          /^\S+@\S+$/.test(value) ? null : "Invalid email",
       },
     },
   });
 
   const onEdit = () => {
-    console.log(formEditSayapPartai.values.data)
+    console.log(formEditSayapPartai.values.data);
     if (Object.values(formEditSayapPartai.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formEditSayapPartai.values.validate.email(formEditSayapPartai.values.data.email) != null) {
+    if (
+      formEditSayapPartai.values.validate.email(
+        formEditSayapPartai.values.data.email
+      ) != null
+    ) {
       return toast("Invalid email");
     }
 
@@ -104,7 +125,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
 
     buttonSimpan();
     thisClosed();
-  }
+  };
 
   return (
     <>
@@ -132,7 +153,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 Simpan
               </Button>
             </Box>
-            <Box w={100}>
+            {/* <Box w={100}>
               <Button
                 fullWidth
                 color="orange.9"
@@ -145,7 +166,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
               >
                 Reset
               </Button>
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
 
@@ -166,124 +187,173 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <NumberInput placeholder="NIK" label="**" {...formEditSayapPartai.getInputProps("data.nik")} />
-                    <TextInput placeholder="Nama" label="**" {...formEditSayapPartai.getInputProps("data.nama")} />
-                    <TextInput placeholder="Email" label="**" {...formEditSayapPartai.getInputProps("data.email")} />
-                    <TextInput placeholder="Tempat Lahir" label="**" {...formEditSayapPartai.getInputProps("data.tempatLahir")} />
-                    <DateInput placeholder="Tanggal Lahir" label="**" {...formEditSayapPartai.getInputProps("data.tanggalLahir")} />
+                    <NumberInput
+                      placeholder="NIK"
+                      label="NIK"
+                      {...formEditSayapPartai.getInputProps("data.nik")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Nama"
+                      label="Nama"
+                      {...formEditSayapPartai.getInputProps("data.nama")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Email"
+                      label="Email"
+                      {...formEditSayapPartai.getInputProps("data.email")}
+                      withAsterisk
+                    />
+                    <TextInput
+                      placeholder="Tempat Lahir"
+                      label="Tempat Lahir"
+                      {...formEditSayapPartai.getInputProps("data.tempatLahir")}
+                      withAsterisk
+                    />
+                    <DateInput
+                      placeholder="Tanggal Lahir"
+                      label="Tanggal Lahir"
+                      {...formEditSayapPartai.getInputProps(
+                        "data.tanggalLahir"
+                      )}
+                      withAsterisk
+                    />
                     <Select
                       data={[
-                        { value: "laki", label: "Laki-Laki" },
-                        { value: "perempuan", label: "Perempuan" },
+                        { value: "Laki-Laki", label: "Laki-Laki" },
+                        { value: "Perempuan", label: "Perempuan" },
                       ]}
                       placeholder="Jenis Kelamin"
-                      label="**"
-                      {...formEditSayapPartai.getInputProps("data.jenisKelamin")}
+                      label="Jenis Kelamin"
+                      {...formEditSayapPartai.getInputProps(
+                        "data.jenisKelamin"
+                      )}
+                      withAsterisk
                     />
-                    <NumberInput placeholder="Nomor Telepon" label="**" {...formEditSayapPartai.getInputProps("data.phoneNumber")} />
+                    <NumberInput
+                      placeholder="Nomor Telepon"
+                      label="Nomor Telepon"
+                      {...formEditSayapPartai.getInputProps("data.phoneNumber")}
+                      withAsterisk
+                    />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Instagram"
-                      label="**"
+                      label="Instagram"
                       {...formEditSayapPartai.getInputProps("data.instagram")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Facebook"
-                      label="**"
+                      label="Facebook"
                       {...formEditSayapPartai.getInputProps("data.facebook")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="TikTok"
-                      label="**"
+                      label="TikTok"
                       {...formEditSayapPartai.getInputProps("data.tiktok")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Twitter"
-                      label="**"
+                      label="Twitter"
                       {...formEditSayapPartai.getInputProps("data.twitter")}
+                      withAsterisk
                     />
                     <Select
-                      data={[
-                        { value: "islam", label: "Islam" },
-                        { value: "Protestan", label: "Protestan" },
-                        { value: "Katolik", label: "Katolik" },
-                        { value: "Hindu", label: "Hindu" },
-                        { value: "Buddha", label: "Buddha" },
-                        { value: "Khonghucu", label: "Khonghucu" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
+                      data={sAgama.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
                       placeholder="Agama"
-                      label="**"
+                      label="Pilih Agama"
                       {...formEditSayapPartai.getInputProps("data.agama")}
+                      withAsterisk
                     />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
+                    <Select
+                      data={sListPekerjaan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
                       placeholder="Pekerjaan"
-                      label="**"
+                      label="Pilih Pekerjaan"
                       {...formEditSayapPartai.getInputProps("data.pekerjaan")}
+                      withAsterisk
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="Alamat"
-                      label="**"
+                      label="Alamat"
                       {...formEditSayapPartai.getInputProps("data.alamat")}
+                      withAsterisk
                     />
                     <Select
-                      data={[
-                        { value: "Bali", label: "Bali" },
-                        { value: "Jawa timur", label: "Jawa Timur" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Provinsi"
-                      label="**"
-                      {...formEditSayapPartai.getInputProps("data.provinsi")}
+                      data={sProvinsi.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Provinsi"
+                      label="Pilih Provinsi"
+                      onChange={(val: any) => {
+                        _loadKabkot(val);
+                        formEditSayapPartai.values.data.provinsi = val!;
+                      }}
+                      // {...formEditSayapPartai.getInputProps("data.provinsi")}
+                      withAsterisk
+                      searchable
+                      clearable
                     />
                     <Select
-                      data={[
-                        { value: "Banyuwangi", label: "Banyuwangi" },
-                        { value: "Malang", label: "Malang" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kabupaten / Kota"
-                      label="**"
-                      {...formEditSayapPartai.getInputProps("data.kabkot")}
+                      data={sKabkot.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Kabupaten / Kota"
+                      label="Pilih Kabupaten / Kota"
+                      onChange={(val: any) => {
+                        _loadKecamatan(val);
+                        formEditSayapPartai.values.data.kabkot = val!;
+                      }}
+                      // {...formEditSayapPartai.getInputProps("data.kabkot")}
+                      withAsterisk
+                      searchable
+                      clearable
                     />
                     <Select
-                      data={[
-                        { value: "Geteng", label: "Genteng" },
-                        { value: "Glenmore", label: "Glenmore" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kecamatan"
-                      label="**"
-                      {...formEditSayapPartai.getInputProps("data.kecamatan")}
+                      data={sKecamatan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Kecamatan"
+                      label="Pilih Kecamatan"
+                      onChange={(val: any) => {
+                        _loadDesa(val);
+                        formEditSayapPartai.values.data.kecamatan = val!;
+                      }}
+                      withAsterisk
+                      searchable
+                      clearable
+                    />
+                    <Select
+                      data={sDesa.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      placeholder="Pilih Desa"
+                      label="Pilih Desa"
+                      onChange={(val: any) => {
+                        formEditSayapPartai.values.data.desa = val!;
+                      }}
+                      withAsterisk
+                      searchable
+                      clearable
+                      // {...formEditSayapPartai.getInputProps("data.desa")}
                     />
                     <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Desa / Cabang"
-                      label="**"
-                      {...formEditSayapPartai.getInputProps("data.desa")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
                       placeholder="RT - __, RW - __"
-                      label="**"
+                      label="RT / RW"
                       {...formEditSayapPartai.getInputProps("data.rtrw")}
+                      withAsterisk
                     />
                   </Flex>
                 </Box>
@@ -305,11 +375,18 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                 <Box>
                   <Flex direction={"column"}>
                     <Select
-                      label="**"
+                      label="Pilih Status Keanggotaan"
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
-                      data={statusKeanggotaan}
-                      {...formEditSayapPartai.getInputProps("data.statusKeanggotaan")}
+                      data={sStatusKeanggotaan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      onChange={(val : any) => {
+                        formEditSayapPartai.values.data.statusKeanggotaan = val;
+
+                      }}
+                      
                     />
 
                     <Select
@@ -325,7 +402,9 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
                       placeholder="Pilih Tingkat Pengurus"
                       nothingFound="No options"
                       data={tingkatPengurus}
-                      {...formEditSayapPartai.getInputProps("data.tingkatPengurus")}
+                      {...formEditSayapPartai.getInputProps(
+                        "data.tingkatPengurus"
+                      )}
                     />
 
                     <Select

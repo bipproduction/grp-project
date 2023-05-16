@@ -28,10 +28,14 @@ import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import EditStrukturPartaiV2 from "./edit_struktur_partai";
 import dataTable from "../data_table.json";
+import { useAtom } from "jotai";
+import { _val_muncul } from "./_val_edit_struktur";
 
 const TableStruktutPartaiV2 = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  // const [open, setOpen] = useAtom(_val_muncul);
+  const [opened, setOpen] = useDisclosure(false)
   const [activePage, setActivePage] = useState();
+  const [isID, setID] = useState<any>();
 
   const tbHead = (
     <tr>
@@ -94,7 +98,9 @@ const TableStruktutPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
-              open();
+              setOpen.open()
+              // setOpen(true);
+              setID(e);
             }}
           >
             Edit
@@ -111,7 +117,7 @@ const TableStruktutPartaiV2 = () => {
     <>
       <Modal
         opened={opened}
-        onClose={close}
+        onClose={setOpen.close}
         size="100%"
         // fullScreen
         overlayProps={{
@@ -119,7 +125,7 @@ const TableStruktutPartaiV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditStrukturPartaiV2 thisClosed={close} />
+        <EditStrukturPartaiV2 thisClosed={setOpen.close} isID={isID} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -187,8 +193,8 @@ const TableStruktutPartaiV2 = () => {
           </Grid>
         </Box>
         <Box>
-          <ScrollArea py={20} >
-            <Table withBorder highlightOnHover >
+          <ScrollArea py={20}>
+            <Table withBorder highlightOnHover>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
