@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   Center,
@@ -21,7 +22,7 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _, { values } from "lodash";
+import _, { uniqueId, values } from "lodash";
 import { data } from "jquery";
 import { api } from "@/lib/api-backend";
 import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
@@ -30,6 +31,10 @@ import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
 import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import { sUser } from "@/s_state/s_user";
+import { number } from "echarts";
+import { _loadMediaSocial } from "@/load_data/media_social/load_media_social";
+import { sMediaSocial } from "@/s_state/media_social/s_media_social";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -75,6 +80,7 @@ const FormDataDiriUser = () => {
     _loadAgama();
     loadProvinsi();
     _loadListPekerjaan();
+    _loadMediaSocial()
   }, []);
 
   // useShallowEffect(() => {
@@ -118,6 +124,7 @@ const FormDataDiriUser = () => {
       });
   };
 
+
   async function loadKecamatan(idKabkot: string) {
     const res = await fetch(
       // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
@@ -157,6 +164,7 @@ const FormDataDiriUser = () => {
   // }
 
   const router = useRouter();
+  const {id} =router.query
   function dataDiriPartai() {
     router.push("/v2/form-data-partai");
   }
@@ -189,22 +197,25 @@ const FormDataDiriUser = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formDataDiri.values.data),
-    }).then((v) => {
-      if (v.status === 201) {
-        toast("Sukses");
-        router.reload();
+    }).then(async (res) => {
+      if (res.status === 200) {
+        const data = await res.json()
+        localStorage.setItem("user_id", data.id)
+        sUser.value = data
+        console.log(sUser.value)
+        toast("succes")
       }
-    });
+    })
   };
 
   const formMediaSocial = useForm({
     initialValues: {
       data: {
-        instagram: "",
-        facebook: "",
-        tiktok: "",
-        twitter: "",
-        // masterMediaSocialId:1,
+        link: "link nanti",
+        name: "",
+        userId: localStorage.getItem("user_id"),
+        masterMediaSocialId: 1,
+        // masterMediaSocialId:1
         // userId:"",
         // name:"",
       },
@@ -214,6 +225,7 @@ const FormDataDiriUser = () => {
   const formDataDiri = useForm({
     initialValues: {
       data: {
+        userId: localStorage.getItem("user_id"),
         nik: "",
         name: "",
         tempatLahir: "",
@@ -245,6 +257,7 @@ const FormDataDiriUser = () => {
   //   // }
   //   router.replace("/v2/form-data-partai");
   // };
+  const userId = sUser.value.id;
   return (
     <>
       <WrapperDataDiriPartai>
@@ -349,15 +362,17 @@ const FormDataDiriUser = () => {
                                   "data.phoneNumber"
                                 )}
                               />
+                              {JSON.stringify(sMediaSocial)}
                               <TextInput
+                              {...formMediaSocial.getInputProps(
+                                "data.name"
+                              )}
+                              // onChange={() => sMediaSocial.value.find((v) => v.id)}
                                 placeholder="Instagram"
                                 withAsterisk
                                 // rightSection={<AiOutlineInstagram size="1.3rem" />}
                                 label="Instagram"
                                 radius={"md"}
-                                {...formMediaSocial.getInputProps(
-                                  "data.instagram"
-                                )}
                               />
                               <TextInput
                                 placeholder="Facebook"
@@ -365,9 +380,9 @@ const FormDataDiriUser = () => {
                                 label="Facebook"
                                 // rightSection={<AiOutlineFacebook size="1.3rem" />}
                                 radius={"md"}
-                                {...formMediaSocial.getInputProps(
-                                  "data.facebook"
-                                )}
+                                // {...formMediaSocial.getInputProps(
+                                //   "data.name"
+                                // )}
                               />
                               <TextInput
                                 placeholder="Tiktok"
@@ -375,9 +390,9 @@ const FormDataDiriUser = () => {
                                 label="Tiktok"
                                 // rightSection={<BsTiktok size="1.3rem" />}
                                 radius={"md"}
-                                {...formMediaSocial.getInputProps(
-                                  "data.tiktok"
-                                )}
+                                // {...formMediaSocial.getInputProps(
+                                //   "data.name"
+                                // )}
                               />
                               <TextInput
                                 placeholder="Twitter"
@@ -385,9 +400,9 @@ const FormDataDiriUser = () => {
                                 label="Twitter"
                                 // rightSection={<AiOutlineTwitter size="1.3rem" />}
                                 radius={"md"}
-                                {...formMediaSocial.getInputProps(
-                                  "data.twitter"
-                                )}
+                                // {...formMediaSocial.getInputProps(
+                                //   "data.name"
+                                // )}
                               />
                               <Select
                                 data={sAgama.value.map((ag) => ({
@@ -402,6 +417,7 @@ const FormDataDiriUser = () => {
                                 {...formDataDiri.getInputProps(
                                   "data.masterAgamaId"
                                 )}
+
                               />
                               <Select
                                 radius={"md"}
@@ -549,8 +565,8 @@ const FormDataDiriUser = () => {
                                     // onClick={() =>
                                     //   console.log(formDataDiri.values, formMediaSocial.values)
                                     // }
-                                    onClick={onDatadiri}
-                                    // onClick={onMediaSocial}
+                                    // onClick={onDatadiri}
+                                    onClick={onMediaSocial}
                                   >
                                     Simpan
                                   </Button>

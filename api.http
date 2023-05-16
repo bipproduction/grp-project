@@ -14,8 +14,8 @@ POST http://localhost:3000/api/auth/signin HTTP/1.1
 Content-Type: application/json
 
 {
-    "email" : "amaliaz",
-    "password" : "123"
+    "email" : "saya@gmail.com",
+    "password" : "saya"
 }
 
 
@@ -87,14 +87,14 @@ POST http://localhost:3000/api/form-data-diri/data-diri-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "nik" : "51710349000230",
+    "nik" : "51710349000231",
     "name":"Amalia",
     "tempatLahir" : "Blitar",
     "tanggalLahir" : "1999-12-07 00:00:00",
     "phoneNumber" : "0884564854",
     "alamat" : "Didalam rumah",
     "rtRw" : "3/2",
-    "userId" : "clhiub2c00004smw0oa21cq33",
+    "userId" : "clhprt4jl0004vnjj0yzgcmyi",
     "masterJenisKelaminId" : 2,
     "masterAgamaId" : 1,
     "masterPekerjaanId" : 2,
@@ -158,9 +158,9 @@ POST http://localhost:3000/api/auth/user-media-sosial/user-media-sosial-post HTT
 Content-Type: application/json
 
 {
-    "name" : "@username1",
+    "name" : "@username12",
     "link" : "link ig",
-    "userId" : "clhiub2c00004smw0oa21cq33",
+    "userId" : "clhprt4jl0004vnjj0yzgcmyi",
     "masterMediaSocialId" : 2
 }
 
