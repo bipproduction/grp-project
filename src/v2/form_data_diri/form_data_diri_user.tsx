@@ -23,6 +23,13 @@ import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
 import _, { values } from "lodash";
 import { data } from "jquery";
+import { api } from "@/lib/api-backend";
+import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+import { _loadAgama } from "@/load_data/load_agama";
+import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
+import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
+import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
+import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -32,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const FormDataDiriUser = () => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState("");
   const [jenisKelamin, setJenisKelamin] = useState<any | []>([]);
   const [agama, setAgama] = useState<any | []>([]);
   const [provinsi, setProvinsi] = useState<any[]>([]);
@@ -64,11 +71,10 @@ const FormDataDiriUser = () => {
   });
 
   useShallowEffect(() => {
-    loadJenisKelamin();
-    loadAgama();
+    _loadJenisKelamin();
+    _loadAgama();
     loadProvinsi();
-    // loadDesa();
-    loadPekerjaan();
+    _loadListPekerjaan();
   }, []);
 
   // useShallowEffect(() => {
@@ -77,19 +83,19 @@ const FormDataDiriUser = () => {
   //       .then(setKabupaten);
   // }, []);
 
-  async function loadJenisKelamin() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-jenis-kelamin")
-      .then((res) => res.json())
-      .then((val) =>
-        setJenisKelamin(Object.values(val).map((e: any) => e.name))
-      );
-  }
+  // async function loadJenisKelamin() {
+  //   const res = await fetch("/api/get/sumber-daya-partai/api-get-jenis-kelamin")
+  //     .then((res) => res.json())
+  //     .then((val) =>
+  //       setJenisKelamin(Object.values(val).map((e: any) => e.name))
+  //     );
+  // }
 
-  async function loadAgama() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-agama")
-      .then((res) => res.json())
-      .then((val) => setAgama(Object.values(val).map((e: any) => e.name)));
-  }
+  // async function loadAgama() {
+  //   const res = await fetch("/api/get/sumber-daya-partai/api-get-agama")
+  //     .then((res) => res.json())
+  //     .then((val) => setAgama(Object.values(val).map((e: any) => e.name)));
+  // }
 
   const loadProvinsi = async () => {
     const res = await fetch(`/api/master/master-provinsi-get-all`);
@@ -144,39 +150,84 @@ const FormDataDiriUser = () => {
         }
       });
   }
-  async function loadPekerjaan() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-pekerjaan")
-      .then((res) => res.json())
-      .then((val) => setPekerjaan(Object.values(val).map((e: any) => e.name)));
-  }
+  // async function loadPekerjaan() {
+  //   const res = await fetch("/api/get/sumber-daya-partai/api-get-pekerjaan")
+  //     .then((res) => res.json())
+  //     .then((val) => setPekerjaan(Object.values(val).map((e: any) => e.name)));
+  // }
 
   const router = useRouter();
   function dataDiriPartai() {
     router.push("/v2/form-data-partai");
   }
 
+  const onMediaSocial = () => {
+    if (Object.values(formMediaSocial.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiMediaSosialUserPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formMediaSocial.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
+  const onDatadiri = () => {
+    if (Object.values(formDataDiri.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiDataDiriPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataDiri.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
+  const formMediaSocial = useForm({
+    initialValues: {
+      data: {
+        instagram: "",
+        facebook: "",
+        tiktok: "",
+        twitter: "",
+        // masterMediaSocialId:1,
+        // userId:"",
+        // name:"",
+      },
+    },
+  });
+
   const formDataDiri = useForm({
     initialValues: {
       data: {
         nik: "",
         name: "",
-        email: "",
         tempatLahir: "",
         tanggalLahir: "",
-        jenisKelamin: "",
         phoneNumber: "",
-        instagram: "",
-        facebook: "",
-        tiktok: "",
-        twitter: "",
-        agama: "",
-        pekerjaan: "",
         alamat: "",
-        provinsi: "",
-        kabkot: "",
-        kecamatan: "",
-        desa: "",
-        rtrw: "",
+        rtRw: "",
+        masterJenisKelaminId: "",
+        masterAgamaId: "",
+        masterPekerjaanId: "",
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterKecamatanId: "",
+        masterDesaId: "",
       },
       validate: {
         email: (value: string) =>
@@ -184,16 +235,16 @@ const FormDataDiriUser = () => {
       },
     },
   });
-  const onDataPartai = () => {
-    if (Object.values(formDataDiri.values.data).includes("")) {
-      return toast("Lengkapi Data diri");
-    }
-    if (
-      formDataDiri.values.validate.email(formDataDiri.values.data.email) != null) {
-      return toast("Invalid email");
-    }
-    router.replace("/v2/form-data-partai");
-  };
+  // const onDataPartai = () => {
+  //   if (Object.values(formDataDiri.values.data).includes("")) {
+  //     return toast("Lengkapi Data diri");
+  //   }
+  //   // if (
+  //   //   formDataDiri.values.validate.email(formDataDiri.values.data.email) != null) {
+  //   //   return toast("Invalid email");
+  //   // }
+  //   router.replace("/v2/form-data-partai");
+  // };
   return (
     <>
       <WrapperDataDiriPartai>
@@ -248,13 +299,13 @@ const FormDataDiriUser = () => {
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("data.name")}
                               />
-                              <TextInput
+                              {/* <TextInput
                                 placeholder="Email"
                                 withAsterisk
                                 label="Email"
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("data.email")}
-                              />
+                              /> */}
                               <TextInput
                                 placeholder="Tempat Lahir"
                                 withAsterisk
@@ -275,14 +326,17 @@ const FormDataDiriUser = () => {
                                 )}
                               />
                               <Select
+                                data={sJenisKelamin.value.map((ag) => ({
+                                  value: ag.id,
+                                  label: ag.name,
+                                }))}
                                 placeholder="Jenis Kelamin"
                                 label="Jenis Kelamin"
                                 radius={"md"}
                                 withAsterisk
                                 searchable
-                                data={jenisKelamin}
                                 {...formDataDiri.getInputProps(
-                                  "data.jenisKelamin"
+                                  "data.masterJenisKelaminId"
                                 )}
                               />
                               <TextInput
@@ -301,7 +355,7 @@ const FormDataDiriUser = () => {
                                 // rightSection={<AiOutlineInstagram size="1.3rem" />}
                                 label="Instagram"
                                 radius={"md"}
-                                {...formDataDiri.getInputProps(
+                                {...formMediaSocial.getInputProps(
                                   "data.instagram"
                                 )}
                               />
@@ -311,7 +365,9 @@ const FormDataDiriUser = () => {
                                 label="Facebook"
                                 // rightSection={<AiOutlineFacebook size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("data.facebook")}
+                                {...formMediaSocial.getInputProps(
+                                  "data.facebook"
+                                )}
                               />
                               <TextInput
                                 placeholder="Tiktok"
@@ -319,7 +375,9 @@ const FormDataDiriUser = () => {
                                 label="Tiktok"
                                 // rightSection={<BsTiktok size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("data.tiktok")}
+                                {...formMediaSocial.getInputProps(
+                                  "data.tiktok"
+                                )}
                               />
                               <TextInput
                                 placeholder="Twitter"
@@ -327,31 +385,34 @@ const FormDataDiriUser = () => {
                                 label="Twitter"
                                 // rightSection={<AiOutlineTwitter size="1.3rem" />}
                                 radius={"md"}
-                                {...formDataDiri.getInputProps("data.twitter")}
+                                {...formMediaSocial.getInputProps(
+                                  "data.twitter"
+                                )}
                               />
                               <Select
-                                data={agama}
+                                data={sAgama.value.map((ag) => ({
+                                  value: ag.id,
+                                  label: ag.name,
+                                }))}
                                 radius={"md"}
                                 placeholder="Agama"
                                 label="Agama"
                                 searchable
                                 withAsterisk
-                                {...formDataDiri.getInputProps("data.agama")}
+                                {...formDataDiri.getInputProps(
+                                  "data.masterAgamaId"
+                                )}
                               />
                               <Select
                                 radius={"md"}
                                 placeholder="Pekerjaan"
                                 label="Pekerjaan"
-                                data={[
-                                  {
-                                    value: "Pegawai Negeri",
-                                    label: "Pegawai Negeri",
-                                  },
-                                  { value: "Swasta", label: "Swasta" },
-                                  { value: "Pengajar", label: "Pengajar" },
-                                ]}
+                                data={sListPekerjaan.value.map((pe) => ({
+                                  value: pe.id,
+                                  label: pe.name,
+                                }))}
                                 {...formDataDiri.getInputProps(
-                                  "data.pekerjaan"
+                                  "data.masterPekerjaanId"
                                 )}
                               />
                               <TextInput
@@ -380,9 +441,10 @@ const FormDataDiriUser = () => {
                                     );
                                     loadKabupaten(val);
                                   }
-                                  formDataDiri.values.data.provinsi = val!
+                                  formDataDiri.values.data.masterProvinceId =
+                                    val!;
                                 }}
-                              
+
                                 // onChange={selectedProvince}
                               />
                               {/* {JSON.stringify(selectedKabupaten)} */}
@@ -408,7 +470,8 @@ const FormDataDiriUser = () => {
                                     kabupaten.find((v) => v.id == val)
                                   );
                                   loadKecamatan(val!);
-                                  formDataDiri.values.data.kabkot = val!
+                                  formDataDiri.values.data.masterKabKotId =
+                                    val!;
                                 }}
                               />
                               {/* {JSON.stringify(selectedKecamatan.name)} */}
@@ -436,7 +499,8 @@ const FormDataDiriUser = () => {
                                     kecamatan.find((v) => v.id == val)
                                   );
                                   loadDesa(val!);
-                                  formDataDiri.values.data.kecamatan = val!
+                                  formDataDiri.values.data.masterKecamatanId =
+                                    val!;
                                 }}
                               />
                               {/* {JSON.stringify(selectedDesa.name)} */}
@@ -462,7 +526,7 @@ const FormDataDiriUser = () => {
                                   setSelectedDesa(
                                     desa.find((v) => v.id == val)
                                   );
-                                  formDataDiri.values.data.desa = val!
+                                  formDataDiri.values.data.masterDesaId = val!;
                                 }}
                                 searchable
                               />
@@ -472,7 +536,7 @@ const FormDataDiriUser = () => {
                                 label="RT/RW"
                                 radius={"md"}
                                 type="number"
-                                {...formDataDiri.getInputProps("data.rtrw")}
+                                {...formDataDiri.getInputProps("data.rtRw")}
                               />
                               <Center pt={20}>
                                 <Box w={150}>
@@ -482,10 +546,11 @@ const FormDataDiriUser = () => {
                                     bg={COLOR.merah}
                                     color="orange.9"
                                     type="submit"
-                                    onClick={() =>
-                                      console.log(formDataDiri.values)
-                                    }
-                                    // onClick={onDataPartai}
+                                    // onClick={() =>
+                                    //   console.log(formDataDiri.values, formMediaSocial.values)
+                                    // }
+                                    onClick={onDatadiri}
+                                    // onClick={onMediaSocial}
                                   >
                                     Simpan
                                   </Button>
