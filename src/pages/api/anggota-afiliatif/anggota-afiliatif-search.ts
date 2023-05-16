@@ -1,31 +1,21 @@
-import client from "@/lib/prisma";
+import client from "@/lib/prisma_db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const legislatifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { tingkat } = req.query
-    const data = await client.legislatif.findMany({
+const anggotaAfiliatifSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { search } = req.query;
+    const data = await client.anggotaAfiliatif.findMany({
         where: {
-            masterTingkatLegislatifId: Number(tingkat),
-            active: true
+            active: true,
+            User: {
+                DataDiri: {
+                    name: {
+                        contains: search as string
+                    }
+                }
+            }
         },
         select: {
             id: true,
-            jabatan: true,
-            periode: true,
-            noUrut: true,
-            dapil: true,
-            cakupanWilayah: true,
-            akd: true,
-            MasterProvince: {
-                select: {
-                    name: true
-                }
-            },
-            MasterKabKot: {
-                select: {
-                    name: true
-                }
-            },
             User: {
                 select: {
                     email: true,
@@ -33,15 +23,9 @@ const legislatifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                         select: {
                             name: true,
                             nik: true,
-                            phoneNumber: true,
-                            alamat: true,
                             tempatLahir: true,
                             tanggalLahir: true,
-                            MasterJenisKelamin: {
-                                select: {
-                                    name: true
-                                }
-                            }
+                            phoneNumber: true
                         }
                     },
                     UserMediaSocial: {
@@ -50,7 +34,6 @@ const legislatifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                         },
                         select: {
                             name: true,
-                            link: true,
                             MasterMediaSocial: {
                                 select: {
                                     name: true
@@ -59,10 +42,16 @@ const legislatifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                         }
                     }
                 }
+            },
+            MasterOrganisasiAfiliatif: {
+                select: {
+                    name: true
+                }
             }
         }
     })
+
     return res.status(200).json(data)
 }
 
-export default legislatifGetAll
+export default anggotaAfiliatifSearch

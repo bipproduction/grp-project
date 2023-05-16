@@ -5,6 +5,17 @@ const rencanaKunjunganProbowoGetAll = async (req: NextApiRequest, res: NextApiRe
     const data = await client.rencanaKunjunganPrabowo.findMany({
         where: {
             active: true
+        },
+        select: {
+            id : true,
+            judul: true,
+            tanggal: true,
+            img: true,
+            MasterStatusAksiNyata: {
+                select: {
+                    name: true
+                }
+            }
         }
     })
     return res.status(200).json(data)
