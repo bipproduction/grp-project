@@ -1,12 +1,19 @@
-import client from "@/lib/prisma";
+import client from "@/lib/prisma_db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const sumberDayaPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { status } = req.query;
+const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { status, search } = req.query;
     const data = await client.sumberDayaPartai.findMany({
         where: {
             active: true,
-            masterStatusKeanggotaanId: Number(status)
+            masterStatusKeanggotaanId: Number(status),
+            User: {
+                DataDiri: {
+                    name: {
+                        contains: search as string
+                    }
+                }
+            }
         },
         select: {
             id: true,
@@ -161,4 +168,4 @@ const sumberDayaPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json(data)
 }
 
-export default sumberDayaPartaiGetAll
+export default sumberDayaPartaiSearch

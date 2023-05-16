@@ -1,47 +1,31 @@
-import client from "@/lib/prisma";
+import client from "@/lib/prisma_db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const {tingkat} = req.query;
-    const data = await client.eksekutif.findMany({
+const legislatifSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { tingkat, search } = req.query;
+    const data = await client.legislatif.findMany({
         where: {
             active: true,
-            masterTingkatEksekutifId: Number(tingkat)
+            masterTingkatLegislatifId: Number(tingkat),
+            User: {
+                DataDiri: {
+                    name: {
+                        contains: search as string
+                    }
+                }
+            }
         },
         select: {
             id: true,
-            namaLembaga: true,
-            alamatKantor: true,
+            jabatan: true,
             periode: true,
-            jabatanNasional: true,
-            MasterJabatanEksekutifProvinsi: {
-                select: {
-                    name: true
-                }
-            },
+            noUrut: true,
+            dapil: true,
+            cakupanWilayah: true,
+            akd: true,
             MasterProvince: {
                 select: {
                     name: true
-                }
-            },
-            MasterJabatanEksekutifKabKot: {
-                select: {
-                    name: true
-                }
-            },
-            MasterJabatanEksekutifKabupaten: {
-                select: {
-                    name: true
-                }
-            },
-            MasterJabatanEksekutifKota: {
-                select: {
-                    name: true
-                }
-            },
-            MasterStatusEksekutif:{
-                select:{
-                    name : true
                 }
             },
             MasterKabKot: {
@@ -51,13 +35,20 @@ const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
             },
             User: {
                 select: {
-                    username: true,
                     email: true,
                     DataDiri: {
                         select: {
                             name: true,
                             nik: true,
+                            phoneNumber: true,
                             alamat: true,
+                            tempatLahir: true,
+                            tanggalLahir: true,
+                            MasterJenisKelamin: {
+                                select: {
+                                    name: true
+                                }
+                            }
                         }
                     },
                     UserMediaSocial: {
@@ -74,11 +65,11 @@ const eksekutifGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
                             }
                         }
                     }
-                },
+                }
             }
         }
     })
     return res.status(200).json(data)
 }
 
-export default eksekutifGetAll
+export default legislatifSearch

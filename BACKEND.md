@@ -3,74 +3,85 @@
 *baca bismillah dlu biar lancar*
 ----------------------------------
 
-- **User**     
-     - tambah = api/auth/user-post
-     - update = api/auth/user-update
+- **User**
+  - tambah = api/auth/user-post
+  - update = api/auth/user-update
 - **Aset Partai**
-     - tambah = api/aset-partai/aset-partai-post
-     - update = api/aset-partai/aset-partai-update
-     - get one = api/aset-partai/aset-partai-get-one?id=
-     - get all = api/aset-partai/aset-partai-get-all
-     - search = api/aset-partai/aset-partai-search?search= (by name)
+  - tambah = api/aset-partai/aset-partai-post
+  - update = api/aset-partai/aset-partai-update
+  - get one = api/aset-partai/aset-partai-get-one?id=
+  - get all = api/aset-partai/aset-partai-get-all
+  - search = api/aset-partai/aset-partai-search?search= (by name)
 - **Data Diri**
-     - tambah = api/form-data-diri/data-diri-post
-     - update = api/form-data-diri/data-diri-update
-     - get one = api/form-data-diri/data-diri-get-one?id= (yg dipake adalah userId)
-     - get all = api/form-data-diri/data-diri-get-all
+  - tambah = api/form-data-diri/data-diri-post
+  - update = api/form-data-diri/data-diri-update
+  - get one = api/form-data-diri/data-diri-get-one?id= (yg dipake adalah userId)
+  - get all = api/form-data-diri/data-diri-get-all
 - **Anggota Afiliatif**
-     - tambah = api/anggota-afiliatif/anggota-afiliatif-post
-     - update = api/anggota-afiliatif/anggota-afiliatif-update
+  - tambah = api/anggota-afiliatif/anggota-afiliatif-post
+  - update = api/anggota-afiliatif/anggota-afiliatif-update
+  - get one = api/anggota-afiliatif/anggota-afiliatif-get-one?id= (by id anggota afiliatif)
+  - get all = api/anggota-afiliatif/anggota-afiliatif-get-all
+  - search = api/anggota-afiliatif/anggota-afiliatif-search?search= (by name data diri)
 - **User Media Sosial**
-     - tambah = api/auth/user-media-sosial/user-media-sosial-post
-     - update = api/auth/user-media-sosial/user-media-sosial-update
+  - tambah = api/auth/user-media-sosial/user-media-sosial-post
+  - update = api/auth/user-media-sosial/user-media-sosial-update
 - **TPS/DPT**
-     - tambah = api/peta-kekuatan/tps-dpt/tps-dpt-post
-     - update = api/peta-kekuatan/tps-dpt/tps-dpt-update
-     - get one = api/peta-kekuatan/tps-dpt/tps-dpt-get-one?id=
-     - get all = api/peta-kekuatan/tps-dpt/tps-dpt-get-all
+  - tambah = api/peta-kekuatan/tps-dpt/tps-dpt-post
+  - update = api/peta-kekuatan/tps-dpt/tps-dpt-update
+  - get one = api/peta-kekuatan/tps-dpt/tps-dpt-get-one?id=
+  - get all = api/peta-kekuatan/tps-dpt/tps-dpt-get-all
 - **Rencana Kunjungan Prabowo**
-     - tambah = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
-     - update = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
-     - get one = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id=
-     - get all = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all
+  - tambah = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
+  - update = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
+  - get one = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id= (by id rencana kunjungan)
+  - get all = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all
+  - search = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-search?search= (by judul rencana kunjungan)
 - **List Undangan Prabowo**
-     - tambah = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-post
-     - update = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update
-     - get one = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-one?id=
-     - get all = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-all
+  - tambah = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-post
+  - update = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update
+  - get one = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-one?id= (by id list undangan)
+  - get all = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-all
+  - search = api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-search?search= (by nama list undangan)
 - **Rencana Kunjungan Gerindra**
-     - tambah = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post
-     - update = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update
-     - get one = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id=
-     - get all = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-all
-- **List Undangan Gerindra** 
-     - tambah = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post
-     - update = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update
-     - get one = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-one?id=
-     - get all = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-all
+  - tambah = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post
+  - update = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update
+  - get one = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-one?id= (by id rencana kunjungan)
+  - get all = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-get-all
+  - search = api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-search?search= (by judul rencana kunjungan)
+- **List Undangan Gerindra**
+  - tambah = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post
+  - update = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update
+  - get one = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-one?id= (by id list undangan)
+  - get all = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-get-all
+  - search = api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-search?search= (by nama undangan)
 - **Calon Pemilih Potensial**
-     - tambah = api/peta-kekuatan/cpt/cpt-post
-     - update = api/peta-kekuatan/cpt/cpt-update
-     - get one = api/peta-kekuatan/cpt/cpt-get-one?id=
-     - get all = api/peta-kekuatan/cpt/cpt-get-all
+  - tambah = api/peta-kekuatan/cpt/cpt-post
+  - update = api/peta-kekuatan/cpt/cpt-update
+  - get one = api/peta-kekuatan/cpt/cpt-get-one?id= (by id calon pemilih potensial)
+  - get all = api/peta-kekuatan/cpt/cpt-get-all
+  - search = api/peta-kekuatan/cpt/cpt-search?search= (by nama calon pemilih potensial)
 - **Eksekutif**
-     - tambah = api/peta-kekuatan/eksekutif/eksekutif-post
-     - update = api/peta-kekuatan/eksekutif/eksekutif-update
-     - get one = api/peta-kekuatan/eksekutif/eksekutif-get-one?id=
-     - get all = api/peta-kekuatan/eksekutif/eksekutif-get-all?tingkat= (by master tingkat eksekutif)
+  - tambah = api/peta-kekuatan/eksekutif/eksekutif-post
+  - update = api/peta-kekuatan/eksekutif/eksekutif-update
+  - get one = api/peta-kekuatan/eksekutif/eksekutif-get-one?id=
+  - get all = api/peta-kekuatan/eksekutif/eksekutif-get-all?tingkat= (by master tingkat eksekutif)
+  - search = api/peta-kekuatan/eksekutif/eksekutif-search?tingkat=...&search=... (by tingkat = id tingkat eksekutif & search = name data diri)
 - **Legislatif**
-     - tambah = api/peta-kekuatan/legislatif/legislatif-post
-     - update = api/peta-kekuatan/legislatif/legislatif-update
-     - get one = api/peta-kekuatan/legislatif/legislatif-get-one?id=
-     - get all = api/peta-kekuatan/legislatif/legislatif-get-all
+  - tambah = api/peta-kekuatan/legislatif/legislatif-post
+  - update = api/peta-kekuatan/legislatif/legislatif-update
+  - get one = api/peta-kekuatan/legislatif/legislatif-get-one?id=
+  - get all = api/peta-kekuatan/legislatif/legislatif-get-all?tingkat= (by master tingkat legislatif)
+  - search = api/peta-kekuatan/legislatif/legislatif-search?tingkat=...&search... (by tingkat = id tingkat legislatif & search = name data diri)
 - **Partai Pengusung Eksekutif**
-     - tambah = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-post
-     - update = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-update
+  - tambah = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-post
+  - update = api/peta-kekuatan/partai-pengusung-eksekutif/partai-pengusung-eksekutif-update
 - **DPD DPC Media Sosial**
-     - tambah = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-post
-     - update = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-update
+  - tambah = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-post
+  - update = api/sumber-daya-partai/dpd-dpc-media-social/dpd-dpc-media-social-update
 - **Sumber Daya Partai**
-     - tambah = api/sumber-daya-partai/sumber-daya-partai-post
-     - update = api/sumber-daya-partai/sumber-daya-partai-update
-     - get one = api/sumber-daya-partai/sumber-daya-partai-get-one?id=
-     - get all = api/sumber-daya-partai/sumber-daya-partai-get-all
+  - tambah = api/sumber-daya-partai/sumber-daya-partai-post
+  - update = api/sumber-daya-partai/sumber-daya-partai-update
+  - get one = api/sumber-daya-partai/sumber-daya-partai-get-one?id= (by id sumber daya partai)
+  - get all = api/sumber-daya-partai/sumber-daya-partai-get-all?status= (by master status keanggotaan)
+  - search = api/sumber-daya-partai/sumber-daya-partai-search?status=...&search=... (by status = id master status keanggotaan & search = name data diri)

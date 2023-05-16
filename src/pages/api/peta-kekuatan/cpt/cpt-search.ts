@@ -1,10 +1,14 @@
-import client from '@/lib/prisma';
-import { NextApiRequest, NextApiResponse } from 'next';
+import client from "@/lib/prisma_db";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const calonPemilihPotensialGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
+const calonPemilihPotensialSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { search } = req.query;
     const data = await client.calonPemilihPotensial.findMany({
         where: {
-            active: true
+            active: true,
+            nama: {
+                contains: search as string
+            }
         },
         select: {
             id: true,
@@ -48,7 +52,9 @@ const calonPemilihPotensialGetAll = async (req: NextApiRequest, res: NextApiResp
 
         }
     })
+
     return res.status(200).json(data)
+
 }
 
-export default calonPemilihPotensialGetAll
+export default calonPemilihPotensialSearch

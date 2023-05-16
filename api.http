@@ -253,8 +253,18 @@ Content-Type: application/json
     "statusSosial" : "Kaya"
 }
 
+
 ### GET ONE CALON PEMILIH POTENSIAL
 GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-one?id=clhiuqvf5000jsmw0ouhhhcyp HTTP/1.1
+
+
+### GET ALL CALON PEMILIH POTENSIAL
+GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-all HTTP/1.1
+
+
+### GET SEARCH CALON PEMILIH POTENSIAL
+GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-search?search=ads HTTP/1.1
+
 
 ### POST RENCANA KUNJUNGAN PRABOWO 
 POST  http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post HTTP/1.1
@@ -282,6 +292,17 @@ Content-Type: application/json
 
 ### GET ONE RENCANA KUNJUNGAN PRABOWO 
 GET http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one?id=clhiuroil000lsmw00b2u1j93 HTTP/1.1
+
+
+
+### GET ALL RENCANA KUNJUNGAN PRABOWO 
+GET http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-all HTTP/1.1
+
+
+### GET SEARCH RENCANA KUNJUNGAN PRABOWO 
+GET http://localhost:3000/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-search?search=r HTTP/1.1
+
+
 
 ### POST RENCANA KUNJUNGAN GERINDRA
 POST http://localhost:3000/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post HTTP/1.1
@@ -332,6 +353,16 @@ Content-Type: application/json
 
 ### GET ONE LIST UNDANGAN PRABOWO
 GET http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-one?id=clhiuukbi000vsmw0pz79uavy HTTP/1.1
+
+
+### GET ALL LIST UNDANGAN PRABOWO
+GET http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-get-all HTTP/1.1
+
+
+### GET SEARCH LIST UNDANGAN PRABOWO
+GET http://localhost:3000/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-search?search=dw HTTP/1.1
+
+
 
 ### POST LIST UNDANGAN GERINDRA
 POST http://localhost:3000/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post HTTP/1.1
@@ -404,15 +435,23 @@ Content-Type: application/json
 GET http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-get-one?id=clgg6z68b000vacojpc6wo1tb HTTP/1.1
 
 
+### GET ALL EKSEKUTIF
+GET http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-get-all?tingkat=1 HTTP/1.1
+
+
+### GET SEARCH EKSEKUTIF
+GET http://localhost:3000/api/peta-kekuatan/eksekutif/eksekutif-search?tingkat=1&search=ds HTTP/1.1
+
+
 
 ### POST LEGISLATIF
 POST http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "userId" : "clhiub2c00004smw0oa21cq33",
     "masterProvinceId" : 1,
-    "masterKabKotId" : 1,
+    "masterKabKotId" : null,
     "masterTingkatLegislatifId" : 1,
     "jabatan" : "Ketua",
     "periode" : "2019",
@@ -444,6 +483,13 @@ Content-Type: application/json
 ### GET ONE LEGISLATIF
 GET http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-get-one?id=clgg7u2y5000xacoj0cjcchsw HTTP/1.1
 
+
+### GET ALL LEGISLATIF
+GET http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-get-all?tingkat=1 HTTP/1.1
+
+
+### GET SEARCH LEGISLATIF
+GET http://localhost:3000/api/peta-kekuatan/legislatif/legislatif-search?tingkat=1&search=amalia HTTP/1.1
 
 
 ### POST PARTAI PENGUSUNG EKSEKUTIF
@@ -499,10 +545,10 @@ POST http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-post HTTP/1
 Content-Type: application/json
 
 {
-    "userId" : "clgg1bp040000acyjqn2nvilc",
+    "userId" : "clhiub2c00004smw0oa21cq33",
     "masterStatusKeanggotaanId" : 1,
     "masterTingkatPengurusId" : 1,
-    "masterJabatanId" : 1,
+    "masterJabatanId" : null,
     "masterJabatanDewanPembinaId" : 1,
     "masterJabatanDewanPimpinanPusatId" : 1,
     "masterJabatanDewanPimpinanDaerahId" : 1,
@@ -551,6 +597,14 @@ Content-Type: application/json
 
 ### GET ONE SUMBER DAYA PARTAI / KEANGGOTAAN
 GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clgg9oijk0017acoj2t8ort8m HTTP/1.1
+
+
+### GET ALL SUMBER DAYA PARTAI / KEANGGOTAAN
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-all?status=1 HTTP/1.1
+
+
+### GET SEARCH SUMBER DAYA PARTAI / KEANGGOTAAN
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-search?status=1&search=amalia HTTP/1.1
 
 
 ###SEEDER USER ROLE

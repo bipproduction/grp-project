@@ -1,10 +1,14 @@
-import client from "@/lib/prisma";
+import client from "@/lib/prisma_db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const listUndanganGerindraGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
+const listUndanganGerindraSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { search } = req.query;
     const data = await client.listUndanganGerindra.findMany({
         where: {
-            active: true
+            active: true,
+            nama: {
+                contains: search as string
+            }
         },
         select: {
             id: true,
@@ -19,4 +23,4 @@ const listUndanganGerindraGetAll = async (req: NextApiRequest, res: NextApiRespo
     return res.status(200).json(data)
 }
 
-export default listUndanganGerindraGetAll
+export default listUndanganGerindraSearch
