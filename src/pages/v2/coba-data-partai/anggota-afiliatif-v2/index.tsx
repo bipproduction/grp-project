@@ -27,6 +27,9 @@ import { useForm } from "@mantine/form";
 import { useShallowEffect } from "@mantine/hooks";
 import { _loadOrganisasiAfiliatif } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
 import { sOrganisasiAfiliatif } from "@/s_state/organisasi_afiliatif/s_organisasi_afiliatif";
+import toast from "react-simple-toasts";
+import { api } from "@/lib/api-backend";
+import { sUser } from "@/s_state/s_user";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -55,11 +58,32 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
     _loadOrganisasiAfiliatif()
   },[])
 
+  const onDataAfiliatif = () => {
+    if (Object.values(formAnggotaAfiliatif.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiAnggotaAfiliatifPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formAnggotaAfiliatif.values.data),
+    }).then(async (res) => {
+      if (res.status === 200) {
+        const data = await res.json()
+        localStorage.setItem("user_id", data.id)
+        sUser.value = data
+        console.log(sUser.value)
+        toast("succes")
+      }
+    })
+  };
+
   const formAnggotaAfiliatif = useForm({
     initialValues: {
       data: {
-        tingkatPengurus: "",
-        afiliatif: ""
+        userId: localStorage.getItem("user_id"),
+        masterOrganisasiAfiliatifId: ""
       }
     }
   })
@@ -105,7 +129,7 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                               * Wajib diisi
                             </Text>
                           </Box>
-                          <Select
+                          {/* <Select
                             onChange={(val) => {
                               formAnggotaAfiliatif.values.data.tingkatPengurus =val!
                             }}
@@ -116,10 +140,10 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                             data={["Organisasi Afiliatif"]}
                             // onChange={(val) => {
                             //   console.log(val)
-                          />
+                          /> */}
                           <Select
                           onChange={(val) => {
-                            formAnggotaAfiliatif.values.data.afiliatif =val!
+                            formAnggotaAfiliatif.values.data.masterOrganisasiAfiliatifId =val!
                           }}
                           data={sOrganisasiAfiliatif.value.map((val) => ({
                             value: val.id,
@@ -145,8 +169,8 @@ function AnggotaAfiliatifV2({ setNilai }: any) {
                                 bg={COLOR.merah}
                                 color="orange.9"
                                 type="submit"
-                                // onClick={onDataPartai}
-                                onClick={() => console.log(formAnggotaAfiliatif.values)}
+                                onClick={onDataAfiliatif}
+                                // onClick={() => console.log(formAnggotaAfiliatif.values)}
                               >
                                 Simpan
                               </Button>
