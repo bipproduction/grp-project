@@ -102,8 +102,8 @@ model AnggotaAfiliatif {
 
 model UserMediaSocial {
   id                  String            @id @default(cuid())
-  name                String
-  link                String
+  name                String?
+  link                String?
   active              Boolean           @default(true)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
@@ -538,8 +538,8 @@ model CalonPemilihPotensial {
 
 model CPTMediaSocial {
   id                      String                @id @default(cuid())
-  name                    String
-  link                    String
+  name                    String?
+  link                    String?
   active                  Boolean               @default(true)
   createdAt               DateTime              @default(now())
   updatedAt               DateTime              @default(now()) @updatedAt
@@ -615,10 +615,10 @@ model Eksekutif {
   masterJabatanEksekutifKotaId      Int?
   MasterStatusEksekutif             MasterStatusEksekutif?           @relation(fields: [masterStatusEksekutifId], references: [id])
   masterStatusEksekutifId           Int?
-  namaLembaga                       String                           @default("")
-  jabatanNasional                   String                           @default("")
-  periode                           String
-  alamatKantor                      String
+  namaLembaga                       String?                          @default("")
+  jabatanNasional                   String?                          @default("")
+  periode                           String?
+  alamatKantor                      String?
   active                            Boolean                          @default(true)
   createdAt                         DateTime                         @default(now())
   updatedAt                         DateTime                         @default(now()) @updatedAt
@@ -635,12 +635,12 @@ model Legislatif {
   masterKabKotId            Int?
   MasterTingkatLegislatif   MasterTingkatLegislatif? @relation(fields: [masterTingkatLegislatifId], references: [id])
   masterTingkatLegislatifId Int?
-  jabatan                   String
-  periode                   String
-  noUrut                    Int
-  dapil                     String
-  cakupanWilayah            String
-  akd                       String
+  jabatan                   String?
+  periode                   String?
+  noUrut                    Int?
+  dapil                     String?
+  cakupanWilayah            String?
+  akd                       String?
   active                    Boolean                  @default(true)
   createdAt                 DateTime                 @default(now())
   updatedAt                 DateTime                 @default(now()) @updatedAt
@@ -684,8 +684,8 @@ model SumberDayaPartai {
   masterDesaId                                Int?
   MasterNegara                                MasterNegara?                              @relation(fields: [masterNegaraId], references: [id])
   masterNegaraId                              Int?
-  alamatKantor                                String
-  waAdmin                                     String
+  alamatKantor                                String?
+  waAdmin                                     String?
   active                                      Boolean                                    @default(true)
   createdAt                                   DateTime                                   @default(now())
   updatedAt                                   DateTime                                   @default(now()) @updatedAt
@@ -709,8 +709,8 @@ model DPDDPCMediaSocial {
   masterMediaSocialId Int
   SumberDayaPartai    SumberDayaPartai  @relation(fields: [sumberDayaPartaiId], references: [id])
   sumberDayaPartaiId  String
-  name                String
-  link                String
+  name                String?
+  link                String?
   active              Boolean           @default(true)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
