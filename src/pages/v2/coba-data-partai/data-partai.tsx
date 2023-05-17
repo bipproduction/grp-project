@@ -44,6 +44,7 @@ import KaderPartaiV2 from "./kader-partai-v2";
 import AnggotaPartaiV2 from "./anggota-partai-v2";
 import StrukturPartaiV2 from "./struktur-partai-v2";
 import SayapPartaiV2 from "./sayap-partai-v2";
+import { useForm } from "@mantine/form";
 
 
 const DataPartai = () => {
@@ -54,6 +55,14 @@ const DataPartai = () => {
     router.push("/v2/coba-data-partai/anggota-afiliatif-v2");
   }
   const [value, setValue] = useState<any>();
+
+  const formStatusAnggota = useForm({
+    initialValues: {
+      data: {
+        masterStatusKeanggotaanId: ''
+      }
+    }
+  })
   return (
     <>
       <WrapperDataDiriPartai>
@@ -98,8 +107,8 @@ const DataPartai = () => {
                           </Box>
                           <Select
                             radius={"md"}
-                            label={"Pilih Tingkat Anggota"}
-                            placeholder="Pilih Tingkat Anggota"
+                            label={"Pilih Status Anggota"}
+                            placeholder="Pilih Status Anggota"
                             withAsterisk
                             data={[
                               "Struktur Partai",
@@ -115,14 +124,14 @@ const DataPartai = () => {
                                 setValue(<StrukturPartaiV2 setNilai={val} />);
                               } else {
                                 if (val == "Sayap Partai") {
-                                  setValue(<SayapPartaiV2 setNilai={val} />);
+                                  setValue(<SayapPartaiV2  setNilai={val} />);
                                 } else {
                                   if (val == "Kader Partai") {
-                                    setValue(<KaderPartaiV2 setNilai={val} />);
+                                    setValue(<KaderPartaiV2  setNilai={val} />);
                                   } else {
                                     if (val == "Anggota Partai") {
                                       setValue(
-                                        <AnggotaPartaiV2 setNilai={val} />
+                                        <AnggotaPartaiV2  setNilai={val} />
                                       );
                                     }
                                   }

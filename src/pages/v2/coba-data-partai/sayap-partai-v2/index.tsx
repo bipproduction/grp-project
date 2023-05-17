@@ -20,6 +20,7 @@ import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
+import toast from "react-simple-toasts";
 
 const  SayapPartaiV2 = ({ setNilai }: any) => {
   const [value, setValue] = useState<any>();
@@ -72,12 +73,32 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
   const [value, setValue] = useState("")
   const router = useRouter()
 
+  const PimpinanPusat = () => {
+    if (
+      Object.values(formSayapPimpinanPusat.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formSayapPimpinanPusat.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
 
   const formSayapPimpinanPusat = useForm({
     initialValues: {
       data: {
-        sayapPartai: "",
-        jabatan: ""
+        userId: localStorage.getItem("user_id"),
+        masterSayapPartaiId: "",
+        masterJabatanDewanPimpinanPusatId: ""
       }
     }
   })
@@ -87,7 +108,7 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
         // {...formStrukturPartai.getInputProps("sayapPartai")}
         onChange={(val) => {
           setValue(val!)
-          formSayapPimpinanPusat.values.data.sayapPartai= val!
+          formSayapPimpinanPusat.values.data.masterSayapPartaiId= val!
         }}
         data={sSayapPartai.value.map((val) => ({
           value: val.id,
@@ -104,7 +125,7 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
       <Select
       onChange={(val) => {
         setValue(val!)
-        formSayapPimpinanPusat.values.data.jabatan= val!
+        formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId= val!
       }}
         label="Jabatan"
         withAsterisk
@@ -129,8 +150,8 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() => console.log(formSayapPimpinanPusat.values, set, setNilai)}
+            onClick={PimpinanPusat}
+            // onClick={() => console.log(formSayapPimpinanPusat.values, set, setNilai)}
           >
             Simpan
           </Button>
@@ -142,16 +163,38 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
 
 const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => {
   const [value, setValue] =useState("")
+  const router = useRouter()
+
+  const PimpinanDaerah = () => {
+    if (
+      Object.values(formSayapDewanPimpinanDaerah.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formSayapDewanPimpinanDaerah.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
 
   const formSayapDewanPimpinanDaerah = useForm({
     initialValues: {
       data: {
-        sayapPartai: "",
-        provinsi: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterSayapPartaiId: "",
+        masterProvinceId: "",
+        masterJabatanDewanPimpinanDaerahId: "",
         alamatKantor: "",
-        nomorWA: "",
-        medsos: ""
+        waAdmin: "",
+        // medsos: ""
       }
     }
   })
@@ -161,7 +204,7 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
         // {...formStrukturPartai.getInputProps("sayapPartai")}
         onChange={(val) => {
           setValue(val!)
-          formSayapDewanPimpinanDaerah.values.data.sayapPartai = val!
+          formSayapDewanPimpinanDaerah.values.data.masterSayapPartaiId = val!
         }}
         data={sSayapPartai.value.map((val) => ({
           value: val.id,
@@ -184,7 +227,7 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
         // }))}
         onChange={(val) => {
           setValue(val!)
-          formSayapDewanPimpinanDaerah.values.data.provinsi = val!
+          formSayapDewanPimpinanDaerah.values.data.masterProvinceId = val!
         }}
         data={sProvinsi.value.map((val) => ({
           value: val.id,
@@ -201,7 +244,7 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
         // {...formStrukturPartai.getInputProps("jabatan")}
         onChange={(val) => {
           setValue(val!)
-          formSayapDewanPimpinanDaerah.values.data.jabatan = val!
+          formSayapDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId = val!
         }}
         data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
           value: val.id,
@@ -224,7 +267,7 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
         label="Alamat Kantor"
       />
       <TextInput
-        {...formSayapDewanPimpinanDaerah.getInputProps("data.nomorWA")}
+        {...formSayapDewanPimpinanDaerah.getInputProps("data.waAdmin")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -232,14 +275,14 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
         label="Nomor WA Admin"
         type="number"
       />
-      <TextInput
+      {/* <TextInput
         {...formSayapDewanPimpinanDaerah.getInputProps("data.medsos")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Add Media Social"
         label="Add Media Social"
-      />
+      /> */}
       <Center pt={20}>
         <Box w={350}>
           <Button
@@ -252,8 +295,8 @@ const DewanPimpinanDaerah = ({ set, setNilai }: { set: any, setNilai: any }) => 
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() => console.log(formSayapDewanPimpinanDaerah.values, set, setNilai)}
+            onClick={PimpinanDaerah}
+            // onClick={() => console.log(formSayapDewanPimpinanDaerah.values, set, setNilai)}
           >
             Simpan
           </Button>
@@ -343,16 +386,39 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
     loadProvinsi()
   },[])
   const [value, setValue] = useState("")
+  const router = useRouter()
+
+  const PimpinanCabang = () => {
+    if (
+      Object.values(formSayapDewanPimpinanCabang.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formSayapDewanPimpinanCabang.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const formSayapDewanPimpinanCabang = useForm({
     initialValues: {
       data: {
-        sayapPartai: "",
-        provinsi: "",
-        kabKot: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterSayapPartaiId: "",
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterJabatanDewanPimpinanCabangId: "",
         alamatKantor: "",
-        nomorWA: "",
-        medsos: ""
+        waAdmin: "",
+        // medsos: ""
       }
     }
   })
@@ -363,7 +429,7 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
           // {...formStrukturPartai.getInputProps("sayapPartai")}
           onChange={(val) => {
             setValue(val!)
-            formSayapDewanPimpinanCabang.values.data.sayapPartai= val!
+            formSayapDewanPimpinanCabang.values.data.masterSayapPartaiId= val!
           }}
           data={sSayapPartai.value.map((val) => ({
             value: val.id,
@@ -399,7 +465,7 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
               )
               loadKabupaten(val)
             }
-            formSayapDewanPimpinanCabang.values.data.provinsi = val!
+            formSayapDewanPimpinanCabang.values.data.masterProvinceId = val!
           }}
           radius={"md"}
           mt={10}
@@ -433,7 +499,7 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
               kabupaten.find((v) => v.id == val)
             )
             loadKecamatan(val!)
-            formSayapDewanPimpinanCabang.values.data.kabKot = val!
+            formSayapDewanPimpinanCabang.values.data.masterKabKotId = val!
           }}
           radius={"md"}
           mt={10}
@@ -447,7 +513,7 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
           // {...formStrukturPartai.getInputProps("jabatan")}
           onChange={(val) => {
             setValue(val!)
-            formSayapDewanPimpinanCabang.values.data.jabatan = val!
+            formSayapDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId = val!
           }}
           data={sJabatanDewanPimpinanCabang.value.map((val) => ({
             value: val.id,
@@ -470,7 +536,7 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
           label="Alamat Kantor"
         />
         <TextInput
-          {...formSayapDewanPimpinanCabang.getInputProps("data.nomorWA")}
+          {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
           radius={"md"}
           mt={10}
           withAsterisk
@@ -478,14 +544,14 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
           label="Nomor WA Admin"
           type="number"
         />
-        <TextInput
+        {/* <TextInput
           {...formSayapDewanPimpinanCabang.getInputProps("data.medsos")}
           radius={"md"}
           mt={10}
           withAsterisk
           placeholder="Add Media Social"
           label="Add Media Social"
-        />
+        /> */}
       </ScrollArea>
       <Center pt={20}>
         <Box w={350}>
@@ -499,8 +565,8 @@ const DewanPimpinanCabang = ({ set, setNilai }: { set: any, setNilai: any }) => 
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() => console.log(formSayapDewanPimpinanCabang.values, set, setNilai)}
+            onClick={PimpinanCabang}
+            // onClick={() => console.log(formSayapDewanPimpinanCabang.values, set, setNilai)}
           >
             Simpan
           </Button>
