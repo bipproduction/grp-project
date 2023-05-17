@@ -35,6 +35,7 @@ import { sUser } from "@/s_state/s_user";
 import { number } from "echarts";
 import { _loadMediaSocial } from "@/load_data/media_social/load_media_social";
 import { sMediaSocial } from "@/s_state/media_social/s_media_social";
+import { apiGetMaster } from "@/lib/api-get-master";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -80,7 +81,7 @@ const FormDataDiriUser = () => {
     _loadAgama();
     loadProvinsi();
     _loadListPekerjaan();
-    _loadMediaSocial()
+    _loadMediaSocial();
   }, []);
 
   // useShallowEffect(() => {
@@ -124,7 +125,6 @@ const FormDataDiriUser = () => {
       });
   };
 
-
   async function loadKecamatan(idKabkot: string) {
     const res = await fetch(
       // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
@@ -162,62 +162,86 @@ const FormDataDiriUser = () => {
   //     .then((res) => res.json())
   //     .then((val) => setPekerjaan(Object.values(val).map((e: any) => e.name)));
   // }
+  const [listData, setListData] = useState([
+    {
+      name: "",
+      userId: "",
+      masterMediaSocialId: 1,
+    },
+    {
+      name: "",
+      userId: "",
+      masterMediaSocialId: 2,
+    },
+    {
+      name: "",
+      userId: "",
+      masterMediaSocialId: 3,
+    },
+    {
+      name: "",
+      userId: "",
+      masterMediaSocialId: 4,
+    },
+  ]);
 
   const router = useRouter();
-  const {id} =router.query
+  const { id } = router.query;
   function dataDiriPartai() {
     router.push("/v2/form-data-partai");
   }
 
-  const onMediaSocial = () => {
-    if (Object.values(formMediaSocial.values.data).includes("")) {
-      return toast("Lengkapi Data Diri");
-    }
-    fetch(api.apiMediaSosialUserPost, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formMediaSocial.values.data),
-    }).then((v) => {
-      if (v.status === 201) {
-        toast("Sukses");
-        router.reload();
-      }
-    });
-  };
+  const onDatadiri = async () => {
+    const adaKosong = listData.find((val) => _.values(val).includes(""));
+    if (adaKosong) return toast("Lengkapi data diri");
 
-  const onDatadiri = () => {
     if (Object.values(formDataDiri.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
-    fetch(api.apiDataDiriPost, {
+    const pertama = await fetch(api.apiDataDiriPost, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formDataDiri.values.data),
     }).then(async (res) => {
-      if (res.status === 200) {
-        const data = await res.json()
-        localStorage.setItem("user_id", data.id)
-        sUser.value = data
-        console.log(sUser.value)
-        toast("succes")
+      if (res.status === 201) {
+        const data = await res.json();
+        console.log(data)
+        return data;
+       
       }
-    })
+      return null;
+    });
+
+    console.log(pertama)
+    if (!pertama) return toast("gagal");
+    
+    for (let item of listData) {
+      await fetch(api.apiMediaSosialUserPost, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+    }
+
+    localStorage.setItem("user_id", pertama.id);
+    sUser.value = pertama;
+    // console.log(sUser.value);
+    toast("succes");
+    router.push("/v2/coba-data-partai/data-partai");
   };
 
   const formMediaSocial = useForm({
     initialValues: {
       data: {
-        link: "link nanti",
-        name: "",
-        userId: localStorage.getItem("user_id"),
-        masterMediaSocialId: 1,
-        // masterMediaSocialId:1
-        // userId:"",
-        // name:"",
+        // listData(),
+        // link: "prosess",
+        // name: "",
+        // userId: localStorage.getItem("user_id"),
+        // masterMediaSocialId: onchange={()},
       },
     },
   });
@@ -257,7 +281,14 @@ const FormDataDiriUser = () => {
   //   // }
   //   router.replace("/v2/form-data-partai");
   // };
-  const userId = sUser.value.id;
+
+  const [listMediaSocial, setListMediaSocial] = useState<any[] | undefined>();
+
+  useShallowEffect(() => {
+    fetch(apiGetMaster.apiMediaSocial)
+      .then((val) => val.json())
+      .then(setListMediaSocial);
+  }, []);
   return (
     <>
       <WrapperDataDiriPartai>
@@ -362,20 +393,37 @@ const FormDataDiriUser = () => {
                                   "data.phoneNumber"
                                 )}
                               />
-                              {JSON.stringify(sMediaSocial)}
+                              {/* {JSON.stringify(sMediaSocial)} */}
                               <TextInput
-                              {...formMediaSocial.getInputProps(
-                                "data.name"
-                              )}
-                              // onChange={() => sMediaSocial.value.find((v) => v.id)}
+                                onChange={(val) => {
+                                  const index = listData?.findIndex(
+                                    (v) => v.masterMediaSocialId == 1
+                                  );
+                                  listData[index].name =
+                                    val.currentTarget.value;
+                                  listData[index].userId =
+                                    localStorage.getItem("user_id")!;
+                                  setListData(listData);
+                                }}
+                                // {...formMediaSocial.values.data}
                                 placeholder="Instagram"
                                 withAsterisk
-                                // rightSection={<AiOutlineInstagram size="1.3rem" />}
                                 label="Instagram"
                                 radius={"md"}
                               />
                               <TextInput
                                 placeholder="Facebook"
+                                onChange={(val) => {
+                                  const index = listData?.findIndex(
+                                    (v) => v.masterMediaSocialId == 2
+                                  );
+                                  listData[index].name =
+                                    val.currentTarget.value;
+                                  listData[index].userId =
+                                    localStorage.getItem("user_id")!;
+                                  setListData(listData);
+                                }}
+                                // {...formMediaSocial.values.data}
                                 withAsterisk
                                 label="Facebook"
                                 // rightSection={<AiOutlineFacebook size="1.3rem" />}
@@ -388,6 +436,17 @@ const FormDataDiriUser = () => {
                                 placeholder="Tiktok"
                                 withAsterisk
                                 label="Tiktok"
+                                onChange={(val) => {
+                                  const index = listData?.findIndex(
+                                    (v) => v.masterMediaSocialId == 3
+                                  );
+                                  listData[index].name =
+                                    val.currentTarget.value;
+                                  listData[index].userId =
+                                    localStorage.getItem("user_id")!;
+                                  setListData(listData);
+                                }}
+                                // {...formMediaSocial.values.data}
                                 // rightSection={<BsTiktok size="1.3rem" />}
                                 radius={"md"}
                                 // {...formMediaSocial.getInputProps(
@@ -398,6 +457,16 @@ const FormDataDiriUser = () => {
                                 placeholder="Twitter"
                                 withAsterisk
                                 label="Twitter"
+                                onChange={(val) => {
+                                  const index = listData?.findIndex(
+                                    (v) => v.masterMediaSocialId == 4
+                                  );
+                                  listData[index].name =
+                                    val.currentTarget.value;
+                                  listData[index].userId =
+                                    localStorage.getItem("user_id")!;
+                                  setListData(listData);
+                                }}
                                 // rightSection={<AiOutlineTwitter size="1.3rem" />}
                                 radius={"md"}
                                 // {...formMediaSocial.getInputProps(
@@ -417,7 +486,6 @@ const FormDataDiriUser = () => {
                                 {...formDataDiri.getInputProps(
                                   "data.masterAgamaId"
                                 )}
-
                               />
                               <Select
                                 radius={"md"}
@@ -565,8 +633,8 @@ const FormDataDiriUser = () => {
                                     // onClick={() =>
                                     //   console.log(formDataDiri.values, formMediaSocial.values)
                                     // }
-                                    // onClick={onDatadiri}
-                                    onClick={onMediaSocial}
+                                    onClick={onDatadiri}
+                                    // onClick={onMediaSocial}
                                   >
                                     Simpan
                                   </Button>

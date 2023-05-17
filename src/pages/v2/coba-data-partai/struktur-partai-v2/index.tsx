@@ -37,12 +37,33 @@ import _ from "lodash";
 import { api } from "@/lib/api-backend";
 import { sNegara } from "@/s_state/negara/s_negara";
 import { _loadNegara } from "@/load_data/negara/load_negara";
+import { sUser } from "@/s_state/s_user";
 
 const StrukturPartaiV2 = ({ setNilai }: any) => {
+  const TingkatPengurus = () => {
+    if (Object.values(formTingkatPengurus.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiDataDiriPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formTingkatPengurus.values.data),
+    }).then(async (res) => {
+      if (res.status === 200) {
+        const data = await res.json();
+        localStorage.setItem("user_id", data.id);
+        sUser.value = data;
+        console.log(sUser.value);
+        toast("succes");
+      }
+    });
+  };
   const formTingkatPengurus = useForm({
     initialValues: {
       data: {
-        tingkatPengurus: "",
+        masterTingkatPengurusId: "",
       },
     },
   });
@@ -139,7 +160,7 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
     _loadJabtanPerwakilanLuarNegeri();
     _loadProvinsi();
     loadProvinsi();
-    _loadNegara()
+    _loadNegara();
   }, []);
 
   return (
@@ -170,7 +191,15 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
               setValue(<DewanPimpinanPusat set={val} setNilai={setNilai} />);
             } else {
               if (val === "Dewan Pimpinan Daerah") {
-                setValue(<DewanPimpinanDaerah set={val} setNilai={setNilai} />);
+                setValue(
+                  <DewanPimpinanDaerah
+                    set={val}
+                    {...formTingkatPengurus.getInputProps(
+                      "data.masterTingkatPengurusId"
+                    )}
+                    setNilai={setNilai}
+                  />
+                );
               } else {
                 if (val === "Dewan Pimpinan Cabang") {
                   setValue(
@@ -212,10 +241,32 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
   const router = useRouter();
   const [value, setValue] = useState("");
 
+  const PimpinanDewanPembina = () => {
+    if (
+      Object.values(formStrukturDewanPembina.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturDewanPembina.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.push("/v2/home");
+      }
+    // router.replace("v2/home");
+    });
+  };
+
   const formStrukturDewanPembina = useForm({
     initialValues: {
       data: {
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterJabatanDewanPembinaId: "",
       },
     },
   });
@@ -238,7 +289,7 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
           value: e.id,
           label: e.name,
         }))}
-        {...formStrukturDewanPembina.getInputProps("data.jabatan")}
+        {...formStrukturDewanPembina.getInputProps("data.masterJabatanDewanPembinaId")}
         // onChange={(val) => {
         //   setValue(val!);
         //   formStrukturDewanPembina.values.data.jabatan = val!;
@@ -256,11 +307,11 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
+            onClick={PimpinanDewanPembina}
             // onClick={() => console.log(setNilai, set,  value)}
-            onClick={() =>
-              console.log(formStrukturDewanPembina.values, setNilai, set)
-            }
+            // onClick={() =>
+            //   console.log(formStrukturDewanPembina.values, setNilai, set)
+            // }
           >
             Simpan
           </Button>
@@ -274,10 +325,31 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any; setNilai: any }) => {
   const router = useRouter();
   const [value, setValue] = useState("");
 
+  const PimpinanPusat = () => {
+    if (
+      Object.values(formStrukturDewanPimpinanPusat.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturDewanPimpinanPusat.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const formStrukturDewanPimpinanPusat = useForm({
     initialValues: {
       data: {
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterJabatanDewanPimpinanPusatId: "",
       },
     },
   });
@@ -296,7 +368,7 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any; setNilai: any }) => {
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturDewanPimpinanPusat.values.data.jabatan = val!;
+          formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId = val!;
         }}
       />
       <Center pt={20}>
@@ -311,10 +383,10 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any; setNilai: any }) => {
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() =>
-              console.log(formStrukturDewanPimpinanPusat.values, setNilai, set)
-            }
+            onClick={PimpinanPusat}
+            // onClick={() =>
+            //   console.log(formStrukturDewanPimpinanPusat.values = setNilai, set)
+            // }
           >
             Simpan
           </Button>
@@ -334,14 +406,35 @@ const DewanPimpinanDaerah = ({
   const router = useRouter();
   const [value, setValue] = useState("");
 
+  const PimpinanDaerah = () => {
+    if (
+      Object.values(formStrukturDewanPimpinanDaerah.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturDewanPimpinanDaerah.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const formStrukturDewanPimpinanDaerah = useForm({
     initialValues: {
       data: {
-        provinsi: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterProvinceId: "",
+        masterJabatanDewanPimpinanDaerahId: "",
         alamatKantor: "",
-        nomorWA: "",
-        medsos: "",
+        waAdmin: "",
+        // medsos: "",
       },
     },
   });
@@ -365,7 +458,7 @@ const DewanPimpinanDaerah = ({
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturDewanPimpinanDaerah.values.data.provinsi = val!;
+          formStrukturDewanPimpinanDaerah.values.data.masterProvinceId = val!;
         }}
       />
       <Select
@@ -383,7 +476,8 @@ const DewanPimpinanDaerah = ({
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturDewanPimpinanDaerah.values.data.jabatan = val!;
+          formStrukturDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
+            val!;
         }}
       />
       <TextInput
@@ -398,7 +492,7 @@ const DewanPimpinanDaerah = ({
         // }}
       />
       <TextInput
-        {...formStrukturDewanPimpinanDaerah.getInputProps("data.nomorWA")}
+        {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -409,7 +503,7 @@ const DewanPimpinanDaerah = ({
         //   setValue(formStrukturDewanPimpinanDaerah.values.data.nomorWA)
         // }}
       />
-      <TextInput
+      {/* <TextInput
         {...formStrukturDewanPimpinanDaerah.getInputProps("data.medsos")}
         radius={"md"}
         mt={10}
@@ -419,7 +513,7 @@ const DewanPimpinanDaerah = ({
         // onChange={() => {
         //   setValue(formStrukturDewanPimpinanDaerah.values.data.medsos)
         // }}
-      />
+      /> */}
       <Center pt={20}>
         <Box w={350}>
           <Button
@@ -432,11 +526,11 @@ const DewanPimpinanDaerah = ({
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
+            onClick={PimpinanDaerah}
             // onClick={() => console.log(formStrukturDewanPimpinanDaerah.values)}
-            onClick={() =>
-              console.log(formStrukturDewanPimpinanDaerah.values, setNilai, set)
-            }
+            // onClick={() =>
+            //   console.log(formStrukturDewanPimpinanDaerah.values, setNilai, set)
+            // }
           >
             Simpan
           </Button>
@@ -529,19 +623,41 @@ const DewanPimpinanCabang = ({
   }
 
   useShallowEffect(() => {
-    loadProvinsi()
-  },[])
+    loadProvinsi();
+  }, []);
+
+  const PimpinanCabang = () => {
+    if (
+      Object.values(formStrukturDewanPimpinanCabang.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturDewanPimpinanCabang.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const router = useRouter();
   const [value, setValue] = useState("");
   const formStrukturDewanPimpinanCabang = useForm({
     initialValues: {
       data: {
-        provinsi: "",
-        kabKot: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterJabatanDewanPimpinanCabangId: "",
         alamatKantor: "",
-        nomorWA: "",
-        medsos: "",
+        waAdmin: "",
+        // medsos: "",
       },
     },
   });
@@ -560,12 +676,10 @@ const DewanPimpinanCabang = ({
         // }}
         onChange={(val) => {
           if (val) {
-            setSelectedProvince(
-              provinsi.find((v) => v.id == val)
-            );
+            setSelectedProvince(provinsi.find((v) => v.id == val));
             loadKabupaten(val);
           }
-          formStrukturDewanPimpinanCabang.values.data.provinsi = val!
+          formStrukturDewanPimpinanCabang.values.data.masterProvinceId = val!;
         }}
         data={provinsi.map((pro) => ({
           value: pro.id,
@@ -602,18 +716,17 @@ const DewanPimpinanCabang = ({
         withAsterisk
         searchable
         onChange={(val) => {
-          setSelectedKabupaten(
-            kabupaten.find((v) => v.id == val)
-          );
+          setSelectedKabupaten(kabupaten.find((v) => v.id == val));
           loadKecamatan(val!);
-          formStrukturDewanPimpinanCabang.values.data.kabKot = val!
+          formStrukturDewanPimpinanCabang.values.data.masterKabKotId = val!;
         }}
       />
       <Select
         // {...formStrukturDewanPimpinanCabang.getInputProps("data.jabatan")}
         onChange={(val) => {
           setValue(val!);
-          formStrukturDewanPimpinanCabang.values.data.jabatan = val!;
+          formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
+            val!;
         }}
         data={sJabatanDewanPimpinanCabang.value.map((val) => ({
           value: val.id,
@@ -636,7 +749,7 @@ const DewanPimpinanCabang = ({
         label="Alamat Kantor"
       />
       <TextInput
-        {...formStrukturDewanPimpinanCabang.getInputProps("data.nomorWA")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.waAdmin")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -644,14 +757,14 @@ const DewanPimpinanCabang = ({
         label="Nomor WA Admin"
         type="number"
       />
-      <TextInput
+      {/* <TextInput
         {...formStrukturDewanPimpinanCabang.getInputProps("data.medsos")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Add Media Social"
         label="Add Media Social"
-      />
+      /> */}
       <Center pt={20}>
         <Box w={350}>
           <Button
@@ -664,10 +777,10 @@ const DewanPimpinanCabang = ({
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() =>
-              console.log(formStrukturDewanPimpinanCabang.values, set, setNilai)
-            }
+            onClick={PimpinanCabang}
+            // onClick={() =>
+            //   console.log(formStrukturDewanPimpinanCabang.values, set, setNilai)
+            // }
           >
             Simpan
           </Button>
@@ -677,6 +790,7 @@ const DewanPimpinanCabang = ({
   );
 };
 const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
+  const router = useRouter()
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
@@ -753,16 +867,38 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
   }
 
   useShallowEffect(() => {
-    loadProvinsi()
-  },[])
+    loadProvinsi();
+  }, []);
+
+  const PimpinanAnakCabang = () => {
+    if (
+      Object.values(formStrukturPimpinanAnakCabang.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturPimpinanAnakCabang.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const [value, setValue] = useState("");
   const formStrukturPimpinanAnakCabang = useForm({
     initialValues: {
       data: {
-        provinsi: "",
-        kabKot: "",
-        kecamatan: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterKecamatanId: "",
+        masterJabatanPimpinanAnakCabangId: "",
       },
     },
   });
@@ -785,12 +921,10 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // }}
         onChange={(val) => {
           if (val) {
-            setSelectedProvince(
-              provinsi.find((v) => v.id == val)
-            )
-            loadKabupaten(val)
+            setSelectedProvince(provinsi.find((v) => v.id == val));
+            loadKabupaten(val);
           }
-          formStrukturPimpinanAnakCabang.values.data.provinsi = val!;
+          formStrukturPimpinanAnakCabang.values.data.masterProvinceId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -814,18 +948,16 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
         key={Math.random()}
         data={
           _.isEmpty(kabupaten)
-          ? []
-          : kabupaten.map((v) => ({
-            value: v.id,
-            label: v.name,
-          }))
+            ? []
+            : kabupaten.map((v) => ({
+                value: v.id,
+                label: v.name,
+              }))
         }
         onChange={(val) => {
-          setSelectedKabupaten(
-            kabupaten.find((v) => v.id == val)
-          )
-          loadKecamatan(val!)
-          formStrukturPimpinanAnakCabang.values.data.kabKot = val!
+          setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+          loadKecamatan(val!);
+          formStrukturPimpinanAnakCabang.values.data.masterKabKotId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -848,18 +980,16 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
         key={Math.random()}
         data={
           _.isEmpty(kecamatan)
-          ? []
-          : kecamatan.map((val) => ({
-            value: val.id,
-            label: val.name,
-          }))
+            ? []
+            : kecamatan.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))
         }
         onChange={(val) => {
-          setSelectedKecamatan(
-            kecamatan.find((v) => v.id == val)
-          )
-          loadDesa(val!)
-          formStrukturPimpinanAnakCabang.values.data.kecamatan = val!;
+          setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+          loadDesa(val!);
+          formStrukturPimpinanAnakCabang.values.data.masterKecamatanId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -879,12 +1009,12 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // data={jabatan}
         data={sJabatanPimpinanAnakCabang.value.map((val) => ({
           value: val.id,
-          label: val.name
+          label: val.name,
         }))}
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturPimpinanAnakCabang.values.data.jabatan = val!;
+          formStrukturPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId = val!;
         }}
       />
 
@@ -900,10 +1030,10 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() =>
-              console.log(formStrukturPimpinanAnakCabang.values, set, setNilai)
-            }
+            onClick={PimpinanAnakCabang}
+            // onClick={() =>
+            //   console.log(formStrukturPimpinanAnakCabang.values, set, setNilai)
+            // }
           >
             Simpan
           </Button>
@@ -989,19 +1119,40 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
   }
 
   useShallowEffect(() => {
-    loadProvinsi()
-  },[])
+    loadProvinsi();
+  }, []);
   const router = useRouter();
   const [value, setValue] = useState("");
+
+  const PimpinanRanting = () => {
+    if (
+      Object.values(formStrukturPimpinanRanting.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturPimpinanRanting.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
 
   const formStrukturPimpinanRanting = useForm({
     initialValues: {
       data: {
-        provinsi: "",
-        kabKot: "",
-        kecamatan: "",
-        jabatan: "",
-        desa: "",
+        userId: localStorage.getItem("user_id"),
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterKecamatanId: "",
+        masterJabatanPimpinanRantingId: "",
+        masterDesaId: "",
       },
     },
   });
@@ -1011,15 +1162,13 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // {...formStrukturPimpinanRanting.getInputProps("data.provinsi")}
         data={provinsi.map((val) => ({
           value: val.id,
-          label: val.name
+          label: val.name,
         }))}
         onChange={(val) => {
           if (val) {
-            setSelectedProvince(
-              provinsi.find((v) => v.id == val)
-            )
-            loadKabupaten(val)
-            formStrukturPimpinanRanting.values.data.provinsi = val!;
+            setSelectedProvince(provinsi.find((v) => v.id == val));
+            loadKabupaten(val);
+            formStrukturPimpinanRanting.values.data.masterProvinceId = val!;
           }
         }}
         // onChange={(val) => {
@@ -1053,18 +1202,16 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         key={Math.random()}
         data={
           _.isEmpty(kabupaten)
-          ? []
-          : kabupaten.map((val) => ({
-            value: val.id,
-            label: val.name
-          }))
+            ? []
+            : kabupaten.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))
         }
         onChange={(val) => {
-          setSelectedKabupaten(
-            kabupaten.find((v) => v.id == val)
-          )
-          loadKecamatan(val!)
-          formStrukturPimpinanRanting.values.data.kabKot = val!;
+          setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+          loadKecamatan(val!);
+          formStrukturPimpinanRanting.values.data.masterKabKotId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -1078,18 +1225,16 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         key={Math.random()}
         data={
           _.isEmpty(kecamatan)
-          ? []
-          : kecamatan.map((val) => ({
-            value: val.id,
-            label: val.name
-          }))
+            ? []
+            : kecamatan.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))
         }
         onChange={(val) => {
-          setSelectedKecamatan(
-            kecamatan.find((v) => v.id == val)
-          )
-          loadDesa(val!)
-          formStrukturPimpinanRanting.values.data.kecamatan = val!;
+          setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+          loadDesa(val!);
+          formStrukturPimpinanRanting.values.data.masterKecamatanId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -1110,10 +1255,8 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
               }))
         }
         onChange={(val) => {
-          setSelectedDesa(
-            desa.find((v) => v.id == val)
-          );
-          formStrukturPimpinanRanting.values.data.desa = val!;
+          setSelectedDesa(desa.find((v) => v.id == val));
+          formStrukturPimpinanRanting.values.data.masterDesaId = val!;
         }}
         radius={"md"}
         mt={10}
@@ -1127,7 +1270,7 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // {...formStrukturPimpinanRanting.getInputProps("data.jabatan")}
         onChange={(val) => {
           setValue(val!);
-          formStrukturPimpinanRanting.values.data.jabatan = val!;
+          formStrukturPimpinanRanting.values.data.masterJabatanPimpinanRantingId = val!;
         }}
         label="Jabatan"
         withAsterisk
@@ -1137,7 +1280,7 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // data={jabatan}
         data={sJabatanPimpinanRanting.value.map((val) => ({
           value: val.id,
-          label: val.name
+          label: val.name,
         }))}
         searchable
       />
@@ -1154,10 +1297,10 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() =>
-              console.log(formStrukturPimpinanRanting.values, set, setNilai)
-            }
+            onClick={PimpinanRanting}
+            // onClick={() =>
+            //   console.log(formStrukturPimpinanRanting.values, set, setNilai)
+            // }
           >
             Simpan
           </Button>
@@ -1176,11 +1319,33 @@ const PerwakilanPartaiLuarNegeri = ({
 }) => {
   const [value, setValue] = useState("");
   const router = useRouter();
+
+  const PerwakilanLuarNegeri = () => {
+    if (
+      Object.values(formPerwakilanLuarNegeri.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formPerwakilanLuarNegeri.values.data),
+    }).then((v) => {
+      if (v.status === 200) {
+        toast("Sukses");
+        router.reload();
+      }
+    });
+  };
+
   const formPerwakilanLuarNegeri = useForm({
     initialValues: {
       data: {
-        negara: "",
-        jabatan: "",
+        userId: localStorage.getItem("user_id"),
+        masterNegaraId: "",
+        masterJabatanPerwakilanPartaiDiLuarNegeriId: "",
       },
     },
   });
@@ -1191,11 +1356,11 @@ const PerwakilanPartaiLuarNegeri = ({
         // data={negara}
         onChange={(val) => {
           setValue(val!);
-          formPerwakilanLuarNegeri.values.data.negara = val!;
+          formPerwakilanLuarNegeri.values.data.masterNegaraId = val!;
         }}
         data={sNegara.value.map((val) => ({
           value: val.id,
-          label: val.name
+          label: val.name,
         }))}
         radius={"md"}
         mt={10}
@@ -1208,7 +1373,7 @@ const PerwakilanPartaiLuarNegeri = ({
         // {...formPerwakilanLuarNegeri.getInputProps("data.jabatan")}
         onChange={(val) => {
           setValue(val!);
-          formPerwakilanLuarNegeri.values.data.jabatan = val!;
+          formPerwakilanLuarNegeri.values.data.masterJabatanPerwakilanPartaiDiLuarNegeriId = val!;
         }}
         label="Jabatan"
         withAsterisk
@@ -1218,7 +1383,7 @@ const PerwakilanPartaiLuarNegeri = ({
         // data={jabatan}
         data={sJabatanPerwakilanLuarNegeri.value.map((val) => ({
           value: val.id,
-          label: val.name
+          label: val.name,
         }))}
         searchable
       />
@@ -1235,10 +1400,10 @@ const PerwakilanPartaiLuarNegeri = ({
             bg={COLOR.merah}
             color="orange.9"
             type="submit"
-            // onClick={onDataPartai}
-            onClick={() =>
-              console.log(formPerwakilanLuarNegeri.values, set, setNilai)
-            }
+            onClick={PerwakilanLuarNegeri}
+            // onClick={() =>
+            //   console.log(formPerwakilanLuarNegeri.values, set, setNilai)
+            // }
           >
             Simpan
           </Button>

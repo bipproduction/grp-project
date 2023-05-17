@@ -1,8 +1,28 @@
 import { Box, Button, Center, Text, TextInput } from '@mantine/core';
 import React from 'react';
 import COLOR from '../../../../../fun/WARNA';
+import { api } from '@/lib/api-backend';
+import toast from 'react-simple-toasts';
+
+
 
 function AnggotaPartaiV2({setNilai}: any) {
+//   if (Object.values(formMediaSocial.values.data).includes("")) {
+//   return toast("Lengkapi Data Diri");
+// }
+// fetch(api.apiMediaSosialUserPost, {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(formMediaSocial.values.data),
+// }).then((v) => {
+//   if (v.status === 200) {
+//     toast("Sukses");
+//     router.reload();
+//   }
+// });
+// };
   return (
     <>
     <Center pt={20}>
