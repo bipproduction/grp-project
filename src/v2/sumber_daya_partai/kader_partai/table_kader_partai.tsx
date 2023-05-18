@@ -85,7 +85,7 @@ const TableKaderPartaiV2 = () => {
       <td>{e.twitter}</td>
 
       <td>
-        <Group position="right">
+        <Group position="center">
           <Button
             variant={"outline"}
             color={"green"}

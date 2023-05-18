@@ -12,17 +12,19 @@ const dataLampiran = [
 export const AsetLampiranV2 = () => {
   const tbHead = (
     <tr>
-        <th>No</th>
+      <th>No</th>
       <th>Nama Lampiran</th>
       <th>Deskripsi</th>
       <th>Foto Lampiran</th>
-      <th><Group position="center">Aksi</Group></th>
+      <th>
+        <Group position="center">Aksi</Group>
+      </th>
     </tr>
   );
 
-  const rows = dataLampiran.map((e,i) => (
+  const rows = dataLampiran.map((e, i) => (
     <tr key={e.id}>
-<td>{i+1}</td>
+      <td>{i + 1}</td>
       <td>{e.namaLam}</td>
       <td>{e.des}</td>
       <td>{e.foto}</td>

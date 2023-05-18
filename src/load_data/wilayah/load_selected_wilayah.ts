@@ -17,14 +17,32 @@ import _ from "lodash";
 
 // }
 
-export async function _loadSelectProvinsi({
-  setIsProvinsi,
-}: {
-  setIsProvinsi: any;
-}) {
+export async function _loadSelectProvinsi(
+  setIsProvinsi: any,
+  setIsKabupaten: any,
+  setIsKecamatan: any,
+  setIsDesa: any,
+  setSelectProvince: any,
+  setSelectKabupaten: any,
+  setSelectKecamatan: any,
+  setSelectDesa: any
+) {
   const res = await fetch(api.apiMasterProvinsiGetAll)
     .then((res) => res.json())
-    .then(setIsProvinsi);
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setIsProvinsi(val);
+        setSelectProvince({});
+        // setSelectKabupaten({});
+        // setSelectKecamatan({});
+        // setSelectDesa({});
+      } else {
+        setIsProvinsi([]);
+        // setIsKabupaten({});
+        // setIsKecamatan({});
+        // setIsDesa({});
+      }
+    });
 }
 
 export async function _loadSelectKabkot(

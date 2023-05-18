@@ -1,9 +1,10 @@
-import { Box, Select, Textarea, TextInput } from "@mantine/core";
+import { Box, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 
 export const AsetUmumV2 = () => {
-    const [ket, setKet] = useState<any | []>([]);
+  const [ket, setKet] = useState<any | []>([]);
 
   useShallowEffect(() => {
     loadKategori();
@@ -36,11 +37,7 @@ export const AsetUmumV2 = () => {
           maxRows={4}
         />
 
-        <Select
-          data={ket}
-          placeholder={"Kategori Aset"}
-          label={"**"}
-        />
+        <Select data={ket} placeholder={"Kategori Aset"} label={"**"} />
         <Textarea
           placeholder="Deskripsi Aset"
           label="**"
@@ -48,6 +45,12 @@ export const AsetUmumV2 = () => {
           minRows={2}
           maxRows={4}
         />
+      </Box>
+      <Box>
+        <NumberInput placeholder="Harga" label="**" />
+        <DateInput placeholder="Tanggal Pembelian" label="**" />
+        <TextInput placeholder="Lokasi Pembelian" label="**" />
+        <TextInput placeholder="Garansi" label="**" />
       </Box>
     </>
   );
