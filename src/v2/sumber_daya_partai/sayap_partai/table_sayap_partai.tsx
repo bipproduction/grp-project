@@ -59,7 +59,7 @@ const TableSayapPartaiV2 = () => {
       <th>Facebook</th>
       <th>TikTok</th>
       <th>Twitter</th>
-      <th>Aksi</th>
+      <th><Center>Aksi</Center></th>
     </tr>
   );
 
@@ -90,7 +90,7 @@ const TableSayapPartaiV2 = () => {
       <td>{e.twitter}</td>
 
       <td>
-        <Group position="right">
+        <Group position="center">
           <Button
             variant={"outline"}
             color={"green"}

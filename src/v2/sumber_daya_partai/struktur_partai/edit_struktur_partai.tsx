@@ -74,15 +74,32 @@ import {
   _loadSelectKecamatan,
   _loadSelectProvinsi,
 } from "@/load_data/wilayah/load_selected_wilayah";
-
+import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
+import { _listDataStruktur } from "./table_struktur_partai";
+import dataTable from "../data_table.json"
 const EditStrukturPartaiV2 = ({
   thisClosed,
-  isID,
+  
 }: {
   thisClosed: any;
-  isID: [];
+  
 }) => {
+  // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
   const [isJabatan, setJabatan] = useState<any>();
+  const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
+  const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
+  const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
+  const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
+  const [isKecamatan, setIsKecamatan] = useAtom(_kecamatan);
+  const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
+  const [isDesa, setIsDesa] = useAtom(_desa);
+  const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
+
+  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
+  
+
+
   // const [selectedProvince, setSelectedProvince] = useState<any>({
   //   id: "",
   //   name: "",
@@ -119,7 +136,10 @@ const EditStrukturPartaiV2 = ({
     _loadJabtanPerwakilanLuarNegeri();
     _loadAgama();
     _loadListPekerjaan();
-    _loadSelectProvinsi({ setIsProvinsi });
+    _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
+    _loadJenisKelamin()
+    setTargetStruktur(dataTable)
+
   }, []);
 
   // const loadKabupaten = async (idProvinsi: string) => {
@@ -222,19 +242,14 @@ const EditStrukturPartaiV2 = ({
     thisClosed();
   };
 
-  // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
-  const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
-  const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
-  const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
-  const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
-  const [isKecamatan, setIsKecamatan] = useAtom(_kecamatan);
-  const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
-  const [isDesa, setIsDesa] = useAtom(_desa);
-  const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
+  if(!targetStruktur){
+    return <></>;
+  }
 
   return (
     <>
-      {/* {JSON.stringify(isID)} */}
+    
+    {/* {JSON.stringify(targetStruktur)} */}
       {/* <Button
         onClick={() => {
           setValEditor(["apa kabar"]);
@@ -353,6 +368,8 @@ const EditStrukturPartaiV2 = ({
         // {...formEditStrukturPartai.getInputProps("data.desa")}
       /> */}
 
+
+
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -373,7 +390,7 @@ const EditStrukturPartaiV2 = ({
                 bg={COLOR.orange}
                 radius={"xl"}
                 onClick={() => {
-                  onEdit()
+                  onEdit();
                 }}
               >
                 Simpan
@@ -411,227 +428,262 @@ const EditStrukturPartaiV2 = ({
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <NumberInput
-                      placeholder="NIK"
-                      label="NIK"
-                      {...formEditStrukturPartai.getInputProps("data.nik")}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Nama"
-                      label="Nama"
-                      {...formEditStrukturPartai.getInputProps("data.nama")}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Email"
-                      label="Email"
-                      {...formEditStrukturPartai.getInputProps("data.email")}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Tempat Lahir"
-                      label="Tempat Lahir"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.tempatLahir"
-                      )}
-                      withAsterisk
-                    />
-                    <DateInput
-                      placeholder="Tanggal Lahir"
-                      label="Tanggal Lahir"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.tanggalLahir"
-                      )}
-                      withAsterisk
-                    />
-                    <Select
-                      data={[
-                        { value: "Laki-Laki", label: "Laki-Laki" },
-                        { value: "Perempuan", label: "Perempuan" },
-                      ]}
-                      placeholder="Jenis Kelamin"
-                      label="Jenis Kelamin"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.jenisKelamin"
-                      )}
-                      withAsterisk
-                    />
-                    <NumberInput
-                      placeholder="Nomor Telepon"
-                      label="Nomor Telepon"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.phoneNumber"
-                      )}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Instagram"
-                      label="Instagram"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.instagram"
-                      )}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Facebook"
-                      label="Facebook"
-                      {...formEditStrukturPartai.getInputProps("data.facebook")}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="TikTok"
-                      label="TikTok"
-                      {...formEditStrukturPartai.getInputProps("data.tiktok")}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Twitter"
-                      label="Twitter"
-                      {...formEditStrukturPartai.getInputProps("data.twitter")}
-                      withAsterisk
-                    />
-                    <Select
-                      data={sAgama.value.map((e) => ({
-                        value: e.id,
-                        label: e.name,
-                      }))}
-                      placeholder="Agama"
-                      label="Pilih Agama"
-                      {...formEditStrukturPartai.getInputProps("data.agama")}
-                      withAsterisk
-                    />
-                    <Select
-                      data={sListPekerjaan.value.map((e) => ({
-                        value: e.id,
-                        label: e.name,
-                      }))}
-                      placeholder="Pekerjaan"
-                      label="Pilih Pekerjaan"
-                      {...formEditStrukturPartai.getInputProps(
-                        "data.pekerjaan"
-                      )}
-                      withAsterisk
-                    />
-                    <TextInput
-                      placeholder="Alamat"
-                      label="Alamat"
-                      {...formEditStrukturPartai.getInputProps("data.alamat")}
-                      withAsterisk
-                    />
-                    <Select
-                      label="Provinsi"
-                      data={isProvinsi.map((e) => ({
-                        value: e.id,
-                        label: e.name,
-                      }))}
-                      onChange={(val: any) => {
-                        setSelectProvince(isProvinsi.find((e) => e.id == val));
-                        _loadSelectKabkot(
-                          val,
-                          setIsKabupaten,
-                          setSelectKabupaten
-                        );
-                        formEditStrukturPartai.values.data.provinsi = val;
-                      }}
-                      placeholder={
-                        selectProvince.name
+                    <Box>
+                      <NumberInput
+                      
+                        placeholder="NIK"
+                        label="NIK"
+                        onChange={(val) => {
+                          const res = [...targetStruktur]
+                          
+
+                        }}
+                        // {...formEditStrukturPartai.getInputProps("data.nik")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Nama"
+                        label="Nama"
+                        {...formEditStrukturPartai.getInputProps("data.nama")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Email"
+                        label="Email"
+                        {...formEditStrukturPartai.getInputProps("data.email")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Tempat Lahir"
+                        label="Tempat Lahir"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.tempatLahir"
+                        )}
+                        withAsterisk
+                      />
+                      <DateInput
+                        placeholder="Tanggal Lahir"
+                        label="Tanggal Lahir"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.tanggalLahir"
+                        )}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sJenisKelamin.value.map((e) => ({
+                          label: e.label,
+                          value: e.value,
+                        }))}
+                        placeholder="Jenis Kelamin"
+                        label="Jenis Kelamin"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.jenisKelamin"
+                        )}
+                        withAsterisk
+                      />
+                      <NumberInput
+                        placeholder="Nomor Telepon"
+                        label="Nomor Telepon"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.phoneNumber"
+                        )}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Instagram"
+                        label="Instagram"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.instagram"
+                        )}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Facebook"
+                        label="Facebook"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.facebook"
+                        )}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="TikTok"
+                        label="TikTok"
+                        {...formEditStrukturPartai.getInputProps("data.tiktok")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Twitter"
+                        label="Twitter"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.twitter"
+                        )}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sAgama.value.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        placeholder="Agama"
+                        label="Pilih Agama"
+                        {...formEditStrukturPartai.getInputProps("data.agama")}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sListPekerjaan.value.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        placeholder="Pekerjaan"
+                        label="Pilih Pekerjaan"
+                        {...formEditStrukturPartai.getInputProps(
+                          "data.pekerjaan"
+                        )}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Alamat"
+                        label="Alamat"
+                        {...formEditStrukturPartai.getInputProps("data.alamat")}
+                        withAsterisk
+                      />
+                    </Box>
+                    <Box>
+                      {/* WILAYAH */}
+                      <Select
+                        label="Provinsi"
+                        data={isProvinsi.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        onChange={(val) => {
+                          formEditStrukturPartai.values.data.provinsi = val!;
+                          setSelectProvince(
+                            isProvinsi.find((e) => e.id == val)
+                          );
+                          _loadSelectKabkot(
+                            val!,
+                            setIsKabupaten,
+                            setSelectKabupaten
+                          );
+                          // _loadSelectKecamatan(
+                          //   val!,
+                          //   setIsKecamatan,
+                          //   setSelectKecamatan
+                          // );
+                          // _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+                        }}
+                        placeholder={
+                          selectProvince.name
+                            ? selectProvince.name
+                            : "Pilih Provinsi"
+                        }
+                        value={
+                          selectProvince.name
                           ? selectProvince.name
                           : "Pilih Provinsi"
-                      }
-                      searchable
-                    />
+                        }
+                        searchable
+                        withAsterisk
+                      />
 
-                    <Select
-                      label="Kabupaten / Kota"
-                      data={
-                        _.isEmpty(isKabupaten)
-                          ? []
-                          : isKabupaten.map((e) => ({
-                              value: e.id,
-                              label: e.name,
-                            }))
-                      }
-                      onChange={(val) => {
-                        // setSelectKabupaten(sKabkot.value.find((e) => e.id == val));
-                        setSelectKabupaten(
-                          isKabupaten.find((e) => e.id == val)
-                        );
-                        _loadSelectKecamatan(
-                          val!,
-                          setIsKecamatan,
-                          setSelectKecamatan
-                        );
-                        formEditStrukturPartai.values.data.kabkot = val!;
-                      }}
-                      placeholder={
-                        selectKabupaten.name
-                          ? selectKabupaten.name
-                          : "Pilih Kabupaten"
-                      }
-                      value={
-                        selectKabupaten.name
-                          ? selectKabupaten.name
-                          : "Pilih Kabupaten"
-                      }
-                      searchable
-                    />
+                      <Select
+                        label="Kabupaten / Kota"
+                        data={
+                          _.isEmpty(isKabupaten)
+                            ? []
+                            : isKabupaten.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          // setSelectKabupaten(sKabkot.value.find((e) => e.id == val));
+                          formEditStrukturPartai.values.data.kabkot = val!;
+                          setSelectKabupaten(
+                            isKabupaten.find((e) => e.id == val)
+                          );
+                          _loadSelectKecamatan(
+                            val!,
+                            setIsKecamatan,
+                            setSelectKecamatan
+                          );
+                          // _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+                        }}
+                        placeholder={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : "Pilih Kabupaten"
+                        }
+                        value={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : "Pilih Kabupaten"
+                        }
+                        searchable
+                        withAsterisk
+                      />
 
-                    <Select
-                      label="Kecamatan"
-                      data={
-                        _.isEmpty(isKecamatan)
-                          ? []
-                          : isKecamatan.map((e) => ({
-                              value: e.id,
-                              label: e.name,
-                            }))
-                      }
-                      onChange={(val) => {
-                        setSelectKecamatan(
-                          isKecamatan.find((e) => e.id == val)
-                        );
-                        _loadSelectDesa(val!, setIsDesa, setSelectDesa);
-                        formEditStrukturPartai.values.data.kecamatan = val!;
-                      }}
-                      placeholder={
-                        selectKecamatan.name
-                          ? selectKecamatan.name
-                          : "Pilih Kecamatan"
-                      }
-                      value={
-                        selectKecamatan.name
-                          ? selectKecamatan.name
-                          : "Pilih Kecamatan"
-                      }
-                    />
+                      <Select
+                        label="Kecamatan"
+                        data={
+                          _.isEmpty(isKecamatan)
+                            ? []
+                            : isKecamatan.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          setSelectKecamatan(
+                            isKecamatan.find((e) => e.id == val)
+                          );
+                          
+                          _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+                          formEditStrukturPartai.values.data.kecamatan = val!;
+                        }}
+                        placeholder={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : "Pilih Kecamatan"
+                        }
+                        value={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : "Pilih Kecamatan"
+                        }
+                        searchable
+                        withAsterisk
+                      />
 
-                    <Select
-                      label="Desa"
-                      data={
-                        _.isEmpty(isDesa)
-                          ? []
-                          : isDesa.map((e) => ({
-                              value: e.id,
-                              label: e.name,
-                            }))
-                      }
-                      onChange={(val) => {
-                        setSelectDesa(isDesa.find((e) => e.id == val));
-                        formEditStrukturPartai.values.data.desa = val!;
-                      }}
-                      placeholder={
-                        selectDesa.name ? selectDesa.name : "Pilih Desa"
-                      }
-                      value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
-                    />
-
-                    <TextInput
-                      placeholder="RT - __, RW - __"
-                      label="RT / RW"
-                      {...formEditStrukturPartai.getInputProps("data.rtrw")}
-                      withAsterisk
-                    />
+                      <Select
+                        label="Desa"
+                        data={
+                          _.isEmpty(isDesa)
+                            ? []
+                            : isDesa.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          setSelectDesa(isDesa.find((e) => e.id == val));
+                          formEditStrukturPartai.values.data.desa = val!;
+                        }}
+                        placeholder={
+                          selectDesa.name ? selectDesa.name : "Pilih Desa"
+                        }
+                        value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
+                        searchable
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="RT - __, RW - __"
+                        label="RT / RW"
+                        {...formEditStrukturPartai.getInputProps("data.rtrw")}
+                        withAsterisk
+                      />
+                    </Box>
                   </Flex>
                 </Box>
               </Paper>
@@ -842,9 +894,7 @@ const EditStrukturPartaiV2 = ({
                         //   formEditStrukturPartai.values.data.tingkatPengurus = val
                         // )
                       }}
-                      // {...formEditStrukturPartai.getInputProps(
-                      //   "data.tingkatPengurus"
-                      // )}
+                    
                     />
                     {isJabatan && isJabatan}
 

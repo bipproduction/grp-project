@@ -56,7 +56,7 @@ const TableAnggotaPartaiV2 = () => {
       <th>Facebook</th>
       <th>TikTok</th>
       <th>Twitter</th>
-      <th>Aksi</th>
+      <th><Center>Aksi</Center></th>
     </tr>
   );
 
@@ -65,7 +65,6 @@ const TableAnggotaPartaiV2 = () => {
       <td>{i + 1}</td>
       <td>{e.name}</td>
       <td>{e.nik}</td>
-      
       <td>{e.email}</td>
       <td>{e.tmpt_lahir}</td>
       <td>{e.tgl_lahir}</td>
@@ -85,7 +84,7 @@ const TableAnggotaPartaiV2 = () => {
       <td>{e.twitter}</td>
 
       <td>
-        <Group position="right">
+        <Group position="center">
           <Button
             variant={"outline"}
             color={"green"}

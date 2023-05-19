@@ -28,14 +28,17 @@ import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import EditStrukturPartaiV2 from "./edit_struktur_partai";
 import dataTable from "../data_table.json";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { _val_muncul } from "./_val_edit_struktur";
+import { atomWithStorage } from "jotai/utils";
+
+export const _listDataStruktur = atomWithStorage<any | undefined>("_list_database_struktur", undefined)
 
 const TableStruktutPartaiV2 = () => {
   // const [open, setOpen] = useAtom(_val_muncul);
   const [opened, setOpen] = useDisclosure(false)
   const [activePage, setActivePage] = useState();
-  const [isID, setID] = useState<any>();
+  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
 
   const tbHead = (
     <tr>
@@ -61,7 +64,7 @@ const TableStruktutPartaiV2 = () => {
       <th>Facebook</th>
       <th>TikTok</th>
       <th>Twitter</th>
-      <th>Aksi</th>
+      <th ><Center>Aksi</Center></th>
     </tr>
   );
 
@@ -91,16 +94,17 @@ const TableStruktutPartaiV2 = () => {
       <td>{e.twitter}</td>
 
       <td>
-        <Group position="right">
+        <Group position="center">
           <Button
             variant={"outline"}
             color={"green"}
             radius={50}
             w={100}
-            onClick={() => {
+            onClick={(val) => {
               setOpen.open()
               // setOpen(true);
-              setID(e);
+              // setTargetStruktur(e)
+              console.log(val.currentTarget.value)
             }}
           >
             Edit
@@ -125,7 +129,7 @@ const TableStruktutPartaiV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditStrukturPartaiV2 thisClosed={setOpen.close} isID={isID} />
+        <EditStrukturPartaiV2 thisClosed={setOpen.close} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>

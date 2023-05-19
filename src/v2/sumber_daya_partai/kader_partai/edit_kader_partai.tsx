@@ -19,74 +19,119 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
+import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
+import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
+import { useAtom } from "jotai";
+import {
+  _desa,
+  _kabupaten,
+  _kecamatan,
+  _provinsi,
+  _selected_Desa,
+  _selected_Kabkot,
+  _selected_Kecamatan,
+  _selected_Provinisi,
+} from "@/s_state/wilayah/select_wilayah";
+import {
+  _loadSelectDesa,
+  _loadSelectKabkot,
+  _loadSelectKecamatan,
+  _loadSelectProvinsi,
+} from "@/load_data/wilayah/load_selected_wilayah";
+import _ from "lodash";
+import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
+import { _loadKaderPartai } from "@/load_data/kader_partai/load_kader_partai";
+import { _loadTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
+import {
+  _loadJabatanDewanPembina,
+  _loadJabatanDewanPimpinanCabang,
+  _loadJabatanDewanPimpinanDaerah,
+  _loadJabatanDewanPimpinanPusat,
+  _loadJabatanPimpinanAnakCabang,
+  _loadJabatanPimpinanRanting,
+  _loadJabtanPerwakilanLuarNegeri,
+} from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { _loadAgama } from "@/load_data/load_agama";
+import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
+import { sKaderPartai } from "@/s_state/kader_partai/s_kader_partai";
+import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 
 const EditKaderPartaiV2 = ({ thisClosed }: any) => {
-  const [statusKeanggotaan, setStatusKeanggotaan] = useState<any | []>([]);
-  const [tingkatKader, setTingkatKader] = useState<any | []>([]);
+  const [statusKeanggotaan, setStatusKeanggotaan] = useState<any[]>([]);
+  const [tingkatKader, setTingkatKader] = useState<any[]>([]);
+  const [isJabatan, setJabatan] = useState<any>();
+  const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
+  const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
+  const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
+  const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
+  const [isKecamatan, setIsKecamatan] = useAtom(_kecamatan);
+  const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
+  const [isDesa, setIsDesa] = useAtom(_desa);
+  const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
 
   useShallowEffect(() => {
-    loadStatusKenaggotaan();
-    loadTingkatKader();
+    _loadKaderPartai();
+    _loadStatusKeanggotaan();
+    _loadTingkatPengurus();
+    _loadJabatanDewanPembina();
+    _loadJabatanDewanPimpinanPusat();
+    _loadJabatanDewanPimpinanDaerah();
+    _loadJabatanDewanPimpinanCabang();
+    _loadJabatanPimpinanAnakCabang();
+    _loadJabatanPimpinanRanting();
+    _loadJabtanPerwakilanLuarNegeri();
+    _loadAgama();
+    _loadListPekerjaan();
+    _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
+    _loadJenisKelamin()
+
   }, []);
-
-  async function loadStatusKenaggotaan() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/api-get-status-keanggotaan"
-    )
-      .then((res) => res.json())
-      .then((val) =>
-        setStatusKeanggotaan(Object.values(val).map((e: any) => e.name))
-      );
-  }
-
-  async function loadTingkatKader() {
-    const res = await fetch(
-      "/api/get/sumber-daya-partai/api-get-kader-partai"
-    )
-      .then((res) => res.json())
-      .then((val) =>
-        setTingkatKader(Object.values(val).map((e: any) => e.name))
-      );
-  }
 
   const formEditKaderPartai = useForm({
     initialValues: {
       data: {
-        nik: '',
-        nama: '',
-        email: '',
-        tempatLahir: '',
-        tanggalLahir: '',
-        jenisKelamin: '',
-        phoneNumber: '',
-        instagram: '',
-        facebook: '',
-        tiktok: '',
-        twitter: '',
-        agama: '',
-        pekerjaan: '',
-        alamat: '',
-        provinsi: '',
-        kabkot: '',
-        kecamatan: '',
-        desa: '',
-        rtrw: '',
-        statusKeanggotaan: '',
-        tingkatKader: '',
+        nik: "",
+        nama: "",
+        email: "",
+        tempatLahir: "",
+        tanggalLahir: "",
+        jenisKelamin: "",
+        phoneNumber: "",
+        instagram: "",
+        facebook: "",
+        tiktok: "",
+        twitter: "",
+        agama: "",
+        pekerjaan: "",
+        alamat: "",
+        provinsi: "",
+        kabkot: "",
+        kecamatan: "",
+        desa: "",
+        rtrw: "",
+        statusKeanggotaan: "",
+        tingkatKader: "",
       },
       validate: {
-        email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        email: (value: string) =>
+          /^\S+@\S+$/.test(value) ? null : "Invalid email",
       },
     },
   });
 
   const onEdit = () => {
-    console.log(formEditKaderPartai.values.data)
+    console.log(formEditKaderPartai.values.data);
     if (Object.values(formEditKaderPartai.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formEditKaderPartai.values.validate.email(formEditKaderPartai.values.data.email) != null) {
+    if (
+      formEditKaderPartai.values.validate.email(
+        formEditKaderPartai.values.data.email
+      ) != null
+    ) {
       return toast("Invalid email");
     }
 
@@ -94,7 +139,7 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
 
     buttonSimpan();
     thisClosed();
-  }
+  };
 
   return (
     <>
@@ -122,7 +167,7 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
                 Simpan
               </Button>
             </Box>
-            <Box w={100}>
+            {/* <Box w={100}>
               <Button
                 fullWidth
                 color="orange.9"
@@ -135,7 +180,7 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
               >
                 Reset
               </Button>
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
 
@@ -156,125 +201,240 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <NumberInput placeholder="NIK" label="**"  {...formEditKaderPartai.getInputProps("data.nik")} />
-                    <TextInput placeholder="Nama" label="**" {...formEditKaderPartai.getInputProps("data.nama")} />
-                    <TextInput placeholder="Email" label="**" {...formEditKaderPartai.getInputProps("data.email")} />
-                    <TextInput placeholder="Tempat Lahir" label="**" {...formEditKaderPartai.getInputProps("data.tempatLahir")} />
-                    <DateInput placeholder="Tanggal Lahir" label="**" {...formEditKaderPartai.getInputProps("data.tanggalLahir")} />
-                    <Select
-                      data={[
-                        { value: "laki", label: "Laki-Laki" },
-                        { value: "perempuan", label: "Perempuan" },
-                      ]}
-                      placeholder="Jenis Kelamin"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.jenisKelamin")}
-                    />
-                    <NumberInput placeholder="Nomor Telepon" label="**" {...formEditKaderPartai.getInputProps("data.phoneNumber")} />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Instagram"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.instagram")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Facebook"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.facebook")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="TikTok"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.tiktok")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Twitter"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.twitter")}
-                    />
-                    <Select
-                      data={[
-                        { value: "islam", label: "Islam" },
-                        { value: "Protestan", label: "Protestan" },
-                        { value: "Katolik", label: "Katolik" },
-                        { value: "Hindu", label: "Hindu" },
-                        { value: "Buddha", label: "Buddha" },
-                        { value: "Khonghucu", label: "Khonghucu" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Agama"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.agama")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Pekerjaan"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.pekerjaan")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Alamat"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.alamat")}
-                    />
-                    <Select
-                      data={[
-                        { value: "Bali", label: "Bali" },
-                        { value: "Jawa timur", label: "Jawa Timur" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Provinsi"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.provinsi")}
-                    />
-                    <Select
-                      data={[
-                        { value: "Banyuwangi", label: "Banyuwangi" },
-                        { value: "Malang", label: "Malang" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kabupaten / Kota"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.kabkot")}
-                    />
-                    <Select
-                      data={[
-                        { value: "Geteng", label: "Genteng" },
-                        { value: "Glenmore", label: "Glenmore" },
-                      ]}
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Kecamatan"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.kecamatan")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="Desa / Cabang"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.desa")}
-                    />
-                    <TextInput
-                      radius={"md"}
-                      mt={10}
-                      placeholder="RT - __, RW - __"
-                      label="**"
-                      {...formEditKaderPartai.getInputProps("data.rtrw")}
-                    />
+                    <Box>
+                      <NumberInput
+                        placeholder="NIK"
+                        label="NIK"
+                        {...formEditKaderPartai.getInputProps("data.nik")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Nama"
+                        label="Nama"
+                        {...formEditKaderPartai.getInputProps("data.nama")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Email"
+                        label="Email"
+                        {...formEditKaderPartai.getInputProps("data.email")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Tempat Lahir"
+                        label="Tempat Lahir"
+                        {...formEditKaderPartai.getInputProps(
+                          "data.tempatLahir"
+                        )}
+                        withAsterisk
+                      />
+                      <DateInput
+                        placeholder="Tanggal Lahir"
+                        label="Tanggal Lahir"
+                        {...formEditKaderPartai.getInputProps(
+                          "data.tanggalLahir"
+                        )}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sJenisKelamin.value.map((e) => ({
+                          label: e.label,
+                          value: e.value,
+                        }))}
+                        placeholder="Jenis Kelamin"
+                        label="Jenis Kelamin"
+                        {...formEditKaderPartai.getInputProps(
+                          "data.jenisKelamin"
+                        )}
+                        withAsterisk
+                      />
+                      <NumberInput
+                        placeholder="Nomor Telepon"
+                        label="Nomor Telepon"
+                        {...formEditKaderPartai.getInputProps(
+                          "data.phoneNumber"
+                        )}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Instagram"
+                        label="Instagram"
+                        {...formEditKaderPartai.getInputProps("data.instagram")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Facebook"
+                        label="Facebook"
+                        {...formEditKaderPartai.getInputProps("data.facebook")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="TikTok"
+                        label="TikTok"
+                        {...formEditKaderPartai.getInputProps("data.tiktok")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Twitter"
+                        label="Twitter"
+                        {...formEditKaderPartai.getInputProps("data.twitter")}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sAgama.value.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        placeholder="Agama"
+                        label="Pilih Agama"
+                        {...formEditKaderPartai.getInputProps("data.agama")}
+                        withAsterisk
+                      />
+                      <Select
+                        data={sListPekerjaan.value.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        placeholder="Pekerjaan"
+                        label="Pilih Pekerjaan"
+                        {...formEditKaderPartai.getInputProps("data.pekerjaan")}
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="Alamat"
+                        label="Alamat"
+                        {...formEditKaderPartai.getInputProps("data.alamat")}
+                        withAsterisk
+                      />
+                    </Box>
+                    <Box>
+                      {/* WILAYAH */}
+                      <Select
+                        label="Provinsi"
+                        data={isProvinsi.map((e) => ({
+                          value: e.id,
+                          label: e.name,
+                        }))}
+                        onChange={(val: any) => {
+                          setSelectProvince(
+                            isProvinsi.find((e) => e.id == val)
+                          );
+                          _loadSelectKabkot(
+                            val,
+                            setIsKabupaten,
+                            setSelectKabupaten
+                          );
+                          formEditKaderPartai.values.data.provinsi = val;
+                        }}
+                        placeholder={
+                          selectProvince.name
+                            ? selectProvince.name
+                            : "Pilih Provinsi"
+                        }
+                        value={
+                          selectProvince.name
+                          ? selectProvince.name
+                          : "Pilih Provinsi"
+                        }
+                        searchable
+                        withAsterisk
+                      />
+
+                      <Select
+                        label="Kabupaten / Kota"
+                        data={
+                          _.isEmpty(isKabupaten)
+                            ? []
+                            : isKabupaten.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          // setSelectKabupaten(sKabkot.value.find((e) => e.id == val));
+                          setSelectKabupaten(
+                            isKabupaten.find((e) => e.id == val)
+                          );
+                          _loadSelectKecamatan(
+                            val!,
+                            setIsKecamatan,
+                            setSelectKecamatan
+                          );
+                          formEditKaderPartai.values.data.kabkot = val!;
+                        }}
+                        placeholder={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : "Pilih Kabupaten"
+                        }
+                        value={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : "Pilih Kabupaten"
+                        }
+                        searchable
+                        withAsterisk
+                      />
+
+                      <Select
+                        label="Kecamatan"
+                        data={
+                          _.isEmpty(isKecamatan)
+                            ? []
+                            : isKecamatan.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          setSelectKecamatan(
+                            isKecamatan.find((e) => e.id == val)
+                          );
+                          _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+                          formEditKaderPartai.values.data.kecamatan = val!;
+                        }}
+                        placeholder={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : "Pilih Kecamatan"
+                        }
+                        value={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : "Pilih Kecamatan"
+                        }
+                        searchable
+                        withAsterisk
+                      />
+
+                      <Select
+                        label="Desa"
+                        data={
+                          _.isEmpty(isDesa)
+                            ? []
+                            : isDesa.map((e) => ({
+                                value: e.id,
+                                label: e.name,
+                              }))
+                        }
+                        onChange={(val) => {
+                          setSelectDesa(isDesa.find((e) => e.id == val));
+                          formEditKaderPartai.values.data.desa = val!;
+                        }}
+                        placeholder={
+                          selectDesa.name ? selectDesa.name : "Pilih Desa"
+                        }
+                        value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
+                        searchable
+                        withAsterisk
+                      />
+                      <TextInput
+                        placeholder="RT - __, RW - __"
+                        label="RT / RW"
+                        {...formEditKaderPartai.getInputProps("data.rtrw")}
+                        withAsterisk
+                      />
+                    </Box>
                   </Flex>
                 </Box>
               </Paper>
@@ -295,22 +455,31 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
                 <Box>
                   <Flex direction={"column"}>
                     <Select
-                      label="**"
+                      label="Pilih Status Keanggotaan"
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
-                      data={statusKeanggotaan}
-                      {...formEditKaderPartai.getInputProps("data.statusKeanggotaan")}
+                      data={sStatusKeanggotaan.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      onChange={(val: any) => {
+                        formEditKaderPartai.values.data.statusKeanggotaan = val;
+                      }}
+                      withAsterisk
                     />
-
                     <Select
-                      label="**"
+                      label="Pilih Tingkat Kader"
                       placeholder="Pilih Tingkat Kader"
                       nothingFound="No options"
-                      data={tingkatKader}
-                      {...formEditKaderPartai.getInputProps("data.tingkatKader")}
+                      data={sKaderPartai.value.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))}
+                      {...formEditKaderPartai.getInputProps(
+                        "data.tingkatKader"
+                      )}
+                      withAsterisk
                     />
-
-
                   </Flex>
                 </Box>
               </Paper>
