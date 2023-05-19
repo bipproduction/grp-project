@@ -1,0 +1,14 @@
+[
+    {
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "password": "admin",
+        "masterUserRoleId": 2
+    },
+    {
+        "username": "super_admin",
+        "email": "super_admin@gmail.com",
+        "password": "super_admin",
+        "masterUserRoleId": 3
+    }
+]

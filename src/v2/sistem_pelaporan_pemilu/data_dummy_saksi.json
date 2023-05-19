@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "nama_provinsi": "Bali",
+        "nama_kabupaten": "Denpasar",
+        "nama_kecamatan": "Denpasar Barat",
+        "nama_desa": "Padang Sambian Klod",
+        "no_tps": "12",
+        "nama": "Ibrahim",
+        "jenis_kelamin": "Laki-laki",
+        "email": "user@gmail.com",
+        "tlp": "08978968123",
+        "keterangan": "Sudah Lapor"
+    },
+    {
+        "id": 1,
+        "nama_provinsi": "Bali",
+        "nama_kabupaten": "Denpasar",
+        "nama_kecamatan": "Denpasar Selatan",
+        "nama_desa": "Sidakarya",
+        "no_tps": "10",
+        "nama": "Ibrahim",
+        "jenis_kelamin": "Laki-laki",
+        "email": "user@gmail.com",
+        "tlp": "08978968123",
+        "keterangan": "Belum Lapor"
+    }
+]

@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "Nama": "Susi",
+        "NIK": 13311413313,
+        "Nama_kementrian": "Perikanan Dan Kelautan",
+        "Jabatan_eksekutif": "Ketua ",
+        "Periode": "2 Tahun ",
+        "Alamat_tinggal": "Tangerang",
+        "Alamat_kantor": "Jalan Sudirman, Jakarta",
+        "Email": "susi@gmail.com",
+        "Media_social": "-",
+        "Provinsi": "Jawa Timur",
+        "Kabkot": "Jember",
+        "Jab_prov": "Gubernur"
+
+    },
+    {
+        "id": 2,
+        "Nama": "Agus",
+        "NIK": 13311413313,
+        "Nama_kementrian": "Perikanan Dan Kelautan",
+        "Jabatan_eksekutif": "Ketua ",
+        "Periode": "2 Tahun ",
+        "Alamat_tinggal": "Tangerang",
+        "Alamat_kantor": "Jalan Sudirman, Jakarta",
+        "Email": "susi@gmail.com",
+        "Media_social": "-",
+        "Provinsi": "Bali",
+        "Kabkot": "Denpasar",
+        "Jab_prov": "Wakil Gubernur"
+    }
+    
+]
+
