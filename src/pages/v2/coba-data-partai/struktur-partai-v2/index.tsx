@@ -38,6 +38,7 @@ import { api } from "@/lib/api-backend";
 import { sNegara } from "@/s_state/negara/s_negara";
 import { _loadNegara } from "@/load_data/negara/load_negara";
 import { sUser } from "@/s_state/s_user";
+import StrukturDewanPembina from "./struktur-dewan-pembina";
 
 const StrukturPartaiV2 = ({ setNilai }: any) => {
   const TingkatPengurus = () => {
@@ -165,6 +166,7 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
 
   return (
     <>
+    {JSON.stringify(value)}
       <Select
         label="Pilih Tingkat Pengurus"
         placeholder="Pilih Tingkat Pengurus"
@@ -183,7 +185,7 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
         onChange={(val) => {
           if (val == "Dewan Pembina") {
             setValue(
-              <DewanPembina set={val} setNilai={setNilai} />
+              <StrukturDewanPembina set={val} setNilai={setNilai} />
               // {...formTingkatPengurus.getInputProps("data.tingkatPengurus")}
             );
           } else {
@@ -191,15 +193,7 @@ const StrukturPartaiV2 = ({ setNilai }: any) => {
               setValue(<DewanPimpinanPusat set={val} setNilai={setNilai} />);
             } else {
               if (val === "Dewan Pimpinan Daerah") {
-                setValue(
-                  <DewanPimpinanDaerah
-                    set={val}
-                    {...formTingkatPengurus.getInputProps(
-                      "data.masterTingkatPengurusId"
-                    )}
-                    setNilai={setNilai}
-                  />
-                );
+                setValue(<DewanPimpinanDaerah set={val} setNilai={setNilai} />);
               } else {
                 if (val === "Dewan Pimpinan Cabang") {
                   setValue(
@@ -242,9 +236,7 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
   const [value, setValue] = useState("");
 
   const PimpinanDewanPembina = () => {
-    if (
-      Object.values(formStrukturDewanPembina.values.data).includes("")
-    ) {
+    if (Object.values(formStrukturDewanPembina.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -258,7 +250,7 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
         toast("Sukses");
         router.push("/v2/home");
       }
-    // router.replace("v2/home");
+      // router.replace("v2/home");
     });
   };
 
@@ -289,7 +281,9 @@ const DewanPembina = ({ set, setNilai }: { set: any; setNilai: any }) => {
           value: e.id,
           label: e.name,
         }))}
-        {...formStrukturDewanPembina.getInputProps("data.masterJabatanDewanPembinaId")}
+        {...formStrukturDewanPembina.getInputProps(
+          "data.masterJabatanDewanPembinaId"
+        )}
         // onChange={(val) => {
         //   setValue(val!);
         //   formStrukturDewanPembina.values.data.jabatan = val!;
@@ -368,7 +362,8 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any; setNilai: any }) => {
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId = val!;
+          formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
+            val!;
         }}
       />
       <Center pt={20}>
@@ -790,7 +785,7 @@ const DewanPimpinanCabang = ({
   );
 };
 const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
@@ -1014,7 +1009,8 @@ const PimpinanAnakCabang = ({ set, setNilai }: { set: any; setNilai: any }) => {
         searchable
         onChange={(val) => {
           setValue(val!);
-          formStrukturPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId = val!;
+          formStrukturPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId =
+            val!;
         }}
       />
 
@@ -1125,9 +1121,7 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
   const [value, setValue] = useState("");
 
   const PimpinanRanting = () => {
-    if (
-      Object.values(formStrukturPimpinanRanting.values.data).includes("")
-    ) {
+    if (Object.values(formStrukturPimpinanRanting.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -1270,7 +1264,8 @@ const PimpinanRanting = ({ set, setNilai }: { set: any; setNilai: any }) => {
         // {...formStrukturPimpinanRanting.getInputProps("data.jabatan")}
         onChange={(val) => {
           setValue(val!);
-          formStrukturPimpinanRanting.values.data.masterJabatanPimpinanRantingId = val!;
+          formStrukturPimpinanRanting.values.data.masterJabatanPimpinanRantingId =
+            val!;
         }}
         label="Jabatan"
         withAsterisk
@@ -1321,9 +1316,7 @@ const PerwakilanPartaiLuarNegeri = ({
   const router = useRouter();
 
   const PerwakilanLuarNegeri = () => {
-    if (
-      Object.values(formPerwakilanLuarNegeri.values.data).includes("")
-    ) {
+    if (Object.values(formPerwakilanLuarNegeri.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -1373,7 +1366,8 @@ const PerwakilanPartaiLuarNegeri = ({
         // {...formPerwakilanLuarNegeri.getInputProps("data.jabatan")}
         onChange={(val) => {
           setValue(val!);
-          formPerwakilanLuarNegeri.values.data.masterJabatanPerwakilanPartaiDiLuarNegeriId = val!;
+          formPerwakilanLuarNegeri.values.data.masterJabatanPerwakilanPartaiDiLuarNegeriId =
+            val!;
         }}
         label="Jabatan"
         withAsterisk
