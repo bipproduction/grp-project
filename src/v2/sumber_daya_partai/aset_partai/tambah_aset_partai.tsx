@@ -167,7 +167,6 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                 <Textarea
                   placeholder="Bergerak, contoh: dengan kondisi ban belakang kurang angin, dll"
                   label="Keterangan Status"
-                  pt={25}
                   autosize
                   minRows={2}
                   maxRows={4}
