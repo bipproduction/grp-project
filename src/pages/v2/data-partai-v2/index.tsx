@@ -22,6 +22,7 @@ import {
 } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
 import KaderPartai from "./kader-partai";
+import AngotaPartaiV2 from "./angota-partai";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -62,7 +63,7 @@ function DataPartaiV2() {
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif, <strong style={{cursor: "pointer"}}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={50}>
@@ -96,26 +97,14 @@ function DataPartaiV2() {
                 <IoArrowForwardCircleOutline size="1.5rem" />
               </Group>
             </UnstyledButton>
-
+            
             {/* kader partai */}
-            <KaderPartai />
+            <KaderPartai/>
             {/* kader partai */}
 
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              onClick={AnggotaPartai}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} fw={700}>
-                    Anggota Partai
-                  </Text>
-                </div>
-                <IoArrowForwardCircleOutline size="1.5rem" />
-              </Group>
-            </UnstyledButton>
+            {/* Anggota Partai */}
+            <AngotaPartaiV2/>
+            {/* Anggota Partai */}
           </Stack>
         </Box>
       </LayoutDataPartaiV2>

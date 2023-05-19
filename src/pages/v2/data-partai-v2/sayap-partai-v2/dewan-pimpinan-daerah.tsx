@@ -1,8 +1,17 @@
 import { Button, Drawer, Group, Select, Text, TextInput, UnstyledButton, createStyles, rem } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/router";
+import toast from "react-simple-toasts";
+import { api } from "@/lib/api-backend";
+import { useForm } from "@mantine/form";
+import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
+import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
+import { sJabatanDewanPimpinanDaerah } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
+import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
+import { _loadJabatanDewanPimpinanDaerah } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -21,36 +30,73 @@ const useStyles = createStyles((theme) => ({
 function DewanPimpinanDaerah() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
+  const [value, setValue] =useState("")
+  const router = useRouter()
+
+  const PimpinanDaerah = () => {
+    if (
+      Object.values(formSayapDewanPimpinanDaerah.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formSayapDewanPimpinanDaerah.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.push("/v2/home");
+      }
+    });
+  };
+
+  const formSayapDewanPimpinanDaerah = useForm({
+    initialValues: {
+      data: {
+        userId: localStorage.getItem("user_id"),
+        masterSayapPartaiId: "",
+        masterProvinceId: "",
+        masterJabatanDewanPimpinanDaerahId: "",
+        alamatKantor: "",
+        waAdmin: "",
+        // medsos: ""
+      }
+    }
+  })
+
+  useShallowEffect(() => {
+    _loadProvinsi()
+    _loadJabatanDewanPimpinanDaerah()
+  },[])
+
   return (
     <>
       <Drawer opened={opened} onClose={close} title="Dewan Pimpinan Daerah" size={"sm"}>
       <Select
-        // onChange={(val) => {
-        //   setValue(val!)
-        //   formSayapPimpinanPusat.values.data.masterSayapPartaiId= val!
-        // }}
-        // data={sSayapPartai.value.map((val) => ({
-        //   value: val.id,
-        //   label: val.name
-        // }))}
+        onChange={(val) => {
+          setValue(val!)
+          formSayapDewanPimpinanDaerah.values.data.masterSayapPartaiId= val!
+        }}
+        data={sSayapPartai.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         label="Pilih Sayap Partai"
         mt={10}
         radius={"md"}
         withAsterisk
         placeholder="Pilih Sayap Partai"
-        data={[{value: "data", label: "data"}]}
         searchable
       />
       <Select
-      data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-      ]}
         // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
-        // data={sProvinsi.value.map((val) => ({
-        //   value: val.id,
-        //   label: val.name,
-        // }))}
+        data={sProvinsi.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         
         radius={"md"}
         mt={10}
@@ -58,56 +104,45 @@ function DewanPimpinanDaerah() {
         label="Provinsi"
         withAsterisk
         searchable
-        // onChange={(val) => {
-        //   setValue(val!);
-        //   formStrukturDewanPimpinanDaerah.values.data.masterProvinceId = val!;
-        // }}
+        onChange={(val) => {
+          setValue(val!);
+          formSayapDewanPimpinanDaerah.values.data.masterProvinceId = val!;
+        }}
       />
       <Select
-        // {...formStrukturDewanPimpinanDaerah.getInputProps("data.jabatan")}
-        data={[
-          { value: 'react', label: 'React' },
-          { value: 'ng', label: 'Angular' },
-        ]}
+        // {...formStrukturPartai.getInputProps("jabatan")}
+        onChange={(val) => {
+          setValue(val!)
+          formSayapDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId = val!
+        }}
+        data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
+          value: val.id,
+          label: val.name
+        }))}
         label="Jabatan"
         withAsterisk
         mt={10}
         radius={"md"}
         placeholder="Jabatan"
         // data={jabatan}
-        // data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
-        //   value: val.id,
-        //   label: val.name,
-        // }))}
         searchable
-        // onChange={(val) => {
-        //   setValue(val!);
-        //   formStrukturDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
-        //     val!;
-        // }}
       />
       <TextInput
-        // {...formStrukturDewanPimpinanDaerah.getInputProps("data.alamatKantor")}
+        {...formSayapDewanPimpinanDaerah.getInputProps("data.alamatKantor")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Alamat Kantor"
         label="Alamat Kantor"
-        // onChange={() => {
-        //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
-        // }}
       />
       <TextInput
-        // {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
+        {...formSayapDewanPimpinanDaerah.getInputProps("data.waAdmin")}
         radius={"md"}
         mt={10}
         withAsterisk
         placeholder="Nomor WA Admin"
         label="Nomor WA Admin"
         type="number"
-        // onChange={() => {
-        //   setValue(formStrukturDewanPimpinanDaerah.values.data.nomorWA)
-        // }}
       />
       {/* <TextInput
         {...formStrukturDewanPimpinanDaerah.getInputProps("data.medsos")}
@@ -120,7 +155,9 @@ function DewanPimpinanDaerah() {
         //   setValue(formStrukturDewanPimpinanDaerah.values.data.medsos)
         // }}
       /> */}
-        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9">
+        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
+        onClick={PimpinanDaerah}
+        >
           SIMPAN
         </Button>
       </Drawer>

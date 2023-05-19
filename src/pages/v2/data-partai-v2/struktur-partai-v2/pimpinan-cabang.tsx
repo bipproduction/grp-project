@@ -9,10 +9,17 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { api } from "@/lib/api-backend";
+import _ from "lodash";
+import toast from "react-simple-toasts";
+import { useRouter } from "next/router";
+import { useForm } from "@mantine/form";
+import { sJabatanDewanPimpinanCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
+import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -31,6 +38,121 @@ const useStyles = createStyles((theme) => ({
 function PimpinanCabang() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
+  const [provinsi, setProvinsi] = useState<any[]>([]);
+  const [kabupaten, setKabupaten] = useState<any[]>([]);
+  const [kecamatan, setKecamatan] = useState<any[]>([]);
+  const [desa, setDesa] = useState<any[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
+    id: "",
+    name: "",
+  });
+  const [selectedDesa, setSelectedDesa] = useState<any>({
+    id: "",
+    name: "",
+  });
+
+  const loadProvinsi = async () => {
+    const res = await fetch(api.apiMasterProvinsiGetAll);
+    const ProviniData = await res.json();
+    setProvinsi(ProviniData);
+  };
+
+  const loadKabupaten = async (idProvinsi: string) => {
+    const res = await fetch(
+      api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKabupaten(val);
+          setSelectedKabupaten({});
+        } else {
+          setKabupaten([]);
+        }
+      });
+  };
+
+  async function loadKecamatan(idKabkot: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-kecamatan"
+      api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setKecamatan(val);
+          setSelectedKecamatan({});
+        } else {
+          setKecamatan([]);
+        }
+      });
+    // .then((res) => res.json())
+    // .then(setKecamatan);
+  }
+  async function loadDesa(idKecamatan: string) {
+    const res = await fetch(
+      // "/api/get/sumber-daya-partai/wilayah/api-get-desa"
+      api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
+    )
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (!_.isEmpty(val)) {
+          setDesa(val);
+          setSelectedDesa({});
+        } else {
+          setDesa([]);
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadProvinsi();
+    _loadJabatanDewanPimpinanCabang();
+  }, []);
+
+  const PimpinanCabang = () => {
+    if (
+      Object.values(formStrukturDewanPimpinanCabang.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formStrukturDewanPimpinanCabang.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.push("/v2/home");
+      }
+    });
+  };
+
+  const router = useRouter();
+  const [value, setValue] = useState("");
+  const formStrukturDewanPimpinanCabang = useForm({
+    initialValues: {
+      data: {
+        userId: localStorage.getItem("user_id"),
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterJabatanDewanPimpinanCabangId: "",
+        alamatKantor: "",
+        waAdmin: "",
+        // medsos: "",
+      },
+    },
+  });
   return (
     <>
       <Drawer
@@ -40,21 +162,20 @@ function PimpinanCabang() {
         size={"sm"}
       >
         <Select
-        // onChange={(val) => {
-        //   if (val) {
-        //     setSelectedProvince(provinsi.find((v) => v.id == val));
-        //     loadKabupaten(val);
-        //   }
-        //   formStrukturDewanPimpinanCabang.values.data.masterProvinceId = val!;
-        // }}
-        // data={provinsi.map((pro) => ({
-        //   value: pro.id,
-        //   label: pro.name,
-        // }))}
-        data={[{value: "data", label: "data"}]}
+        onChange={(val) => {
+          if (val) {
+            setSelectedProvince(provinsi.find((v) => v.id == val));
+            loadKabupaten(val);
+          }
+          formStrukturDewanPimpinanCabang.values.data.masterProvinceId = val!;
+        }}
+        data={provinsi.map((pro) => ({
+          value: pro.id,
+          label: pro.name,
+        }))}
         radius={"md"}
-        // placeholder={selectedProvince.name}
-        // value={selectedProvince.name}
+        placeholder={selectedProvince.name}
+        value={selectedProvince.name}
         mt={10}
         label="Provinsi"
         withAsterisk
@@ -62,39 +183,37 @@ function PimpinanCabang() {
       />
       <Select
         key={Math.random()}
-        // data={
-        //   _.isEmpty(kabupaten)
-        //     ? []
-        //     : kabupaten.map((v) => ({
-        //         value: v.id,
-        //         label: v.name,
-        //       }))
-        // }
+        data={
+          _.isEmpty(kabupaten)
+            ? []
+            : kabupaten.map((v) => ({
+                value: v.id,
+                label: v.name,
+              }))
+        }
         radius={"md"}
         mt={10}
-        // placeholder={selectedKabupaten.name}
-        // value={selectedKabupaten.name}
+        placeholder={selectedKabupaten.name}
+        value={selectedKabupaten.name}
         label="Kabupaten / Kota"
         withAsterisk
         searchable
-        data={[{value: "data", label: "data"}]}
-        // onChange={(val) => {
-        //   setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-        //   loadKecamatan(val!);
-        //   formStrukturDewanPimpinanCabang.values.data.masterKabKotId = val!;
-        // }}
+        onChange={(val) => {
+          setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+          loadKecamatan(val!);
+          formStrukturDewanPimpinanCabang.values.data.masterKabKotId = val!;
+        }}
       />
       <Select
-        // onChange={(val) => {
-        //   setValue(val!);
-        //   formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
-        //     val!;
-        // }}
-        // data={sJabatanDewanPimpinanCabang.value.map((val) => ({
-        //   value: val.id,
-        //   label: val.name,
-        // }))}
-        data={[{value: "data", label: "data"}]}
+        onChange={(val) => {
+          setValue(val!);
+          formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
+            val!;
+        }}
+        data={sJabatanDewanPimpinanCabang.value.map((val) => ({
+          value: val.id,
+          label: val.name,
+        }))}
         label="Jabatan"
         withAsterisk
         mt={10}
@@ -104,7 +223,7 @@ function PimpinanCabang() {
         searchable
       />
       <TextInput
-        // {...formStrukturDewanPimpinanCabang.getInputProps("data.alamatKantor")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.alamatKantor")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -112,7 +231,7 @@ function PimpinanCabang() {
         label="Alamat Kantor"
       />
       <TextInput
-        // {...formStrukturDewanPimpinanCabang.getInputProps("data.waAdmin")}
+        {...formStrukturDewanPimpinanCabang.getInputProps("data.waAdmin")}
         radius={"md"}
         mt={10}
         withAsterisk
@@ -128,7 +247,9 @@ function PimpinanCabang() {
         placeholder="Add Media Social"
         label="Add Media Social"
       /> */}
-        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9">
+        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
+        onClick={PimpinanCabang}
+        >
           SIMPAN
         </Button>
       </Drawer>

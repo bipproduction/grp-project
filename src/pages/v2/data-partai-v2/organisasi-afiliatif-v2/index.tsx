@@ -20,8 +20,14 @@ import {
   IoArrowForwardCircleOutline,
   IoChevronDownCircle,
 } from "react-icons/io5";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import COLOR from "../../../../../fun/WARNA";
+import { _loadOrganisasiAfiliatif } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
+import toast from "react-simple-toasts";
+import { api } from "@/lib/api-backend";
+import { sUser } from "@/s_state/s_user";
+import { useForm } from "@mantine/form";
+import { sOrganisasiAfiliatif } from "@/s_state/organisasi_afiliatif/s_organisasi_afiliatif";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -46,13 +52,45 @@ function OrganisasiAfiliatifV2() {
   function Afiliatif() {
     router.push("/v2/data-partai-v2");
   }
+
+  useShallowEffect(() => {
+    _loadOrganisasiAfiliatif()
+  },[])
+
+  const onDataAfiliatif = () => {
+    if (Object.values(formAnggotaAfiliatif.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiAnggotaAfiliatifPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formAnggotaAfiliatif.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.push("/v2/home");
+      }
+    });
+  };
+
+  const formAnggotaAfiliatif = useForm({
+    initialValues: {
+      data: {
+        userId: localStorage.getItem("user_id"),
+        masterOrganisasiAfiliatifId: ""
+      }
+    }
+  })
+
   return (
     <>
       <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Bukan Organisasi Afiliatif, <strong>Klik disini !</strong>
+              Jika Bukan Organisasi Afiliatif, <strong style={{cursor: "pointer"}}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={50}>
@@ -63,22 +101,23 @@ function OrganisasiAfiliatifV2() {
               size={"sm"}
             >
               <Select
-                // onChange={(val) => {
-                //   formAnggotaAfiliatif.values.data.masterOrganisasiAfiliatifId =
-                //     val!;
-                // }}
-                // data={sOrganisasiAfiliatif.value.map((val) => ({
-                //   value: val.id,
-                //   label: val.name,
-                // }))}
+                onChange={(val) => {
+                  formAnggotaAfiliatif.values.data.masterOrganisasiAfiliatifId =
+                    val!;
+                }}
+                data={sOrganisasiAfiliatif.value.map((val) => ({
+                  value: val.id,
+                  label: val.name,
+                }))}
                 radius={"md"}
                 mt={10}
                 label="Pilih Nama Organisasi Afilliatif"
                 placeholder="Pilih Nama Organisasi Afilliatif"
                 withAsterisk
-                data={[{value: "data", label: "data"}]}
               />
-              <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9">
+              <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
+              onClick={onDataAfiliatif}
+              >
                 SIMPAN
               </Button>
             </Drawer>

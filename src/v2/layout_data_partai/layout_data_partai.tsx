@@ -25,7 +25,7 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
           <Box bg={COLOR.hitam} w={"100%"} h={"100vh"}>
           <Container size="30rem" px={0} pt={250}>
             <Center>
-            <Image src="../.././logo.png" width={400} alt="logo" />
+            <Image src="../.././logo.png" width={300} alt="logo" />
             </Center>
             </Container>
         </Box>

@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Alert,
   AspectRatio,
   Avatar,
   Box,
@@ -11,6 +12,7 @@ import {
   Header,
   Image,
   Menu,
+  Modal,
   SimpleGrid,
   Text,
   TextInput,
@@ -31,9 +33,9 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi";
+import { FiAlertCircle, FiLogOut } from "react-icons/fi";
 import { useForm } from "@mantine/form";
-import { useWindowScroll } from "@mantine/hooks";
+import { useDisclosure, useWindowScroll } from "@mantine/hooks";
 import { constant } from "lodash";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -141,10 +143,39 @@ const HomeUserV2 = () => {
   } else if (sUser.value.masterUserRoleId == "3") {
     link_dashboard = "/v2/dashboard-super-admin";
   }
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       {/* HEADER */}
+      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
+        <Alert
+          icon={<FiAlertCircle size="2rem" color="red" />}
+          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
+          color="gray"
+        >
+          <Group pt={10}>
+            <Box w={150}>
+              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={close}>
+                TIDAK
+              </Button>
+            </Box>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="green.9"
+                bg={COLOR.hijautua}
+                onClick={() => {
+                  localStorage.removeItem("user_id");
+                  sUser.value = {};
+                }}
+              >
+                IYA
+              </Button>
+            </Box>
+          </Group>
+        </Alert>
+      </Modal>
       <Box>
         <Header
           height={70}
@@ -234,10 +265,11 @@ const HomeUserV2 = () => {
                   </Menu.Item>
                   <Menu.Item>
                     <Group
-                      onClick={() => {
-                        localStorage.removeItem("user_id");
-                        sUser.value = {};
-                      }}
+                    onClick={open}
+                      // onClick={() => {
+                      //   localStorage.removeItem("user_id");
+                      //   sUser.value = {};
+                      // }}
                     >
                       <AiOutlineLogout color="red" size="1.3rem" />
                       <Text color="red">Logout</Text>

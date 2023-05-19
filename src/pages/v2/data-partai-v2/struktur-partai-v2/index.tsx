@@ -1,5 +1,6 @@
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import {
+  ActionIcon,
   Box,
   Button,
   Drawer,
@@ -13,7 +14,7 @@ import {
 } from "@mantine/core";
 import React from "react";
 import { useRouter } from "next/router";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from "react-icons/io5";
 import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure } from "@mantine/hooks";
 import DewanPembina from "./dewan-pembina";
@@ -46,6 +47,9 @@ function TingkatPengurusStrukturPartai() {
   function Afiliatif() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
   }
+  function Back() {
+    router.push("/v2/data-partai-v2");
+  }
   return (
     <>
       <LayoutDataPartaiV2>
@@ -55,7 +59,10 @@ function TingkatPengurusStrukturPartai() {
               Jika Termasuk Organisasi Afiliatif, <strong>Klik disini !</strong>
             </Text>
           </Box>
-          <Stack p={30} pt={50}>
+          <Stack p={30} pt={35}>
+          <ActionIcon onClick={Back} variant="transparent">
+            <IoArrowBackCircleSharp size="2rem"  color={COLOR.merah}/>
+          </ActionIcon>
             <DewanPembina />
             <DewanPimpinanPusat />
             <DewanPimpinanDaerah />

@@ -20,6 +20,8 @@ import {
   ActionIcon,
   HoverCard,
   Tooltip,
+  Modal,
+  Alert,
 } from "@mantine/core";
 import { useState } from "react";
 import {
@@ -32,7 +34,7 @@ import {
 import { FaCircle } from "react-icons/fa";
 import {} from "react-icons/io";
 import COLOR from "../../fun/WARNA";
-import { FiLogOut } from "react-icons/fi";
+import { FiAlertCircle, FiLogOut } from "react-icons/fi";
 import { gSelectedPage } from "@/xg_state.ts/g_selected_page";
 import { useHookstate } from "@hookstate/core";
 import StrukturPartaiV2 from "./sumber_daya_partai/struktur_partai/struktur_partai";
@@ -49,6 +51,7 @@ import DbAnggotaPartai from "./database_partai/db_anggota_partai/db_anggota_part
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import Head from "next/head";
+import { useDisclosure } from "@mantine/hooks";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -82,7 +85,9 @@ const listSidebar = [
 
 const LayoutDashboarSuperdAdminV2 = () => {
   const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
+  const [openednya, setOpenedNya] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
+
 
   const [select, setSelect] = useState("Data Struktur Partai");
 
@@ -96,6 +101,34 @@ const LayoutDashboarSuperdAdminV2 = () => {
   if (sUser.value.masterUserRoleId != "3") router.replace("/v2");
   return (
     <>
+      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
+        <Alert
+          icon={<FiAlertCircle size="2rem" color="red" />}
+          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
+          color="gray"
+        >
+          <Group pt={10}>
+            <Box w={150}>
+              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={close}>
+                TIDAK
+              </Button>
+            </Box>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="green.9"
+                bg={COLOR.hijautua}
+                onClick={() => {
+                  localStorage.removeItem("user_id");
+                  sUser.value = {};
+                }}
+              >
+                IYA
+              </Button>
+            </Box>
+          </Group>
+        </Alert>
+      </Modal>
       <AppShell
         styles={{
           main: {
@@ -111,7 +144,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
           <Navbar
             p="md"
             hiddenBreakpoint="sm"
-            hidden={!opened}
+            hidden={!openednya}
             width={{ sm: 200, lg: 280 }}
           >
             <Box>
@@ -157,10 +190,11 @@ const LayoutDashboarSuperdAdminV2 = () => {
                         </Menu.Item>
                         <Menu.Item>
                           <Group
-                            onClick={() => {
-                              localStorage.removeItem("user_id");
-                              sUser.value = {};
-                            }}
+                          onClick={open}
+                            // onClick={() => {
+                            //   localStorage.removeItem("user_id");
+                            //   sUser.value = {};
+                            // }}
                           >
                             <AiOutlineLogout color="red" size="1.3rem" />
                             <Text color="red">Logout</Text>
@@ -201,7 +235,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
                         c={select == v.name ? "blue" : "dark"}
                         label={v.name}
                         onClick={() => {
-                          setOpened(false);
+                          setOpenedNya(false);
                           // SelectedView.value == v.name;
                           setSelect(v.name);
                         }}
