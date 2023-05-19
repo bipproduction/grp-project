@@ -76,13 +76,14 @@ import {
 } from "@/load_data/wilayah/load_selected_wilayah";
 import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
-
+import { _listDataStruktur } from "./table_struktur_partai";
+import dataTable from "../data_table.json"
 const EditStrukturPartaiV2 = ({
   thisClosed,
-  isID,
+  
 }: {
   thisClosed: any;
-  isID: [];
+  
 }) => {
   // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
   const [isJabatan, setJabatan] = useState<any>();
@@ -94,6 +95,10 @@ const EditStrukturPartaiV2 = ({
   const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
   const [isDesa, setIsDesa] = useAtom(_desa);
   const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
+
+  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
+  
+
 
   // const [selectedProvince, setSelectedProvince] = useState<any>({
   //   id: "",
@@ -133,6 +138,7 @@ const EditStrukturPartaiV2 = ({
     _loadListPekerjaan();
     _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
     _loadJenisKelamin()
+    setTargetStruktur(dataTable)
 
   }, []);
 
@@ -236,9 +242,14 @@ const EditStrukturPartaiV2 = ({
     thisClosed();
   };
 
+  if(!targetStruktur){
+    return <></>;
+  }
+
   return (
     <>
-      {/* {JSON.stringify(isID)} */}
+    
+    {/* {JSON.stringify(targetStruktur)} */}
       {/* <Button
         onClick={() => {
           setValEditor(["apa kabar"]);
@@ -357,6 +368,8 @@ const EditStrukturPartaiV2 = ({
         // {...formEditStrukturPartai.getInputProps("data.desa")}
       /> */}
 
+
+
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -417,9 +430,15 @@ const EditStrukturPartaiV2 = ({
                   <Flex direction={"column"}>
                     <Box>
                       <NumberInput
+                      
                         placeholder="NIK"
                         label="NIK"
-                        {...formEditStrukturPartai.getInputProps("data.nik")}
+                        onChange={(val) => {
+                          const res = [...targetStruktur]
+                          
+
+                        }}
+                        // {...formEditStrukturPartai.getInputProps("data.nik")}
                         withAsterisk
                       />
                       <TextInput
