@@ -84,7 +84,7 @@ const EditKaderPartaiV2 = ({ thisClosed }: any) => {
     _loadJabtanPerwakilanLuarNegeri();
     _loadAgama();
     _loadListPekerjaan();
-    _loadSelectProvinsi({ setIsProvinsi });
+    _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
     _loadJenisKelamin()
 
   }, []);

@@ -19,19 +19,21 @@ import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
+import {
+  _loadKategoriAset,
+  _loadStatusAset,
+} from "@/load_data/sumber_daya_partai/load_aset_partai";
+import { useAtom } from "jotai";
+import {
+  sKategoriAset,
+  sStatusAset,
+} from "@/s_state/sumber_daya_partai/s_aset";
 
 const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
-  const [ket, setKet] = useState<any | []>([]);
-
   useShallowEffect(() => {
-    loadKategori();
+    _loadKategoriAset();
+    _loadStatusAset();
   }, []);
-
-  async function loadKategori() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-kategori-aset")
-      .then((res) => res.json())
-      .then((val) => setKet(Object.values(val).map((e: any) => e.name)));
-  }
 
   const formDataAset = useForm({
     initialValues: {
@@ -54,8 +56,8 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
 
   const onEdit = () => {
     console.log(formDataAset.values.data);
-    if(Object.values(formDataAset.values.data).includes("")){
-      return toast("Lengkapi Data Diri")
+    if (Object.values(formDataAset.values.data).includes("")) {
+      return toast("Lengkapi Data Diri");
     }
     buttonSimpan();
     thisClosed();
@@ -63,6 +65,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
 
   return (
     <>
+      {/* {JSON.stringify(kategori)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -152,7 +155,10 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
             <Box>
               <Flex direction={"column"}>
                 <Select
-                  data={["Bergerak", "Tidak Bergerak"]}
+                  data={sStatusAset.value.map((e) => ({
+                    label: e.name,
+                    value: e.id,
+                  }))}
                   placeholder={"Status Aset"}
                   label={"Status Aset"}
                   withAsterisk
@@ -170,7 +176,10 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                 />
 
                 <Select
-                  data={ket}
+                  data={sKategoriAset.value.map((e) => ({
+                    label: e.name,
+                    value: e.id,
+                  }))}
                   placeholder={"Kategori Aset"}
                   label={"Kategori Aset"}
                   withAsterisk

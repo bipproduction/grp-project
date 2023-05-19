@@ -95,7 +95,7 @@ const EditSayapPartaiV2 = ({ thisClosed }: any) => {
     _loadJabatanDewanPimpinanCabang();
     _loadAgama();
     _loadListPekerjaan();
-    _loadSelectProvinsi({ setIsProvinsi });
+    _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
     _loadSayapPartai();
     _loadJenisKelamin()
 

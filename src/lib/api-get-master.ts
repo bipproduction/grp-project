@@ -4,11 +4,14 @@ export const apiGetMaster = {
     "apiGetJenisKelamin": "/api/get/sumber-daya-partai/api-get-jenis-kelamin",
     "apiMediaSocial": "/api/get/sumber-daya-partai/api-get-media-social",
 
-
-
     // SUMBER DAYA PARTAI
     "apiGetStatusKeanggotaan": "/api/get/sumber-daya-partai/api-get-status-keanggotaan",
     "apiGetTingkatPengurus": "/api/get/sumber-daya-partai/api-get-tingkat-pengurus",
+    // Aset
+    "apiGetKategoriAset" : "/api/get/sumber-daya-partai/api-get-kategori-aset",
+    "apiGetStatusAset" : "/api/get/sumber-daya-partai/api-get-status-aset",
+
+
     // Struktur Partai
     "apiGetJabatanDewanPembina": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina" ,
     "apiGetJabatanDewanPimpinanPusat": "/api/get/sumber-daya-partai/api-get-jabatan-dewan-pimpinan-pusat" ,
