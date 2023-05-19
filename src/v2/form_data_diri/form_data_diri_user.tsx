@@ -231,7 +231,7 @@ const FormDataDiriUser = () => {
     sUser.value = pertama;
     // console.log(sUser.value);
     toast("succes");
-    router.push("/v2/coba-data-partai/data-partai");
+    router.push("/v2/data-partai-v2");
   };
 
   const formMediaSocial = useForm({

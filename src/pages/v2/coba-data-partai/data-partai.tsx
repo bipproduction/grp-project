@@ -105,6 +105,7 @@ const DataPartai = () => {
                               * Wajib diisi
                             </Text>
                           </Box>
+                          {JSON.stringify(value)}
                           <Select
                             radius={"md"}
                             label={"Pilih Status Anggota"}

@@ -23,7 +23,21 @@ import _ from "lodash";
 import toast from "react-simple-toasts";
 
 const  SayapPartaiV2 = ({ setNilai }: any) => {
+  const router = useRouter();
   const [value, setValue] = useState<any>();
+
+  const SayapPartai = async () => {
+    for (let item of setNilai) {
+      await fetch(api.apiSumberDayaPartaiPost, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+      })
+    }
+  }
+
   useShallowEffect(() => {
     _loadJabatanDewanPimpinanPusat()
     _loadJabatanDewanPimpinanDaerah()
@@ -47,8 +61,10 @@ const  SayapPartaiV2 = ({ setNilai }: any) => {
           "Pimpinan Anak Cabang",
         ]}
         onChange={(val) => {
+          
           if (val == "Dewan Pimpinan Pusat") {
-            setValue(<DewanPimpinanPusat set={val} setNilai={setNilai} />);
+            
+            setValue(<DewanPimpinanPusat set={val}  setNilai={setNilai}/>);
           } else {
             if (val === "Dewan Pimpinan Daerah") {
               setValue(<DewanPimpinanDaerah set={val} setNilai={setNilai} />);
@@ -99,6 +115,7 @@ const DewanPimpinanPusat = ({ set, setNilai }: { set: any, setNilai: any }) => {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
         masterJabatanDewanPimpinanPusatId: ""
+        
       }
     }
   })

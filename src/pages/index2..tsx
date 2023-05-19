@@ -1,5 +1,6 @@
 import { api } from "@/lib/api-backend";
 import { apiGetMaster } from "@/lib/api-get-master";
+import { MyIndex2 } from "@/zindex2/my_index2";
 import { Button, Group, Select, Stack, TextInput } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import React, { useState } from "react";
@@ -35,72 +36,7 @@ function Index2() {
   }, []);
   return (
     <>
-      {JSON.stringify(listMediaSosial)}
-      <Group>
-        <Stack p={"xs"}>
-          <Group>
-            <TextInput
-              label={"instagram"}
-              onChange={(val) => {
-                const index = listData?.findIndex(
-                  (v) => v.masterMediaSocialId == 1
-                );
-                listData[index].name = val.currentTarget.value;
-                listData[index].userId = localStorage.getItem("user_id")!;
-                setlsistData(listData);
-
-                // console.log(listData);
-              }}
-            />
-            <TextInput
-              label={"facebook"}
-              onChange={(val) => {
-                const index = listData?.findIndex(
-                  (v) => v.masterMediaSocialId == 2
-                );
-                listData[index].name = val.currentTarget.value;
-                listData[index].userId = localStorage.getItem("user_id")!;
-                // setlsistData(listData);
-
-                // console.log(listData);
-              }}
-            />
-            <TextInput
-              label={"Tiktok"}
-              onChange={(val) => {
-                const index = listData?.findIndex(
-                  (v) => v.masterMediaSocialId == 3
-                );
-                listData[index].name = val.currentTarget.value;
-                listData[index].userId = localStorage.getItem("user_id")!;
-                // setlsistData(listData);
-
-                // console.log(listData);
-              }}
-            />
-            <TextInput
-              label={"Twitter"}
-              onChange={(val) => {
-                const index = listData?.findIndex(
-                  (v) => v.masterMediaSocialId == 4
-                );
-                listData[index].name = val.currentTarget.value;
-                listData[index].userId = localStorage.getItem("user_id")!;
-                // setlsistData(listData);
-
-                // console.log(listData);
-              }}
-            />
-          </Group>
-          <Button
-            onClick={() => {
-              console.table(listData);
-            }}
-          >
-            Simpan
-          </Button>
-        </Stack>
-      </Group>
+      <MyIndex2 />
     </>
   );
 }

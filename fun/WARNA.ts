@@ -7,6 +7,11 @@ const COLOR = {
     coklat: "#83281C",
     biru: "#30099CA",
     abu2: "#D9D2CE",
-    hitam1: "#25262B"
+    hitam1: "#25262B",
+    color1: "#99382B",
+    color2: "#B24536",
+    color3: "#903A2E",
+    color4: "#761F14",
+    hijautua: "#025464"
 }
 export default COLOR
