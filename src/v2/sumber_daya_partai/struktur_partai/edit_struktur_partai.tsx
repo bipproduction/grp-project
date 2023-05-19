@@ -97,8 +97,6 @@ const EditStrukturPartaiV2 = ({
   const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
 
   const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
-  
-
 
   // const [selectedProvince, setSelectedProvince] = useState<any>({
   //   id: "",
