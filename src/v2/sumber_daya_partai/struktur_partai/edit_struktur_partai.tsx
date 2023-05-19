@@ -247,7 +247,7 @@ const EditStrukturPartaiV2 = ({
   return (
     <>
     
-    {/* {JSON.stringify(targetStruktur)} */}
+    {JSON.stringify(targetStruktur)}
       {/* <Button
         onClick={() => {
           setValEditor(["apa kabar"]);
