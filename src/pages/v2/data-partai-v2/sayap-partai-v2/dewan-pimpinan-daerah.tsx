@@ -12,6 +12,7 @@ import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { sJabatanDewanPimpinanDaerah } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { _loadJabatanDewanPimpinanDaerah } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { sUser } from "@/s_state/s_user";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -34,6 +35,8 @@ function DewanPimpinanDaerah() {
   const router = useRouter()
 
   const PimpinanDaerah = () => {
+    console.log(localStorage.getItem("user_id")+"----"+sUser.value.masterUserRoleId);
+    console.log(formSayapDewanPimpinanDaerah.values.data);
     if (
       Object.values(formSayapDewanPimpinanDaerah.values.data).includes("")
     ) {

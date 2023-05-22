@@ -227,8 +227,8 @@ const FormDataDiriUser = () => {
       });
     }
 
-    localStorage.setItem("user_id", pertama.id);
-    sUser.value = pertama;
+    // localStorage.setItem("user_id", pertama.id);
+    // sUser.value = pertama;
     // console.log(sUser.value);
     toast("succes");
     router.push("/v2/data-partai-v2");
