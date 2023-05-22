@@ -3,18 +3,21 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Grid,
   Group,
   Modal,
   Pagination,
   Paper,
   ScrollArea,
+  Stack,
   Table,
   Text,
   TextInput,
+  Title,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -31,15 +34,35 @@ import dataTable from "../data_table.json";
 import { atom, useAtom } from "jotai";
 import { _val_muncul } from "./_val_edit_struktur";
 import { atomWithStorage } from "jotai/utils";
+import _ from "lodash";
 
-export const _listDataStruktur = atomWithStorage<any | undefined>("_list_database_struktur", undefined)
+export const _listDataStruktur = atomWithStorage<any | undefined>(
+  "_list_database_struktur",
+  undefined
+);
+export const _dataStruktur = atomWithStorage<any[]>("_database_struktur", []);
+export const _dataDiri = atomWithStorage<any[]>("_data_diri", [])
 
 const TableStruktutPartaiV2 = () => {
   // const [open, setOpen] = useAtom(_val_muncul);
-  const [opened, setOpen] = useDisclosure(false)
+  const [opened, setOpen] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
-  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
-  const [datanya, setDatanya] = useState<any>()
+  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur);
+  const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
+  const [dataDiri, setDataDiri] = useAtom(_dataDiri)
+
+  useShallowEffect(() => {
+    loadDataStruktur(1);
+  }, []);
+
+  async function loadDataStruktur(status: any) {
+    const res = await fetch(
+      `/api/sumber-daya-partai/sumber-daya-partai-get-all?status=${status}`
+    )
+      .then((res) => res.json())
+      .then((val) => setDataStruktur(val));
+  }
+
 
   const tbHead = (
     <tr>
@@ -65,7 +88,9 @@ const TableStruktutPartaiV2 = () => {
       <th>Facebook</th>
       <th>TikTok</th>
       <th>Twitter</th>
-      <th ><Center>Aksi</Center></th>
+      <th>
+        <Center>Aksi</Center>
+      </th>
     </tr>
   );
 
@@ -102,12 +127,11 @@ const TableStruktutPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={(val) => {
-              setOpen.open()
+              setOpen.open();
               // setOpen(true);
-              setTargetStruktur(e)
+              setTargetStruktur(e);
               // setDatanya(e)
-            //  console.log(e)
-              
+              //  console.log(e)
             }}
           >
             Edit
@@ -120,8 +144,15 @@ const TableStruktutPartaiV2 = () => {
     </tr>
   ));
 
+  const tableHead = dataStuktur.map((e, i) => e.User).map((v,ii) => v.DataDiri).map((s,iii) => setDataDiri(s));
+
+
   return (
     <>
+      {JSON.stringify(dataStuktur)}
+      <Divider/>
+      {/* {JSON.stringify(dataDiri.map((e) => e))} */}
+
       <Modal
         opened={opened}
         onClose={setOpen.close}
@@ -136,82 +167,33 @@ const TableStruktutPartaiV2 = () => {
 
         <EditStrukturPartaiV2 thisClosed={setOpen.close} />
       </Modal>
+      {/* <Table sx={{overflow: "scroll"}}>
+        <thead>
+          <tr>
+           {dataStuktur.map((e, i) => e.User).map((v) => v.DataDiri).map((e) => _.keys(e).map((e, i) => 
+           <th key={i}>
+            <Text>{_.upperCase(e)}</Text>
+           </th>
+           ))}
+          </tr>
+        </thead>
+      </Table> */}
+      {dataStuktur.map((e, i) => 
+      <Box key={i}>
+        <Stack>{e.User[i]}</Stack>
+      </Box>
+      )}
+
       <Box>
-        <Paper bg={COLOR.abuabu} p={10}>
-          <Grid>
-            <Grid.Col span={8}>
-              <Text size={20} fw={"bold"}>
-                Data Struktur Partai
-              </Text>
-            </Grid.Col>
-            {/* <Grid.Col span={4}>
-              <Group position="right">
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<AiOutlineSave />}
-                >
-                  Save
-                </Button>
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<CiFilter />}
-                >
-                  Fillter
-                </Button>
-              </Group>
-            </Grid.Col> */}
-          </Grid>
-        </Paper>
-        <Box pt={20}>
-          <Grid>
-            <Grid.Col md={4} lg={4}>
-              <TextInput
-                mt={5}
-                icon={<AiOutlineSearch size={20} />}
-                placeholder="Search"
-                radius={"md"}
-              />
-            </Grid.Col>
-            {/* <Grid.Col md={8} lg={8}>
-              <Group position="right">
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineDownload size={20} />}
-                  radius={"xl"}
-                  bg={COLOR.orange}
-                >
-                  Download Tamplate
-                </Button>
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineUpload size={20} />}
-                  radius={"xl"}
-                  m={5}
-                  bg={COLOR.orange}
-                >
-                  Import File
-                </Button>
-              </Group>
-            </Grid.Col> */}
-          </Grid>
-        </Box>
-        <Box>
-          <ScrollArea py={20}>
-            <Table withBorder highlightOnHover>
-              <thead>{tbHead}</thead>
-              <tbody>{rows}</tbody>
-            </Table>
-            <Group position="right" pt={10}>
-              <Pagination total={10} color={"orange"} />
-            </Group>
-          </ScrollArea>
-        </Box>
+        <ScrollArea py={20}>
+          <Table withBorder highlightOnHover>
+            {/* <thead>{tableHead}</thead> */}
+            {/* <tbody>{rows}</tbody> */}
+          </Table>
+          <Group position="right" pt={10}>
+            <Pagination total={10} color={"orange"} />
+          </Group>
+        </ScrollArea>
       </Box>
     </>
   );
