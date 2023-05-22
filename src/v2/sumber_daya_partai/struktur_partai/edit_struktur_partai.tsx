@@ -12,8 +12,11 @@ import {
   Select,
   SimpleGrid,
   Space,
+  Stack,
+  Table,
   Text,
   TextInput,
+  Title,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useSetState, useShallowEffect } from "@mantine/hooks";
@@ -77,14 +80,8 @@ import {
 import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { _listDataStruktur } from "./table_struktur_partai";
-import dataTable from "../data_table.json"
-const EditStrukturPartaiV2 = ({
-  thisClosed,
-  
-}: {
-  thisClosed: any;
-  
-}) => {
+import dataTable from "../data_table.json";
+const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
   const [isJabatan, setJabatan] = useState<any>();
   const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
@@ -96,7 +93,7 @@ const EditStrukturPartaiV2 = ({
   const [isDesa, setIsDesa] = useAtom(_desa);
   const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
 
-  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
+  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur);
 
   // const [selectedProvince, setSelectedProvince] = useState<any>({
   //   id: "",
@@ -134,10 +131,18 @@ const EditStrukturPartaiV2 = ({
     _loadJabtanPerwakilanLuarNegeri();
     _loadAgama();
     _loadListPekerjaan();
-    _loadSelectProvinsi( setIsProvinsi, setIsKabupaten, setIsKecamatan, setIsDesa, setSelectProvince, setSelectKabupaten, setSelectKecamatan, setSelectDesa );
-    _loadJenisKelamin()
-    setTargetStruktur(dataTable)
-
+    _loadSelectProvinsi(
+      setIsProvinsi,
+      setIsKabupaten,
+      setIsKecamatan,
+      setIsDesa,
+      setSelectProvince,
+      setSelectKabupaten,
+      setSelectKecamatan,
+      setSelectDesa
+    );
+    _loadJenisKelamin();
+    // setTargetStruktur(dataTable)
   }, []);
 
   // const loadKabupaten = async (idProvinsi: string) => {
@@ -240,14 +245,13 @@ const EditStrukturPartaiV2 = ({
     thisClosed();
   };
 
-  if(!targetStruktur){
+  if (!targetStruktur) {
     return <></>;
   }
 
   return (
     <>
-    
-    {JSON.stringify(targetStruktur)}
+      {/* {JSON.stringify(targetStruktur)} */}
       {/* <Button
         onClick={() => {
           setValEditor(["apa kabar"]);
@@ -366,8 +370,6 @@ const EditStrukturPartaiV2 = ({
         // {...formEditStrukturPartai.getInputProps("data.desa")}
       /> */}
 
-
-
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -394,6 +396,7 @@ const EditStrukturPartaiV2 = ({
                 Simpan
               </Button>
             </Box>
+            {}
             {/* <Box w={100}>
               <Button
                 fullWidth
@@ -424,7 +427,45 @@ const EditStrukturPartaiV2 = ({
                     Wajib diisi
                   </Text>
                 </Flex>
-                <Box>
+                <Stack p={"xs"}>
+                  {_.keys(_.omit(targetStruktur, ["id"])).map((v, i) => (
+                    <Box key={i}>
+                      <TextInput
+                        onChange={(val) => {
+                          targetStruktur[v] = val.target.value;
+                          setTargetStruktur({ ...targetStruktur });
+                        }}
+                        value={targetStruktur[v]}
+                        label={_.upperCase(v)}
+                      />
+                    </Box>
+                  ))}
+                </Stack>
+                <Box
+                  sx={{
+                    overflow: "scroll",
+                  }}
+                >
+                  <Table>
+                    <thead>
+                      <tr>
+                        {_.keys(targetStruktur).map((v, i) => (
+                          <th key={i}>
+                            <Title order={5}>{_.upperCase(v)}</Title>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {_.values(targetStruktur).map((v, i) => (
+                          <td key={i}>{v}</td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Box>
+                {/* <Box>
                   <Flex direction={"column"}>
                     <Box>
                       <NumberInput
@@ -432,11 +473,12 @@ const EditStrukturPartaiV2 = ({
                         placeholder="NIK"
                         label="NIK"
                         onChange={(val) => {
-                          const res = [...targetStruktur]
+                          targetStruktur
+                          
                           
 
                         }}
-                        // {...formEditStrukturPartai.getInputProps("data.nik")}
+
                         withAsterisk
                       />
                       <TextInput
@@ -547,7 +589,7 @@ const EditStrukturPartaiV2 = ({
                       />
                     </Box>
                     <Box>
-                      {/* WILAYAH */}
+
                       <Select
                         label="Provinsi"
                         data={isProvinsi.map((e) => ({
@@ -564,12 +606,7 @@ const EditStrukturPartaiV2 = ({
                             setIsKabupaten,
                             setSelectKabupaten
                           );
-                          // _loadSelectKecamatan(
-                          //   val!,
-                          //   setIsKecamatan,
-                          //   setSelectKecamatan
-                          // );
-                          // _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+
                         }}
                         placeholder={
                           selectProvince.name
@@ -596,7 +633,7 @@ const EditStrukturPartaiV2 = ({
                               }))
                         }
                         onChange={(val) => {
-                          // setSelectKabupaten(sKabkot.value.find((e) => e.id == val));
+
                           formEditStrukturPartai.values.data.kabkot = val!;
                           setSelectKabupaten(
                             isKabupaten.find((e) => e.id == val)
@@ -606,7 +643,7 @@ const EditStrukturPartaiV2 = ({
                             setIsKecamatan,
                             setSelectKecamatan
                           );
-                          // _loadSelectDesa(val!, setIsDesa, setSelectDesa);
+
                         }}
                         placeholder={
                           selectKabupaten.name
@@ -683,7 +720,7 @@ const EditStrukturPartaiV2 = ({
                       />
                     </Box>
                   </Flex>
-                </Box>
+                </Box> */}
               </Paper>
             </Box>
             <Box>
@@ -892,7 +929,6 @@ const EditStrukturPartaiV2 = ({
                         //   formEditStrukturPartai.values.data.tingkatPengurus = val
                         // )
                       }}
-                    
                     />
                     {isJabatan && isJabatan}
 

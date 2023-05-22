@@ -39,6 +39,7 @@ const TableStruktutPartaiV2 = () => {
   const [opened, setOpen] = useDisclosure(false)
   const [activePage, setActivePage] = useState();
   const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur)
+  const [datanya, setDatanya] = useState<any>()
 
   const tbHead = (
     <tr>
@@ -103,8 +104,10 @@ const TableStruktutPartaiV2 = () => {
             onClick={(val) => {
               setOpen.open()
               // setOpen(true);
-              // setTargetStruktur(e)
-              console.log(val.currentTarget.value)
+              setTargetStruktur(e)
+              // setDatanya(e)
+            //  console.log(e)
+              
             }}
           >
             Edit
@@ -129,6 +132,8 @@ const TableStruktutPartaiV2 = () => {
           opacity: 0.1,
         }}
       >
+        {/* {JSON.stringify(targetStruktur)} */}
+
         <EditStrukturPartaiV2 thisClosed={setOpen.close} />
       </Modal>
       <Box>
