@@ -25,13 +25,13 @@ function Contoh1() {
       <Group p={20}>
         <Stack>
           <Button
-            onClick={() => {
-              fetch(apiGetMaster.apiGetStatusKeanggotaan)
-                .then((res) => res.json())
-                // .then(() =>
-                //   setData1(Object.values)
-                // );
-            }}
+            // onClick={() => {
+            //   fetch(apiGetMaster.apiGetStatusKeanggotaan)
+            //     .then((res) => res.json())
+            //     // .then(() =>
+            //     //   setData1(Object.values)
+            //     // );
+            // }}
           >
             Struktur Partai
           </Button>
