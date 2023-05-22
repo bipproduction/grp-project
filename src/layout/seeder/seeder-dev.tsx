@@ -55,6 +55,10 @@ const SeederDev = () => {
     await fetch(apiSeeder.apiSeederSayapPartai).then(
       async (e) => e.status == 200
     );
+  const syncSeederTingkatSayap = async () =>
+    await fetch(apiSeeder.apiSeederTingkatSayap).then(
+      async (e) => e.status == 200
+    );
   const syncSeederOrganisasiAfiliatif = async () =>
     await fetch(apiSeeder.apiSeederOrganisasiAfiliatif).then(
       async (e) => e.status == 200
@@ -269,6 +273,10 @@ const SeederDev = () => {
                   <ButtonSync
                     loadData={syncSeederSayapPartai}
                     name={"Sync Sayap Partai"}
+                  />
+                  <ButtonSync
+                    loadData={syncSeederTingkatSayap}
+                    name="Sync Tingkat Sayap"
                   />
                   <ButtonSync
                     loadData={syncSeederOrganisasiAfiliatif}

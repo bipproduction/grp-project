@@ -9,6 +9,7 @@ export const apiSeeder = {
 // status keanggotaan
 "apiSeederKaderPartai":"/api/seeder/sumber-daya-partai/api-seeder-kader-partai",
 "apiSeederSayapPartai":"/api/seeder/sumber-daya-partai/api-seeder-sayap-partai",
+"apiSeederTingkatSayap":"/api/seeder/sumber-daya-partai/api-seeder-tingkat-sayap",
 "apiSeederOrganisasiAfiliatif":"/api/seeder/sumber-daya-partai/api-seeder-organisasi-afiliatif",
 "apiSeederStatusKenaggotaan":"/api/seeder/sumber-daya-partai/api-seeder-status-keanggotaan",
 "apiSeederTingkatPengurus":"/api/seeder/sumber-daya-partai/api-seeder-tingkat-pengurus",

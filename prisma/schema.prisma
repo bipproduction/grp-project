@@ -670,6 +670,8 @@ model SumberDayaPartai {
   masterJabatanPimpinanRantingId              Int?
   MasterJabatanPerwakilanPartaiDiLuarNegeri   MasterJabatanPerwakilanPartaiDiluarNegeri? @relation(fields: [masterJabatanPerwakilanPartaiDiLuarNegeriId], references: [id])
   masterJabatanPerwakilanPartaiDiLuarNegeriId Int?
+  MasterTingkatSayap                          MasterTingkatSayap?                        @relation(fields: [masterTingkatSayapId], references: [id])
+  masterTingkatSayapId                        Int?
   MasterSayapPartai                           MasterSayapPartai?                         @relation(fields: [masterSayapPartaiId], references: [id])
   masterSayapPartaiId                         Int?
   MasterKaderPartai                           MasterKaderPartai?                         @relation(fields: [masterKaderPartaiId], references: [id])
@@ -714,4 +716,13 @@ model DPDDPCMediaSocial {
   active              Boolean           @default(true)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
+}
+
+model MasterTingkatSayap {
+  id               Int                @id @default(autoincrement())
+  name             String
+  active           Boolean            @default(true)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now()) @updatedAt
+  SumberDayaPartai SumberDayaPartai[]
 }
