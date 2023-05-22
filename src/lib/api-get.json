@@ -50,6 +50,11 @@
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-sayap-partai"
   },
   {
+    "dir": "Status Keanggotaan",
+    "title": "Tingkat Sayap Partai",
+    "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-tingkat-sayap"
+  },
+  {
     "dir": "Tingkat Pengurus",
     "title": "Jabatan Dewan Pembina",
     "api": "http://localhost:3000/api/get/sumber-daya-partai/api-get-jabatan-dewan-pembina"

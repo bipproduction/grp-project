@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "Dewan Pimpinan Pusat"
+    },
+    {
+        "id": 2,
+        "name": "Dewan Pimpinan Daerah"
+    },
+    {
+        "id": 3,
+        "name": "Dewan Pimpinan Cabang"
+    },
+    {
+        "id": 4,
+        "name": "Pimpinan Anak Cabang"
+    }
+]
