@@ -6,10 +6,10 @@ import React, { useState } from "react";
 import { _val_data_partai } from "./contoh";
 import fetch from "node-fetch";
 
-// const _loadData_get = atom({
-//   masterTingkatPengurusId: '',
-//   masterStatusKeanggotaanId: '',
-// })
+const _loadData_get = atom({
+  masterTingkatPengurusId: '',
+  masterStatusKeanggotaanId: '',
+})
 
 function Contoh1() {
   const [data1, setData1] = useState<any | []>([]);
@@ -36,7 +36,7 @@ function Contoh1() {
             Struktur Partai
           </Button>
         </Stack>
-        {JSON.stringify(data1)}
+        {/* {JSON.stringify(data1)} */}
       </Group>
     </>
   );
