@@ -5,6 +5,7 @@ const rencanaKunjunganPrabowoPost = async (req: NextApiRequest, res: NextApiResp
     if (req.method === "POST") {
         let body = req.body
         body.tanggal = new Date(body.tanggal)
+        body.masterStatusAksiNyataId = Number(body.masterStatusAksiNyataId)
         await client.rencanaKunjunganPrabowo.create({
             data: body
         })

@@ -29,6 +29,8 @@ export const apiGetMaster = {
     "apiOrganisasiAfiliatif": "/api/get/sumber-daya-partai/api-get-organisasi-afiliatif",
 
 
+    // Aksi Nyata
+    "apiGetStatusAksiNyata":"/api/get/aksi-nyata/api-get-status-kunjungan",
 
 
 

@@ -16,11 +16,15 @@ import {
 import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
-import { includes } from "lodash";
+import _ from "lodash";
 import toast from "react-simple-toasts";
+import { api } from "@/lib/api-backend";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
+import { ModelRencanaKunjungan } from "../../../../model/model_aksi_nyata";
 
-const EditRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
-
+const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: any }) => {
+    const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const formEditRencanaKunjungan = useForm({
         initialValues: {
             data: {
@@ -32,8 +36,21 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
         },
     });
 
+    const inidata = data;
+
+    const loadData = () => {
+        fetch(api.apiRencanaKunjunganPrabowoGetOne + `?id=${inidata}`)
+            .then((v) => v.json())
+            .then((v) => {
+                setDataEdit(v);
+            });
+    }
+
+    useShallowEffect(() => {
+        loadData();
+    }, []);
+
     const onEdit = () => {
-        console.log(formEditRencanaKunjungan.values.data);
         if (Object.values(formEditRencanaKunjungan.values.data).includes("")) {
             return toast("Lengkapi Data");
         }
@@ -42,6 +59,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
         buttonSimpan();
         thisClosed();
     }
+
 
     return (
         <>
@@ -69,8 +87,8 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditRencanaKunjungan.getInputProps("data.judul")} />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formEditRencanaKunjungan.getInputProps("data.tanggalKunjungan")} />
+                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditRencanaKunjungan.getInputProps("data.judul")} value={dataEdit?.judul} />
+                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formEditRencanaKunjungan.getInputProps("data.tanggalKunjungan")}/>
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
