@@ -29,3 +29,8 @@ export const _get_kader = atom({
 export const _anggota = atom({
   masterStatusKeanggotaanId: undefined,
 });
+
+export const ambil_data = atom({
+    masterTingkatPengurusId: "",
+    masterStatusKeanggotaanId: "",
+});

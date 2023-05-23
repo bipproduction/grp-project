@@ -24,8 +24,8 @@ import { useDisclosure } from "@mantine/hooks";
 import KaderPartai from "./kader-partai";
 import AngotaPartaiV2 from "./angota-partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
 import { number } from "echarts";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

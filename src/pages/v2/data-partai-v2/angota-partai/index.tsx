@@ -18,8 +18,8 @@ import { useRouter } from "next/router";
 import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
 import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
 import { useForm } from "@mantine/form";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

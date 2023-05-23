@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

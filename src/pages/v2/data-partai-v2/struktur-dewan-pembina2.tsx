@@ -24,11 +24,11 @@ import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { sJabatanDewanPembina } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadJabatanDewanPembina } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
-import { ambil_data } from "@/pages/ambil_data";
 import { useAtom } from "jotai";
 import { number } from "echarts";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { FiAlertCircle } from "react-icons/fi";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

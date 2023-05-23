@@ -20,7 +20,7 @@ import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { Router, useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

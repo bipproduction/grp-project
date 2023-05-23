@@ -1,5 +1,4 @@
 import { _loadStatusKeanggotaan } from '@/load_data/sumber_daya_partai/load_status_keanggotaan';
-import { ambil_data } from '@/pages/ambil_data';
 import { sStatusKeanggotaan } from '@/s_state/sumber_daya_partai/s_status_keanggotaan';
 import LayoutDataPartaiV2 from '@/v2/layout_data_partai/layout_data_partai';
 import { ActionIcon, Box, Button, Group, Stack, Text, UnstyledButton, createStyles, rem } from '@mantine/core';
@@ -12,6 +11,7 @@ import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from 'react-icons
 import COLOR from '../../../../fun/WARNA';
 import toast from 'react-simple-toasts';
 import { api } from '@/lib/api-backend';
+import { ambil_data } from '@/xg_state.ts/g_selected_page';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

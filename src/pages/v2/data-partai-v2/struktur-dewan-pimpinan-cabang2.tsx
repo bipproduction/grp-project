@@ -28,8 +28,8 @@ import { useForm } from "@mantine/form";
 import { sJabatanDewanPimpinanCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
 import COLOR from "../../../../fun/WARNA";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

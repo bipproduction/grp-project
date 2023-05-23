@@ -26,8 +26,8 @@ import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),

@@ -25,7 +25,7 @@ import {
   _loadJabtanPerwakilanLuarNegeri,
 } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/pages/ambil_data";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
