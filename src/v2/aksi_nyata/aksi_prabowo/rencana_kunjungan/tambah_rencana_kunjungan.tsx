@@ -17,29 +17,57 @@ import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
+import { api } from "@/lib/api-backend";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
+import { apiGetMaster } from "@/lib/api-get-master";
+import { TableRencanaKunjunganPrabowoV2 } from "./table_rencana_kunjungan";
 
 const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
+    const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const loadStatusAksiNyata = async () => {
+        const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
+        const data = await res.json();
+        setListStatusAksiNyata(data);
+    };
+
+
+    useShallowEffect(() => {
+        loadStatusAksiNyata();
+    }, []);
+
     const formTambahRencanaKunjungan = useForm({
         initialValues: {
             data: {
                 judul: '',
-                tanggalKunjungan: '',
-                potretKunjungan: '',
-                statusKunjungan: '',
+                tanggal: '',
+                img: '',
+                masterStatusAksiNyataId: '',
             },
         },
     });
 
     const onAdd = () => {
-        console.log(formTambahRencanaKunjungan.values.data);
         if (Object.values(formTambahRencanaKunjungan.values.data).includes("")) {
             return toast("Lengkapi Data");
         }
 
         // disini pengaplikasian api
-
-        buttonSimpan();
-        thisClosed();
+        fetch(api.apiRencanaKunjunganPrabowoPost, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formTambahRencanaKunjungan.values.data),
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.status === 201) {
+                buttonSimpan();
+                thisClosed();
+            } else {
+                toast(data.message);
+            }
+        });
 
     }
 
@@ -70,20 +98,23 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                         <Box>
                             <Flex direction={"column"}>
                                 <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahRencanaKunjungan.getInputProps("data.judul")} />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahRencanaKunjungan.getInputProps("data.tanggalKunjungan")} />
+                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahRencanaKunjungan.getInputProps("data.tanggal")} />
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
-                                    {...formTambahRencanaKunjungan.getInputProps("data.potretKunjungan")}
+                                    {...formTambahRencanaKunjungan.getInputProps("data.img")}
                                 />
                                 <Select
-                                    data={["Pending", "Sedang Berjalan", "Berhasil", "Batal"]}
+                                    data={listStatusAksiNyata.map((data) => ({
+                                        value: data.id,
+                                        label: data.name,
+                                      }))}
                                     placeholder={"Pilih Status Kunjungan"}
                                     label={"**"}
-                                    {...formTambahRencanaKunjungan.getInputProps("data.statusKunjungan")}
+                                    {...formTambahRencanaKunjungan.getInputProps("data.masterStatusAksiNyataId")}
                                 />
 
                                 <Group position="left" pt={20}>

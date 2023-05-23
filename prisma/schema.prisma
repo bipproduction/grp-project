@@ -44,7 +44,7 @@ model AsetPartai {
   pengguna             String
   penanggungJawab      String
   harga                Float
-  tglPembelian         DateTime
+  tglPembelian         DateTime           @db.Date
   lokasiPembelian      String
   garansi              String
   MasterStatusAset     MasterStatusAset   @relation(fields: [masterStatusAsetId], references: [id])
@@ -64,7 +64,7 @@ model DataDiri {
   nik                  String             @unique
   name                 String
   tempatLahir          String
-  tanggalLahir         DateTime
+  tanggalLahir         DateTime           @db.Date
   phoneNumber          String
   alamat               String
   rtRw                 String
@@ -526,7 +526,7 @@ model CalonPemilihPotensial {
   nik                           String                      @unique
   nama                          String
   email                         String                      @unique
-  tanggalLahir                  DateTime
+  tanggalLahir                  DateTime                    @db.Date
   phoneNumber                   String
   alamat                        String
   statusSosial                  String
@@ -552,7 +552,7 @@ model CPTMediaSocial {
 model RencanaKunjunganPrabowo {
   id                      String                @id @default(cuid())
   judul                   String
-  tanggal                 DateTime
+  tanggal                 DateTime              @db.Date
   img                     String
   MasterStatusAksiNyata   MasterStatusAksiNyata @relation(fields: [masterStatusAksiNyataId], references: [id])
   masterStatusAksiNyataId Int
@@ -575,7 +575,7 @@ model ListUndanganPrabowo {
 model RencanaKunjunganGerindra {
   id                      String                 @id @default(cuid())
   judul                   String
-  tanggal                 DateTime
+  tanggal                 DateTime               @db.Date
   img                     String
   MasterStatusAksiNyata   MasterStatusAksiNyata  @relation(fields: [masterStatusAksiNyataId], references: [id])
   masterStatusAksiNyataId Int
