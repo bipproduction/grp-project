@@ -10,6 +10,8 @@ import { useForm } from "@mantine/form";
 import _ from "lodash";
 import { sJabatanPimpinanAnakCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { useAtom } from "jotai";
+import { ambil_data } from "@/pages/ambil_data";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -28,7 +30,7 @@ const useStyles = createStyles((theme) => ({
 function PimpinanAnakCabang() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
-
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const router = useRouter();
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
@@ -239,7 +241,13 @@ function PimpinanAnakCabang() {
               className={classes.user}
               pr={20}
               pl={20}
-              onClick={open}
+              onClick={() => {
+                setAmbilData({
+                  ...ambilData,
+                  masterTingkatPengurusId: '5'
+                })
+        router.push("/v2/data-partai-v2/struktur-pimpinan-anak-cabang2")
+              }}
             >
               <Group>
                 <div style={{ flex: 1 }}>

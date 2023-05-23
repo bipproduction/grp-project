@@ -1,8 +1,11 @@
 import {
+  ActionIcon,
+  Box,
   Button,
   Drawer,
   Group,
   Select,
+  Stack,
   Text,
   TextInput,
   UnstyledButton,
@@ -10,19 +13,23 @@ import {
   rem,
 } from "@mantine/core";
 import React, { useState } from "react";
-import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
+import {
+  IoArrowBackCircleSharp,
+  IoArrowForwardCircleOutline,
+} from "react-icons/io5";
 import { sJabatanDewanPimpinanPusat } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
-import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
+import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
 import { ambil_data } from "@/pages/ambil_data";
+import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
+import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
+import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -31,14 +38,15 @@ const useStyles = createStyles((theme) => ({
   user: {
     display: "block",
     width: "100%",
-    padding: 15,
+    padding: 7,
     borderRadius: 8,
     color: "white",
 
     backgroundColor: COLOR.merah,
   },
 }));
-function DewanPimpinanPusat() {
+
+function SayapDewanPimpinanPusat2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
@@ -46,6 +54,7 @@ function DewanPimpinanPusat() {
   const router = useRouter();
 
   const PimpinanPusat = () => {
+    // console.log(formSayapPimpinanPusat.values.data)
     if (Object.values(formSayapPimpinanPusat.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
@@ -69,6 +78,8 @@ function DewanPimpinanPusat() {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
         masterJabatanDewanPimpinanPusatId: "",
+        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
+        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
       },
     },
   });
@@ -78,15 +89,57 @@ function DewanPimpinanPusat() {
     _loadSayapPartai();
   }, []);
 
+  function Afiliatif() {
+    router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
+  }
+  function Back() {
+    router.push("/v2/data-partai-v2/sayap-partai-v2");
+  }
   return (
-    <>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title="Dewan Pimpinan Pusat"
-        size={"sm"}
-      >
-        <Select
+   <>
+         <LayoutDataPartaiV2>
+        <Box h={"100%"}>
+          <Box pl={40}></Box>
+          <Box pl={40}>
+            <Text fz={12} onClick={Afiliatif}>
+              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+            </Text>
+          </Box>
+          <Stack p={30} pt={35}>
+            <ActionIcon onClick={Back} variant="transparent">
+              <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
+            </ActionIcon>
+            <UnstyledButton
+              className={classes.user}
+              pr={20}
+              pl={20}
+              bg={"white"}
+            >
+              <Group>
+                <div style={{ flex: 1 }}>
+                  <Text size={15} color="dark">
+                    Sayap Partai
+                  </Text>
+                </div>
+              </Group>
+            </UnstyledButton>
+            <Box pt={10}>
+              <UnstyledButton
+                className={classes.user}
+                pr={20}
+                pl={20}
+                bg={"white"}
+              >
+                <Group>
+                  <div style={{ flex: 1 }}>
+                    <Text size={15} color="dark">
+                    Dewan Pimpinan Pusat
+                    </Text>
+                  </div>
+                </Group>
+              </UnstyledButton>
+            </Box>
+            <Select
           onChange={(val) => {
             setValue(val!);
             formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
@@ -129,30 +182,11 @@ function DewanPimpinanPusat() {
         >
           SIMPAN
         </Button>
-      </Drawer>
-      <UnstyledButton
-        className={classes.user}
-        pr={20}
-        pl={20}
-        onClick={() => {
-          setAmbilData({
-            ...ambilData,
-            masterTingkatPengurusId: "1",
-          });
-          router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-pusat2");
-        }}
-      >
-        <Group>
-          <div style={{ flex: 1 }}>
-            <Text size={15} fw={700}>
-              Dewan Pimpinan Pusat
-            </Text>
-          </div>
-          <IoArrowForwardCircleOutline size="1.5rem" />
-        </Group>
-      </UnstyledButton>
-    </>
+          </Stack>
+        </Box>
+      </LayoutDataPartaiV2>
+   </>
   );
 }
 
-export default DewanPimpinanPusat;
+export default SayapDewanPimpinanPusat2;

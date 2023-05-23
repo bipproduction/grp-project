@@ -21,6 +21,8 @@ import { sProvinsi } from "@/s_state/wilayah/s_provinsi";
 import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { sJabatanDewanPimpinanDaerah } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadJabatanDewanPimpinanDaerah } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { useAtom } from "jotai";
+import { ambil_data } from "@/pages/ambil_data";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -41,6 +43,8 @@ function DewanPimpinanDaerah() {
   const { classes } = useStyles();
   const router = useRouter();
   const [value, setValue] = useState("");
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
+
 
   const PimpinanDaerah = () => {
     if (
@@ -161,7 +165,15 @@ function DewanPimpinanDaerah() {
           SIMPAN
         </Button>
       </Drawer>
-      <UnstyledButton className={classes.user} pr={20} pl={20} onClick={open}>
+      <UnstyledButton className={classes.user} pr={20} pl={20} 
+      onClick={() => {
+        setAmbilData({
+          ...ambilData,
+          masterTingkatPengurusId: "3",
+        });
+        router.push("/v2/data-partai-v2/struktur-dewan-pimpinan-daerah2")
+      }}
+      >
         <Group>
           <div style={{ flex: 1 }}>
             <Text size={15} fw={700}>

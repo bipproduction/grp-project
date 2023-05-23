@@ -1,8 +1,12 @@
 import {
+  ActionIcon,
+  Box,
   Button,
   Drawer,
   Group,
+  ScrollArea,
   Select,
+  Stack,
   Text,
   TextInput,
   UnstyledButton,
@@ -10,19 +14,20 @@ import {
   rem,
 } from "@mantine/core";
 import React, { useState } from "react";
-import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { useRouter } from "next/router";
+import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from "react-icons/io5";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
+import { useRouter } from "next/router";
 import toast from "react-simple-toasts";
 import { useForm } from "@mantine/form";
+import { sJabatanDewanPimpinanCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
-import { sJabatanPimpinanAnakCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
-import { _loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { useAtom } from "jotai";
 import { ambil_data } from "@/pages/ambil_data";
+import COLOR from "../../../../fun/WARNA";
+import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -31,18 +36,18 @@ const useStyles = createStyles((theme) => ({
   user: {
     display: "block",
     width: "100%",
-    padding: 15,
+    padding: 7,
     borderRadius: 8,
     color: "white",
 
     backgroundColor: COLOR.merah,
   },
 }));
-function PimpinanAnakCabang() {
-  const [ambilData, setAmbilData] = useAtom(ambil_data);
+
+function SayapDewanPimpinanCabang2() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
-  const router = useRouter();
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
@@ -119,13 +124,16 @@ function PimpinanAnakCabang() {
   }
 
   useShallowEffect(() => {
-    loadProvinsi();
-    _loadJabatanPimpinanAnakCabang();
-  }, []);
+    loadProvinsi()
+    _loadJabatanDewanPimpinanCabang()
+  },[])
+  const [value, setValue] = useState("")
+  const router = useRouter()
 
-  const PimpinanAnakCabang = () => {
+  const PimpinanCabang = () => {
+    // console.log(formSayapDewanPimpinanCabang.values.data)
     if (
-      Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
+      Object.values(formSayapDewanPimpinanCabang.values.data).includes("")
     ) {
       return toast("Lengkapi Data Diri");
     }
@@ -134,7 +142,7 @@ function PimpinanAnakCabang() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
+      body: JSON.stringify(formSayapDewanPimpinanCabang.values.data),
     }).then((v) => {
       if (v.status === 201) {
         toast("Sukses");
@@ -143,44 +151,88 @@ function PimpinanAnakCabang() {
     });
   };
 
-  const [value, setValue] = useState("");
-  const formSayapDewanPimpinanAnakCabang = useForm({
+  const formSayapDewanPimpinanCabang = useForm({
     initialValues: {
       data: {
         userId: localStorage.getItem("user_id"),
+        masterSayapPartaiId: "",
         masterProvinceId: "",
         masterKabKotId: "",
-        masterKecamatanId: "",
-        masterJabatanPimpinanAnakCabangId: "",
-        masterSayapPartaiId: "",
-      },
-    },
-  });
+        masterJabatanDewanPimpinanCabangId: "",
+        alamatKantor: "",
+        waAdmin: "",
+        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
+        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+        // medsos: ""
+      }
+    }
+  })
+
+  function Afiliatif() {
+    router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
+  }
+  function Back() {
+    router.push("/v2/data-partai-v2/sayap-partai-v2");
+  }
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title="Pimpinan Anak Cabang"
-        size={"sm"}
-      >
-        <Select
-          // {...formStrukturPartai.getInputProps("sayapPartai")}
+          <LayoutDataPartaiV2>
+        <Box h={"100%"}>
+          <Box pl={40}></Box>
+          <Box pl={40}>
+            <Text fz={12} onClick={Afiliatif}>
+              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+            </Text>
+          </Box>
+          <Stack p={30} pt={35}>
+            <ActionIcon onClick={Back} variant="transparent">
+              <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
+            </ActionIcon>
+            <UnstyledButton
+              className={classes.user}
+              pr={20}
+              pl={20}
+              bg={"white"}
+            >
+              <Group>
+                <div style={{ flex: 1 }}>
+                  <Text size={15} color="dark">
+                    Sayap Partai
+                  </Text>
+                </div>
+              </Group>
+            </UnstyledButton>
+            <Box pt={10}>
+              <UnstyledButton
+                className={classes.user}
+                pr={20}
+                pl={20}
+                bg={"white"}
+              >
+                <Group>
+                  <div style={{ flex: 1 }}>
+                    <Text size={15} color="dark">
+                      Dewan Pimpinan Cabang
+                    </Text>
+                  </div>
+                </Group>
+              </UnstyledButton>
+            </Box>
+            <ScrollArea h={{sm: 405, base: 300}} scrollbarSize={0}>
+            <Select
           onChange={(val) => {
-            setValue(val!);
-            formSayapDewanPimpinanAnakCabang.values.data.masterSayapPartaiId =
-              val!;
+            setValue(val!)
+            formSayapDewanPimpinanCabang.values.data.masterSayapPartaiId= val!
           }}
           data={sSayapPartai.value.map((val) => ({
             value: val.id,
-            label: val.name,
+            label: val.name
           }))}
           label="Pilih Sayap Partai"
-          mt={10}
+          mt={1}
           radius={"md"}
           withAsterisk
           placeholder="Pilih Sayap Partai"
-          // data={sayap}
           searchable
         />
         <Select
@@ -190,11 +242,12 @@ function PimpinanAnakCabang() {
           }))}
           onChange={(val) => {
             if (val) {
-              setSelectedProvince(provinsi.find((v) => v.id == val));
-              loadKabupaten(val);
+              setSelectedProvince(
+                provinsi.find((v) => v.id == val)
+              )
+              loadKabupaten(val)
             }
-            formSayapDewanPimpinanAnakCabang.values.data.masterProvinceId =
-              val!;
+            formSayapDewanPimpinanCabang.values.data.masterProvinceId = val!
           }}
           radius={"md"}
           mt={10}
@@ -208,16 +261,18 @@ function PimpinanAnakCabang() {
           key={Math.random()}
           data={
             _.isEmpty(kabupaten)
-              ? []
-              : kabupaten.map((v) => ({
-                  value: v.id,
-                  label: v.name,
-                }))
+            ? []
+            : kabupaten.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))
           }
           onChange={(val) => {
-            setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-            loadKecamatan(val!);
-            formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId = val!;
+            setSelectedKabupaten(
+              kabupaten.find((v) => v.id == val)
+            )
+            loadKecamatan(val!)
+            formSayapDewanPimpinanCabang.values.data.masterKabKotId = val!
           }}
           radius={"md"}
           mt={10}
@@ -228,82 +283,57 @@ function PimpinanAnakCabang() {
           searchable
         />
         <Select
-          key={Math.random()}
-          data={
-            _.isEmpty(kecamatan)
-              ? []
-              : kecamatan.map((val) => ({
-                  value: val.id,
-                  label: val.name,
-                }))
-          }
           onChange={(val) => {
-            setSelectedKecamatan(kecamatan.find((v) => v.id == val));
-            loadDesa(val!);
-            formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
-              val!;
+            setValue(val!)
+            formSayapDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId = val!
           }}
-          radius={"md"}
-          mt={10}
-          placeholder={selectedKecamatan.name}
-          value={selectedKecamatan.name}
-          label="Kecamatan"
-          withAsterisk
-          searchable
-        />
-        <Select
-          // {...formStrukturPartai.getInputProps("jabatan")}
-          onChange={(val) => {
-            setValue(val!);
-            formSayapDewanPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId =
-              val!;
-          }}
-          data={sJabatanPimpinanAnakCabang.value.map((val) => ({
+          data={sJabatanDewanPimpinanCabang.value.map((val) => ({
             value: val.id,
-            label: val.name,
+            label: val.name
           }))}
           label="Jabatan"
           withAsterisk
           mt={10}
           radius={"md"}
           placeholder="Jabatan"
-          // data={jabatan}
           searchable
         />
-        <Button
-          mt={20}
-          fullWidth
-          bg={COLOR.coklat}
-          color="red.9"
+        <TextInput
+          {...formSayapDewanPimpinanCabang.getInputProps("data.alamatKantor")}
           radius={"md"}
-          onClick={PimpinanAnakCabang}
+          mt={10}
+          withAsterisk
+          placeholder="Alamat Kantor"
+          label="Alamat Kantor"
+        />
+        <TextInput
+          {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
+          radius={"md"}
+          mt={10}
+          withAsterisk
+          placeholder="Nomor WA Admin"
+          label="Nomor WA Admin"
+          type="number"
+        />
+        {/* <TextInput
+          {...formSayapDewanPimpinanCabang.getInputProps("data.medsos")}
+          radius={"md"}
+          mt={10}
+          withAsterisk
+          placeholder="Add Media Social"
+          label="Add Media Social"
+        /> */}
+        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
+        onClick={PimpinanCabang}
         >
           SIMPAN
         </Button>
-      </Drawer>
-      <UnstyledButton
-        className={classes.user}
-        pr={20}
-        pl={20}
-        onClick={() => {
-          setAmbilData({
-            ...ambilData,
-            masterTingkatPengurusId: "4",
-          });
-          router.push("/v2/data-partai-v2/sayap-pimpinan-anak-cabang2");
-        }}
-      >
-        <Group>
-          <div style={{ flex: 1 }}>
-            <Text size={15} fw={700}>
-              Pimpinan Anak cabang
-            </Text>
-          </div>
-          <IoArrowForwardCircleOutline size="1.5rem" />
-        </Group>
-      </UnstyledButton>
+            </ScrollArea>
+          </Stack>
+        </Box>
+      </LayoutDataPartaiV2>
     </>
   );
 }
 
-export default PimpinanAnakCabang;
+export default SayapDewanPimpinanCabang2;

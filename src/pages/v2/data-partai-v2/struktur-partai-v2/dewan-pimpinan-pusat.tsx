@@ -1,4 +1,14 @@
-import { Button, Drawer, Group, Select, Text, TextInput, UnstyledButton, createStyles, rem } from "@mantine/core";
+import {
+  Button,
+  Drawer,
+  Group,
+  Select,
+  Text,
+  TextInput,
+  UnstyledButton,
+  createStyles,
+  rem,
+} from "@mantine/core";
 import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -9,6 +19,8 @@ import { api } from "@/lib/api-backend";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { useAtom } from "jotai";
+import { ambil_data } from "@/pages/ambil_data";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -27,8 +39,9 @@ const useStyles = createStyles((theme) => ({
 function DewanPimpinanPusat() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
-  const router = useRouter()
+  const router = useRouter();
   const [value, setValue] = useState("");
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
 
   const PimpinanPusat = () => {
     if (
@@ -60,50 +73,32 @@ function DewanPimpinanPusat() {
   });
 
   useShallowEffect(() => {
-    _loadJabatanDewanPimpinanPusat()
-  },[])
+    _loadJabatanDewanPimpinanPusat();
+  }, []);
 
   return (
     <>
-      <Drawer opened={opened} onClose={close} title="Dewan Pimpinan Pusat" size={"sm"}>
-      <Select
-        label="Jabatan"
-        withAsterisk
-        mt={10}
-        radius={"md"}
-        placeholder="Jabatan"
-        searchable
-        data={sJabatanDewanPimpinanPusat.value.map((val) => ({
-          value: val.id,
-          label: val.name,
-        }))}
-        onChange={(val) => {
-          setValue(val!);
-          formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
-            val!;
-        }}
-      />
-        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
-        onClick={PimpinanPusat}
-        >
-          SIMPAN
-        </Button>
-      </Drawer>
       <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              onClick={open}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} fw={700}>
-                    Dewan Pimpinan Pusat
-                  </Text>
-                </div>
-                <IoArrowForwardCircleOutline size="1.5rem" />
-              </Group>
-            </UnstyledButton> 
+        className={classes.user}
+        pr={20}
+        pl={20}
+        onClick={() => {
+          setAmbilData({
+            ...ambilData,
+            masterTingkatPengurusId: "2",
+          });
+          router.push("/v2/data-partai-v2/struktur-dewan-pimpinan-pusat2");
+        }}
+      >
+        <Group>
+          <div style={{ flex: 1 }}>
+            <Text size={15} fw={700}>
+              Dewan Pimpinan Pusat
+            </Text>
+          </div>
+          <IoArrowForwardCircleOutline size="1.5rem" />
+        </Group>
+      </UnstyledButton>
     </>
   );
 }
