@@ -35,21 +35,26 @@ import { atom, useAtom } from "jotai";
 import { _val_muncul } from "./_val_edit_struktur";
 import { atomWithStorage } from "jotai/utils";
 import _ from "lodash";
+import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
 
-export const _listDataStruktur = atomWithStorage<any | undefined>(
+export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_struktur",
-  undefined
+  null
 );
-export const _dataStruktur = atomWithStorage<any[]>("_database_struktur", []);
-export const _dataDiri = atomWithStorage<any[]>("_data_diri", [])
+export const _dataStruktur = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_database_struktur",
+  []
+);
+
+//buat interface 
 
 const TableStruktutPartaiV2 = () => {
   // const [open, setOpen] = useAtom(_val_muncul);
   const [opened, setOpen] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
-  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur);
+  const [targetStruktur, setTargetStruktur] = useAtom(_editDataStruktur);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
-  const [dataDiri, setDataDiri] = useAtom(_dataDiri)
+
 
   useShallowEffect(() => {
     loadDataStruktur(1);
@@ -60,9 +65,8 @@ const TableStruktutPartaiV2 = () => {
       `/api/sumber-daya-partai/sumber-daya-partai-get-all?status=${status}`
     )
       .then((res) => res.json())
-      .then((val) => setDataStruktur(val));
+      .then(setDataStruktur);
   }
-
 
   const tbHead = (
     <tr>
@@ -85,9 +89,9 @@ const TableStruktutPartaiV2 = () => {
       <th>Desa / Cabang</th>
       <th>RT/RW</th>
       <th>Instagram</th>
-      <th>Facebook</th>
+      {/* <th>Facebook</th>
       <th>TikTok</th>
-      <th>Twitter</th>
+      <th>Twitter</th> */}
       <th>
         <Center>Aksi</Center>
       </th>
@@ -129,7 +133,7 @@ const TableStruktutPartaiV2 = () => {
             onClick={(val) => {
               setOpen.open();
               // setOpen(true);
-              setTargetStruktur(e);
+              // setTargetStruktur(e);
               // setDatanya(e)
               //  console.log(e)
             }}
@@ -144,14 +148,63 @@ const TableStruktutPartaiV2 = () => {
     </tr>
   ));
 
-  const tableHead = dataStuktur.map((e, i) => e.User).map((v,ii) => v.DataDiri).map((s,iii) => setDataDiri(s));
-
-
   return (
     <>
-      {JSON.stringify(dataStuktur)}
-      <Divider/>
-      {/* {JSON.stringify(dataDiri.map((e) => e))} */}
+      {/* {JSON.stringify(dataStuktur.map((e) => e.id))} */}
+      <Box sx={{ overflow: "scroll" }}>
+        <Table withBorder>
+          <thead>{tbHead}</thead>
+          <tbody>
+            {dataStuktur.map((e, i) => (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{e.User.DataDiri.name}</td>
+                <td>{e.User.DataDiri.nik}</td>
+                <td>{e.MasterTingkatPengurus.name}</td>
+                <td>{e.MasterJabatan}</td>
+                <td>{e.User.email}</td>
+                <td>{e.User.DataDiri.tempatLahir}</td>
+                <td>{e.User.DataDiri.tanggalLahir}</td>
+                <td>{e.User.DataDiri.MasterJenisKelamin.name}</td>
+                <td>{e.User.DataDiri.phoneNumber}</td>
+                <td>{e.User.DataDiri.MasterAgama.name}</td>
+                <td>{e.User.DataDiri.MasterPekerjaan.name}</td>
+                <td>{e.User.DataDiri.alamat}</td>
+                <td>{e.User.DataDiri.MasterProvince.name}</td>
+                <td>{e.User.DataDiri.MasterKabKot.name}</td>
+                <td>{e.User.DataDiri.MasterKecamatan.name}</td>
+                <td>{e.User.DataDiri.MasterDesa.name}</td>
+                <td>{e.User.DataDiri.rtRw}</td>
+                <td>{e.User.UserMediaSocial.length}</td>
+                <td>
+                  <Group position="center">
+                    <Button
+                      variant={"outline"}
+                      color={"green"}
+                      radius={50}
+                      w={100}
+                      onClick={(val) => {
+                        setOpen.open();
+                        setTargetStruktur(e)
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      color={"red"}
+                      radius={50}
+                      w={100}
+                    >
+                      Hapus
+                    </Button>
+                  </Group>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Box>
 
       <Modal
         opened={opened}
@@ -163,7 +216,6 @@ const TableStruktutPartaiV2 = () => {
           opacity: 0.1,
         }}
       >
-        {/* {JSON.stringify(targetStruktur)} */}
 
         <EditStrukturPartaiV2 thisClosed={setOpen.close} />
       </Modal>
@@ -178,23 +230,18 @@ const TableStruktutPartaiV2 = () => {
           </tr>
         </thead>
       </Table> */}
-      {dataStuktur.map((e, i) => 
-      <Box key={i}>
-        <Stack>{e.User[i]}</Stack>
-      </Box>
-      )}
 
-      <Box>
+      {/* <Box>
         <ScrollArea py={20}>
           <Table withBorder highlightOnHover>
-            {/* <thead>{tableHead}</thead> */}
-            {/* <tbody>{rows}</tbody> */}
+            <thead>{tbHead}</thead>
+            <tbody>{rows}</tbody>
           </Table>
           <Group position="right" pt={10}>
             <Pagination total={10} color={"orange"} />
           </Group>
         </ScrollArea>
-      </Box>
+      </Box> */}
     </>
   );
 };

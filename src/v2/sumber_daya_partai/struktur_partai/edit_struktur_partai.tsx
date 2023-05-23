@@ -59,7 +59,7 @@ import { sDesa } from "@/s_state/wilayah/s_desa";
 import { _loadDesa } from "@/load_data/wilayah/load_desa";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { _val_edit_struktur } from "./_val_edit_struktur";
 import {
   _desa,
@@ -79,8 +79,12 @@ import {
 } from "@/load_data/wilayah/load_selected_wilayah";
 import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
-import { _listDataStruktur } from "./table_struktur_partai";
+import { _editDataStruktur } from "./table_struktur_partai";
 import dataTable from "../data_table.json";
+import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
+import { atomWithStorage } from "jotai/utils";
+
+const _listData = atom<ModelSumberDayaPartai | null>(null);
 const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
   const [isJabatan, setJabatan] = useState<any>();
@@ -93,31 +97,8 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [isDesa, setIsDesa] = useAtom(_desa);
   const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
 
-  const [targetStruktur, setTargetStruktur] = useAtom(_listDataStruktur);
-
-  // const [selectedProvince, setSelectedProvince] = useState<any>({
-  //   id: "",
-  //   name: "",
-  // });
-
-  // const [kabupaten, setKabupaten] = useState<any[]>([]);
-  // const [selectedKabupaten, setSelectedKabupaten] = useState<any>({
-  //   id: "",
-  //   name: "",
-  // });
-
-  // // const [kecamatan, setKecamatan] = useSetState<any[]>([]);
-  // const [kec, setKec] = useState<any[]>([]);
-  // const [selectedKecamatan, setSelectedKecamatan] = useState<any>({
-  //   id: "",
-  //   name: "",
-  // });
-
-  // const [desa, setDesa] = useState<any[]>([]);
-  // const [selectedDesa, setSelectedDesa] = useState<any>({
-  //   id: "",
-  //   name: "",
-  // });
+  const [targetStruktur, setTargetStruktur] = useAtom(_editDataStruktur);
+  const [listData, setListData] = useAtom(_listData);
 
   useShallowEffect(() => {
     _loadStatusKeanggotaan();
@@ -144,53 +125,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     _loadJenisKelamin();
     // setTargetStruktur(dataTable)
   }, []);
-
-  // const loadKabupaten = async (idProvinsi: string) => {
-  //   const res = await fetch(
-  //     api.apiMasterKabkotByProvinsi + `?idProvinsi=${idProvinsi}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then(async (val) => {
-  //       if (!_.isEmpty(val)) {
-  //         setKabupaten(val);
-  //         setSelectedKabupaten({});
-  //       } else {
-  //         setKabupaten([]);
-  //       }
-  //     });
-  // };
-
-  // const loadKecamatan = async (idKabkot: string) => {
-  //   const res = await fetch(
-  //     api.apiMasterKecamatanByKabkot + `?idKabkot=${idKabkot}`
-  //   )
-  //     .then((res) => res.json())
-  //     // .then(console.log)
-  //     .then(async (val) => {
-  //       if (!_.isEmpty(val)) {
-  //         // setKecamatan(val);
-  //         setSelectedKecamatan({});
-  //         setKec(val);
-  //       } else {
-  //         setKec([]);
-  //       }
-  //     });
-  // };
-
-  // const loadDesa = async (idKecamatan: string) => {
-  //   const res = await fetch(
-  //     api.apiMasterDesaByKecamatan + `?idKecamatan=${idKecamatan}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then(async (val) => {
-  //       if (!_.isEmpty(val)) {
-  //         setDesa(val);
-  //         setSelectedDesa({});
-  //       } else {
-  //         setDesa([]);
-  //       }
-  //     });
-  // };
 
   const formEditStrukturPartai = useForm({
     initialValues: {
@@ -225,6 +159,14 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     },
   });
 
+  // function update(){
+  //   const body: ModelEditSDP = {
+  //     id: targetStruktur?.id as any,
+  //     alamatKantor: targetStruktur?.User.DataDiri.alamat as any,
+
+  //   }
+  // }
+
   const onEdit = () => {
     console.log(formEditStrukturPartai.values.data);
     if (Object.values(formEditStrukturPartai.values.data).includes("")) {
@@ -245,6 +187,18 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     thisClosed();
   };
 
+  const thisEdit = async () => {
+    console.log(targetStruktur);
+    // const body = targetStruktur;
+    // await fetch("/api/sumber-daya-partai/sumber-daya-partai-update", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(body),
+    // });
+  };
+
   if (!targetStruktur) {
     return <></>;
   }
@@ -252,123 +206,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   return (
     <>
       {/* {JSON.stringify(targetStruktur)} */}
-      {/* <Button
-        onClick={() => {
-          setValEditor(["apa kabar"]);
-        }}
-      >
-        Tekan
-      </Button>
-      {JSON.stringify(valeditor)} */}
-      {/* <Percobaan /> */}
-      {/* <Select
-        style={{}}
-        data={sProvinsi.value.map((e) => ({
-          value: e.id,
-          label: e.name,
-        }))}
-        value={selectedProvince.name}
-        placeholder={
-          selectedProvince.name ? selectedProvince.name : "Pilih Provinsi"
-        }
-        label="Pilih Provinsi"
-        onChange={(val: any) => {
-          setSelectedProvince(sProvinsi.value.find((v) => v.id == val));
-          loadKabupaten(val);
-
-          formEditStrukturPartai.values.data.provinsi = val!;
-        }}
-        // {...formEditStrukturPartai.getInputProps("data.provinsi")}
-        withAsterisk
-        searchable
-        clearable
-      />
-      <Select
-        // data={sKabkot.value.map((e) => ({
-        //   value: e.id,
-        //   label: e.name,
-        // }))}
-        key={Math.random()}
-        data={
-          _.isEmpty(kabupaten)
-            ? []
-            : kabupaten.map((e) => ({
-                value: e.id,
-                label: e.name,
-              }))
-        }
-        label="Pilih Kabupaten / Kota"
-        onChange={(val) => {
-          setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-          loadKecamatan(val!);
-          formEditStrukturPartai.values.data.kabkot = val!;
-        }}
-        // {...formEditStrukturPartai.getInputProps("data.kabkot")}
-        placeholder={
-          selectedKabupaten.name ? selectedKabupaten.name : "Pilih Kabupaten"
-        }
-        value={
-          selectedKabupaten.name ? selectedKabupaten.name : "Pilih Kabupaten"
-        }
-        withAsterisk
-        searchable
-        clearable
-      />
-      <Select
-        // data={sKecamatan.value.map((e) => ({
-        //   value: e.id,
-        //   label: e.name,
-        // }))}
-        key={Math.random()}
-        data={
-          _.isEmpty(kec)
-            ? []
-            : kec.map((v) => ({
-                value: v.id,
-                label: v.name,
-              }))
-        }
-        onChange={(val: any) => {
-          setSelectedKecamatan(kec.find((e) => e.id == val));
-          loadDesa(val);
-          formEditStrukturPartai.values.data.kecamatan = val!;
-        }}
-        placeholder={
-          selectedKecamatan.name ? selectedKecamatan.name : "Pilih Kecamatan"
-        }
-        label={
-          selectedKecamatan.name ? selectedKecamatan.name : "Pilih Kecamatan"
-        }
-        withAsterisk
-        searchable
-        clearable
-      />
-      <Select
-        key={Math.random()}
-        // data={sDesa.value.map((e) => ({
-        //   value: e.id,
-        //   label: e.name,
-        // }))}
-        data={
-          _.isEmpty(desa)
-            ? []
-            : desa.map((e) => ({
-                value: e.id,
-                label: e.name,
-              }))
-        }
-        placeholder={selectedDesa.name ? selectedDesa.name : "Pilih Desa"}
-        value={selectedDesa.name ? selectedDesa.name : "Pilih Desa"}
-        label="Pilih Desa"
-        onChange={(val: any) => {
-          setSelectedDesa(desa.find((e) => e.id == val));
-          formEditStrukturPartai.values.data.desa = val!;
-        }}
-        withAsterisk
-        searchable
-        clearable
-        // {...formEditStrukturPartai.getInputProps("data.desa")}
-      /> */}
 
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -390,7 +227,8 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                 bg={COLOR.orange}
                 radius={"xl"}
                 onClick={() => {
-                  onEdit();
+                  // onEdit();
+                  thisEdit();
                 }}
               >
                 Simpan
@@ -427,7 +265,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                     Wajib diisi
                   </Text>
                 </Flex>
-                <Stack p={"xs"}>
+                {/* <Stack p={"xs"}>
                   {_.keys(_.omit(targetStruktur, ["id"])).map((v, i) => (
                     <Box key={i}>
                       <TextInput
@@ -464,21 +302,20 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       </tr>
                     </tbody>
                   </Table>
-                </Box>
-                {/* <Box>
+                </Box> */}
+
+                <Box>
                   <Flex direction={"column"}>
                     <Box>
-                      <NumberInput
-                      
+                      <TextInput
                         placeholder="NIK"
                         label="NIK"
+                        value={targetStruktur.User.DataDiri.nik}
                         onChange={(val) => {
-                          targetStruktur
-                          
-                          
-
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.nik = val.target.value;
+                          setListData(data);
                         }}
-
                         withAsterisk
                       />
                       <TextInput
@@ -589,41 +426,51 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       />
                     </Box>
                     <Box>
-
                       <Select
-                        label="Provinsi"
+                        label="Pilih Provinsi"
+                        searchable
+                        value={
+                          selectProvince.name
+                            ? selectProvince.name
+                            : targetStruktur.User.DataDiri.MasterProvince.name
+                        }
+                        placeholder={
+                          selectProvince.name
+                            ? selectProvince.name
+                            : targetStruktur.User.DataDiri.MasterProvince.name
+                        }
                         data={isProvinsi.map((e) => ({
                           value: e.id,
                           label: e.name,
                         }))}
-                        onChange={(val) => {
-                          formEditStrukturPartai.values.data.provinsi = val!;
+                        onChange={(val: any) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.MasterProvince = val;
+                          setListData(data);
                           setSelectProvince(
                             isProvinsi.find((e) => e.id == val)
                           );
                           _loadSelectKabkot(
-                            val!,
+                            val,
                             setIsKabupaten,
                             setSelectKabupaten
                           );
-
                         }}
-                        placeholder={
-                          selectProvince.name
-                            ? selectProvince.name
-                            : "Pilih Provinsi"
-                        }
-                        value={
-                          selectProvince.name
-                          ? selectProvince.name
-                          : "Pilih Provinsi"
-                        }
-                        searchable
-                        withAsterisk
                       />
 
                       <Select
-                        label="Kabupaten / Kota"
+                        label="Pilih Kabupaten / Kota"
+                        searchable
+                        value={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : targetStruktur.User.DataDiri.MasterKabKot.name
+                        }
+                        placeholder={
+                          selectKabupaten.name
+                            ? selectKabupaten.name
+                            : targetStruktur.User.DataDiri.MasterKabKot.name
+                        }
                         data={
                           _.isEmpty(isKabupaten)
                             ? []
@@ -632,35 +479,30 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                                 label: e.name,
                               }))
                         }
-                        onChange={(val) => {
-
-                          formEditStrukturPartai.values.data.kabkot = val!;
+                        onChange={(val: any) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.MasterKabKot = val;
+                          setListData(data);
                           setSelectKabupaten(
                             isKabupaten.find((e) => e.id == val)
                           );
                           _loadSelectKecamatan(
-                            val!,
+                            val,
                             setIsKecamatan,
                             setSelectKecamatan
                           );
-
                         }}
-                        placeholder={
-                          selectKabupaten.name
-                            ? selectKabupaten.name
-                            : "Pilih Kabupaten"
-                        }
-                        value={
-                          selectKabupaten.name
-                            ? selectKabupaten.name
-                            : "Pilih Kabupaten"
-                        }
-                        searchable
-                        withAsterisk
                       />
 
                       <Select
-                        label="Kecamatan"
+                        label="Pilih Kecamatan"
+                        searchable
+                        value={selectKecamatan.name}
+                        placeholder={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : targetStruktur.User.DataDiri.MasterKecamatan.name
+                        }
                         data={
                           _.isEmpty(isKecamatan)
                             ? []
@@ -669,30 +511,31 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                                 label: e.name,
                               }))
                         }
-                        onChange={(val) => {
+                        onChange={(val: any) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.MasterKecamatan.name = val;
+                          setListData(data);
                           setSelectKecamatan(
                             isKecamatan.find((e) => e.id == val)
                           );
-                          
-                          _loadSelectDesa(val!, setIsDesa, setSelectDesa);
-                          formEditStrukturPartai.values.data.kecamatan = val!;
+                          _loadSelectDesa(val, setIsDesa, setSelectDesa);
+                          // console.log(val)
                         }}
-                        placeholder={
-                          selectKecamatan.name
-                            ? selectKecamatan.name
-                            : "Pilih Kecamatan"
-                        }
-                        value={
-                          selectKecamatan.name
-                            ? selectKecamatan.name
-                            : "Pilih Kecamatan"
-                        }
-                        searchable
-                        withAsterisk
                       />
 
                       <Select
-                        label="Desa"
+                        label="Plih Desa"
+                        searchable
+                        value={
+                          selectDesa.name
+                            ? selectDesa.name
+                            : targetStruktur.User.DataDiri.MasterDesa.name
+                        }
+                        placeholder={
+                          selectDesa.name
+                            ? selectDesa.name
+                            : targetStruktur.User.DataDiri.MasterDesa.name
+                        }
                         data={
                           _.isEmpty(isDesa)
                             ? []
@@ -701,16 +544,12 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                                 label: e.name,
                               }))
                         }
-                        onChange={(val) => {
+                        onChange={(val: any) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.MasterDesa.name = val;
+                          setListData(data);
                           setSelectDesa(isDesa.find((e) => e.id == val));
-                          formEditStrukturPartai.values.data.desa = val!;
                         }}
-                        placeholder={
-                          selectDesa.name ? selectDesa.name : "Pilih Desa"
-                        }
-                        value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
-                        searchable
-                        withAsterisk
                       />
                       <TextInput
                         placeholder="RT - __, RW - __"
@@ -720,7 +559,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       />
                     </Box>
                   </Flex>
-                </Box> */}
+                </Box>
               </Paper>
             </Box>
             <Box>
@@ -738,7 +577,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                 </Flex>
                 <Box>
                   <Flex direction={"column"}>
-                    <Select
+                    {/* <Select
                       label="Pilih Status Keanggotaan"
                       placeholder="Pilih Status Keanggotaan"
                       nothingFound="No options"
@@ -750,13 +589,11 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       {...formEditStrukturPartai.getInputProps(
                         "data.statusKeanggotaan"
                       )}
-                    />
-                    {/* <Text>
-                    {formEditStrukturPartai.values.data.tingkatPengurus}
-                  </Text> */}
+                    /> */}
+
                     <Select
                       label="Pilih Tingkat Pengurus"
-                      placeholder="Pilih Tingkat Pengurus"
+                      placeholder={targetStruktur.MasterTingkatPengurus.name}
                       nothingFound="No options"
                       withAsterisk
                       data={sTingkatPengurus.value.map((e) => ({
