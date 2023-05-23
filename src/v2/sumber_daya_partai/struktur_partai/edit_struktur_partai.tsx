@@ -159,14 +159,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     },
   });
 
-  // function update(){
-  //   const body: ModelEditSDP = {
-  //     id: targetStruktur?.id as any,
-  //     alamatKantor: targetStruktur?.User.DataDiri.alamat as any,
-
-  //   }
-  // }
-
   const onEdit = () => {
     console.log(formEditStrukturPartai.values.data);
     if (Object.values(formEditStrukturPartai.values.data).includes("")) {
@@ -205,7 +197,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   return (
     <>
-      {/* {JSON.stringify(targetStruktur)} */}
+      {JSON.stringify(targetStruktur.User.DataDiri.tanggalLahir)}
 
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -265,45 +257,6 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                     Wajib diisi
                   </Text>
                 </Flex>
-                {/* <Stack p={"xs"}>
-                  {_.keys(_.omit(targetStruktur, ["id"])).map((v, i) => (
-                    <Box key={i}>
-                      <TextInput
-                        onChange={(val) => {
-                          targetStruktur[v] = val.target.value;
-                          setTargetStruktur({ ...targetStruktur });
-                        }}
-                        value={targetStruktur[v]}
-                        label={_.upperCase(v)}
-                      />
-                    </Box>
-                  ))}
-                </Stack>
-                <Box
-                  sx={{
-                    overflow: "scroll",
-                  }}
-                >
-                  <Table>
-                    <thead>
-                      <tr>
-                        {_.keys(targetStruktur).map((v, i) => (
-                          <th key={i}>
-                            <Title order={5}>{_.upperCase(v)}</Title>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {_.values(targetStruktur).map((v, i) => (
-                          <td key={i}>{v}</td>
-                        ))}
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Box> */}
-
                 <Box>
                   <Flex direction={"column"}>
                     <Box>
@@ -321,29 +274,49 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       <TextInput
                         placeholder="Nama"
                         label="Nama"
-                        {...formEditStrukturPartai.getInputProps("data.nama")}
+                        value={targetStruktur.User.DataDiri.name}
+                        onChange={(val) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.name = val.target.value;
+                          setListData(data)
+                        }}
+                        // {...formEditStrukturPartai.getInputProps("data.nama")}
                         withAsterisk
                       />
                       <TextInput
                         placeholder="Email"
                         label="Email"
-                        {...formEditStrukturPartai.getInputProps("data.email")}
+                        value={targetStruktur.User.email}
+                        onChange={(val) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.email = val.target.value;
+                          setListData(data)
+                        }}
+                        // {...formEditStrukturPartai.getInputProps("data.email")}
                         withAsterisk
                       />
                       <TextInput
                         placeholder="Tempat Lahir"
                         label="Tempat Lahir"
-                        {...formEditStrukturPartai.getInputProps(
-                          "data.tempatLahir"
-                        )}
+                        value={targetStruktur.User.DataDiri.tempatLahir}
+                        onChange={(val) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.tempatLahir = val.target.value;
+                          setListData(data)
+                        }}
+                        // {...formEditStrukturPartai.getInputProps(
+                        //   "data.tempatLahir"
+                        // )}
                         withAsterisk
                       />
                       <DateInput
                         placeholder="Tanggal Lahir"
                         label="Tanggal Lahir"
-                        {...formEditStrukturPartai.getInputProps(
-                          "data.tanggalLahir"
-                        )}
+                        
+
+                        // {...formEditStrukturPartai.getInputProps(
+                        //   "data.tanggalLahir"
+                        // )}
                         withAsterisk
                       />
                       <Select
@@ -497,7 +470,11 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       <Select
                         label="Pilih Kecamatan"
                         searchable
-                        value={selectKecamatan.name}
+                        value={
+                          selectKecamatan.name
+                            ? selectKecamatan.name
+                            : targetStruktur.User.DataDiri.MasterKecamatan.name
+                        }
                         placeholder={
                           selectKecamatan.name
                             ? selectKecamatan.name
@@ -513,7 +490,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         }
                         onChange={(val: any) => {
                           const data = _.clone(targetStruktur);
-                          data.User.DataDiri.MasterKecamatan.name = val;
+                          data.User.DataDiri.MasterKecamatan = val;
                           setListData(data);
                           setSelectKecamatan(
                             isKecamatan.find((e) => e.id == val)
@@ -546,7 +523,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         }
                         onChange={(val: any) => {
                           const data = _.clone(targetStruktur);
-                          data.User.DataDiri.MasterDesa.name = val;
+                          data.User.DataDiri.MasterDesa = val;
                           setListData(data);
                           setSelectDesa(isDesa.find((e) => e.id == val));
                         }}

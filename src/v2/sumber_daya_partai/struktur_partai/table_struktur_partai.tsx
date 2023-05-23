@@ -36,6 +36,7 @@ import { _val_muncul } from "./_val_edit_struktur";
 import { atomWithStorage } from "jotai/utils";
 import _ from "lodash";
 import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
+import { api } from "@/lib/api-backend";
 
 export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_struktur",
@@ -62,7 +63,7 @@ const TableStruktutPartaiV2 = () => {
 
   async function loadDataStruktur(status: any) {
     const res = await fetch(
-      `/api/sumber-daya-partai/sumber-daya-partai-get-all?status=${status}`
+      api.apiSumberDayaPartaiGetAll + `?status=${status}`
     )
       .then((res) => res.json())
       .then(setDataStruktur);
