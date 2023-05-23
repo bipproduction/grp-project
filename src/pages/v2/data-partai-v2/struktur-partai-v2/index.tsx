@@ -14,7 +14,10 @@ import {
 } from "@mantine/core";
 import React from "react";
 import { useRouter } from "next/router";
-import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from "react-icons/io5";
+import {
+  IoArrowBackCircleSharp,
+  IoArrowForwardCircleOutline,
+} from "react-icons/io5";
 import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure } from "@mantine/hooks";
 import DewanPembina from "./dewan-pembina";
@@ -56,13 +59,17 @@ function TingkatPengurusStrukturPartai() {
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
-          <ActionIcon onClick={Back} variant="transparent">
-            <IoArrowBackCircleSharp size="2rem"  color={COLOR.merah}/>
-          </ActionIcon>
+            {/* <Button w={120} onClick={Back} leftIcon={<IoArrowBackCircleSharp size="1rem"/>} bg={COLOR.merah} color="orange.9" radius="xl">
+              Kembali
+            </Button> */}
+            <ActionIcon onClick={Back} variant="transparent">
+              <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
+            </ActionIcon>
             <DewanPembina />
             <DewanPimpinanPusat />
             <DewanPimpinanDaerah />

@@ -13,14 +13,22 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import React from "react";
+import React, { useState } from "react";
 import { Simonetta } from "next/font/google";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import COLOR from "../../../fun/WARNA";
 import EditKTAV2 from "./edit_kta";
+import { api } from "@/lib/api-backend";
 
 const DataProfileV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [listData, setListData] = useState<any | null>(null);
+
+  useShallowEffect(() => {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+    .then((val) => val.json())
+    .then(setListData);
+  },[])
   return (
     <>
       <Paper

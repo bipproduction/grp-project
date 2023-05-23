@@ -7,11 +7,9 @@ import { api } from "@/lib/api-backend";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { atom, useAtom } from "jotai";
 import _ from "lodash";
+import { _val_get } from "@/xg_state.ts/g_selected_page";
 
-const _val_get = atom({
-  masterTingkatPengurusId: undefined,
-  masterStatusKeanggotaanId: undefined,
-});
+
 
 export function MyIndex2() {
   const [listStatusAnggota, setListAnggota] = useState<any[]>();
@@ -32,6 +30,7 @@ export function MyIndex2() {
                   onClick={() => {
                     valGet.masterTingkatPengurusId = v.id;
                     setValGet({ ...valGet });
+                    
                   }}
                   w={150}
                 >
@@ -44,7 +43,7 @@ export function MyIndex2() {
             listStatusAnggota?.find((v) => +v.id == +valGet.masterTingkatPengurusId!)
           )}
         </Group>
-        <Contoh2 />
+        {/* <Contoh2 /> */}
       </Stack>
     </>
   );

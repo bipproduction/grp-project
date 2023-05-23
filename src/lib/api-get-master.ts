@@ -7,6 +7,7 @@ export const apiGetMaster = {
     // SUMBER DAYA PARTAI
     "apiGetStatusKeanggotaan": "/api/get/sumber-daya-partai/api-get-status-keanggotaan",
     "apiGetTingkatPengurus": "/api/get/sumber-daya-partai/api-get-tingkat-pengurus",
+    "apiGetTingkatSayap": "/api/get/sumber-daya-partai/api-get-tingkat-sayap",
     // Aset
     "apiGetKategoriAset" : "/api/get/sumber-daya-partai/api-get-kategori-aset",
     "apiGetStatusAset" : "/api/get/sumber-daya-partai/api-get-status-aset",

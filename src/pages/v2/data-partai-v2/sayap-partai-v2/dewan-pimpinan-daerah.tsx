@@ -13,6 +13,8 @@ import { sJabatanDewanPimpinanDaerah } from "@/s_state/sumber_daya_partai/s_jaba
 import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { _loadJabatanDewanPimpinanDaerah } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { sUser } from "@/s_state/s_user";
+import { useAtom } from "jotai";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -33,27 +35,29 @@ function DewanPimpinanDaerah() {
   const { classes } = useStyles();
   const [value, setValue] =useState("")
   const router = useRouter()
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
+
 
   const PimpinanDaerah = () => {
-    console.log(localStorage.getItem("user_id")+"----"+sUser.value.masterUserRoleId);
+    // console.log(localStorage.getItem("user_id")+"----"+sUser.value.masterUserRoleId);
     console.log(formSayapDewanPimpinanDaerah.values.data);
-    if (
-      Object.values(formSayapDewanPimpinanDaerah.values.data).includes("")
-    ) {
-      return toast("Lengkapi Data Diri");
-    }
-    fetch(api.apiSumberDayaPartaiPost, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formSayapDewanPimpinanDaerah.values.data),
-    }).then((v) => {
-      if (v.status === 201) {
-        toast("Sukses");
-        router.push("/v2/home");
-      }
-    });
+    // if (
+    //   Object.values(formSayapDewanPimpinanDaerah.values.data).includes("")
+    // ) {
+    //   return toast("Lengkapi Data Diri");
+    // }
+    // fetch(api.apiSumberDayaPartaiPost, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formSayapDewanPimpinanDaerah.values.data),
+    // }).then((v) => {
+    //   if (v.status === 201) {
+    //     toast("Sukses");
+    //     router.push("/v2/home");
+    //   }
+    // });
   };
 
   const formSayapDewanPimpinanDaerah = useForm({
@@ -65,6 +69,8 @@ function DewanPimpinanDaerah() {
         masterJabatanDewanPimpinanDaerahId: "",
         alamatKantor: "",
         waAdmin: "",
+        masterTingkatPengurusId: ambilData.masterTingkatPengurusId,
+        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
         // medsos: ""
       }
     }
@@ -168,7 +174,13 @@ function DewanPimpinanDaerah() {
               className={classes.user}
               pr={20}
               pl={20}
-              onClick={open}
+              onClick={() => {
+                setAmbilData({
+                  ...ambilData,
+                  masterTingkatPengurusId: '2'
+                })
+                router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-daeraht2");
+              }}
             >
               <Group>
                 <div style={{ flex: 1 }}>

@@ -1,4 +1,14 @@
-import { Button, Drawer, Group, Select, Text, TextInput, UnstyledButton, createStyles, rem } from "@mantine/core";
+import {
+  Button,
+  Drawer,
+  Group,
+  Select,
+  Text,
+  TextInput,
+  UnstyledButton,
+  createStyles,
+  rem,
+} from "@mantine/core";
 import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -11,6 +21,8 @@ import { useForm } from "@mantine/form";
 import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
 import { sJabatanPimpinanAnakCabang } from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { _loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { useAtom } from "jotai";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -27,6 +39,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 function PimpinanAnakCabang() {
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
@@ -107,7 +120,7 @@ function PimpinanAnakCabang() {
 
   useShallowEffect(() => {
     loadProvinsi();
-    _loadJabatanPimpinanAnakCabang()
+    _loadJabatanPimpinanAnakCabang();
   }, []);
 
   const PimpinanAnakCabang = () => {
@@ -145,139 +158,152 @@ function PimpinanAnakCabang() {
   });
   return (
     <>
-      <Drawer opened={opened} onClose={close} title="Pimpinan Anak Cabang" size={"sm"}>
-      <Select
-        // {...formStrukturPartai.getInputProps("sayapPartai")}
-        onChange={(val) => {
-          setValue(val!)
-          formSayapDewanPimpinanAnakCabang.values.data.masterSayapPartaiId= val!
-        }}
-        data={sSayapPartai.value.map((val) => ({
-          value: val.id,
-          label: val.name
-        }))}
-        label="Pilih Sayap Partai"
-        mt={10}
-        radius={"md"}
-        withAsterisk
-        placeholder="Pilih Sayap Partai"
-        // data={sayap}
-        searchable
-      />
-      <Select
-        data={provinsi.map((pro) => ({
-          value: pro.id,
-          label: pro.name
-        }))}
-        onChange={(val) => {
-          if (val) {
-            setSelectedProvince(
-              provinsi.find((v) => v.id == val)
-            )
-            loadKabupaten(val)
-          }
-          formSayapDewanPimpinanAnakCabang.values.data.masterProvinceId= val!
-        }}
-        radius={"md"}
-        mt={10}
-        placeholder={selectedProvince.name}
-        value={selectedProvince.name}
-        label="Provinsi"
-        withAsterisk
-        searchable
-      />
-      <Select
-        key={Math.random()}
-        data={
-          _.isEmpty(kabupaten)
-          ? []
-          : kabupaten.map((v) => ({
-            value: v.id,
-            label: v.name
-          }))
-        }
-        onChange={(val) => {
-          setSelectedKabupaten(
-            kabupaten.find((v) => v.id == val)
-          )
-          loadKecamatan(val!)
-          formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId= val!
-        }}
-        radius={"md"}
-        mt={10}
-        placeholder={selectedKabupaten.name}
-        value={selectedKabupaten.name}
-        label="Kabupaten / Kota"
-        withAsterisk
-        searchable
-      />
-      <Select
-        key={Math.random()}
-        data={
-          _.isEmpty(kecamatan)
-          ? []
-          : kecamatan.map((val) => ({
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Pimpinan Anak Cabang"
+        size={"sm"}
+      >
+        <Select
+          // {...formStrukturPartai.getInputProps("sayapPartai")}
+          onChange={(val) => {
+            setValue(val!);
+            formSayapDewanPimpinanAnakCabang.values.data.masterSayapPartaiId =
+              val!;
+          }}
+          data={sSayapPartai.value.map((val) => ({
             value: val.id,
-            label: val.name
-          }))
-        }
-        onChange={(val) => {
-          setSelectedKecamatan(
-            kecamatan.find((v) => v.id == val)
-          )
-          loadDesa(val!)
-          formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId= val!
-        }}
-        radius={"md"}
-        mt={10}
-        placeholder={selectedKecamatan.name}
-        value={selectedKecamatan.name}
-        label="Kecamatan"
-        withAsterisk
-        searchable
-      />
-      <Select
-        // {...formStrukturPartai.getInputProps("jabatan")}
-        onChange={(val) => {
-          setValue(val!)
-          formSayapDewanPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId= val!
-        }}
-        data={sJabatanPimpinanAnakCabang.value.map((val) => ({
-          value: val.id,
-          label: val.name
-        }))}
-        label="Jabatan"
-        withAsterisk
-        mt={10}
-        radius={"md"}
-        placeholder="Jabatan"
-        // data={jabatan}
-        searchable
-      />
-        <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
-        onClick={PimpinanAnakCabang}
+            label: val.name,
+          }))}
+          label="Pilih Sayap Partai"
+          mt={10}
+          radius={"md"}
+          withAsterisk
+          placeholder="Pilih Sayap Partai"
+          // data={sayap}
+          searchable
+        />
+        <Select
+          data={provinsi.map((pro) => ({
+            value: pro.id,
+            label: pro.name,
+          }))}
+          onChange={(val) => {
+            if (val) {
+              setSelectedProvince(provinsi.find((v) => v.id == val));
+              loadKabupaten(val);
+            }
+            formSayapDewanPimpinanAnakCabang.values.data.masterProvinceId =
+              val!;
+          }}
+          radius={"md"}
+          mt={10}
+          placeholder={selectedProvince.name}
+          value={selectedProvince.name}
+          label="Provinsi"
+          withAsterisk
+          searchable
+        />
+        <Select
+          key={Math.random()}
+          data={
+            _.isEmpty(kabupaten)
+              ? []
+              : kabupaten.map((v) => ({
+                  value: v.id,
+                  label: v.name,
+                }))
+          }
+          onChange={(val) => {
+            setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+            loadKecamatan(val!);
+            formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId = val!;
+          }}
+          radius={"md"}
+          mt={10}
+          placeholder={selectedKabupaten.name}
+          value={selectedKabupaten.name}
+          label="Kabupaten / Kota"
+          withAsterisk
+          searchable
+        />
+        <Select
+          key={Math.random()}
+          data={
+            _.isEmpty(kecamatan)
+              ? []
+              : kecamatan.map((val) => ({
+                  value: val.id,
+                  label: val.name,
+                }))
+          }
+          onChange={(val) => {
+            setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+            loadDesa(val!);
+            formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
+              val!;
+          }}
+          radius={"md"}
+          mt={10}
+          placeholder={selectedKecamatan.name}
+          value={selectedKecamatan.name}
+          label="Kecamatan"
+          withAsterisk
+          searchable
+        />
+        <Select
+          // {...formStrukturPartai.getInputProps("jabatan")}
+          onChange={(val) => {
+            setValue(val!);
+            formSayapDewanPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId =
+              val!;
+          }}
+          data={sJabatanPimpinanAnakCabang.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          label="Jabatan"
+          withAsterisk
+          mt={10}
+          radius={"md"}
+          placeholder="Jabatan"
+          // data={jabatan}
+          searchable
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PimpinanAnakCabang}
         >
           SIMPAN
         </Button>
       </Drawer>
       <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              onClick={open}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} fw={700}>
-                    Pimpinan Anak cabang
-                  </Text>
-                </div>
-                <IoArrowForwardCircleOutline size="1.5rem" />
-              </Group>
-            </UnstyledButton> 
+        className={classes.user}
+        pr={20}
+        pl={20}
+        onClick={() => {
+          setAmbilData({
+            ...ambilData,
+            masterTingkatPengurusId: "4",
+          });
+          router.push("/v2/data-partai-v2/sayap-pimpinan-anak-cabang2");
+        }}
+      >
+        <Group>
+          <div style={{ flex: 1 }}>
+            <Text size={15} fw={700}>
+              Pimpinan Anak cabang
+            </Text>
+          </div>
+          <IoArrowForwardCircleOutline size="1.5rem" />
+        </Group>
+      </UnstyledButton>
     </>
   );
 }
 
 export default PimpinanAnakCabang;
-
