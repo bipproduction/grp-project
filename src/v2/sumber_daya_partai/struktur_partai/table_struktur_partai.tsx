@@ -151,7 +151,7 @@ const TableStruktutPartaiV2 = () => {
 
   return (
     <>
-      {/* {JSON.stringify(dataStuktur.map((e) => e.id))} */}
+      {/* {JSON.stringify(dataStuktur)} */}
       <Box sx={{ overflow: "scroll" }}>
         <Table withBorder>
           <thead>{tbHead}</thead>
