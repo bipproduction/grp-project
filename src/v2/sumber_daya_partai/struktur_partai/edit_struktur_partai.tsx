@@ -7,6 +7,7 @@ import {
   Grid,
   Group,
   Mark,
+  NativeSelect,
   NumberInput,
   Paper,
   Select,
@@ -77,14 +78,20 @@ import {
   _loadSelectKecamatan,
   _loadSelectProvinsi,
 } from "@/load_data/wilayah/load_selected_wilayah";
-import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import {
+  _sJenisKelamin,
+  _selectJenisKelamin,
+  sJenisKelamin,
+} from "@/s_state/s_jenis_kelamin";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { _editDataStruktur } from "./table_struktur_partai";
 import dataTable from "../data_table.json";
 import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
 import { atomWithStorage } from "jotai/utils";
+import moment from "moment";
 
 const _listData = atom<ModelSumberDayaPartai | null>(null);
+
 const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   // const [valeditor, setValEditor] = useAtom(_val_edit_struktur);
   const [isJabatan, setJabatan] = useState<any>();
@@ -96,6 +103,9 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
   const [isDesa, setIsDesa] = useAtom(_desa);
   const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
+  const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
+  const [selectJenisKelamin, setSelectJenisKelamin] =
+    useAtom(_selectJenisKelamin);
 
   const [targetStruktur, setTargetStruktur] = useAtom(_editDataStruktur);
   const [listData, setListData] = useAtom(_listData);
@@ -122,7 +132,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
       setSelectKecamatan,
       setSelectDesa
     );
-    _loadJenisKelamin();
+    _loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
     // setTargetStruktur(dataTable)
   }, []);
 
@@ -261,7 +271,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                   <Flex direction={"column"}>
                     <Box>
                       <TextInput
-                        placeholder="NIK"
+                        placeholder={targetStruktur.User.DataDiri.nik}
                         label="NIK"
                         value={targetStruktur.User.DataDiri.nik}
                         onChange={(val) => {
@@ -278,7 +288,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         onChange={(val) => {
                           const data = _.clone(targetStruktur);
                           data.User.DataDiri.name = val.target.value;
-                          setListData(data)
+                          setListData(data);
                         }}
                         // {...formEditStrukturPartai.getInputProps("data.nama")}
                         withAsterisk
@@ -290,7 +300,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         onChange={(val) => {
                           const data = _.clone(targetStruktur);
                           data.User.email = val.target.value;
-                          setListData(data)
+                          setListData(data);
                         }}
                         // {...formEditStrukturPartai.getInputProps("data.email")}
                         withAsterisk
@@ -302,7 +312,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         onChange={(val) => {
                           const data = _.clone(targetStruktur);
                           data.User.DataDiri.tempatLahir = val.target.value;
-                          setListData(data)
+                          setListData(data);
                         }}
                         // {...formEditStrukturPartai.getInputProps(
                         //   "data.tempatLahir"
@@ -312,31 +322,44 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       <DateInput
                         placeholder="Tanggal Lahir"
                         label="Tanggal Lahir"
-                        
-
+                        value={
+                          new Date(targetStruktur.User.DataDiri.tanggalLahir)
+                        }
+                        onChange={(val: any) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.tanggalLahir = val;
+                          setListData(data);
+                        }}
                         // {...formEditStrukturPartai.getInputProps(
                         //   "data.tanggalLahir"
                         // )}
                         withAsterisk
                       />
-                      <Select
-                        data={sJenisKelamin.value.map((e) => ({
-                          label: e.label,
-                          value: e.value,
-                        }))}
-                        placeholder="Jenis Kelamin"
+                      <NativeSelect
                         label="Jenis Kelamin"
-                        {...formEditStrukturPartai.getInputProps(
-                          "data.jenisKelamin"
-                        )}
-                        withAsterisk
+                        onChange={(val) => {
+                          const data: any = _.clone(targetStruktur);
+                          data.User.DataDiri.MasterJenisKelamin = val;
+                          setListData(data);
+                          setSelectJenisKelamin(
+                            isJenisKelamin.find((e) => e.id == val)
+                          );
+                        }}
+                        value={
+                          targetStruktur.User.DataDiri.MasterJenisKelamin.name
+                        }
+                        data={isJenisKelamin.map((v) => v.name)}
                       />
-                      <NumberInput
+
+                      <TextInput
                         placeholder="Nomor Telepon"
                         label="Nomor Telepon"
-                        {...formEditStrukturPartai.getInputProps(
-                          "data.phoneNumber"
-                        )}
+                        value={targetStruktur.User.DataDiri.phoneNumber}
+                        onChange={(val) => {
+                          const data = _.clone(targetStruktur);
+                          data.User.DataDiri.phoneNumber = val.target.value;
+                          setListData(data);
+                        }}
                         withAsterisk
                       />
                       <TextInput
@@ -399,7 +422,39 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                       />
                     </Box>
                     <Box>
-                      <Select
+                      {JSON.stringify(
+                        targetStruktur.User.DataDiri.MasterProvince.name
+                      )}
+                      <NativeSelect
+                        label="Prov"
+                        value={targetStruktur.User.DataDiri.MasterProvince.name}
+                        data={isProvinsi.map((e) => ({
+                          label: e.name,
+                          value: e.id
+                        }))}
+
+                        onChange={(val) => {
+                          console
+                        }}
+
+
+                        // onChange={(val) => {
+                        //   const data = _.clone(targetStruktur);
+                        //   data.User.DataDiri.MasterProvince.name = val.target.value;
+                        //   setListData(data)
+                        //   setSelectProvince(
+                        //     isProvinsi.find((e) => e.name == val)
+                        //   )
+                        //   console.log(val.target.value)
+                          // _loadSelectKabkot(
+                          //   val,
+                          //   setIsKabupaten,
+                          //   setSelectKabupaten
+                          // )
+                        // }}
+
+                      />
+                      {/* <Select
                         label="Pilih Provinsi"
                         searchable
                         value={
@@ -429,7 +484,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                             setSelectKabupaten
                           );
                         }}
-                      />
+                      /> */}
 
                       <Select
                         label="Pilih Kabupaten / Kota"
