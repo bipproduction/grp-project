@@ -19,16 +19,30 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import COLOR from "../../../fun/WARNA";
 import EditKTAV2 from "./edit_kta";
 import { api } from "@/lib/api-backend";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { DataDiri, ModelSumberDayaPartai, UserMediaSocial } from "@/model/interface_sumber_daya_partai";
+
+export const _datapartai_form = atomWithStorage<DataDiri | null>("", null)
+export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>("_list_database_data_diri", null)
 
 const DataProfileV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [listData, setListData] = useState<any | null>(null);
+  // const [listData, setListData] = useState<string | any>("");
+  const [listData2, setListData2] = useAtom(_datapartai_user)
+  const [listData, setListData] = useAtom(_datapartai_form)
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-    .then((val) => val.json())
-    .then(setListData);
-  },[])
+      .then((val) => val.json())
+      .then(setListData);
+  }, []);
+
+  useShallowEffect(() => {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+      .then((val) => val.json())
+      .then(setListData2);
+  }, []);
   return (
     <>
       <Paper
@@ -42,7 +56,7 @@ const DataProfileV2 = () => {
       >
         <Grid>
           <Grid.Col span={12}>
-            <Text mt={5} mb={5} ml={10}>
+            <Text mt={5} mb={5} fz={25} ml={10} fw={700}>
               {" "}
               Data Profile
             </Text>
@@ -62,53 +76,54 @@ const DataProfileV2 = () => {
                 borderRadius: 10,
               }}
             >
-              <Text fz={22} color={"#525252"} fw={700}>
+              {/* <Text fz={22}  fw={700}>
                 Data Profile
-              </Text>
+              </Text> */}
               {/* <Group>
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
               <Box mt={20}>
                 <Text fz={15}>NIK</Text>
-                <Text fw={700}>3510101212990003</Text>
+                <Text fw={700}>{listData?.nik}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Nama</Text>
-                <Text fw={700}>Moh Alif Al Lukman</Text>
+                <Text fw={700}>{listData?.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Email</Text>
-                <Text fw={700}>allukman.lukman99@gmail.com</Text>
+                <Text fw={700}>{listData2?.User.email}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Tempat Lahir</Text>
-                <Text fw={700}>Kalimantan Tengah</Text>
+                <Text fw={700}>{listData?.tempatLahir}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Tanggal Lahir</Text>
-                <Text fw={700}>12 Desember 1999</Text>
+                <Text fw={700}>{listData?.tanggalLahir}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Jenis Kelamin</Text>
-                <Text fw={700}>Laki - Laki</Text>
+                <Text fw={700}>{listData?.MasterJenisKelamin.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Nomor Handphone</Text>
-                <Text fw={700}>087701790942</Text>
+                <Text fw={700}>{listData?.phoneNumber}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Instargram</Text>
-                <Text fw={700}>Allukman12</Text>
+                <Text fw={700}></Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Facebook</Text>
-                <Text fw={700}>Allukman</Text>
+                <Text fw={700}></Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>TikTok</Text>
-                <Text fw={700}>Allukman</Text>
+                <Text fw={700}></Text>
               </Box>
+
               {/* BATAS */}
             </Box>
           </Box>
@@ -119,7 +134,7 @@ const DataProfileV2 = () => {
               p={20}
               pl={30}
               pr={30}
-              pt={65}
+              pt={10}
               sx={{
                 backgroundColor: COLOR.abuabu,
                 borderRadius: 10,
@@ -129,45 +144,43 @@ const DataProfileV2 = () => {
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
+
+
               <Box mt={10}>
                 <Text fz={15}>Twitter</Text>
-                <Text fw={700}>Allukman</Text>
+                <Text fw={700}></Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Agama</Text>
-                <Text fw={700}>Islam</Text>
+                <Text fw={700}>{listData?.MasterAgama.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Pekerjaan</Text>
-                <Text fw={700}>Programmer</Text>
+                <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Alamat</Text>
-                <Text fw={700}>Jl.Gunung Anthena 1 No 11 A</Text>
-              </Box>
-              <Box mt={10}>
-                <Text fz={15}>Alamat</Text>
-                <Text fw={700}>Jl.Gunung Anthena 1 No 11 A</Text>
+                <Text fw={700}>{listData?.alamat}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Provinsi</Text>
-                <Text fw={700}>Bali</Text>
+                <Text fw={700}>{listData?.MasterProvince.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Kabupaten / Kota</Text>
-                <Text fw={700}>Denpasar</Text>
+                <Text fw={700}>{listData?.MasterKabKot.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Kecamatan</Text>
-                <Text fw={700}>Denpasar Barat</Text>
+                <Text fw={700}>{listData?.MasterKecamatan.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Desa</Text>
-                <Text fw={700}>Padang Sambian Klod</Text>
+                <Text fw={700}>{listData?.MasterDesa.name}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>RT/RW</Text>
-                <Text fw={700}>0000</Text>
+                <Text fw={700}>{listData?.rtRw}</Text>
               </Box>
             </Box>
           </Box>
