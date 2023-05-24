@@ -83,12 +83,14 @@ import {
   _selectJenisKelamin,
   sJenisKelamin,
 } from "@/s_state/s_jenis_kelamin";
-import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
+import { _loadJenisKelamin, _new_loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { _editDataStruktur } from "./table_struktur_partai";
 import dataTable from "../data_table.json";
 import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
 import { atomWithStorage } from "jotai/utils";
 import moment from "moment";
+import React from 'react'
+import RaectSelect from 'react-select'
 
 const _listData = atom<ModelSumberDayaPartai | null>(null);
 
@@ -132,7 +134,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
       setSelectKecamatan,
       setSelectDesa
     );
-    _loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
+    _new_loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
     // setTargetStruktur(dataTable)
   }, []);
 
@@ -207,7 +209,23 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   return (
     <>
-      {JSON.stringify(targetStruktur.User.DataDiri.tanggalLahir)}
+      {/* {JSON.stringify(targetStruktur.User.DataDiri.tanggalLahir)}, */}
+
+      <RaectSelect
+      // defaultValue={targetStruktur.User.DataDiri.MasterJenisKelamin.name}
+      options={isJenisKelamin.map((e) => ({
+        value: e.id,
+        label: e.name
+      }))}
+      onChange={(val : any) => {
+        const data = _.clone(targetStruktur)
+        data.User.DataDiri.MasterJenisKelamin.name = val?.value
+        setListData(data)
+        setSelectJenisKelamin(
+          isJenisKelamin.find((e) => e.id = val?.value)
+        )
+      } }
+      />
 
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -351,6 +369,8 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         data={isJenisKelamin.map((v) => v.name)}
                       />
 
+                      
+
                       <TextInput
                         placeholder="Nomor Telepon"
                         label="Nomor Telepon"
@@ -434,7 +454,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         }))}
 
                         onChange={(val) => {
-                          console
+                          console.log()
                         }}
 
 

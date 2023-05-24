@@ -5,7 +5,12 @@ import { atom } from "jotai";
 import _ from "lodash";
 
 
-export const _loadJenisKelamin = (setIsJenisKelamin : any, setSelectJenisKelamin : any) => 
+export const _loadJenisKelamin = () => 
+fetch(apiGetMaster.apiGetJenisKelamin)
+.then((e) => e.json())
+.then((val) => (sJenisKelamin.value = val))
+
+export const _new_loadJenisKelamin = (setIsJenisKelamin : any, setSelectJenisKelamin : any) => 
 fetch(apiGetMaster.apiGetJenisKelamin)
 .then((e) => e.json())
 .then(async (val) => {
