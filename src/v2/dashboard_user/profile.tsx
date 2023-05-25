@@ -63,7 +63,7 @@ const DataProfileV2 = () => {
           </Grid.Col>
         </Grid>
       </Paper>
-
+      {/* {JSON.stringify(listData)} */}
       <Grid>
         <Grid.Col span={6}>
           <Box pt={20}>
@@ -83,6 +83,7 @@ const DataProfileV2 = () => {
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
+              
               <Box mt={20}>
                 <Text fz={15}>NIK</Text>
                 <Text fw={700}>{listData?.nik}</Text>
