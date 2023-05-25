@@ -197,7 +197,7 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   return (
     <>
-      {JSON.stringify(targetStruktur.User.DataDiri.tanggalLahir)}
+      {JSON.stringify(targetStruktur)}
 
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -287,10 +287,11 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
                         placeholder="Email"
                         label="Email"
                         value={targetStruktur.User.email}
-                        onChange={(val) => {
+                        onChange={(val: any) => {
                           const data = _.clone(targetStruktur);
                           data.User.email = val.target.value;
                           setListData(data)
+                          formEditStrukturPartai.values.data = val
                         }}
                         // {...formEditStrukturPartai.getInputProps("data.email")}
                         withAsterisk

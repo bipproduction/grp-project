@@ -5,7 +5,10 @@ export interface ModelRencanaKunjungan {
     img: string
     masterStatusAksiNyataId: number
     active: boolean
-    createdAt: string
-    updatedAt: string
-}
+    MasterStatusAksiNyata: MasterStatusAksiNyata
+  }
+  
+  export interface MasterStatusAksiNyata {
+    name: string
+  }
 

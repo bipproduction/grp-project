@@ -33,6 +33,16 @@ Content-Type: application/json
 }
 
 
+### UPDATE USER STATUS / USER ROLE
+POST  http://localhost:3001/api/auth/user-update-status HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"clhyfol2r0000smsm48sd192m",
+    "masterUserRoleId":1
+}
+
+
 
 ### POST ASET PARTAI
 POST http://localhost:3000/api/aset-partai/aset-partai-post HTTP/1.1

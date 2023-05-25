@@ -22,16 +22,35 @@ import { api } from "@/lib/api-backend";
 import { useState } from "react";
 import { useShallowEffect } from "@mantine/hooks";
 import { ModelRencanaKunjungan } from "../../../../model/model_aksi_nyata";
+import { apiGetMaster } from "@/lib/api-get-master";
+import { atomWithStorage } from "jotai/utils";
+const moment = require('moment');
+
 
 const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: any }) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
+    const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const loadStatusAksiNyata = async () => {
+        const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
+        const data = await res.json();
+        setListStatusAksiNyata(data);
+    };
+    const body = {
+        id: dataEdit?.id,
+        judul: dataEdit?.judul,
+        tanggal: dataEdit?.tanggal,
+        img: dataEdit?.img,
+        masterStatusaksiNyataId: dataEdit?.masterStatusAksiNyataId,
+    };
+
     const formEditRencanaKunjungan = useForm({
         initialValues: {
             data: {
+                id: '',
                 judul: '',
-                tanggalKunjungan: '',
-                potretKunjungan: '',
-                statusKunjungan: '',
+                tanggal: '',
+                img: '',
+                masterStatusaksiNyataId: '',
             },
         },
     });
@@ -48,21 +67,39 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
 
     useShallowEffect(() => {
         loadData();
+        loadStatusAksiNyata();
     }, []);
 
     const onEdit = () => {
-        if (Object.values(formEditRencanaKunjungan.values.data).includes("")) {
+        console.log(body);
+        if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
         // disini pengaplikasian api
+        // fetch(api.apiRencanaKunjunganPrabowoUpdate, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(formEditRencanaKunjungan.values.data),
+        // }).then(async (res) => {
+        //     const data = await res.json();
+        //     if (res.status === 201) {
+        //         buttonSimpan();
+        //         thisClosed();
+        //     } else {
+        //         toast(data.message);
+        //     }
+        // });
 
-        buttonSimpan();
-        thisClosed();
+        // buttonSimpan();
+        // thisClosed();
     }
 
 
     return (
         <>
+            {/* {JSON.stringify(dataEdit)} */}
             <Box>
                 <Paper bg={COLOR.abuabu} p={10}>
                     <Grid>
@@ -87,21 +124,26 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditRencanaKunjungan.getInputProps("data.judul")} value={dataEdit?.judul} />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formEditRencanaKunjungan.getInputProps("data.tanggalKunjungan")}/>
+                                <TextInput label="**" value={dataEdit?.judul} onChange={(val) => {
+                                    body.judul = val.target.value;
+                                }} />
+                                <DateInput label="**" {...formEditRencanaKunjungan.getInputProps("data.tanggalKunjungan")} value={moment(dataEdit?.tanggal)} />
                                 <Textarea
-                                    placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
                                     {...formEditRencanaKunjungan.getInputProps("data.potretKunjungan")}
+                                    value={dataEdit?.img}
                                 />
                                 <Select
-                                    data={["Pending", "Sedang Berjalan", "Berhasil", "Batal"]}
-                                    placeholder={"Pilih Status Kunjungan"}
+                                    data={listStatusAksiNyata.map((data) => ({
+                                        value: data.id,
+                                        label: data.name,
+                                    }))}
+                                    placeholder={dataEdit?.MasterStatusAksiNyata.name}
                                     label={"**"}
-                                    {...formEditRencanaKunjungan.getInputProps("data.statusKunjungan")}
+                                    {...formEditRencanaKunjungan.getInputProps("data.masterStatusAksiNyataId")}
                                 />
 
                                 <Group position="left" pt={20}>
