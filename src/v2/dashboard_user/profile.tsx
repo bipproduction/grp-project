@@ -21,16 +21,25 @@ import EditKTAV2 from "./edit_kta";
 import { api } from "@/lib/api-backend";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { DataDiri, ModelSumberDayaPartai, UserMediaSocial } from "@/model/interface_sumber_daya_partai";
+import {
+  DataDiri,
+  ModelSumberDayaPartai,
+  UserMediaSocial,
+} from "@/model/interface_sumber_daya_partai";
+import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
-export const _datapartai_form = atomWithStorage<DataDiri | null>("", null)
-export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>("_list_database_data_diri", null)
+export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
+export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
+  "_list_database_data_diri",
+  null
+);
 
 const DataProfileV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   // const [listData, setListData] = useState<string | any>("");
-  const [listData2, setListData2] = useAtom(_datapartai_user)
-  const [listData, setListData] = useAtom(_datapartai_form)
+  const [listData2, setListData2] = useAtom(_datapartai_user);
+  const [listData, setListData] = useAtom(_datapartai_form);
+  const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -83,8 +92,8 @@ const DataProfileV2 = () => {
                 <Text color={COLOR.merah}>*</Text>
                 <Text fz={10}>Wajib diisi</Text>
               </Group> */}
-              
-              <Box mt={20}>
+
+              <Box>
                 <Text fz={15}>NIK</Text>
                 <Text fw={700}>{listData?.nik}</Text>
               </Box>
@@ -113,17 +122,14 @@ const DataProfileV2 = () => {
                 <Text fw={700}>{listData?.phoneNumber}</Text>
               </Box>
               <Box mt={10}>
-                <Text fz={15}>Instargram</Text>
-                <Text fw={700}></Text>
+                <Text fz={15}>Agama</Text>
+                <Text fw={700}>{listData?.MasterAgama.name}</Text>
               </Box>
               <Box mt={10}>
-                <Text fz={15}>Facebook</Text>
-                <Text fw={700}></Text>
+                <Text fz={15}>Pekerjaan</Text>
+                <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
               </Box>
-              <Box mt={10}>
-                <Text fz={15}>TikTok</Text>
-                <Text fw={700}></Text>
-              </Box>
+
 
               {/* BATAS */}
             </Box>
@@ -141,28 +147,16 @@ const DataProfileV2 = () => {
                 borderRadius: 10,
               }}
             >
-              {/* <Group mt={35}>
-                <Text color={COLOR.merah}>*</Text>
-                <Text fz={10}>Wajib diisi</Text>
-              </Group> */}
-
-
               <Box mt={10}>
-                <Text fz={15}>Twitter</Text>
+                <Text fz={15}>{listData2?.User.UserMediaSocial.map((v, i) => (
+                  <Box key={i}>
+                    <Text fz={15} mt={10}>{v.MasterMediaSocial.name}</Text>
+                    <Text fw={700}>{v.name}</Text>
+                  </Box>
+                ))}</Text>
                 <Text fw={700}></Text>
               </Box>
-              <Box mt={10}>
-                <Text fz={15}>Agama</Text>
-                <Text fw={700}>{listData?.MasterAgama.name}</Text>
-              </Box>
-              <Box mt={10}>
-                <Text fz={15}>Pekerjaan</Text>
-                <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
-              </Box>
-              <Box mt={10}>
-                <Text fz={15}>Alamat</Text>
-                <Text fw={700}>{listData?.alamat}</Text>
-              </Box>
+
               <Box mt={10}>
                 <Text fz={15}>Provinsi</Text>
                 <Text fw={700}>{listData?.MasterProvince.name}</Text>
@@ -179,7 +173,7 @@ const DataProfileV2 = () => {
                 <Text fz={15}>Desa</Text>
                 <Text fw={700}>{listData?.MasterDesa.name}</Text>
               </Box>
-              <Box mt={10}>
+              <Box mt={10} mb={7}>
                 <Text fz={15}>RT/RW</Text>
                 <Text fw={700}>{listData?.rtRw}</Text>
               </Box>
