@@ -4,6 +4,7 @@ export const api = {
     "apiAuthSignUp": "/api/auth/signup",
     "apiAuthUpdate": "/api/auth/user-update",
     "apiGetOneUser": "/api/auth/get-one-user",
+    "apiUserUpdateStatus": "/api/auth/user-update-status",
 
 
     // DATA DIRI 

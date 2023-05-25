@@ -21,7 +21,6 @@ import { api } from "@/lib/api-backend";
 import { useState } from "react";
 import { useShallowEffect } from "@mantine/hooks";
 import { apiGetMaster } from "@/lib/api-get-master";
-import { TableRencanaKunjunganPrabowoV2 } from "./table_rencana_kunjungan";
 
 const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);

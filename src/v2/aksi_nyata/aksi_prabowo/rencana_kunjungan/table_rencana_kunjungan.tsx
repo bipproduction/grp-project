@@ -4,6 +4,7 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditRencanaKunjunganPrabowoV2 from "./edit_rencana_kunjungan";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
+const moment = require('moment')
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
   const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] = useState<any[]>([]);
@@ -37,7 +38,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
       <td>{i + 1}</td>
       <td>{e.judul}</td>
       <td>{e.MasterStatusAksiNyata.name}</td>
-      <td>{e.tanggal}</td>
+      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
       <td>{e.img}</td>
       <td>
         <Group position="center">
