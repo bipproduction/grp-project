@@ -39,6 +39,7 @@ import toast from "react-simple-toasts";
 import _ from "lodash";
 import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
 import { _datapartai_form, _datapartai_user } from "./profile";
+import { _sJenisKelamin, _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
 
 const _listData = atom<DataDiri | null>(null);
 const _listData2 = atom<ModelSumberDayaPartai | null>(null);
@@ -57,6 +58,8 @@ const EditKTAV2 = () => {
   const [targetDataPartai2, setTargetDataPartai2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_listData);
   const [listDat2, setListData2] = useAtom(_listData2);
+  const [isJenisKelamin, setIsJenisKelamin] =useAtom(_sJenisKelamin)
+  const [selectJenisKelamin, setSelectJenisKelamin] =useAtom(_selectJenisKelamin)
 
   const [mediaListData, setMediaListData] = useState([
     {
@@ -221,12 +224,13 @@ const EditKTAV2 = () => {
               value={targetDataPartai?.nik}
             />
             <TextInput radius={"md"} mt={10} placeholder="Nama" label="Nama"
+            {...formUpdateDataDiri.getInputProps("data.name")}
             value={targetDataPartai?.name}
-            onChange={() => {
-              const data = _.clone(targetDataPartai)
-              data?.name 
-              setListData(data)
-            }}
+            // onChange={() => {
+            //   const data = _.clone(targetDataPartai)
+            //   data?.name 
+            //   setListData(data)
+            // }}
             />
             <TextInput radius={"md"} mt={10} placeholder="Email" label="Email"
             value={targetDataPartai2?.User.email}

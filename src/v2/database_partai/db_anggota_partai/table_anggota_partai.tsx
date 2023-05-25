@@ -139,7 +139,7 @@ const TableAnggotaPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
-        <Box pt={20}>
+        {/* <Box pt={20}>
           <Grid>
             <Grid.Col md={4} lg={4}>
               <TextInput
@@ -171,7 +171,7 @@ const TableAnggotaPartaiV2 = () => {
               </Group>
             </Grid.Col>
           </Grid>
-        </Box>
+        </Box> */}
         <Box>
           <ScrollArea py={20} >
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>

@@ -30,12 +30,13 @@ import { _loadAgama } from "@/load_data/load_agama";
 import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
 import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
-import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import { _sJenisKelamin, sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { sUser } from "@/s_state/s_user";
 import { number } from "echarts";
 import { _loadMediaSocial } from "@/load_data/media_social/load_media_social";
 import { sMediaSocial } from "@/s_state/media_social/s_media_social";
 import { apiGetMaster } from "@/lib/api-get-master";
+import { useAtom } from "jotai";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -75,9 +76,11 @@ const FormDataDiriUser = () => {
     id: "",
     name: "",
   });
+  const [isJenisKelamin, setIsJenisKelamin] =useAtom(_sJenisKelamin)
+  const [selectJenisKelamin, setSelectJenisKelamin] =useAtom(_sJenisKelamin)
 
   useShallowEffect(() => {
-    _loadJenisKelamin();
+  _loadJenisKelamin();
     _loadAgama();
     loadProvinsi();
     _loadListPekerjaan();
