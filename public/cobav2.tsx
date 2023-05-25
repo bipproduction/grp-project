@@ -1,6 +1,6 @@
 import React from 'react'
 
-function cobav2() {
+function Cobav2() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function cobav2() {
   )
 }
 
-export default cobav2
+export default Cobav2
