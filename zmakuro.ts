@@ -84,4 +84,12 @@ async function main() {
     })
 }
 
-main()
+
+function main2(){
+    const data = listFile.find((v) => v.file == "seeder_desa")
+    console.log(data?.id)
+}
+
+main2()
+
+// main()

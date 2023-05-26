@@ -1,4 +1,5 @@
 export interface ModelTingkatPengurus {
+  id: string
     userId: string
     masterStatusKeanggotaanId: number
     masterTingkatPengurusId: number
@@ -19,5 +20,5 @@ export interface ModelTingkatPengurus {
     masterNegaraId: number
     alamatKantor: string
     waAdmin: string
-  }
   
+}

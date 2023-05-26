@@ -6,23 +6,24 @@ export interface ModelSumberDayaPartai {
   User: User
   MasterTingkatPengurus: MasterTingkatPengurus
   MasterJabatan: any
-  MasterJabatanDewanPembina: any
+  MasterJabatanDewanPembina?: MasterJabatanDewanPembina
   MasterJabatanDewanPimpinanPusat?: MasterJabatanDewanPimpinanPusat
-  MasterJabatanDewanPimpinanDaerah: any
+  MasterJabatanDewanPimpinanDaerah?: MasterJabatanDewanPimpinanDaerah
   MasterJabatanDewanPimpinanCabang?: MasterJabatanDewanPimpinanCabang
-  MasterJabatanPimpinanAnakCabang: any
-  MasterJabatanPimpinanRanting: any
-  MasterJabatanPerwakilanPartaiDiLuarNegeri: any
+  MasterJabatanPimpinanAnakCabang: MasterJabatanPimpinanAnakCabang
+  MasterJabatanPimpinanRanting: MasterJabatanPimpinanRanting
+  MasterJabatanPerwakilanPartaiDiLuarNegeri: MasterJabatanPerwakilanPartaiDiLuarNegeri
   MasterSayapPartai?: MasterSayapPartai
-  MasterKaderPartai: any
+  MasterKaderPartai: MasterKaderPartai
   MasterProvince?: MasterProvince2
   MasterKabKot?: MasterKabKot2
-  MasterKecamatan: any
-  MasterDesa: any
-  MasterNegara: any
+  MasterKecamatan: MasterKecamatan
+  MasterDesa: MasterDesa
+  MasterNegara: MasterNegara
 }
 
 export interface User {
+  id: string
   email: string
   DataDiri: DataDiri
   UserMediaSocial: UserMediaSocial[]
@@ -83,25 +84,75 @@ export interface MasterMediaSocial {
 }
 
 export interface MasterTingkatPengurus {
+  id: number,
   name: string
 }
 
+export interface MasterJabatanDewanPembina {
+  id: number,
+  name: string,
+}
+
 export interface MasterJabatanDewanPimpinanPusat {
+  id: number,
+  name: string
+}
+
+export interface MasterJabatanDewanPimpinanDaerah {
+  id: number,
   name: string
 }
 
 export interface MasterJabatanDewanPimpinanCabang {
+  id: number,
+  name: string
+}
+
+export interface MasterJabatanPimpinanAnakCabang {
+  id: number
+  name: string
+}
+
+export interface MasterJabatanPimpinanRanting {
+  id: number,
+  name: string
+}
+export interface MasterJabatanPerwakilanPartaiDiLuarNegeri {
+  id: number,
+  name: string
+}
+
+export interface MasterKaderPartai {
+  id: number,
   name: string
 }
 
 export interface MasterSayapPartai {
+  id: number,
   name: string
 }
 
 export interface MasterProvince2 {
+  id: number,
   name: string
 }
 
 export interface MasterKabKot2 {
+  id: number,
+  name: string
+}
+
+export interface MasterKecamatan {
+  id: number,
+  name: string
+}
+
+export interface MasterDesa {
+  id: number,
+  name: string
+}
+
+export interface MasterNegara {
+  id: number,
   name: string
 }
