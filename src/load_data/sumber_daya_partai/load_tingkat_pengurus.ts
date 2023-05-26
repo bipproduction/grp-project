@@ -7,8 +7,11 @@ import _ from "lodash";
 import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
 
 export const _tingkatPengurus = atom<any[]>([]);
-export const _selectTingkatPengurus =
-  atomWithStorage<MasterTingkatPengurus | null>("_selectTingkatPengurus", null);
+export const _selectTingkatPengurus = atom({
+  id: "",
+  name: ""
+})
+  // atomWithStorage<MasterTingkatPengurus | null>("_selectTingkatPengurus", null);
 export const _editTingkatPengurus =
   atomWithStorage<ModelTingkatPengurus | null>(
     "_new_modelTingkatPengurus",

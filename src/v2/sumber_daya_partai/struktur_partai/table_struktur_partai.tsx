@@ -35,17 +35,23 @@ import { atom, useAtom } from "jotai";
 import { _val_muncul } from "./_val_edit_struktur";
 import { atomWithStorage } from "jotai/utils";
 import _ from "lodash";
-import { ModelSumberDayaPartai } from "../../../model/interface_sumber_daya_partai";
+import {
+  MasterTingkatPengurus,
+  ModelSumberDayaPartai,
+} from "../../../model/interface_sumber_daya_partai";
 import { api } from "@/lib/api-backend";
 import { EditStrukturV2 } from "./edit_struktur";
 import { StrukturEditV2 } from "./stuktur_edit";
-import { _dataStruktur, _loadDataStruktur_ByIdStatus, _new_loadEditByModel } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import {
+  _dataStruktur,
+  _loadDataStruktur_ByIdStatus,
+  _new_loadEditByModel,
+} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
 export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_struktur",
   null
 );
-
 
 //buat interface
 
@@ -60,14 +66,13 @@ const TableStruktutPartaiV2 = () => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur)
   }, []);
 
-  
-
   const tbHead = (
     <tr>
       <th>No</th>
       <th>Nama</th>
       <th>NIK</th>
       <th>Tingkat Pengurus</th>
+      <th>Jabatan</th>
       {/* <th>Jabatan</th>
       <th>Email</th>
       <th>Tempat Lahir</th>
@@ -105,6 +110,9 @@ const TableStruktutPartaiV2 = () => {
                 <td>{e.User.DataDiri.name}</td>
                 <td>{e.User.DataDiri.nik}</td>
                 <td>{e.MasterTingkatPengurus.name}</td>
+                <td>
+                  {<DataJabatan setTingkat={e} />}
+                </td>
                 {/* <td>
                   {e.MasterJabatanDewanPimpinanCabang?.name}
                 </td>
@@ -160,6 +168,7 @@ const TableStruktutPartaiV2 = () => {
       </Box>
 
       <Modal
+        centered
         opened={opened}
         onClose={setOpen.close}
         size="lg"
@@ -171,7 +180,7 @@ const TableStruktutPartaiV2 = () => {
       >
         {/* <EditStrukturPartaiV2 thisClosed={setOpen.close} /> */}
         {/* <EditStrukturV2 thisClosed={setOpen.close}/> */}
-        <StrukturEditV2 thisClosed={setOpen.close}/>
+        <StrukturEditV2 thisClosed={setOpen.close} />
       </Modal>
       {/* <Table sx={{overflow: "scroll"}}>
         <thead>
@@ -199,5 +208,59 @@ const TableStruktutPartaiV2 = () => {
     </>
   );
 };
+
+function DataJabatan({setTingkat}:{setTingkat: ModelSumberDayaPartai}) {
+  return (
+    <>
+    {/* {JSON.stringify(setTingkat.MasterTingkatPengurus.id)} */}
+      {(() => {
+        let data = setTingkat.MasterTingkatPengurus?.id
+        if (data == 1) {
+          return (
+            <><Text>{setTingkat.MasterJabatanDewanPembina?.name}</Text></>
+          )
+        } else {
+          if (data == 2) {
+            return (
+              <><Text>{setTingkat.MasterJabatanDewanPimpinanPusat?.name}</Text></>
+            )
+          } else {
+            if (data == 3) {
+              return (
+                <><Text>{setTingkat.MasterJabatanDewanPimpinanDaerah?.name}</Text></>
+              )
+            } else {
+              if (data == 4) {
+                return (
+                  <><Text>{setTingkat.MasterJabatanDewanPimpinanCabang?.name}</Text></>
+                )
+              } else {
+                if (data == 5) {
+                  return (
+                    <><Text>{setTingkat.MasterJabatanPimpinanAnakCabang.name}</Text></>
+                  )
+                } else {
+                  if (data == 6) {
+                    return (
+                      <><Text>{setTingkat.MasterJabatanPimpinanRanting.name}</Text></>
+                    )
+                  } else {
+                    if (data == 7) {
+                      return (
+                        <><Text>{setTingkat.MasterJabatanPerwakilanPartaiDiLuarNegeri.name}</Text></>
+                      )
+                    } else {
+                      return <>Salah</>
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })()}
+    </>
+  );
+}
 
 export default TableStruktutPartaiV2;
