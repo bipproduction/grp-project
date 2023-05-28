@@ -42,29 +42,32 @@ function EditDataPartai() {
   const [changeData, setChangeData] = useAtom(_listChangeData);
 
   const onEdit =  () => {
-    console.log(editFormDataDiri.values.data)
+    // console.log(editFormDataDiri.values.data)
     const body = {
-      id: listData,
-      masterAgamaId: 0 ,
-      // masterPekerjaanId: ,
-      // masterProvinceId: bovinceId,
-      // masterKabKotId: boKotId,
-      // masterKecamatanId: boamatanId,
-      // masterDesaId: boaId,
-      // nik:   tempatLahir: boir,
-      // tanggalLahir: bohir,
-      // masterJenisKelaminId: boisKelaminId,
-      // phoneNumber: boer,
-      // alamat: bo     rtRw:
+      id: listData?.id,
+      masterAgamaId: listData?.MasterAgama.id,
+      masterPekerjaanId: listData?.MasterPekerjaan.id,
+      masterProvinceId: listData?.MasterProvince.id,
+      masterKabKotId: listData?.MasterKabKot.id,
+      masterKecamatanId: listData?.MasterKecamatan.id,
+      masterDesaId: listData?.MasterDesa.id,
+      nik:   listData?.nik,
+      tempatLahir: listData?.tempatLahir,
+      tanggalLahir: listData?.tanggalLahir,
+      masterJenisKelaminId: listData?.MasterJenisKelamin.id,
+      phoneNumber: listData?.phoneNumber,
+      alamat: listData?.alamat,   
+      rtRw: listData?.rtRw
     
     }
-    //     fetch("/api/form-data-diri/data-diri-update", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(editFormDataDiri.values.data),
-    // });
+    // console.log(body)
+        fetch("/api/form-data-diri/data-diri-update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
     // console.log(targetEditDataDIri);
     // console.log(editFormDataDiri.values.data);
@@ -82,32 +85,32 @@ function EditDataPartai() {
     // });
   };
 
-  const editFormDataDiri = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        id: dataDiri?.id,
-        nik: "",
-        name: "",
-        tempatLahir: "",
-        tanggalLahir: "",
-        phoneNumber: "",
-        alamat: "",
-        rtRw: "",
-        masterJenisKelaminId: "",
-        masterAgamaId: "",
-        masterPekerjaanId: "",
-        masterProvinceId: 17,
-        masterKabKotId: 260,
-        masterKecamatanId: 4086,
-        masterDesaId: 50631,
-      },
-      validate: {
-        email: (value: string) =>
-          /^\S+@\S+$/.test(value) ? null : "Invalid email",
-      },
-    },
-  });
+  // const editFormDataDiri = useForm({
+  //   initialValues: {
+  //     data: {
+  //       userId: localStorage.getItem("user_id"),
+  //       id: listData?.id,
+  //       nik: "",
+  //       name: "",
+  //       tempatLahir: "",
+  //       tanggalLahir: "",
+  //       phoneNumber: "",
+  //       alamat: "",
+  //       rtRw: "",
+  //       masterJenisKelaminId: "",
+  //       masterAgamaId: "",
+  //       masterPekerjaanId: "",
+  //       masterProvinceId: 17,
+  //       masterKabKotId: 260,
+  //       masterKecamatanId: 4086,
+  //       masterDesaId: 50631,
+  //     },
+  //     validate: {
+  //       email: (value: string) =>
+  //         /^\S+@\S+$/.test(value) ? null : "Invalid email",
+  //     },
+  //   },
+  // });
 
   
 
@@ -136,7 +139,7 @@ function EditDataPartai() {
         <TextInput
           label="Nama"
           placeholder={listData?.name}
-          {...editFormDataDiri.getInputProps("data.name")}
+          // {...editFormDataDiri.getInputProps("data.name")}
         />
         <TextInput
           withAsterisk
@@ -145,7 +148,7 @@ function EditDataPartai() {
           radius={"md"}
           type="number"
           placeholder={listData?.nik}
-          {...editFormDataDiri.getInputProps("data.nik")}
+          // {...editFormDataDiri.getInputProps("data.nik")}
         />
         <TextInput
           mt={10}
@@ -154,7 +157,7 @@ function EditDataPartai() {
           label="Tempat Lahir"
           radius={"md"}
           placeholder={listData?.tempatLahir}
-          {...editFormDataDiri.getInputProps("data.tempatLahir")}
+          // {...editFormDataDiri.getInputProps("data.tempatLahir")}
         />
         <DateInput
           // placeholder="Tanggal Lahir"
@@ -163,7 +166,7 @@ function EditDataPartai() {
           label="Tanggal Lahir"
           placeholder={listData?.tanggalLahir}
           radius={"md"}
-          {...editFormDataDiri.getInputProps("data.tanggalLahir")}
+          // {...editFormDataDiri.getInputProps("data.tanggalLahir")}
         />
         <Select
           data={sJenisKelamin.value.map((ag) => ({
@@ -176,7 +179,7 @@ function EditDataPartai() {
           radius={"md"}
           withAsterisk
           searchable
-          {...editFormDataDiri.getInputProps("data.masterJenisKelaminId")}
+          // {...editFormDataDiri.getInputProps("data.masterJenisKelaminId")}
         />
         <TextInput
           // placeholder="Nomor Handphone"
@@ -185,7 +188,7 @@ function EditDataPartai() {
           label="Nomor Handphone"
           radius={"md"}
           type="number"
-          {...editFormDataDiri.getInputProps("data.phoneNumber")}
+          // {...editFormDataDiri.getInputProps("data.phoneNumber")}
         />
         <Select
           data={sAgama.value.map((ag) => ({
@@ -198,7 +201,7 @@ function EditDataPartai() {
           label="Agama"
           searchable
           withAsterisk
-          {...editFormDataDiri.getInputProps("data.masterAgamaId")}
+          // {...editFormDataDiri.getInputProps("data.masterAgamaId")}
         />
         <Select
           radius={"md"}
@@ -209,7 +212,7 @@ function EditDataPartai() {
             value: pe.id,
             label: pe.name,
           }))}
-          {...editFormDataDiri.getInputProps("data.masterPekerjaanId")}
+          // {...editFormDataDiri.getInputProps("data.masterPekerjaanId")}
         />
         <TextInput
           // placeholder="Alamat"
@@ -217,7 +220,7 @@ function EditDataPartai() {
           withAsterisk
           label="Alamat"
           radius={"md"}
-          {...editFormDataDiri.getInputProps("data.alamat")}
+          // {...editFormDataDiri.getInputProps("data.alamat")}
         />
         <TextInput
           placeholder={listData?.rtRw}
@@ -226,7 +229,7 @@ function EditDataPartai() {
           label="RT/RW"
           radius={"md"}
           type="number"
-          {...editFormDataDiri.getInputProps("data.rtRw")}
+          // {...editFormDataDiri.getInputProps("data.rtRw")}
         />
       <Button
         fullWidth

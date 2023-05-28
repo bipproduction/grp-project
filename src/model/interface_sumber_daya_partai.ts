@@ -49,14 +49,17 @@ export interface DataDiri {
 }
 
 export interface MasterJenisKelamin {
+  id: number,
   name: string
 }
 
 export interface MasterAgama {
+  id: number,
   name: string
 }
 
 export interface MasterPekerjaan {
+  id: number,
   name: string
 }
 
