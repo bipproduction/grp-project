@@ -6,6 +6,16 @@ const listUndanganPrabowoGetOne = async (req: NextApiRequest, res: NextApiRespon
     const data = await client.listUndanganPrabowo.findUnique({
         where : {
             id : id as any
+        },
+        select : {
+            nama : true,
+            id : true,
+            rencanaKunjunganPrabowoId : true,
+            RencanaKunjunganPrabowo : {
+                select : {
+                    judul: true
+                }
+            }
         }
     })
 

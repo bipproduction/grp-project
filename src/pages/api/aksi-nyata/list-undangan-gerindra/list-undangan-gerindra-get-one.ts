@@ -6,6 +6,17 @@ const listUndanganGerindraGetOne = async (req: NextApiRequest, res: NextApiRespo
     const data = await client.listUndanganGerindra.findUnique({
         where: {
             id: id as any
+        },
+        select: {
+            id: true,
+            nama: true,
+            rencanaKunjunganGerindraId: true,
+            RencanaKunjunganGerindra: {
+                select: {
+                    judul: true,
+                    tanggal: true
+                }
+            }
         }
     })
     if (!data) return res.status(204).end()

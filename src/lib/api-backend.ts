@@ -18,7 +18,8 @@ export const api = {
     "apiRencanaKunjunganPrabowoGetOne": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-get-one",
     "apiRencanaKunjunganPrabowoPost": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post",
     "apiRencanaKunjunganPrabowoUpdate": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update",
-    "apiRencanaKunjunganPrabowoSearch": "/api/aksi-nyata-rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-search",
+    "apiRencanaKunjunganPrabowoSearch": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-search",
+    "apiRencanaKunjunganPrabowoHapus": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-hapus",
 
 
     // AKSI NYATA - LIST UNDANGAN PRABOWO
@@ -27,6 +28,7 @@ export const api = {
     "apiListUndanganPrabowoPost": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-post",
     "apiListUndanganPrabowoUpdate": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update",
     "apiListUndanganPrabowoSearch": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-search",
+    "apiListUndanganPrabowoHapus": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-hapus",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN GERINDRA
@@ -35,6 +37,7 @@ export const api = {
     "apiRencanaKunjunganGerindraPost": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-post",
     "apiRencanaKunjunganGerindraUpdate": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update",
     "apiRencanaKunjunganGerindraSearch": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-search",
+    "apiRencanaKunjunganGerindraHapus": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-hapus",
 
 
     // AKSI NYATA - LIST UNDANGAN GERINDRA
@@ -43,6 +46,7 @@ export const api = {
     "apiListUndanganGerindraPost": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-post",
     "apiListUndanganGerindraUpdate": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update",
     "apiListUndanganGerindraSearch": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-search",
+    "apiListundanganGerindraHapus": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-hapus",
 
 
     // ANGGOTA AFILIATIF
@@ -51,6 +55,7 @@ export const api = {
     "apiAnggotaAfiliatifPost": "/api/anggota-afiliatif/anggota-afiliatif-post",
     "apiAnggotaAfiliatifUpdate": "/api/anggota-afiliatif/anggota-afiliatif-update",
     "apiAnggotaAfiliatifSearch": "/api/anggota-afiliatif/anggota-afiliatif-search",
+    "apiAnggotaAfiliatifHapus": "/api/anggota-afiliatif/anggota-afiliatif-hapus",
 
 
     // ASET PARTAI
@@ -59,6 +64,7 @@ export const api = {
     "apiAsetPartaiPost": "/api/aset-partai/aset-partai-post",
     "apiAsetPartaiUpdate": "/api/aset-partai/aset-partai-update",
     "apiAsetPartaiSearch": "/api/aset-partai/aset-partai-search",
+    "apiAsetPartaiHapus": "/api/aset-partai/aset-partai-hapus",
 
 
     // MEDIA SOSIAL USER
@@ -72,6 +78,7 @@ export const api = {
     "apiCPTPost": "/api/peta-kekuatan/cpt/cpt-post",
     "apiCPTUpdate": "/api/peta-kekuatan/cpt/cpt-update",
     "apiCPTSearch": "/api/peta-kekuatan/cpt/cpt-search",
+    "apiCPTHapus": "/api/peta-kekuatan/cpt/cpt-hapus",
 
 
     // EKSEKUTIF
@@ -80,6 +87,7 @@ export const api = {
     "apiEksekutifPost": "/api/peta-kekuatan/eksekutif/eksekutif-post",
     "apiEksekutifUpdate": "/api/peta-kekuatan/eksekutif/eksekutif-update",
     "apiEksekutifSearch": "/api/peta-kekuatan/eksekutif/eksekutif-search",
+    "apiEksekutifHapus": "/api/peta-kekuatan/eksekutif/eksekutif-hapus",
 
 
     // LEGISLATIF
@@ -88,6 +96,7 @@ export const api = {
     "apiLegislatifPost": "/api/peta-kekuatan/legislatif/legislatif-post",
     "apiLegislatifUpdate": "/api/peta-kekuatan/legislatif/legislatif-update",
     "apiLegislatifSearch": "/api/peta-kekuatan/legislatif/legislatif-search",
+    "apiLegislatifHapus": "/api/peta-kekuatan/legislatif/legislatif-hapus",
 
 
     // PARTAI PENGUSUNG EKSEKUTIF
@@ -108,6 +117,7 @@ export const api = {
     "apiSumberDayaPartaiPost": "/api/sumber-daya-partai/sumber-daya-partai-post",
     "apiSumberDayaPartaiUpdate": "/api/sumber-daya-partai/sumber-daya-partai-update",
     "apiSumberDayaPartaiSearch": "/api/sumber-daya-partai/sumber-daya-partai-search",
+    "apiSumberDayaPartaiHapus": "/api/sumber-daya-partai/sumber-daya-partai-hapus",
 
 
 

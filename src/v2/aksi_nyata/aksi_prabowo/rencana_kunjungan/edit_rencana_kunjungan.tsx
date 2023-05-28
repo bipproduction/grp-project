@@ -30,35 +30,15 @@ const moment = require('moment');
 const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: any }) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
         const data = await res.json();
         setListStatusAksiNyata(data);
     };
-    const body = {
-        id: dataEdit?.id,
-        judul: dataEdit?.judul,
-        tanggal: dataEdit?.tanggal,
-        img: dataEdit?.img,
-        masterStatusaksiNyataId: dataEdit?.masterStatusAksiNyataId,
-    };
-
-    const formEditRencanaKunjungan = useForm({
-        initialValues: {
-            data: {
-                id: '',
-                judul: '',
-                tanggal: '',
-                img: '',
-                masterStatusaksiNyataId: '',
-            },
-        },
-    });
-
-    const inidata = data;
 
     const loadData = () => {
-        fetch(api.apiRencanaKunjunganPrabowoGetOne + `?id=${inidata}`)
+        fetch(api.apiRencanaKunjunganPrabowoGetOne + `?id=${data}`)
             .then((v) => v.json())
             .then((v) => {
                 setDataEdit(v);
@@ -70,32 +50,51 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
         loadStatusAksiNyata();
     }, []);
 
+
+    const body = {
+        id: dataEdit?.id,
+        judul: dataEdit?.judul,
+        tanggal: dataEdit?.tanggal,
+        img: dataEdit?.img,
+        masterStatusaksiNyataId: dataEdit?.masterStatusAksiNyataId,
+    };
+
+    // const formEditRencanaKunjungan = useForm({
+    //     initialValues: {
+    //         data: {
+    //             id: '',
+    //             judul: '',
+    //             tanggal: '',
+    //             img: '',
+    //             masterStatusaksiNyataId: '',
+    //         },
+    //     },
+    // });
+
     const onEdit = () => {
         console.log(body);
         if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
         // disini pengaplikasian api
-        // fetch(api.apiRencanaKunjunganPrabowoUpdate, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(formEditRencanaKunjungan.values.data),
-        // }).then(async (res) => {
-        //     const data = await res.json();
-        //     if (res.status === 201) {
-        //         buttonSimpan();
-        //         thisClosed();
-        //     } else {
-        //         toast(data.message);
-        //     }
-        // });
-
-        // buttonSimpan();
-        // thisClosed();
+        fetch(api.apiRencanaKunjunganPrabowoUpdate, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.status === 201) {
+                buttonSimpan();
+                thisClosed();
+            } else {
+                toast(data.message);
+            }
+        });
     }
 
+    if(dataEdit===undefined) return<></>
 
     return (
         <>
@@ -124,17 +123,21 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput label="**" value={dataEdit?.judul} onChange={(val) => {
+                                <TextInput label="**" placeholder={dataEdit?.judul} onChange={(val) => {
                                     body.judul = val.target.value;
                                 }} />
-                                <DateInput label="**" {...formEditRencanaKunjungan.getInputProps("data.tanggalKunjungan")} value={moment(dataEdit?.tanggal)} />
+                                <DateInput label="**" onChange={(val) => {
+                                    body.tanggal = String(val);
+                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} />
                                 <Textarea
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
-                                    {...formEditRencanaKunjungan.getInputProps("data.potretKunjungan")}
-                                    value={dataEdit?.img}
+                                    onChange={(val) => {
+                                        body.img = val.target.value;
+                                    }}
+                                    placeholder={dataEdit?.img}
                                 />
                                 <Select
                                     data={listStatusAksiNyata.map((data) => ({
@@ -143,7 +146,9 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                     }))}
                                     placeholder={dataEdit?.MasterStatusAksiNyata.name}
                                     label={"**"}
-                                    {...formEditRencanaKunjungan.getInputProps("data.masterStatusAksiNyataId")}
+                                    onChange={(val) => {
+                                        body.masterStatusaksiNyataId = _.toInteger(val);
+                                    }}
                                 />
 
                                 <Group position="left" pt={20}>

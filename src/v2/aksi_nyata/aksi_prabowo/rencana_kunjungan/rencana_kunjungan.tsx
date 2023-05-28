@@ -52,7 +52,7 @@ export const RencanaKunjunganPrabowoV2 = () => {
                     </Grid.Col>
                 </Grid>
             </Box>
-            <TableRencanaKunjunganPrabowoV2 />
+            <TableRencanaKunjunganPrabowoV2/>
         </Box>
 
 

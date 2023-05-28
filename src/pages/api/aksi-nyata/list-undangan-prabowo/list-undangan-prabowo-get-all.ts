@@ -11,7 +11,8 @@ const listUndanganPrabowoGetAll = async (req: NextApiRequest, res: NextApiRespon
             nama: true,
             RencanaKunjunganPrabowo: {
                 select: {
-                    judul: true
+                    judul: true,
+                    tanggal: true
                 }
             }
         }

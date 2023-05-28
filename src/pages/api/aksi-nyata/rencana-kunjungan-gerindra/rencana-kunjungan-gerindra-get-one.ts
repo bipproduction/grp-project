@@ -6,6 +6,18 @@ const rencanaKunjunganGerindraGetOne = async (req: NextApiRequest, res: NextApiR
     const data = await client.rencanaKunjunganGerindra.findUnique({
         where: {
             id: id as any
+        },
+        select: {
+            id: true,
+            judul: true,
+            img: true,
+            tanggal: true,
+            masterStatusAksiNyataId: true,
+            MasterStatusAksiNyata: {
+                select: {
+                    name: true
+                }
+            }
         }
     })
     if (!data) return res.status(204).end()
