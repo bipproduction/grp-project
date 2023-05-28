@@ -1,9 +1,38 @@
 import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditListUndanganPrabowoV2 from "./edit_list_undangan";
+import { useState } from "react";
+import { api } from "@/lib/api-backend";
+import { ModelListUndangan } from "@/model/model_aksi_nyata";
+import toast from "react-simple-toasts";
+const moment = require('moment')
 
 export const TableListUndanganPrabowoV2 = () => {
+  const [listUndanganPrabowo, setListUndanganPrabowo] = useState<ModelListUndangan[]>([]);
+  const [dataId, setDataId] = useState<string>("");
+
+  const loadListUndanganPrabowo = () => {
+    fetch(api.apiListUndanganPrabowoGetAll)
+      .then((v) => v.json())
+      .then((v) => {
+        setListUndanganPrabowo(v);
+      });
+  };
+
+  useShallowEffect(() => {
+    loadListUndanganPrabowo();
+  }, []);
+
+  const onDelete = (id: string) => {
+    fetch(api.apiListUndanganPrabowoHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast("Success");
+        }
+      });
+  }
+
   const tbHead = (
     <tr>
       <th>No</th>
@@ -14,12 +43,12 @@ export const TableListUndanganPrabowoV2 = () => {
     </tr>
   );
 
-  const rows = myData.map((e, i) => (
+  const rows = listUndanganPrabowo.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
-      <td>{e.judul}</td>
-      <td>{e.tanggal}</td>
-      <td>{e.img}</td>
+      <td>{e.RencanaKunjunganPrabowo.judul}</td>
+      <td>{moment(e.RencanaKunjunganPrabowo.tanggal).format("DD MMM YYYY")}</td>
+      <td>{e.nama}</td>
       <td>
         <Group position="center">
           <Button
@@ -29,11 +58,12 @@ export const TableListUndanganPrabowoV2 = () => {
             w={100}
             onClick={() => {
               open();
+              setDataId(e.id);
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button>
         </Group>
@@ -56,7 +86,7 @@ export const TableListUndanganPrabowoV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditListUndanganPrabowoV2 thisClosed={close} />
+        <EditListUndanganPrabowoV2 thisClosed={close} data={dataId} />
       </Modal>
 
 

@@ -17,28 +17,55 @@ import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
+import { useState } from "react";
+import { api } from "@/lib/api-backend";
+import { useShallowEffect } from "@mantine/hooks";
 
 const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
+    const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
+
+    const loadListRencanaKunjungan = async () => {
+        const res = await fetch(api.apiRencanaKunjunganGerindraGetAll);
+        const data = await res.json();
+        setListRencanaKunjungan(data);
+    };
+
+
+    useShallowEffect(() => {
+        loadListRencanaKunjungan();
+    }, []);
 
     const formTambahListundangan = useForm({
         initialValues: {
             data: {
-                judul: '',
-                tanggalKunjungan: '',
+                rencanaKunjunganGerindraId: '',
+                // tanggalKunjungan: '',
                 nama: '',
             },
         },
     });
 
     const onAdd = () => {
-        console.log(formTambahListundangan.values.data)
+        // console.log(formTambahListundangan.values.data)
         if (Object.values(formTambahListundangan.values.data).includes("")) {
             return toast("Lengkapi Data");
         }
         // disini pengaplikasian api
-
-        buttonSimpan();
-        thisClosed();
+        fetch(api.apiListUndanganGerindraPost, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formTambahListundangan.values.data),
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.status === 201) {
+                buttonSimpan();
+                thisClosed();
+            } else {
+                toast(data.message);
+            }
+        });
     }
 
 
@@ -68,10 +95,18 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahListundangan.getInputProps("data.judul")}/>
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahListundangan.getInputProps("data.tanggalKunjungan")}/>
+                                <Select data={listRencanaKunjungan.map((data) => ({
+                                    value: data.id,
+                                    label: data.judul,
+                                }))}
+                                    placeholder={"Pilih Rencana Kunjungan"}
+                                    searchable={true}
+                                    {...formTambahListundangan.getInputProps("data.rencanaKunjunganGerindraId")}
+                                />
+                                {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahListundangan.getInputProps("data.judul")} /> */}
+                                {/* <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahListundangan.getInputProps("data.tanggalKunjungan")} /> */}
                                 <TextInput placeholder="Nama Tamu Undangan" label="**"{...formTambahListundangan.getInputProps("data.nama")} />
-                                <TextInput placeholder="Tambah List Undangan" mt={20} />
+                                {/* <TextInput placeholder="Tambah List Undangan" mt={20} /> */}
 
                                 <Group position="left" pt={20}>
                                     <Button

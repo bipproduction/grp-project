@@ -4,11 +4,12 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditRencanaKunjunganPrabowoV2 from "./edit_rencana_kunjungan";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
+import toast from "react-simple-toasts";
 const moment = require('moment')
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
   const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] = useState<any[]>([]);
-  const [dataId, setDataId]=useState<string>("");
+  const [dataId, setDataId] = useState<string>("");
 
   const loadRencanaKunjunganPrabowo = () => {
     fetch(api.apiRencanaKunjunganPrabowoGetAll)
@@ -21,6 +22,15 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
   useShallowEffect(() => {
     loadRencanaKunjunganPrabowo();
   }, []);
+
+  const onDelete = (id: string) => {
+    fetch(api.apiRencanaKunjunganPrabowoHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast("Success");
+        }
+      });
+  }
 
   const tbHead = (
     <tr>
@@ -54,7 +64,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button>
         </Group>
@@ -79,7 +89,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditRencanaKunjunganPrabowoV2 thisClosed={close} data={dataId}/>
+        <EditRencanaKunjunganPrabowoV2 thisClosed={close} data={dataId} />
       </Modal>
 
       <Box pt={20}>

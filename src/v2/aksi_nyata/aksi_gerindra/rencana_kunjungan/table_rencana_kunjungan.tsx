@@ -1,9 +1,37 @@
 import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import EditRencanaKunjunganGerindraV2 from "./edit_rencana_kunjungan";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import { useState } from "react";
+import { api } from "@/lib/api-backend";
+import moment from "moment";
+import toast from "react-simple-toasts";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
+  const [listData, setListData] = useState<any[]>([]);
+  const [dataId, setDataId] = useState<string>("");
+
+  const loadData = () => {
+    fetch(api.apiRencanaKunjunganGerindraGetAll)
+      .then((v) => v.json())
+      .then((v) => {
+        setListData(v);
+      });
+  }
+
+  const onDelete = (id: string) => {
+    fetch(api.apiRencanaKunjunganGerindraHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast("Success");
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadData();
+  }, [])
+
   const tbHead = (
     <tr>
       <th>No</th>
@@ -15,12 +43,12 @@ export const TableRencanaKunjunganGerindraV2 = () => {
     </tr>
   );
 
-  const rows = myData.map((e, i) => (
+  const rows = listData.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.judul}</td>
-      <td>{e.status}</td>
-      <td>{e.tanggal}</td>
+      <td>{e.MasterStatusAksiNyata.name}</td>
+      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
       <td>{e.img}</td>
       <td>
         <Group position="center">
@@ -30,12 +58,13 @@ export const TableRencanaKunjunganGerindraV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
+              setDataId(e.id);
               open();
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button>
         </Group>
@@ -59,7 +88,7 @@ export const TableRencanaKunjunganGerindraV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditRencanaKunjunganGerindraV2 thisClosed={close} />
+        <EditRencanaKunjunganGerindraV2 thisClosed={close} data={dataId} />
       </Modal>
 
 

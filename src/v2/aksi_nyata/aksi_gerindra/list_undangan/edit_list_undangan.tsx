@@ -17,30 +17,77 @@ import { DateInput } from "@mantine/dates";
 import COLOR from "../../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
+import { useShallowEffect } from "@mantine/hooks";
+import { useState } from "react";
+import { ModelListUndanganGerindra } from "@/model/model_aksi_nyata";
+import { api } from "@/lib/api-backend";
+import _ from "lodash";
 
-const EditListUndanganGerindraV2 = ({ thisClosed }: any) => {
+const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
+    const [dataEdit, setDataEdit] = useState<ModelListUndanganGerindra | null>(null);
+    const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
 
-    const formEditListUndangan = useForm({
-        initialValues : {
-            data : {
-                judul : '',
-                tanggalKunjungan : '',
-                nama : '',
-            },
-        },
-    });
+    const loadRencanaKunjunganGerindra = async () => {
+        const res = await fetch(api.apiRencanaKunjunganGerindraGetAll);
+        const data = await res.json();
+        setListRencanaKunjungan(data);
+    };
+
+    const loadData = () => {
+        fetch(api.apiListUndanganGerindraGetOne + `?id=${data}`)
+            .then((v) => v.json())
+            .then((v) => {
+                setDataEdit(v);
+            });
+    }
+
+    useShallowEffect(() => {
+        loadData();
+        loadRencanaKunjunganGerindra();
+    }, []);
+
+    const body = {
+        id: dataEdit?.id,
+        rencanaKunjunganGerindraId: dataEdit?.rencanaKunjunganGerindraId,
+        nama: dataEdit?.nama,
+    };
+
+    // const formEditListUndangan = useForm({
+    //     initialValues : {
+    //         data : {
+    //             judul : '',
+    //             tanggalKunjungan : '',
+    //             nama : '',
+    //         },
+    //     },
+    // });
+
 
     const onEdit = () => {
-        console.log(formEditListUndangan.values.data);
+        console.log(body);
 
-        if (Object.values(formEditListUndangan.values.data).includes("")) {
+        if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
         // disini pengaplikasian api
-
-        buttonSimpan();
-        thisClosed();
+        fetch(api.apiListUndanganGerindraUpdate, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.status === 201) {
+                buttonSimpan();
+                thisClosed();
+            } else {
+                toast(data.message);
+            }
+        });
     }
+
+    if(dataEdit===undefined || _.isNull(dataEdit)) return <></>
     return (
         <>
             <Box>
@@ -67,10 +114,22 @@ const EditListUndanganGerindraV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditListUndangan.getInputProps("data.judul")}/>
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formEditListUndangan.getInputProps("data.tanggalKunjungan")}/>
-                                <TextInput placeholder="Nama Tamu Undangan" label="**" {...formEditListUndangan.getInputProps("data.nama")}/>
-                                <TextInput placeholder="Tambah List Undangan" mt={20}/>
+                                <Select data={listRencanaKunjungan.map((data) => ({
+                                    value: data.id,
+                                    label: data.judul,
+                                }))}
+                                    placeholder={dataEdit?.RencanaKunjunganGerindra.judul}
+                                    searchable={true}
+                                    onChange={(val) => {
+                                        body.rencanaKunjunganGerindraId = String(val);
+                                    }}
+                                />
+                                {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**"/> */}
+                                {/* <DateInput placeholder="Tanggal Kunjungan" label="**"/> */}
+                                <TextInput placeholder={dataEdit?.nama} label="**" onChange={(val) => {
+                                    body.nama = val.target.value;
+                                }} />
+                                {/* <TextInput placeholder="Tambah List Undangan" mt={20}/> */}
 
                                 <Group position="left" pt={20}>
                                     <Button
