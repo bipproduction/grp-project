@@ -8,9 +8,9 @@ export const _loadEditDataDiri_ById = async (id: any, setTargetDataEdit: any) =>
     .then((v) => setTargetDataEdit(v))
 }
 
-export const _dataDiri = atomWithStorage<DataDiri[]>(
-    "",
-    []
+export const _dataDiri = atomWithStorage<DataDiri | null>(
+    "_datadiri",
+    null
   );
 
   export const _EditDataDiri = atomWithStorage<ModelSumberDayaPartai | null>(

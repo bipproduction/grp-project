@@ -31,7 +31,6 @@ export interface User {
 }
 
 export interface DataDiri {
-  id: string
   name: string
   nik: string
   tempatLahir: string

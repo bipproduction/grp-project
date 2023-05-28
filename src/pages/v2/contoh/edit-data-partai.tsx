@@ -2,6 +2,7 @@ import { api } from "@/lib/api-backend";
 import {
   _EditDataDiri,
   _dataDiri,
+
 } from "@/load_data/data_diri_partai/load_edit_data_partai";
 import { _loadAgama } from "@/load_data/load_agama";
 import { _loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
@@ -11,7 +12,8 @@ import {
   _listChangeData,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { _editTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
-import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import { DataDiriUser } from "@/model/interface_data_diri";
+import { DataDiri, ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { sListPekerjaan } from "@/s_state/s_list_pekerjaan";
 import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
@@ -28,7 +30,7 @@ import { atomWithStorage } from "jotai/utils";
 import _ from "lodash";
 import React, { useState } from "react";
 import toast from "react-simple-toasts";
-export const _dataedit = atomWithStorage<ModelSumberDayaPartai | null>(
+export const _dataedit = atomWithStorage<DataDiriUser | null>(
   "",
   null
 );
@@ -36,12 +38,36 @@ export const _dataedit = atomWithStorage<ModelSumberDayaPartai | null>(
 function EditDataPartai() {
   const [targetEditDataDIri, setTargetEditDataDiri] = useAtom(_EditDataDiri);
   const [listData, setListData] = useAtom(_datapartai_form);
-  // const [dataDiri, setDataDiri] = useAtom(_dataedit);
+  const [dataDiri, setDataDiri] = useAtom(_dataedit);
   const [changeData, setChangeData] = useAtom(_listChangeData);
 
-  const onEdit = async () => {
+  const onEdit =  () => {
+    console.log(editFormDataDiri.values.data)
+    const body = {
+      id: listData,
+      masterAgamaId: 0 ,
+      // masterPekerjaanId: ,
+      // masterProvinceId: bovinceId,
+      // masterKabKotId: boKotId,
+      // masterKecamatanId: boamatanId,
+      // masterDesaId: boaId,
+      // nik:   tempatLahir: boir,
+      // tanggalLahir: bohir,
+      // masterJenisKelaminId: boisKelaminId,
+      // phoneNumber: boer,
+      // alamat: bo     rtRw:
+    
+    }
+    //     fetch("/api/form-data-diri/data-diri-update", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(editFormDataDiri.values.data),
+    // });
+
     // console.log(targetEditDataDIri);
-    console.log(editFormDataDiri.values.data);
+    // console.log(editFormDataDiri.values.data);
 
     // // const body = {};
     // if (Object.values(editFormDataDiri.values.data).includes("")) {
@@ -60,7 +86,7 @@ function EditDataPartai() {
     initialValues: {
       data: {
         userId: localStorage.getItem("user_id"),
-        id: listData?.name,
+        id: dataDiri?.id,
         nik: "",
         name: "",
         tempatLahir: "",
@@ -83,6 +109,8 @@ function EditDataPartai() {
     },
   });
 
+  
+
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
       .then((val) => val.json())
@@ -101,13 +129,13 @@ function EditDataPartai() {
   }, []);
   return (
     <>
-      {JSON.stringify(listData?.id)}
+      {JSON.stringify(dataDiri)}
 
       <Box p={40}>
 
         <TextInput
           label="Nama"
-          placeholder={listData?.id}
+          placeholder={listData?.name}
           {...editFormDataDiri.getInputProps("data.name")}
         />
         <TextInput
@@ -200,13 +228,13 @@ function EditDataPartai() {
           type="number"
           {...editFormDataDiri.getInputProps("data.rtRw")}
         />
-      </Box>
       <Button
         fullWidth
         radius={"xl"}
         // bg={COLOR.merah}
         color="orange.9"
         type="submit"
+        mt={20}
         // onClick={() =>
         //   console.log(formDataDiri.values, formMediaSocial.values)
         // }
@@ -215,6 +243,7 @@ function EditDataPartai() {
       >
         Simpan
       </Button>
+      </Box>
     </>
   );
 }
