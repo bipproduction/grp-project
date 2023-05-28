@@ -10,7 +10,7 @@ import {
 } from "./../../s_state/sumber_daya_partai/s_jabatan_struktur_partai";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { atomWithStorage } from "jotai/utils";
-import _ from "lodash";
+import _, { set } from "lodash";
 import { MasterJabatanDewanPembina } from "@/model/interface_sumber_daya_partai";
 
 export const _dewanPembina = atom<any[]>([]);
@@ -25,6 +25,26 @@ export const _selectDewanPimpinanPusat = atom({
 });
 export const _dewanPimpinanDaerah = atom<any[]>([]);
 export const _selectDewanPimpinanDaerah = atom({
+  id: new Number(),
+  name: "",
+});
+export const _dewanPimpinanCabang = atom<any[]>([]);
+export const _selectDewabPimpinanCabang = atom({
+  id: new Number(),
+  name: "",
+});
+export const _dewanPimpinanAnakCabang = atom<any[]>([]);
+export const _selectPimpinanAnakCabang = atom({
+  id: new Number(),
+  name: "",
+});
+export const _dewanPimpinanRanting = atom<any[]>([]);
+export const _selectPimpinanRanting = atom({
+  id: new Number(),
+  name: "",
+});
+export const _perwakilanLuarNegeri = atom<any[]>([]);
+export const _selectPerwakilanLuarNegeri = atom({
   id: new Number(),
   name: "",
 });
@@ -77,6 +97,65 @@ export const _new_loadJabatanDewanPimpinanDaerah = (
     });
 };
 
+export const _new_loadJabatanDewanPimpinanCabang = (
+  setListJabatan_DPimpinanCabang: any,
+  setSelect_DPimpinanCabang: any
+) => {
+  fetch(apiGetMaster.apiGetJabatanDewanPimpinanCabang)
+    .then((e) => e.json())
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setListJabatan_DPimpinanCabang(val), setSelect_DPimpinanCabang({});
+      } else {
+        setListJabatan_DPimpinanCabang([]);
+      }
+    });
+};
+
+export const _new_loadJabatanPimpinanAnakCabang = (
+  setListJabatan_PAnakCabang: any,
+  setSelect_PAnakCabang: any
+) => {
+  fetch(apiGetMaster.apiGetJabatanPimpinanAnakCabang)
+    .then((e) => e.json())
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setListJabatan_PAnakCabang(val), setSelect_PAnakCabang({});
+      } else {
+        setListJabatan_PAnakCabang([]);
+      }
+    });
+};
+
+export const _new_loadJabatanPimpinanRanting = (
+  setListJabatan_PRanting: any,
+  setSelect_PRanting: any
+) => {
+  fetch(apiGetMaster.apiGetJabatanPimpinanRanting)
+    .then((e) => e.json())
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setListJabatan_PRanting(val), setSelect_PRanting({});
+      } else {
+        setListJabatan_PRanting([]);
+      }
+    });
+};
+
+export const _new_loadPerwakilanLuarNegeri = (
+  setListPerwakilanLuarNegeri: any,
+  setSelect_PerwakilanLuarNegeri: any
+) => {
+  fetch(apiGetMaster.apiGetJabatanPerwakilanLuarNegeri)
+    .then((e) => e.json())
+    .then(async (val) => {
+      if (!_.isEmpty(val)) {
+        setListPerwakilanLuarNegeri(val), setSelect_PerwakilanLuarNegeri({});
+      } else {
+        setListPerwakilanLuarNegeri([]);
+      }
+    });
+};
 
 // SIGNAL GLOBAL STATE
 export const _loadJabatanDewanPembina = () =>
