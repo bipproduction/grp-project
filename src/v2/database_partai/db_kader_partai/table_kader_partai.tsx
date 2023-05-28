@@ -14,7 +14,7 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -27,84 +27,93 @@ import {
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../../../v2/sumber_daya_partai/data_table.json";
+import { atomWithStorage } from "jotai/utils";
+import { useAtom } from "jotai";
+import { _dataKader, _dataSayap } from "@/load_data/sayap_partai/load_sayap_partai";
+import { api } from "@/lib/api-backend";
+import toast from "react-simple-toasts";
+import { _loadDataStruktur_ByIdStatus } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
+const _valueStatus = atomWithStorage<any | null>("_status", null);
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
 
+  const [dataKader, setDataKader] = useAtom(_dataKader);
+  const [valueAktif, setValueAktif] = useState<string>("");
+  const [valueNoAktif, setValueNoAktif] = useState<string>("");
+  const theme = useMantineTheme();
+  const [checked, setChecked] = useState(false);
+
+  const BodyAktif = {
+    id: valueAktif,
+    masterUserRoleId: "2",
+  };
+  const onAktif = () => {
+    console.log(BodyAktif);
+    fetch(api.apiUserUpdateStatus, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(BodyAktif),
+    }).then(async (res) => {
+      console.log(res.status);
+      if (res.status === 201) {
+        toast("Success");
+      } else {
+        toast("Gagal");
+      }
+      //   return null
+    });
+    // console.log(onUpdate)
+  };
+
+  const BodyNonAktif = {
+    id: valueNoAktif,
+    masterUserRoleId: "1",
+  };
+  const NonAktif = () => {
+    console.log(BodyNonAktif);
+    fetch(api.apiUserUpdateStatus, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(BodyNonAktif),
+    }).then(async (res) => {
+      console.log(res.status);
+      if (res.status === 201) {
+        toast("Success");
+      } else {
+        toast("Gagal");
+      }
+      //   return null
+    });
+    // console.log(onUpdate)
+  };
+
+  useShallowEffect(() => {
+    _loadDataStruktur_ByIdStatus(3, setDataKader);
+    // loadDataStatus();
+  });
+
   const tbHead = (
     <tr>
       <th>No</th>
       <th>Nama</th>
-      <th>NIK</th>
-      <th>Tingkat Kader</th>
-      <th>Email</th>
-      <th>Tempat Lahir</th>
-      <th>Tanggal Lahir</th>
-      <th>Jenis Kelamin</th>
-      <th>Nomor Tlpn</th>
-      <th>Agama</th>
-      <th>Pekerjaan</th>
-      <th>Alamat</th>
+      <th>Tingkat Pengurus</th>
       <th>Provinsi</th>
       <th>Kabupaten</th>
       <th>Kecamatan</th>
       <th>Desa / Cabang</th>
-      <th>RT/RW</th>
-      <th>Instagram</th>
-      <th>Facebook</th>
-      <th>TikTok</th>
-      <th>Twitter</th>
-      <th>Aksi</th>
+      <th>Status</th>
+      <th>
+        <Group position="center">Aksi</Group>
+      </th>
     </tr>
   );
-
-  const rows = dataTable.map((e, i) => (
-    <tr key={e.id}>
-      <td>{i + 1}</td>
-      <td>{e.name}</td>
-      <td>{e.nik}</td>
-      <td>{e.kader_partai}</td>
-      <td>{e.email}</td>
-      <td>{e.tmpt_lahir}</td>
-      <td>{e.tgl_lahir}</td>
-      <td>{e.j_kelamin}</td>
-      <td>{e.nomor_tlpn}</td>
-      <td>{e.agama}</td>
-      <td>{e.pekerjaan}</td>
-      <td>{e.alamat}</td>
-      <td>{e.provinsi}</td>
-      <td>{e.kabupaten}</td>
-      <td>{e.kecamatan}</td>
-      <td>{e.desa}</td>
-      <td>{e.rt_rw}</td>
-      <td>{e.instagram}</td>
-      <td>{e.facebook}</td>
-      <td>{e.tiktok}</td>
-      <td>{e.twitter}</td>
-
-      <td>
-        <Group position="right">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={() => {
-               
-                open()
-            }}
-          >
-            Aktif
-          </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
-            Non Aktif
-          </Button>
-        </Group>
-      </td>
-    </tr>
-  ));
 
   return (
     <>
@@ -116,78 +125,64 @@ const TableKaderPartaiV2 = () => {
                 Data Kader Partai
               </Text>
             </Grid.Col>
-            <Grid.Col span={4}>
-              {/* <Group position="right">
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<AiOutlineSave />}
-                >
-                  Save
-                </Button>
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<CiFilter />}
-                >
-                  Fillter
-                </Button>
-              </Group> */}
-            </Grid.Col>
           </Grid>
         </Paper>
-        {/* <Box pt={20}>
-          <Grid>
-            <Grid.Col md={4} lg={4}>
-              <TextInput
-                mt={5}
-                icon={<AiOutlineSearch size={20} />}
-                placeholder="Search"
-                radius={"md"}
-              />
-            </Grid.Col>
-            <Grid.Col md={8} lg={8}>
-              <Group position="right">
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineDownload size={20} />}
-                  radius={"xl"}
-                  bg={COLOR.orange}
-                >
-                  Download Tamplate
-                </Button>
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineUpload size={20} />}
-                  radius={"xl"}
-                  m={5}
-                  bg={COLOR.orange}
-                >
-                  Import File
-                </Button>
-              </Group>
-            </Grid.Col>
-          </Grid>
-        </Box> */}
-        <Box>
-          <ScrollArea py={20} >
-            <Table withBorder highlightOnHover horizontalSpacing={"lg"} >
+        <Group>
+          <Box sx={{ overflow: "scroll" }} py={20}>
+            <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
               <thead>{tbHead}</thead>
-              <tbody>{rows}</tbody>
+              <tbody>
+                {dataKader.map((e, i) => (
+                  <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{e.User.DataDiri.name}</td>
+                    <td>{e.MasterKaderPartai.name}</td>
+                    <td>{e.User.DataDiri.MasterProvince.name}</td>
+                    <td>{e.User.DataDiri.MasterKabKot.name}</td>
+                    <td>{e.User.DataDiri.MasterKecamatan.name}</td>
+                    <td>{e.User.DataDiri.MasterDesa.name}</td>
+                    <td>
+                      <Text fw={"bold"}>
+                      {e.User.MasterUserRole?.name}
+                      </Text>
+                    </td>
+                    <td>
+                      <Group position="center">
+                        <Button
+                          w={120}
+                          variant="outline"
+                          color="teal"
+                          radius="xl"
+                          onClick={() => {
+                            BodyAktif.id = e.User.id;
+                            onAktif();
+                          }}
+                        >
+                          Admin
+                        </Button>
+                        <Button
+                          w={120}
+                          variant="outline"
+                          color="red"
+                          radius="xl"
+                          onClick={() => {
+                            BodyNonAktif.id = e.User.id;
+                            NonAktif();
+                          }}
+                        >
+                          Non Admin
+                        </Button>
+                      </Group>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </Table>
-            <Group position="right" pt={10}>
-              <Pagination total={10} color={"orange"} />
-            </Group>
-          </ScrollArea>
-        </Box>
+          </Box>
+        </Group>
       </Box>
     </>
   );
 };
 
 export default TableKaderPartaiV2;
-

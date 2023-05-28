@@ -10,7 +10,7 @@ const userUpdateStatus = async (req: NextApiRequest, res: NextApiResponse) => {
                 id: body.id
             },
             data: {
-                masterUserRoleId: body.masterUserRoleId
+                masterUserRoleId: Number(body.masterUserRoleId)
             }
         })
         res.status(201).json({ success: true, message: "Data terupdate" })

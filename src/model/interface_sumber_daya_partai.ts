@@ -27,9 +27,11 @@ export interface User {
   email: string
   DataDiri: DataDiri
   UserMediaSocial: UserMediaSocial[]
+  MasterUserRole?: MasterUserRole
 }
 
 export interface DataDiri {
+  id: string
   name: string
   nik: string
   tempatLahir: string
@@ -153,6 +155,11 @@ export interface MasterDesa {
 }
 
 export interface MasterNegara {
+  id: number,
+  name: string
+}
+
+export interface MasterUserRole {
   id: number,
   name: string
 }

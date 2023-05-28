@@ -23,6 +23,10 @@ const FormSignUp = () => {
         },
     });
 
+    function  homeData() {
+        router.push("/");
+    }
+
     const onRegister = () => {
 
         if (Object.values(formRegister.values.data).includes("")) {
@@ -55,7 +59,7 @@ const FormSignUp = () => {
             <Center pt={100}>
                 <Box
                     bg={COLOR.orange}
-                    h={530}
+                    h={560}
                     w={500}
                     sx={{
                         borderRadius: 10,
@@ -105,7 +109,7 @@ const FormSignUp = () => {
                             >
                                 Registrasi
                             </Button>
-                            <Box component="a" href="/">
+                            <Box component="a" href="/" >
                                 <Text
                                     style={{ cursor: "pointer" }}
                                     align="right"
