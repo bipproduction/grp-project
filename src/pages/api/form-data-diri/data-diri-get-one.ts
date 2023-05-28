@@ -36,36 +36,43 @@ const dataDiriGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
             },
             MasterJenisKelamin: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterAgama: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterPekerjaan: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterProvince: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterKabKot: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterKecamatan: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterDesa: {
                 select: {
+                    id: true,
                     name: true
                 }
             }
