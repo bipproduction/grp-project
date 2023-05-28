@@ -56,6 +56,7 @@ const KTAV2 = () => {
           background: COLOR.abuabu,
         }}
       >
+        {/* <pre>{JSON.stringify(listData, null, 2)}</pre> */}
         <Grid>
           <Grid.Col span={12}>
             <Text mt={5} mb={5} ml={10} fz={25} fw={700}>

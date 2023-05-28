@@ -85,13 +85,6 @@ const DataProfileV2 = () => {
                 borderRadius: 10,
               }}
             >
-              {/* <Text fz={22}  fw={700}>
-                Data Profile
-              </Text> */}
-              {/* <Group>
-                <Text color={COLOR.merah}>*</Text>
-                <Text fz={10}>Wajib diisi</Text>
-              </Group> */}
 
               <Box>
                 <Text fz={15}>NIK</Text>
