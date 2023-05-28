@@ -46,7 +46,7 @@ import {
   _dataStruktur,
   _loadDataStruktur_ByIdStatus,
   _loadData_ByStatus_BySeach,
-  _new_loadData_ByStatusSeacrh,
+  _editLoadStruktur_ByStatusSeacrh,
   // _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
@@ -64,7 +64,7 @@ const TableStruktutPartaiV2 = () => {
   // const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [search, setSearch] = useState('')
-  const [dataTable, setDataTable] = useAtom(_new_loadData_ByStatusSeacrh)
+  const [dataTable, setDataTable] = useAtom(_editLoadStruktur_ByStatusSeacrh)
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur)

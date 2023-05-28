@@ -2,7 +2,7 @@ import {
   _dataSeach,
   _dataTable_ByStatusSearch,
   _loadData_ByStatus_BySeach,
-  _new_loadData_ByStatusSeacrh,
+  _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {

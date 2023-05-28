@@ -19,8 +19,8 @@ import {
   _listChangeData,
   _loadDataStruktur_ByIdStatus,
   _loadData_ByStatus_BySeach,
-  _loadEditStuktur_ById,
-  _new_loadData_ByStatusSeacrh,
+  _loadEditSumberDayaPartai_ById,
+  _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
@@ -61,7 +61,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [dataTable, setDataTable] = useAtom(_dataTable_ByStatusSearch);
   const [search, setSearch] = useState("")
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
-  const [targetEdit, setTargetEdit] = useAtom(_new_loadData_ByStatusSeacrh);
+  const [targetEdit, setTargetEdit] = useAtom(_editLoadStruktur_ByStatusSeacrh);
   const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus);
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
     _selectTingkatPengurus
@@ -103,7 +103,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   );
 
   useShallowEffect(() => {
-    _loadEditStuktur_ById(targetStruktur, setTargetEdit);
+    _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
     _new_loadTingkatPengurus(setTingkatPengurus, setSelectTingkatPengurus);
     _new_loadJabatanDewanPembina(setListJabatan_DPembina, setSelectDPembina);
     _new_loadJabatanDewanPimpinanPusat(
@@ -185,7 +185,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   return (
     <>
-      {/* {JSON.stringify(tingkatPengurus)} */}
+      {/* {JSON.stringify(targetEdit)} */}
       {/* {JSON.stringify(listJabatan_PRanting)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -217,7 +217,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
           </Box>
         </Box>
         <Box>
-          {/* <TextInput
+          <TextInput
             label="Name"
             value={targetEdit.User.DataDiri.name}
             onChange={(val) => {
@@ -225,7 +225,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
               data.User.DataDiri.name = val.target.value;
               setChangeData(data);
             }}
-          /> */}
+          />
           <Select
             maxDropdownHeight={150}
             disabled

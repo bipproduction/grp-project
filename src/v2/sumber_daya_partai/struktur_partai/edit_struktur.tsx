@@ -1,6 +1,6 @@
 import {
   _listChangeData,
-  _loadEditStuktur_ById,
+  _loadEditSumberDayaPartai_ById,
   _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { useShallowEffect } from "@mantine/hooks";
@@ -111,7 +111,7 @@ export const EditStrukturV2 = (thisClosed: any) => {
       setSelectDesa
     );
     _new_loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
-    _loadEditStuktur_ById(targetStruktur, setTargetEdit);
+    _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
     _new_loadTingkatPengurus(setTingkatPengurus, setSelectTingkatPengurus);
   }, []);
 

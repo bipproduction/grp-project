@@ -14,7 +14,7 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -26,13 +26,27 @@ import {
 } from "react-icons/ai";
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
-
 import dataTable from "../data_table.json";
 import EditSayapPartaiV2 from "./edit_sayap_partai";
+import { useAtom } from "jotai";
+import {
+  _dataSayapTable_ByStatusSearch,
+  _dataTable_ByStatusSearch,
+  _loadData_ByStatus_BySeach,
+  _editLoadStruktur_ByStatusSeacrh,
+} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { SayapEditV2 } from "./sayap_edit";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
+  const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
+  const [search, setSearch] = useState("");
+  const [valueId, setValueId] = useState('')
+
+  useShallowEffect(() => {
+    _loadData_ByStatus_BySeach(2, search, setDataTable);
+  }, []);
 
   const tbHead = (
     <tr>
@@ -42,7 +56,7 @@ const TableSayapPartaiV2 = () => {
       <th>Nama Sayap</th>
       <th>Tingkat Pengurus</th>
       <th>Jabatan</th>
-      <th>Email</th>
+      {/* <th>Email</th>
       <th>Tempat Lahir</th>
       <th>Tanggal Lahir</th>
       <th>Jenis Kelamin</th>
@@ -58,36 +72,21 @@ const TableSayapPartaiV2 = () => {
       <th>Instagram</th>
       <th>Facebook</th>
       <th>TikTok</th>
-      <th>Twitter</th>
-      <th><Center>Aksi</Center></th>
+      <th>Twitter</th> */}
+      <th>
+        <Center>Aksi</Center>
+      </th>
     </tr>
   );
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
       <td>{i + 1}</td>
-      <td>{e.name}</td>
-      <td>{e.nik}</td>
-      <td>{e.sayap_partai}</td>
-      <td>{e.tingkat_pengurus}</td>
-      <td>{e.jabatan}</td>
-      <td>{e.email}</td>
-      <td>{e.tmpt_lahir}</td>
-      <td>{e.tgl_lahir}</td>
-      <td>{e.j_kelamin}</td>
-      <td>{e.nomor_tlpn}</td>
-      <td>{e.agama}</td>
-      <td>{e.pekerjaan}</td>
-      <td>{e.alamat}</td>
-      <td>{e.provinsi}</td>
-      <td>{e.kabupaten}</td>
-      <td>{e.kecamatan}</td>
-      <td>{e.desa}</td>
-      <td>{e.rt_rw}</td>
-      <td>{e.instagram}</td>
-      <td>{e.facebook}</td>
-      <td>{e.tiktok}</td>
-      <td>{e.twitter}</td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.MasterSayapPartai?.name}</td>
+      <td>{e.MasterTingkatPengurus.name}</td>
+      <td>ok</td>
 
       <td>
         <Group position="center">
@@ -97,8 +96,8 @@ const TableSayapPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
-               
-                open()
+              setValueId(e.id)
+              open();
             }}
           >
             Edit
@@ -113,17 +112,20 @@ const TableSayapPartaiV2 = () => {
 
   return (
     <>
+      {/* {JSON.stringify(dataTable)} */}
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
+        size="lg"
+        centered
         // fullScreen
         overlayProps={{
           // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
-        <EditSayapPartaiV2 thisClosed={close} />
+        {/* <EditSayapPartaiV2 thisClosed={close} /> */}
+        <SayapEditV2 thisClosed={close} setId={valueId}/>
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -191,7 +193,7 @@ const TableSayapPartaiV2 = () => {
           </Grid>
         </Box>
         <Box>
-          <ScrollArea py={20} >
+          <ScrollArea py={20}>
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
@@ -206,4 +208,4 @@ const TableSayapPartaiV2 = () => {
   );
 };
 
-export default TableSayapPartaiV2
+export default TableSayapPartaiV2;
