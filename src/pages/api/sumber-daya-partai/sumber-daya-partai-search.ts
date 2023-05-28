@@ -21,6 +21,7 @@ const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse)
             waAdmin: true,
             User: {
                 select: {
+                    id: true,
                     email: true,
                     DataDiri: {
                         select: {
@@ -33,36 +34,43 @@ const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse)
                             rtRw: true,
                             MasterJenisKelamin: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterAgama: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterPekerjaan: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterProvince: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterKabKot: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterKecamatan: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             },
                             MasterDesa: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             }
@@ -73,9 +81,11 @@ const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse)
                             active: true
                         },
                         select: {
+                            id: true,
                             name: true,
                             MasterMediaSocial: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             }
@@ -85,84 +95,101 @@ const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse)
             },
             MasterTingkatPengurus: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatan: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanDewanPembina: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanDewanPimpinanPusat: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanDewanPimpinanDaerah: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanDewanPimpinanCabang: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanPimpinanAnakCabang: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanPimpinanRanting: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterJabatanPerwakilanPartaiDiLuarNegeri: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterSayapPartai: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterKaderPartai: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterProvince: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterKabKot: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterKecamatan: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterDesa: {
                 select: {
+                    id: true,
                     name: true
                 }
             },
             MasterNegara: {
                 select: {
+                    id: true,
                     name: true
                 }
-            }
+            },
+            
         }
     })
     return res.status(200).json(data)

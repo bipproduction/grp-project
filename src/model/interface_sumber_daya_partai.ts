@@ -30,6 +30,7 @@ export interface User {
 }
 
 export interface DataDiri {
+  id: string
   name: string
   nik: string
   tempatLahir: string
@@ -59,27 +60,33 @@ export interface MasterPekerjaan {
 }
 
 export interface MasterProvince {
+  id: number,
   name: string
 }
 
 export interface MasterKabKot {
+  id: number,
   name: string
 }
 
 export interface MasterKecamatan {
+  id: number,
   name: string
 }
 
 export interface MasterDesa {
+  id: number,
   name: string
 }
 
 export interface UserMediaSocial {
+  id: number,
   name: string
   MasterMediaSocial: MasterMediaSocial
 }
 
 export interface MasterMediaSocial {
+  id: number,
   name: string
 }
 

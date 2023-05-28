@@ -45,7 +45,9 @@ import { StrukturEditV2 } from "./stuktur_edit";
 import {
   _dataStruktur,
   _loadDataStruktur_ByIdStatus,
-  _new_loadEditByModel,
+  _loadData_ByStatus_BySeach,
+  _new_loadData_ByStatusSeacrh,
+  // _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
 export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
@@ -59,11 +61,14 @@ const TableStruktutPartaiV2 = () => {
   // const [open, setOpen] = useAtom(_val_muncul);
   const [opened, setOpen] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
-  const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
+  // const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
+  const [search, setSearch] = useState('')
+  const [dataTable, setDataTable] = useAtom(_new_loadData_ByStatusSeacrh)
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur)
+    _loadData_ByStatus_BySeach(1, setSearch, setDataTable)
   }, []);
 
   const tbHead = (
@@ -145,7 +150,7 @@ const TableStruktutPartaiV2 = () => {
                       w={100}
                       onClick={(val) => {
                         setOpen.open();
-                        setTargetStruktur(e.id as any);
+                        // setTargetStruktur(e.id as any);
                         // console.log(e.id)
                       }}
                     >
