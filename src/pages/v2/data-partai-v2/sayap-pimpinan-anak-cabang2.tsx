@@ -30,7 +30,7 @@ import { _loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/l
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -49,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 
 function SayapPimpinanAnakCabang2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
@@ -133,24 +134,24 @@ function SayapPimpinanAnakCabang2() {
   }, []);
 
   const PimpinanAnakCabang = () => {
-    // console.log(formSayapDewanPimpinanAnakCabang.values.data)
-    if (
-      Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
-    ) {
-      return toast("Lengkapi Data Diri");
-    }
-    fetch(api.apiSumberDayaPartaiPost, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
-    }).then((v) => {
-      if (v.status === 201) {
-        toast("Sukses");
-        router.push("/v2/home");
-      }
-    });
+    console.log(formSayapDewanPimpinanAnakCabang.values.data)
+    // if (
+    //   Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
+    // ) {
+    //   return toast("Lengkapi Data Diri");
+    // }
+    // fetch(api.apiSumberDayaPartaiPost, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
+    // }).then((v) => {
+    //   if (v.status === 201) {
+    //     toast("Sukses");
+    //     router.push("/v2/home");
+    //   }
+    // });
   };
 
   const [value, setValue] = useState("");
@@ -163,8 +164,8 @@ function SayapPimpinanAnakCabang2() {
         masterKecamatanId: "",
         masterJabatanPimpinanAnakCabangId: "",
         masterSayapPartaiId: "",
-        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
-        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+        masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
+        masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
       },
     },
   });

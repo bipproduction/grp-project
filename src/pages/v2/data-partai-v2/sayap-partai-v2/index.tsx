@@ -18,6 +18,7 @@ import DewanPimpinanPusat from "./dewan-pimpinan-pusat";
 import DewanPimpinanDaerah from "./dewan-pimpinan-daerah";
 import PimpinanCabang from "./dewan-pimpinan-cabang";
 import PimpinanAnakCabang from "./pimpinan-anak-cabang";
+import { ambil_data } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
