@@ -162,7 +162,7 @@ const TableStruktutPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
-        <Grid>
+        {/* <Grid>
           <Grid.Col md={4} lg={4}>
           <TextInput
           mt={20}
@@ -172,7 +172,7 @@ const TableStruktutPartaiV2 = () => {
           onChange={(val) => onSearch(val.currentTarget.value) }
           />
           </Grid.Col>
-        </Grid>
+        </Grid> */}
         <Group>
           <Box sx={{ overflow: "scroll" }} py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
