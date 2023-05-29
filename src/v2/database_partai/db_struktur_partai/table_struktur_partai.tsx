@@ -40,24 +40,27 @@ import { useAtom } from "jotai";
 import {
   _dataStruktur,
   _loadDataStruktur_ByIdStatus,
+  _loadData_ByStatus_BySeach,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { data } from "jquery";
 import _, { keyBy } from "lodash";
 import { useForm } from "@mantine/form";
 import { sUser } from "@/s_state/s_user";
 import { atomWithStorage } from "jotai/utils";
+import { _dataTable_ByStatusSearch_SuperAdmin, _loadData_ByStatus_BySeach_Super_Admin } from "@/load_data/super_admin/load_sumber_data_super_admin";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
 const TableStruktutPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
-
+  const [search, setSearch] = useState("")
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [valueAktif, setValueAktif] = useState<string>("");
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
   const theme = useMantineTheme();
   const [checked, setChecked] = useState(false);
+  const [dataTableSuper, setDatatableSuper] = useAtom(_dataTable_ByStatusSearch_SuperAdmin)
 
   const [status, setStatus] = useState<any[]>([]);
   const [selectStatus, setSelectStatus] = useState({
@@ -86,7 +89,8 @@ const TableStruktutPartaiV2 = () => {
         toast("Gagal");
       }
       //   return null
-    });
+    })
+
     // console.log(onUpdate)
   };
 
@@ -125,6 +129,11 @@ const TableStruktutPartaiV2 = () => {
     // loadDataStatus();
   });
 
+  function onSearch(text: string) {
+    _loadData_ByStatus_BySeach(1, text, setDataStruktur)
+  }
+
+
   const tbHead = (
     <tr>
       <th>No</th>
@@ -153,6 +162,17 @@ const TableStruktutPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
+        <Grid>
+          <Grid.Col md={4} lg={4}>
+          <TextInput
+          mt={20}
+          icon={<AiOutlineSearch size={20}/>}
+          placeholder="Search"
+          radius={"md"}
+          onChange={(val) => onSearch(val.currentTarget.value) }
+          />
+          </Grid.Col>
+        </Grid>
         <Group>
           <Box sx={{ overflow: "scroll" }} py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">

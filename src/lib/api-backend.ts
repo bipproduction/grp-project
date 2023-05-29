@@ -11,6 +11,7 @@ export const api = {
     "apiDataDiriGetOne": "/api/form-data-diri/data-diri-get-one",
     "apiDataDiriPost": "/api/form-data-diri/data-diri-post",
     "apiDataDiriUpdate": "/api/form-data-diri/data-diri-update",
+    "apiDataDiriGetByNIK":"/api/form-data-diri/data-diri-get-by-nik",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN PRABOWO

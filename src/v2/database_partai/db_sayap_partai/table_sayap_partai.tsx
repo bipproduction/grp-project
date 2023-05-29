@@ -106,7 +106,7 @@ const TableSayapPartaiV2 = () => {
     <tr>
       <th>No</th>
       <th>Nama</th>
-      <th>Tingkat Pengurus</th>
+      <th>Tingkat Sayap</th>
       <th>Provinsi</th>
       <th>Kabupaten</th>
       <th>Kecamatan</th>
@@ -140,7 +140,7 @@ const TableSayapPartaiV2 = () => {
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{e.User.DataDiri.name}</td>
-                    <td>{e.MasterTingkatPengurus.name}</td>
+                    <td>{e.MasterSayapPartai?.name}</td>
                     <td>{e.User.DataDiri.MasterProvince.name}</td>
                     <td>{e.User.DataDiri.MasterKabKot.name}</td>
                     <td>{e.User.DataDiri.MasterKecamatan.name}</td>

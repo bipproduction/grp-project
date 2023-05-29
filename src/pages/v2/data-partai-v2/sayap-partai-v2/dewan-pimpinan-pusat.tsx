@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -40,6 +40,7 @@ const useStyles = createStyles((theme) => ({
 }));
 function DewanPimpinanPusat() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [value, setValue] = useState<any>();
@@ -135,9 +136,9 @@ function DewanPimpinanPusat() {
         pr={20}
         pl={20}
         onClick={() => {
-          setAmbilData({
-            ...ambilData,
-            masterTingkatPengurusId: "1",
+          setAmbilDataSayap({
+            ...ambilDataSayap,
+            masterTingkatSayapId: "1",
           });
           router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-pusat2");
         }}

@@ -22,11 +22,21 @@ import { DateInput } from "@mantine/dates";
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
+import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
+import toast from "react-simple-toasts";
+import _ from "lodash";
 
 export const FormTambahEksekutifProvinsiV2 = ({
   tutupModal,
   setNilai,
 }: any) => {
+  const [dataDiri, setDataDiri] = useState<ModelEksekutifDataDiri | undefined>(undefined);
+  const [inputNIK, setInputNIK] = useState("");
+  const [inputProvince, setInputProvince] = useState<any | null>(null);
+  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>(null);
+  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
+  const [inputPeriode, setInputPeriode] = useState("");
+  const [inputAlamatKantor, setInputAlamatKantor] = useState("");
 
   useShallowEffect(() => {
     _loadProvinsi();
@@ -34,6 +44,55 @@ export const FormTambahEksekutifProvinsiV2 = ({
     _loadJabatanEksekutifProvinisi();
     _loadStatusEksekutif();
   }, []);
+
+
+  async function onFind() {
+    const res = await fetch(api.apiDataDiriGetByNIK + `?nik=${inputNIK}`);
+    const datanya = await res.json();
+
+    if (datanya && !_.isEmpty(datanya)) {
+      return setDataDiri(datanya);
+    }
+
+    setDataDiri(undefined);
+    toast("Data tidak ditemukan");
+  }
+
+
+  const body = {
+    userId: dataDiri?.User.id,
+    masterTingkatEksekutifId: 2,
+    masterProvinceId: inputProvince,
+    masterJabatanEksekutifProvinsiId: inputJabatanProvince,
+    masterStatusEksekutifId: inputStatusEksekutif,
+    periode: inputPeriode,
+    alamatKantor: inputAlamatKantor,
+  }
+
+  const onAdd = () => {
+    console.log(body);
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+
+    // disini pengaplikasian api
+    fetch(api.apiEksekutifPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(async (res) => {
+      const data = await res.json();
+      if (res.status === 201) {
+        buttonSimpan();
+        tutupModal();
+      } else {
+        toast(data.message);
+      }
+    });
+
+  }
 
   return (
     <>
@@ -48,6 +107,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
               value: e.id,
               label: e.name,
             }))}
+            onChange={(val) => { setInputProvince(val) }}
           />
           <Select
             withAsterisk
@@ -57,62 +117,71 @@ export const FormTambahEksekutifProvinsiV2 = ({
               value: e.id,
               label: e.name,
             }))}
+            onChange={(val) => { setInputJabatanProvince(val) }}
           />
-          <TextInput placeholder="Periode" label="Periode" withAsterisk />
-          <TextInput placeholder="Nama" label="Nama" withAsterisk />
-          <TextInput placeholder="NIK" label="NIK" withAsterisk />
-          <TextInput placeholder="Email" label="*Email*" withAsterisk />
-          <TextInput
-            placeholder="Alamat Tinggal / Domisili"
-            label="*Alamat Tinggal / Domisili*"
-            withAsterisk
-          />
-          <TextInput
-            placeholder="Alamat Kantor"
-            label="Alamat Kantor"
-            withAsterisk
-          />
-          <TextInput
-            placeholder="No Handphone"
-            label="No Handphone"
-            withAsterisk
-          />
-          <TextInput placeholder="Facebook" label="Facebook" />
-          <TextInput placeholder="Instagram" label="Instagram" />
-          <TextInput placeholder="TikTok" label="TikTok" />
-          <TextInput placeholder="Twitter" label="Twitter" />
-          <Select
-            data={sStatusEksekutif.value.map((e) => ({
-              value: e.id,
-              label: e.name,
-            }))}
-            label={"Pilih Status"}
-            placeholder={"Pilih Status"}
-            withAsterisk
-          />
-          <MultiSelect
-            data={sListPartaiPengusung.value.map((e) => ({
-              value: e.id,
-              label: e.name,
-            }))}
-            label={"Pilih Partai"}
-            placeholder={"Pilih Partai"}
-            withAsterisk
-          />
-          <Box pt={20}>
-            <Button
-              w={100}
-              color="orange.9"
-              bg={COLOR.orange}
-              radius={"xl"}
-              onClick={() => {
-                buttonSimpan();
-                tutupModal();
-              }}
-            >
-              Simpan
-            </Button>
-          </Box>
+          <TextInput placeholder="Periode" label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { setInputNIK(val.target.value) }} />
+          <Button onClick={onFind}>Cek</Button>
+          {dataDiri && (
+            <>
+              <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataDiri.name} />
+              <TextInput placeholder="Email" label="*Email*" withAsterisk value={dataDiri.User.email} />
+              <TextInput
+                placeholder="Alamat Tinggal / Domisili"
+                label="*Alamat Tinggal / Domisili*"
+                withAsterisk
+                value={dataDiri.alamat}
+              />
+              <TextInput
+                placeholder="Alamat Kantor"
+                label="Alamat Kantor"
+                withAsterisk
+                onChange={(val) => { setInputAlamatKantor(val.target.value) }}
+              />
+              <TextInput
+                placeholder="No Handphone"
+                label="No Handphone"
+                withAsterisk
+                value={dataDiri.phoneNumber}
+              />
+              {/* <TextInput placeholder="Facebook" label="Facebook" />
+              <TextInput placeholder="Instagram" label="Instagram" />
+              <TextInput placeholder="TikTok" label="TikTok" />
+              <TextInput placeholder="Twitter" label="Twitter" /> */}
+              <Select
+                data={sStatusEksekutif.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                label={"Pilih Status"}
+                placeholder={"Pilih Status"}
+                withAsterisk
+                onChange={(val) => { setInputStatusEksekutif(val) }}
+              />
+              {/* <MultiSelect
+                data={sListPartaiPengusung.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                label={"Pilih Partai"}
+                placeholder={"Pilih Partai"}
+                withAsterisk
+              /> */}
+              <Box pt={20}>
+                <Button
+                  w={100}
+                  color="orange.9"
+                  bg={COLOR.orange}
+                  radius={"xl"}
+                  onClick={() => {
+                    onAdd();
+                  }}
+                >
+                  Simpan
+                </Button>
+              </Box>
+            </>
+          )}
         </Flex>
       </Box>
     </>

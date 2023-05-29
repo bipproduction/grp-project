@@ -48,14 +48,32 @@ const DataProfileV2 = () => {
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-      .then((val) => val.json())
-      .then(setListData);
+      // .then((val) => val.json())
+      // .then(setListData);
+      .then(
+        async (val) => {
+          if (val.status == 200) {
+            const data = await val.json();
+            setListData(data);
+            return;
+          }
+        }
+      );
   }, []);
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-      .then((val) => val.json())
-      .then(setListData2);
+      // .then((val) => val.json())
+      // .then(setListData2);
+      .then(
+        async (val) => {
+          if (val.status == 200) {
+            const data = await val.json();
+            setListData2(data);
+            return;
+          }
+        }
+      );
   }, []);
 
   return (

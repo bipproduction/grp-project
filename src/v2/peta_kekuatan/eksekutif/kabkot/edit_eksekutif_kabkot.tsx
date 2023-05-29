@@ -34,11 +34,33 @@ import {
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
+import { ModelEksekutif } from "@/model/model_peta_kekuatan";
+import toast from "react-simple-toasts";
 
-export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
+export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
+  console.log(data);
   const [value, setValue] = useState<any>();
+  const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  const [inputProvince, setInputProvince] = useState<any | null>(null);
+  const [inputKabKot, setInputKabKot] = useState<any | null>(null);
+  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>(null);
+  const [inputJabatanKabKot, setInputJabatanKabKot] = useState<any | null>(null);
+  const [inputJabatanKabupaten, setInputJabatanKabupaten] = useState<any | null>(null);
+  const [inputJabatanKota, setInputJabatanKota] = useState<any | null>(null);
+  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
+  const [inputPeriode, setInputPeriode] = useState("");
+  const [inputAlamatKantor, setInputAlamatKantor] = useState("");
+
+  const loadData = () => {
+    fetch(api.apiEksekutifGetOne + `?id=${data}`)
+      .then((v) => v.json())
+      .then((v) => {
+        setDataEdit(v);
+      });
+  }
 
   useShallowEffect(() => {
+    loadData();
     _loadProvinsi();
     _loadJabatanEksekutifKabKot();
     _loadJabatanEksekutifKota();
@@ -46,6 +68,44 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
     _loadStatusEksekutif();
     _loadListPartai();
   }, []);
+
+  const body = {
+    id: dataEdit?.id,
+    userId: dataEdit?.userId,
+    masterTingkatEksekutifId: 3,
+    masterProvinceId: inputProvince ? inputProvince : dataEdit?.MasterProvince?.id,
+    masterKabKotId: inputKabKot ? inputKabKot : dataEdit?.MasterKabKot?.id,
+    masterJabatanEksekutifKabKotId: inputJabatanKabKot ? inputJabatanKabKot : dataEdit?.masterJabatanEksekutifKabKotId,
+    masterJabatanEksekutifKabupatenId: inputJabatanKabupaten ? inputJabatanKabupaten : dataEdit?.MasterJabatanEksekutifKabupaten?.id,
+    masterJabatanEksekutifKotaId: inputJabatanKota ? inputJabatanKota : dataEdit?.MasterJabatanEksekutifKota?.id,
+    masterStatusEksekutifId: inputStatusEksekutif ? inputStatusEksekutif : dataEdit?.MasterStatusEksekutif?.id,
+    periode: inputPeriode ? inputPeriode : dataEdit?.periode,
+    alamatKantor: inputAlamatKantor ? inputAlamatKantor : dataEdit?.alamatKantor,
+  }
+
+  const onEdit = () => {
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+    // disini pengaplikasian api
+    fetch(api.apiEksekutifUpdate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(async (res) => {
+      const data = await res.json();
+      if (res.status === 201) {
+        buttonSimpan();
+        thisClosed();
+      } else {
+        toast(data.message);
+      }
+    });
+  }
+
+  if (dataEdit === undefined) return <></>
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
@@ -64,23 +124,27 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
             {/* <TextInput placeholder="Nama Kementrian Lembaga" label="**" /> */}
             <Select
               label={"Pilih Jabatan Bupati / Walikota"}
-              placeholder="Bupati / Walikota"
+              placeholder={dataEdit?.MasterJabatanEksekutifKabKot?.name}
               data={sJabatanEksekutifKabKot.value.map((e) => ({
-                value: e.name,
+                value: e.id,
                 label: e.name,
               }))}
               onChange={(val) => {
-                //   console.log(val);
-                if (val == "Walikota") {
+                setInputJabatanKabKot(val)
+                if (val == "2") {
                   setValue(
                     <Select
                       data={sJabatanEksekutifKota.value.map((e) => ({
                         value: e.id,
                         label: e.name,
                       }))}
-                      placeholder={"Pilih Jabatan Kota"}
+                      placeholder={dataEdit?.MasterJabatanEksekutifKota?.name}
                       label="Pilih Jabatan Kota"
                       withAsterisk
+                      onChange={(val) => {
+                        setInputJabatanKota(val);
+                        setInputJabatanKabupaten(null);
+                      }}
                     />
                   );
                 } else {
@@ -90,9 +154,13 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
                         value: e.id,
                         label: e.name,
                       }))}
-                      placeholder={"Pilih Jabatan Kabupaten"}
+                      placeholder={dataEdit?.MasterJabatanEksekutifKabupaten?.name}
                       label="Pilih Jabatan Kabupaten"
                       withAsterisk
+                      onChange={() => {
+                        setInputJabatanKota(null);
+                        setInputJabatanKabupaten(val);
+                      }}
                     />
                   );
                 }
@@ -104,40 +172,49 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
               withAsterisk
               searchable
               label={"Pilih Provinsi"}
-              placeholder={"Pilih Provinsi"}
+              placeholder={dataEdit?.MasterProvince?.name}
               data={sProvinsi.value.map((e) => ({
                 value: e.id,
                 label: e.name,
               }))}
-              onChange={_loadKabkot}
+              onChange={(val) => {
+                _loadKabkot
+                setInputProvince(val);
+              }}
             />
 
             <Select
               withAsterisk
               searchable
               label={"Pilih Kabupaten"}
-              placeholder={"Pilih Kabupaten"}
+              placeholder={dataEdit?.MasterKabKot?.name}
               data={sKabkot.value.map((e) => ({
                 value: e.id,
                 label: e.name,
               }))}
+              onChange={(val) => {
+                setInputKabKot(val);
+              }}
             />
 
-            <TextInput placeholder="Periode" label="Periode" withAsterisk />
-            <TextInput placeholder="Nama" label="Nama" withAsterisk />
+            <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
+            {/* <TextInput placeholder="Nama" label="Nama" withAsterisk />
             <TextInput placeholder="NIK" label="NIK" withAsterisk />
             <TextInput placeholder="Email" label="Email" withAsterisk />
             <TextInput
               placeholder="Alamat Tinggal / Domisili"
               label="Alamat Tinggal / Domisili"
               withAsterisk
-            />
+            /> */}
             <TextInput
-              placeholder="Alamat Kantor"
+              placeholder={dataEdit?.alamatKantor}
               label="*Alamat Kantor"
               withAsterisk
+              onChange={(val) => {
+                setInputAlamatKantor(val.target.value)
+              }}
             />
-            <TextInput
+            {/* <TextInput
               placeholder="No Handphone"
               label="No Handphone"
               withAsterisk
@@ -145,7 +222,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
             <TextInput placeholder="Facebook" label="Facebook" />
             <TextInput placeholder="Instagram" label="Instagram" />
             <TextInput placeholder="TikTok" label="TikTok" />
-            <TextInput placeholder="Twitter" label="Twitter" />
+            <TextInput placeholder="Twitter" label="Twitter" /> */}
 
             <Select
               data={sStatusEksekutif.value.map((e) => ({
@@ -153,10 +230,13 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
                 label: e.name,
               }))}
               label={"Pilih Status"}
-              placeholder={"Pilih Status"}
+              placeholder={dataEdit?.MasterStatusEksekutif?.name}
               withAsterisk
+              onChange={(val) => {
+                setInputStatusEksekutif(val)
+              }}
             />
-            <MultiSelect
+            {/* <MultiSelect
               withAsterisk
               data={sListPartaiPengusung.value.map((e) => ({
                 value: e.id,
@@ -164,7 +244,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
               }))}
               label={"Pilih Partai Pengusung"}
               placeholder={"Pilih Partai Pengusung"}
-            />
+            /> */}
             <Box pt={20}>
               <Button
                 w={100}
@@ -172,8 +252,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed }: any) => {
                 bg={COLOR.orange}
                 radius={"xl"}
                 onClick={() => {
-                  buttonSimpan();
-                  thisClosed();
+                  onEdit();
                 }}
               >
                 Simpan

@@ -27,7 +27,7 @@ import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,6 +48,7 @@ function SayapDewanPimpinanCabang2() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
@@ -161,8 +162,8 @@ function SayapDewanPimpinanCabang2() {
         masterJabatanDewanPimpinanCabangId: "",
         alamatKantor: "",
         waAdmin: "",
-        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
-        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+        masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
+        masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
         // medsos: ""
       }
     }
