@@ -27,7 +27,12 @@ import COLOR from "../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
 import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
 import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
-import { _loadTingkatPengurus, _new_loadTingkatPengurus, _selectTingkatPengurus, _tingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
+import {
+  _loadTingkatPengurus,
+  _new_loadTingkatPengurus,
+  _selectTingkatPengurus,
+  _tingkatPengurus,
+} from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import { sTingkatPengurus } from "@/s_state/sumber_daya_partai/s_tingkat_pengurus";
 import {
   _loadJabatanDewanPembina,
@@ -113,8 +118,8 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     useAtom(_selectJenisKelamin);
   const [targetStruktur, setTargetStruktur] = useAtom(_editDataStruktur);
   const [listData, setListData] = useAtom(_listData);
-  const [targetEdit, setTargetEdit] = useAtom(_editDataStruktur)
- 
+  const [targetEdit, setTargetEdit] = useAtom(_editDataStruktur);
+
   useShallowEffect(() => {
     _loadStatusKeanggotaan();
     _loadTingkatPengurus();
@@ -139,14 +144,12 @@ const EditStrukturPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
     );
     _new_loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
     _loadDataEdit(targetStruktur);
-   
   }, []);
-
 
   const _loadDataEdit = async (id: any) => {
     await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
       .then((e) => e.json())
-      .then((val) => (setTargetEdit(val)));
+      .then((val) => setTargetEdit(val));
   };
 
   const formEditStrukturPartai = useForm({
