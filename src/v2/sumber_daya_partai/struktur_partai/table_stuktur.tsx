@@ -36,7 +36,9 @@ export const TableStrukturV2 = () => {
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
 
-  useShallowEffect(() => {}, []);
+  useShallowEffect(() => {
+    onSearch("")
+  }, []);
 
   const thHead = (
     <tr>
