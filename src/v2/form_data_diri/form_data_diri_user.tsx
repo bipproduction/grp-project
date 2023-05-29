@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
 import { useShallowEffect } from "@mantine/hooks";
-import _, { uniqueId, values } from "lodash";
+import _, { isEmpty, isNumber, min, uniqueId, values } from "lodash";
 import { data } from "jquery";
 import { api } from "@/lib/api-backend";
 import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
@@ -269,6 +269,18 @@ const FormDataDiriUser = () => {
         masterDesaId: "",
       },
       validate: {
+        nik: (value: any ) => {
+          if( value.minLength == 16) {
+            return false
+          }
+          if( value.minLength !== 16) {
+            return false
+          }
+          if(!value.match(/^[0-9]{16}$/)) {
+            return false
+          }
+          return toast("Lengkapi Data Diri")
+        },
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
       },
@@ -336,9 +348,12 @@ const FormDataDiriUser = () => {
                                 placeholder="NIK"
                                 withAsterisk
                                 mt={10}
+                                minLength={16}
+                                maxLength={16}
                                 label="NIK"
                                 radius={"md"}
                                 type="number"
+                                // pattern="[0-16]"
                                 {...formDataDiri.getInputProps("data.nik")}
                               />
                               <TextInput
