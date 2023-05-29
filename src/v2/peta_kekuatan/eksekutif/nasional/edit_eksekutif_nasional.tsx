@@ -15,12 +15,63 @@ import {
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
+import { ModelEksekutif } from "@/model/model_peta_kekuatan";
+import { api } from "@/lib/api-backend";
+import _ from "lodash";
+import toast from "react-simple-toasts";
 
-export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
+export const EditEksekutifNasionalV2 = ({ thisClosed, data }: any) => {
+  const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  const [inputNamaLembaga, setInputNamaLembaga] = useState("");
+  const [inputPeriode, setInputPeriode] = useState("");
+  const [inputAlamatKantor, setInputAlamatKantor] = useState("");
+  const [inputJabatanNasional, setInputJabatanNasional] = useState("");
+
+  const loadData = () => {
+    fetch(api.apiEksekutifGetOne + `?id=${data}`)
+      .then((v) => v.json())
+      .then((v) => {
+        setDataEdit(v);
+      });
+  }
+
   useShallowEffect(() => {
-    _loadTingkatEksekutif();
+    loadData();
   }, []);
 
+  const body = {
+    id: dataEdit?.id,
+    userId: dataEdit?.userId,
+    masterTingkatEksekutifId: 1,
+    namaLembaga: inputNamaLembaga?inputNamaLembaga:dataEdit?.namaLembaga,
+    periode: inputPeriode?inputPeriode:dataEdit?.periode,
+    alamatKantor: inputAlamatKantor?inputAlamatKantor:dataEdit?.alamatKantor,
+    jabatanNasional: inputJabatanNasional?inputJabatanNasional:dataEdit?.jabatanNasional
+  }
+
+  const onEdit = () => {
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+    // disini pengaplikasian api
+    fetch(api.apiEksekutifUpdate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(async (res) => {
+      const data = await res.json();
+      if (res.status === 201) {
+        buttonSimpan();
+        thisClosed();
+      } else {
+        toast(data.message);
+      }
+    });
+  }
+
+  if (dataEdit === undefined) return <></>
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
@@ -47,29 +98,32 @@ export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
             withAsterisk
             /> */}
             <TextInput
-              placeholder="Nama Kementrian Lembaga"
+              placeholder={dataEdit?.namaLembaga}
               label="Nama Kementrian Lembaga"
               withAsterisk
+              onChange={(val) => { setInputNamaLembaga(val.target.value) }}
             />
-            <TextInput placeholder="Jabatan" label="Jabatan" withAsterisk />
-            <TextInput placeholder="Periode" label="Periode" withAsterisk />
-            <TextInput placeholder="Nama" label="Nama" withAsterisk />
-            <TextInput placeholder="NIK" label="NIK" withAsterisk />
-            <TextInput placeholder="Email" label="*Email*" withAsterisk />
+            <TextInput placeholder={dataEdit?.jabatanNasional} label="Jabatan" withAsterisk onChange={(val) => { setInputJabatanNasional(val.target.value) }} />
+            <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
+            {/* <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataEdit?.User.DataDiri.name} />
+              <TextInput placeholder="NIK" label="NIK" withAsterisk value={dataEdit?.User.DataDiri.nik} />
+              <TextInput placeholder="Email" label="*Email*" withAsterisk value={dataEdit?.User.email} />
+              <TextInput
+                placeholder="Alamat Tinggal / Domisili"
+                label="*Alamat Tinggal / Domisili*"
+                withAsterisk
+                value={dataEdit?.User.DataDiri.alamat}
+              /> */}
             <TextInput
-              placeholder="Alamat Tinggal / Domisili"
-              label="*Alamat Tinggal / Domisili*"
+              placeholder={dataEdit?.alamatKantor}
+              label="Alamat Kantor*"
               withAsterisk
+              onChange={(val) => { setInputAlamatKantor(val.target.value) }}
             />
-            <TextInput
-              placeholder="Alamat Kantor"
-              label="*Alamat Kantor*"
-              withAsterisk
-            />
-            <TextInput placeholder="Facebook" label="Facebook" />
+            {/* <TextInput placeholder="Facebook" label="Facebook" />
             <TextInput placeholder="Instagram" label="Instagram" />
             <TextInput placeholder="TikTok" label="TikTok" />
-            <TextInput placeholder="Twitter" label="Twitter" />
+            <TextInput placeholder="Twitter" label="Twitter" /> */}
             <Box pt={20}>
               <Button
                 w={100}
@@ -77,8 +131,7 @@ export const EditEksekutifNasionalV2 = ({ thisClosed }: any) => {
                 bg={COLOR.orange}
                 radius={"xl"}
                 onClick={() => {
-                  buttonSimpan();
-                  thisClosed();
+                  onEdit();
                 }}
               >
                 Simpan

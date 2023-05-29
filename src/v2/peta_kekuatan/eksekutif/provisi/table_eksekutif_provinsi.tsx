@@ -1,12 +1,39 @@
 import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
 import { EditEksekutifProvinsiV2 } from "./edit_eksekutif_provinsi";
+import { ModelEksekutif } from "@/model/model_peta_kekuatan";
+import { api } from "@/lib/api-backend";
+import toast from "react-simple-toasts";
 
 export const TableEksekutifProvinsiV2 = () => {
   const [opened, {open, close}] = useDisclosure(false)
+  const [listData, setListData] = useState<ModelEksekutif[]>([]);
+  const [dataId, setDataId] = useState<string>("");
+
+  const loadData = () => {
+    fetch(api.apiEksekutifGetAll+`?tingkat=2`)
+      .then((v) => v.json())
+      .then((v) => {
+        setListData(v);
+      });
+  }
+
+  const onDelete = (id: string) => {
+    fetch(api.apiEksekutifHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast("Success");
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadData();
+  }, [])
+
   const tbHead = (
     <tr>
       <th>No</th>
@@ -18,25 +45,25 @@ export const TableEksekutifProvinsiV2 = () => {
       <th>Alamat Tinggal/Domisili</th>
       <th>Alamat Kantor</th>
       <th>Email</th>
-      <th>Media Social</th>
+      {/* <th>Media Social</th> */}
       <th>
         <Group position="center">Aksi</Group>
       </th>
     </tr>
   );
 
-  const rows = myData.map((e, i) => (
+  const rows = listData.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
-      <td>{e.Nama}</td>
-      <td>{e.NIK}</td>
-      <td>{e.Provinsi}</td>
-      <td>{e.Jab_prov}</td>
-      <td>{e.Periode}</td>
-      <td>{e.Alamat_tinggal}</td>
-      <td>{e.Alamat_kantor}</td>
-      <td>{e.Email}</td>
-      <td>{e.Media_social}</td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.MasterProvince?.name}</td>
+      <td>{e.MasterJabatanEksekutifProvinsi?.name}</td>
+      <td>{e.periode}</td>
+      <td>{e.User.DataDiri.alamat}</td>
+      <td>{e.alamatKantor}</td>
+      <td>{e.User.email}</td>
+      {/* <td>{e.Media_social}</td> */}
       <td>
         <Group position="center">
           <Button
@@ -46,11 +73,12 @@ export const TableEksekutifProvinsiV2 = () => {
             w={100}
             onClick={() => {
               open();
+              setDataId(e.id);
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
             Hapus
           </Button>
         </Group>
@@ -64,7 +92,7 @@ export const TableEksekutifProvinsiV2 = () => {
     opened={opened}
     onClose={close}
     >
-      <EditEksekutifProvinsiV2 thisClosed={close}/>
+      <EditEksekutifProvinsiV2 thisClosed={close} data={dataId}/>
 
     </Modal>
       <Box pt={20}>
