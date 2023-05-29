@@ -135,23 +135,23 @@ function SayapPimpinanAnakCabang2() {
 
   const PimpinanAnakCabang = () => {
     console.log(formSayapDewanPimpinanAnakCabang.values.data)
-    // if (
-    //   Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
-    // ) {
-    //   return toast("Lengkapi Data Diri");
-    // }
-    // fetch(api.apiSumberDayaPartaiPost, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
-    // }).then((v) => {
-    //   if (v.status === 201) {
-    //     toast("Sukses");
-    //     router.push("/v2/home");
-    //   }
-    // });
+    if (
+      Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
+    ) {
+      return toast("Lengkapi Data Diri");
+    }
+    fetch(api.apiSumberDayaPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
+    }).then((v) => {
+      if (v.status === 201) {
+        toast("Sukses");
+        router.push("/v2/home");
+      }
+    });
   };
 
   const [value, setValue] = useState("");
