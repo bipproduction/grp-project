@@ -16,19 +16,41 @@ export const _listChangeData = atom<ModelSumberDayaPartai | null>(null);
 
 // Global state untuk _loadData_ByStatus_BySeach
 // Storage di bawah digunakan untuk menampung isi database untuk di tampilkan
-export const _dataTable_ByStatusSearch = atomWithStorage<ModelSumberDayaPartai[]>("_dataTable_ByStatusSearch>",[])
-export const _dataSayapTable_ByStatusSearch = atomWithStorage<ModelSumberDayaPartai []>("_dataSayapTable", [])
+export const _dataTable_ByStatusSearch = atomWithStorage<
+  ModelSumberDayaPartai[]
+>("_dataTable_ByStatusSearch>", []);
+export const _dataSayapTable_ByStatusSearch = atomWithStorage<
+  ModelSumberDayaPartai[]
+>("_dataSayapTable", []);
 // Storage di bawah digunakan untuk memanggil data ke edit page, Get One by Id
-export const _editLoadStruktur_ByStatusSeacrh = atomWithStorage<ModelSumberDayaPartai | null>(" _editLoadStruktur_ByStatusSeacrh",null)
-export const _editLoadSayap_ByStatusSeacrh = atomWithStorage<ModelSumberDayaPartai | null>("_editLoadSayap_ByStatusSeacrh", null)
-export const _dataSeach = atom<any>('')
+export const _editLoadStruktur_ByStatusSeacrh =
+  atomWithStorage<ModelSumberDayaPartai | null>(
+    " _editLoadStruktur_ByStatusSeacrh",
+    null
+  );
+export const _editLoadSayap_ByStatusSeacrh =
+  atomWithStorage<ModelSumberDayaPartai | null>(
+    "_editLoadSayap_ByStatusSeacrh",
+    null
+  );
+export const _dataSeach = atom<any>("");
 
 // Load Data by Status Keanggotaan dan Search by name
-export const _loadData_ByStatus_BySeach = async (status: any, search: any, setDataTable: any) => {
-  await fetch(api.apiSumberDayaPartaiSearch + `?status=${status}&?search=${search}`)
-  .then((res) => res.json())
-  .then((val) => setDataTable(val))
-}
+export const _loadData_ByStatus_BySeach = async (
+  status: any,
+  search: any,
+  setDataTable: any
+) => {
+  await fetch(
+    api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}`
+  )
+    .then((res) => res.json())
+    .then((val) => {
+      // console.table(val);
+      // console.log(search)
+      setDataTable(val);
+    });
+};
 
 // Load Data by Status Kenanggotaan
 export async function _loadDataStruktur_ByIdStatus(
@@ -40,7 +62,10 @@ export async function _loadDataStruktur_ByIdStatus(
     .then((val) => setDataStruktur(val));
 }
 
-export const _loadEditSumberDayaPartai_ById = async (id: any, setTargetEdit: any) => {
+export const _loadEditSumberDayaPartai_ById = async (
+  id: any,
+  setTargetEdit: any
+) => {
   await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
     .then((e) => e.json())
     .then((val) => setTargetEdit(val));

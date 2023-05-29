@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse) => {
     const { status, search } = req.query;
+    // console.log(search)
     const data = await client.sumberDayaPartai.findMany({
         where: {
             active: true,
