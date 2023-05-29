@@ -1,7 +1,14 @@
 import { api } from "@/lib/api-backend";
-import { _dataDiri, _loadDataDiri_ByIdStatus, _loadEditDataDiri_ById } from "@/load_data/data_diri_partai/load_edit_data_partai";
+import {
+  _dataDiri,
+  _loadDataDiri_ByIdStatus,
+  _loadEditDataDiri_ById,
+} from "@/load_data/data_diri_partai/load_edit_data_partai";
 import { _editTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
-import { DataDiri, ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import {
+  DataDiri,
+  ModelSumberDayaPartai,
+} from "@/model/interface_sumber_daya_partai";
 import { _editDataStruktur } from "@/v2/sumber_daya_partai/struktur_partai/table_struktur_partai";
 import { Center, Table } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
@@ -47,33 +54,34 @@ function TableEdit() {
 
   useShallowEffect(() => {
     // _loadEditStuktur_ById(targetStruktur)
-    _loaddataDiriSatu()
-  },[])
+    _loaddataDiriSatu();
+  }, []);
 
-//  const _loadEditStuktur_ById = async (id: any, ) => {
-//     await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
-//     .then(async (val) => {
-//       if (val.status == 200) {
-//         const data = await val.json()
-//         setTargetStruktur(data)
-//         return
-//       }
-//     })
-//       // .then((e) => e.json())
-//       // .then((val) => setTargetEdit(val));
-//   };
+  //  const _loadEditStuktur_ById = async (id: any, ) => {
+  //     await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
+  //     .then(async (val) => {
+  //       if (val.status == 200) {
+  //         const data = await val.json()
+  //         setTargetStruktur(data)
+  //         return
+  //       }
+  //     })
+  //       // .then((e) => e.json())
+  //       // .then((val) => setTargetEdit(val));
+  //   };
 
   const _loaddataDiriSatu = async () => {
     await fetch(api.apiSumberDayaPartaiGetAll + `?status=1`)
-    .then(async (val) => {
-            if (val.status == 200) {
-              const data = await val.json()
-              setTargetStruktur(data)
-              return
-            }
-          })
-  }
-
+    .then(
+      async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setTargetStruktur(data);
+          return;
+        }
+      }
+    );
+  };
 
   // useShallowEffect(() => {
   //   fetch(api.apiUserUpdateStatus).then(async (val) => {
@@ -124,7 +132,6 @@ function TableEdit() {
   //   </tr>
   // );
 
-  
   return (
     <>
       {/* <pre>{JSON.stringify(dataDiri, null, 2)}</pre> */}
