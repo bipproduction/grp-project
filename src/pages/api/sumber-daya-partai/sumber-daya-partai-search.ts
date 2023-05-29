@@ -94,6 +94,12 @@ const sumberDayaPartaiSearch = async (req: NextApiRequest, res: NextApiResponse)
                     }
                 }
             },
+            MasterTingkatSayap:{
+                select: {
+                    id: true,
+                    name: true
+                }
+            },
             MasterTingkatPengurus: {
                 select: {
                     id: true,

@@ -1,6 +1,6 @@
 import {
   _dataSeach,
-  _dataTable_ByStatusSearch,
+  _dataStrukturTable_ByStatusSearch,
   _loadData_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
@@ -34,8 +34,7 @@ import COLOR from "../../../../fun/WARNA";
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
-  const [search, setSearch] = useDebouncedState("", 300);
-  const [dataTable, setDataTable] = useAtom(_dataTable_ByStatusSearch);
+  const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
 
   useShallowEffect(() => {}, []);
 
