@@ -269,18 +269,6 @@ const FormDataDiriUser = () => {
         masterDesaId: "",
       },
       validate: {
-        nik: (value: any ) => {
-          if( value.minLength == 16) {
-            return false
-          }
-          if( value.minLength !== 16) {
-            return false
-          }
-          if(!value.match(/^[0-9]{16}$/)) {
-            return false
-          }
-          return toast("Lengkapi Data Diri")
-        },
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
       },
