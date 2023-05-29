@@ -215,6 +215,8 @@ const EditKTAV2 = () => {
             <Text color={COLOR.merah}>**</Text>
             <Text fz={10}>Wajib diisi</Text>
           </Group>
+        </Box>
+      </Box>
           <ScrollArea h={450}>
             <TextInput
               radius={"md"}
@@ -360,8 +362,6 @@ const EditKTAV2 = () => {
               </Box>
             </Flex>
           </ScrollArea>
-        </Box>
-      </Box>
     </>
   );
 };

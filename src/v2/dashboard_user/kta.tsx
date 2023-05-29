@@ -21,6 +21,9 @@ import { atomWithStorage } from "jotai/utils";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import { useAtom } from "jotai";
 import { api } from "@/lib/api-backend";
+import EditDataDiriNew from "./edit_data_diri_new";
+import moment from "moment";
+import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>("", null)
 
@@ -29,6 +32,8 @@ const KTAV2 = () => {
   const [gambar, setGambar] = useState<any>();
   const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useAtom(_datapartai_form)
+  const [openModal, setOpenModal] = useAtom(val_edit_modal)
+
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -110,7 +115,7 @@ const KTAV2 = () => {
                       >
                         <Text fz={15} >: {listData?.name} </Text>
                         <Text fz={15} >: {listData?.tempatLahir}</Text>
-                        <Text fz={15} >:  {listData?.tanggalLahir}</Text>
+                        <Text fz={15} >: {moment(listData?.tanggalLahir).format("LL")}</Text>
                         <Text fz={15} >: {listData?.MasterDesa.name}</Text>
                         <Text fz={15} >: {listData?.MasterKecamatan.name} </Text>
                         <Text fz={15} >: {listData?.MasterKabKot.name} </Text>
@@ -127,23 +132,25 @@ const KTAV2 = () => {
           <Center pt={30} pb={40}>
             <Flex gap="md" pt={20}>
               <Modal
-                opened={opened}
-                onClose={close}
-                size="100%"
+                opened={openModal}
+                onClose={() => setOpenModal(true)}
+                size="90%"
                 // fullScreen
+                title="Edit Data Diri"
                 overlayProps={{
                   // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                   opacity: 0.1,
                 }}
               >
-                <EditKTAV2 />
+                {/* <EditKTAV2 /> */}
+                <EditDataDiriNew/>
               </Modal>
               <Box w={150}>
                 <Button
                   fullWidth
                   color="pink.9"
                   bg={COLOR.ungu}
-                  onClick={open}
+                  onClick={() => setOpenModal(true)}
                   radius={"xl"}
                 >
                   Edit KTA

@@ -1,7 +1,13 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider, Modal, Stack, Title } from "@mantine/core";
-import { PropsWithChildren, useState } from "react";
+import {
+  LoadingOverlay,
+  MantineProvider,
+  Modal,
+  Stack,
+  Title,
+} from "@mantine/core";
+import React, { PropsWithChildren, useState } from "react";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import Login from "@/layout/auth/form-login";
 import _ from "lodash";
@@ -15,6 +21,8 @@ import { Modak } from "next/font/google";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
 import SeederEnd from "./seeder";
+import { useAtom } from "jotai";
+import { val_loading } from "@/xg_state.ts/val_loading";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -37,12 +45,30 @@ export default function App(props: AppProps) {
           colorScheme: "light",
         }}
       >
-        <DevSeeder>
-          <Authrovider>
-            <Component {...pageProps} />
-          </Authrovider>
-        </DevSeeder>
+        <LoadingProvicer>
+          <DevSeeder>
+            <Authrovider>
+              <Component {...pageProps} />
+            </Authrovider>
+          </DevSeeder>
+        </LoadingProvicer>
       </MantineProvider>
+    </>
+  );
+}
+
+function LoadingProvicer({ children }: { children: React.ReactNode }) {
+  const [isLoading, setLoading] = useAtom(val_loading);
+  return (
+    <>
+      {children}
+      <LoadingOverlay
+        h={"100vh"}
+        visible={isLoading}
+        overlayBlur={2}
+        transitionDuration={0}
+        overlayOpacity={0.3}
+      />
     </>
   );
 }

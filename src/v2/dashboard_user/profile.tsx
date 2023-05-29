@@ -27,19 +27,24 @@ import {
   UserMediaSocial,
 } from "@/model/interface_sumber_daya_partai";
 import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import EditDataDiriNew from "./edit_data_diri_new";
+import { Router } from "next/router";
+import moment from "moment";
+import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 
-export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
+export const _datapartai_form = atomWithStorage<DataDiri | null>("dataDiri", null);
 export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_data_diri",
   null
 );
 
 const DataProfileV2 = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  // const [opened, { open, close }] = useDisclosure(false);
   // const [listData, setListData] = useState<string | any>("");
   const [listData2, setListData2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_datapartai_form);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
+  const [openModal, setOpenModal] = useAtom(val_edit_modal)
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -52,6 +57,7 @@ const DataProfileV2 = () => {
       .then((val) => val.json())
       .then(setListData2);
   }, []);
+
   return (
     <>
       <Paper
@@ -104,7 +110,7 @@ const DataProfileV2 = () => {
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Tanggal Lahir</Text>
-                <Text fw={700}>{listData?.tanggalLahir}</Text>
+                <Text fw={700}>{moment(listData?.tanggalLahir).format("LL")}</Text>
               </Box>
               <Box mt={10}>
                 <Text fz={15}>Jenis Kelamin</Text>
@@ -121,6 +127,10 @@ const DataProfileV2 = () => {
               <Box mt={10}>
                 <Text fz={15}>Pekerjaan</Text>
                 <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
+              </Box>
+              <Box mt={10}>
+                <Text fz={15}>Alamat</Text>
+                <Text fw={700}>{listData?.alamat}</Text>
               </Box>
 
 
@@ -176,16 +186,18 @@ const DataProfileV2 = () => {
       </Grid>
       <Flex gap="md" pt={20}>
         <Modal
-          opened={opened}
-          onClose={close}
-          size="100%"
+          opened={openModal}
+          onClose={() => setOpenModal(true)}
+          size="90%"
           // fullScreen
+          title="Edit Data Diri"
           overlayProps={{
             // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
             opacity: 0.1,
           }}
         >
-          <EditKTAV2 />
+          {/* <EditKTAV2 /> */}
+          <EditDataDiriNew />
         </Modal>
         <Box w={150}>
           <Button
@@ -193,7 +205,8 @@ const DataProfileV2 = () => {
             color="orange.9"
             bg={COLOR.merah}
             radius={"xl"}
-            onClick={open}
+            onClick={() => setOpenModal(true)}
+          
           >
             Edit KTA
           </Button>
