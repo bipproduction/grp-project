@@ -1,6 +1,5 @@
 import { api } from "@/lib/api-backend";
 import { _dataDiri, _loadDataDiri_ByIdStatus, _loadEditDataDiri_ById } from "@/load_data/data_diri_partai/load_edit_data_partai";
-import { _loadEditStuktur_ById } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { _editTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import { DataDiri, ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { _editDataStruktur } from "@/v2/sumber_daya_partai/struktur_partai/table_struktur_partai";
