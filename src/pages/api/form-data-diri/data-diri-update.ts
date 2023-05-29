@@ -20,6 +20,7 @@ const dataDiriUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 id: body.id
             },
             data: {
+                name: body.name,
                 masterAgamaId: body.masterAgamaId,
                 masterPekerjaanId: body.masterPekerjaanId,
                 masterProvinceId: body.masterProvinceId,

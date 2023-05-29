@@ -14,6 +14,12 @@ const sumberDayaPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse)
             waAdmin: true,
             User: {
                 select: {
+                   MasterUserRole:{
+                    select: {
+id: true,
+name: true
+                    },
+                },
                     id: true,
                     email: true,
                     DataDiri: {

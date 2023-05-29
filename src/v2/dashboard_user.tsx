@@ -56,11 +56,11 @@ const listSidebar = [
         name: "Data Profile",
         view: DataProfileV2,
       },
-      {
-        id: 2,
-        name: "Status Keanggotaan",
-        view: StatusKeanggotaanV2,
-      },
+      // {
+      //   id: 2,
+      //   name: "Status Keanggotaan",
+      //   view: StatusKeanggotaanV2,
+      // },
     ],
   },
   {
