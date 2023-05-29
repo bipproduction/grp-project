@@ -26,8 +26,8 @@ import {
 import {
   _editTingkatPengurus,
   _new_loadTingkatPengurus,
-  _selectTingkatPengurus,
-  _tingkatPengurus,
+  _selectTingkatPengurus_Struktur,
+  _tingkatPengurus_Struktur,
 } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import _ from "lodash";
 import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
@@ -62,9 +62,9 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [search, setSearch] = useState("")
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [targetEdit, setTargetEdit] = useAtom(_editLoadStruktur_ByStatusSeacrh);
-  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus);
+  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus_Struktur);
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
-    _selectTingkatPengurus
+    _selectTingkatPengurus_Struktur
   );
   const [changeData, setChangeData] = useAtom(_listChangeData);
   // List dan Select Jabatan
@@ -217,7 +217,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
           </Box>
         </Box>
         <Box>
-          <TextInput
+          {/* <TextInput
             label="Name"
             value={targetEdit.User.DataDiri.name}
             onChange={(val) => {
@@ -225,7 +225,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
               data.User.DataDiri.name = val.target.value;
               setChangeData(data);
             }}
-          />
+          /> */}
           <Select
             maxDropdownHeight={150}
             disabled

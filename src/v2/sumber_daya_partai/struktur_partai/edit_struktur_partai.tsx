@@ -27,7 +27,7 @@ import COLOR from "../../../../fun/WARNA";
 import { useForm } from "@mantine/form";
 import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
 import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
-import { _loadTingkatPengurus, _new_loadTingkatPengurus, _selectTingkatPengurus, _tingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
+import { _loadTingkatPengurus, _new_loadTingkatPengurus, _selectTingkatPengurus_Struktur, _tingkatPengurus_Struktur } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import { sTingkatPengurus } from "@/s_state/sumber_daya_partai/s_tingkat_pengurus";
 import {
   _loadJabatanDewanPembina,

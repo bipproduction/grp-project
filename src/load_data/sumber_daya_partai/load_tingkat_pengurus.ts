@@ -6,11 +6,17 @@ import { MasterTingkatPengurus } from "@/model/interface_sumber_daya_partai";
 import _ from "lodash";
 import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
 
-export const _tingkatPengurus = atom<any[]>([]);
-export const _selectTingkatPengurus = atom({
+export const _tingkatPengurus_Struktur = atom<any[]>([]);
+export const _selectTingkatPengurus_Struktur = atom({
   id: "",
   name: ""
 })
+export const _tingkatPengurus_Sayapp = atom<any[]>([])
+export const _selectTingkatPengurus_Sayapp = atom({
+  id: "",
+  name: ""
+})
+
   // atomWithStorage<MasterTingkatPengurus | null>("_selectTingkatPengurus", null);
 export const _editTingkatPengurus =
   atomWithStorage<ModelTingkatPengurus | null>(
@@ -38,3 +44,20 @@ export const _new_loadTingkatPengurus = (
       }
     });
 };
+
+export const _new_loadTingkatPengurus_Sayap = (
+  setTingkatPengurus: any,
+  setSelectTingkatPengurus: any
+) => {
+  fetch(apiGetMaster.apiGetTingkatSayap)
+  .then((e) => e.json())
+  // .then(console.log)
+  .then(async (val) => {
+    if (!_.isEmpty(val)) {
+      setTingkatPengurus(val);
+      setSelectTingkatPengurus({});
+    } else {
+      setTingkatPengurus([]);
+    }
+  });
+}

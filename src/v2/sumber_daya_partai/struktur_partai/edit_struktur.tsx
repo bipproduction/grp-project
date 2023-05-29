@@ -46,8 +46,8 @@ import {
     _editTingkatPengurus,
   _loadTingkatPengurus,
   _new_loadTingkatPengurus,
-  _selectTingkatPengurus,
-  _tingkatPengurus,
+  _selectTingkatPengurus_Struktur,
+  _tingkatPengurus_Struktur,
 } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import {
   _loadSelectDesa,
@@ -83,9 +83,9 @@ export const EditStrukturV2 = (thisClosed: any) => {
   const [selectJenisKelamin, setSelectJenisKelamin] =
     useAtom(_selectJenisKelamin);
   const [isJabatan, setJabatan] = useState<any>();
-  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus);
+  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus_Struktur);
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
-    _selectTingkatPengurus
+    _selectTingkatPengurus_Struktur
   );
 
   useShallowEffect(() => {

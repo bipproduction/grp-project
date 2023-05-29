@@ -9,27 +9,35 @@ import {
   Box,
   Button,
   Center,
+  Grid,
   Group,
   Modal,
+  Pagination,
+  Paper,
+  ScrollArea,
   Table,
   Text,
   TextInput,
 } from "@mantine/core";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import {
+  useDebouncedState,
+  useDisclosure,
+  useShallowEffect,
+} from "@mantine/hooks";
 import { useAtom } from "jotai";
 import _ from "lodash";
 import { StrukturEditV2 } from "./stuktur_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import { AiOutlineSearch } from "react-icons/ai";
+import COLOR from "../../../../fun/WARNA";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
-  const [search, setSearch] = useAtom(_dataSeach);
+  const [search, setSearch] = useDebouncedState("", 300);
   const [dataTable, setDataTable] = useAtom(_dataTable_ByStatusSearch);
 
-  useShallowEffect(() => {
-    _loadData_ByStatus_BySeach(1, search, setDataTable);
-  }, []);
+  useShallowEffect(() => {}, []);
 
   const thHead = (
     <tr>
@@ -50,7 +58,9 @@ export const TableStrukturV2 = () => {
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterTingkatPengurus.name}</td>
-      <td><DataJabatan setTingkat={e}/></td>
+      <td>
+        <DataJabatan setTingkat={e} />
+      </td>
       <td>
         <Group position="center">
           <Button
@@ -75,10 +85,7 @@ export const TableStrukturV2 = () => {
   ));
 
   function onSearch(text: string) {
-    let data = _.clone(
-      dataTable.filter((e) => e.User.DataDiri.name).includes(text as any)
-    );
-    setSearch(data);
+    _loadData_ByStatus_BySeach(1, text, setDataTable);
   }
 
   return (
@@ -97,19 +104,82 @@ export const TableStrukturV2 = () => {
       >
         <StrukturEditV2 thisClosed={setOpen.close} />
       </Modal>
-      <Box sx={{overflow: "scroll"}}>
-        {/* {search} */}
-        <TextInput
-          py={20}
-          placeholder="Cari nama"
-          onChange={(val) => {
-            onSearch(val.target.value);
-          }}
-        />
-        <Table withBorder>
-          <thead>{thHead}</thead>
-          <tbody>{tbBody}</tbody>
-        </Table>
+
+      <Box sx={{ overflow: "scroll" }}>
+        <Paper bg={COLOR.abuabu} p={10}>
+          <Grid>
+            <Grid.Col span={8}>
+              <Text size={20} fw={"bold"}>
+                Data Struktur Partai
+              </Text>
+            </Grid.Col>
+            {/* <Grid.Col span={4}>
+              <Group position="right">
+                <Button
+                  w={100}
+                  bg={COLOR.merah}
+                  color={"orange"}
+                  radius={50}
+                  leftIcon={<AiOutlineSave />}
+                >
+                  Save
+                </Button>
+                <Button
+                  w={100}
+                  bg={COLOR.merah}
+                  color={"orange"}
+                  radius={50}
+                  leftIcon={<CiFilter />}
+                >
+                  Fillter
+                </Button>
+              </Group>
+            </Grid.Col> */}
+          </Grid>
+        </Paper>
+        <Box pt={20}>
+          <Grid>
+            <Grid.Col md={4} lg={4}>
+              <TextInput
+                mt={5}
+                icon={<AiOutlineSearch size={20} />}
+                placeholder="Search"
+                radius={"md"}
+                onChange={(val) => onSearch(val.currentTarget.value)}
+              />
+            </Grid.Col>
+            {/* <Grid.Col md={8} lg={8}>
+              <Group position="right">
+                <Button
+                  color="orange.9"
+                  leftIcon={<AiOutlineDownload size={20} />}
+                  radius={"xl"}
+                  bg={COLOR.orange}
+                >
+                  Download Tamplate
+                </Button>
+                <Button
+                  color="orange.9"
+                  leftIcon={<AiOutlineUpload size={20} />}
+                  radius={"xl"}
+                  m={5}
+                  bg={COLOR.orange}
+                >
+                  Import File
+                </Button>
+              </Group>
+            </Grid.Col> */}
+          </Grid>
+        </Box>
+        <ScrollArea py={20}>
+          <Table withBorder>
+            <thead>{thHead}</thead>
+            <tbody>{tbBody}</tbody>
+          </Table>
+          {/* <Group position="right" pt={10}>
+            <Pagination total={10} color={"orange"} />
+          </Group> */}
+        </ScrollArea>
       </Box>
     </>
   );
