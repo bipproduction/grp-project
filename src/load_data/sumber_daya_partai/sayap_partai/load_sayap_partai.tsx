@@ -8,7 +8,7 @@ import _ from "lodash";
 export const _list_SayapPartai = atom<any[]>([]);
 export const _select_SayapPartaii = atom({
   id: new Number(),
-  nama: "",
+  name: "",
 });
 
 export const _loadNama_SayapPartai = async (

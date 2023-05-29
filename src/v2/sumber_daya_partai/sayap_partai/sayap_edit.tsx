@@ -146,10 +146,10 @@ export const SayapEditV2 = ({
         />
         <Select
           label="Nama Sayap Partai"
-          value={selectSayapPartai.nama}
+          value={selectSayapPartai.name}
           placeholder={
-            selectSayapPartai?.nama
-              ? selectSayapPartai.nama
+            selectSayapPartai?.name
+              ? selectSayapPartai.name
               : targetEdit.MasterSayapPartai?.name
           }
           data={sayapPartai.map((e) => ({
