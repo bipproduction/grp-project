@@ -1,5 +1,7 @@
 import {
+  _dataSayapTable_ByStatusSearch,
   _editLoadSayap_ByStatusSeacrh,
+  _loadData_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
@@ -12,7 +14,15 @@ import { Box, Button, Grid, Paper, Select, Text } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
-import { _listSayapPartai, _loadNama_SayapPartai, _select_SayapPartai } from "@/load_data/sumber_daya_partai/sayap_partai/load_sayap_partai";
+import {
+  _list_SayapPartai,
+  _loadNama_SayapPartai,
+  _select_SayapPartaii,
+} from "@/load_data/sumber_daya_partai/sayap_partai/load_sayap_partai";
+import _ from "lodash";
+import { useState } from "react";
+import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import { api } from "@/lib/api-backend";
 
 export const SayapEditV2 = ({
   thisClosed,
@@ -21,6 +31,8 @@ export const SayapEditV2 = ({
   setId: any;
   thisClosed: any;
 }) => {
+  const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
+  const [search, setSearch] = useState("");
   const [targetEdit, setTargetEdit] = useAtom(_editLoadSayap_ByStatusSeacrh);
   const [tingkatPengurus, setTingkatPengurus] = useAtom(
     _tingkatPengurus_Sayapp
@@ -28,8 +40,12 @@ export const SayapEditV2 = ({
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
     _selectTingkatPengurus_Sayapp
   );
-  const [sayapPartai, setSayapPartai] = useAtom(_listSayapPartai)
-  const [selectSayapPartai, setSelectSayapPartai] = useAtom(_select_SayapPartai)
+  const [sayapPartai, setSayapPartai] = useAtom(_list_SayapPartai);
+  const [selectSayapPartai, setSelectSayapPartai] =
+    useAtom(_select_SayapPartaii);
+  const [changeData, setChangeData] = useState<ModelSumberDayaPartai | null>(
+    null
+  );
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(setId, setTargetEdit);
@@ -37,14 +53,58 @@ export const SayapEditV2 = ({
       setTingkatPengurus,
       setSelectTingkatPengurus
     );
-    _loadNama_SayapPartai(setSayapPartai, setSelectSayapPartai)
+    _loadNama_SayapPartai(setSayapPartai, setSelectSayapPartai);
   }, []);
+
+  const onEdit = () => {
+    thisClosed();
+    const body = {
+      id: targetEdit?.id,
+      userId: targetEdit?.User.id!,
+      masterStatusKeanggotaanId: 2,
+      masterTingkatPengurusId: targetEdit?.MasterTingkatPengurus.id!,
+      // masterJabatanId: targetEdit?.MasterJabatan!,
+      // masterJabatanDewanPembinaId: targetEdit?.MasterJabatanDewanPembina?.id!,
+      // masterJabatanDewanPimpinanPusatId:
+      //   targetEdit?.MasterJabatanDewanPimpinanPusat?.id!,
+      // masterJabatanDewanPimpinanDaerahId:
+      //   targetEdit?.MasterJabatanDewanPimpinanDaerah?.id!,
+      // masterJabatanDewanPimpinanCabangId:
+      //   targetEdit?.MasterJabatanDewanPimpinanCabang?.id!,
+      // masterJabatanPimpinanAnakCabangId:
+      //   targetEdit?.MasterJabatanPimpinanAnakCabang?.id!,
+      // masterJabatanPimpinanRantingId:
+      //   targetEdit?.MasterJabatanPimpinanRanting?.id!,
+      // masterJabatanPerwakilanPartaiDiLuarNegeriId:
+      //   targetEdit?.MasterJabatanPerwakilanPartaiDiLuarNegeri?.id!,
+      masterSayapPartaiId: targetEdit?.MasterSayapPartai?.id!,
+      // masterKaderPartaiId: targetEdit?.MasterKaderPartai?.id!,
+      // masterProvinceId: targetEdit?.MasterProvince?.id!,
+      // masterKabKotId: targetEdit?.MasterKabKot?.id!,
+      // masterKecamatanId: targetEdit?.MasterKecamatan?.id!,
+      // masterDesaId: targetEdit?.MasterDesa?.id!,
+      // masterNegaraId: targetEdit?.MasterNegara?.id!,
+      // alamatKantor: targetEdit?.alamatKantor!,
+      // waAdmin: targetEdit?.waAdmin!,
+    };
+    // console.log(body)
+
+    fetch(api.apiSumberDayaPartaiUpdate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then(async (val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
+  };
 
   if (!targetEdit) return <></>;
 
   return (
     <>
-      {/* {JSON.stringify(tingkatPengurus)} */}
+      {JSON.stringify(targetEdit.MasterSayapPartai, null, "\t")}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -67,8 +127,7 @@ export const SayapEditV2 = ({
               bg={COLOR.orange}
               radius={"xl"}
               onClick={(val) => {
-                // onEdit();
-                console.log("Hehehe");
+                onEdit();
               }}
             >
               Simpan
@@ -86,15 +145,26 @@ export const SayapEditV2 = ({
             label: e.name,
           }))}
         />
-        {/* <Select 
-        label="Nama Sayap Partai"
-        value={targetEdit.MasterSayapPartai?.name}
-        placeholder={targetEdit.MasterSayapPartai?.name}
-        data={sayapPartai.map((e) => ({
+        <Select
+          label="Nama Sayap Partai"
+          value={selectSayapPartai.nama}
+          placeholder={
+            selectSayapPartai?.nama
+              ? selectSayapPartai.nama
+              : targetEdit.MasterSayapPartai?.name
+          }
+          data={sayapPartai.map((e) => ({
             value: e.id,
-            label: e.name
-        }))}
-        /> */}
+            label: e.name,
+          }))}
+          onChange={(val) => {
+            // console.log(val)
+            setSelectSayapPartai(sayapPartai.find((e) => e.id == val));
+            const data: any = _.clone(targetEdit);
+            data.MasterSayapPartai.id = val;
+            setChangeData(data);
+          }}
+        />
       </Box>
     </>
   );

@@ -16,7 +16,7 @@ export const _listChangeData = atom<ModelSumberDayaPartai | null>(null);
 
 // Global state untuk _loadData_ByStatus_BySeach
 // Storage di bawah digunakan untuk menampung isi database untuk di tampilkan
-export const _dataTable_ByStatusSearch = atomWithStorage<
+export const _dataStrukturTable_ByStatusSearch = atomWithStorage<
   ModelSumberDayaPartai[]
 >("_dataTable_ByStatusSearch>", []);
 export const _dataSayapTable_ByStatusSearch = atomWithStorage<

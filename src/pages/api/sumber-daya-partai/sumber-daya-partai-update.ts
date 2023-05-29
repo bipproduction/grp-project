@@ -8,7 +8,7 @@ const sumberDayaPartaiUpdate = async (
 ) => {
   if (req.method === "POST") {
     const body = req.body;
-    console.log(body) 
+    // console.log(body) 
     await client.sumberDayaPartai.update({
       where: {
         id: body.id,

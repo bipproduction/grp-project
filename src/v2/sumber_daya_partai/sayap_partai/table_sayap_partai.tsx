@@ -31,22 +31,28 @@ import EditSayapPartaiV2 from "./edit_sayap_partai";
 import { useAtom } from "jotai";
 import {
   _dataSayapTable_ByStatusSearch,
-  _dataTable_ByStatusSearch,
+  _dataStrukturTable_ByStatusSearch,
   _loadData_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { SayapEditV2 } from "./sayap_edit";
+import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import { api } from "@/lib/api-backend";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
   const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
   const [search, setSearch] = useState("");
-  const [valueId, setValueId] = useState('')
+  const [valueId, setValueId] = useState("");
 
-  useShallowEffect(() => {
-    _loadData_ByStatus_BySeach(2, search, setDataTable);
-  }, []);
+  useShallowEffect(() => {}, []);
+
+  const hapusData = (id: string) => {
+    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
+      .then((e) => e.json())
+      .then((val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
+  };
 
   const tbHead = (
     <tr>
@@ -85,8 +91,10 @@ const TableSayapPartaiV2 = () => {
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterSayapPartai?.name}</td>
-      <td>{e.MasterTingkatPengurus.name}</td>
-      <td>ok</td>
+      {/* <td>{e.MasterTingkatPengurus.name}</td> */}
+      {/* <td>
+        <JabatanSayapPartai setJabtan={e} />
+      </td> */}
 
       <td>
         <Group position="center">
@@ -96,13 +104,19 @@ const TableSayapPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
-              setValueId(e.id)
+              setValueId(e.id);
               open();
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button
+            variant={"outline"}
+            color={"red"}
+            radius={50}
+            w={100}
+            onClick={() => hapusData(e.id)}
+          >
             Hapus
           </Button>
         </Group>
@@ -110,9 +124,15 @@ const TableSayapPartaiV2 = () => {
     </tr>
   ));
 
+  const onSearch = (search: string) => {
+    _loadData_ByStatus_BySeach(2, search, setDataTable);
+  };
+
   return (
     <>
-      {/* {JSON.stringify(dataTable)} */}
+      <pre>
+        {/* {JSON.stringify(dataTable.map((e) => e, " apa"),null,2)} */}
+      </pre>
       <Modal
         opened={opened}
         onClose={close}
@@ -125,7 +145,7 @@ const TableSayapPartaiV2 = () => {
         }}
       >
         {/* <EditSayapPartaiV2 thisClosed={close} /> */}
-        <SayapEditV2 thisClosed={close} setId={valueId}/>
+        <SayapEditV2 thisClosed={close} setId={valueId} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -167,6 +187,7 @@ const TableSayapPartaiV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
+                onChange={(val) => onSearch(val.currentTarget.value)}
               />
             </Grid.Col>
             {/* <Grid.Col md={8} lg={8}>
@@ -198,14 +219,31 @@ const TableSayapPartaiV2 = () => {
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            <Group position="right" pt={10}>
+            {/* <Group position="right" pt={10}>
               <Pagination total={10} color={"orange"} />
-            </Group>
+            </Group> */}
           </ScrollArea>
         </Box>
       </Box>
     </>
   );
 };
+
+function JabatanSayapPartai({
+  setJabtan,
+}: {
+  setJabtan: ModelSumberDayaPartai;
+}) {
+  return (
+    <>
+      {/* {JSON.stringify(setJabtan.MasterTingkatPengurus.id)} */}
+      {(() => {
+        if (setJabtan.MasterTingkatPengurus.id == 1) {
+          return <>{setJabtan.MasterJabatanDewanPimpinanPusat?.name}</>;
+        }
+      })()}
+    </>
+  );
+}
 
 export default TableSayapPartaiV2;

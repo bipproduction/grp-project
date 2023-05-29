@@ -15,7 +15,7 @@ import { _editDataStruktur } from "./table_struktur_partai";
 import { useShallowEffect } from "@mantine/hooks";
 import {
   _dataStruktur,
-  _dataTable_ByStatusSearch,
+  _dataStrukturTable_ByStatusSearch,
   _listChangeData,
   _loadDataStruktur_ByIdStatus,
   _loadData_ByStatus_BySeach,
@@ -58,7 +58,7 @@ import {
 import { api } from "@/lib/api-backend";
 
 export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
-  const [dataTable, setDataTable] = useAtom(_dataTable_ByStatusSearch);
+  const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
   const [search, setSearch] = useState("")
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [targetEdit, setTargetEdit] = useAtom(_editLoadStruktur_ByStatusSeacrh);
