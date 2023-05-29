@@ -25,7 +25,7 @@ import KaderPartai from "./kader-partai";
 import AngotaPartaiV2 from "./angota-partai";
 import { useAtom } from "jotai";
 import { number } from "echarts";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -48,6 +48,7 @@ function DataPartaiV2() {
   const router = useRouter();
   const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
 
   function StrukturPartai() {
     router.push("/v2/data-partai-v2/struktur-partai-v2");
@@ -101,8 +102,8 @@ function DataPartaiV2() {
               pr={20}
               pl={20}
               onClick={() => {
-                setAmbilData({
-                  ...ambilData,
+                setAmbilDataSayap({
+                  ...ambilDataSayap,
                   masterStatusKeanggotaanId: "2",
                   // strukturpartaiId: ""
                 })

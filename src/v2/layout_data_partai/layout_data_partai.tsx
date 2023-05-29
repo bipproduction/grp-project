@@ -1,4 +1,4 @@
-import { AppShell, Box, Center, Container, Flex, Image, Paper, Stack, Text } from "@mantine/core";
+import { AppShell, Box, Center, Container, Flex, Group, Image, Paper, Stack, Text } from "@mantine/core";
 import React, { PropsWithChildren } from "react";
 import COLOR from "../../../fun/WARNA";
 import { useRouter } from "next/router";
@@ -11,7 +11,7 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
   }
   return (
     <>
-      <Flex>
+        <Flex>
         <Paper w={520}>
           <Box bg={COLOR.abuabu} w={"100%"} h={"100vh"}>
             <Box pl={40} pr={40} pt={50}>
@@ -29,7 +29,7 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
             </Center>
             </Container>
         </Box>
-      </Flex>
+        </Flex>
     </>
   );
 }

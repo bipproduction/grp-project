@@ -292,6 +292,8 @@ const FormDataDiriUser = () => {
       .then((val) => val.json())
       .then(setListMediaSocial);
   }, []);
+
+  if (!formDataDiri) return <></>;
   return (
     <>
       <WrapperDataDiriPartai>
