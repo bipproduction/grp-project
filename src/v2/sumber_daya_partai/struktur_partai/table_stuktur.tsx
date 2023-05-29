@@ -30,13 +30,17 @@ import { StrukturEditV2 } from "./stuktur_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
+import { api } from "@/lib/api-backend";
+import { useState } from "react";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
-
-  useShallowEffect(() => {}, []);
+  const [search, setSearch] = useState("");
+  useShallowEffect(() => {
+    onSearch("");
+  }, []);
 
   const thHead = (
     <tr>
@@ -75,7 +79,15 @@ export const TableStrukturV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button
+            variant={"outline"}
+            color={"red"}
+            radius={50}
+            w={100}
+            onClick={() => {
+              hapusData(e.id)
+            }}
+          >
             Hapus
           </Button>
         </Group>
@@ -86,6 +98,12 @@ export const TableStrukturV2 = () => {
   function onSearch(text: string) {
     _loadData_ByStatus_BySeach(1, text, setDataTable);
   }
+
+  const hapusData = (id: string) => {
+    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
+      .then((e) => e.json())
+      .then((val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
+  };
 
   return (
     <>

@@ -7,8 +7,8 @@ import {
 import {
   _new_loadTingkatPengurus,
   _new_loadTingkatPengurus_Sayap,
-  _selectTingkatPengurus_Sayapp,
-  _tingkatPengurus_Sayapp,
+  _selectTingkatPengurus_Sayap,
+  _tingkatPengurus_Sayap,
 } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import { Box, Button, Grid, Paper, Select, Text } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
@@ -34,11 +34,9 @@ export const SayapEditV2 = ({
   const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
   const [search, setSearch] = useState("");
   const [targetEdit, setTargetEdit] = useAtom(_editLoadSayap_ByStatusSeacrh);
-  const [tingkatPengurus, setTingkatPengurus] = useAtom(
-    _tingkatPengurus_Sayapp
-  );
+  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus_Sayap);
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
-    _selectTingkatPengurus_Sayapp
+    _selectTingkatPengurus_Sayap
   );
   const [sayapPartai, setSayapPartai] = useAtom(_list_SayapPartai);
   const [selectSayapPartai, setSelectSayapPartai] =
@@ -62,7 +60,8 @@ export const SayapEditV2 = ({
       id: targetEdit?.id,
       userId: targetEdit?.User.id!,
       masterStatusKeanggotaanId: 2,
-      masterTingkatPengurusId: targetEdit?.MasterTingkatPengurus.id!,
+      // masterTingkatPengurusId: targetEdit?.MasterTingkatPengurus.id!,
+      masterTingkatSayapId: targetEdit?.MasterTingkatSayap.id,
       // masterJabatanId: targetEdit?.MasterJabatan!,
       // masterJabatanDewanPembinaId: targetEdit?.MasterJabatanDewanPembina?.id!,
       // masterJabatanDewanPimpinanPusatId:
@@ -104,7 +103,7 @@ export const SayapEditV2 = ({
 
   return (
     <>
-      {JSON.stringify(targetEdit.MasterSayapPartai, null, "\t")}
+      {/* {JSON.stringify(targetEdit, null, "\t")} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -138,8 +137,8 @@ export const SayapEditV2 = ({
           label="Tingkat Pengurus"
           disabled
           maxDropdownHeight={150}
-          value={targetEdit.MasterTingkatPengurus?.name}
-          placeholder={targetEdit.MasterTingkatPengurus?.name}
+          value={targetEdit.MasterTingkatSayap.name}
+          placeholder={targetEdit.MasterTingkatSayap.name}
           data={tingkatPengurus.map((e) => ({
             value: e.id,
             label: e.name,
@@ -147,10 +146,10 @@ export const SayapEditV2 = ({
         />
         <Select
           label="Nama Sayap Partai"
-          value={selectSayapPartai.nama}
+          value={selectSayapPartai.name}
           placeholder={
-            selectSayapPartai?.nama
-              ? selectSayapPartai.nama
+            selectSayapPartai?.name
+              ? selectSayapPartai.name
               : targetEdit.MasterSayapPartai?.name
           }
           data={sayapPartai.map((e) => ({

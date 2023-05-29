@@ -46,7 +46,9 @@ const TableSayapPartaiV2 = () => {
   const [search, setSearch] = useState("");
   const [valueId, setValueId] = useState("");
 
-  useShallowEffect(() => {}, []);
+  useShallowEffect(() => {
+    onSearch("")
+  }, []);
 
   const hapusData = (id: string) => {
     fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
@@ -245,7 +247,17 @@ function JabatanSayapPartai({
           if (setJabtan.MasterTingkatSayap.id == 2) {
             return <>{setJabtan.MasterJabatanDewanPimpinanDaerah?.name}</>;
           } else {
-            
+            if (setJabtan.MasterTingkatSayap.id == 3) {
+              return <>{setJabtan.MasterJabatanDewanPimpinanCabang?.name}</>;
+            } else {
+              if (setJabtan.MasterTingkatSayap.id == 4) {
+                return <>{setJabtan.MasterJabatanPimpinanAnakCabang.name}</>;
+              } else {
+                return<>
+                <Text>undefined</Text>
+                </>
+              }
+            }
           }
         }
       })()}
