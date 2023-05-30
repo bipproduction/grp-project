@@ -6,7 +6,9 @@ import {
   Flex,
   Grid,
   Group,
+  Stack,
   Text,
+  rem,
 } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import React, { useRef, useState } from "react";
@@ -27,15 +29,16 @@ function BGCoba() {
 
   return (
     <>
-      <Group pt={20}>
-        <Box mx="auto" ref={ref as any}>
-          <BackgroundImage
-            src="../.././KTANew10.png"
-            w={560}
-            h={370}
-            radius={30}
-          >
-              <Box pl={170} pt={30}>
+      <Stack>
+        <Group pt={20}>
+          <Box mx="auto" ref={ref as any}>
+            <BackgroundImage
+              src="../.././KTANew10.png"
+              w={{base: 280, sm: 510, xs: 320}}
+              h={{sm: 350, base: 190, xs: 213}}
+              radius={10}
+            >
+              <Box pl={{sm:170, base: 80, xs: 95}} pt={{sm: 25, base: 15, xs: 16}}>
                 <Grid gutter="xs" pl={5}>
                   <Grid.Col span={4}>
                     <Flex
@@ -45,13 +48,13 @@ function BGCoba() {
                       direction="column"
                       wrap="wrap"
                     >
-                      <Text fw={"bold"}>Name</Text>
-                      <Text fw={"bold"}>TTL</Text>
-                      <Text fw={"bold"}>Kel</Text>
-                      <Text fw={"bold"}>Kec</Text>
-                      <Text fw={"bold"}>Kab</Text>
-                      <Text fw={"bold"}>Provinsi</Text>
-                      <Text fw={"bold"}>Jenis Kelamin</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Name</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>TTL</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Kel</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Kec</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Kab</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Provinsi</Text>
+                      <Text fw={"bold"} fz={{base: 8, sm: 14, xs: 9}}>Jenis Kelamin</Text>
                     </Flex>
                   </Grid.Col>
                   <Grid.Col span={8}>
@@ -62,20 +65,21 @@ function BGCoba() {
                       direction="column"
                       wrap="wrap"
                     >
-                      <Text>: Moh Alif Al Lukman </Text>
-                      <Text>: Malang, 02-01-1999 </Text>
-                      <Text>: Padang Sambian Klod </Text>
-                      <Text>: Denpasar Barat </Text>
-                      <Text>: Denpasar </Text>
-                      <Text>: Bali</Text>
-                      <Text>: Laki-Laki</Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Moh Alif Al Lukman </Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Malang, 02-01-1999 </Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Padang Sambian Klod </Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Denpasar Barat </Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Denpasar </Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Bali</Text>
+                      <Text fz={{base: 8, sm: 14, xs: 9}}>: Laki-Laki</Text>
                     </Flex>
                   </Grid.Col>
                 </Grid>
               </Box>
-          </BackgroundImage>
-        </Box>
-      </Group>
+            </BackgroundImage>
+          </Box>
+        </Group>
+      </Stack>
       <Group position="center">
         <Center>
           <Button onClick={() => gambar!.exportComponentAsPNG(ref as any)}>

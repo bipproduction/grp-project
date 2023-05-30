@@ -43,9 +43,12 @@ import {
 import {
   Box,
   Button,
+  Center,
+  Grid,
   Group,
   LoadingOverlay,
   Select,
+  SimpleGrid,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -125,56 +128,29 @@ function EditDataDiriNew() {
       },
       body: JSON.stringify(body),
     });
+    loadDatadiri();
     setLoading(false);
     setOpenModal(false);
-    // console.log(targetEditDataDIri);
-    // console.log(editFormDataDiri.values.data);
-
-    // // const body = {};
-    // if (Object.values(editFormDataDiri.values.data).includes("")) {
-    //   return toast("Lengkapi Data Diri");
-    // }
-    // fetch("/api/form-data-diri/data-diri-update", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(editFormDataDiri.values.data),
-    // });
   };
 
-  // const editFormDataDiri = useForm({
-  //   initialValues: {
-  //     data: {
-  //       userId: localStorage.getItem("user_id"),
-  //       id: listData?.id,
-  //       nik: "",
-  //       name: "",
-  //       tempatLahir: "",
-  //       tanggalLahir: "",
-  //       phoneNumber: "",
-  //       alamat: "",
-  //       rtRw: "",
-  //       masterJenisKelaminId: "",
-  //       masterAgamaId: "",
-  //       masterPekerjaanId: "",
-  //       masterProvinceId: 17,
-  //       masterKabKotId: 260,
-  //       masterKecamatanId: 4086,
-  //       masterDesaId: 50631,
-  //     },
-  //     validate: {
-  //       email: (value: string) =>
-  //         /^\S+@\S+$/.test(value) ? null : "Invalid email",
-  //     },
-  //   },
-  // });
-
   useShallowEffect(() => {
-    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-      .then((val) => val.json())
-      .then(setListData);
+    loadDatadiri();
   }, []);
+
+  async function loadDatadiri() {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+      // .then((val) => val.json())
+      // .then(setListData);
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setListData(data);
+          return;
+        }
+        // router.reload()
+      });
+  }
+
   // useShallowEffect(() => {
   //   fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
   //     .then((val) => val.json())
@@ -203,25 +179,32 @@ function EditDataDiriNew() {
   if (!listData) return <></>;
   return (
     <>
-      {/* {JSON.stringify(listData)} */}
-      <Box pt={20}>
+      <Box pb={15}>
         <Box
-          p={20}
-          pl={30}
-          pr={30}
           sx={{
+            width: "100%",
             backgroundColor: COLOR.abuabu,
-            borderRadius: 10,
+            padding: 5,
+            borderRadius: 7,
           }}
         >
-          {/* <Text fz={22} color={"#525252"} fw={700}>
-            Form Data Diri
+          <Text fw={700} fz={20} pl={10}>
+            Edit Data Diri
           </Text>
-          <Group>
-            <Text color={COLOR.merah}>**</Text>
-            <Text fz={10}>Wajib diisi</Text>
-          </Group> */}
-          <Box>
+        </Box>
+      </Box>
+
+      <Grid>
+        <Grid.Col md={6} lg={6}>
+          <Box
+            p={20}
+            pl={30}
+            pr={30}
+            sx={{
+              backgroundColor: COLOR.abuabu,
+              borderRadius: 10,
+            }}
+          >
             <TextInput
               label="Nama"
               radius={"md"}
@@ -260,13 +243,12 @@ function EditDataDiriNew() {
             />
 
             <DateInput
-              // placeholder="Tanggal Lahir"
               withAsterisk
+              placeholder={moment(listData.tanggalLahir).format("LL")}
               mt={10}
               // rightSection={<AiOutlineCalendar size="1.3rem" />}
               label="Tanggal Lahir"
               radius={"md"}
-              value={new Date(listData.tanggalLahir)}
               onChange={(val: any) => {
                 const perubahan = _.clone(listData);
                 listData.tanggalLahir = val;
@@ -290,38 +272,6 @@ function EditDataDiriNew() {
               }}
               // {...editFormDataDiri.getInputProps("data.phoneNumber")}
             />
-            {/* <Select
-          data={sAgama.value.map((ag) => ({
-            value: ag.id,
-            label: ag.name,
-          }))}
-          radius={"md"}
-          placeholder={listData?.MasterAgama.name}
-          // placeholder="Agama"
-          label="Agama"
-          searchable
-          withAsterisk
-          // {...editFormDataDiri.getInputProps("data.masterAgamaId")}
-        /> */}
-            {/* <Select
-          radius={"md"}
-          // placeholder="Pekerjaan"
-          // placeholder={listData?.MasterPekerjaan.name}
-          label="Pekerjaan"
-          data={sListPekerjaan.value.map((pe) => ({
-            value: pe.id,
-            label: pe.name,
-          }))}
-          value={listData.MasterPekerjaan.name}
-          placeholder={listData.MasterPekerjaan.name}
-          onChange={(val: any) => {
-            const data = _.clone(listData);
-            data.MasterPekerjaan.id = val;
-            setUbah(data);
-            // setListData(itDesa.find((e) => e.id == val));
-          }}
-          // {...editFormDataDiri.getInputProps("data.masterPekerjaanId")}
-        /> */}
             <TextInput
               // placeholder="Alamat"
               placeholder={listData?.alamat}
@@ -337,6 +287,18 @@ function EditDataDiriNew() {
               }}
               // {...editFormDataDiri.getInputProps("data.alamat")}
             />
+          </Box>
+        </Grid.Col>
+        <Grid.Col md={6} lg={6}>
+          <Box
+            p={20}
+            pl={30}
+            pr={30}
+            sx={{
+              backgroundColor: COLOR.abuabu,
+              borderRadius: 10,
+            }}
+          >
             <TextInput
               placeholder={listData?.rtRw}
               // placeholder="RT/RW"
@@ -344,7 +306,6 @@ function EditDataDiriNew() {
               label="RT/RW"
               radius={"md"}
               type="number"
-              mt={10}
               value={listData?.rtRw}
               onChange={(val) => {
                 const perubahan = _.clone(listData);
@@ -353,33 +314,6 @@ function EditDataDiriNew() {
               }}
               // {...editFormDataDiri.getInputProps("data.rtRw")}
             />
-            {/* <Select
-              mt={10}
-              radius={"md"}
-              label={"Jenis Kelamin"}
-              value={
-                selectJenisKelaminDT.name
-                  ? selectJenisKelaminDT.name
-                  : listData.MasterJenisKelamin.name
-              }
-              placeholder={
-                selectJenisKelaminDT.name
-                  ? selectJenisKelaminDT.name
-                  : listData.MasterJenisKelamin.name
-              }
-              data={sJenisKelamin.value.map((ag) => ({
-                value: ag.id,
-                label: ag.name,
-              }))}
-              onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                listData.MasterJenisKelamin.id = val;
-                setUbah(perubahan);
-                setSelectJenisKelaminDT(
-                  sJenisKelamin.value.find((e) => e.id == val)
-                );
-              }}
-            /> */}
             <Select
               label="Pilih Provinsi"
               mt={10}
@@ -499,12 +433,12 @@ function EditDataDiriNew() {
               }}
             />
             <Button
-              w={150}
-              radius={"xl"}
+              fullWidth
+              radius={"md"}
               // bg={COLOR.merah}
               color="orange.9"
               type="submit"
-              mt={20}
+              mt={35}
               onClick={async () => {
                 await onEdit();
               }}
@@ -512,8 +446,8 @@ function EditDataDiriNew() {
               Simpan
             </Button>
           </Box>
-        </Box>
-      </Box>
+        </Grid.Col>
+      </Grid>
     </>
   );
 }

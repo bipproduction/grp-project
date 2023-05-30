@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FormDataDiriUser = () => {
+function FormCoba() {
   const [value, setValue] = useState("");
   const [jenisKelamin, setJenisKelamin] = useState<any | []>([]);
   const [agama, setAgama] = useState<any | []>([]);
@@ -77,11 +77,11 @@ const FormDataDiriUser = () => {
     id: "",
     name: "",
   });
-  const [isJenisKelamin, setIsJenisKelamin] =useAtom(_sJenisKelamin)
-  const [selectJenisKelamin, setSelectJenisKelamin] =useAtom(_sJenisKelamin)
+  const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
+  const [selectJenisKelamin, setSelectJenisKelamin] = useAtom(_sJenisKelamin);
 
   useShallowEffect(() => {
-  _loadJenisKelamin();
+    _loadJenisKelamin();
     _loadAgama();
     loadProvinsi();
     _loadListPekerjaan();
@@ -194,7 +194,6 @@ const FormDataDiriUser = () => {
   function dataDiriPartai() {
     router.push("/v2/form-data-partai");
   }
-
   const onDatadiri = async () => {
     const adaKosong = listData.find((val) => _.values(val).includes(""));
     if (adaKosong) return toast("Lengkapi data diri");
@@ -211,16 +210,15 @@ const FormDataDiriUser = () => {
     }).then(async (res) => {
       if (res.status === 201) {
         const data = await res.json();
-        console.log(data)
+        console.log(data);
         return data;
-       
       }
       return null;
     });
 
-    console.log(pertama)
+    console.log(pertama);
     if (!pertama) return toast("gagal");
-    
+
     for (let item of listData) {
       await fetch(api.apiMediaSosialUserPost, {
         method: "POST",
@@ -604,6 +602,6 @@ const FormDataDiriUser = () => {
       </LayoutDataPartaiV2>
     </>
   );
-};
+}
 
-export default FormDataDiriUser;
+export default FormCoba;

@@ -18,6 +18,7 @@ import {
   Button,
   Grid,
   ActionIcon,
+  HoverCard,
   Tooltip,
   Modal,
   Alert,
@@ -33,15 +34,22 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa";
+import {} from "react-icons/io";
 import COLOR from "../../fun/WARNA";
 import { FiAlertCircle, FiLogOut } from "react-icons/fi";
 import { gSelectedPage } from "@/xg_state.ts/g_selected_page";
 import { useHookstate } from "@hookstate/core";
+import StrukturPartaiV2 from "./sumber_daya_partai/struktur_partai/struktur_partai";
+import SayapPartaiV2 from "./sumber_daya_partai/sayap_partai/sayap_partai";
+import KaderPartaiV2 from "./sumber_daya_partai/kader_partai/kader_partai";
+import AnggotaPartaiV2 from "./sumber_daya_partai/anggota_partai/anggota_partai";
+import AsetPartaiV2 from "./sumber_daya_partai/aset_partai/aset_partai";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
-import KTAV2 from "./dashboard_user/kta";
-import DataProfileV2 from "./dashboard_user/profile";
-import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
+import DbStrukturPartai from "./database_partai/db_struktur_partai/db_struktur_partai";
+import DbSayapPartai from "./database_partai/db_sayap_partai/db_sayap_partai";
+import DbKaderPartai from "./database_partai/db_kader_partai/db_kader_partai";
+import DbAnggotaPartai from "./database_partai/db_anggota_partai/db_anggota_partai";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import Head from "next/head";
@@ -51,59 +59,48 @@ import { useDisclosure } from "@mantine/hooks";
 const listSidebar = [
   {
     id: 1,
-    name: "Profile",
+    name: "Database Partai",
     child: [
       {
         id: 1,
-        name: "Data Profile",
-        view: DataProfileV2,
+        name: "Data Struktur Partai",
+        view: DbStrukturPartai,
       },
-      // {
-      //   id: 2,
-      //   name: "Status Keanggotaan",
-      //   view: StatusKeanggotaanV2,
-      // },
-    ],
-  },
-  {
-    id: 2,
-    name: "KTA",
-    child: [
       {
-        id: 1,
-        name: "Cetak KTA",
-        view: KTAV2,
+        id: 2,
+        name: "Data Sayap Partai",
+        view: DbSayapPartai,
+      },
+      {
+        id: 3,
+        name: "Data Kader Partai",
+        view: DbKaderPartai,
+      },
+      {
+        id: 5,
+        name: "Data Anggota Partai",
+        view: DbAnggotaPartai,
       },
     ],
   },
 ];
 
-const LayoutDashboardV2 = () => {
+const LayoutDashboarSuperdAdminCobaV2 = () => {
   const theme = useMantineTheme();
   const [openednya, setOpenedNya] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
 
-  const [select, setSelect] = useState("Data Profile");
+
+  const [select, setSelect] = useState("Data Struktur Partai");
 
   const lSelectedPage = useHookstate(gSelectedPage);
-  // const SelectedView = signal<string>('');
-  // const [select, setSelect] = useState('')
-
-  // useShallowEffect(() => {
-  //   const page = localStorage.getItem('selected_page')
-  //   if(page){
-  //     lSelectedPage.set(page)
-  //   }
-  // }, [])
-
-  const onSelectedPage = (page: string) => {
-    localStorage.setItem("selected_page", page);
-    lSelectedPage.set(page);
-  };
   const router = useRouter();
+
   function home() {
     router.push("/v2/home");
   }
+
+  if (sUser.value.masterUserRoleId != "3") router.replace("/v2");
   return (
     <>
       <Modal opened={opened} onClose={close} withCloseButton={false} centered>
@@ -199,7 +196,7 @@ const LayoutDashboardV2 = () => {
         }
         header={
           <Header height={{ base: 70, md: 70 }} p="md" bg={COLOR.merah}>
-            <div
+             <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -217,7 +214,7 @@ const LayoutDashboardV2 = () => {
                 />
               </MediaQuery>
               <Box w={"100%"}>
-                <Group position="apart" sx={{ height: "100%" }}>
+              <Group position="apart" sx={{ height: "100%" }}>
                   <Flex
                     justify="flex-start"
                     align="flex-start"
@@ -234,7 +231,6 @@ const LayoutDashboardV2 = () => {
                       RESOURCE PLANNING
                     </Text>
                   </Flex>
-
                   <Group pr={20}>
                     <Menu position="bottom-end" withArrow>
                       <Menu.Target>
@@ -246,20 +242,20 @@ const LayoutDashboardV2 = () => {
                       </Menu.Target>
                       <Menu.Dropdown>
                         {/* <Menu.Item> */}
-                        <Group p={11}>
-                          <AiOutlineUser color="black" size="1.3rem" />
-                          <Text fw={700}>{sUser.value?.username}</Text>
-                        </Group>
+                          <Group p={11}>
+                            <AiOutlineUser color="black" size="1.3rem" />
+                            <Text fw={700}>{sUser.value?.username}</Text>
+                          </Group>
                         {/* </Menu.Item> */}
                         {/* <Menu.Item> */}
-                        <Group p={11}>
-                          <MdAlternateEmail color="black" size="1.3rem" />
-                          <Text>{sUser.value?.email}</Text>
-                        </Group>
+                          <Group p={11}>
+                            <MdAlternateEmail color="black" size="1.3rem" />
+                            <Text>{sUser.value?.email}</Text>
+                          </Group>
                         {/* </Menu.Item> */}
                         <Menu.Item>
                           <Group
-                            onClick={open}
+                          onClick={open}
                             // onClick={() => {
                             //   localStorage.removeItem("user_id");
                             //   sUser.value = {};
@@ -290,4 +286,4 @@ const LayoutDashboardV2 = () => {
   );
 };
 
-export default LayoutDashboardV2;
+export default LayoutDashboarSuperdAdminCobaV2;
