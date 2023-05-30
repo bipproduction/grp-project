@@ -14,11 +14,72 @@ import {
 import { DateInput } from "@mantine/dates";
 import { useShallowEffect } from "@mantine/hooks";
 import COLOR from "../../../../../fun/WARNA";
+import { useState } from "react";
+import { ModelLegislatif } from "@/model/model_peta_kekuatan";
+import { api } from "@/lib/api-backend";
+import toast from "react-simple-toasts";
 
-export const EditLegislatifDprdProvinsiV2 = ({thisClosed}: any) => {
+export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
+  const [dataEdit, setDataEdit] = useState<ModelLegislatif | null>(null);
+  const [inputProvince, setInputProvince] = useState<any | null>(null)
+  const [inputJabatan, setInputJabatan] = useState("");
+  const [inputPeriode, setInputPeriode] = useState("");
+  const [inputNoUrut, setInputNoUrut] = useState<any | null>(null)
+  const [inputDapil, setInputDapil] = useState("");
+  const [inputCakupanWilayah, setInputCakupanWilayah] = useState("");
+  const [inputAkd, setInputAkd] = useState("");
+
+  const loadData = () => {
+    fetch(api.apiLegislatifGetOne + `?id=${data}`)
+      .then((v) => v.json())
+      .then((v) => {
+        setDataEdit(v);
+        //console.log(v)
+      });
+  }
   useShallowEffect(() => {
     _loadProvinsi();
+    loadData();
   }, []);
+
+
+  const body = {
+    id: dataEdit?.id,
+    userId: dataEdit?.userId,
+    masterTingkatLegislatifId: 2,
+    masterProvinceId:inputProvince?inputProvince:dataEdit?.masterProvinceId,
+    jabatan: inputJabatan?inputJabatan:dataEdit?.jabatan,
+    periode: inputPeriode?inputPeriode:dataEdit?.periode,
+    noUrut: inputNoUrut?inputNoUrut:dataEdit?.noUrut,
+    dapil: inputDapil?inputDapil:dataEdit?.dapil,
+    cakupanWilayah: inputCakupanWilayah?inputCakupanWilayah:dataEdit?.cakupanWilayah,
+    akd: inputAkd?inputAkd:dataEdit?.akd
+  }
+
+  const onEdit = () => {
+    console.log(body);
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+    // disini pengaplikasian api
+    fetch(api.apiLegislatifUpdate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(async (res) => {
+      const data = await res.json();
+      if (res.status === 201) {
+        buttonSimpan();
+        thisClosed();
+      } else {
+        toast(data.message);
+      }
+    });
+  }
+
+  if (dataEdit===undefined) return <></>
   return (
     <>
       <Box>
@@ -33,37 +94,45 @@ export const EditLegislatifDprdProvinsiV2 = ({thisClosed}: any) => {
         </Paper>
         <Box>
           <Flex direction={"column"}>
-            <TextInput placeholder="NIK" label="NIK" withAsterisk />
-            <TextInput placeholder="Nama" label="Nama" withAsterisk />
-            <Select
-              placeholder="Nomoe Urut"
-              label="Nomor Urut"
-              data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
-              withAsterisk
-            />
+            {/* <TextInput placeholder="NIK" label="NIK" withAsterisk />
+            <TextInput placeholder="Nama" label="Nama" withAsterisk /> */}
 
             <Select
               withAsterisk
-              placeholder="Pilih Provinsi"
+              placeholder={dataEdit?.MasterProvince?.name}
               label="Pilih Provinsi"
               data={sProvinsi.value.map((v) => ({
                 label: v.name,
                 value: v.id,
               }))}
+              onChange={(val)=>{
+                setInputProvince(val)
+              }}
             />
 
-            <TextInput placeholder="Dapil" label="Dapil" withAsterisk />
+            <TextInput placeholder={dataEdit?.dapil} label="Dapil" withAsterisk onChange={(val)=>{setInputDapil(val.target.value)}}/>
             <TextInput
-              placeholder="Cakupan Wilayah"
+              placeholder={dataEdit?.cakupanWilayah}
               label="Cakupan Wilayah"
               withAsterisk
+              onChange={(val)=>{setInputCakupanWilayah(val.target.value)}}
             />
             <TextInput
-              placeholder="Komisi / AKD"
+              placeholder={dataEdit?.akd}
               label="Komisi / AKD"
               withAsterisk
+              onChange={(val)=>{setInputAkd(val.target.value)}}
             />
-            <TextInput
+            <Select
+              placeholder={String(dataEdit?.noUrut)}
+              label="Nomor Urut"
+              data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+              withAsterisk
+              onChange={(val)=>{
+                setInputNoUrut(Number(val))
+              }}
+            />
+            {/* <TextInput
               placeholder="Tempat Lahir"
               label="Tempat Lahir"
               withAsterisk
@@ -79,15 +148,15 @@ export const EditLegislatifDprdProvinsiV2 = ({thisClosed}: any) => {
               placeholder="No Handphone"
               label="No Handphone"
               withAsterisk
-            />
-            <TextInput placeholder="Alamat " label="Alamat" withAsterisk />
-            <TextInput placeholder="Email" label="Email" withAsterisk />
-            <TextInput placeholder="Periode" label="Periode" withAsterisk />
-            <TextInput placeholder="Jabatan" label="Jabatan" withAsterisk />
-            <TextInput placeholder="Facebook" label="Facebook" />
+            /> */}
+            {/* <TextInput placeholder="Alamat " label="Alamat" withAsterisk />
+            <TextInput placeholder="Email" label="Email" withAsterisk /> */}
+            <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val)=>{setInputPeriode(val.target.value)}} />
+            <TextInput placeholder={dataEdit?.jabatan} label="Jabatan" withAsterisk onChange={(val)=>{setInputJabatan(val.target.value)}} />
+            {/* <TextInput placeholder="Facebook" label="Facebook" />
             <TextInput placeholder="Instagram" label="Instagram" />
             <TextInput placeholder="TikTok" label="TikTok" />
-            <TextInput placeholder="Twitter" label="Twitter" />
+            <TextInput placeholder="Twitter" label="Twitter" /> */}
             <Box pt={20}>
               <Button
                 w={100}
@@ -95,8 +164,7 @@ export const EditLegislatifDprdProvinsiV2 = ({thisClosed}: any) => {
                 bg={COLOR.orange}
                 radius={"xl"}
                 onClick={() => {
-                  buttonSimpan();
-                  thisClosed()
+                  onEdit()
                 }}
               >
                 Simpan

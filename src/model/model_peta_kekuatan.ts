@@ -135,3 +135,19 @@ export interface MasterMediaSocial {
   name: string
 }
 
+
+export interface ModelLegislatif {
+  id: string
+  jabatan: string
+  periode: string
+  noUrut: number
+  dapil: string
+  cakupanWilayah: string
+  akd: string,
+  userId: string,
+  masterProvinceId:number,
+  masterKabKotId:number,
+  MasterProvince?: MasterProvince
+  MasterKabKot?: MasterKabKot
+  User: User
+}

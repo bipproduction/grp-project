@@ -1,11 +1,38 @@
 import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../data_legis_dummy.json";
 import { EditLegislatifDprRiV2 } from "./edit_legislatif_dpr_ri";
+import { useState } from "react";
+import { ModelLegislatif } from "@/model/model_peta_kekuatan";
+import { api } from "@/lib/api-backend";
+import toast from "react-simple-toasts";
 
 export const TableLegislatifRIV2 = () => {
   const [opened, {open, close}] = useDisclosure(false)
+  const [listData, setListData] = useState<ModelLegislatif[]>([]);
+  const [dataId, setDataId] = useState<string>("");
+
+  const loadData = () => {
+    fetch(api.apiLegislatifGetAll+`?tingkat=1`)
+      .then((v) => v.json())
+      .then((v) => {
+        setListData(v);
+      });
+  }
+
+  const onDelete = (id: string) => {
+    fetch(api.apiLegislatifHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast("Success");
+        }
+      });
+  }
+
+  useShallowEffect(() => {
+    loadData();
+  }, [])
 
   const tbHead = (
     <tr>
@@ -16,39 +43,31 @@ export const TableLegislatifRIV2 = () => {
       <th>Dapil</th>
       <th>Cakupan Wilayah</th>
       <th>Komisi / AKD</th>
-      <th>Tempat Lahir</th>
-      <th>Tgl Lahir</th>
-      <th>Jenis Kelamin</th>
-      <th>No Handphone</th>
       <th>Alamat</th>
       <th>Email</th>
       <th>Periode</th>
       <th>Jabatan</th>
-      <th>Media Social</th>
+      {/* <th>Media Social</th> */}
       <th>
         <Group position="center">Aksi</Group>
       </th>
     </tr>
   );
 
-  const rows = myData.map((e, i) => (
+  const rows = listData.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
-      <td>{e.Nama}</td>
-      <td>{e.NIK}</td>
-      <td>{e.No_Urut}</td>
-      <td>{e.Dapil}</td>
-      <td>{e.Cakupan_Wilayah}</td>
-      <td>{e.Komisi_AKD}</td>
-      <td>{e.Tempat_Lahir}</td>
-      <td>{e.Tgl_Lahir}</td>
-      <td>{e.Jenis_Kelamin}</td>
-      <td>{e.No_handphone}</td>
-      <td>{e.Alamat}</td>
-      <td>{e.Email}</td>
-      <td>{e.Periode}</td>
-      <td>{e.Jabatan}</td>
-      <td>{e.Media_Social}</td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.noUrut}</td>
+      <td>{e.dapil}</td>
+      <td>{e.cakupanWilayah}</td>
+      <td>{e.akd}</td>
+      <td>{e.User.DataDiri.alamat}</td>
+      <td>{e.User.email}</td>
+      <td>{e.periode}</td>
+      <td>{e.jabatan}</td>
+      {/* <td>{e.Media_Social}</td> */}
       <td>
         <Group position="center">
           <Button
@@ -58,11 +77,12 @@ export const TableLegislatifRIV2 = () => {
             w={100}
             onClick={() => {
               open();
+              setDataId(e.id);
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
             Hapus
           </Button>
         </Group>
@@ -78,6 +98,7 @@ export const TableLegislatifRIV2 = () => {
     >
       <EditLegislatifDprRiV2
       thisClosed={close}
+      data={dataId}
       />
 
     </Modal>

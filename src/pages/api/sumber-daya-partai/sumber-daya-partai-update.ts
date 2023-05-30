@@ -8,7 +8,6 @@ const sumberDayaPartaiUpdate = async (
 ) => {
   if (req.method === "POST") {
     const body = req.body;
-    // console.log(body) 
     await client.sumberDayaPartai.update({
       where: {
         id: body.id,
@@ -31,6 +30,7 @@ const sumberDayaPartaiUpdate = async (
         masterJabatanPimpinanRantingId: body.masterJabatanPimpinanRantingId,
         masterJabatanPerwakilanPartaiDiLuarNegeriId:
           body.masterJabatanPerwakilanPartaiDiLuarNegeriId,
+        masterTingkatSayapId: body.masterTingkatSayapId,
         masterSayapPartaiId: body.masterSayapPartaiId,
         masterKaderPartaiId: body.masterKaderPartaiId,
         masterProvinceId: body.masterProvinceId,
