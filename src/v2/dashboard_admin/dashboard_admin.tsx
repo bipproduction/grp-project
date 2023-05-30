@@ -16,31 +16,41 @@ import EChartAnggotaPartaiV2 from "./chart_anggota_partai";
 import EChartKaderPartaiV2 from "./chart_kader_partai";
 import EChartSayapPartaiV2 from "./chart_sayap_partai";
 import EChartStrukturPartaiV2 from "./chart_struktur_partai";
+import { useState } from "react";
+import { useShallowEffect } from "@mantine/hooks";
 
-const listDataDashboard = [
-  {
-    id: 1,
-    name: "Total Struktur Partai",
-    nilai: "245",
-  },
-  {
-    id: 2,
-    name: "Total Sayap Partai",
-    nilai: "549",
-  },
-  {
-    id: 3,
-    name: "Total Kader Partai",
-    nilai: "1.897",
-  },
-  {
-    id: 4,
-    name: "Total Anggota Partai",
-    nilai: "10.578",
-  },
-];
+
 
 const DashAdmin = () => {
+  const [dataValue, setDataValue] = useState()
+
+  useShallowEffect(() => {
+
+  },[])
+
+
+  const listDataDashboard = [
+    {
+      id: 1,
+      name: "Total Struktur Partai",
+      nilai: "245",
+    },
+    {
+      id: 2,
+      name: "Total Sayap Partai",
+      nilai: "549",
+    },
+    {
+      id: 3,
+      name: "Total Kader Partai",
+      nilai: "1.897",
+    },
+    {
+      id: 4,
+      name: "Total Anggota Partai",
+      nilai: "10.578",
+    },
+  ];
   return (
     <>
       <Box>

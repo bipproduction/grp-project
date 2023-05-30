@@ -38,6 +38,7 @@ import {
 import { SayapEditV2 } from "./sayap_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { api } from "@/lib/api-backend";
+import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -49,12 +50,6 @@ const TableSayapPartaiV2 = () => {
   useShallowEffect(() => {
     onSearch("")
   }, []);
-
-  const hapusData = (id: string) => {
-    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
-      .then((e) => e.json())
-      .then((val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
-  };
 
   const tbHead = (
     <tr>
@@ -113,15 +108,11 @@ const TableSayapPartaiV2 = () => {
           >
             Edit
           </Button>
-          <Button
-            variant={"outline"}
-            color={"red"}
-            radius={50}
-            w={100}
-            onClick={() => hapusData(e.id)}
-          >
-            Hapus
-          </Button>
+          <ButtonDeleteData 
+          setId={e}
+          search={search}
+          setDataTable={setDataTable}
+          />
         </Group>
       </td>
     </tr>

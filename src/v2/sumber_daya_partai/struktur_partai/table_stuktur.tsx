@@ -17,6 +17,7 @@ import {
   Pagination,
   Paper,
   ScrollArea,
+  Space,
   Table,
   Text,
   TextInput,
@@ -36,6 +37,7 @@ import { api } from "@/lib/api-backend";
 import { useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import toast from "react-simple-toasts";
+import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
@@ -99,7 +101,7 @@ export const TableStrukturV2 = () => {
 
   return (
     <>
-      <pre>{/* {JSON.stringify(dataTable, null, 2)} */}</pre>
+      {/* <pre>{JSON.stringify(dataTable.map((e) => e.MasterStatusKeanggotaan.id), null, 2)}</pre> */}
       <Modal
         centered
         opened={opened}
@@ -279,67 +281,4 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
   );
 }
 
-function ButtonDeleteData({
-  setId,
-  search,
-  setDataTable,
-}: {
-  setId: ModelSumberDayaPartai;
-  search: string;
-  setDataTable: any;
-}) {
-  const [opened, setOpen] = useDisclosure(false);
 
-  const hapusData = (id: string) => {
-    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
-      .then((e) => e.json())
-      .then((val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
-  };
-  return (
-    <>
-      <Modal opened={opened} onClose={setOpen.close} centered size={"xs"}>
-        <Alert
-          icon={<FiAlertCircle size="1rem" />}
-          title="Hapus Data Ini!"
-          color="red"
-        >
-          <Flex gap={"lg"}>
-            <Button
-              onClick={() => setOpen.close()}
-              radius={"xl"}
-              w={100}
-              color="green"
-              bg={COLOR.hijautua}
-            >
-              Batal
-            </Button>
-            <Button
-              onClick={() => {
-                setOpen.close()
-                hapusData(setId.id);
-                toast("Data Terhapus")
-              }}
-              radius={"xl"}
-              w={100}
-              color="red"
-              bg={COLOR.merah}
-            >
-              Hapus
-            </Button>
-          </Flex>
-        </Alert>
-      </Modal>
-      <Button
-        variant={"outline"}
-        color={"red"}
-        radius={50}
-        w={100}
-        onClick={() => {
-          setOpen.open();
-        }}
-      >
-        Hapus
-      </Button>
-    </>
-  );
-}

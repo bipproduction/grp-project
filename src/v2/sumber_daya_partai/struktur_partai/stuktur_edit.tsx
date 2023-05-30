@@ -60,10 +60,12 @@ import { buttonSimpan } from "@/v2/component/button-toast";
 
 export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [targetEdit, setTargetEdit] = useAtom(_editLoadStruktur_ByStatusSeacrh);
-  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus_Struktur);
+  const [tingkatPengurus, setTingkatPengurus] = useAtom(
+    _tingkatPengurus_Struktur
+  );
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
     _selectTingkatPengurus_Struktur
   );
@@ -135,7 +137,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   const onEdit = () => {
     thisClosed();
-    buttonSimpan()
+    buttonSimpan();
     const body = {
       id: targetEdit?.id!,
       userId: targetEdit?.User.id!,
@@ -187,7 +189,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   return (
     <>
-      {/* {JSON.stringify(targetEdit)} */}
+      {/* <pre>{JSON.stringify(targetEdit, null, "\t")}</pre> */}
       {/* {JSON.stringify(listJabatan_PRanting)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -219,7 +221,11 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
           </Box>
         </Box>
         <Box>
-        <TextInput label="Nama" disabled value={targetEdit.User.DataDiri.name} />
+          <TextInput
+            label="Nama"
+            disabled
+            value={targetEdit.User.DataDiri.name}
+          />
           <Select
             maxDropdownHeight={150}
             disabled
@@ -498,7 +504,11 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
                             </>
                           );
                         } else {
-                          return <><Text>undefined</Text></>
+                          return (
+                            <>
+                              <Text>undefined</Text>
+                            </>
+                          );
                         }
                       }
                     }

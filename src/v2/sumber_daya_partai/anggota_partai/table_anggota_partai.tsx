@@ -30,11 +30,13 @@ import dataTable from "../data_table.json";
 import EditAnggotaPartaiV2 from "./edit_anggota_partai";
 import { _dataAnggotaTable_ByStatusSearch, _loadData_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { useAtom } from "jotai";
+import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 
 const TableAnggotaPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
   const [dataTable, setDataTable] = useAtom(_dataAnggotaTable_ByStatusSearch)
+  const [search, setSearch] = useState("");
 
   useShallowEffect(() => {
     onSearch("")
@@ -109,9 +111,11 @@ const TableAnggotaPartaiV2 = () => {
           >
             Edit
           </Button> */}
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
-            Hapus
-          </Button>
+          <ButtonDeleteData 
+          setId={e}
+          search={search}
+          setDataTable={setDataTable}
+          />
         </Group>
       </td>
     </tr>
@@ -172,6 +176,7 @@ const TableAnggotaPartaiV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
+                onChange={(val) => onSearch(val.currentTarget.value)}
               />
             </Grid.Col>
             {/* <Grid.Col md={8} lg={8}>

@@ -36,6 +36,7 @@ import {
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { KaderEditv2 } from "./kader_edit";
 import { api } from "@/lib/api-backend";
+import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -50,12 +51,6 @@ const TableKaderPartaiV2 = () => {
 
   const onSearch = (search: string) => {
     _loadData_ByStatus_BySeach(3, search, setDataTable);
-  };
-
-  const hapusData = (id: string) => {
-    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
-      .then((e) => e.json())
-      .then((val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
   };
 
   const tbHead = (
@@ -109,19 +104,16 @@ const TableKaderPartaiV2 = () => {
           >
             Edit
           </Button>
-          <Button
-            variant={"outline"}
-            color={"red"}
-            radius={50}
-            w={100}
-            onClick={() => hapusData(e.id)}
-          >
-            Hapus
-          </Button>
+          <ButtonDeleteData 
+          setId={e}
+          search={search}
+          setDataTable={setDataTable}
+          />
         </Group>
       </td>
     </tr>
   ));
+
 
   return (
     <>

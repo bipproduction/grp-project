@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const sumberDayaPartaiHapus = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query
+    // console.log(id)
     await client.sumberDayaPartai.update({
         where: {
             id: id as string
@@ -13,7 +14,7 @@ const sumberDayaPartaiHapus = async (req: NextApiRequest, res: NextApiResponse) 
         }
     })
 
-    return res.status(200).json({ success: true, message: "Data terupdate" })
+    return res.status(200).json({ success: true, message: "Data Terhapus" })
 }
 
 export default sumberDayaPartaiHapus

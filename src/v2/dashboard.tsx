@@ -229,7 +229,7 @@ const DashboardAdminV2 = () => {
   }
   return (
     <>
-      <Modal opened={open} onClose={setOpen.close} centered>
+      <Modal opened={open} onClose={setOpen.close} centered withCloseButton={false}>
         {/* localStorage.removeItem("user_id");
                             sUser.value = {}; */}
         <Alert
