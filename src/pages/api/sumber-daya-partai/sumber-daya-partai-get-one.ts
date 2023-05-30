@@ -76,6 +76,12 @@ const sumberDayaPartaiGetOne = async (req: NextApiRequest, res: NextApiResponse)
                     }
                 }
             },
+            MasterStatusKeanggotaan: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             MasterTingkatSayap:{
                 select: {
                     id: true,

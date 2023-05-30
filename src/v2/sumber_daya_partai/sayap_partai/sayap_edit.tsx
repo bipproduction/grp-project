@@ -14,6 +14,7 @@ import {
   Box,
   Button,
   Grid,
+  Loader,
   Paper,
   Select,
   Text,
@@ -45,6 +46,7 @@ import { _selectDPimpinanCabang_Sayap } from "@/load_data/sumber_daya_partai/loa
 import { _new_loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { _pAnakCabang_Sayap } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { _selectPAnakCabang_Sayap } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { buttonSimpan } from "@/v2/component/button-toast";
 
 export const SayapEditV2 = ({
   thisClosed,
@@ -116,6 +118,7 @@ export const SayapEditV2 = ({
   }, []);
 
   const onEdit = () => {
+    buttonSimpan();
     thisClosed();
     const body = {
       id: targetEdit?.id,
@@ -160,7 +163,12 @@ export const SayapEditV2 = ({
       .then(async (val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
   };
 
-  if (!targetEdit) return <></>;
+  if (!targetEdit)
+    return (
+      <>
+        <Loader />
+      </>
+    );
 
   return (
     <>
@@ -195,7 +203,11 @@ export const SayapEditV2 = ({
           </Box>
         </Box>
         <Box>
-          <TextInput label="Nama "disabled value={targetEdit.User.DataDiri.name} />
+          <TextInput
+            label="Nama "
+            disabled
+            value={targetEdit.User.DataDiri.name}
+          />
           <Select
             label="Tingkat Pengurus"
             disabled
@@ -343,9 +355,11 @@ export const SayapEditV2 = ({
                       </>
                     );
                   } else {
-                    return <>
-                    <Text>undefined</Text>
-                    </>;
+                    return (
+                      <>
+                        <Text>undefined</Text>
+                      </>
+                    );
                   }
                 }
               }

@@ -1,8 +1,17 @@
-import { Box, Paper, Grid, Button, Text, Select, TextInput } from "@mantine/core";
+import {
+  Box,
+  Paper,
+  Grid,
+  Button,
+  Text,
+  Select,
+  TextInput,
+  Loader,
+} from "@mantine/core";
 import COLOR from "../../../../fun/WARNA";
 import { useShallowEffect } from "@mantine/hooks";
 import {
-    _dataKaderTable_ByStatusSearch,
+  _dataKaderTable_ByStatusSearch,
   _editLoadKader_ByStatusSeacrh,
   _loadData_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
@@ -17,6 +26,7 @@ import { useState } from "react";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import _ from "lodash";
 import { api } from "@/lib/api-backend";
+import { buttonSimpan } from "@/v2/component/button-toast";
 
 export const KaderEditv2 = ({
   thisClosed,
@@ -25,7 +35,7 @@ export const KaderEditv2 = ({
   thisClosed: any;
   valueId: any;
 }) => {
-    const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
+  const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
   const [search, setSearch] = useState("");
   const [targetEdit, setTargetEdit] = useAtom(_editLoadKader_ByStatusSeacrh);
   const [kaderPartai, setKaderPartai] = useAtom(_list_KaderPartai);
@@ -41,6 +51,7 @@ export const KaderEditv2 = ({
   }, []);
 
   const onEdit = () => {
+    buttonSimpan();
     thisClosed();
     const body = {
       id: targetEdit?.id,
@@ -74,15 +85,22 @@ export const KaderEditv2 = ({
     };
     // console.log(body);
     fetch(api.apiSumberDayaPartaiUpdate, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then(async (val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then(async (val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
   };
+
+  if (!targetEdit)
+    return (
+      <>
+        <Loader />
+      </>
+    );
 
   return (
     <>
@@ -117,7 +135,11 @@ export const KaderEditv2 = ({
           </Box>
         </Box>
         <Box>
-        <TextInput label="Nama" disabled value={targetEdit?.User.DataDiri.name} />
+          <TextInput
+            label="Nama"
+            disabled
+            value={targetEdit?.User.DataDiri.name}
+          />
           <Select
             maxDropdownHeight={120}
             label="Kader Partai"
