@@ -25,33 +25,31 @@ import EditDataDiriNew from "./edit_data_diri_new";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 
-export const _datapartai_form = atomWithStorage<DataDiri | null>("", null)
+export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
 
 const KTAV2 = () => {
   const ref = useRef();
   const [gambar, setGambar] = useState<any>();
   const [opened, { open, close }] = useDisclosure(false);
-  const [listData, setListData] = useAtom(_datapartai_form)
-  const [openModal, setOpenModal] = useAtom(val_edit_modal)
+  const [listData1, setListData1] = useAtom(_datapartai_form);
+  const [openModal, setOpenModal] = useAtom(val_edit_modal);
 
-
-  useShallowEffect(() => {
+  async function loadKTA() {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
       // .then((val) => val.json())
       // .then(setListData);
-      .then(
-        async (val) => {
-          if (val.status == 200) {
-            const data = await val.json();
-            setListData(data);
-            return;
-          }
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setListData1(data);
+          return;
         }
-      );
-  }, []);
+      });
+  }
 
   useShallowEffect(() => {
     apa();
+    loadKTA();
   });
 
   async function apa() {
@@ -83,19 +81,24 @@ const KTAV2 = () => {
         <Box
           sx={{
             borderRadius: 10,
-            backgroundColor: COLOR.orange,
+            border: "1px solid #7E1717",
+            background: COLOR.coklat,
           }}
         >
+          <Stack>
           <Center pt={40}>
             <Box mx="auto" ref={ref as any}>
               <BackgroundImage
                 src="../.././KTANew10.png"
-                w={560}
-                h={370}
-                radius={30}
+                w={{ base: 290, sm: 510, xs: 320 }}
+                h={{ sm: 350, base: 200, xs: 213 }}
+                radius={10}
               >
-                <Box pl={170} pt={25}>
-                  <Grid gutter="xs">
+                <Box
+                  pl={{ sm: 170, base: 80, xs: 95 }}
+                  pt={{ sm: 25, base: 15, xs: 16 }}
+                >
+                  <Grid gutter="xs" pl={5}>
                     <Grid.Col span={4}>
                       <Flex
                         gap={5}
@@ -104,14 +107,30 @@ const KTAV2 = () => {
                         direction="column"
                         wrap="wrap"
                       >
-                        <Text fz={15} fw={"bold"}>Name</Text>
-                        <Text fz={15} fw={"bold"}>Tempat</Text>
-                        <Text fz={15} fw={"bold"}>Tanggal</Text>
-                        <Text fz={15} fw={"bold"}>Kelurahan</Text>
-                        <Text fz={15} fw={"bold"}>Kecamatan</Text>
-                        <Text fz={15} fw={"bold"}>Kabupaten</Text>
-                        <Text fz={15} fw={"bold"}>Provinsi</Text>
-                        <Text fz={15} fw={"bold"}>Jenis Kelamin</Text>
+                        <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          Name
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Tempat
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Tanggal
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Kelurahan
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Kecamatan
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Kabupaten
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Provinsi
+                        </Text>
+                        <Text fw={"bold"} fz={{ base:7, sm: 14, xs: 9 }}>
+                          Jenis Kelamin
+                        </Text>
                       </Flex>
                     </Grid.Col>
                     <Grid.Col span={8}>
@@ -122,14 +141,30 @@ const KTAV2 = () => {
                         direction="column"
                         wrap="wrap"
                       >
-                        <Text fz={15} >: {listData?.name} </Text>
-                        <Text fz={15} >: {listData?.tempatLahir}</Text>
-                        <Text fz={15} >: {moment(listData?.tanggalLahir).format("LL")}</Text>
-                        <Text fz={15} >: {listData?.MasterDesa.name}</Text>
-                        <Text fz={15} >: {listData?.MasterKecamatan.name} </Text>
-                        <Text fz={15} >: {listData?.MasterKabKot.name} </Text>
-                        <Text fz={15} >: {listData?.MasterProvince.name}</Text>
-                        <Text fz={15} >: {listData?.MasterJenisKelamin.name}</Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.name}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.tempatLahir}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {moment(listData1?.tanggalLahir).format("LL")}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.MasterDesa.name}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.MasterKecamatan.name}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.MasterKabKot.name}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.MasterProvince.name}
+                        </Text>
+                        <Text fz={{ base:7, sm: 14, xs: 9 }}>
+                          : {listData1?.MasterJenisKelamin.name}
+                        </Text>
                       </Flex>
                     </Grid.Col>
                   </Grid>
@@ -137,28 +172,31 @@ const KTAV2 = () => {
               </BackgroundImage>
             </Box>
           </Center>
+          </Stack>
 
           <Center pt={30} pb={40}>
             <Flex gap="md" pt={20}>
               <Modal
                 opened={openModal}
                 onClose={() => setOpenModal(true)}
-                size="90%"
+                size={"xl"}
                 // fullScreen
-                title="Edit Data Diri"
+                // title="Edit Data Diri"
+                centered
                 overlayProps={{
                   // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                   opacity: 0.1,
                 }}
+                withCloseButton={false}
               >
                 {/* <EditKTAV2 /> */}
-                <EditDataDiriNew/>
+                <EditDataDiriNew />
               </Modal>
               <Box w={150}>
                 <Button
                   fullWidth
                   color="pink.9"
-                  bg={COLOR.ungu}
+                  bg={COLOR.orange}
                   onClick={() => setOpenModal(true)}
                   radius={"xl"}
                 >
@@ -170,7 +208,7 @@ const KTAV2 = () => {
                 <Button
                   fullWidth
                   color="pink.9"
-                  bg={COLOR.ungu}
+                  bg={COLOR.orange}
                   radius={"xl"}
                   onClick={() => gambar!.exportComponentAsPNG(ref as any)}
                 >

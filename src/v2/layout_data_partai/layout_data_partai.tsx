@@ -1,19 +1,36 @@
-import { AppShell, Box, Center, Container, Flex, Group, Image, Paper, Stack, Text } from "@mantine/core";
+import {
+  AppShell,
+  Box,
+  Center,
+  Container,
+  Flex,
+  Group,
+  Image,
+  Paper,
+  Stack,
+  Text,
+} from "@mantine/core";
 import React, { PropsWithChildren } from "react";
 import COLOR from "../../../fun/WARNA";
 import { useRouter } from "next/router";
 
-
 function LayoutDataPartaiV2({ children }: PropsWithChildren) {
-  const router = useRouter()
+  const router = useRouter();
   function Afiliatif() {
-    router.push("/v2/data-partai-v2/organisasi-afiliatif-v2/organisasi-afiliatif");
+    router.push(
+      "/v2/data-partai-v2/organisasi-afiliatif-v2/organisasi-afiliatif"
+    );
   }
   return (
     <>
-        <Flex>
+      <Flex direction={{ base: "column", sm: "row" }}>
         <Paper w={520}>
-          <Box bg={COLOR.abuabu} w={"100%"} h={"100vh"}>
+          <Box
+            bg={COLOR.abuabu}
+            w={"100%"}
+            h={"100vh"}
+            style={{ backgroundRepeat: "no-repeat" }}
+          >
             <Box pl={40} pr={40} pt={50}>
               <Text fw={700} fz={40}>
                 Form Data Diri
@@ -22,14 +39,19 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
             <Stack>{children}</Stack>
           </Box>
         </Paper>
-          <Box bg={COLOR.hitam} w={"100%"} h={"100vh"}>
+        <Box
+          bg={COLOR.hitam}
+          w={"100%"}
+          h={"100vh"}
+          style={{ backgroundRepeat: "no-repeat" }}
+        >
           <Container size="30rem" px={0} pt={280}>
             <Center>
-            <Image src="../.././logo.png" width={280} alt="logo" />
+              <Image src="../.././logo.png" width={280} alt="logo" />
             </Center>
-            </Container>
+          </Container>
         </Box>
-        </Flex>
+      </Flex>
     </>
   );
 }

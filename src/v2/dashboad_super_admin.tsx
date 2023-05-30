@@ -22,6 +22,8 @@ import {
   Tooltip,
   Modal,
   Alert,
+  MediaQuery,
+  Burger,
 } from "@mantine/core";
 import { useState } from "react";
 import {
@@ -123,12 +125,13 @@ const LayoutDashboarSuperdAdminV2 = () => {
                   sUser.value = {};
                 }}
               >
-                IYA
+                YA
               </Button>
             </Box>
           </Group>
         </Alert>
       </Modal>
+
       <AppShell
         styles={{
           main: {
@@ -146,10 +149,72 @@ const LayoutDashboarSuperdAdminV2 = () => {
             hiddenBreakpoint="sm"
             hidden={!openednya}
             width={{ sm: 200, lg: 280 }}
+            bg={COLOR.abuabu}
           >
-            <Box>
-              <Header height={70} bg={COLOR.merah}>
-                <Group position="apart" sx={{ height: "100%" }}>
+            <Flex align={"center"} gap={"lg"}>
+              <FaCircle size={25} color={COLOR.merah} />
+              <Text fw={"bold"}>ADMIN</Text>
+            </Flex>
+            <Navbar.Section grow mt="md" component={ScrollArea}>
+              {listSidebar.map((e, i) => (
+                <NavLink
+                  key={`${e.id}${i}`}
+                  label={e.name}
+                  icon={<FaCircle color={COLOR.merah} />}
+                >
+                  {e.child.map((v, ii) => (
+                    <Paper key={`${v.id}${ii}`}>
+                      <NavLink
+                        icon={<FaCircle color={COLOR.orange} />}
+                        c={select == v.name ? "blue" : "dark"}
+                        fw={select == v.name ? "bolder" : "normal"}
+                        bg={COLOR.abuabu}
+                        label={v.name}
+                        onClick={() => {
+                          setOpenedNya(false);
+                          // SelectedView.value == v.name;
+                          // setSelect(v.name);
+                          setSelect(v.name);
+                        }}
+                      />
+                    </Paper>
+                  ))}
+                </NavLink>
+              ))}
+            </Navbar.Section>
+
+            <Navbar.Section>
+              {
+                <Box pt={20}>
+                  <Group>
+                    <Text color="gray">version 1.0</Text>
+                  </Group>
+                </Box>
+              }
+            </Navbar.Section>
+          </Navbar>
+        }
+        header={
+          <Header height={{ base: 70, md: 70 }} p="md" bg={COLOR.merah}>
+             <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                <Burger
+                  opened={openednya}
+                  onClick={() => setOpenedNya((o) => !o)}
+                  size="lg"
+                  color={theme.colors.gray[6]}
+                  mr="xl"
+                />
+              </MediaQuery>
+              <Box w={"100%"}>
+              <Group position="apart" sx={{ height: "100%" }}>
                   <Flex
                     justify="flex-start"
                     align="flex-start"
@@ -167,7 +232,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
                     </Text>
                   </Flex>
                   <Group pr={20}>
-                    <Menu>
+                    <Menu position="bottom-end" withArrow>
                       <Menu.Target>
                         <Tooltip label="Profile">
                           <Group style={{ cursor: "pointer" }}>
@@ -176,18 +241,18 @@ const LayoutDashboarSuperdAdminV2 = () => {
                         </Tooltip>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item>
-                          <Group>
+                        {/* <Menu.Item> */}
+                          <Group p={11}>
                             <AiOutlineUser color="black" size="1.3rem" />
                             <Text fw={700}>{sUser.value?.username}</Text>
                           </Group>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <Group>
+                        {/* </Menu.Item> */}
+                        {/* <Menu.Item> */}
+                          <Group p={11}>
                             <MdAlternateEmail color="black" size="1.3rem" />
                             <Text>{sUser.value?.email}</Text>
                           </Group>
-                        </Menu.Item>
+                        {/* </Menu.Item> */}
                         <Menu.Item>
                           <Group
                           onClick={open}
@@ -204,50 +269,9 @@ const LayoutDashboarSuperdAdminV2 = () => {
                     </Menu>
                   </Group>
                 </Group>
-              </Header>
-            </Box>
-
-            <Navbar.Section>
-              {/* <Group pb={30} onClick={home} style={{cursor: 'pointer'}}>
-                <ActionIcon>
-                  <IoArrowBackCircle size={90} color={COLOR.merah} />
-                </ActionIcon>
-                <Text  onClick={home}>Home</Text>
-              </Group> */}
-              {
-                <Flex align={"center"} gap={"lg"}>
-                  <FaCircle size={25} color={COLOR.merah} />
-                  <Text>{sUser.value?.username}</Text>
-                </Flex>
-              }
-            </Navbar.Section>
-            <Navbar.Section grow mt="md" component={ScrollArea}>
-              {listSidebar.map((e, i) => (
-                <NavLink
-                  key={`${e.id}${i}`}
-                  label={e.name}
-                  icon={<FaCircle color={COLOR.merah} />}
-                >
-                  {e.child.map((v, ii) => (
-                    <Paper key={`${v.id}${ii}`}>
-                      <NavLink
-                        icon={<FaCircle color={COLOR.orange} />}
-                        c={select == v.name ? "blue" : "dark"}
-                        label={v.name}
-                        onClick={() => {
-                          setOpenedNya(false);
-                          // SelectedView.value == v.name;
-                          setSelect(v.name);
-                        }}
-                      />
-                    </Paper>
-                  ))}
-                </NavLink>
-              ))}
-            </Navbar.Section>
-
-            {/* <Navbar.Section>{<Text>Footer</Text>}</Navbar.Section> */}
-          </Navbar>
+              </Box>
+            </div>
+          </Header>
         }
       >
         {listSidebar.map((e) =>

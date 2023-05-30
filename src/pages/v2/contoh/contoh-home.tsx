@@ -1,9 +1,12 @@
 import {
   ActionIcon,
   Alert,
+  AppShell,
+  Aside,
   AspectRatio,
   Avatar,
   Box,
+  Burger,
   Button,
   Card,
   Center,
@@ -11,8 +14,10 @@ import {
   Group,
   Header,
   Image,
+  MediaQuery,
   Menu,
   Modal,
+  Navbar,
   SimpleGrid,
   Text,
   TextInput,
@@ -22,8 +27,9 @@ import {
   Tooltip,
   TypographyStylesProvider,
   createStyles,
+  useMantineColorScheme,
+  useMantineTheme,
 } from "@mantine/core";
-import COLOR from "../../../fun/WARNA";
 import { sUser } from "@/s_state/s_user";
 import {
   AiFillSetting,
@@ -39,8 +45,12 @@ import { useDisclosure, useWindowScroll } from "@mantine/hooks";
 import { constant } from "lodash";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import COLOR from "../../../../fun/WARNA";
+import { useState } from "react";
 
 const HomeUserV2 = () => {
+  const theme = useMantineTheme();
+  const [opened, setOpened] = useState(false);
   const mockdata = [
     {
       description:
@@ -143,61 +153,58 @@ const HomeUserV2 = () => {
   } else if (sUser.value.masterUserRoleId == "3") {
     link_dashboard = "/v2/dashboard-super-admin";
   }
-  const [opened, { open, close }] = useDisclosure(false);
+  const [openedModal, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      {/* HEADER */}
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
-        <Alert
-          icon={<FiAlertCircle size="2rem" color="red" />}
-          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
-          color="gray"
-        >
-          <Group pt={10}>
-            <Box w={150}>
-              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={close}>
-                TIDAK
-              </Button>
-            </Box>
-            <Box w={150}>
-              <Button
-                fullWidth
-                color="green.9"
-                bg={COLOR.hijautua}
-                onClick={() => {
-                  localStorage.removeItem("user_id");
-                  sUser.value = {};
-                }}
-              >
-                YA
-              </Button>
-            </Box>
-          </Group>
-        </Alert>
-      </Modal>
-      <Box>
-        <Header
-          height={70}
-          bg={COLOR.merah}
-          sx={{ position: "sticky", top: 0 }}
-        >
-          <Group position="apart" sx={{ height: "100%" }}>
-            <Flex
-              justify="flex-start"
-              align="flex-start"
-              direction="column"
-              wrap="wrap"
-              pl={20}
+      <AppShell
+        styles={{
+          main: {
+            background:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[8]
+                : theme.colors.gray[0],
+          },
+        }}
+        navbarOffsetBreakpoint="sm"
+        asideOffsetBreakpoint="sm"
+        header={
+          <Header height={{ base: 70, md: 70 }} p={"md"} bg={COLOR.merah}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                width: "100%",
+              }}
             >
-              <Text fz={25} color="white">
-                GARUDA
-              </Text>
-              <Text fz={15} color="white">
-                RESOURCE PLANNING
-              </Text>
-            </Flex>
-            <Group sx={{ height: "100%" }} spacing={0} hidden>
+              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="lg"
+                  color={theme.colors.gray[6]}
+                  mr="xl"
+                />
+              </MediaQuery>
+              <Box w={"100%"}>
+                <Group position="apart" sx={{ height: "100%" }}>
+                  <Flex
+                    justify="flex-start"
+                    align="flex-start"
+                    direction="column"
+                    wrap="wrap"
+                    pl={20}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Text fz={25} color="white">
+                      GARUDA
+                    </Text>
+                    <Text fz={15} color="white">
+                      RESOURCE PLANNING
+                    </Text>
+                  </Flex>
+                  <Group sx={{ height: "100%" }} spacing={0}>
               <Button
                 variant="subtle"
                 color="gray.0"
@@ -278,14 +285,15 @@ const HomeUserV2 = () => {
                 </Menu.Dropdown>
               </Menu>
             </Group>
-          </Group>
-        </Header>
-
-        {/* HOME */}
+                </Group>
+              </Box>
+            </div>
+          </Header>
+        }
+      >
         <Group pt={20} p={5}>
           <Image src="/../gerindra.png" alt="a" />
         </Group>
-
         {/* ABOUT */}
         <Box p={10} pt={30} pb={40}>
           <Text fw={700} fz={20}>
@@ -323,7 +331,6 @@ const HomeUserV2 = () => {
             </TypographyStylesProvider>
           </Box>
         </Box>
-
         {/* BLOG */}
         <Box>
           {/* {JSON.stringify(sUser.value)} */}
@@ -335,7 +342,6 @@ const HomeUserV2 = () => {
             {cards}
           </SimpleGrid>
         </Box>
-
         {/* CONTACT */}
         <Box p={10} pt={30}>
           <Box
@@ -422,7 +428,7 @@ const HomeUserV2 = () => {
             </SimpleGrid>
           </Box>
         </Box>
-      </Box>
+      </AppShell>
     </>
   );
 };
