@@ -29,6 +29,7 @@ import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 import LayoutDataDiriV2 from "@/v2/layout_data_partai/layout_data_diri";
+import LayoutDataDiriCabangV2 from "@/v2/layout_data_partai/layout_data_cabang";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -178,8 +179,10 @@ function SayapDewanPimpinanCabang2() {
   }
   return (
     <>
-          <LayoutDataPartaiV2>
+          {/* <LayoutDataPartaiV2> */}
           {/* <LayoutDataDiriV2> */}
+          <LayoutDataDiriCabangV2>
+
         <Box h={"100%"} bg={COLOR.abuabu}>
           <Box pl={40}></Box>
           <Box pl={40}>
@@ -231,7 +234,6 @@ function SayapDewanPimpinanCabang2() {
             label: val.name
           }))}
           label="Pilih Sayap Partai"
-          mt={1}
           radius={"md"}
           withAsterisk
           placeholder="Pilih Sayap Partai"
@@ -252,7 +254,7 @@ function SayapDewanPimpinanCabang2() {
             formSayapDewanPimpinanCabang.values.data.masterProvinceId = val!
           }}
           radius={"md"}
-          mt={10}
+          // mt={10}
           placeholder={selectedProvince.name}
           value={selectedProvince.name}
           label="Provinsi"
@@ -277,7 +279,7 @@ function SayapDewanPimpinanCabang2() {
             formSayapDewanPimpinanCabang.values.data.masterKabKotId = val!
           }}
           radius={"md"}
-          mt={10}
+          // mt={10}
           placeholder={selectedKabupaten.name}
           value={selectedKabupaten.name}
           label="Kabupaten / Kota"
@@ -295,7 +297,7 @@ function SayapDewanPimpinanCabang2() {
           }))}
           label="Jabatan"
           withAsterisk
-          mt={10}
+          // mt={10}
           radius={"md"}
           placeholder="Jabatan"
           searchable
@@ -303,7 +305,7 @@ function SayapDewanPimpinanCabang2() {
         <TextInput
           {...formSayapDewanPimpinanCabang.getInputProps("data.alamatKantor")}
           radius={"md"}
-          mt={10}
+          // mt={10}
           withAsterisk
           placeholder="Alamat Kantor"
           label="Alamat Kantor"
@@ -311,7 +313,7 @@ function SayapDewanPimpinanCabang2() {
         <TextInput
           {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
           radius={"md"}
-          mt={10}
+          // mt={10}
           withAsterisk
           placeholder="Nomor WA Admin"
           label="Nomor WA Admin"
@@ -332,8 +334,9 @@ function SayapDewanPimpinanCabang2() {
         </Button>
           </Stack>
         </Box>
+          </LayoutDataDiriCabangV2>
           {/* </LayoutDataDiriV2> */}
-      </LayoutDataPartaiV2>
+      {/* </LayoutDataPartaiV2> */}
     </>
   );
 }

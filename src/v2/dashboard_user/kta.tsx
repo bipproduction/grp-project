@@ -148,7 +148,7 @@ const KTAV2 = () => {
                           : {listData1?.tempatLahir}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
-                          : {moment(listData1?.tanggalLahir).format("LL")}
+                          : {moment(listData1?.tanggalLahir).format('LL')}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
                           : {listData1?.MasterDesa.name}

@@ -98,7 +98,7 @@ function OrganisasiAfiliatifV2() {
               opened={opened}
               onClose={close}
               title="Organisasi Afilliatif"
-              size={"sm"}
+              size={460}
             >
               <Select
                 onChange={(val) => {
