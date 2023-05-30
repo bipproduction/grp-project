@@ -119,6 +119,7 @@ export const api = {
     "apiSumberDayaPartaiUpdate": "/api/sumber-daya-partai/sumber-daya-partai-update",
     "apiSumberDayaPartaiSearch": "/api/sumber-daya-partai/sumber-daya-partai-search",
     "apiSumberDayaPartaiHapus": "/api/sumber-daya-partai/sumber-daya-partai-hapus",
+    "apiSumberDayaPartaiCount": "/api/sumber-daya-partai/sumber-daya-partai-count",
 
 
 
