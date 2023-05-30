@@ -1,4 +1,4 @@
-import { Box, Paper, Grid, Button, Text, Select } from "@mantine/core";
+import { Box, Paper, Grid, Button, Text, Select, TextInput } from "@mantine/core";
 import COLOR from "../../../../fun/WARNA";
 import { useShallowEffect } from "@mantine/hooks";
 import {
@@ -117,6 +117,7 @@ export const KaderEditv2 = ({
           </Box>
         </Box>
         <Box>
+        <TextInput label="Nama" disabled value={targetEdit?.User.DataDiri.name} />
           <Select
             maxDropdownHeight={120}
             label="Kader Partai"

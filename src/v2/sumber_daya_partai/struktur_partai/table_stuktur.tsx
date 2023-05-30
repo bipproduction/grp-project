@@ -6,9 +6,11 @@ import {
   _new_loadEditByModel,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
+  Alert,
   Box,
   Button,
   Center,
+  Flex,
   Grid,
   Group,
   Modal,
@@ -32,6 +34,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
 import { api } from "@/lib/api-backend";
 import { useState } from "react";
+import { FiAlertCircle } from "react-icons/fi";
+import toast from "react-simple-toasts";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
@@ -79,17 +83,11 @@ export const TableStrukturV2 = () => {
           >
             Edit
           </Button>
-          <Button
-            variant={"outline"}
-            color={"red"}
-            radius={50}
-            w={100}
-            onClick={() => {
-              hapusData(e.id)
-            }}
-          >
-            Hapus
-          </Button>
+          <ButtonDeleteData
+            setId={e}
+            search={search}
+            setDataTable={setDataTable}
+          />
         </Group>
       </td>
     </tr>
@@ -98,12 +96,6 @@ export const TableStrukturV2 = () => {
   function onSearch(text: string) {
     _loadData_ByStatus_BySeach(1, text, setDataTable);
   }
-
-  const hapusData = (id: string) => {
-    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
-      .then((e) => e.json())
-      .then((val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
-  };
 
   return (
     <>
@@ -270,7 +262,11 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
                         </>
                       );
                     } else {
-                      return <>Salah</>;
+                      return (
+                        <>
+                          <Text>undefined</Text>
+                        </>
+                      );
                     }
                   }
                 }
@@ -279,6 +275,71 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
           }
         }
       })()}
+    </>
+  );
+}
+
+function ButtonDeleteData({
+  setId,
+  search,
+  setDataTable,
+}: {
+  setId: ModelSumberDayaPartai;
+  search: string;
+  setDataTable: any;
+}) {
+  const [opened, setOpen] = useDisclosure(false);
+
+  const hapusData = (id: string) => {
+    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
+      .then((e) => e.json())
+      .then((val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
+  };
+  return (
+    <>
+      <Modal opened={opened} onClose={setOpen.close} centered size={"xs"}>
+        <Alert
+          icon={<FiAlertCircle size="1rem" />}
+          title="Hapus Data Ini!"
+          color="red"
+        >
+          <Flex gap={"lg"}>
+            <Button
+              onClick={() => setOpen.close()}
+              radius={"xl"}
+              w={100}
+              color="green"
+              bg={COLOR.hijautua}
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={() => {
+                setOpen.close()
+                hapusData(setId.id);
+                toast("Data Terhapus")
+              }}
+              radius={"xl"}
+              w={100}
+              color="red"
+              bg={COLOR.merah}
+            >
+              Hapus
+            </Button>
+          </Flex>
+        </Alert>
+      </Modal>
+      <Button
+        variant={"outline"}
+        color={"red"}
+        radius={50}
+        w={100}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        Hapus
+      </Button>
     </>
   );
 }

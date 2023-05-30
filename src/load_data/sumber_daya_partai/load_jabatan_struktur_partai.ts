@@ -13,6 +13,7 @@ import { atomWithStorage } from "jotai/utils";
 import _, { set } from "lodash";
 import { MasterJabatanDewanPembina } from "@/model/interface_sumber_daya_partai";
 
+// setValue untuk Struktu Partai
 export const _dewanPembina = atom<any[]>([]);
 export const _selectDewanPembina = atom({
   id: new Number(),
@@ -33,12 +34,12 @@ export const _selectDewabPimpinanCabang = atom({
   id: new Number(),
   name: "",
 });
-export const _dewanPimpinanAnakCabang = atom<any[]>([]);
+export const _pimpinanAnakCabang = atom<any[]>([]);
 export const _selectPimpinanAnakCabang = atom({
   id: new Number(),
   name: "",
 });
-export const _dewanPimpinanRanting = atom<any[]>([]);
+export const _pimpinanRanting = atom<any[]>([]);
 export const _selectPimpinanRanting = atom({
   id: new Number(),
   name: "",
@@ -48,6 +49,28 @@ export const _selectPerwakilanLuarNegeri = atom({
   id: new Number(),
   name: "",
 });
+
+// setValue untuk Sayap Partai
+export const _dPimpinanPusat_Sayap = atom<any[]>([])
+export const _selectDPimpinanPusat_Sayap = atom({
+  id: new Number(),
+  name: "",
+})
+export const _dPimpinanDaerah_Sayap = atom<any[]>([])
+export const _selectDPimpinanDaerah_Sayap = atom({
+  id: new Number(),
+  name: "",
+})
+export const _dPimpinanCabang_Sayap = atom<any[]>([])
+export const _selectDPimpinanCabang_Sayap = atom({
+  id: new Number(),
+  name: "",
+})
+export const _pAnakCabang_Sayap = atom<any[]>([])
+export const _selectPAnakCabang_Sayap = atom({
+  id: new Number(),
+  name: "",
+})
 
 // JOTAI GLOBAL STATE
 export const _new_loadJabatanDewanPembina = (

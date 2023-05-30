@@ -25,6 +25,9 @@ export const _dataSayapTable_ByStatusSearch = atomWithStorage<
 export const _dataKaderTable_ByStatusSearch = atomWithStorage<
   ModelSumberDayaPartai[]
 >("_dataKaderTable", []);
+export const _dataAnggotaTable_ByStatusSearch = atomWithStorage<
+  ModelSumberDayaPartai[]
+>("_dataAnggotaPartai", []);
 
 // Storage di bawah digunakan untuk memanggil data ke edit page, Get One by Id
 export const _editLoadStruktur_ByStatusSeacrh =
@@ -37,11 +40,11 @@ export const _editLoadSayap_ByStatusSeacrh =
     "_editLoadSayap_ByStatusSeacrh",
     null
   );
-  export const _editLoadKader_ByStatusSeacrh =
+export const _editLoadKader_ByStatusSeacrh =
   atomWithStorage<ModelSumberDayaPartai | null>(
     "_editLoadKader_ByStatusSeacrh",
     null
-    );
+  );
 export const _dataSeach = atom<any>("");
 
 // Load Data by Status Keanggotaan dan Search by name

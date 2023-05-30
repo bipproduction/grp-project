@@ -21,6 +21,8 @@ import {
   MediaQuery,
   Burger,
   Tooltip,
+  Modal,
+  Alert,
 } from "@mantine/core";
 import SumberDayaPartai from "@/layout/sumber_daya_partai/sumber_daya_partai";
 import StrukturPartai from "@/layout/sumber_daya_partai/struktur_partai/struktur_partai";
@@ -51,13 +53,13 @@ import TabulasiData from "@/layout/sistem_pelaporan_pemilu/tabulasi_data/tabulas
 import SaksiPilpres from "@/layout/sistem_pelaporan_pemilu/saksi_pilpres/saksi_pilpres";
 import SaksiPileg from "@/layout/sistem_pelaporan_pemilu/saksi_pileg/saksi_pileg";
 import COLOR from "../../fun/WARNA";
-import { FiLogOut } from "react-icons/fi";
+import { FiAlertCircle, FiLogOut } from "react-icons/fi";
 import DataPilpres2019 from "@/layout/peta_kekuatan/pemilu/DataPilpres2019/DataPilpres2019";
 import KomparasiData from "@/layout/peta_kekuatan/pemilu/KomparasiData/KomparasiData";
 import DashboardAdmin from "@/layout/dashboardAdmin/DashboardAdmin";
 import { gSelectedPage } from "@/xg_state.ts/g_selected_page";
 import { useHookstate } from "@hookstate/core";
-import { useShallowEffect } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import DashAdmin from "./dashboard_admin/dashboard_admin";
 import StrukturPartaiV2 from "./sumber_daya_partai/struktur_partai/struktur_partai";
 import SayapPartaiV2 from "./sumber_daya_partai/sayap_partai/sayap_partai";
@@ -203,7 +205,7 @@ const listSidebar = [
 const DashboardAdminV2 = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-
+  const [open, setOpen] = useDisclosure(false);
   const [select, setSelect] = useState("Dashboard");
 
   const lSelectedPage = useHookstate(gSelectedPage);
@@ -227,6 +229,36 @@ const DashboardAdminV2 = () => {
   }
   return (
     <>
+      <Modal opened={open} onClose={setOpen.close} centered>
+        {/* localStorage.removeItem("user_id");
+                            sUser.value = {}; */}
+        <Alert
+          icon={<FiAlertCircle size="2rem" color="red" />}
+          title="APAKAH ANDA YAKIN AKAN LOGOUT?"
+          color="gray"
+        >
+          <Group pt={10}>
+            <Box w={150}>
+              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={setOpen.close}>
+                TIDAK
+              </Button>
+            </Box>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="green.9"
+                bg={COLOR.hijautua}
+                onClick={() => {
+                  localStorage.removeItem("user_id");
+                  sUser.value = {};
+                }}
+              >
+                YA
+              </Button>
+            </Box>
+          </Group>
+        </Alert>
+      </Modal>
       <AppShell
         styles={{
           main: {
@@ -327,14 +359,12 @@ const DashboardAdminV2 = () => {
                   </Flex>
 
                   <Menu position="bottom-end" withArrow>
-                    <Menu.Target >
-                      
-                        <Group style={{ cursor: "pointer" }} >
-                          <Avatar radius="xl" />
-                        </Group>
-                      
+                    <Menu.Target>
+                      <Group style={{ cursor: "pointer" }}>
+                        <Avatar radius="xl" />
+                      </Group>
                     </Menu.Target>
-                    <Menu.Dropdown >
+                    <Menu.Dropdown>
                       <Menu.Item>
                         <Group>
                           <AiOutlineUser color="black" size="1.3rem" />
@@ -348,12 +378,11 @@ const DashboardAdminV2 = () => {
                           <Text>{sUser.value?.email}</Text>
                         </Group>
                       </Menu.Item>
-                      <Menu.Divider/>
+                      <Menu.Divider />
                       <Menu.Item>
                         <Group
                           onClick={() => {
-                            localStorage.removeItem("user_id");
-                            sUser.value = {};
+                            setOpen.open();
                           }}
                         >
                           <AiOutlineLogout color="red" size="1.3rem" />
