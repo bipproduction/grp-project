@@ -34,7 +34,7 @@ import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
 import { useState } from "react";
 import {
   _dewanPembina,
-  _dewanPimpinanAnakCabang as _pimpinanAnakCabang,
+  _pimpinanAnakCabang as _pimpinanAnakCabang,
   _dewanPimpinanCabang,
   _dewanPimpinanDaerah,
   _dewanPimpinanPusat,
@@ -48,7 +48,7 @@ import {
   _selectDewanPimpinanDaerah,
   _selectDewanPimpinanPusat,
   _selectPimpinanAnakCabang,
-  _dewanPimpinanRanting as _pimpinanRanting,
+  _pimpinanRanting as _pimpinanRanting,
   _selectPimpinanRanting,
   _new_loadJabatanPimpinanRanting,
   _perwakilanLuarNegeri,
@@ -56,6 +56,7 @@ import {
   _new_loadPerwakilanLuarNegeri,
 } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { api } from "@/lib/api-backend";
+import { buttonSimpan } from "@/v2/component/button-toast";
 
 export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
@@ -134,6 +135,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
 
   const onEdit = () => {
     thisClosed();
+    buttonSimpan()
     const body = {
       id: targetEdit?.id!,
       userId: targetEdit?.User.id!,
@@ -217,15 +219,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
           </Box>
         </Box>
         <Box>
-          {/* <TextInput
-            label="Name"
-            value={targetEdit.User.DataDiri.name}
-            onChange={(val) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.name = val.target.value;
-              setChangeData(data);
-            }}
-          /> */}
+        <TextInput label="Nama" disabled value={targetEdit.User.DataDiri.name} />
           <Select
             maxDropdownHeight={150}
             disabled
@@ -284,7 +278,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
                       const data1: any = _.clone(targetEdit);
                       data1.MasterJabatanDewanPembina.id = val;
                       setChangeData(targetEdit);
-                      console.log(data1);
+                      // console.log(data1);
                     }}
                   />
                 </>
@@ -373,7 +367,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
                               : targetEdit.MasterJabatanDewanPimpinanCabang
                                   ?.name
                           }
-                          data={listJabatan_DPimpinanDaerah.map((e) => ({
+                          data={listJabatan_DPimpinanCabang.map((e) => ({
                             value: e.id,
                             label: e.name,
                           }))}
@@ -504,6 +498,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
                             </>
                           );
                         } else {
+                          return <><Text>undefined</Text></>
                         }
                       }
                     }
