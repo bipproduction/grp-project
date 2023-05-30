@@ -100,7 +100,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
                   </Text>
                   <Text>
-                    A2 : Pemilih Potensial (Keluarga, Saudara, Tentangga)
+                    A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
                   </Text>
                   <Text>
                     A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)

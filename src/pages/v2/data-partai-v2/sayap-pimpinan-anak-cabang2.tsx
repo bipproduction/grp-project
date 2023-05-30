@@ -30,7 +30,7 @@ import { _loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_partai/l
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -49,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 
 function SayapPimpinanAnakCabang2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
@@ -133,7 +134,7 @@ function SayapPimpinanAnakCabang2() {
   }, []);
 
   const PimpinanAnakCabang = () => {
-    // console.log(formSayapDewanPimpinanAnakCabang.values.data)
+    console.log(formSayapDewanPimpinanAnakCabang.values.data)
     if (
       Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
     ) {
@@ -163,8 +164,8 @@ function SayapPimpinanAnakCabang2() {
         masterKecamatanId: "",
         masterJabatanPimpinanAnakCabangId: "",
         masterSayapPartaiId: "",
-        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
-        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+        masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
+        masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
       },
     },
   });

@@ -14,7 +14,7 @@ import { _loadProvinsi } from "@/load_data/wilayah/load_provinsi";
 import { _loadJabatanDewanPimpinanDaerah } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { sUser } from "@/s_state/s_user";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,6 +36,7 @@ function DewanPimpinanDaerah() {
   const [value, setValue] =useState("")
   const router = useRouter()
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
 
 
   const PimpinanDaerah = () => {
@@ -175,9 +176,9 @@ function DewanPimpinanDaerah() {
               pr={20}
               pl={20}
               onClick={() => {
-                setAmbilData({
-                  ...ambilData,
-                  masterTingkatPengurusId: '2'
+                setAmbilDataSayap({
+                  ...ambilDataSayap,
+                  masterTingkatSayapId: '2'
                 })
                 router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-daeraht2");
               }}

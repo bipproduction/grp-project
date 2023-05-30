@@ -4,6 +4,7 @@ export interface ModelSumberDayaPartai {
   alamatKantor: string
   waAdmin: string
   User: User
+  MasterTingkatSayap: MasterTingkatSayap
   MasterTingkatPengurus: MasterTingkatPengurus
   MasterJabatan: any
   MasterJabatanDewanPembina?: MasterJabatanDewanPembina
@@ -90,6 +91,11 @@ export interface UserMediaSocial {
 }
 
 export interface MasterMediaSocial {
+  id: number,
+  name: string
+}
+
+export interface MasterTingkatSayap {
   id: number,
   name: string
 }

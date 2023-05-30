@@ -11,8 +11,8 @@ export const _selectTingkatPengurus_Struktur = atom({
   id: "",
   name: ""
 })
-export const _tingkatPengurus_Sayapp = atom<any[]>([])
-export const _selectTingkatPengurus_Sayapp = atom({
+export const _tingkatPengurus_Sayap = atom<any[]>([])
+export const _selectTingkatPengurus_Sayap = atom({
   id: "",
   name: ""
 })

@@ -14,7 +14,7 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -28,10 +28,35 @@ import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../data_table.json";
 import EditKaderPartaiV2 from "./edit_kader_partai";
+import { useAmp } from "next/amp";
+import { useAtom } from "jotai";
+import {
+  _dataKaderTable_ByStatusSearch,
+  _loadData_ByStatus_BySeach,
+} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { KaderEditv2 } from "./kader_edit";
+import { api } from "@/lib/api-backend";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
+  const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
+  const [valueId, setValueId] = useState("");
+  const [search, setSearch] = useState("");
+
+  useShallowEffect(() => {
+    onSearch("");
+  }, []);
+
+  const onSearch = (search: string) => {
+    _loadData_ByStatus_BySeach(3, search, setDataTable);
+  };
+
+  const hapusData = (id: string) => {
+    fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
+      .then((e) => e.json())
+      .then((val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
+  };
 
   const tbHead = (
     <tr>
@@ -39,7 +64,7 @@ const TableKaderPartaiV2 = () => {
       <th>Nama</th>
       <th>NIK</th>
       <th>Tingkat Kader</th>
-      <th>Email</th>
+      {/* <th>Email</th>
       <th>Tempat Lahir</th>
       <th>Tanggal Lahir</th>
       <th>Jenis Kelamin</th>
@@ -55,34 +80,19 @@ const TableKaderPartaiV2 = () => {
       <th>Instagram</th>
       <th>Facebook</th>
       <th>TikTok</th>
-      <th>Twitter</th>
-      <th>Aksi</th>
+      <th>Twitter</th> */}
+      <th>
+        <Center>Aksi</Center>
+      </th>
     </tr>
   );
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
       <td>{i + 1}</td>
-      <td>{e.name}</td>
-      <td>{e.nik}</td>
-      <td>{e.kader_partai}</td>
-      <td>{e.email}</td>
-      <td>{e.tmpt_lahir}</td>
-      <td>{e.tgl_lahir}</td>
-      <td>{e.j_kelamin}</td>
-      <td>{e.nomor_tlpn}</td>
-      <td>{e.agama}</td>
-      <td>{e.pekerjaan}</td>
-      <td>{e.alamat}</td>
-      <td>{e.provinsi}</td>
-      <td>{e.kabupaten}</td>
-      <td>{e.kecamatan}</td>
-      <td>{e.desa}</td>
-      <td>{e.rt_rw}</td>
-      <td>{e.instagram}</td>
-      <td>{e.facebook}</td>
-      <td>{e.tiktok}</td>
-      <td>{e.twitter}</td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.MasterKaderPartai.name}</td>
 
       <td>
         <Group position="center">
@@ -92,13 +102,20 @@ const TableKaderPartaiV2 = () => {
             radius={50}
             w={100}
             onClick={() => {
-               
-                open()
+              setValueId(e.id);
+
+              open();
             }}
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100}>
+          <Button
+            variant={"outline"}
+            color={"red"}
+            radius={50}
+            w={100}
+            onClick={() => hapusData(e.id)}
+          >
             Hapus
           </Button>
         </Group>
@@ -108,17 +125,20 @@ const TableKaderPartaiV2 = () => {
 
   return (
     <>
+      {/* {JSON.stringify(dataTable)} */}
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
+        size="lg"
+        centered
         // fullScreen
         overlayProps={{
           // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
-        <EditKaderPartaiV2 thisClosed={close} />
+        {/* <EditKaderPartaiV2 thisClosed={close} valueId={valueId} /> */}
+        <KaderEditv2 thisClosed={close} valueId={valueId} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -160,6 +180,7 @@ const TableKaderPartaiV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
+                onChange={(val) => onSearch(val.currentTarget.value)}
               />
             </Grid.Col>
             {/* <Grid.Col md={8} lg={8}>
@@ -186,14 +207,14 @@ const TableKaderPartaiV2 = () => {
           </Grid>
         </Box>
         <Box>
-          <ScrollArea py={20} >
-            <Table withBorder highlightOnHover horizontalSpacing={"lg"} >
+          <ScrollArea py={20}>
+            <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            <Group position="right" pt={10}>
+            {/* <Group position="right" pt={10}>
               <Pagination total={10} color={"orange"} />
-            </Group>
+            </Group> */}
           </ScrollArea>
         </Box>
       </Box>

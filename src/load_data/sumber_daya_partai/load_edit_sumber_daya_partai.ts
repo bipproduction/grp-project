@@ -15,13 +15,17 @@ export const _new_loadEditByModel =
 export const _listChangeData = atom<ModelSumberDayaPartai | null>(null);
 
 // Global state untuk _loadData_ByStatus_BySeach
-// Storage di bawah digunakan untuk menampung isi database untuk di tampilkan
-export const _dataTable_ByStatusSearch = atomWithStorage<
+// Storage di bawah digunakan untuk menampung isi database untuk di tampilkan di table
+export const _dataStrukturTable_ByStatusSearch = atomWithStorage<
   ModelSumberDayaPartai[]
 >("_dataTable_ByStatusSearch>", []);
 export const _dataSayapTable_ByStatusSearch = atomWithStorage<
   ModelSumberDayaPartai[]
 >("_dataSayapTable", []);
+export const _dataKaderTable_ByStatusSearch = atomWithStorage<
+  ModelSumberDayaPartai[]
+>("_dataKaderTable", []);
+
 // Storage di bawah digunakan untuk memanggil data ke edit page, Get One by Id
 export const _editLoadStruktur_ByStatusSeacrh =
   atomWithStorage<ModelSumberDayaPartai | null>(
@@ -33,6 +37,11 @@ export const _editLoadSayap_ByStatusSeacrh =
     "_editLoadSayap_ByStatusSeacrh",
     null
   );
+  export const _editLoadKader_ByStatusSeacrh =
+  atomWithStorage<ModelSumberDayaPartai | null>(
+    "_editLoadKader_ByStatusSeacrh",
+    null
+    );
 export const _dataSeach = atom<any>("");
 
 // Load Data by Status Keanggotaan dan Search by name

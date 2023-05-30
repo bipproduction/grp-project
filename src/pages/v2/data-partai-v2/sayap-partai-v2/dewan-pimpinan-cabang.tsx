@@ -22,7 +22,7 @@ import { sJabatanDewanPimpinanCabang } from "@/s_state/sumber_daya_partai/s_jaba
 import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
 import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { useAtom } from "jotai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -42,6 +42,7 @@ function PimpinanCabang() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
@@ -279,9 +280,9 @@ function PimpinanCabang() {
       </Drawer>
       <UnstyledButton className={classes.user} pr={20} pl={20} 
       onClick={() => {
-        setAmbilData({
-          ...ambilData,
-          masterTingkatPengurusId: '3'
+        setAmbilDataSayap({
+          ...ambilDataSayap,
+          masterTingkatSayapId: '3'
         })
         router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-cabang2")
       }}

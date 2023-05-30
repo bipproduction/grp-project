@@ -5,8 +5,11 @@ import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import _ from "lodash";
 
-export const _listSayapPartai = atomWithStorage<MasterSayapPartai[]>("", []);
-export const _select_SayapPartai = atom<MasterSayapPartai | null>(null);
+export const _list_SayapPartai = atom<any[]>([]);
+export const _select_SayapPartaii = atom({
+  id: new Number(),
+  name: "",
+});
 
 export const _loadNama_SayapPartai = async (
   setSayapPartai: any,

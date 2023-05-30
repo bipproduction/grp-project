@@ -37,7 +37,7 @@ import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
-import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -56,14 +56,15 @@ const useStyles = createStyles((theme) => ({
 
 function SayapDewanPimpinanDaeraht2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [value, setValue] = useState<any>();
   const router = useRouter();
 
-  const PimpinanPusat = () => {
-    // console.log(formSayapPimpinanPusat.values.data)
-    if (Object.values(formSayapPimpinanPusat.values.data).includes("")) {
+  const PimpinanDaerah = () => {
+    console.log(formSayapPimpinanDaerah.values.data)
+    if (Object.values(formSayapPimpinanDaerah.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -71,7 +72,7 @@ function SayapDewanPimpinanDaeraht2() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formSayapPimpinanPusat.values.data),
+      body: JSON.stringify(formSayapPimpinanDaerah.values.data),
     }).then((v) => {
       if (v.status === 201) {
         toast("Sukses");
@@ -80,14 +81,14 @@ function SayapDewanPimpinanDaeraht2() {
     });
   };
 
-  const formSayapPimpinanPusat = useForm({
+  const formSayapPimpinanDaerah = useForm({
     initialValues: {
       data: {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
         masterJabatanDewanPimpinanPusatId: "",
-        masterTingkatPengurusId: +ambilData.masterTingkatPengurusId,
-        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+        masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
+        masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
       },
     },
   });
@@ -150,7 +151,7 @@ function SayapDewanPimpinanDaeraht2() {
             <Select
               onChange={(val) => {
                 setValue(val!);
-                formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
+                formSayapPimpinanDaerah.values.data.masterSayapPartaiId = val!;
               }}
               data={sSayapPartai.value.map((val) => ({
                 value: val.id,
@@ -165,14 +166,14 @@ function SayapDewanPimpinanDaeraht2() {
             <Select
               onChange={(val) => {
                 setValue(val!);
-                formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
+                formSayapPimpinanDaerah.values.data.masterJabatanDewanPimpinanPusatId =
                   val!;
               }}
               label="Jabatan"
               withAsterisk
               radius={"md"}
               placeholder="Jabatan"
-              data={sJabatanDewanPimpinanPusat.value.map((val) => ({
+              data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
                 value: val.id,
                 label: val.name,
               }))}
@@ -184,7 +185,7 @@ function SayapDewanPimpinanDaeraht2() {
               bg={COLOR.coklat}
               color="red.9"
               radius={"md"}
-              onClick={PimpinanPusat}
+              onClick={PimpinanDaerah}
             >
               SIMPAN
             </Button>

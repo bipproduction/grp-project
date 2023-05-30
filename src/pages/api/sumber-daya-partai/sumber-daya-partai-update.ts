@@ -16,6 +16,7 @@ const sumberDayaPartaiUpdate = async (
         userId: body.userId,
         masterStatusKeanggotaanId: body.masterStatusKeanggotaanId,
         masterTingkatPengurusId: body.masterTingkatPengurusId,
+        masterTingkatSayapId: body.masterTingkatSayapId,
         masterJabatanId: body.masterJabatanId,
         masterJabatanDewanPembinaId: body.masterJabatanDewanPembinaId,
         masterJabatanDewanPimpinanPusatId:
