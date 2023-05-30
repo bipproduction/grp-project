@@ -21,9 +21,12 @@ import { useState } from "react";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { useShallowEffect } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
+import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { useAtom } from "jotai";
 
 const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -33,6 +36,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
 
     useShallowEffect(() => {
         loadStatusAksiNyata();
+        //_loadDataRencanaKunjunganGerindra("", setListDataNew);
     });
 
     const formTambahRencanaKunjungan = useForm({
@@ -62,6 +66,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataRencanaKunjunganGerindra("", setListDataNew);
             } else {
                 toast(data.message);
             }

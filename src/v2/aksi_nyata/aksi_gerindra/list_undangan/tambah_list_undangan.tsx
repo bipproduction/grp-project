@@ -20,9 +20,12 @@ import toast from "react-simple-toasts";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
+import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { useAtom } from "jotai";
 
 const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
+    const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
 
     const loadListRencanaKunjungan = async () => {
         const res = await fetch(api.apiRencanaKunjunganGerindraGetAll);
@@ -62,6 +65,7 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataListUndanganGerindra("", setListDataNew);
             } else {
                 toast(data.message);
             }

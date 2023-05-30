@@ -7,31 +7,36 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
+import { useAtom } from "jotai";
+import { _dataEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 
 export const TableEksekutifNasionalV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
+  const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [dataId, setDataId] = useState<string>("");
 
-  const loadData = () => {
-    fetch(api.apiEksekutifGetAll+`?tingkat=1`)
-      .then((v) => v.json())
-      .then((v) => {
-        setListData(v);
-      });
-  }
+  // const loadData = () => {
+  //   fetch(api.apiEksekutifGetAll+`?tingkat=1`)
+  //     .then((v) => v.json())
+  //     .then((v) => {
+  //       setListData(v);
+  //     });
+  // }
 
   const onDelete = (id: string) => {
     fetch(api.apiEksekutifHapus + `?id=${id}`)
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataEksekutif(1,"", setListDataNew);
         }
       });
   }
 
   useShallowEffect(() => {
-    loadData();
+    //loadData();
+    _loadDataEksekutif(1, "", setListDataNew);
   }, [])
 
   const tbHead = (
@@ -53,7 +58,7 @@ export const TableEksekutifNasionalV2 = () => {
     
   );
 
-  const rows = listData.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.User.DataDiri.name}</td>

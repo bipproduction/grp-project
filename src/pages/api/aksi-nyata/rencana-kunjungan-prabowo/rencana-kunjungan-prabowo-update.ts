@@ -13,7 +13,7 @@ const rencanaKunjunganPrabowoUpdate = async (req: NextApiRequest, res: NextApiRe
                 judul: body.judul,
                 tanggal: body.tanggal,
                 img: body.img,
-                masterStatusAksiNyataId: body.masterStatusAksiNyataId
+                masterStatusAksiNyataId:body.masterStatusAksiNyataId
             }
         })
 

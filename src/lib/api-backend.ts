@@ -11,7 +11,7 @@ export const api = {
     "apiDataDiriGetOne": "/api/form-data-diri/data-diri-get-one",
     "apiDataDiriPost": "/api/form-data-diri/data-diri-post",
     "apiDataDiriUpdate": "/api/form-data-diri/data-diri-update",
-    "apiDataDiriGetByNIK":"/api/form-data-diri/data-diri-get-by-nik",
+    "apiDataDiriGetByNIK": "/api/form-data-diri/data-diri-get-by-nik",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN PRABOWO
@@ -89,6 +89,7 @@ export const api = {
     "apiEksekutifUpdate": "/api/peta-kekuatan/eksekutif/eksekutif-update",
     "apiEksekutifSearch": "/api/peta-kekuatan/eksekutif/eksekutif-search",
     "apiEksekutifHapus": "/api/peta-kekuatan/eksekutif/eksekutif-hapus",
+    "apiEksekutifSearchAll": "/api/peta-kekuatan/eksekutif/eksekutif-search-all",
 
 
     // LEGISLATIF
@@ -98,6 +99,7 @@ export const api = {
     "apiLegislatifUpdate": "/api/peta-kekuatan/legislatif/legislatif-update",
     "apiLegislatifSearch": "/api/peta-kekuatan/legislatif/legislatif-search",
     "apiLegislatifHapus": "/api/peta-kekuatan/legislatif/legislatif-hapus",
+    "apiLegislatifSearchAll": "/api/peta-kekuatan/legislatif/legislatif-search-all",
 
 
     // PARTAI PENGUSUNG EKSEKUTIF

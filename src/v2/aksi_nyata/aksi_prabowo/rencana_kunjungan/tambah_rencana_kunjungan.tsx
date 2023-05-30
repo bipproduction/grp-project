@@ -21,9 +21,12 @@ import { api } from "@/lib/api-backend";
 import { useState } from "react";
 import { useShallowEffect } from "@mantine/hooks";
 import { apiGetMaster } from "@/lib/api-get-master";
+import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { useAtom } from "jotai";
 
 const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const [listDataNew, setListDataNew]  = useAtom(_dataRencanaKunjunganPrabowo);
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
         const data = await res.json();
@@ -63,6 +66,7 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataRencanaKunjunganPrabowo("", setListDataNew);
             } else {
                 toast(data.message);
             }

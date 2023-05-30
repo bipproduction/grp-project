@@ -6,30 +6,35 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import moment from "moment";
 import toast from "react-simple-toasts";
+import { useAtom } from "jotai";
+import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
   const [listData, setListData] = useState<any[]>([]);
   const [dataId, setDataId] = useState<string>("");
+  const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
 
-  const loadData = () => {
-    fetch(api.apiRencanaKunjunganGerindraGetAll)
-      .then((v) => v.json())
-      .then((v) => {
-        setListData(v);
-      });
-  }
+  // const loadData = () => {
+  //   fetch(api.apiRencanaKunjunganGerindraGetAll)
+  //     .then((v) => v.json())
+  //     .then((v) => {
+  //       setListData(v);
+  //     });
+  // }
 
   const onDelete = (id: string) => {
     fetch(api.apiRencanaKunjunganGerindraHapus + `?id=${id}`)
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataRencanaKunjunganGerindra("", setListDataNew);
         }
       });
   }
 
   useShallowEffect(() => {
-    loadData();
+    // loadData();
+    _loadDataRencanaKunjunganGerindra("", setListDataNew);
   }, [])
 
   const tbHead = (
@@ -43,7 +48,7 @@ export const TableRencanaKunjunganGerindraV2 = () => {
     </tr>
   );
 
-  const rows = listData.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.judul}</td>

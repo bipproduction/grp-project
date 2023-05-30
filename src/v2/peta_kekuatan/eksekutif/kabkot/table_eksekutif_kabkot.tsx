@@ -7,11 +7,14 @@ import { useState } from "react";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { useAtom } from "jotai";
+import { _dataEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 
 export const TableEksekutifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false)
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
   const [dataId, setDataId] = useState<string>("");
+  const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=3`)
@@ -26,12 +29,14 @@ export const TableEksekutifKabKotV2 = () => {
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataEksekutif(3, "", setListDataNew);
         }
       });
   }
 
   useShallowEffect(() => {
     loadData();
+    _loadDataEksekutif(3, "", setListDataNew);
   }, [])
 
   const tbHead = (
@@ -51,7 +56,7 @@ export const TableEksekutifKabKotV2 = () => {
     </tr>
   );
 
-  const rows = listData.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.User.DataDiri.name}</td>

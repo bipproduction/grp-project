@@ -24,12 +24,15 @@ import { useShallowEffect } from "@mantine/hooks";
 import { ModelRencanaKunjungan } from "../../../../model/model_aksi_nyata";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { atomWithStorage } from "jotai/utils";
+import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { useAtom } from "jotai";
 const moment = require('moment');
 
 
 const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: any }) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -56,7 +59,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
         judul: dataEdit?.judul,
         tanggal: dataEdit?.tanggal,
         img: dataEdit?.img,
-        masterStatusaksiNyataId: dataEdit?.masterStatusAksiNyataId,
+        masterStatusAksiNyataId: dataEdit?.masterStatusAksiNyataId,
     };
 
     // const formEditRencanaKunjungan = useForm({
@@ -72,7 +75,6 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
     // });
 
     const onEdit = () => {
-        console.log(body);
         if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
@@ -88,6 +90,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataRencanaKunjunganPrabowo("", setListDataNew);
             } else {
                 toast(data.message);
             }
@@ -147,7 +150,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                     placeholder={dataEdit?.MasterStatusAksiNyata.name}
                                     label={"**"}
                                     onChange={(val) => {
-                                        body.masterStatusaksiNyataId = _.toInteger(val);
+                                        body.masterStatusAksiNyataId = _.toInteger(val);
                                     }}
                                 />
 

@@ -23,11 +23,14 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
+import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { useAtom } from "jotai";
 const moment = require('moment');
 
 const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
+    const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -82,6 +85,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataRencanaKunjunganGerindra("", setListDataNew);
             } else {
                 toast(data.message);
             }

@@ -16,6 +16,8 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import toast from "react-simple-toasts";
+import { _dataLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { useAtom } from "jotai";
 
 export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
   const [dataEdit, setDataEdit] = useState<ModelLegislatif | null>(null);
@@ -25,6 +27,8 @@ export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
   const [inputDapil, setInputDapil] = useState("");
   const [inputCakupanWilayah, setInputCakupanWilayah] = useState("");
   const [inputAkd, setInputAkd] = useState("");
+  const [listDataNew, setListDataNew] = useAtom(_dataLegislatifNasional);
+
   const loadData = () => {
     fetch(api.apiLegislatifGetOne + `?id=${data}`)
       .then((v) => v.json())
@@ -66,6 +70,7 @@ export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
+        _loadDataLegislatif(1,"",setListDataNew);
       } else {
         toast(data.message);
       }
