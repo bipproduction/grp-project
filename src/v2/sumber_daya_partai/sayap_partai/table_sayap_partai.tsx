@@ -88,7 +88,7 @@ const TableSayapPartaiV2 = () => {
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterSayapPartai?.name}</td>
-      <td>{e.MasterTingkatSayap.name}</td>
+      <td>{e.MasterTingkatSayap?.name}</td>
       {/* <td>{e.MasterTingkatPengurus.name}</td> */}
       <td>
         <JabatanSayapPartai setJabtan={e} />
@@ -232,16 +232,16 @@ function JabatanSayapPartai({
     <>
       {/* {JSON.stringify(setJabtan.MasterTingkatPengurus.id)} */}
       {(() => {
-        if (setJabtan.MasterTingkatSayap.id == 1) {
+        if (setJabtan.MasterTingkatSayap?.id == 1) {
           return <>{setJabtan.MasterJabatanDewanPimpinanPusat?.name}</>;
         } else {
-          if (setJabtan.MasterTingkatSayap.id == 2) {
+          if (setJabtan.MasterTingkatSayap?.id == 2) {
             return <>{setJabtan.MasterJabatanDewanPimpinanDaerah?.name}</>;
           } else {
-            if (setJabtan.MasterTingkatSayap.id == 3) {
+            if (setJabtan.MasterTingkatSayap?.id == 3) {
               return <>{setJabtan.MasterJabatanDewanPimpinanCabang?.name}</>;
             } else {
-              if (setJabtan.MasterTingkatSayap.id == 4) {
+              if (setJabtan.MasterTingkatSayap?.id == 4) {
                 return <>{setJabtan.MasterJabatanPimpinanAnakCabang.name}</>;
               } else {
                 return<>

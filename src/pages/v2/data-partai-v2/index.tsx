@@ -26,6 +26,7 @@ import AngotaPartaiV2 from "./angota-partai";
 import { useAtom } from "jotai";
 import { number } from "echarts";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
+import LayoutDataDiriV2 from "@/v2/layout_data_partai/layout_data_diri";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -64,7 +65,7 @@ function DataPartaiV2() {
   }
   return (
     <>
-      <LayoutDataPartaiV2>
+    <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
@@ -129,7 +130,8 @@ function DataPartaiV2() {
             {/* Anggota Partai */}
           </Stack>
         </Box>
-      </LayoutDataPartaiV2>
+    </LayoutDataPartaiV2>
+
     </>
   );
 }
