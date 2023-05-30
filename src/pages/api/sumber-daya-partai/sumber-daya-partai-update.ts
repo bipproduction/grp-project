@@ -30,7 +30,6 @@ const sumberDayaPartaiUpdate = async (
         masterJabatanPimpinanRantingId: body.masterJabatanPimpinanRantingId,
         masterJabatanPerwakilanPartaiDiLuarNegeriId:
           body.masterJabatanPerwakilanPartaiDiLuarNegeriId,
-        masterTingkatSayapId: body.masterTingkatSayapId,
         masterSayapPartaiId: body.masterSayapPartaiId,
         masterKaderPartaiId: body.masterKaderPartaiId,
         masterProvinceId: body.masterProvinceId,
