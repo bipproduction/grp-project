@@ -18,46 +18,87 @@ import EChartSayapPartaiV2 from "./chart_sayap_partai";
 import EChartStrukturPartaiV2 from "./chart_struktur_partai";
 import { useState } from "react";
 import { useShallowEffect } from "@mantine/hooks";
-
-
+import { api } from "@/lib/api-backend";
+import { _loadData_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 
 const DashAdmin = () => {
-  const [dataValue, setDataValue] = useState()
+  const [totalStruktur, setTotalStruktur] = useState([]);
+  const [totalSayap, setTotalSayap] = useState([]);
+  const [totalKader, setTotalKader] = useState([]);
+  const [totalAnggota, setTotalAnggota] = useState([]);
+  const [search, setSearch] = useState("");
+  const [dataTable, setDataTable] = useState([]);
 
   useShallowEffect(() => {
+    loadDataCountStruktur();
+    loadDataCountSayap();
+    loadDataCountKader();
+    loadDataCountAnggota();
 
-  },[])
+    _loadData_ByStatus_BySeach(3, search, setDataTable);
+    _loadData_ByStatus_BySeach(4, search, setDataTable);
+  }, []);
 
+  const loadDataCountStruktur = async () => {
+    await fetch(api.apiSumberDayaPartaiCount + `?id=${1}`)
+      .then((res) => res.json())
+      .then(async (val) => {
+        setTotalStruktur(val);
+        _loadData_ByStatus_BySeach(1, search, setDataTable);
+      });
+  };
+  const loadDataCountSayap = async () => {
+    await fetch(api.apiSumberDayaPartaiCount + `?id=${2}`)
+      .then((res) => res.json())
+      .then((val) => {
+        setTotalSayap(val);
+        _loadData_ByStatus_BySeach(2, search, setDataTable);
+      });
+  };
+  const loadDataCountKader = async () => {
+    await fetch(api.apiSumberDayaPartaiCount + `?id=${3}`)
+      .then((res) => res.json())
+      .then((val) => setTotalKader(val));
+  };
+  const loadDataCountAnggota = async () => {
+    await fetch(api.apiSumberDayaPartaiCount + `?id=${4}`)
+      .then((res) => res.json())
+      .then((val) => setTotalAnggota(val));
+  };
 
   const listDataDashboard = [
     {
       id: 1,
       name: "Total Struktur Partai",
-      nilai: "245",
+      nilai: totalStruktur,
     },
     {
       id: 2,
       name: "Total Sayap Partai",
-      nilai: "549",
+      nilai: totalSayap,
     },
     {
       id: 3,
       name: "Total Kader Partai",
-      nilai: "1.897",
+      nilai: totalKader,
     },
     {
       id: 4,
       name: "Total Anggota Partai",
-      nilai: "10.578",
+      nilai: totalAnggota,
     },
   ];
   return (
     <>
+      {/* {JSON.stringify(totalStruktur)}
+    {JSON.stringify(totalSayap)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
-              <Text size={20} fw={"bold"}>Dashboard Admin</Text>
+              <Text size={20} fw={"bold"}>
+                Dashboard Admin
+              </Text>
             </Grid.Col>
             {/* <Grid.Col span={4}>
               <Group position="right">
@@ -93,7 +134,7 @@ const DashAdmin = () => {
                 { maxWidth: 755, cols: 1, spacing: "xl" },
               ]}
             >
-              {listDataDashboard.map((e) => (
+              {listDataDashboard.map((e: any) => (
                 <Paper
                   key={e.id}
                   shadow={"lg"}
@@ -104,10 +145,11 @@ const DashAdmin = () => {
                   }}
                 >
                   <Center>
-                    <Text >{e.name}</Text>
+                    <Text>{e.name}</Text>
                   </Center>
                   <Center>
                     <Text mt={10} fw={700} fz={30} color={COLOR.merah}>
+                      {/* {e.nilai} */}
                       {e.nilai}
                     </Text>
                   </Center>
@@ -123,10 +165,10 @@ const DashAdmin = () => {
               { maxWidth: 755, cols: 1, spacing: "xl" },
             ]}
           >
-            <EChartStrukturPartaiV2/>
-            <EChartSayapPartaiV2/>
-            <EChartKaderPartaiV2/>
-            <EChartAnggotaPartaiV2/>
+            <EChartStrukturPartaiV2 />
+            <EChartSayapPartaiV2 />
+            <EChartKaderPartaiV2 />
+            <EChartAnggotaPartaiV2 />
           </SimpleGrid>
         </Box>
       </Box>
