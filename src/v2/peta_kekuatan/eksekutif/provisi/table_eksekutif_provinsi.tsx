@@ -7,14 +7,17 @@ import { EditEksekutifProvinsiV2 } from "./edit_eksekutif_provinsi";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { useAtom } from "jotai";
 
 export const TableEksekutifProvinsiV2 = () => {
-  const [opened, {open, close}] = useDisclosure(false)
+  const [opened, { open, close }] = useDisclosure(false)
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
   const [dataId, setDataId] = useState<string>("");
+  const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
 
   const loadData = () => {
-    fetch(api.apiEksekutifGetAll+`?tingkat=2`)
+    fetch(api.apiEksekutifGetAll + `?tingkat=2`)
       .then((v) => v.json())
       .then((v) => {
         setListData(v);
@@ -26,12 +29,14 @@ export const TableEksekutifProvinsiV2 = () => {
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataEksekutif(2, "", setListDataNew);
         }
       });
   }
 
   useShallowEffect(() => {
     loadData();
+    _loadDataEksekutif(2, "", setListDataNew);
   }, [])
 
   const tbHead = (
@@ -52,7 +57,7 @@ export const TableEksekutifProvinsiV2 = () => {
     </tr>
   );
 
-  const rows = listData.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.User.DataDiri.name}</td>
@@ -78,7 +83,7 @@ export const TableEksekutifProvinsiV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button>
         </Group>
@@ -88,13 +93,13 @@ export const TableEksekutifProvinsiV2 = () => {
 
   return (
     <>
-    <Modal
-    opened={opened}
-    onClose={close}
-    >
-      <EditEksekutifProvinsiV2 thisClosed={close} data={dataId}/>
+      <Modal
+        opened={opened}
+        onClose={close}
+      >
+        <EditEksekutifProvinsiV2 thisClosed={close} data={dataId} />
 
-    </Modal>
+      </Modal>
       <Box pt={20}>
         <ScrollArea>
           <Table withBorder horizontalSpacing={"lg"}>

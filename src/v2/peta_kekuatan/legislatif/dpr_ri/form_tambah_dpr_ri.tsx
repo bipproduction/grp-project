@@ -9,6 +9,8 @@ import toast from "react-simple-toasts";
 import _ from "lodash"
 import { data } from "jquery";
 import { on } from "events";
+import { _dataLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { useAtom } from "jotai";
 
 export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
   const [dataDiri, setDataDiri] = useState<ModelEksekutifDataDiri | undefined>(undefined);
@@ -19,6 +21,7 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
   const [inputDapil, setInputDapil] = useState("");
   const [inputCakupanWilayah, setInputCakupanWilayah] = useState("");
   const [inputAkd, setInputAkd] = useState("");
+  const [listDataNew, setListDataNew] = useAtom(_dataLegislatifNasional);
 
 
   async function onFind() {
@@ -61,6 +64,7 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
+        _loadDataLegislatif(1,"",setListDataNew)
       } else {
         toast(data.message);
       }

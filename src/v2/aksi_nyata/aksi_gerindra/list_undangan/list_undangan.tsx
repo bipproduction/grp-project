@@ -4,9 +4,17 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableListUndanganGerindraV2 } from "./table_list_undangan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahListUndanganGerindraV2 from "./tambah_list_undangan";
+import { useAtom } from "jotai";
+import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 export const ListUndanganGerindraV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
+    const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
+
+
+    function onSearch(text: string) {
+        _loadDataListUndanganGerindra(text, setListDataNew);
+    }
 
     return <>
 
@@ -35,6 +43,7 @@ export const ListUndanganGerindraV2 = () => {
                             icon={<AiOutlineSearch size={20} />}
                             placeholder="Search"
                             radius={"md"}
+                            onChange={(val) => { onSearch(val.target.value) }}
                         />
                     </Grid.Col>
                     <Grid.Col md={8} lg={8}>

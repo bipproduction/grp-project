@@ -5,22 +5,26 @@ import EditRencanaKunjunganPrabowoV2 from "./edit_rencana_kunjungan";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { useAtom } from "jotai";
+import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 const moment = require('moment')
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
   const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] = useState<any[]>([]);
+  const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
   const [dataId, setDataId] = useState<string>("");
 
-  const loadRencanaKunjunganPrabowo = () => {
-    fetch(api.apiRencanaKunjunganPrabowoGetAll)
-      .then((v) => v.json())
-      .then((v) => {
-        setDataRencanaKunjunganPrabowo(v);
-      });
-  };
+  // const loadRencanaKunjunganPrabowo = () => {
+  //   fetch(api.apiRencanaKunjunganPrabowoGetAll)
+  //     .then((v) => v.json())
+  //     .then((v) => {
+  //       setDataRencanaKunjunganPrabowo(v);
+  //     });
+  // };
 
   useShallowEffect(() => {
-    loadRencanaKunjunganPrabowo();
+    //loadRencanaKunjunganPrabowo();
+    _loadDataRencanaKunjunganPrabowo("", setListDataNew);
   }, []);
 
   const onDelete = (id: string) => {
@@ -28,6 +32,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataRencanaKunjunganPrabowo("", setListDataNew);
         }
       });
   }
@@ -43,7 +48,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
     </tr>
   );
 
-  const rows = listDataRencanaKunjunganPrabowo.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.judul}</td>

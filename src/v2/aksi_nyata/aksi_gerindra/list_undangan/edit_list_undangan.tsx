@@ -22,10 +22,13 @@ import { useState } from "react";
 import { ModelListUndanganGerindra } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
+import { useAtom } from "jotai";
+import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganGerindra | null>(null);
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
+    const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
 
     const loadRencanaKunjunganGerindra = async () => {
         const res = await fetch(api.apiRencanaKunjunganGerindraGetAll);
@@ -64,7 +67,6 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
 
 
     const onEdit = () => {
-        console.log(body);
 
         if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
@@ -81,13 +83,14 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _loadDataListUndanganGerindra("", setListDataNew);
             } else {
                 toast(data.message);
             }
         });
     }
 
-    if(dataEdit===undefined || _.isNull(dataEdit)) return <></>
+    if (dataEdit === undefined || _.isNull(dataEdit)) return <></>
     return (
         <>
             <Box>

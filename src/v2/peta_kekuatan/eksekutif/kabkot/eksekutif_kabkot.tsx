@@ -3,8 +3,15 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahEksekutifV2 } from "../tambah_eksekutif";
 import { TableEksekutifKabKotV2 } from "./table_eksekutif_kabkot";
+import { _dataEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { useAtom } from "jotai";
 
 export const EksekutifKabKotV2 = () => {
+  const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
+
+  function onSearch(text: string) {
+    _loadDataEksekutif(3, text, setListDataNew);
+  }
   return (
     <>
       <Box>
@@ -16,6 +23,9 @@ export const EksekutifKabKotV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
+                onChange={(val) => {
+                  onSearch(val.target.value);
+                }}
               />
             </Grid.Col>
             <Grid.Col md={8} lg={8}>
@@ -23,7 +33,7 @@ export const EksekutifKabKotV2 = () => {
             </Grid.Col>
           </Grid>
         </Box>
-        <TableEksekutifKabKotV2/>
+        <TableEksekutifKabKotV2 />
       </Box>
     </>
   );

@@ -7,31 +7,36 @@ import { useState } from "react";
 import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { useAtom } from "jotai";
+import { _dataLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 
 export const TableLegislatifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useState<ModelLegislatif[]>([]);
+  const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
   const [dataId, setDataId] = useState<string>("");
 
-  const loadData = () => {
-    fetch(api.apiLegislatifGetAll + `?tingkat=3`)
-      .then((v) => v.json())
-      .then((v) => {
-        setListData(v);
-      });
-  }
+  // const loadData = () => {
+  //   fetch(api.apiLegislatifGetAll + `?tingkat=3`)
+  //     .then((v) => v.json())
+  //     .then((v) => {
+  //       setListData(v);
+  //     });
+  // }
 
   const onDelete = (id: string) => {
     fetch(api.apiLegislatifHapus + `?id=${id}`)
       .then(async (res) => {
         if (res.status === 200) {
           toast("Success");
+          _loadDataLegislatif(3, "", setListDataNew);
         }
       });
   }
 
   useShallowEffect(() => {
-    loadData();
+    //loadData();
+    _loadDataLegislatif(3, "", setListDataNew);
   }, [])
 
   const tbHead = (
@@ -53,7 +58,7 @@ export const TableLegislatifKabKotV2 = () => {
     </tr>
   );
 
-  const rows = listData.map((e, i) => (
+  const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{i + 1}</td>
       <td>{e.User.DataDiri.name}</td>
@@ -80,7 +85,7 @@ export const TableLegislatifKabKotV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
+          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button>
         </Group>

@@ -4,9 +4,16 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableRencanaKunjunganPrabowoV2 } from "./table_rencana_kunjungan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahRencanaKunjunganPrabowoV2 from "./tambah_rencana_kunjungan";
+import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { useAtom } from "jotai";
 
 export const RencanaKunjunganPrabowoV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
+    const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
+    
+    function onSearch(text: string) {
+        _loadDataRencanaKunjunganPrabowo(text, setListDataNew);
+      }
     return <>
         {/* Tambah Modal */}
         <Modal
@@ -32,6 +39,7 @@ export const RencanaKunjunganPrabowoV2 = () => {
                             icon={<AiOutlineSearch size={20} />}
                             placeholder="Search"
                             radius={"md"}
+                            onChange={(val)=>{onSearch(val.target.value)}}
                         />
                     </Grid.Col>
                     <Grid.Col md={8} lg={8}>

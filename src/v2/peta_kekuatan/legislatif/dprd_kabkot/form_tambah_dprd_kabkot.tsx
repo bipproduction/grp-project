@@ -16,6 +16,7 @@ import _ from "lodash";
 import { _loadSelectKabkot } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
+import { _dataLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 
 export const FormTambahLegislatifDprdKabkotV2 = ({
   tutupModal,
@@ -35,6 +36,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
   const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
   const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
   const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
+  const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
 
 
   async function onFind() {
@@ -83,6 +85,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
+        _loadDataLegislatif(3, "", setListDataNew);
       } else {
         toast(data.message);
       }

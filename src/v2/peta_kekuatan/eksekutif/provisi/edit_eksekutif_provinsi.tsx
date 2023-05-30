@@ -26,6 +26,8 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
+import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { useAtom } from "jotai";
 
 export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
   const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
@@ -35,6 +37,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
   const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
   const [inputPeriode, setInputPeriode] = useState<any | null>(null);
   const [inputAlamatKantor, setInputAlamatKantor] = useState<any | null>(null);
+  const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetOne + `?id=${data}`)
@@ -65,7 +68,6 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
   }
 
   const onEdit = () => {
-    console.log(body);
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -81,6 +83,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
+        _loadDataEksekutif(2, "", setListDataNew);
       } else {
         toast(data.message);
       }

@@ -21,7 +21,8 @@ const eksekutifUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 masterStatusEksekutifId: body.masterStatusEksekutifId,
                 namaLembaga: body.namaLembaga,
                 periode: body.periode,
-                alamatKantor: body.alamatKantor
+                alamatKantor: body.alamatKantor,
+                jabatanNasional:body.jabatanNasional,
             }
         })
 
