@@ -6,7 +6,9 @@ import {
   Flex,
   Group,
   Image,
+  Navbar,
   Paper,
+  ScrollArea,
   Stack,
   Text,
 } from "@mantine/core";
@@ -14,7 +16,7 @@ import React, { PropsWithChildren } from "react";
 import COLOR from "../../../fun/WARNA";
 import { useRouter } from "next/router";
 
-function LayoutDataPartaiV2({ children }: PropsWithChildren) {
+function LayoutDataDiriV2({ children }: PropsWithChildren) {
   const router = useRouter();
   function Afiliatif() {
     router.push(
@@ -23,22 +25,20 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
   }
   return (
     <>
-      <Flex direction={{ base: "column", sm: "row" }}>
-        <Paper w={676}>
-          <Box
-            bg={COLOR.abuabu}
-            w={"100%"}
-            h={"100vh"}
-            style={{ backgroundRepeat: "no-repeat" }}
-          >
-            <Box pl={40} pr={40} pt={50}>
+      <Flex >
+      <Navbar  width={{ base: 500 }}>
+      <Box pl={40}  pb={20} pt={20} bg={COLOR.abuabu}>
               <Text fw={700} fz={40}>
                 Form Data Diri
               </Text>
+              <Text >* Wajib diisi</Text>
             </Box>
-            <Stack>{children}</Stack>
-          </Box>
-        </Paper>
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+      <Box>{children}</Box>
+      </Navbar.Section>
+
+    </Navbar>
+
         <Box
           bg={COLOR.hitam}
           w={"100%"}
@@ -56,4 +56,4 @@ function LayoutDataPartaiV2({ children }: PropsWithChildren) {
   );
 }
 
-export default LayoutDataPartaiV2;
+export default LayoutDataDiriV2;

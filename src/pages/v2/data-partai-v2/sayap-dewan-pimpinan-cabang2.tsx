@@ -28,6 +28,7 @@ import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
+import LayoutDataDiriV2 from "@/v2/layout_data_partai/layout_data_diri";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -178,7 +179,8 @@ function SayapDewanPimpinanCabang2() {
   return (
     <>
           <LayoutDataPartaiV2>
-        <Box h={"100%"}>
+          {/* <LayoutDataDiriV2> */}
+        <Box h={"100%"} bg={COLOR.abuabu}>
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
@@ -219,7 +221,6 @@ function SayapDewanPimpinanCabang2() {
                 </Group>
               </UnstyledButton>
             </Box>
-            <ScrollArea h={{sm: 405, base: 300}} scrollbarSize={0}>
             <Select
           onChange={(val) => {
             setValue(val!)
@@ -329,9 +330,9 @@ function SayapDewanPimpinanCabang2() {
         >
           SIMPAN
         </Button>
-            </ScrollArea>
           </Stack>
         </Box>
+          {/* </LayoutDataDiriV2> */}
       </LayoutDataPartaiV2>
     </>
   );

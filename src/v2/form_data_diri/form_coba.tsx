@@ -5,6 +5,7 @@ import {
   Center,
   Container,
   Image,
+  Navbar,
   ScrollArea,
   Select,
   SimpleGrid,
@@ -38,6 +39,7 @@ import { sMediaSocial } from "@/s_state/media_social/s_media_social";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { useAtom } from "jotai";
 import LayoutDataPartaiV2 from "../layout_data_partai/layout_data_partai";
+import LayoutDataDiriV2 from "../layout_data_partai/layout_data_diri";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -295,311 +297,327 @@ function FormCoba() {
   if (!formDataDiri) return <></>;
   return (
     <>
-      <LayoutDataPartaiV2>
-        <Box pl={20} pr={20}>
-          <Text mb={20}>* Wajib diisi</Text>
-          <Box>
-            <ScrollArea h={{sm: 580}} style={{
-
-            }} scrollbarSize={0}>
+      <LayoutDataDiriV2>
+        <Navbar  width={{ base: 500 }} bg={COLOR.abuabu}>
+        <Box pl={40}  pb={20} pt={20}>
+              <Text fw={700} fz={40}>
+                Form Data Diri
+              </Text>
+              <Text >* Wajib diisi</Text>
+            </Box>
+          <Navbar.Section  grow component={ScrollArea} px={70} pb={30}>
+            <Stack>
               <Box
                 component="form"
-                maw={400}
-                mx="auto"
+                // // maw={400}
+                // mx="auto"
                 onSubmit={formDataDiri.onSubmit(() => {})}
               >
-                <Stack>
-                  <TextInput
-                    placeholder="NIK"
-                    withAsterisk
-                    mt={10}
-                    minLength={16}
-                    maxLength={16}
-                    label="NIK"
-                    radius={"md"}
-                    type="number"
-                    // pattern="[0-16]"
-                    {...formDataDiri.getInputProps("data.nik")}
-                  />
-                  <TextInput
-                    placeholder="Nama"
-                    withAsterisk
-                    label="Nama"
-                    radius={"md"}
-                    {...formDataDiri.getInputProps("data.name")}
-                  />
-                  {/* <TextInput
+                <TextInput
+                  placeholder="NIK"
+                  withAsterisk
+                  mt={10}
+                  minLength={16}
+                  maxLength={16}
+                  label="NIK"
+                  radius={"md"}
+                  type="number"
+                  // pattern="[0-16]"
+                  {...formDataDiri.getInputProps("data.nik")}
+                />
+                <TextInput
+                  placeholder="Nama"
+                  withAsterisk
+                  mt={10}
+                  label="Nama"
+                  radius={"md"}
+                  {...formDataDiri.getInputProps("data.name")}
+                />
+                {/* <TextInput
                                 placeholder="Email"
                                 withAsterisk
                                 label="Email"
                                 radius={"md"}
                                 {...formDataDiri.getInputProps("data.email")}
                               /> */}
-                  <TextInput
-                    placeholder="Tempat Lahir"
-                    withAsterisk
-                    label="Tempat Lahir"
-                    radius={"md"}
-                    {...formDataDiri.getInputProps("data.tempatLahir")}
-                  />
-                  <DateInput
-                    placeholder="Tanggal Lahir"
-                    withAsterisk
-                    // rightSection={<AiOutlineCalendar size="1.3rem" />}
-                    label="Tanggal Lahir"
-                    radius={"md"}
-                    {...formDataDiri.getInputProps("data.tanggalLahir")}
-                  />
-                  <Select
-                    data={sJenisKelamin.value.map((ag) => ({
-                      value: ag.id,
-                      label: ag.name,
-                    }))}
-                    placeholder="Jenis Kelamin"
-                    label="Jenis Kelamin"
-                    radius={"md"}
-                    withAsterisk
-                    searchable
-                    {...formDataDiri.getInputProps("data.masterJenisKelaminId")}
-                  />
-                  <TextInput
-                    placeholder="Nomor Handphone"
-                    withAsterisk
-                    label="Nomor Handphone"
-                    radius={"md"}
-                    type="number"
-                    {...formDataDiri.getInputProps("data.phoneNumber")}
-                  />
-                  {/* {JSON.stringify(sMediaSocial)} */}
-                  <TextInput
-                    onChange={(val) => {
-                      const index = listData?.findIndex(
-                        (v) => v.masterMediaSocialId == 1
-                      );
-                      listData[index].name = val.currentTarget.value;
-                      listData[index].userId = localStorage.getItem("user_id")!;
-                      setListData(listData);
-                    }}
-                    // {...formMediaSocial.values.data}
-                    placeholder="Instagram"
-                    withAsterisk
-                    label="Instagram"
-                    radius={"md"}
-                  />
-                  <TextInput
-                    placeholder="Facebook"
-                    onChange={(val) => {
-                      const index = listData?.findIndex(
-                        (v) => v.masterMediaSocialId == 2
-                      );
-                      listData[index].name = val.currentTarget.value;
-                      listData[index].userId = localStorage.getItem("user_id")!;
-                      setListData(listData);
-                    }}
-                    // {...formMediaSocial.values.data}
-                    withAsterisk
-                    label="Facebook"
-                    // rightSection={<AiOutlineFacebook size="1.3rem" />}
-                    radius={"md"}
-                    // {...formMediaSocial.getInputProps(
-                    //   "data.name"
-                    // )}
-                  />
-                  <TextInput
-                    placeholder="Tiktok"
-                    withAsterisk
-                    label="Tiktok"
-                    onChange={(val) => {
-                      const index = listData?.findIndex(
-                        (v) => v.masterMediaSocialId == 3
-                      );
-                      listData[index].name = val.currentTarget.value;
-                      listData[index].userId = localStorage.getItem("user_id")!;
-                      setListData(listData);
-                    }}
-                    // {...formMediaSocial.values.data}
-                    // rightSection={<BsTiktok size="1.3rem" />}
-                    radius={"md"}
-                    // {...formMediaSocial.getInputProps(
-                    //   "data.name"
-                    // )}
-                  />
-                  <TextInput
-                    placeholder="Twitter"
-                    withAsterisk
-                    label="Twitter"
-                    onChange={(val) => {
-                      const index = listData?.findIndex(
-                        (v) => v.masterMediaSocialId == 4
-                      );
-                      listData[index].name = val.currentTarget.value;
-                      listData[index].userId = localStorage.getItem("user_id")!;
-                      setListData(listData);
-                    }}
-                    // rightSection={<AiOutlineTwitter size="1.3rem" />}
-                    radius={"md"}
-                    // {...formMediaSocial.getInputProps(
-                    //   "data.name"
-                    // )}
-                  />
-                  <Select
-                    data={sAgama.value.map((ag) => ({
-                      value: ag.id,
-                      label: ag.name,
-                    }))}
-                    radius={"md"}
-                    placeholder="Agama"
-                    label="Agama"
-                    searchable
-                    withAsterisk
-                    {...formDataDiri.getInputProps("data.masterAgamaId")}
-                  />
-                  <Select
-                    radius={"md"}
-                    placeholder="Pekerjaan"
-                    label="Pekerjaan"
-                    data={sListPekerjaan.value.map((pe) => ({
-                      value: pe.id,
-                      label: pe.name,
-                    }))}
-                    {...formDataDiri.getInputProps("data.masterPekerjaanId")}
-                  />
-                  <TextInput
-                    placeholder="Alamat"
-                    withAsterisk
-                    label="Alamat"
-                    radius={"md"}
-                    {...formDataDiri.getInputProps("data.alamat")}
-                  />
-                  {/* {JSON.stringify(selectedProvince)} */}
-                  <Select
-                    data={provinsi.map((pro) => ({
-                      value: pro.id,
-                      label: pro.name,
-                    }))}
-                    radius={"md"}
-                    placeholder={selectedProvince.name}
-                    value={selectedProvince.name}
-                    label="Provinsi"
-                    withAsterisk
-                    searchable
-                    onChange={(val) => {
-                      if (val) {
-                        setSelectedProvince(provinsi.find((v) => v.id == val));
-                        loadKabupaten(val);
-                      }
-                      formDataDiri.values.data.masterProvinceId = val!;
-                    }}
+                <TextInput
+                  placeholder="Tempat Lahir"
+                  withAsterisk
+                  mt={10}
+                  label="Tempat Lahir"
+                  radius={"md"}
+                  {...formDataDiri.getInputProps("data.tempatLahir")}
+                />
+                <DateInput
+                  placeholder="Tanggal Lahir"
+                  withAsterisk
+                  // rightSection={<AiOutlineCalendar size="1.3rem" />}
+                  label="Tanggal Lahir"
+                  radius={"md"}
+                  mt={10}
+                  {...formDataDiri.getInputProps("data.tanggalLahir")}
+                />
+                <Select
+                  data={sJenisKelamin.value.map((ag) => ({
+                    value: ag.id,
+                    label: ag.name,
+                  }))}
+                  placeholder="Jenis Kelamin"
+                  label="Jenis Kelamin"
+                  radius={"md"}
+                  withAsterisk
+                  mt={10}
+                  searchable
+                  {...formDataDiri.getInputProps("data.masterJenisKelaminId")}
+                />
+                <TextInput
+                  placeholder="Nomor Handphone"
+                  withAsterisk
+                  label="Nomor Handphone"
+                  radius={"md"}
+                  mt={10}
+                  type="number"
+                  {...formDataDiri.getInputProps("data.phoneNumber")}
+                />
+                {/* {JSON.stringify(sMediaSocial)} */}
+                <TextInput
+                  onChange={(val) => {
+                    const index = listData?.findIndex(
+                      (v) => v.masterMediaSocialId == 1
+                    );
+                    listData[index].name = val.currentTarget.value;
+                    listData[index].userId = localStorage.getItem("user_id")!;
+                    setListData(listData);
+                  }}
+                  // {...formMediaSocial.values.data}
+                  placeholder="Instagram"
+                  withAsterisk
+                  mt={10}
+                  label="Instagram"
+                  radius={"md"}
+                />
+                <TextInput
+                  placeholder="Facebook"
+                  mt={10}
+                  onChange={(val) => {
+                    const index = listData?.findIndex(
+                      (v) => v.masterMediaSocialId == 2
+                    );
+                    listData[index].name = val.currentTarget.value;
+                    listData[index].userId = localStorage.getItem("user_id")!;
+                    setListData(listData);
+                  }}
+                  // {...formMediaSocial.values.data}
+                  withAsterisk
+                  label="Facebook"
+                  // rightSection={<AiOutlineFacebook size="1.3rem" />}
+                  radius={"md"}
+                  // {...formMediaSocial.getInputProps(
+                  //   "data.name"
+                  // )}
+                />
+                <TextInput
+                  placeholder="Tiktok"
+                  withAsterisk
+                  label="Tiktok"
+                  mt={10}
+                  onChange={(val) => {
+                    const index = listData?.findIndex(
+                      (v) => v.masterMediaSocialId == 3
+                    );
+                    listData[index].name = val.currentTarget.value;
+                    listData[index].userId = localStorage.getItem("user_id")!;
+                    setListData(listData);
+                  }}
+                  // {...formMediaSocial.values.data}
+                  // rightSection={<BsTiktok size="1.3rem" />}
+                  radius={"md"}
+                  // {...formMediaSocial.getInputProps(
+                  //   "data.name"
+                  // )}
+                />
+                <TextInput
+                  placeholder="Twitter"
+                  withAsterisk
+                  label="Twitter"
+                  mt={10}
+                  onChange={(val) => {
+                    const index = listData?.findIndex(
+                      (v) => v.masterMediaSocialId == 4
+                    );
+                    listData[index].name = val.currentTarget.value;
+                    listData[index].userId = localStorage.getItem("user_id")!;
+                    setListData(listData);
+                  }}
+                  // rightSection={<AiOutlineTwitter size="1.3rem" />}
+                  radius={"md"}
+                  // {...formMediaSocial.getInputProps(
+                  //   "data.name"
+                  // )}
+                />
+                <Select
+                  data={sAgama.value.map((ag) => ({
+                    value: ag.id,
+                    label: ag.name,
+                  }))}
+                  radius={"md"}
+                  mt={10}
+                  placeholder="Agama"
+                  label="Agama"
+                  searchable
+                  withAsterisk
+                  {...formDataDiri.getInputProps("data.masterAgamaId")}
+                />
+                <Select
+                  radius={"md"}
+                  placeholder="Pekerjaan"
+                  label="Pekerjaan"
+                  mt={10}
+                  data={sListPekerjaan.value.map((pe) => ({
+                    value: pe.id,
+                    label: pe.name,
+                  }))}
+                  {...formDataDiri.getInputProps("data.masterPekerjaanId")}
+                />
+                <TextInput
+                  placeholder="Alamat"
+                  withAsterisk
+                  label="Alamat"
+                  radius={"md"}
+                  mt={10}
+                  {...formDataDiri.getInputProps("data.alamat")}
+                />
+                {/* {JSON.stringify(selectedProvince)} */}
+                <Select
+                  data={provinsi.map((pro) => ({
+                    value: pro.id,
+                    label: pro.name,
+                  }))}
+                  radius={"md"}
+                  mt={10}
+                  placeholder={selectedProvince.name}
+                  value={selectedProvince.name}
+                  label="Provinsi"
+                  withAsterisk
+                  searchable
+                  onChange={(val) => {
+                    if (val) {
+                      setSelectedProvince(provinsi.find((v) => v.id == val));
+                      loadKabupaten(val);
+                    }
+                    formDataDiri.values.data.masterProvinceId = val!;
+                  }}
 
-                    // onChange={selectedProvince}
-                  />
-                  {/* {JSON.stringify(selectedKabupaten)} */}
-                  <Select
-                    key={Math.random()}
-                    data={
-                      _.isEmpty(kabupaten)
-                        ? []
-                        : kabupaten.map((v) => ({
-                            value: v.id,
-                            label: v.name,
-                          }))
-                    }
-                    // {...formDataDiri.getInputProps("data.kabkot")}
-                    placeholder={selectedKabupaten.name}
-                    value={selectedKabupaten.name}
-                    radius={"md"}
-                    label="Kabupaten / Kota"
-                    withAsterisk
-                    searchable
-                    onChange={(val) => {
-                      setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-                      loadKecamatan(val!);
-                      formDataDiri.values.data.masterKabKotId = val!;
-                    }}
-                  />
-                  {/* {JSON.stringify(selectedKecamatan.name)} */}
-                  <Select
-                    key={Math.random()}
-                    data={
-                      _.isEmpty(kecamatan)
-                        ? []
-                        : kecamatan.map((val) => ({
-                            value: val.id,
-                            label: val.name,
-                          }))
-                    }
-                    radius={"md"}
-                    placeholder={selectedKecamatan.name}
-                    // {...formDataDiri.getInputProps(
-                    //   "data.kecamatan"
-                    // )}
-                    value={selectedKecamatan.name}
-                    label="Kecamatan"
-                    withAsterisk
-                    searchable
-                    onChange={(val) => {
-                      setSelectedKecamatan(kecamatan.find((v) => v.id == val));
-                      loadDesa(val!);
-                      formDataDiri.values.data.masterKecamatanId = val!;
-                    }}
-                  />
-                  {/* {JSON.stringify(selectedDesa.name)} */}
-                  <Select
-                    key={Math.random()}
-                    data={
-                      _.isEmpty(desa)
-                        ? []
-                        : desa.map((val) => ({
-                            value: val.id,
-                            label: val.name,
-                          }))
-                    }
-                    radius={"md"}
-                    placeholder={selectedDesa.name}
-                    // {...formDataDiri.getInputProps(
-                    //   "data.desa"
-                    // )}
-                    value={selectedDesa.name}
-                    label="Desa"
-                    withAsterisk
-                    onChange={(val) => {
-                      setSelectedDesa(desa.find((v) => v.id == val));
-                      formDataDiri.values.data.masterDesaId = val!;
-                    }}
-                    searchable
-                  />
-                  <TextInput
-                    placeholder="RT/RW"
-                    withAsterisk
-                    label="RT/RW"
-                    radius={"md"}
-                    type="number"
-                    {...formDataDiri.getInputProps("data.rtRw")}
-                  />
-                  <Center pt={20}>
-                    <Box w={150}>
-                      <Button
-                        fullWidth
-                        radius={"xl"}
-                        bg={COLOR.merah}
-                        color="orange.9"
-                        type="submit"
-                        // onClick={() =>
-                        //   console.log(formDataDiri.values, formMediaSocial.values)
-                        // }
-                        onClick={onDatadiri}
-                        // onClick={onMediaSocial}
-                      >
-                        Simpan
-                      </Button>
-                    </Box>
-                  </Center>
-                </Stack>
+                  // onChange={selectedProvince}
+                />
+                {/* {JSON.stringify(selectedKabupaten)} */}
+                <Select
+                  key={Math.random()}
+                  data={
+                    _.isEmpty(kabupaten)
+                      ? []
+                      : kabupaten.map((v) => ({
+                          value: v.id,
+                          label: v.name,
+                        }))
+                  }
+                  // {...formDataDiri.getInputProps("data.kabkot")}
+                  placeholder={selectedKabupaten.name}
+                  value={selectedKabupaten.name}
+                  radius={"md"}
+                  mt={10}
+                  label="Kabupaten / Kota"
+                  withAsterisk
+                  searchable
+                  onChange={(val) => {
+                    setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+                    loadKecamatan(val!);
+                    formDataDiri.values.data.masterKabKotId = val!;
+                  }}
+                />
+                {/* {JSON.stringify(selectedKecamatan.name)} */}
+                <Select
+                  key={Math.random()}
+                  data={
+                    _.isEmpty(kecamatan)
+                      ? []
+                      : kecamatan.map((val) => ({
+                          value: val.id,
+                          label: val.name,
+                        }))
+                  }
+                  radius={"md"}
+                  mt={10}
+                  placeholder={selectedKecamatan.name}
+                  // {...formDataDiri.getInputProps(
+                  //   "data.kecamatan"
+                  // )}
+                  value={selectedKecamatan.name}
+                  label="Kecamatan"
+                  withAsterisk
+                  searchable
+                  onChange={(val) => {
+                    setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+                    loadDesa(val!);
+                    formDataDiri.values.data.masterKecamatanId = val!;
+                  }}
+                />
+                {/* {JSON.stringify(selectedDesa.name)} */}
+                <Select
+                  key={Math.random()}
+                  data={
+                    _.isEmpty(desa)
+                      ? []
+                      : desa.map((val) => ({
+                          value: val.id,
+                          label: val.name,
+                        }))
+                  }
+                  radius={"md"}
+                  mt={10}
+                  placeholder={selectedDesa.name}
+                  // {...formDataDiri.getInputProps(
+                  //   "data.desa"
+                  // )}
+                  value={selectedDesa.name}
+                  label="Desa"
+                  withAsterisk
+                  onChange={(val) => {
+                    setSelectedDesa(desa.find((v) => v.id == val));
+                    formDataDiri.values.data.masterDesaId = val!;
+                  }}
+                  searchable
+                />
+                <TextInput
+                  placeholder="RT/RW"
+                  withAsterisk
+                  label="RT/RW"
+                  radius={"md"}
+                  type="number"
+                  mt={10}
+                  {...formDataDiri.getInputProps("data.rtRw")}
+                />
+                <Center pt={20}>
+                    <Button
+                      fullWidth
+                      radius={"xl"}
+                      bg={COLOR.merah}
+                      color="orange.9"
+                      type="submit"
+                      // onClick={() =>
+                      //   console.log(formDataDiri.values, formMediaSocial.values)
+                      // }
+                      onClick={onDatadiri}
+                      // onClick={onMediaSocial}
+                    >
+                      Simpan
+                    </Button>
+                </Center>
               </Box>
-            </ScrollArea>
-          </Box>
-        </Box>
-      </LayoutDataPartaiV2>
+            </Stack>
+          </Navbar.Section>
+        </Navbar>
+      </LayoutDataDiriV2>
     </>
   );
 }
