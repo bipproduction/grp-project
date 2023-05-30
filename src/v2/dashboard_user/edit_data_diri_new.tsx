@@ -65,6 +65,8 @@ import COLOR from "../../../fun/WARNA";
 import { useRouter } from "next/router";
 import { val_loading } from "@/xg_state.ts/val_loading";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
+import 'moment/locale/id' 
+moment.locale('id')
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
 
 export const _listData = atom<DataDiri | null>(null);
@@ -254,6 +256,7 @@ function EditDataDiriNew() {
                 listData.tanggalLahir = val;
                 setUbah(perubahan);
               }}
+
             />
 
             <TextInput
