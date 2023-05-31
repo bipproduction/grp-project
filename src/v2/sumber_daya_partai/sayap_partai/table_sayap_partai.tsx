@@ -124,9 +124,9 @@ const TableSayapPartaiV2 = () => {
 
   return (
     <>
-      <pre>
-        {/* {JSON.stringify(dataTable.map((e) => e, " apa"),null,2)} */}
-      </pre>
+      {/* <pre>
+        {JSON.stringify(dataTable.map((e) => e, " apa"),null,2)}
+      </pre> */}
       <Modal
         opened={opened}
         onClose={close}
@@ -141,7 +141,7 @@ const TableSayapPartaiV2 = () => {
         {/* <EditSayapPartaiV2 thisClosed={close} /> */}
         <SayapEditV2 thisClosed={close} setId={valueId} />
       </Modal>
-      <Box>
+      <Box sx={{overflow: "scroll"}}>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
