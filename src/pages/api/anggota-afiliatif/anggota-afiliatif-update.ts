@@ -5,6 +5,7 @@ const anggotaAfiliatifUpdate = async (req: NextApiRequest, res: NextApiResponse)
 
     if (req.method === "POST") {
         const body = req.body
+        // console.log(body)
         await client.anggotaAfiliatif.update({
             where: {
                 id: body.id
@@ -15,7 +16,7 @@ const anggotaAfiliatifUpdate = async (req: NextApiRequest, res: NextApiResponse)
             }
         })
 
-        return res.status(201).json({ success: true, message: "Data terupdate" })
+        return res.status(201).json({ success: true, message: "Data Terupdate" })
     } else {
         return res.status(204).end()
     }

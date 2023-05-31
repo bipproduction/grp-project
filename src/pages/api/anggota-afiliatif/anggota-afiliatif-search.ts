@@ -18,14 +18,23 @@ const anggotaAfiliatifSearch = async (req: NextApiRequest, res: NextApiResponse)
             id: true,
             User: {
                 select: {
+                    id: true,
                     email: true,
                     DataDiri: {
                         select: {
+                            id: true,
+                            active: true,
                             name: true,
                             nik: true,
+                            alamat: true,
                             tempatLahir: true,
                             tanggalLahir: true,
-                            phoneNumber: true
+                            phoneNumber: true,
+                            MasterProvince: true,
+                            MasterKabKot: true,
+                            MasterKecamatan: true,
+                            MasterDesa: true,
+                            rtRw: true
                         }
                     },
                     UserMediaSocial: {
@@ -45,6 +54,7 @@ const anggotaAfiliatifSearch = async (req: NextApiRequest, res: NextApiResponse)
             },
             MasterOrganisasiAfiliatif: {
                 select: {
+                    id:true,
                     name: true
                 }
             }

@@ -40,18 +40,7 @@ export const ViewOrganisasiAfiliatifV2 = () => {
                         </Grid.Col> */}
                     </Grid>
                 </Paper>
-                <Box pt={20}>
-                    <Grid>
-                        <Grid.Col md={4} lg={4}>
-                            <TextInput
-                                mt={5}
-                                icon={<AiOutlineSearch size={20} />}
-                                placeholder="Search"
-                                radius={"md"}
-                            />
-                        </Grid.Col>
-                    </Grid>
-                </Box>
+                
                 <TableOrganisasiAfiliatifV2 />
             </Box>
         </>
