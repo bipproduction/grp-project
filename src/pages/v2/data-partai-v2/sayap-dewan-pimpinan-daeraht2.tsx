@@ -86,7 +86,7 @@ function SayapDewanPimpinanDaeraht2() {
       data: {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
-        masterJabatanDewanPimpinanPusatId: "",
+        masterJabatanDewanPimpinanDaerahId: "",
         masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
         masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
       },
@@ -166,7 +166,7 @@ function SayapDewanPimpinanDaeraht2() {
             <Select
               onChange={(val) => {
                 setValue(val!);
-                formSayapPimpinanDaerah.values.data.masterJabatanDewanPimpinanPusatId =
+                formSayapPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
                   val!;
               }}
               label="Jabatan"

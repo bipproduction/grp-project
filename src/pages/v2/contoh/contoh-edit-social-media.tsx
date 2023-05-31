@@ -61,11 +61,11 @@ import _ from "lodash";
 import moment from "moment";
 import React, { useState } from "react";
 import toast from "react-simple-toasts";
-import COLOR from "../../../fun/WARNA";
 import { useRouter } from "next/router";
 import { val_loading } from "@/xg_state.ts/val_loading";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
+import COLOR from "../../../../fun/WARNA";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
 
@@ -181,6 +181,7 @@ function EditDataDiriNew() {
   if (!listData) return <></>;
   return (
     <>
+    <Box p={40}>
       <Box pb={15}>
         <Box
           sx={{
@@ -245,19 +246,6 @@ function EditDataDiriNew() {
             />
             {/* <Text>{listData.tanggalLahir}</Text>
             <Text>{moment(listData.tanggalLahir).format("LL")}</Text> */}
-            <DateInput
-              withAsterisk
-              placeholder={moment(listData.tanggalLahir).format("LL")}
-              mt={10}
-              // rightSection={<AiOutlineCalendar size="1.3rem" />}
-              label="Tanggal Lahir"
-              radius={"md"}
-              onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
-                setUbah(perubahan);
-              }}
-            />
 
             <TextInput
               // placeholder="Nomor Handphone"
@@ -290,6 +278,18 @@ function EditDataDiriNew() {
               }}
               // {...editFormDataDiri.getInputProps("data.alamat")}
             />
+            <TextInput
+              placeholder="Instagram"
+              mt={10}
+              label="Instagram"
+              radius={"md"}
+            />
+            <TextInput
+              placeholder="Facebook"
+              mt={10}
+              label="Facebook"
+              radius={"md"}
+            />
           </Box>
         </Grid.Col>
         <Grid.Col md={6} lg={6}>
@@ -302,6 +302,12 @@ function EditDataDiriNew() {
               borderRadius: 10,
             }}
           >
+            <TextInput
+              placeholder="Tiktok"
+              label="Tiktok"
+              mt={10}
+              radius={"md"}
+            />
             <TextInput
               placeholder={listData?.rtRw}
               // placeholder="RT/RW"
@@ -316,6 +322,19 @@ function EditDataDiriNew() {
                 setUbah(perubahan);
               }}
               // {...editFormDataDiri.getInputProps("data.rtRw")}
+            />
+            <DateInput
+              withAsterisk
+              placeholder={moment(listData.tanggalLahir).format("LL")}
+              mt={10}
+              // rightSection={<AiOutlineCalendar size="1.3rem" />}
+              label="Tanggal Lahir"
+              radius={"md"}
+              onChange={(val: any) => {
+                const perubahan = _.clone(listData);
+                listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
+                setUbah(perubahan);
+              }}
             />
             <Select
               label="Pilih Provinsi"
@@ -435,8 +454,12 @@ function EditDataDiriNew() {
                 setSelectDesaDT(itDesa.find((e) => e.id == val));
               }}
             />
-            <Button
-              fullWidth
+
+          </Box>
+        </Grid.Col>
+      </Grid>
+      <Button
+      w={150}
               radius={"md"}
               // bg={COLOR.merah}
               color="orange.9"
@@ -448,9 +471,7 @@ function EditDataDiriNew() {
             >
               Simpan
             </Button>
-          </Box>
-        </Grid.Col>
-      </Grid>
+    </Box>
     </>
   );
 }
