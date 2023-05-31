@@ -59,7 +59,7 @@ export const AfiliatifEditV2 = ({
       masterOrganisasiAfiliatifId:
         targerEdit?.MasterOrganisasiAfiliatif.id,
     };
-    console.log(body);
+    // console.log(body);
     fetch(api.apiAnggotaAfiliatifUpdate, {
       method: "POST",
       headers: {
