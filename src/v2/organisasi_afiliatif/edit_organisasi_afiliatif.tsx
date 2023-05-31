@@ -39,13 +39,15 @@ const EditOrganisasiAfiliatifV2 = ({
   valueId: any;
 }) => {
   const [listData, setListData] = useAtom(_datapartai_user);
-  const [listDataAfiliatif, setListDataAfiliatif] = useAtom(_list_Afiliatif);
-  const [selectAfiliatif, setSelectAfiliatif] = useAtom(_select_Afiliatif);
-  const [changeData, setChangeData] = useState<ModelSumberDayaPartai | null>(
-    null
-  );
-  const [afiliatif, setAfiliatif] = useState<any | []>([])
-
+  // const [listDataAfiliatif, setListDataAfiliatif] = useAtom(_list_Afiliatif);
+  // const [selectAfiliatif, setSelectAfiliatif] = useAtom(_select_Afiliatif);
+  // const [changeData, setChangeData] = useState<ModelSumberDayaPartai | null>(
+  //   null
+  // );
+  const [afiliatif, setAfiliatif] = useState({
+    id: new Number(),
+    name: "",
+  });
 
   const onEdit = async () => {
     const body = {
@@ -76,14 +78,14 @@ const EditOrganisasiAfiliatifV2 = ({
   }, []);
 
   useShallowEffect(() => {
-    loadAfiliatif()
-  },[])
+    loadAfiliatif();
+  }, []);
   async function loadAfiliatif() {
-    const res = await fetch("/api/get/sumber-daya-partai/api-get-organisasi-afiliatif")
+    const res = await fetch(
+      "/api/get/sumber-daya-partai/api-get-organisasi-afiliatif"
+    )
       .then((res) => res.json())
-      .then((val) =>
-        setAfiliatif(Object.values(val).map((e: any) => e.name))
-      );
+      .then((val) => setAfiliatif(val));
   }
 
   return (
@@ -113,24 +115,27 @@ const EditOrganisasiAfiliatifV2 = ({
                 Simpan
               </Button>
             </Box>
-            <Select
-              maxDropdownHeight={120}
-              label="Organisasi Afiliatif"
-              value={listData?.MasterOrganisasiAfiliatif?.name}
-              placeholder={
-                listData?.MasterOrganisasiAfiliatif?.name
-                  ? listData?.MasterOrganisasiAfiliatif?.name
-                  : listData?.MasterOrganisasiAfiliatif?.name
-              }
-              data={afiliatif}
-              onChange={(val) => {
-                setSelectAfiliatif(listDataAfiliatif.find((e) => e.id == val));
-                const data: any = _.clone(listData);
-                data.MasterKaderPartai = val;
-                setChangeData(data);
-              }}
-            />
           </Flex>
+        </Box>
+        <Box>
+          <TextInput label="Nama" disabled />
+          {/* <Select
+            maxDropdownHeight={120}
+            label="Organisasi Afiliatif"
+            value={listData?.MasterOrganisasiAfiliatif?.name}
+            placeholder={
+              listData?.MasterOrganisasiAfiliatif?.name
+                ? listData?.MasterOrganisasiAfiliatif?.name
+                : listData?.MasterOrganisasiAfiliatif?.name
+            }
+            data={afiliatif}
+            onChange={(val) => {
+              setSelectAfiliatif(listDataAfiliatif.find((e) => e.id == val));
+              const data: any = _.clone(listData);
+              data.MasterKaderPartai = val;
+              setChangeData(data);
+            }}
+          /> */}
         </Box>
       </Box>
     </>
