@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _dataRencanaKunjunganGerindra, _loadDataListUndanganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataRencanaKunjunganGerindra, _dataSearchListUndanganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataListUndanganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 export function ButtonDeleteAksiGerindra({
     setId,
@@ -32,6 +32,8 @@ export function ButtonDeleteAksiGerindra({
     const [opened, setOpen] = useDisclosure(false);
     const [listDataRencanaKunjungan, setListDataRencanaKunjungan] = useAtom(_dataRencanaKunjunganGerindra);
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganGerindra);
+    const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganGerindra);
+    const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganGerindra);
     let text;
 
     if (setKategori == 1) {
@@ -46,8 +48,8 @@ export function ButtonDeleteAksiGerindra({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataRencanaKunjunganGerindra("", setListDataRencanaKunjungan);
-                        _loadDataListUndanganGerindra("", setListDataUndangan);
+                        _loadDataRencanaKunjunganGerindra(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
+                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
                     }
                 });
         } else {
@@ -55,7 +57,7 @@ export function ButtonDeleteAksiGerindra({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataListUndanganGerindra("", setListDataUndangan);
+                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
                     }
                 });
         }

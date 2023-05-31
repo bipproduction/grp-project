@@ -7,13 +7,14 @@ import { api } from "@/lib/api-backend";
 import moment from "moment";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
   const [listData, setListData] = useState<any[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
 
   // const loadData = () => {
   //   fetch(api.apiRencanaKunjunganGerindraGetAll)
@@ -35,7 +36,7 @@ export const TableRencanaKunjunganGerindraV2 = () => {
 
   useShallowEffect(() => {
     // loadData();
-    _loadDataRencanaKunjunganGerindra("", setListDataNew);
+    _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
   }, [])
 
   const tbHead = (
@@ -88,12 +89,13 @@ export const TableRencanaKunjunganGerindraV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
+        size={"xl"}
         // fullScreen
         overlayProps={{
           // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
+        centered
       >
         <EditRencanaKunjunganGerindraV2 thisClosed={close} data={dataId} />
       </Modal>

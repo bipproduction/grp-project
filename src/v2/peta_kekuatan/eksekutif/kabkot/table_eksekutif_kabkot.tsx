@@ -99,6 +99,7 @@ export const TableEksekutifKabKotV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
+        centered size={"lg"}
       >
         <EditEksekutifKabkotV2 thisClosed={close} data={dataId} />
       </Modal>

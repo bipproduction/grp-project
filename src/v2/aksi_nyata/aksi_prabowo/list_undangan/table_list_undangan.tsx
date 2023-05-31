@@ -7,7 +7,7 @@ import { api } from "@/lib/api-backend";
 import { ModelListUndanganPrabowo } from "@/model/model_aksi_nyata";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import _ from "lodash";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 const moment = require('moment')
@@ -16,19 +16,19 @@ export const TableListUndanganPrabowoV2 = () => {
   const [listUndanganPrabowo, setListUndanganPrabowo] = useState<ModelListUndanganPrabowo[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
 
   const loadListUndanganPrabowo = () => {
     fetch(api.apiListUndanganPrabowoGetAll)
       .then((v) => v.json())
       .then((v) => {
         setListUndanganPrabowo(v);
-        //console.log(v)
       });
   };
 
   useShallowEffect(() => {
     loadListUndanganPrabowo();
-    _loadDataListUndanganPrabowo("", setListDataNew);
+    _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
   }, []);
 
   // const onDelete = (id: string) => {
@@ -90,12 +90,13 @@ export const TableListUndanganPrabowoV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
+        size={"xl"}
         // fullScreen
         overlayProps={{
           // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
+        centered
       >
         <EditListUndanganPrabowoV2 thisClosed={close} data={dataId} />
       </Modal>
@@ -117,33 +118,33 @@ export const TableListUndanganPrabowoV2 = () => {
                 </td>)}
               </tr>)}
             </tbody> */}
-            <tbody>{listDataNew && listDataNew.map((v, i)=>(
+            <tbody>{listDataNew && listDataNew.map((v, i) => (
               <tr key={i}>
-              <td>{i + 1}</td>
-              <td>{v.judul}</td>
-              <td>{moment(v.tanggal).format("DD MMM YYYY")}</td>
-              <td>{v.nama}</td>
-              <td>
-                <Group position="center">
-                  <Button
-                    variant={"outline"}
-                    color={"green"}
-                    radius={50}
-                    w={100}
-                    onClick={() => {
-                      open();
-                      setDataId(v.id);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <ButtonDeleteAksiPrabowo setId={v.id} setKategori="2" setNama={v.nama}/>
-                  {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(v.id) }}>
+                <td>{i + 1}</td>
+                <td>{v.judul}</td>
+                <td>{moment(v.tanggal).format("DD MMM YYYY")}</td>
+                <td>{v.nama}</td>
+                <td>
+                  <Group position="center">
+                    <Button
+                      variant={"outline"}
+                      color={"green"}
+                      radius={50}
+                      w={100}
+                      onClick={() => {
+                        open();
+                        setDataId(v.id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <ButtonDeleteAksiPrabowo setId={v.id} setKategori="2" setNama={v.nama} />
+                    {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(v.id) }}>
                     Hapus
                   </Button> */}
-                </Group>
-              </td>
-            </tr>
+                  </Group>
+                </td>
+              </tr>
             ))}</tbody>
           </Table>
         </ScrollArea>

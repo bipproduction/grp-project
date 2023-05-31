@@ -97,7 +97,7 @@ export const TableEksekutifNasionalV2 = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close}>
+      <Modal opened={opened} onClose={close} centered size={"lg"}>
         <EditEksekutifNasionalV2 thisClosed={close} data={dataId}/>
       </Modal>
       <Box pt={20}>

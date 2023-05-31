@@ -101,6 +101,7 @@ export const TableLegislatifKabKotV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
+        centered size={"lg"}
       >
         <EditLegislatifDprdKabkotV2
           thisClosed={close}

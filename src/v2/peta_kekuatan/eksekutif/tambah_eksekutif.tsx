@@ -25,7 +25,7 @@ export const TambahEksekutifV2 = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} size={"lg"}>
+      <Modal opened={opened} onClose={close} size={"lg"} centered>
         <TambahDataEksekutif tutupModal={close} />
       </Modal>
       <Group position="right">

@@ -5,15 +5,16 @@ import { TableListUndanganGerindraV2 } from "./table_list_undangan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahListUndanganGerindraV2 from "./tambah_list_undangan";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 export const ListUndanganGerindraV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
-
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganGerindra);
 
     function onSearch(text: string) {
         _loadDataListUndanganGerindra(text, setListDataNew);
+        setInputSearch(text);
     }
 
     return <>
@@ -22,12 +23,13 @@ export const ListUndanganGerindraV2 = () => {
         <Modal
             opened={opened}
             onClose={close}
-            size="100%"
+            size={"xl"}
             // fullScreen
             overlayProps={{
                 // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                 opacity: 0.1,
             }}
+            centered
         >
             <TambahListUndanganGerindraV2 thisClosed={close} />
         </Modal>

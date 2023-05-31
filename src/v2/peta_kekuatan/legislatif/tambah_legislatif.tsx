@@ -25,7 +25,7 @@ export const TambahLegislatifV2 = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} size={"lg"}>
+      <Modal opened={opened} onClose={close} size={"lg"} centered>
         <TambahDataLegislatif tutupModal={close} />
       </Modal>
       <Group position="right">

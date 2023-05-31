@@ -22,13 +22,14 @@ import { ModelListUndanganPrabowo } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
-import { _dataListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 
 const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganPrabowo | null>(null);
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
 
     const loadRencanaKunjunganPrabowo = async () => {
         const res = await fetch(api.apiRencanaKunjunganPrabowoGetAll);
@@ -71,7 +72,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataListUndanganPrabowo("", setListDataNew);
+                _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
             }

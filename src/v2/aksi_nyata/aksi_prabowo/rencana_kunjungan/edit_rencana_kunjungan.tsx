@@ -24,15 +24,18 @@ import { useShallowEffect } from "@mantine/hooks";
 import { ModelRencanaKunjungan } from "../../../../model/model_aksi_nyata";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { atomWithStorage } from "jotai/utils";
-import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
-const moment = require('moment');
+import moment from "moment";
+import "moment/locale/id";
+moment.locale("id");
 
 
 const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: any }) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -90,14 +93,14 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataRencanaKunjunganPrabowo("", setListDataNew);
+                _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
             }
         });
     }
 
-    if(dataEdit===undefined) return<></>
+    if (dataEdit === undefined) return <></>
 
     return (
         <>
@@ -129,9 +132,6 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                 <TextInput label="**" placeholder={dataEdit?.judul} onChange={(val) => {
                                     body.judul = val.target.value;
                                 }} />
-                                <DateInput label="**" onChange={(val) => {
-                                    body.tanggal = String(val);
-                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} />
                                 <Textarea
                                     label="**"
                                     autosize
@@ -142,6 +142,9 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                     }}
                                     placeholder={dataEdit?.img}
                                 />
+                                <DateInput label="**" onChange={(val) => {
+                                    body.tanggal = moment(val).format("YYYY-MM-DD");
+                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} />
                                 <Select
                                     data={listStatusAksiNyata.map((data) => ({
                                         value: data.id,

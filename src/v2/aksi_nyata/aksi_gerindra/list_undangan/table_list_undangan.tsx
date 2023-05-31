@@ -7,7 +7,7 @@ import { ModelListUndanganGerindra } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
 const moment = require('moment')
 
@@ -15,6 +15,7 @@ export const TableListUndanganGerindraV2 = () => {
     const [listUndanganGerindra, setListUndanganGerindra] = useState<ModelListUndanganGerindra[]>([]);
     const [dataId, setDataId] = useState<string>("");
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganGerindra);
 
     // const loadListUndanganGerindra = () => {
     //     fetch(api.apiListUndanganGerindraGetAll)
@@ -26,7 +27,7 @@ export const TableListUndanganGerindraV2 = () => {
 
     useShallowEffect(() => {
         //loadListUndanganGerindra();
-        _loadDataListUndanganGerindra("", setListDataNew);
+        _loadDataListUndanganGerindra(inputSearch, setListDataNew);
     }, []);
 
     // const onDelete = (id: string) => {
@@ -88,12 +89,13 @@ export const TableListUndanganGerindraV2 = () => {
             <Modal
                 opened={opened}
                 onClose={close}
-                size="100%"
+                size={"xl"}
                 // fullScreen
                 overlayProps={{
                     // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                     opacity: 0.1,
                 }}
+                centered
             >
                 <EditListUndanganGerindraV2 thisClosed={close} data={dataId} />
             </Modal>
