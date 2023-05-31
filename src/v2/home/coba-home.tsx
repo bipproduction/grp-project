@@ -183,7 +183,7 @@ const HomeUserNewV2 = () => {
 
   return (
     <>
-        <Modal opened={openeModal} onClose={setOpenModal.close}  centered>
+        <Modal opened={openeModal} onClose={setOpenModal.close}  centered withCloseButton={false}>
         <Alert
           icon={<FiAlertCircle size="2rem" color="red" />}
           title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
@@ -331,7 +331,7 @@ const HomeUserNewV2 = () => {
             opened={opened}
             onClick={toggle}
             className={classes.burger}
-            size="md"
+            size="lg"
             color="white"
           />
 
