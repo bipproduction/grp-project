@@ -23,12 +23,13 @@ import { ModelListUndanganGerindra } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganGerindra | null>(null);
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganGerindra);
 
     const loadRencanaKunjunganGerindra = async () => {
         const res = await fetch(api.apiRencanaKunjunganGerindraGetAll);
@@ -67,7 +68,7 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
 
 
     const onEdit = () => {
-
+        // console.log(body);
         if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
@@ -83,7 +84,7 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataListUndanganGerindra("", setListDataNew);
+                _loadDataListUndanganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
             }
@@ -123,8 +124,8 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
                                 }))}
                                     placeholder={dataEdit?.RencanaKunjunganGerindra.judul}
                                     searchable={true}
-                                    onChange={(val) => {
-                                        body.rencanaKunjunganGerindraId = String(val);
+                                    onChange={(val: any) => {
+                                        body.rencanaKunjunganGerindraId = val;
                                     }}
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**"/> */}

@@ -6,14 +6,17 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
-const moment = require('moment')
+import moment from "moment";
+import "moment/locale/id";
+moment.locale("id");
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
   const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] = useState<any[]>([]);
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
   const [dataId, setDataId] = useState<string>("");
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
 
   // const loadRencanaKunjunganPrabowo = () => {
   //   fetch(api.apiRencanaKunjunganPrabowoGetAll)
@@ -25,7 +28,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
 
   useShallowEffect(() => {
     //loadRencanaKunjunganPrabowo();
-    _loadDataRencanaKunjunganPrabowo("", setListDataNew);
+    _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
   }, []);
 
   // const onDelete = (id: string) => {
@@ -70,7 +73,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
           >
             Edit
           </Button>
-          <ButtonDeleteAksiPrabowo setId={e.id} setKategori="1" setNama={e.judul}/>
+          <ButtonDeleteAksiPrabowo setId={e.id} setKategori="1" setNama={e.judul} />
           {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button> */}
@@ -89,12 +92,13 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
+        size={"xl"}
         // fullScreen
         overlayProps={{
           // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
+        centered
       >
         <EditRencanaKunjunganPrabowoV2 thisClosed={close} data={dataId} />
       </Modal>

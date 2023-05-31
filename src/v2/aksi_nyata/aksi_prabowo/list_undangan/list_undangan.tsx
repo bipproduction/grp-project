@@ -4,15 +4,17 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableListUndanganPrabowoV2 } from "./table_list_undangan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahListUndanganPrabowoV2 from "./tambah_list_undangan";
-import { _dataListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 
 export const ListUndanganPrabowoV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
 
-    function onSearch (text: string) {
+    function onSearch(text: string) {
         _loadDataListUndanganPrabowo(text, setListDataNew);
+        setInputSearch(text);
     }
 
     return <>
@@ -20,12 +22,13 @@ export const ListUndanganPrabowoV2 = () => {
         <Modal
             opened={opened}
             onClose={close}
-            size="100%"
+            size={"xl"}
             // fullScreen
             overlayProps={{
                 // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                 opacity: 0.1,
             }}
+            centered
         >
             <TambahListUndanganPrabowoV2 thisClosed={close} />
         </Modal>
@@ -40,7 +43,7 @@ export const ListUndanganPrabowoV2 = () => {
                             icon={<AiOutlineSearch size={20} />}
                             placeholder="Search"
                             radius={"md"}
-                            onChange={(val)=>{onSearch(val.target.value)}}
+                            onChange={(val) => { onSearch(val.target.value) }}
                         />
                     </Grid.Col>
                     <Grid.Col md={8} lg={8}>

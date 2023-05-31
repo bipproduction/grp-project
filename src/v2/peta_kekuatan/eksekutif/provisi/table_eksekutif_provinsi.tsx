@@ -99,6 +99,7 @@ export const TableEksekutifProvinsiV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
+        centered size={"lg"}
       >
         <EditEksekutifProvinsiV2 thisClosed={close} data={dataId} />
 

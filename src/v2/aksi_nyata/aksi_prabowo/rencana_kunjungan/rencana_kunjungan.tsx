@@ -4,27 +4,29 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableRencanaKunjunganPrabowoV2 } from "./table_rencana_kunjungan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahRencanaKunjunganPrabowoV2 from "./tambah_rencana_kunjungan";
-import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 
 export const RencanaKunjunganPrabowoV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
-    
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+
     function onSearch(text: string) {
         _loadDataRencanaKunjunganPrabowo(text, setListDataNew);
-      }
+        setInputSearch(text);
+    }
     return <>
         {/* Tambah Modal */}
         <Modal
             opened={opened}
             onClose={close}
-            size="100%"
-            // fullScreen
+            size={"xl"}
             overlayProps={{
                 // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                 opacity: 0.1,
             }}
+            centered
         >
             <TambahRencanaKunjunganPrabowoV2 thisClosed={close} />
         </Modal>
@@ -39,7 +41,7 @@ export const RencanaKunjunganPrabowoV2 = () => {
                             icon={<AiOutlineSearch size={20} />}
                             placeholder="Search"
                             radius={"md"}
-                            onChange={(val)=>{onSearch(val.target.value)}}
+                            onChange={(val) => { onSearch(val.target.value) }}
                         />
                     </Grid.Col>
                     <Grid.Col md={8} lg={8}>
@@ -60,7 +62,7 @@ export const RencanaKunjunganPrabowoV2 = () => {
                     </Grid.Col>
                 </Grid>
             </Box>
-            <TableRencanaKunjunganPrabowoV2/>
+            <TableRencanaKunjunganPrabowoV2 />
         </Box>
 
 

@@ -4,16 +4,18 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableRencanaKunjunganGerindraV2 } from "./table_rencana_kunjungan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahRencanaKunjunganGerindraV2 from "./tambah_rencana_kunjungan";
-import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
 
 export const RencanaKunjunganGerindraV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
 
 
     function onSearch(text: string) {
         _loadDataRencanaKunjunganGerindra(text, setListDataNew);
+        setInputSearch(text);
     }
 
     return <>
@@ -21,12 +23,13 @@ export const RencanaKunjunganGerindraV2 = () => {
         <Modal
             opened={opened}
             onClose={close}
-            size="100%"
+            size={"xl"}
             // fullScreen
             overlayProps={{
                 // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                 opacity: 0.1,
             }}
+            centered
         >
             <TambahRencanaKunjunganGerindraV2 thisClosed={close} />
         </Modal>

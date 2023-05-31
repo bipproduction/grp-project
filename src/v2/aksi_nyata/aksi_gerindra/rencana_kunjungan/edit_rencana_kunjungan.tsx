@@ -23,14 +23,17 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
-import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
-const moment = require('moment');
+import moment from "moment";
+import "moment/locale/id";
+moment.locale("id");
 
 const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelRencanaKunjungan | null>(null);
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -66,10 +69,11 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
         judul: dataEdit?.judul,
         tanggal: dataEdit?.tanggal,
         img: dataEdit?.img,
-        masterStatusaksiNyataId: dataEdit?.masterStatusAksiNyataId,
+        masterStatusAksiNyataId: dataEdit?.masterStatusAksiNyataId,
     };
 
     const onEdit = () => {
+        // console.log(body);
         if (Object.values(body).includes("")) {
             return toast("Lengkapi Data");
         }
@@ -85,7 +89,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataRencanaKunjunganGerindra("", setListDataNew);
+                _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
             }
@@ -123,7 +127,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                                     body.judul = val.target.value;
                                 }} />
                                 <DateInput placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} label="**" onChange={(val) => {
-                                    body.tanggal = String(val);
+                                    body.tanggal = moment(val).format("YYYY-MM-DD");
                                 }} />
                                 <Textarea
                                     placeholder={dataEdit?.img}
@@ -142,8 +146,8 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                                     }))}
                                     placeholder={dataEdit?.MasterStatusAksiNyata.name}
                                     label={"**"}
-                                    onChange={(val) => {
-                                        body.masterStatusaksiNyataId = _.toInteger(val);
+                                    onChange={(val: any) => {
+                                        body.masterStatusAksiNyataId = val;
                                     }}
                                 />
 

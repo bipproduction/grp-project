@@ -1,5 +1,6 @@
 import { api } from "@/lib/api-backend";
 import { ModelListUndanganPrabowo, ModelListUndanganPrabowoNew, ModelRencanaKunjungan } from "@/model/model_aksi_nyata";
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export const _dataRencanaKunjunganPrabowo = atomWithStorage<ModelRencanaKunjungan[]>(
@@ -11,6 +12,9 @@ export const _dataListUndanganPrabowo = atomWithStorage<ModelListUndanganPrabowo
     "_list_undangan",
     []
 );
+
+export const _dataSearchRencanaKunjunganPrabowo = atom("");
+export const _dataSearchListUndanganPrabowo = atom("");
 
 export async function _loadDataRencanaKunjunganPrabowo(
     search: any,

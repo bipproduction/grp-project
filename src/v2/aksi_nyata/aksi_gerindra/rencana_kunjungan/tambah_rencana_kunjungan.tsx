@@ -21,12 +21,20 @@ import { useState } from "react";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { useShallowEffect } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
-import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
+import moment from "moment";
+import "moment/locale/id";
+moment.locale("id");
 
 const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
+    const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
+    const [inputJudul, setInputJudul] = useState("");
+    const [inputTanggal, setInputTanggal] = useState("");
+    const [inputImg, setInputImg] = useState("");
+    const [inputMasterStatusAksiNyata, setInputMasterStatusAksiNyata] = useState("");
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -36,22 +44,19 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
 
     useShallowEffect(() => {
         loadStatusAksiNyata();
-        //_loadDataRencanaKunjunganGerindra("", setListDataNew);
     });
 
-    const formTambahRencanaKunjungan = useForm({
-        initialValues: {
-            data: {
-                judul: '',
-                tanggal: '',
-                img: '',
-                masterStatusAksiNyataId: '',
-            }
-        },
-    });
+    const body1 = {
+        judul: inputJudul,
+        tanggal: inputTanggal,
+        img: inputImg,
+        masterStatusAksiNyataId: inputMasterStatusAksiNyata,
+    }
+
 
     const onAdd = () => {
-        if (Object.values(formTambahRencanaKunjungan.values.data).includes("")) {
+        //console.log(body1)
+        if (Object.values(body1).includes("")) {
             return toast("Lengkapi Data");
         }
         // disini pengaplikasian api
@@ -60,13 +65,13 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(formTambahRencanaKunjungan.values.data),
+            body: JSON.stringify(body1),
         }).then(async (res) => {
             const data = await res.json();
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataRencanaKunjunganGerindra("", setListDataNew);
+                _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
             }
@@ -99,15 +104,24 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                     <SimpleGrid cols={2}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahRencanaKunjungan.getInputProps("data.judul")} />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahRencanaKunjungan.getInputProps("data.tanggal")} />
+                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => {
+                                    // body1.judul = val.target.value 
+                                    setInputJudul(val.target.value)
+                                }} />
+                                <DateInput placeholder="Tanggal Kunjungan" label="**" onChange={(val) => {
+                                    // body1.tanggal = moment(val).format("YYYY-MM-DD")
+                                    setInputTanggal(moment(val).format("YYYY-MM-DD"));
+                                }} />
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
-                                    {...formTambahRencanaKunjungan.getInputProps("data.img")}
+                                    onChange={(val) => { 
+                                        // body1.img = val.target.value; console.log(body1) 
+                                        setInputImg(val.target.value)
+                                    }}
                                 />
                                 <Select
                                     data={listStatusAksiNyata.map((data) => ({
@@ -116,7 +130,10 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                                     }))}
                                     placeholder={"Pilih Status Kunjungan"}
                                     label={"**"}
-                                    {...formTambahRencanaKunjungan.getInputProps("data.masterStatusAksiNyataId")}
+                                    onChange={(val: any) => { 
+                                        body1.masterStatusAksiNyataId = val 
+                                        setInputMasterStatusAksiNyata(val);
+                                    }}
                                 />
 
                                 <Group position="left" pt={20}>

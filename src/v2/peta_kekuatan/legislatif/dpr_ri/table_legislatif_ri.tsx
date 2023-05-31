@@ -103,6 +103,7 @@ export const TableLegislatifRIV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
+        centered size={"lg"}
       >
         <EditLegislatifDprRiV2
           thisClosed={close}

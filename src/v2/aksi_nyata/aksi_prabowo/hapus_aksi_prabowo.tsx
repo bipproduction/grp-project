@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganPrabowo, _dataRencanaKunjunganPrabowo, _loadDataListUndanganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchListUndanganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataListUndanganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 
 export function ButtonDeleteAksiPrabowo({
     setId,
@@ -32,6 +32,8 @@ export function ButtonDeleteAksiPrabowo({
     const [opened, setOpen] = useDisclosure(false);
     const [listDataRencanaKunjungan, setListDataRencanaKunjungan] = useAtom(_dataRencanaKunjunganPrabowo);
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganPrabowo);
+    const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+    const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganPrabowo);
     let text;
 
     if (setKategori == 1) {
@@ -46,8 +48,8 @@ export function ButtonDeleteAksiPrabowo({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataRencanaKunjunganPrabowo("", setListDataRencanaKunjungan);
-                        _loadDataListUndanganPrabowo("", setListDataUndangan);
+                        _loadDataRencanaKunjunganPrabowo(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
+                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
                     }
                 });
         } else {
@@ -55,7 +57,7 @@ export function ButtonDeleteAksiPrabowo({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataListUndanganPrabowo("", setListDataUndangan);
+                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
                     }
                 });
         }

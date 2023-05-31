@@ -101,7 +101,7 @@ export const TableLegislatifProvinsiV2 = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close}>
+      <Modal opened={opened} onClose={close} centered size={"lg"}>
         <EditLegislatifDprdProvinsiV2
           thisClosed={close}
           data={dataId}
