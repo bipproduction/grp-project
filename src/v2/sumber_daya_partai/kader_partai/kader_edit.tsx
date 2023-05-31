@@ -48,6 +48,7 @@ export const KaderEditv2 = ({
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(valueId, setTargetEdit);
     _loadNama_KaderPartai(setKaderPartai, setSelectKaderPartai);
+   
   }, []);
 
   const onEdit = () => {
@@ -93,6 +94,7 @@ export const KaderEditv2 = ({
     })
       .then((res) => res.json())
       .then(async (val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
+      // .then(console.log)
   };
 
   if (!targetEdit)

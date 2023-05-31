@@ -52,6 +52,7 @@ const TableAnggotaPartaiV2 = () => {
       <th>Nama</th>
       <th>NIK</th>   
       <th>Email</th>
+      <th>Jenis Kelamin</th>
       {/* <th>Tempat Lahir</th>
       <th>Tanggal Lahir</th>
       <th>Jenis Kelamin</th>
@@ -78,6 +79,7 @@ const TableAnggotaPartaiV2 = () => {
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.User.email}</td>
+      <td>{e.User.DataDiri.MasterJenisKelamin.name}</td>
       {/* <td>{e.nik}</td>
       <td>{e.email}</td>
       <td>{e.tmpt_lahir}</td>

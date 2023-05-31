@@ -122,6 +122,12 @@ export const api = {
     "apiSumberDayaPartaiSearch": "/api/sumber-daya-partai/sumber-daya-partai-search",
     "apiSumberDayaPartaiHapus": "/api/sumber-daya-partai/sumber-daya-partai-hapus",
     "apiSumberDayaPartaiCount": "/api/sumber-daya-partai/sumber-daya-partai-count",
+    "apiSumberDayaPartai_StrukturCount": "/api/sumber-daya-partai/struktur-partai-count",
+    "apiSumberDayaPartai_SayapCount": "/api/sumber-daya-partai/sayap-partai-count",
+    "apiSumberDayaPartai_KaderCount": "/api/sumber-daya-partai/kader-partai-count",
+    "apiSumberDayaPartai_AnggotaCount": "/api/sumber-daya-partai/anggota-partai-count",
+
+
 
 
 
