@@ -9,6 +9,7 @@ import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import _ from "lodash";
+import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 const moment = require('moment')
 
 export const TableListUndanganPrabowoV2 = () => {
@@ -30,15 +31,15 @@ export const TableListUndanganPrabowoV2 = () => {
     _loadDataListUndanganPrabowo("", setListDataNew);
   }, []);
 
-  const onDelete = (id: string) => {
-    fetch(api.apiListUndanganPrabowoHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataListUndanganPrabowo("", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiListUndanganPrabowoHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataListUndanganPrabowo("", setListDataNew);
+  //       }
+  //     });
+  // }
 
   const tbHead = (
     <tr>
@@ -136,9 +137,10 @@ export const TableListUndanganPrabowoV2 = () => {
                   >
                     Edit
                   </Button>
-                  <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(v.id) }}>
+                  <ButtonDeleteAksiPrabowo setId={v.id} setKategori="2" setNama={v.nama}/>
+                  {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(v.id) }}>
                     Hapus
-                  </Button>
+                  </Button> */}
                 </Group>
               </td>
             </tr>

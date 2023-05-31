@@ -3,14 +3,16 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahEksekutifV2 } from "../tambah_eksekutif";
 import { TableEksekutifKabKotV2 } from "./table_eksekutif_kabkot";
-import { _dataEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const EksekutifKabKotV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
 
   function onSearch(text: string) {
     _loadDataEksekutif(3, text, setListDataNew);
+    setInputSearch(text);
   }
   return (
     <>

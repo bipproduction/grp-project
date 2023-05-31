@@ -11,7 +11,7 @@ import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _dataLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 
 export const FormTambahLegislatifDprdProvinsiV2 = ({
@@ -28,6 +28,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
   const [inputCakupanWilayah, setInputCakupanWilayah] = useState("");
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifProvinsi);
 
 
   async function onFind() {
@@ -74,7 +75,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataLegislatif(2, "", setListDataNew);
+        _loadDataLegislatif(2, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }

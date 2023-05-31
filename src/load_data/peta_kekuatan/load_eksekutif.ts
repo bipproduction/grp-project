@@ -21,7 +21,9 @@ export const _dataEksekutifKabKot = atomWithStorage<ModelEksekutif[]>(
     []
 );
 
-
+export const _dataSearchEksekutifNasional = atom("");
+export const _dataSearchEksekutifProvinsi = atom("");
+export const _dataSearchEksekutifKabKot = atom("");
 
 
 

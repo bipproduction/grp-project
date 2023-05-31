@@ -22,6 +22,11 @@ export const _dataLegislatifKabKot = atomWithStorage<ModelLegislatif[]>(
 );
 
 
+export const _dataSearchLegislatifNasional = atom("");
+export const _dataSearchLegislatifProvinsi = atom("");
+export const _dataSearchLegislatifKabKot = atom("");
+
+
 
 
 

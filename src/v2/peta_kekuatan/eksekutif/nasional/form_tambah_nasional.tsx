@@ -7,7 +7,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
-import { _dataEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const FormTambahEksekutifNasionalV2 = ({
@@ -21,6 +21,7 @@ export const FormTambahEksekutifNasionalV2 = ({
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [inputJabatanNasional, setInputJabatanNasional] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
 
   async function onFind() {
     const res = await fetch(api.apiDataDiriGetByNIK + `?nik=${inputNIK}`);
@@ -60,7 +61,7 @@ export const FormTambahEksekutifNasionalV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataEksekutif(1, "", setListDataNew);
+        _loadDataEksekutif(1, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }

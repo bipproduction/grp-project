@@ -8,13 +8,15 @@ import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 
 export const TableEksekutifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false)
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=3`)
@@ -24,19 +26,19 @@ export const TableEksekutifKabKotV2 = () => {
       });
   }
 
-  const onDelete = (id: string) => {
-    fetch(api.apiEksekutifHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataEksekutif(3, "", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiEksekutifHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataEksekutif(3, "", setListDataNew);
+  //       }
+  //     });
+  // }
 
   useShallowEffect(() => {
     loadData();
-    _loadDataEksekutif(3, "", setListDataNew);
+    _loadDataEksekutif(3, inputSearch, setListDataNew);
   }, [])
 
   const tbHead = (
@@ -83,9 +85,10 @@ export const TableEksekutifKabKotV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+          <ButtonDeleteEksekutif setId={e.id} setTingkat="3" setNama={e.User.DataDiri.name} />
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>
@@ -97,7 +100,7 @@ export const TableEksekutifKabKotV2 = () => {
         opened={opened}
         onClose={close}
       >
-        <EditEksekutifKabkotV2 thisClosed={close} data={dataId}/>
+        <EditEksekutifKabkotV2 thisClosed={close} data={dataId} />
       </Modal>
       <Box pt={20}>
         <ScrollArea>

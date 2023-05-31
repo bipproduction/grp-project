@@ -11,7 +11,7 @@ import { useState } from "react";
 import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _dataLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 
 
@@ -27,6 +27,7 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
   const [inputCakupanWilayah, setInputCakupanWilayah] = useState("");
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
 
   const loadData = () => {
     fetch(api.apiLegislatifGetOne + `?id=${data}`)
@@ -41,6 +42,10 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
     _loadProvinsi();
     loadData();
   }, []);
+
+  useShallowEffect(() => {
+    _loadKabkot(String(dataEdit?.masterProvinceId));
+  }, [dataEdit])
 
   const body = {
     id: dataEdit?.id,
@@ -73,7 +78,7 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataLegislatif(3, "", setListDataNew);
+        _loadDataLegislatif(3, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }
@@ -106,8 +111,8 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
               label: v.name,
               value: v.id,
             }))}
-            onChange={(val)=>{
-              _loadKabkot
+            onChange={(val: any) => {
+              _loadKabkot(val)
               setInputProvince(val)
             }}
           />
@@ -120,30 +125,30 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
               label: v.name,
               value: v.id,
             }))}
-            onChange={(val)=>{
+            onChange={(val) => {
               setinputKabKot(val)
             }}
           />
 
-          <TextInput placeholder={dataEdit?.dapil} label="Dapil" withAsterisk onChange={(val)=>{setInputDapil(val.target.value)}}/>
+          <TextInput placeholder={dataEdit?.dapil} label="Dapil" withAsterisk onChange={(val) => { setInputDapil(val.target.value) }} />
           <TextInput
             placeholder={dataEdit?.cakupanWilayah}
             label="Cakupan Wilayah"
             withAsterisk
-            onChange={(val)=>{setInputCakupanWilayah(val.target.value)}}
+            onChange={(val) => { setInputCakupanWilayah(val.target.value) }}
           />
           <TextInput
             placeholder={dataEdit?.akd}
             label="Komisi / AKD"
             withAsterisk
-            onChange={(val)=>{setInputAkd(val.target.value)}}
+            onChange={(val) => { setInputAkd(val.target.value) }}
           />
           <Select
             placeholder={String(dataEdit?.noUrut)}
             label="Nomor Urut"
             data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
             withAsterisk
-            onChange={(val)=>{setInputNoUrut(Number(val))}}
+            onChange={(val) => { setInputNoUrut(Number(val)) }}
           />
           {/* <TextInput
             placeholder="Tempat Lahir"
@@ -164,8 +169,8 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
           />
           <TextInput placeholder="Alamat " label="Alamat" withAsterisk />
           <TextInput placeholder="Email" label="Email" withAsterisk /> */}
-          <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val)=>{setInputPeriode(val.target.value)}} />
-          <TextInput placeholder={dataEdit?.jabatan} label="Jabatan" withAsterisk onChange={(val)=>{setInputJabatan(val.target.value)}} />
+          <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
+          <TextInput placeholder={dataEdit?.jabatan} label="Jabatan" withAsterisk onChange={(val) => { setInputJabatan(val.target.value) }} />
           {/* <TextInput placeholder="Facebook" label="Facebook" />
           <TextInput placeholder="Instagram" label="Instagram" />
           <TextInput placeholder="TikTok" label="TikTok" />

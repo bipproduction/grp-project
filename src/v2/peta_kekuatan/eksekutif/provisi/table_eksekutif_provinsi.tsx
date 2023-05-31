@@ -7,14 +7,16 @@ import { EditEksekutifProvinsiV2 } from "./edit_eksekutif_provinsi";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
+import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 
 export const TableEksekutifProvinsiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false)
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=2`)
@@ -24,19 +26,19 @@ export const TableEksekutifProvinsiV2 = () => {
       });
   }
 
-  const onDelete = (id: string) => {
-    fetch(api.apiEksekutifHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataEksekutif(2, "", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiEksekutifHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataEksekutif(2, "", setListDataNew);
+  //       }
+  //     });
+  // }
 
   useShallowEffect(() => {
     loadData();
-    _loadDataEksekutif(2, "", setListDataNew);
+    _loadDataEksekutif(2, inputSearch, setListDataNew);
   }, [])
 
   const tbHead = (
@@ -83,9 +85,10 @@ export const TableEksekutifProvinsiV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+          <ButtonDeleteEksekutif setId={e.id} setTingkat="2" setNama={e.User.DataDiri.name} />
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>
