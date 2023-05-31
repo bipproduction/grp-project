@@ -18,6 +18,7 @@ import {
   Menu,
   Modal,
   Navbar,
+  ScrollArea,
   SimpleGrid,
   Text,
   TextInput,
@@ -50,6 +51,7 @@ import { useState } from "react";
 
 const HomeUserV2 = () => {
   const theme = useMantineTheme();
+  const [openednya, setOpenedNya] = useState(false);
   const [opened, setOpened] = useState(false);
   const mockdata = [
     {
@@ -104,6 +106,16 @@ const HomeUserV2 = () => {
     btn: {
       "&:hover": {
         color: COLOR.merah,
+      },
+    },
+    hiddenMobile: {
+      [theme.fn.smallerThan("sm")]: {
+        display: "none",
+      },
+    },
+    hiddenDesktop: {
+      [theme.fn.largerThan("sm")]: {
+        display: "none",
       },
     },
   }));
@@ -168,6 +180,100 @@ const HomeUserV2 = () => {
         }}
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
+        navbar={
+          <Navbar
+            className={classes.hiddenDesktop}
+          >
+            <Navbar.Section grow mt="md" component={ScrollArea}>
+            <Group
+                    sx={{ height: "100%" }}
+                    spacing={0}
+                  >
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 100 })}
+                    >
+                      Home
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 800 })}
+                    >
+                      About
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 1350 })}
+                    >
+                      Blog
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 2000 })}
+                    >
+                      Contact Us
+                    </Button>
+                  </Group>
+                  <Group pr={20}>
+                    <Menu position="bottom-end" withArrow>
+                      <Menu.Target>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                            <Avatar radius="xl" />
+                          </Group>
+                        </Tooltip>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Group p={11}>
+                          <AiOutlineUser color="black" size="1.3rem" />
+                          <Text fw={700}>{sUser.value?.username}</Text>
+                        </Group>
+                        {/* </Menu.Item> */}
+                        {/* <Menu.Item> */}
+                        <Group p={11}>
+                          <MdAlternateEmail color="black" size="1.3rem" />
+                          <Text>{sUser.value?.email}</Text>
+                        </Group>
+                        {/* </Menu.Item> */}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push(link_dashboard);
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Lihat Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Group
+                            onClick={open}
+                            // onClick={() => {
+                            //   localStorage.removeItem("user_id");
+                            //   sUser.value = {};
+                            // }}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
+            </Navbar.Section>
+
+
+          </Navbar>
+        }
         header={
           <Header height={{ base: 70, md: 70 }} p={"md"} bg={COLOR.merah}>
             <div
@@ -204,87 +310,91 @@ const HomeUserV2 = () => {
                       RESOURCE PLANNING
                     </Text>
                   </Flex>
-                  <Group sx={{ height: "100%" }} spacing={0}>
-              <Button
-                variant="subtle"
-                color="gray.0"
-                className={classes.btn}
-                onClick={() => scrollTo({ y: 100 })}
-              >
-                Home
-              </Button>
-              <Button
-                variant="subtle"
-                color="gray.0"
-                className={classes.btn}
-                onClick={() => scrollTo({ y: 800 })}
-              >
-                About
-              </Button>
-              <Button
-                variant="subtle"
-                color="gray.0"
-                className={classes.btn}
-                onClick={() => scrollTo({ y: 1350 })}
-              >
-                Blog
-              </Button>
-              <Button
-                variant="subtle"
-                color="gray.0"
-                className={classes.btn}
-                onClick={() => scrollTo({ y: 2000 })}
-              >
-                Contact Us
-              </Button>
-            </Group>
-            <Group pr={20}>
-              <Menu position="bottom-end" withArrow>
-                <Menu.Target>
-                  <Tooltip label="Profile">
-                    <Group style={{ cursor: "pointer" }}>
-                      <Avatar radius="xl" />
-                    </Group>
-                  </Tooltip>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <AiOutlineUser color="black" size="1.3rem" />
-                      <Text fw={700}>{sUser.value?.username}</Text>
-                    </Group>
-                  {/* </Menu.Item> */}
-                  {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <MdAlternateEmail color="black" size="1.3rem" />
-                      <Text>{sUser.value?.email}</Text>
-                    </Group>
-                  {/* </Menu.Item> */}
-                  <Menu.Item>
-                    <Group
-                      onClick={() => {
-                        router.push(link_dashboard);
-                      }}
+                  <Group
+                    sx={{ height: "100%" }}
+                    spacing={0}
+                    className={classes.hiddenMobile}
+                  >
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 100 })}
                     >
-                      <AiOutlineProfile color="black" size="1.3rem" />
-                      <Text>Lihat Profile</Text>
-                    </Group>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Group
-                    onClick={open}
-                      // onClick={() => {
-                      //   localStorage.removeItem("user_id");
-                      //   sUser.value = {};
-                      // }}
+                      Home
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 800 })}
                     >
-                      <AiOutlineLogout color="red" size="1.3rem" />
-                      <Text color="red">Logout</Text>
-                    </Group>
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            </Group>
+                      About
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 1350 })}
+                    >
+                      Blog
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="gray.0"
+                      className={classes.btn}
+                      onClick={() => scrollTo({ y: 2000 })}
+                    >
+                      Contact Us
+                    </Button>
+                  </Group>
+                  <Group pr={20}>
+                    <Menu position="bottom-end" withArrow>
+                      <Menu.Target>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                            <Avatar radius="xl" />
+                          </Group>
+                        </Tooltip>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Group p={11}>
+                          <AiOutlineUser color="black" size="1.3rem" />
+                          <Text fw={700}>{sUser.value?.username}</Text>
+                        </Group>
+                        {/* </Menu.Item> */}
+                        {/* <Menu.Item> */}
+                        <Group p={11}>
+                          <MdAlternateEmail color="black" size="1.3rem" />
+                          <Text>{sUser.value?.email}</Text>
+                        </Group>
+                        {/* </Menu.Item> */}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push(link_dashboard);
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Lihat Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Group
+                            onClick={open}
+                            // onClick={() => {
+                            //   localStorage.removeItem("user_id");
+                            //   sUser.value = {};
+                            // }}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
                 </Group>
               </Box>
             </div>
