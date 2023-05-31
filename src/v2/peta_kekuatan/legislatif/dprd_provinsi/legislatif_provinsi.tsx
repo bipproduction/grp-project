@@ -3,14 +3,16 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahLegislatifV2 } from "../tambah_legislatif";
 import { TableLegislatifProvinsiV2 } from "./table_legislatif_provinsi";
-import { _dataLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 
 export const LegislatifProvinsiV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifProvinsi);
 
   function onSearch(text: string) {
     _loadDataLegislatif(2, text, setListDataNew);
+    setInputSearch(text);
   }
   return (
     <>
@@ -23,7 +25,7 @@ export const LegislatifProvinsiV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
-                onChange={(val)=>{onSearch(val.target.value)}}
+                onChange={(val) => { onSearch(val.target.value) }}
               />
             </Grid.Col>
             <Grid.Col md={8} lg={8}>
@@ -31,7 +33,7 @@ export const LegislatifProvinsiV2 = () => {
             </Grid.Col>
           </Grid>
         </Box>
-        <TableLegislatifProvinsiV2/>
+        <TableLegislatifProvinsiV2 />
       </Box>
     </>
   );

@@ -8,6 +8,7 @@ import moment from "moment";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
   const [listData, setListData] = useState<any[]>([]);
@@ -22,15 +23,15 @@ export const TableRencanaKunjunganGerindraV2 = () => {
   //     });
   // }
 
-  const onDelete = (id: string) => {
-    fetch(api.apiRencanaKunjunganGerindraHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataRencanaKunjunganGerindra("", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiRencanaKunjunganGerindraHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataRencanaKunjunganGerindra("", setListDataNew);
+  //       }
+  //     });
+  // }
 
   useShallowEffect(() => {
     // loadData();
@@ -69,9 +70,10 @@ export const TableRencanaKunjunganGerindraV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+          <ButtonDeleteAksiGerindra setId={e.id} setKategori="1" setNama={e.judul} />
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>

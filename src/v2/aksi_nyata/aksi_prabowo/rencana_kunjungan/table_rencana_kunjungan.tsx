@@ -7,6 +7,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 const moment = require('moment')
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
@@ -27,15 +28,15 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
     _loadDataRencanaKunjunganPrabowo("", setListDataNew);
   }, []);
 
-  const onDelete = (id: string) => {
-    fetch(api.apiRencanaKunjunganPrabowoHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataRencanaKunjunganPrabowo("", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiRencanaKunjunganPrabowoHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataRencanaKunjunganPrabowo("", setListDataNew);
+  //       }
+  //     });
+  // }
 
   const tbHead = (
     <tr>
@@ -69,9 +70,10 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+          <ButtonDeleteAksiPrabowo setId={e.id} setKategori="1" setNama={e.judul}/>
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>

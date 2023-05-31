@@ -36,11 +36,10 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
-import { _dataEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
-  console.log(data);
   const [value, setValue] = useState<any>();
   const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
   const [inputProvince, setInputProvince] = useState<any | null>(null);
@@ -53,6 +52,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [inputPeriode, setInputPeriode] = useState("");
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetOne + `?id=${data}`)
@@ -60,6 +60,42 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
       .then((v) => {
         setDataEdit(v);
       });
+  }
+
+  function setJabatan(input: any) {
+    if (dataEdit && input == 2) {
+      setValue(
+        <Select
+          data={sJabatanEksekutifKota.value.map((e) => ({
+            value: e.id,
+            label: e.name,
+          }))}
+          placeholder={dataEdit?.MasterJabatanEksekutifKota?.name}
+          label="Pilih Jabatan Kota"
+          withAsterisk
+          onChange={(val) => {
+            setInputJabatanKota(val);
+            setInputJabatanKabupaten(null);
+          }}
+        />
+      );
+    } else if (dataEdit && input == 1) {
+      setValue(
+        <Select
+          data={sJabatanEksekutifKabupaten.value.map((e) => ({
+            value: e.id,
+            label: e.name,
+          }))}
+          placeholder={dataEdit?.MasterJabatanEksekutifKabupaten?.name}
+          label="Pilih Jabatan Kabupaten"
+          withAsterisk
+          onChange={(val) => {
+            setInputJabatanKota(null);
+            setInputJabatanKabupaten(val);
+          }}
+        />
+      );
+    }
   }
 
   useShallowEffect(() => {
@@ -102,14 +138,19 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataEksekutif(3, "", setListDataNew);
+        _loadDataEksekutif(3, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }
     });
   }
 
-  if (dataEdit === undefined) return <></>
+  useShallowEffect(() => {
+    setJabatan(dataEdit?.masterJabatanEksekutifKabKotId);
+    _loadKabkot(String(dataEdit?.MasterProvince?.id));
+  }, [dataEdit])
+
+  if (!dataEdit) return <></>
   return (
     <>
       {/* {JSON.stringify(dataEks)} */}
@@ -135,39 +176,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
               }))}
               onChange={(val) => {
                 setInputJabatanKabKot(val)
-                if (val == "2") {
-                  setValue(
-                    <Select
-                      data={sJabatanEksekutifKota.value.map((e) => ({
-                        value: e.id,
-                        label: e.name,
-                      }))}
-                      placeholder={dataEdit?.MasterJabatanEksekutifKota?.name}
-                      label="Pilih Jabatan Kota"
-                      withAsterisk
-                      onChange={(val) => {
-                        setInputJabatanKota(val);
-                        setInputJabatanKabupaten(null);
-                      }}
-                    />
-                  );
-                } else {
-                  setValue(
-                    <Select
-                      data={sJabatanEksekutifKabupaten.value.map((e) => ({
-                        value: e.id,
-                        label: e.name,
-                      }))}
-                      placeholder={dataEdit?.MasterJabatanEksekutifKabupaten?.name}
-                      label="Pilih Jabatan Kabupaten"
-                      withAsterisk
-                      onChange={() => {
-                        setInputJabatanKota(null);
-                        setInputJabatanKabupaten(val);
-                      }}
-                    />
-                  );
-                }
+                setJabatan(val);
               }}
             />
             {value && <>{value}</>}
@@ -181,8 +190,8 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
                 value: e.id,
                 label: e.name,
               }))}
-              onChange={(val) => {
-                _loadKabkot
+              onChange={(val: any) => {
+                _loadKabkot(val);
                 setInputProvince(val);
               }}
             />

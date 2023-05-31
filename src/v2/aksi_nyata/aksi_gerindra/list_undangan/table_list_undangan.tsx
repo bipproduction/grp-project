@@ -8,6 +8,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
 const moment = require('moment')
 
 export const TableListUndanganGerindraV2 = () => {
@@ -28,15 +29,15 @@ export const TableListUndanganGerindraV2 = () => {
         _loadDataListUndanganGerindra("", setListDataNew);
     }, []);
 
-    const onDelete = (id: string) => {
-        fetch(api.apiListundanganGerindraHapus + `?id=${id}`)
-            .then(async (res) => {
-                if (res.status === 200) {
-                    toast("Success");
-                    _loadDataListUndanganGerindra("", setListDataNew);
-                }
-            });
-    }
+    // const onDelete = (id: string) => {
+    //     fetch(api.apiListundanganGerindraHapus + `?id=${id}`)
+    //         .then(async (res) => {
+    //             if (res.status === 200) {
+    //                 toast("Success");
+    //                 _loadDataListUndanganGerindra("", setListDataNew);
+    //             }
+    //         });
+    // }
 
     const tbHead = (
         <tr>
@@ -122,9 +123,10 @@ export const TableListUndanganGerindraV2 = () => {
                                         >
                                             Edit
                                         </Button>
-                                        <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+                                        <ButtonDeleteAksiGerindra setId={e.id} setKategori="2" setNama={e.nama} />
+                                        {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
                                             Hapus
-                                        </Button>
+                                        </Button> */}
                                     </Group>
                                 </td>
                             </tr>

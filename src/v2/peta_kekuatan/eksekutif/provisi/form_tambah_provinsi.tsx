@@ -25,7 +25,7 @@ import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const FormTambahEksekutifProvinsiV2 = ({
@@ -40,6 +40,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
   const [inputPeriode, setInputPeriode] = useState("");
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
 
   useShallowEffect(() => {
     _loadProvinsi();
@@ -89,7 +90,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataEksekutif(2, "", setListDataNew);
+        _loadDataEksekutif(2, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }

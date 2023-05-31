@@ -8,13 +8,15 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { useAtom } from "jotai";
-import { _dataEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 
 export const TableEksekutifNasionalV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useState<ModelEksekutif[]>([]);
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [dataId, setDataId] = useState<string>("");
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
 
   // const loadData = () => {
   //   fetch(api.apiEksekutifGetAll+`?tingkat=1`)
@@ -24,19 +26,19 @@ export const TableEksekutifNasionalV2 = () => {
   //     });
   // }
 
-  const onDelete = (id: string) => {
-    fetch(api.apiEksekutifHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataEksekutif(1,"", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiEksekutifHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataEksekutif(1,"", setListDataNew);
+  //       }
+  //     });
+  // }
 
   useShallowEffect(() => {
     //loadData();
-    _loadDataEksekutif(1, "", setListDataNew);
+    _loadDataEksekutif(1, inputSearch, setListDataNew);
   }, [])
 
   const tbHead = (
@@ -84,9 +86,10 @@ export const TableEksekutifNasionalV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
+          <ButtonDeleteEksekutif setId={e.id} setTingkat="1" setNama={e.User.DataDiri.name} />
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>

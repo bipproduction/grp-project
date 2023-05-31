@@ -8,13 +8,15 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { ButtonDeleteLegislatif } from "../hapus_legislatif";
 
 export const TableLegislatifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useState<ModelLegislatif[]>([]);
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
   const [dataId, setDataId] = useState<string>("");
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
 
   // const loadData = () => {
   //   fetch(api.apiLegislatifGetAll + `?tingkat=3`)
@@ -24,19 +26,19 @@ export const TableLegislatifKabKotV2 = () => {
   //     });
   // }
 
-  const onDelete = (id: string) => {
-    fetch(api.apiLegislatifHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          toast("Success");
-          _loadDataLegislatif(3, "", setListDataNew);
-        }
-      });
-  }
+  // const onDelete = (id: string) => {
+  //   fetch(api.apiLegislatifHapus + `?id=${id}`)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         toast("Success");
+  //         _loadDataLegislatif(3, "", setListDataNew);
+  //       }
+  //     });
+  // }
 
   useShallowEffect(() => {
     //loadData();
-    _loadDataLegislatif(3, "", setListDataNew);
+    _loadDataLegislatif(3, inputSearch, setListDataNew);
   }, [])
 
   const tbHead = (
@@ -85,9 +87,10 @@ export const TableLegislatifKabKotV2 = () => {
           >
             Edit
           </Button>
-          <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
+          <ButtonDeleteLegislatif setId={e.id} setTingkat="3" setNama={e.User.DataDiri.name} />
+          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
-          </Button>
+          </Button> */}
         </Group>
       </td>
     </tr>

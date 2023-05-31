@@ -3,14 +3,16 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahEksekutifV2 } from "../tambah_eksekutif";
 import { TableEksekutifProvinsiV2 } from "./table_eksekutif_provinsi";
-import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const EksekutifProvinsiV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
 
   function onSearch(text: string) {
     _loadDataEksekutif(2, text, setListDataNew);
+    setInputSearch(text);
   }
   return (
     <>
@@ -23,7 +25,7 @@ export const EksekutifProvinsiV2 = () => {
                 icon={<AiOutlineSearch size={20} />}
                 placeholder="Search"
                 radius={"md"}
-                onChange={(val)=>{onSearch(val.target.value)}}
+                onChange={(val) => { onSearch(val.target.value) }}
               />
             </Grid.Col>
             <Grid.Col md={8} lg={8}>

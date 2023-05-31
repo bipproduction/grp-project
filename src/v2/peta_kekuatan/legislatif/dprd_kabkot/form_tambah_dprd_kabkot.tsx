@@ -16,7 +16,7 @@ import _ from "lodash";
 import { _loadSelectKabkot } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
-import { _dataLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 
 export const FormTambahLegislatifDprdKabkotV2 = ({
   tutupModal,
@@ -37,6 +37,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
   const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
   const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
 
 
   async function onFind() {
@@ -85,7 +86,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataLegislatif(3, "", setListDataNew);
+        _loadDataLegislatif(3, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }
@@ -157,7 +158,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
           <Button onClick={onFind}>Cek</Button>
           {dataDiri && (
             <>
-              <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataDiri.name}/>
+              <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataDiri.name} />
 
               {/* <TextInput
                     placeholder="Tempat Lahir"
@@ -178,7 +179,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
                 value={dataDiri.phoneNumber}
               />
               <TextInput placeholder="Alamat " label="Alamat" withAsterisk value={dataDiri.alamat} />
-              <TextInput placeholder="Email" label="Email" withAsterisk  value={dataDiri.User.email}/>
+              <TextInput placeholder="Email" label="Email" withAsterisk value={dataDiri.User.email} />
 
               {/* <TextInput placeholder="Facebook" label="Facebook" />
                     <TextInput placeholder="Instagram" label="Instagram" />

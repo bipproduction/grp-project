@@ -26,7 +26,7 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
-import { _dataEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
@@ -38,6 +38,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
   const [inputPeriode, setInputPeriode] = useState<any | null>(null);
   const [inputAlamatKantor, setInputAlamatKantor] = useState<any | null>(null);
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetOne + `?id=${data}`)
@@ -60,11 +61,11 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
     id: dataEdit?.id,
     userId: dataEdit?.userId,
     masterTingkatEksekutifId: 2,
-    masterProvinceId: inputProvince?inputProvince:dataEdit?.MasterProvince?.id,
-    masterJabatanEksekutifProvinsiId: inputJabatanProvince?inputJabatanProvince:dataEdit?.MasterJabatanEksekutifProvinsi?.id,
-    masterStatusEksekutifId: inputStatusEksekutif?inputStatusEksekutif:dataEdit?.MasterStatusEksekutif?.id,
-    periode: inputPeriode?inputPeriode:dataEdit?.periode,
-    alamatKantor: inputAlamatKantor?inputAlamatKantor:dataEdit?.alamatKantor,
+    masterProvinceId: inputProvince ? inputProvince : dataEdit?.MasterProvince?.id,
+    masterJabatanEksekutifProvinsiId: inputJabatanProvince ? inputJabatanProvince : dataEdit?.MasterJabatanEksekutifProvinsi?.id,
+    masterStatusEksekutifId: inputStatusEksekutif ? inputStatusEksekutif : dataEdit?.MasterStatusEksekutif?.id,
+    periode: inputPeriode ? inputPeriode : dataEdit?.periode,
+    alamatKantor: inputAlamatKantor ? inputAlamatKantor : dataEdit?.alamatKantor,
   }
 
   const onEdit = () => {
@@ -83,7 +84,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataEksekutif(2, "", setListDataNew);
+        _loadDataEksekutif(2, inputSearch, setListDataNew);
       } else {
         toast(data.message);
       }
@@ -115,7 +116,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
                 value: e.id,
                 label: e.name,
               }))}
-              onChange={(val)=>{
+              onChange={(val) => {
                 setInputProvince(val);
               }}
             />
@@ -127,13 +128,13 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
                 value: e.id,
                 label: e.name,
               }))}
-              onChange={(val)=>{
+              onChange={(val) => {
                 setInputJabatanProvince(val)
               }}
             />
-            <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val)=>{
+            <TextInput placeholder={dataEdit?.periode} label="Periode" withAsterisk onChange={(val) => {
               setInputPeriode(val.target.value)
-            }}/>
+            }} />
             {/* <TextInput placeholder="Nama" label="Nama" withAsterisk />
             <TextInput placeholder="NIK" label="NIK" withAsterisk />
             <TextInput placeholder="Email" label="*Email*" withAsterisk />
@@ -146,7 +147,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
               placeholder={dataEdit?.alamatKantor}
               label="Alamat Kantor"
               withAsterisk
-              onChange={(val)=>{
+              onChange={(val) => {
                 setInputAlamatKantor(val.target.value)
               }}
             />
@@ -167,7 +168,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
               label={"Pilih Status"}
               placeholder={dataEdit?.MasterStatusEksekutif?.name}
               withAsterisk
-              onChange={(val)=>{
+              onChange={(val) => {
                 setInputStatusEksekutif(val)
               }}
             />
