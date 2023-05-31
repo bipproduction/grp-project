@@ -153,7 +153,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
           >
             <Flex align={"center"} gap={"lg"}>
               <FaCircle size={25} color={COLOR.merah} />
-              <Text fw={"bold"}>ADMIN</Text>
+              <Text fw={"bold"}>SUPER ADMIN</Text>
             </Flex>
             <Navbar.Section grow mt="md" component={ScrollArea}>
               {listSidebar.map((e, i) => (

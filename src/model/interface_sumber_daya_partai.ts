@@ -22,6 +22,7 @@ export interface ModelSumberDayaPartai {
   MasterKecamatan: MasterKecamatan
   MasterDesa: MasterDesa
   MasterNegara: MasterNegara
+  MasterOrganisasiAfiliatif: MasterOrganisasiAfiliatif
 }
 
 export interface User {
@@ -181,6 +182,10 @@ export interface MasterNegara {
 }
 
 export interface MasterUserRole {
+  id: number,
+  name: string
+}
+export interface MasterOrganisasiAfiliatif {
   id: number,
   name: string
 }

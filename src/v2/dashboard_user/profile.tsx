@@ -32,6 +32,8 @@ import EditDataDiriNew from "./edit_data_diri_new";
 import { Router } from "next/router";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
+import 'moment/locale/id' 
+moment.locale('id')
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
   "dataDiri",

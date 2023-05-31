@@ -24,6 +24,8 @@ import { api } from "@/lib/api-backend";
 import EditDataDiriNew from "./edit_data_diri_new";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
+import 'moment/locale/id' 
+moment.locale('id')
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
 
@@ -151,7 +153,7 @@ const KTAV2 = () => {
                           : {moment(listData1?.tanggalLahir).format('LL')}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
-                          : {listData1?.MasterDesa.name}
+                          : {listData1?.MasterDesa?.name}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
                           : {listData1?.MasterKecamatan.name}
