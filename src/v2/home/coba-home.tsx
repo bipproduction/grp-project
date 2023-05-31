@@ -248,7 +248,7 @@ const HomeUserNewV2 = () => {
                   variant="subtle"
                   color="gray.0"
                   className={classes.btn}
-                  onClick={() => scrollTo({ y: 100 })}
+                  onClick={() => scrollTo({ y: 0 })}
                 >
                   Home
                 </Button>

@@ -182,11 +182,8 @@ const KTAV2 = () => {
                 opened={openModal}
                 onClose={() => setOpenModal(true)}
                 size={"xl"}
-                // fullScreen
-                // title="Edit Data Diri"
                 centered
                 overlayProps={{
-                  // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
                   opacity: 0.1,
                 }}
                 withCloseButton={false}

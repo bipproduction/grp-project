@@ -77,7 +77,7 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
 
     return (
         <>
-            <Box>
+            <Box p={20}>
                 <Paper bg={COLOR.abuabu} p={10}>
                     <Grid>
                         <Grid.Col span={8}>
@@ -98,7 +98,7 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid>
                         <Box>
                             <Flex direction={"column"}>
                                 <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => { body.judul = val.target.value }} />

@@ -105,7 +105,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
     return (
         <>
             {/* {JSON.stringify(dataEdit)} */}
-            <Box>
+            <Box p={20}>
                 <Paper bg={COLOR.abuabu} p={10}>
                     <Grid>
                         <Grid.Col span={8}>
@@ -126,7 +126,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid >
                         <Box>
                             <Flex direction={"column"}>
                                 <TextInput label="**" placeholder={dataEdit?.judul} onChange={(val) => {
