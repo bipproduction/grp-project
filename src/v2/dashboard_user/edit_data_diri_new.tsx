@@ -68,10 +68,11 @@ import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
+const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 
 export const _listData = atom<DataDiri | null>(null);
 
-function EditDataDiriNew() {
+function EditDataDiriNew({ thisClosed }: any) {
   const [targetEditDataDIri, setTargetEditDataDiri] = useAtom(_EditDataDiri);
   const router = useRouter();
   const [listData, setListData] = useAtom(_datapartai_form);
@@ -98,9 +99,14 @@ function EditDataDiriNew() {
   const [visible, handle] = useDisclosure(false);
   const [isLoading, setLoading] = useAtom(val_loading);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
+  const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
+  const [valNik, setValNik] = useState<string | null>(null);
+
+
 
   const onEdit = async () => {
     // console.log(editFormDataDiri.values.data)
+    thisClosed(true)
     setLoading(true);
     const body = {
       id: listData?.id,
@@ -132,7 +138,8 @@ function EditDataDiriNew() {
     });
     loadDatadiri();
     setLoading(false);
-    setOpenModal(false);
+    setOpenKta(false);
+
   };
 
   useShallowEffect(() => {
@@ -150,6 +157,7 @@ function EditDataDiriNew() {
           return;
         }
         // router.reload()
+        
       });
   }
 
@@ -218,13 +226,27 @@ function EditDataDiriNew() {
               }}
             />
             <TextInput
+              description={
+                valNik && valNik.length != 16 ? (
+                  <Text>Nik 16 Angka Length</Text>
+                ) : (
+                  ""
+                )
+              }
+              error={valNik && valNik.length != 16}
+              placeholder="NIK"
               withAsterisk
               mt={10}
+              minLength={16}
+              maxLength={16}
               label="NIK"
               radius={"md"}
               type="number"
               value={listData?.nik}
               onChange={(val) => {
+                if (val) {
+                  setValNik(val.currentTarget.value);
+                }
                 const perubahan = _.clone(listData);
                 listData.nik = val.currentTarget.value;
                 setUbah(perubahan);
@@ -243,20 +265,39 @@ function EditDataDiriNew() {
                 setUbah(perubahan);
               }}
             />
-            {/* <Text>{listData.tanggalLahir}</Text>
-            <Text>{moment(listData.tanggalLahir).format("LL")}</Text> */}
+            {/* <Text>{listData.tanggalLahir}</Text> */}
+            {/* <Text>{listData.tanggalLahir}</Text> */}
+
             <DateInput
+              // key={moment(listData.tanggalLahir).format("YYYY-MM-DD")}
               withAsterisk
               placeholder={moment(listData.tanggalLahir).format("LL")}
               mt={10}
-              // rightSection={<AiOutlineCalendar size="1.3rem" />}
               label="Tanggal Lahir"
               radius={"md"}
-              onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
-                setUbah(perubahan);
+              value={new Date(listData.tanggalLahir)}
+              onChange={(val) => {
+                if (val) {
+                  const tanggal = moment(new Date()).diff(val, "years");
+                  if (tanggal < 17) {
+                    const perubahan = _.clone(listData);
+                    listData.tanggalLahir = listData.tanggalLahir;
+                    setUbah(perubahan);
+                    return toast(
+                      "Anda tidak boleh mengisi data dengan usia kurang dari 17 tahun"
+                    );
+                  }
+
+                  const perubahan = _.clone(listData);
+                  listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
+                  setUbah(perubahan);
+                }
               }}
+              // onChange={(val: any) => {
+              //   const perubahan = _.clone(listData);
+              //   listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
+              //   setUbah(perubahan);
+              // }}
             />
 
             <TextInput
@@ -442,9 +483,8 @@ function EditDataDiriNew() {
               color="orange.9"
               type="submit"
               mt={35}
-              onClick={async () => {
-                await onEdit();
-              }}
+              
+              onClick={onEdit}
             >
               Simpan
             </Button>

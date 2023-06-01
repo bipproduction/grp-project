@@ -20,7 +20,7 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import COLOR from "../../../fun/WARNA";
 import EditKTAV2 from "./edit_kta";
 import { api } from "@/lib/api-backend";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import {
   DataDiri,
@@ -32,8 +32,9 @@ import EditDataDiriNew from "./edit_data_diri_new";
 import { Router } from "next/router";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
-import 'moment/locale/id' 
-moment.locale('id')
+import "moment/locale/id";
+import { AiFillEdit, AiOutlineEdit } from "react-icons/ai";
+moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
   "dataDiri",
@@ -44,6 +45,8 @@ export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
   null
 );
 
+const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
+
 const DataProfileV2 = () => {
   // const [opened, { open, close }] = useDisclosure(false);
   // const [listData, setListData] = useState<string | any>("");
@@ -51,6 +54,7 @@ const DataProfileV2 = () => {
   const [listData, setListData] = useAtom(_datapartai_form);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
+  const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -98,6 +102,22 @@ const DataProfileV2 = () => {
           </Grid.Col>
         </Grid>
       </Paper>
+
+      <Flex gap="md" pt={30}>
+        <Box w={150}>
+          <Button
+            fullWidth
+            color="pink.9"
+            bg={COLOR.coklat}
+            radius={"xl"}
+            onClick={() => setOpenKta(true)}
+            leftIcon={<AiOutlineEdit size={20}/>}
+          >
+            EDIT KTA
+          </Button>
+        </Box>
+      </Flex>
+
       {/* {JSON.stringify(listData)} */}
       <SimpleGrid
         cols={2}
@@ -212,37 +232,32 @@ const DataProfileV2 = () => {
         </Box>
       </SimpleGrid>
 
-      <Flex gap="md" pt={20}>
-        <Modal
-          opened={openModal}
-          onClose={() => setOpenModal(true)}
-          size={"xl"}
-          withCloseButton={false}
-          // fullScreen
-          // title="Edit Data Diri"
-          centered
-          overlayProps={{
-            // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
-            opacity: 0.1,
-          }}
-        >
-          {/* <EditKTAV2 /> */}
-          <EditDataDiriNew />
-        </Modal>
-        <Box w={150}>
-          <Button
-            fullWidth
-            color="orange.9"
-            bg={COLOR.merah}
-            radius={"xl"}
-            onClick={() => setOpenModal(true)}
-          >
-            Edit KTA
-          </Button>
-        </Box>
-      </Flex>
+
+      <ModalEditData />
     </>
   );
 };
+
+export function ModalEditData() {
+  const [openModal, setOpenModal] = useAtom(val_edit_modal);
+  const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
+  return (
+    <>
+      <Modal
+        size={"xl"}
+        opened={openKta}
+        onClose={() => setOpenKta(false)}
+        // onClose={}
+        centered
+        overlayProps={{
+          opacity: 0.1,
+        }}
+        // withCloseButton={false}
+      >
+        <EditDataDiriNew    thisClosed={() => setOpenKta(false)} />
+      </Modal>
+    </>
+  );
+}
 
 export default DataProfileV2;

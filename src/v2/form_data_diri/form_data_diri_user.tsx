@@ -41,6 +41,7 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { useAtom } from "jotai";
 import LayoutDataPartaiV2 from "../layout_data_partai/layout_data_partai";
 import LayoutDataDiriV2 from "../layout_data_partai/layout_data_diri";
+import moment from "moment";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -373,7 +374,36 @@ const FormDataDiriUser = () => {
               label="Tanggal Lahir"
               radius={"md"}
               mt={10}
-              {...formDataDiri.getInputProps("data.tanggalLahir")}
+              value={
+                _.isEmpty(formDataDiri.values.data.tanggalLahir)
+                  ? null
+                  : new Date(formDataDiri.values.data.tanggalLahir)
+              }
+              onChange={(val) => {
+                if (val) {
+                  const tanggal = moment(new Date()).diff(val, "years");
+                  if (tanggal < 17) {
+                    formDataDiri.setValues({
+                      data: {
+                        ...formDataDiri.values.data,
+                        tanggalLahir: "",
+                      },
+                    });
+
+                    return toast(
+                      "Anda tidak boleh mengisi data dengan usia kurang dari 17 tahun"
+                    );
+                  }
+
+                  formDataDiri.setValues({
+                    data: {
+                      ...formDataDiri.values.data,
+                      tanggalLahir: moment(val).format("YYYY-MM-DD"),
+                    },
+                  });
+                }
+              }}
+              // {...formDataDiri.getInputProps("data.tanggalLahir")}
             />
             <Select
               data={sJenisKelamin.value.map((ag) => ({
