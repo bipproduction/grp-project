@@ -40,6 +40,9 @@ import {
 } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import { FiAlertCircle } from "react-icons/fi";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 
 const HEADER_HEIGHT = rem(80);
 
@@ -99,7 +102,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const val_modal_logout = atomWithStorage("val_modal_logout", false);
+
 const HomeUserNewV2 = () => {
+  const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
   const mockdata = [
     {
       description:
@@ -167,7 +173,7 @@ const HomeUserNewV2 = () => {
   });
 
   const [scroll, scrollTo] = useWindowScroll();
-  const [openeModal,  setOpenModal ] = useDisclosure(false);
+  const [openeModal, setOpenModal] = useDisclosure(false);
   const [opened, { toggle, close, open }] = useDisclosure(false);
   const router = useRouter();
 
@@ -183,37 +189,12 @@ const HomeUserNewV2 = () => {
 
   return (
     <>
-        <Modal opened={openeModal} onClose={setOpenModal.close}  centered withCloseButton={false}>
-        <Alert
-          icon={<FiAlertCircle size="2rem" color="red" />}
-          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
-          color="gray"
-        >
-          <Group pt={10}>
-            <Box w={150}>
-              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={setOpenModal.close}>
-                TIDAK
-              </Button>
-            </Box>
-            <Box w={150}>
-              <Button
-                fullWidth
-                color="green.9"
-                bg={COLOR.hijautua}
-                onClick={() => {
-                  localStorage.removeItem("user_id");
-                  sUser.value = {};
-                }}
-              >
-                YA
-              </Button>
-            </Box>
-          </Group>
-        </Alert>
-      </Modal>
-
+    <ModalLogout/>
       <Header
-        height={80} px="md" bg={COLOR.coklat} sx={{ position: "sticky", top: 0 }}
+        height={80}
+        px="md"
+        bg={COLOR.coklat}
+        sx={{ position: "sticky", top: 0 }}
       >
         <Group position="apart" sx={{ height: "100%" }}>
           {/* <MantineLogo size={28} /> */}
@@ -244,38 +225,38 @@ const HomeUserNewV2 = () => {
 
             <Group position="apart" sx={{ height: "100%" }}>
               {/* <Group sx={{ height: "100%" }} spacing={0} hidden position="center" > */}
-                <Button
-                  variant="subtle"
-                  color="gray.0"
-                  className={classes.btn}
-                  onClick={() => scrollTo({ y: 0 })}
-                >
-                  Home
-                </Button>
-                <Button
-                  variant="subtle"
-                  color="gray.0"
-                  className={classes.btn}
-                  onClick={() => scrollTo({ y: 800 })}
-                >
-                  About
-                </Button>
-                <Button
-                  variant="subtle"
-                  color="gray.0"
-                  className={classes.btn}
-                  onClick={() => scrollTo({ y: 1350 })}
-                >
-                  Blog
-                </Button>
-                <Button
-                  variant="subtle"
-                  color="gray.0"
-                  className={classes.btn}
-                  onClick={() => scrollTo({ y: 2000 })}
-                >
-                  Contact Us
-                </Button>
+              <Button
+                variant="subtle"
+                color="gray.0"
+                className={classes.btn}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Home
+              </Button>
+              <Button
+                variant="subtle"
+                color="gray.0"
+                className={classes.btn}
+                onClick={() => scrollTo({ y: 800 })}
+              >
+                About
+              </Button>
+              <Button
+                variant="subtle"
+                color="gray.0"
+                className={classes.btn}
+                onClick={() => scrollTo({ y: 1350 })}
+              >
+                Blog
+              </Button>
+              <Button
+                variant="subtle"
+                color="gray.0"
+                className={classes.btn}
+                onClick={() => scrollTo({ y: 2000 })}
+              >
+                Contact Us
+              </Button>
               {/* </Group> */}
               <Group pr={20}>
                 <Menu position="bottom-end" withArrow>
@@ -311,7 +292,8 @@ const HomeUserNewV2 = () => {
                     </Menu.Item>
                     <Menu.Item>
                       <Group
-                        onClick={setOpenModal.open}
+                        onClick={() => setOpenLogout(true)}
+                        // onClick={setOpenModal.open}
                         // onClick={() => {
                         //   localStorage.removeItem("user_id");
                         //   sUser.value = {};
@@ -342,10 +324,10 @@ const HomeUserNewV2 = () => {
           >
             {(styles) => (
               <Center
-              className={classes.dropdown}
-              p={10}
-              style={styles}
-              bg={COLOR.coklat}
+                className={classes.dropdown}
+                p={10}
+                style={styles}
+                bg={COLOR.coklat}
               >
                 {/* {items} */}
                 <Group>
@@ -420,7 +402,8 @@ const HomeUserNewV2 = () => {
                       </Menu.Item>
                       <Menu.Item>
                         <Group
-                          onClick={open}
+                          // onClick={open}
+                        onClick={() => setOpenLogout(true)}
                           // onClick={() => {
                           //   localStorage.removeItem("user_id");
                           //   sUser.value = {};
@@ -478,8 +461,8 @@ const HomeUserNewV2 = () => {
             kerakyatan.
           </TypographyStylesProvider>
         </Box>
-         {/* BLOG */}
-         <Box>
+        {/* BLOG */}
+        <Box>
           {/* {JSON.stringify(sUser.value)} */}
           <SimpleGrid
             p={10}
@@ -489,8 +472,8 @@ const HomeUserNewV2 = () => {
             {cards}
           </SimpleGrid>
         </Box>
-                {/* CONTACT */}
-                <Box p={10} pt={30}>
+        {/* CONTACT */}
+        <Box p={10} pt={30}>
           <Box
             p={20}
             sx={{
@@ -575,11 +558,56 @@ const HomeUserNewV2 = () => {
             </SimpleGrid>
           </Box>
         </Box>
-
-
       </Box>
     </>
   );
 };
+
+export function ModalLogout() {
+  const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
+
+  return (
+    <>
+      <Modal
+        opened={openLogout}
+        onClose={() => setOpenLogout(false)}
+        centered
+        withCloseButton={false}
+      >
+        <Alert
+          icon={<FiAlertCircle size="2rem" color="red" />}
+          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
+          color="gray"
+        >
+          <Group pt={10}>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="red.9"
+                bg={COLOR.merah}
+                onClick={close}
+              >
+                TIDAK
+              </Button>
+            </Box>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="green.9"
+                bg={COLOR.hijautua}
+                onClick={() => {
+                  localStorage.removeItem("user_id");
+                  sUser.value = {};
+                }}
+              >
+                YA
+              </Button>
+            </Box>
+          </Group>
+        </Alert>
+      </Modal>
+    </>
+  );
+}
 
 export default HomeUserNewV2;

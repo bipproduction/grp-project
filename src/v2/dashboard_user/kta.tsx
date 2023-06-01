@@ -25,7 +25,6 @@ import EditDataDiriNew from "./edit_data_diri_new";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import 'moment/locale/id' 
-import EditKTANew from "./edit_kta_new";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 moment.locale('id')
 
