@@ -382,7 +382,7 @@ const FormDataDiriUser = () => {
               onChange={(val) => {
                 if (val) {
                   const tanggal = moment(new Date()).diff(val, "years");
-                  if (tanggal < 18) {
+                  if (tanggal < 17) {
                     formDataDiri.setValues({
                       data: {
                         ...formDataDiri.values.data,
@@ -391,7 +391,7 @@ const FormDataDiriUser = () => {
                     });
 
                     return toast(
-                      "Anda tidak boleh mengisi data dengan usia kurang dari 18 tahun"
+                      "Anda tidak boleh mengisi data dengan usia kurang dari 17 tahun"
                     );
                   }
 
