@@ -28,9 +28,9 @@ export function ButtonDeleteData({
       if (res.status == 200) {
         const data = await res.json();
         if (data.success) return toast(data.message);
-        return toast("gagal");
+        return toast("Gagal");
       }
-      return toast("error");
+      return toast("Error");
     })
     .then((val) => _loadData_ByStatus_BySeach(setId.MasterStatusKeanggotaan.id, search, setDataTable));
   };
