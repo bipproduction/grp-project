@@ -24,7 +24,7 @@ import { useAtom } from "jotai";
 import { api } from "@/lib/api-backend";
 import {
   _list_Afiliatif,
-  _loadEditAfiliatif,
+  // _loadEditAfiliatif,
   _loadNama_Afiliatif,
   _select_Afiliatif,
 } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
@@ -73,7 +73,7 @@ const EditOrganisasiAfiliatifV2 = ({
   };
 
   useShallowEffect(() => {
-    _loadEditAfiliatif(valueId, setListData);
+    // _loadEditAfiliatif(valueId, setListData);
     // _loadNama_Afiliatif(setListDataAfiliatif, setSelectAfiliatif);
   }, []);
 
