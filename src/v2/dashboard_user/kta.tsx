@@ -25,9 +25,14 @@ import EditDataDiriNew from "./edit_data_diri_new";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import 'moment/locale/id' 
+import EditKTANew from "./edit_kta_new";
+import { AiOutlineCloudDownload } from "react-icons/ai";
 moment.locale('id')
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
+const val_open_edit_kta2 = atomWithStorage("val_open_edit_kta2", false);
+
+
 
 const KTAV2 = () => {
   const ref = useRef();
@@ -35,6 +40,8 @@ const KTAV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listData1, setListData1] = useAtom(_datapartai_form);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
+  const [openKta2, setOpenKta2] = useAtom(val_open_edit_kta2);
+
 
   async function loadKTA() {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -178,44 +185,29 @@ const KTAV2 = () => {
 
           <Center pt={30} pb={40}>
             <Flex gap="md" pt={20}>
-              <Modal
-                opened={openModal}
-                onClose={() => setOpenModal(true)}
-                size={"xl"}
-                centered
-                overlayProps={{
-                  opacity: 0.1,
-                }}
-                withCloseButton={false}
-              >
-                {/* <EditKTAV2 /> */}
-                <EditDataDiriNew />
-              </Modal>
-              <Box w={150}>
+              {/* <Box w={150}>
                 <Button
                   fullWidth
                   color="pink.9"
                   bg={COLOR.orange}
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => setOpenKta2(true)}
                   radius={"xl"}
                 >
                   Edit KTA
                 </Button>
-              </Box>
-              <Box w={150}>
+              </Box> */}
+              <Box w={160}>
                 {/* <DownloadPng/> */}
                 <Button
                   fullWidth
                   color="pink.9"
                   bg={COLOR.orange}
                   radius={"xl"}
+                  leftIcon={<AiOutlineCloudDownload size={25}/>}
                   onClick={() => gambar!.exportComponentAsPNG(ref as any)}
                 >
                   Cetak KTA
                 </Button>
-                {/* <PngDownload /> */}
-                {/* <Coba/> */}
-                {/* <CobaAja/> */}
               </Box>
             </Flex>
           </Center>
@@ -224,4 +216,6 @@ const KTAV2 = () => {
     </>
   );
 };
+
+
 export default KTAV2;
