@@ -104,7 +104,7 @@ const useStyles = createStyles((theme) => ({
 
 const val_modal_logout = atomWithStorage("val_modal_logout", false);
 
-const HomeUserNewV2 = () => {
+const HomeUserNewV2 = ({ thisClosed }: any) => {
   const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
   const mockdata = [
     {
@@ -189,7 +189,7 @@ const HomeUserNewV2 = () => {
 
   return (
     <>
-    <ModalLogout/>
+    <ModalLogout thisClosed={close} />
       <Header
         height={80}
         px="md"
@@ -563,7 +563,7 @@ const HomeUserNewV2 = () => {
   );
 };
 
-export function ModalLogout() {
+export function ModalLogout({ thisClosed }: any) {
   const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
 
   return (
@@ -585,7 +585,7 @@ export function ModalLogout() {
                 fullWidth
                 color="red.9"
                 bg={COLOR.merah}
-                onClick={close}
+                onClick={() => setOpenLogout(false)}
               >
                 TIDAK
               </Button>
