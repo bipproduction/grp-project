@@ -175,22 +175,22 @@ const FormDataDiriUser = () => {
   const [listData, setListData] = useState([
     {
       name: "",
-      userId: "",
+      userId: localStorage.getItem("user_id"),
       masterMediaSocialId: 1,
     },
     {
       name: "",
-      userId: "",
+      userId: localStorage.getItem("user_id"),
       masterMediaSocialId: 2,
     },
     {
       name: "",
-      userId: "",
+      userId: localStorage.getItem("user_id"),
       masterMediaSocialId: 3,
     },
     {
       name: "",
-      userId: "",
+      userId: localStorage.getItem("user_id"),
       masterMediaSocialId: 4,
     },
   ]);
@@ -202,7 +202,7 @@ const FormDataDiriUser = () => {
   }
 
   const onDatadiri = async () => {
-    // const adaKosong = listData.find((val) => _.values(val).includes(""));
+    listData.find((val) => _.values(val).includes(""));
     // if (adaKosong) return toast("Lengkapi data diri");
 
     if (valNik?.length != 16) return toast("nik harus 16 angka");
@@ -232,7 +232,7 @@ const FormDataDiriUser = () => {
     });
 
     console.log(pertama);
-    // if (!pertama) return toast("gagal");
+    if (!pertama) return toast("gagal");
 
     for (let item of listData) {
       await fetch(api.apiMediaSosialUserPost, {
@@ -241,7 +241,8 @@ const FormDataDiriUser = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(item),
-      });
+      })
+console.log(item)
     }
 
     // localStorage.setItem("user_id", pertama.id);
