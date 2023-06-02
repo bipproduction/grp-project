@@ -194,7 +194,7 @@ const DataProfileV2 = () => {
               borderRadius: 10,
             }}
           >
-            <Box mt={10}>
+            {/* <Box mt={10}>
               <Text fz={15}>
                 {listData2?.User.UserMediaSocial.map((v, i) => (
                   <Box key={i}>
@@ -206,7 +206,7 @@ const DataProfileV2 = () => {
                 ))}
               </Text>
               <Text fw={700}></Text>
-            </Box>
+            </Box> */}
 
             <Box mt={10}>
               <Text fz={15}>Provinsi</Text>
