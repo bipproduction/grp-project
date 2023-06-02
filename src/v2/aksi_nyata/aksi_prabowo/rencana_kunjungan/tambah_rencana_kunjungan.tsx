@@ -98,24 +98,26 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => { body.judul = val.target.value }} />
+                                <TextInput mt={10} placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => { body.judul = val.target.value }} />
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
+                                    mt={10}
                                     minRows={2}
                                     maxRows={4}
                                     onChange={(val) => { body.img = val.target.value }}
                                 />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" onChange={(val: any) => { body.tanggal = moment(val).format("YYYY-MM-DD") }} />
+                                <DateInput mt={10} placeholder="Tanggal Kunjungan" label="**" onChange={(val: any) => { body.tanggal = moment(val).format("YYYY-MM-DD") }} />
                                 <Select
                                     data={listStatusAksiNyata.map((data) => ({
                                         value: data.id,
                                         label: data.name,
                                     }))}
+                                    mt={10}
                                     placeholder={"Pilih Status Kunjungan"}
                                     label={"**"}
                                     onChange={(val: any) => { body.masterStatusAksiNyataId = val }}
