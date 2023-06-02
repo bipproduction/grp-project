@@ -242,7 +242,7 @@ const FormDataDiriUser = () => {
         },
         body: JSON.stringify(item),
       })
-console.log(item)
+// console.log(item)
     }
 
     // localStorage.setItem("user_id", pertama.id);

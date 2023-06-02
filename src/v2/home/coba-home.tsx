@@ -335,7 +335,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     variant="subtle"
                     color="gray.0"
                     className={classes.btn}
-                    onClick={() => scrollTo({ y: 100 })}
+                    onClick={() => scrollTo({ y: 0 })}
                   >
                     Home
                   </Button>
@@ -343,7 +343,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     variant="subtle"
                     color="gray.0"
                     className={classes.btn}
-                    onClick={() => scrollTo({ y: 800 })}
+                    onClick={() => scrollTo({ y: 250 })}
                   >
                     About
                   </Button>
@@ -351,7 +351,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     variant="subtle"
                     color="gray.0"
                     className={classes.btn}
-                    onClick={() => scrollTo({ y: 1350 })}
+                    onClick={() => scrollTo({ y: 837 })}
                   >
                     Blog
                   </Button>
@@ -359,7 +359,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     variant="subtle"
                     color="gray.0"
                     className={classes.btn}
-                    onClick={() => scrollTo({ y: 2000 })}
+                    onClick={() => scrollTo({ y: 3178 })}
                   >
                     Contact Us
                   </Button>
