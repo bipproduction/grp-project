@@ -104,7 +104,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
 
   return (
     <>
-      <Box p={20}>
+      <Box >
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
@@ -125,12 +125,13 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
               </Text>
             </Flex>
           </Box>
-          <SimpleGrid>
+          <SimpleGrid pt={20}>
             <Box>
               <Flex direction={"column"}>
                 <TextInput
                   placeholder={dataEdit?.judul}
                   label="**"
+                  mt={10}
                   onChange={(val) => {
                     body.judul = val.target.value;
                   }}
@@ -142,6 +143,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                   autosize
                   minRows={2}
                   maxRows={4}
+                  mt={10}
                   onChange={(val) => {
                     body.img = val.target.value;
                   }}
@@ -149,6 +151,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                 <DateInput
                   placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")}
                   label="**"
+                  mt={10}
                   onChange={(val) => {
                     body.tanggal = moment(val).format("YYYY-MM-DD");
                   }}
@@ -158,6 +161,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                     value: data.id,
                     label: data.name,
                   }))}
+                  mt={10}
                   placeholder={dataEdit?.MasterStatusAksiNyata.name}
                   label={"**"}
                   onChange={(val: any) => {

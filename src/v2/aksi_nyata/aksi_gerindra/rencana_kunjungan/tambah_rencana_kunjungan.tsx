@@ -86,7 +86,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
 
   return (
     <>
-      <Box p={20}>
+      <Box >
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
@@ -107,12 +107,13 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
               </Text>
             </Flex>
           </Box>
-          <SimpleGrid>
+          <SimpleGrid pt={20}>
             <Box>
               <Flex direction={"column"}>
                 <TextInput
                   placeholder="Masukkan Judul Rencana & Agenda"
                   label="**"
+                  mt={10}
                   onChange={(val) => {
                     // body1.judul = val.target.value
                     setInputJudul(val.target.value);
@@ -123,6 +124,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                   placeholder="Potret Lokasi Kunjungan"
                   label="**"
                   autosize
+                  mt={10}
                   minRows={2}
                   maxRows={4}
                   onChange={(val) => {
@@ -133,6 +135,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                 <DateInput
                   placeholder="Tanggal Kunjungan"
                   label="**"
+                  mt={10}
                   onChange={(val) => {
                     // body1.tanggal = moment(val).format("YYYY-MM-DD")
                     setInputTanggal(moment(val).format("YYYY-MM-DD"));
@@ -145,6 +148,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                   }))}
                   placeholder={"Pilih Status Kunjungan"}
                   label={"**"}
+                  mt={10}
                   onChange={(val: any) => {
                     body1.masterStatusAksiNyataId = val;
                     setInputMasterStatusAksiNyata(val);
