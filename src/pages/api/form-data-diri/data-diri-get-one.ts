@@ -16,6 +16,7 @@ const dataDiriGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
             phoneNumber : true,
             alamat : true,
             rtRw : true,
+            img : true,
             User: {
                 select: {
                     email: true,

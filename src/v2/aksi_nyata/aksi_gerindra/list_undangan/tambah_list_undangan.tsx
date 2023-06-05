@@ -22,6 +22,7 @@ import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
@@ -66,6 +67,7 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _postLogUser("cli9oizqw0008smnrtbv6lfyo","ADD","User menambah data list undangan gerindra");
                 _loadDataListUndanganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
