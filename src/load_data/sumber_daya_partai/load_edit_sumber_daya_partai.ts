@@ -82,3 +82,16 @@ export const _loadEditSumberDayaPartai_ById = async (
     .then((e) => e.json())
     .then((val) => setTargetEdit(val));
 };
+export const _loadUserSumberDayaPartai_ById = async (
+  id: any,
+  setDatKeanggotan: any
+) => {
+  await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
+  .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setDatKeanggotan(data);
+          return;
+        }
+      });
+};

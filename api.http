@@ -606,7 +606,7 @@ Content-Type: application/json
 }
 
 ### GET ONE SUMBER DAYA PARTAI / KEANGGOTAAN
-GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clhpq769l0006vn8ixxz8k8zz HTTP/1.1
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clii84u91000dvnqkh95lwlkg HTTP/1.1
 
 
 ### GET ALL SUMBER DAYA PARTAI / KEANGGOTAAN

@@ -182,7 +182,7 @@ const TableStruktutPartaiV2 = () => {
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{e.User.DataDiri.name}</td>
-                    <td>{e.MasterTingkatPengurus.name}</td>
+                    <td>{e.MasterTingkatPengurus?.name}</td>
                     <td>{e.User.DataDiri.MasterProvince.name}</td>
                     <td>{e.User.DataDiri.MasterKabKot.name}</td>
                     <td>{e.User.DataDiri.MasterKecamatan.name}</td>

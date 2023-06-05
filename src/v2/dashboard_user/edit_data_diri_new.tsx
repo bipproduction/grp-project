@@ -102,11 +102,9 @@ function EditDataDiriNew({ thisClosed }: any) {
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [valNik, setValNik] = useState<string | null>(null);
 
-
-
   const onEdit = async () => {
     // console.log(editFormDataDiri.values.data)
-    thisClosed(true)
+    thisClosed(true);
     setLoading(true);
     const body = {
       id: listData?.id,
@@ -139,7 +137,6 @@ function EditDataDiriNew({ thisClosed }: any) {
     loadDatadiri();
     setLoading(false);
     setOpenKta(false);
-
   };
 
   useShallowEffect(() => {
@@ -157,7 +154,6 @@ function EditDataDiriNew({ thisClosed }: any) {
           return;
         }
         // router.reload()
-        
       });
   }
 
@@ -331,6 +327,20 @@ function EditDataDiriNew({ thisClosed }: any) {
               }}
               // {...editFormDataDiri.getInputProps("data.alamat")}
             />
+            <TextInput
+              withAsterisk
+              mt={10}
+              label="Instagram"
+              radius={"md"}
+              // {...editFormDataDiri.getInputProps("data.alamat")}
+            />
+            <TextInput
+              withAsterisk
+              mt={10}
+              label="Facebook"
+              radius={"md"}
+              // {...editFormDataDiri.getInputProps("data.alamat")}
+            />
           </Box>
         </Grid.Col>
         <Grid.Col md={6} lg={6}>
@@ -344,11 +354,25 @@ function EditDataDiriNew({ thisClosed }: any) {
             }}
           >
             <TextInput
+              withAsterisk
+              label="Tiktok"
+              radius={"md"}
+              // {...editFormDataDiri.getInputProps("data.alamat")}
+            />
+            <TextInput
+              withAsterisk
+              mt={10}
+              label="Twitter"
+              radius={"md"}
+              // {...editFormDataDiri.getInputProps("data.alamat")}
+            />
+            <TextInput
               placeholder={listData?.rtRw}
               // placeholder="RT/RW"
               withAsterisk
               label="RT/RW"
               radius={"md"}
+              mt={10}
               type="number"
               value={listData?.rtRw}
               onChange={(val) => {
@@ -483,7 +507,6 @@ function EditDataDiriNew({ thisClosed }: any) {
               color="orange.9"
               type="submit"
               mt={35}
-              
               onClick={onEdit}
             >
               Simpan
