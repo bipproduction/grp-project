@@ -21,6 +21,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataListUndanganGerindra, _dataRencanaKunjunganGerindra, _dataSearchListUndanganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataListUndanganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteAksiGerindra({
     setId,
@@ -34,12 +35,14 @@ export function ButtonDeleteAksiGerindra({
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganGerindra);
     const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganGerindra);
     const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganGerindra);
-    let text;
+    let text, desk_log: string;
 
     if (setKategori == 1) {
         text = `Hapus Data ${setNama} dan seluruh list undangan yg berkaitan?`
+        desk_log = 'User menghapus data rencana kunjungan gerindra'
     } else {
         text = `Hapus Data ${setNama} ?`
+        desk_log = 'User menghapus data list undangan gerindra'
     }
 
     const onDelete = () => {
@@ -50,6 +53,7 @@ export function ButtonDeleteAksiGerindra({
                         toast("Success");
                         _loadDataRencanaKunjunganGerindra(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
                         _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
+                        _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
         } else {
@@ -58,6 +62,7 @@ export function ButtonDeleteAksiGerindra({
                     if (res.status === 200) {
                         toast("Success");
                         _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
+                        _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
         }

@@ -36,6 +36,7 @@ import { atomWithStorage } from "jotai/utils";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _dataSayap } from "@/load_data/sayap_partai/load_sayap_partai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -65,6 +66,7 @@ const TableSayapPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengaktifkan status admin");
       } else {
         toast("Gagal");
       }
@@ -89,6 +91,7 @@ const TableSayapPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User menonaktifkan status admin");
       } else {
         toast("Gagal");
       }

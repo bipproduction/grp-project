@@ -43,6 +43,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const HEADER_HEIGHT = rem(80);
 
@@ -189,7 +190,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
 
   return (
     <>
-    <ModalLogout thisClosed={close} />
+      <ModalLogout thisClosed={close} />
       <Header
         height={80}
         px="md"
@@ -293,11 +294,11 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     <Menu.Item>
                       <Group
                         onClick={() => setOpenLogout(true)}
-                        // onClick={setOpenModal.open}
-                        // onClick={() => {
-                        //   localStorage.removeItem("user_id");
-                        //   sUser.value = {};
-                        // }}
+                      // onClick={setOpenModal.open}
+                      // onClick={() => {
+                      //   localStorage.removeItem("user_id");
+                      //   sUser.value = {};
+                      // }}
                       >
                         <AiOutlineLogout color="red" size="1.3rem" />
                         <Text color="red">Logout</Text>
@@ -403,11 +404,11 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       <Menu.Item>
                         <Group
                           // onClick={open}
-                        onClick={() => setOpenLogout(true)}
-                          // onClick={() => {
-                          //   localStorage.removeItem("user_id");
-                          //   sUser.value = {};
-                          // }}
+                          onClick={() => setOpenLogout(true)}
+                        // onClick={() => {
+                        //   localStorage.removeItem("user_id");
+                        //   sUser.value = {};
+                        // }}
                         >
                           <AiOutlineLogout color="red" size="1.3rem" />
                           <Text color="red">Logout</Text>
@@ -488,7 +489,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
             >
               <Image radius={20} src={"/../gerindra.png"} alt="a" />
               <Box>
-                <form onSubmit={form.onSubmit(() => {})}>
+                <form onSubmit={form.onSubmit(() => { })}>
                   <Title
                     order={2}
                     size="h1"
@@ -596,6 +597,7 @@ export function ModalLogout({ thisClosed }: any) {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
+                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                 }}

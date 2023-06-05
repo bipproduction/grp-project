@@ -20,6 +20,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
   const [dataEdit, setDataEdit] = useState<ModelLegislatif | null>(null);
@@ -78,6 +79,7 @@ export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
         buttonSimpan();
         thisClosed();
         _loadDataLegislatif(2, inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data legislatif tingkat DPRD Provinsi")
       } else {
         toast(data.message);
       }

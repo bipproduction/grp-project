@@ -67,7 +67,7 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _postLogUser("cli9oizqw0008smnrtbv6lfyo","ADD","User menambah data list undangan gerindra");
+                _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data list undangan gerindra");
                 _loadDataListUndanganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);

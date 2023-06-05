@@ -5,6 +5,7 @@ import toast from "react-simple-toasts"
 import { api } from "@/lib/api-backend"
 import { sUser } from "@/s_state/s_user"
 import { useRouter } from "next/router"
+import { _postLogUser } from "@/load_data/log_user/post_log_user"
 
 
 const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
@@ -35,6 +36,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
                 localStorage.setItem("user_id", data.id);
                 sUser.value = data;
                 toast("Success");
+                _postLogUser(data.id, "LOGIN", "User login")
                 //router.reload();
             } else {
                 toast("Email atau password salah");

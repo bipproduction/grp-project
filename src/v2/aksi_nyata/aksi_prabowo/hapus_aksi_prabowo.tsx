@@ -21,6 +21,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataListUndanganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchListUndanganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataListUndanganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteAksiPrabowo({
     setId,
@@ -34,12 +35,14 @@ export function ButtonDeleteAksiPrabowo({
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganPrabowo);
     const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganPrabowo);
     const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganPrabowo);
-    let text;
+    let text, desk_log: string;
 
     if (setKategori == 1) {
         text = `Hapus Data ${setNama} dan seluruh list undangan yg berkaitan?`
+        desk_log = 'User menghapus data rencana kunjungan prabowo'
     } else {
         text = `Hapus Data ${setNama} ?`
+        desk_log = 'User menghapus data list undangan prabowo'
     }
 
     const onDelete = () => {
@@ -50,6 +53,7 @@ export function ButtonDeleteAksiPrabowo({
                         toast("Success");
                         _loadDataRencanaKunjunganPrabowo(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
                         _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
+                        _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
         } else {
@@ -58,6 +62,7 @@ export function ButtonDeleteAksiPrabowo({
                     if (res.status === 200) {
                         toast("Success");
                         _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
+                        _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
         }

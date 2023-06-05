@@ -48,6 +48,7 @@ import { useForm } from "@mantine/form";
 import { sUser } from "@/s_state/s_user";
 import { atomWithStorage } from "jotai/utils";
 import { _dataTable_ByStatusSearch_SuperAdmin, _loadData_ByStatus_BySeach_Super_Admin } from "@/load_data/super_admin/load_sumber_data_super_admin";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -85,6 +86,7 @@ const TableStruktutPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengaktifkan status admin")
       } else {
         toast("Gagal");
       }
@@ -110,6 +112,7 @@ const TableStruktutPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User menonaktifkan status admin");
       } else {
         toast("Gagal");
       }
