@@ -12,6 +12,7 @@ export const api = {
     "apiDataDiriPost": "/api/form-data-diri/data-diri-post",
     "apiDataDiriUpdate": "/api/form-data-diri/data-diri-update",
     "apiDataDiriGetByNIK": "/api/form-data-diri/data-diri-get-by-nik",
+    "apiDataDiriUpdateImg": "/api/form-data-diri/data-diri-update-img",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN PRABOWO
@@ -71,6 +72,8 @@ export const api = {
     // MEDIA SOSIAL USER
     "apiMediaSosialUserPost": "/api/auth/user-media-sosial/user-media-sosial-post",
     "apiMediaSosialUserUpdate": "/api/auth/user-media-sosial/user-media-sosial-update",
+    "apiMediaSosialUserGetByUser": "/api/auth/user-media-sosial/user-media-sosial-get-by-user",
+    "apiMediaSosialUserGetOne": "/api/auth/user-media-sosial/user-media-sosial-get-one",
 
 
     // CALON PEMILIH POTENSIAL (CPT)
@@ -126,7 +129,13 @@ export const api = {
     "apiSumberDayaPartai_SayapCount": "/api/sumber-daya-partai/sayap-partai-count",
     "apiSumberDayaPartai_KaderCount": "/api/sumber-daya-partai/kader-partai-count",
     "apiSumberDayaPartai_AnggotaCount": "/api/sumber-daya-partai/anggota-partai-count",
+    "apiSumberDayaPartaiGetByUser": "/api/sumber-daya-partai/sumber-daya-partai-get-by-user",
 
+
+
+    //  LOG USER 
+    "apiLogUserPost": "/api/log-user/log-user-post",
+    "apiLogUserGetAll": "/api/log-user/log-user-get-all",
 
 
 
