@@ -24,6 +24,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
 import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganPrabowo | null>(null);
@@ -73,6 +74,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                 buttonSimpan();
                 thisClosed();
                 _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
+                _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data list undangan prabowo")
             } else {
                 toast(data.message);
             }

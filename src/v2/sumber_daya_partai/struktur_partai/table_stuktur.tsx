@@ -89,6 +89,7 @@ export const TableStrukturV2 = () => {
             setId={e}
             search={search}
             setDataTable={setDataTable}
+            setTingkat="struktur partai"
           />
         </Group>
       </td>

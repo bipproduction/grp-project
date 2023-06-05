@@ -6,15 +6,18 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { FiAlertCircle } from "react-icons/fi";
 import toast from "react-simple-toasts";
 import COLOR from "../../../fun/WARNA";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteData({
   setId,
   search,
   setDataTable,
+  setTingkat
 }: {
   setId: ModelSumberDayaPartai;
   search: string;
   setDataTable: any;
+  setTingkat:any;
 }) {
   const [opened, setOpen] = useDisclosure(false);
 
@@ -26,6 +29,7 @@ export function ButtonDeleteData({
     fetch(api.apiSumberDayaPartaiHapus + `?id=${id}`)
     .then(async (res) => {
       if (res.status == 200) {
+        _postLogUser(localStorage.getItem("user_id"), "HAPUS", `User menghapus data ${setTingkat}`);
         const data = await res.json();
         if (data.success) return toast(data.message);
         return toast("gagal");

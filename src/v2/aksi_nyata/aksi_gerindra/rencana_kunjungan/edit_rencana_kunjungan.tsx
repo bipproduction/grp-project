@@ -31,6 +31,7 @@ import {
 import { useAtom } from "jotai";
 import moment from "moment";
 import "moment/locale/id";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 moment.locale("id");
 
 const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
@@ -96,6 +97,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
         buttonSimpan();
         thisClosed();
         _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data rencana kunjungan gerindra")
       } else {
         toast(data.message);
       }
