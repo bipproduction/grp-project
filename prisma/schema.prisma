@@ -26,6 +26,7 @@ model User {
   Eksekutif        Eksekutif[]
   Legislatif       Legislatif[]
   SumberDayaPartai SumberDayaPartai[]
+  LogUser          LogUser[]
 }
 
 model MasterUserRole {
@@ -68,6 +69,7 @@ model DataDiri {
   phoneNumber          String
   alamat               String
   rtRw                 String
+  img                  String?
   active               Boolean            @default(true)
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @default(now()) @updatedAt
@@ -725,4 +727,15 @@ model MasterTingkatSayap {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt
   SumberDayaPartai SumberDayaPartai[]
+}
+
+model LogUser {
+  id        String   @id @default(cuid())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  activity  String
+  deskripsi String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
