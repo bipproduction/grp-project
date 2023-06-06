@@ -21,6 +21,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataLegislatifKabKot, _dataLegislatifNasional, _dataLegislatifProvinsi, _dataSearchLegislatifKabKot, _dataSearchLegislatifNasional, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteLegislatif({
     setId,
@@ -42,13 +43,18 @@ export function ButtonDeleteLegislatif({
             .then(async (res) => {
                 if (res.status === 200) {
                     toast("Success");
+                    let desk_log
                     if (setTingkat == 1) {
                         _loadDataLegislatif(1, inputSearchNasional, setListDataNasional);
+                        desk_log = 'User menghapus data legislatif tingkat DPRD RI'
                     } else if (setTingkat == 2) {
                         _loadDataLegislatif(2, inputSearchProvinsi, setListDataProv);
+                        desk_log = 'User menghapus data legislatif tingkat DPRD Provinsi'
                     } else {
                         _loadDataLegislatif(3, inputSearchKabKot, setListDataKabKot);
+                        desk_log = 'User menghapus data legislatif tingkat DPRD Kabupaten/Kota'
                     }
+                    _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                 }
             });
     }

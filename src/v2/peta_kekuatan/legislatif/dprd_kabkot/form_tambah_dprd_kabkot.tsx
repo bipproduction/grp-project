@@ -17,6 +17,7 @@ import { _loadSelectKabkot } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
 import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahLegislatifDprdKabkotV2 = ({
   tutupModal,
@@ -87,6 +88,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
         buttonSimpan();
         tutupModal();
         _loadDataLegislatif(3, inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data legislatif tingkat DPRD Kabupaten/Kota")
       } else {
         toast(data.message);
       }
