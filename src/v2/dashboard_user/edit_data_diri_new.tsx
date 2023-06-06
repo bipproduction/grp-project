@@ -67,6 +67,8 @@ import { val_loading } from "@/xg_state.ts/val_loading";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
+import { buttonSimpan } from "../component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
 // export const _MediaSocialGet = atomWithStorage<ModelUserMediaSosial | null>(
@@ -141,9 +143,11 @@ function EditDataDiriNew({ thisClosed }: any) {
       },
       body: JSON.stringify(body),
     });
+    buttonSimpan()
     loadDatadiri();
     setLoading(false);
     setOpenKta(false);
+    _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data profile");
   };
 
   useShallowEffect(() => {
