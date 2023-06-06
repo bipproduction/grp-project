@@ -39,25 +39,26 @@ model MasterUserRole {
 }
 
 model AsetPartai {
-  id                   String             @id @default(cuid())
+  id                   String               @id @default(cuid())
   name                 String
-  serialNumber         String             @unique
+  serialNumber         String               @unique
   pengguna             String
   penanggungJawab      String
   harga                Float
-  tglPembelian         DateTime           @db.Date
+  tglPembelian         DateTime             @db.Date
   lokasiPembelian      String
   garansi              String
-  MasterStatusAset     MasterStatusAset   @relation(fields: [masterStatusAsetId], references: [id])
+  MasterStatusAset     MasterStatusAset     @relation(fields: [masterStatusAsetId], references: [id])
   masterStatusAsetId   Int
   keterangan           String
-  MasterKategoriAset   MasterKategoriAset @relation(fields: [masterKategoriAsetId], references: [id])
+  MasterKategoriAset   MasterKategoriAset   @relation(fields: [masterKategoriAsetId], references: [id])
   masterKategoriAsetId Int
   deskripsi            String
   img                  String
-  active               Boolean            @default(true)
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @default(now()) @updatedAt
+  active               Boolean              @default(true)
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @default(now()) @updatedAt
+  LampiranAsetPartai   LampiranAsetPartai[]
 }
 
 model DataDiri {
@@ -738,4 +739,16 @@ model LogUser {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model LampiranAsetPartai {
+  id           String     @id @default(cuid())
+  AsetPartai   AsetPartai @relation(fields: [asetPartaiId], references: [id])
+  asetPartaiId String
+  name         String
+  deskripsi    String
+  file         String
+  active       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now()) @updatedAt
 }
