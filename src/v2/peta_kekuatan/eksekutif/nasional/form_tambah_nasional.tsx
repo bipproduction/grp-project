@@ -9,6 +9,7 @@ import _ from "lodash";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahEksekutifNasionalV2 = ({
   tutupModal,
@@ -62,6 +63,7 @@ export const FormTambahEksekutifNasionalV2 = ({
         buttonSimpan();
         tutupModal();
         _loadDataEksekutif(1, inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data eksekutif tingkat nasional")
       } else {
         toast(data.message);
       }

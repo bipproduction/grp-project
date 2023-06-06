@@ -28,6 +28,7 @@ import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import _ from "lodash";
 import { api } from "@/lib/api-backend";
 import { buttonSimpan } from "@/v2/component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const KaderEditv2 = ({
   thisClosed,
@@ -95,7 +96,10 @@ export const KaderEditv2 = ({
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then(async (val) => _loadData_ByStatus_BySeach(3, inputSearch, setDataTable));
+
+      .then(async (val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
+      _postLogUser(localStorage.getItem("user_id"), "UBAH" ,"User mengubah data kader partai")
+
       // .then(console.log)
   };
 

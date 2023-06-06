@@ -22,6 +22,7 @@ import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
@@ -66,6 +67,7 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
+                _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data list undangan gerindra");
                 _loadDataListUndanganGerindra(inputSearch, setListDataNew);
             } else {
                 toast(data.message);
@@ -97,20 +99,21 @@ const TambahListUndanganGerindraV2 = ({ thisClosed }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <Select data={listRencanaKunjungan.map((data) => ({
                                     value: data.id,
                                     label: data.judul,
                                 }))}
+                                mt={10}
                                     placeholder={"Pilih Rencana Kunjungan"}
                                     searchable={true}
                                     {...formTambahListundangan.getInputProps("data.rencanaKunjunganGerindraId")}
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahListundangan.getInputProps("data.judul")} /> */}
                                 {/* <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahListundangan.getInputProps("data.tanggalKunjungan")} /> */}
-                                <TextInput placeholder="Nama Tamu Undangan" label="**"{...formTambahListundangan.getInputProps("data.nama")} />
+                                <TextInput mt={10} placeholder="Nama Tamu Undangan" label="**"{...formTambahListundangan.getInputProps("data.nama")} />
                                 {/* <TextInput placeholder="Tambah List Undangan" mt={20} /> */}
 
                                 <Group position="left" pt={20}>

@@ -66,8 +66,14 @@ import { useRouter } from "next/router";
 import { val_loading } from "@/xg_state.ts/val_loading";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
+import { ModelUserMediaSosial } from "@/model/interface_media_social";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
+// export const _MediaSocialGet = atomWithStorage<ModelUserMediaSosial | null>(
+//   "",
+//   null
+// );
+
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 
 export const _listData = atom<DataDiri | null>(null);
@@ -101,12 +107,11 @@ function EditDataDiriNew({ thisClosed }: any) {
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [valNik, setValNik] = useState<string | null>(null);
-
-
+  // const [mediaSocialGet, setMediaSocialGet] = useAtom(_MediaSocialGet);
 
   const onEdit = async () => {
     // console.log(editFormDataDiri.values.data)
-    thisClosed(true)
+    thisClosed(true);
     setLoading(true);
     const body = {
       id: listData?.id,
@@ -139,7 +144,6 @@ function EditDataDiriNew({ thisClosed }: any) {
     loadDatadiri();
     setLoading(false);
     setOpenKta(false);
-
   };
 
   useShallowEffect(() => {
@@ -157,14 +161,30 @@ function EditDataDiriNew({ thisClosed }: any) {
           return;
         }
         // router.reload()
-        
       });
   }
+
+  // async function loadUserMediaSosial() {
+  //   fetch(
+  //     api.apiMediaSosialUserGetByUser +
+  //       `?user=${localStorage.getItem("user_id")}`
+  //   ).then(async (val) => {
+  //     if (val.status == 200) {
+  //       const data = await val.json();
+  //       setMediaSocialGet(data);
+  //       return;
+  //     }
+  //   });
+  // }
 
   // useShallowEffect(() => {
   //   fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
   //     .then((val) => val.json())
   //     .then(setDataDiri);
+  // }, []);
+
+  // useShallowEffect(() => {
+  //   loadUserMediaSosial();
   // }, []);
 
   useShallowEffect(() => {
@@ -199,11 +219,12 @@ function EditDataDiriNew({ thisClosed }: any) {
           }}
         >
           <Text fw={700} fz={20} pl={10}>
-            Edit Data Diri
+            Edit Profile
           </Text>
         </Box>
       </Box>
 
+      {/* <pre>{JSON.stringify(mediaSocialGet, null, 2)}</pre> */}
       <Grid>
         <Grid.Col md={6} lg={6}>
           <Box
@@ -483,7 +504,6 @@ function EditDataDiriNew({ thisClosed }: any) {
               color="orange.9"
               type="submit"
               mt={35}
-              
               onClick={onEdit}
             >
               Simpan

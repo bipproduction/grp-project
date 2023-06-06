@@ -27,6 +27,7 @@ import toast from "react-simple-toasts";
 import _ from "lodash";
 import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahEksekutifProvinsiV2 = ({
   tutupModal,
@@ -91,6 +92,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
         buttonSimpan();
         tutupModal();
         _loadDataEksekutif(2, inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data eksekutif tingkat provinsi")
       } else {
         toast(data.message);
       }

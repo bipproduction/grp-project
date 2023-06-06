@@ -114,6 +114,7 @@ const TableSayapPartaiV2 = () => {
           setId={e}
           search={search}
           setDataTable={setDataTable}
+          setTingkat="sayap partai"
           />
         </Group>
       </td>

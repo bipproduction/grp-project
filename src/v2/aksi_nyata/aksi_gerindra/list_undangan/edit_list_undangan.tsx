@@ -24,6 +24,7 @@ import { api } from "@/lib/api-backend";
 import _ from "lodash";
 import { useAtom } from "jotai";
 import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganGerindra | null>(null);
@@ -85,6 +86,7 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
                 buttonSimpan();
                 thisClosed();
                 _loadDataListUndanganGerindra(inputSearch, setListDataNew);
+                _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data list undangan gerindra")
             } else {
                 toast(data.message);
             }
@@ -115,13 +117,14 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <Select data={listRencanaKunjungan.map((data) => ({
                                     value: data.id,
                                     label: data.judul,
                                 }))}
+                                mt={10}
                                     placeholder={dataEdit?.RencanaKunjunganGerindra.judul}
                                     searchable={true}
                                     onChange={(val: any) => {
@@ -130,7 +133,7 @@ const EditListUndanganGerindraV2 = ({ thisClosed, data }: any) => {
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**"/> */}
                                 {/* <DateInput placeholder="Tanggal Kunjungan" label="**"/> */}
-                                <TextInput placeholder={dataEdit?.nama} label="**" onChange={(val) => {
+                                <TextInput mt={10} placeholder={dataEdit?.nama} label="**" onChange={(val) => {
                                     body.nama = val.target.value;
                                 }} />
                                 {/* <TextInput placeholder="Tambah List Undangan" mt={20}/> */}

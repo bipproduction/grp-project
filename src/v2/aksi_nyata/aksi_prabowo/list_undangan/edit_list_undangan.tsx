@@ -24,6 +24,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
 import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
     const [dataEdit, setDataEdit] = useState<ModelListUndanganPrabowo | null>(null);
@@ -73,6 +74,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                 buttonSimpan();
                 thisClosed();
                 _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
+                _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data list undangan prabowo")
             } else {
                 toast(data.message);
             }
@@ -104,13 +106,14 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <Select data={listRencanaKunjungan.map((data) => ({
                                     value: data.id,
                                     label: data.judul,
                                 }))}
+                                mt={10}
                                     placeholder={dataEdit?.RencanaKunjunganPrabowo.judul}
                                     searchable={true}
                                     onChange={(val) => {
@@ -119,7 +122,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditListUndangan.getInputProps("data.judul")} /> */}
                                 {/* <DateInput placeholder={dataEdit?.RencanaKunjunganPrabowo.tanggal} label="**" /> */}
-                                <TextInput placeholder={dataEdit?.nama} label="**" onChange={(val) => {
+                                <TextInput mt={10} placeholder={dataEdit?.nama} label="**" onChange={(val) => {
                                     body.nama = val.target.value;
                                 }} />
                                 {/* <TextInput placeholder="Tambah List Undangan" mt={20} /> */}

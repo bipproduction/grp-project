@@ -25,6 +25,7 @@ import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _load
 import { useAtom } from "jotai";
 import moment from "moment";
 import "moment/locale/id";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 moment.locale("id");
 
 const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
@@ -68,6 +69,7 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                 buttonSimpan();
                 thisClosed();
                 _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
+                _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data rencana kunjungan prabowo")
             } else {
                 toast(data.message);
             }
@@ -98,24 +100,26 @@ const TambahRencanaKunjunganPrabowoV2 = ({ thisClosed }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
-                                <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => { body.judul = val.target.value }} />
+                                <TextInput mt={10} placeholder="Masukkan Judul Rencana & Agenda" label="**" onChange={(val) => { body.judul = val.target.value }} />
                                 <Textarea
                                     placeholder="Potret Lokasi Kunjungan"
                                     label="**"
                                     autosize
+                                    mt={10}
                                     minRows={2}
                                     maxRows={4}
                                     onChange={(val) => { body.img = val.target.value }}
                                 />
-                                <DateInput placeholder="Tanggal Kunjungan" label="**" onChange={(val: any) => { body.tanggal = moment(val).format("YYYY-MM-DD") }} />
+                                <DateInput mt={10} placeholder="Tanggal Kunjungan" label="**" onChange={(val: any) => { body.tanggal = moment(val).format("YYYY-MM-DD") }} />
                                 <Select
                                     data={listStatusAksiNyata.map((data) => ({
                                         value: data.id,
                                         label: data.name,
                                     }))}
+                                    mt={10}
                                     placeholder={"Pilih Status Kunjungan"}
                                     label={"**"}
                                     onChange={(val: any) => { body.masterStatusAksiNyataId = val }}
