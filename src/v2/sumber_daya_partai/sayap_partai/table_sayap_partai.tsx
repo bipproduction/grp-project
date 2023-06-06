@@ -34,6 +34,7 @@ import {
   _dataStrukturTable_ByStatusSearch,
   _loadData_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { SayapEditV2 } from "./sayap_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
@@ -46,6 +47,7 @@ const TableSayapPartaiV2 = () => {
   const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
   const [search, setSearch] = useState("");
   const [valueId, setValueId] = useState("");
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   useShallowEffect(() => {
     onSearch("")
@@ -121,6 +123,7 @@ const TableSayapPartaiV2 = () => {
 
   const onSearch = (search: string) => {
     _loadData_ByStatus_BySeach(2, search, setDataTable);
+    setInputSearch(search)
   };
 
   return (

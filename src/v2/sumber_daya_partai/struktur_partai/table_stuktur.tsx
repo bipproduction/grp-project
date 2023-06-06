@@ -4,6 +4,7 @@ import {
   _loadData_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
   Alert,
@@ -47,6 +48,7 @@ export const TableStrukturV2 = () => {
   useShallowEffect(() => {
     onSearch("");
   }, []);
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   const thHead = (
     <tr>
@@ -98,6 +100,7 @@ export const TableStrukturV2 = () => {
 
   function onSearch(text: string) {
     _loadData_ByStatus_BySeach(1, text, setDataTable);
+    setInputSearch(text)
   }
 
   return (

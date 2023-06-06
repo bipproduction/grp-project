@@ -22,6 +22,7 @@ import {
   _loadEditSumberDayaPartai_ById,
   _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
   _editTingkatPengurus,
@@ -105,6 +106,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [select_PerwakilanLuarNegeri, setSelect_PerwakilanLuarNegeri] = useAtom(
     _selectPerwakilanLuarNegeri
   );
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
@@ -178,8 +180,10 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
+
       .then(async (val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
+
   };
 
   if (!targetEdit)

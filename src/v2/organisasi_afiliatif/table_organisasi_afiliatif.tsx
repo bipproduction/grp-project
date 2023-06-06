@@ -47,7 +47,16 @@ export const TableOrganisasiAfiliatifV2 = () => {
 
   const onDelete = async (id: string) => {
     await fetch(api.apiAnggotaAfiliatifHapus + `?id=${id}`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 200) {
+          const data = await res.json();
+          if (data.success) {
+            return data.message;
+          }
+          return toast("Gagal");
+        }
+        return toast("Error");
+      })
       .then((val) =>
         _loadDataAfiliatif_ById_Search(search, setListDataAfiliatif)
       );
@@ -104,7 +113,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
             w={100}
             onClick={() => {
               onDelete(e.id);
-              toast("Hapus Data")
+              toast("Hapus Data");
             }}
           >
             Hapus

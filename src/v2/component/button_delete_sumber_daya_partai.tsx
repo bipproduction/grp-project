@@ -32,9 +32,9 @@ export function ButtonDeleteData({
         _postLogUser(localStorage.getItem("user_id"), "HAPUS", `User menghapus data ${setTingkat}`);
         const data = await res.json();
         if (data.success) return toast(data.message);
-        return toast("gagal");
+        return toast("Gagal");
       }
-      return toast("error");
+      return toast("Error");
     })
     .then((val) => _loadData_ByStatus_BySeach(setId.MasterStatusKeanggotaan.id, search, setDataTable));
   };

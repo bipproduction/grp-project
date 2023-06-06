@@ -5,6 +5,7 @@ const asetPartaiUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "POST") {
         let body = req.body
+        console.log(body)
         const aset = await client.asetPartai.findUnique({
             where: {
                 serialNumber: body.serialNumber
@@ -14,7 +15,8 @@ const asetPartaiUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
         // cek serialNumber
         if (aset && aset.id != body.id) return res.status(209).json({ success: false, message: "Serial number telah digunakan." })
 
-        body.tglPembelian = new Date(body.tglPembelian)
+
+       
 
         await client.asetPartai.update({
             where: {
@@ -26,11 +28,12 @@ const asetPartaiUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 pengguna: body.pengguna,
                 penanggungJawab: body.penanggungJawab,
                 harga: body.harga,
-                tglPembelian: body.tglPembelian,
+                tglPembelian: new Date(body.tglPembelian),
                 garansi: body.garansi,
-                masterStatusAsetId: body.statusAset,
+                lokasiPembelian: body.lokasiPembelian,
+                masterStatusAsetId: body.masterStatusAsetId,
                 keterangan: body.keterangan,
-                masterKategoriAsetId: body.kategori,
+                masterKategoriAsetId: body.masterKategoriAsetId,
                 deskripsi: body.deskripsi,
                 img: body.img
             }

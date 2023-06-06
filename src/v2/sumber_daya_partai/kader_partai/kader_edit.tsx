@@ -15,6 +15,7 @@ import {
   _editLoadKader_ByStatusSeacrh,
   _loadData_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { useAtom } from "jotai";
 import {
@@ -45,6 +46,7 @@ export const KaderEditv2 = ({
   const [changeData, setChangeData] = useState<ModelSumberDayaPartai | null>(
     null
   );
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(valueId, setTargetEdit);
@@ -94,8 +96,10 @@ export const KaderEditv2 = ({
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
+
       .then(async (val) => _loadData_ByStatus_BySeach(3, search, setDataTable));
       _postLogUser(localStorage.getItem("user_id"), "UBAH" ,"User mengubah data kader partai")
+
       // .then(console.log)
   };
 

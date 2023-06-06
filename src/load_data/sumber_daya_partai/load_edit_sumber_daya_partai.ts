@@ -46,6 +46,7 @@ export const _editLoadKader_ByStatusSeacrh =
     null
   );
 export const _dataSeach = atom<any>("");
+export const _searchDataSumberDayaPartai = atom("")
 
 // Load Data by Status Keanggotaan dan Search by name
 export const _loadData_ByStatus_BySeach = async (
@@ -58,8 +59,7 @@ export const _loadData_ByStatus_BySeach = async (
   )
     .then((res) => res.json())
     .then((val) => {
-      // console.table(val);
-      // console.log(search)
+ 
       setDataTable(val);
     });
 };
