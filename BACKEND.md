@@ -15,6 +15,7 @@
 - **Data Diri**
   - tambah = api/form-data-diri/data-diri-post
   - update = api/form-data-diri/data-diri-update
+  - update foto profil = api/form-data-diri/data-diri-update-img
   - get one = api/form-data-diri/data-diri-get-one?id= (yg dipake adalah userId)
   - get all = api/form-data-diri/data-diri-get-all
 - **Anggota Afiliatif**
@@ -26,6 +27,8 @@
 - **User Media Sosial**
   - tambah = api/auth/user-media-sosial/user-media-sosial-post
   - update = api/auth/user-media-sosial/user-media-sosial-update
+  - get by user id = api/auth/user-media-sosial/user-media-sosial-get-by-user?user= (by userid)
+  - get one = api/auth/user-media-sosial/user-media-sosial-get-one?id= (by id)
 - **TPS/DPT**
   - tambah = api/peta-kekuatan/tps-dpt/tps-dpt-post
   - update = api/peta-kekuatan/tps-dpt/tps-dpt-update
@@ -85,3 +88,4 @@
   - get one = api/sumber-daya-partai/sumber-daya-partai-get-one?id= (by id sumber daya partai)
   - get all = api/sumber-daya-partai/sumber-daya-partai-get-all?status= (by master status keanggotaan)
   - search = api/sumber-daya-partai/sumber-daya-partai-search?status=...&search=... (by status = id master status keanggotaan & search = name data diri)
+  - get by user = api/sumber-daya-partai/sumber-daya-partai-get-by-user?user= (by user id)

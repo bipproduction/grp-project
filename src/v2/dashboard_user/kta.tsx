@@ -162,7 +162,7 @@ const KTAV2 = () => {
                           : {listData1?.MasterDesa?.name}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
-                          : {listData1?.MasterKecamatan.name}
+                          : {listData1?.MasterKecamatan?.name}
                         </Text>
                         <Text fz={{ base:7, sm: 14, xs: 9 }}>
                           : {listData1?.MasterKabKot.name}

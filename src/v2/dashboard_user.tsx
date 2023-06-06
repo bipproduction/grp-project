@@ -46,6 +46,7 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import Head from "next/head";
 import { useDisclosure } from "@mantine/hooks";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 const listSidebar = [
@@ -58,11 +59,11 @@ const listSidebar = [
         name: "Data Profile",
         view: DataProfileV2,
       },
-      // {
-      //   id: 2,
-      //   name: "Status Keanggotaan",
-      //   view: StatusKeanggotaanV2,
-      // },
+      {
+        id: 2,
+        name: "Status Keanggotaan",
+        view: StatusKeanggotaanV2,
+      },
     ],
   },
   {
@@ -124,6 +125,7 @@ const LayoutDashboardV2 = () => {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
+                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                 }}

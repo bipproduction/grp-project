@@ -28,6 +28,7 @@ import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _load
 import { useAtom } from "jotai";
 import moment from "moment";
 import "moment/locale/id";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 moment.locale("id");
 
 
@@ -94,6 +95,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                 buttonSimpan();
                 thisClosed();
                 _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
+                _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data rencana kunjungan prabowo")
             } else {
                 toast(data.message);
             }
@@ -105,7 +107,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
     return (
         <>
             {/* {JSON.stringify(dataEdit)} */}
-            <Box p={20}>
+            <Box >
                 <Paper bg={COLOR.abuabu} p={10}>
                     <Grid>
                         <Grid.Col span={8}>
@@ -126,17 +128,18 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid >
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <TextInput label="**" placeholder={dataEdit?.judul} onChange={(val) => {
                                     body.judul = val.target.value;
-                                }} />
+                                }}  mt={10}/>
                                 <Textarea
                                     label="**"
                                     autosize
                                     minRows={2}
                                     maxRows={4}
+                                    mt={10}
                                     onChange={(val) => {
                                         body.img = val.target.value;
                                     }}
@@ -144,8 +147,11 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                 />
                                 <DateInput label="**" onChange={(val) => {
                                     body.tanggal = moment(val).format("YYYY-MM-DD");
-                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} />
+                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} 
+                                mt={10}
+                                />
                                 <Select
+                                mt={10}
                                     data={listStatusAksiNyata.map((data) => ({
                                         value: data.id,
                                         label: data.name,

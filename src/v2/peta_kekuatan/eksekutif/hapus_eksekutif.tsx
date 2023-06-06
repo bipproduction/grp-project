@@ -21,6 +21,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteEksekutif({
     setId,
@@ -42,13 +43,18 @@ export function ButtonDeleteEksekutif({
             .then(async (res) => {
                 if (res.status === 200) {
                     toast("Success");
+                    let desk_log
                     if (setTingkat == 1) {
+                        desk_log = 'User menghapus data eksekutif tingkat nasional'
                         _loadDataEksekutif(1, inputSearchNasional, setListDataNasional);
                     } else if (setTingkat == 2) {
+                        desk_log = 'User menghapus data eksekutif tingkat provinsi'
                         _loadDataEksekutif(2, inputSearchProvinsi, setListDataProv);
                     } else {
+                        desk_log = 'User menghapus data eksekutif tingkat kabupaten/kota'
                         _loadDataEksekutif(3, inputSearchKabKot, setListDataKabKot);
                     }
+                    _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log);
 
                 }
             });

@@ -48,6 +48,7 @@ import { _new_loadJabatanPimpinanAnakCabang } from "@/load_data/sumber_daya_part
 import { _pAnakCabang_Sayap } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { _selectPAnakCabang_Sayap } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { buttonSimpan } from "@/v2/component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const SayapEditV2 = ({
   thisClosed,
@@ -162,7 +163,10 @@ export const SayapEditV2 = ({
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then(async (val) => _loadData_ByStatus_BySeach(2, inputSearch, setDataTable));
+
+      .then(async (val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
+      _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data sayap partai")
+
   };
 
   if (!targetEdit)

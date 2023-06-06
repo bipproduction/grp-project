@@ -111,6 +111,7 @@ const TableKaderPartaiV2 = () => {
           setId={e}
           search={search}
           setDataTable={setDataTable}
+          setTingkat="kader partai"
           />
         </Group>
       </td>

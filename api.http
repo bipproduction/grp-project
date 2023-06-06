@@ -120,7 +120,7 @@ POST http://localhost:3000/api/form-data-diri/data-diri-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "clhy98fmm000ivnqsrbdwxh2x",
+    "id" : "clib3g9rb0003smzuqfi35nap",
     "name" : "Amalia Dwi",
     "nik" : "51710349000230",
     "tempatLahir" : "Denpasar",
@@ -137,6 +137,18 @@ Content-Type: application/json
     "masterKecamatanId" : 1,
     "masterDesaId" : 1
 }
+
+
+
+### UPDATE DATA DIRI - FOTO PROFILE - IMG
+POST http://localhost:3000/api/form-data-diri/data-diri-update-img HTTP/1.1
+Content-Type: application/json
+
+{
+    "id" : "clib3g9rb0003smzuqfi35nap",
+    "img" : "aaa.jpg"
+}
+
 
 ### GET ONE DATA DIRI
 GET http://localhost:3000/api/form-data-diri/data-diri-get-one?id=clhiub2c00004smw0oa21cq33 HTTP/1.1
@@ -185,6 +197,15 @@ Content-Type: application/json
     "userId" : "clhiub2c00004smw0oa21cq33",
     "masterMediaSocialId" :2
 }
+
+
+#### GET MEDIA SOCIAL BY USER ID
+GET  http://localhost:3000/api/auth/user-media-sosial/user-media-sosial-get-by-user?user=cli9oizqw0008smnrtbv6lfyo HTTP/1.1
+
+
+
+### GET MEDIA SOCIAL BY ID 
+GET http://localhost:3000/api/auth/user-media-sosial/user-media-sosial-get-one?id=cli9ola8y000fsmnrtufde9nm HTTP/1.1
 
 
 ### POST TPS DPT
@@ -606,7 +627,11 @@ Content-Type: application/json
 }
 
 ### GET ONE SUMBER DAYA PARTAI / KEANGGOTAAN
-GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clhpq769l0006vn8ixxz8k8zz HTTP/1.1
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=clii84u91000dvnqkh95lwlkg HTTP/1.1
+
+
+### GET ONE SUMBER DAYA PARTAI BY USER ID / KEANGGOTAAN
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-by-user?user=clii82htj0000vnqkploisqit HTTP/1.1
 
 
 ### GET ALL SUMBER DAYA PARTAI / KEANGGOTAAN
@@ -642,3 +667,19 @@ GET http://localhost:3000/api/master/master-kecamatan-get-by-kabkot?idKabkot=2 H
 
 ### GET WILAYAH DESA
 GET http://localhost:3000/api/master/master-desa-get-by-kecamatan?idKecamatan=3 HTTP/1.1
+
+
+
+### POST LOG USER 
+POST http://localhost:3000/api/log-user/log-user-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":"clib3dd5s0000smzun58wzdj1",
+    "activity":"login",
+    "deskripsi":"login ke sistem"
+}
+
+
+### GET ALL LOG USER
+GET http://localhost:3000/api/log-user/log-user-get-all HTTP/1.1
