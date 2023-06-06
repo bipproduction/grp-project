@@ -133,9 +133,16 @@ export const api = {
 
 
 
-    //  LOG USER 
+    // LOG USER 
     "apiLogUserPost": "/api/log-user/log-user-post",
     "apiLogUserGetAll": "/api/log-user/log-user-get-all",
+
+
+
+    // LAMPIRAN ASET PARTAI
+    "apiLampiranPost": "/api/aset-partai/lampiran/lampiran-post",
+    "apiLampiranGetByAset": "/api/aset-partai/lampiran/lampiran-get-by-aset",
+    "apiLampiranHapus": "/api/aset-partai/lampiran/lampiran-hapus",
 
 
 
