@@ -7,9 +7,16 @@ const sumberDayaPartaiHapus = async (req: NextApiRequest, res: NextApiResponse) 
     // console.log(id)
     await client.sumberDayaPartai.update({
         where: {
-            id: id as string
+            id: id as string,
         },
         data: {
+            User: {
+                update: {
+                    active: false,
+                    
+                }
+            },
+
             active: false
         }
     })
