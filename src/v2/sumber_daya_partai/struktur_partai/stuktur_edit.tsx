@@ -181,7 +181,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
     })
       .then((res) => res.json())
 
-      .then(async (val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
+      .then(async (val) => _loadData_ByStatus_BySeach(1, inputSearch, setDataTable));
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
 
   };

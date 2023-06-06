@@ -98,7 +98,10 @@ export const ChartTPSDesaV2 = ({ idKecamatan }: { idKecamatan: any }) => {
               <Box pl={10}>
                 <Text size={15}>Jumlah TPS:</Text>
                 <List>
-                  <List.Item sx={{ fontSize: 12 }}>Total TPS: 123</List.Item>
+                  <List.Item sx={{ fontSize: 12 }}>
+                    Total TPS:{" "}
+                    {`${Math.floor(Math.random() * (100 - 1 + 10) + 1)}`}
+                  </List.Item>
                   {/* <List.Item sx={{ fontSize: 12 }}>TPS Baru : 12</List.Item>
                   <List.Item sx={{ fontSize: 12 }}>Total DPT : 10.421</List.Item> */}
                 </List>

@@ -94,7 +94,7 @@ export const ViewTPSdanDPTV2 = () => {
                   >
                     Import File
                   </Button> */}
-                  <Button
+                  {/* <Button
                     leftIcon={<AiFillPlusCircle size={20} />}
                     radius={"xl"}
                     m={5}
@@ -103,7 +103,7 @@ export const ViewTPSdanDPTV2 = () => {
                     onClick={open}
                   >
                     Tambah
-                  </Button>
+                  </Button> */}
                 </Group>
               </Grid.Col>
             </Grid>

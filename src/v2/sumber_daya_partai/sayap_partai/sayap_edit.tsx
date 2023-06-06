@@ -164,7 +164,7 @@ export const SayapEditV2 = ({
     })
       .then((res) => res.json())
 
-      .then(async (val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
+      .then(async (val) => _loadData_ByStatus_BySeach(2, inputSearch, setDataTable));
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data sayap partai")
 
   };
