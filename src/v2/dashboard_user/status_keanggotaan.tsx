@@ -32,12 +32,31 @@ import {
 import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
 import { _dataKeanggotaan } from "@/load_data/sayap_partai/load_sayap_partai";
 
+export const _keanggotaan_user = atomWithStorage<ModelSumberDayaPartai[] | null>(
+  "_list_database_Keaggotaan",
+  null
+);
+
 const StatusKeanggotaanV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [listDataKeanggotaan, setListDataKeanggotaan] = useAtom(_keanggotaan_user)
+
+  useShallowEffect(() => {
+    fetch(api.apiSumberDayaPartaiGetByUser + `?user=${localStorage.getItem("user_id")}`)
+      // .then((val) => val.json())
+      // .then(setListData);
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setListDataKeanggotaan(data);
+          return;
+        }
+      });
+  }, []);
 
   return (
     <>
-      {/* {JSON.stringify(dataKeanggotan)} */}
+      {/* <pre>{JSON.stringify(listDataKeanggotaan, null, 2)}</pre> */}
       {/* <Modal opened={opened} onClose={close} centered size={"xl"}>
         <EditKeanggotaan />
       </Modal> */}
@@ -66,14 +85,16 @@ const StatusKeanggotaanV2 = () => {
           pl={30}
           p={20}
           sx={{
-            backgroundColor: COLOR.abuabu,
+            backgroundColor: COLOR.coklat,
             borderRadius: 10,
           }}
         >
-          <Box>
-            <Text fz={15}>Status Keanggotaan</Text>
-            <Text fw={700}>Kader Partai</Text>
+          {/* <Text fz={15} color="white">Status Keanggotaan</Text> */}
+          {listDataKeanggotaan?.map((v, i) => (
+          <Box key={i}>
+            <Text fw={700} color="white" fz={20}>{v.MasterStatusKeanggotaan.name}</Text>
           </Box>
+          ))}
         </Box>
       </Box>
     </>

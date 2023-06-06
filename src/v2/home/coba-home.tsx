@@ -189,7 +189,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
 
   return (
     <>
-    <ModalLogout thisClosed={close} />
+      <ModalLogout thisClosed={close} />
       <Header
         height={80}
         px="md"
@@ -403,7 +403,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       <Menu.Item>
                         <Group
                           // onClick={open}
-                        onClick={() => setOpenLogout(true)}
+                          onClick={() => setOpenLogout(true)}
                           // onClick={() => {
                           //   localStorage.removeItem("user_id");
                           //   sUser.value = {};
@@ -598,6 +598,7 @@ export function ModalLogout({ thisClosed }: any) {
                 onClick={() => {
                   localStorage.removeItem("user_id");
                   sUser.value = {};
+                  setOpenLogout(false);
                 }}
               >
                 YA

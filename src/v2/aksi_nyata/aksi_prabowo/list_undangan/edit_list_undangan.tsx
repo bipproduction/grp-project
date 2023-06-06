@@ -104,13 +104,14 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <Select data={listRencanaKunjungan.map((data) => ({
                                     value: data.id,
                                     label: data.judul,
                                 }))}
+                                mt={10}
                                     placeholder={dataEdit?.RencanaKunjunganPrabowo.judul}
                                     searchable={true}
                                     onChange={(val) => {
@@ -119,7 +120,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formEditListUndangan.getInputProps("data.judul")} /> */}
                                 {/* <DateInput placeholder={dataEdit?.RencanaKunjunganPrabowo.tanggal} label="**" /> */}
-                                <TextInput placeholder={dataEdit?.nama} label="**" onChange={(val) => {
+                                <TextInput mt={10} placeholder={dataEdit?.nama} label="**" onChange={(val) => {
                                     body.nama = val.target.value;
                                 }} />
                                 {/* <TextInput placeholder="Tambah List Undangan" mt={20} /> */}

@@ -38,6 +38,7 @@ import {
   AiOutlineCloudUpload,
   AiOutlineEdit,
 } from "react-icons/ai";
+import EditMediaSocial from "./edit_media_social";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
@@ -50,6 +51,7 @@ export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
 );
 
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
+const val_open_edit_media = atomWithStorage("val_open_edit_media", false);
 
 const DataProfileV2 = () => {
   // const [opened, { open, close }] = useDisclosure(false);
@@ -59,6 +61,7 @@ const DataProfileV2 = () => {
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
+  const [openMedia, setOpenMedia] = useAtom(val_open_edit_media);
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -88,6 +91,7 @@ const DataProfileV2 = () => {
 
   return (
     <>
+      {/* <pre>{JSON.stringify(listData2, null, 2)}</pre> */}
       <Paper
         p={2}
         pt={3.5}
@@ -150,7 +154,7 @@ const DataProfileV2 = () => {
             ]}
           >
             {" "}
-            <Box pt={20} p={10}>
+            <Box pt={20} pl={10}>
               <Box
                 p={20}
                 pl={30}
@@ -171,7 +175,7 @@ const DataProfileV2 = () => {
                 </Box>
                 <Box mt={10}>
                   <Text fz={15}>Email</Text>
-                  <Text fw={700}>{listData2?.User.email}</Text>
+                  <Text fw={700}>{listData2?.User?.email}</Text>
                 </Box>
                 <Box mt={10}>
                   <Text fz={15}>Tempat Lahir</Text>
@@ -207,7 +211,7 @@ const DataProfileV2 = () => {
                 {/* BATAS */}
               </Box>
             </Box>
-            <Box pt={20} p={10}>
+            <Box pt={20} pr={10}>
               <Box
                 p={20}
                 pl={30}
@@ -221,7 +225,7 @@ const DataProfileV2 = () => {
               >
                 <Box mt={10}>
                   <Text fz={15}>
-                    {listData2?.User.UserMediaSocial.map((v, i) => (
+                    {listData2?.User?.UserMediaSocial.map((v, i) => (
                       <Box key={i}>
                         <Text fz={15} mt={10}>
                           {v.MasterMediaSocial.name}
@@ -256,9 +260,9 @@ const DataProfileV2 = () => {
               </Box>
             </Box>
           </SimpleGrid>
-          <Center>
+          <Group>
             <Flex gap="md" pt={20} pl={10} pb={30}>
-              <Box w={250}>
+              <Box w={200}>
                 <Button
                   fullWidth
                   color="pink.9"
@@ -267,14 +271,28 @@ const DataProfileV2 = () => {
                   onClick={() => setOpenKta(true)}
                   leftIcon={<AiOutlineEdit size={20} />}
                 >
-                  EDIT KTA
+                  EDIT PROFILE
                 </Button>
               </Box>
             </Flex>
-          </Center>
+            <Flex gap="md" pt={20} pl={10} pb={30}>
+              <Box w={200}>
+                <Button
+                  fullWidth
+                  color="pink.9"
+                  bg={COLOR.orange}
+                  radius={"xl"}
+                  onClick={() => setOpenMedia(true)}
+                  leftIcon={<AiOutlineEdit size={20} />}
+                >
+                  EDIT MEDIA SOSIAL
+                </Button>
+              </Box>
+            </Flex>
+          </Group>
         </Box>
       </Box>
-
+      <ModalEditMediaSocial />
       <ModalEditData />
     </>
   );
@@ -297,6 +315,25 @@ export function ModalEditData() {
         // withCloseButton={false}
       >
         <EditDataDiriNew thisClosed={() => setOpenKta(false)} />
+      </Modal>
+    </>
+  );
+}
+
+export function ModalEditMediaSocial() {
+  const [openMedia, setOpenMedia] = useAtom(val_open_edit_media);
+  return (
+    <>
+      <Modal
+        size={"md"}
+        opened={openMedia}
+        onClose={() => setOpenMedia(false)}
+        centered
+        overlayProps={{
+          opacity: 0.5,
+        }}
+      >
+        <EditMediaSocial thisClosed={() => setOpenMedia(false)}  />
       </Modal>
     </>
   );

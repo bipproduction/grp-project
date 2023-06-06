@@ -631,7 +631,7 @@ GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-one?id=c
 
 
 ### GET ONE SUMBER DAYA PARTAI BY USER ID / KEANGGOTAAN
-GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-by-user?user=clib3dd5s0000smzun58wzdj1 HTTP/1.1
+GET http://localhost:3000/api/sumber-daya-partai/sumber-daya-partai-get-by-user?user=clii82htj0000vnqkploisqit HTTP/1.1
 
 
 ### GET ALL SUMBER DAYA PARTAI / KEANGGOTAAN
