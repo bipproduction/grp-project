@@ -157,6 +157,20 @@ const DashAdmin = () => {
               ))}
             </SimpleGrid>
           </Box>
+          <Grid my={20}>
+            <Grid.Col md={6} lg={6}>
+              <EChartStrukturPartaiV2 />
+            </Grid.Col>
+            <Grid.Col md={6} lg={6}>
+              <EChartSayapPartaiV2 />
+            </Grid.Col>
+            <Grid.Col md={6} lg={6}>
+              <EChartKaderPartaiV2 />
+            </Grid.Col>
+            <Grid.Col md={6} lg={6}>
+              <EChartAnggotaPartaiV2 />
+            </Grid.Col>
+          </Grid>
           <SimpleGrid
             mt={20}
             cols={2}
@@ -164,12 +178,7 @@ const DashAdmin = () => {
               { maxWidth: 980, cols: 2, spacing: "xl" },
               { maxWidth: 755, cols: 1, spacing: "xl" },
             ]}
-          >
-            <EChartStrukturPartaiV2 />
-            <EChartSayapPartaiV2 />
-            <EChartKaderPartaiV2 />
-            <EChartAnggotaPartaiV2 />
-          </SimpleGrid>
+          ></SimpleGrid>
         </Box>
       </Box>
     </>

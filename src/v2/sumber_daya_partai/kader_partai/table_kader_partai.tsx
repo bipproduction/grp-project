@@ -33,6 +33,7 @@ import { useAtom } from "jotai";
 import {
   _dataKaderTable_ByStatusSearch,
   _loadData_ByStatus_BySeach,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { KaderEditv2 } from "./kader_edit";
 import { api } from "@/lib/api-backend";
@@ -44,6 +45,7 @@ const TableKaderPartaiV2 = () => {
   const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
   const [valueId, setValueId] = useState("");
   const [search, setSearch] = useState("");
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   useShallowEffect(() => {
     onSearch("");
@@ -51,6 +53,7 @@ const TableKaderPartaiV2 = () => {
 
   const onSearch = (search: string) => {
     _loadData_ByStatus_BySeach(3, search, setDataTable);
+    setInputSearch(search)
   };
 
   const tbHead = (

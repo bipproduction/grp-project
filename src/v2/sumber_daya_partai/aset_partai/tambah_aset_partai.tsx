@@ -15,12 +15,14 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
-import { useShallowEffect } from "@mantine/hooks";
+import { useHash, useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import {
+  _listData_AsetPartai,
   _loadKategoriAset,
+  _loadListDataAset,
   _loadStatusAset,
 } from "@/load_data/sumber_daya_partai/load_aset_partai";
 import { useAtom } from "jotai";
@@ -28,40 +30,143 @@ import {
   sKategoriAset,
   sStatusAset,
 } from "@/s_state/sumber_daya_partai/s_aset";
+import { api } from "@/lib/api-backend";
+import moment from "moment";
 
 const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
+  const [dataAset, setDataAset] = useAtom(_listData_AsetPartai);
+  const [hash, setHash] = useHash();
+  const [dataKirim, setDataKirim] = useState({
+    name: "",
+    serialNumber: "",
+    pengguna: "",
+    penanggungJawab: "",
+    harga: new Number(),
+    tglPembelian: "",
+    lokasiPembelian: "",
+    garansi: "",
+    masterStatusAsetId: new Number(),
+    keterangan: "",
+    masterKategoriAsetId: new Number(),
+    deskripsi: "",
+    img: "test",
+  });
+
   useShallowEffect(() => {
     _loadKategoriAset();
     _loadStatusAset();
   }, []);
 
-  const formDataAset = useForm({
-    initialValues: {
-      data: {
-        namaAset: "",
-        nomorSeri: "",
-        pengguna: "",
-        penanggungJawab: "",
-        harga: "",
-        tanggalPembelian: "",
-        lokasiPembelian: "",
-        garansi: "",
-        statusAset: "",
-        keteranagnAset: "",
-        kategoriAset: "",
-        deskripsiAset: "",
-      },
-    },
-  });
+  // useShallowEffect(() => {
+  //   console.log(hash);
+  //   if (hash && hash == "#auto") {
+  //     setDataKirim({
+  //       name: "Baba",
+  //       serialNumber: "23F4FF4223",
+  //       pengguna: "Bagas",
+  //       penanggungJawab: "Nusa",
+  //       harga: 430000,
+  //       tglPembelian: "2023-02-01",
+  //       lokasiPembelian: "Denpasar",
+  //       garansi: "4 Tahun",
+  //       masterStatusAsetId: 1,
+  //       keterangan: "bagus",
+  //       masterKategoriAsetId: 2,
+  //       deskripsi: "warna hitam",
+  //       img: "test",
+  //     });
+  //   } toast("Berhasil")
+  // }, [hash]);
 
-  const onEdit = () => {
-    console.log(formDataAset.values.data);
-    if (Object.values(formDataAset.values.data).includes("")) {
+  // useShallowEffect(() => {
+  //   console.log(hash);
+  //   if (hash && hash == "#auto") {
+  //     formDataAset.setValues({
+  //       data: {
+  //         name: "dsdsdsds",
+  //         serialNumber: "dssdsds",
+  //         pengguna: "dsdsds",
+  //         penanggungJawab: "dssdsdsds",
+  //         harga: "3000",
+  //         tglPembelian: "2023-06-05",
+  //         lokasiPembelian: "sdfsds",
+  //         garansi: "dsdsd",
+  //         masterStatusAsetId: "1",
+  //         keterangan: "sdfdsds",
+  //         masterKategoriAsetId: "1",
+  //         deskripsi: "sdssdsds",
+  //         img: "test",
+  //       },
+  //     });
+
+  //     toast("set data success");
+  //   }
+  // }, [hash]);
+  const onCreate = async () => {
+    console.log(dataKirim);
+    if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data Diri");
     }
-    buttonSimpan();
-    thisClosed();
+
+    await fetch(api.apiAsetPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataKirim),
+    }).then(async (res) => {
+      if (res.status == 201) {
+        thisClosed();
+        _loadListDataAset(setDataAset);
+        return toast("Berhasil");
+      } else {
+        if (res.status == 209) {
+          return toast("Serial number telah digunakan");
+        }
+        return toast("Gagal");
+      }
+    });
+
+
+    // thisClosed();
   };
+
+  const onEdit = () => {
+    console.log(dataKirim);
+    // if (Object.values(dataKirim).includes("")) {
+    //   return toast("Lengkapi Data Diri");
+    // }
+
+    // formDataAset.values.data.tglPembelian = moment(
+    //   formDataAset.values.data.tglPembelian
+    // ).format("YYYY-MM-DD");
+
+    fetch(api.apiAsetPartaiPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataKirim),
+    }).then(async (res) => {
+      if (res.status == 201) {
+        // const data = res.json();
+        // console.log(data)
+
+        // TODO: disini
+        // thisClosed();
+        // _loadListDataAset(setDataAset);
+
+        return toast("success");
+        // return data;
+      }
+      return toast("gagal");
+      // return null;
+    });
+    buttonSimpan();
+
+    // thisClosed();
+  };
+  // if (!sStatusAset) return <></>;
 
   return (
     <>
@@ -94,49 +199,89 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Nama Aset"
                   label="Nama Aset"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.namaAset`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      name: val.currentTarget.value,
+                    })
+                  }
                 />
                 <TextInput
                   placeholder="Nomor Serial"
-                  label="Nomor Serial"
+                  label="Serial Number"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.nomorSeri`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      serialNumber: val.currentTarget.value,
+                    })
+                  }
                 />
                 <TextInput
                   placeholder="Pengguna"
                   label="Pengguna"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.pengguna`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      pengguna: val.currentTarget.value,
+                    })
+                  }
                 />
                 <TextInput
                   placeholder="Penangung Jawab"
                   label="Penangung Jawab"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.penanggungJawab`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      penanggungJawab: val.currentTarget.value,
+                    })
+                  }
                 />
                 <NumberInput
                   placeholder="Harga"
                   label="Harga"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.harga`)}
+                  onChange={(val: any) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      harga: val,
+                    })
+                  }
                 />
                 <DateInput
                   placeholder="Tanggal Pembelian"
                   label="Tanggal Pembelian"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.tanggalPembelian`)}
+                  onChange={(val: any) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      tglPembelian: moment(val).format("YYYY-MM-DD"),
+                    })
+                  }
                 />
                 <TextInput
                   placeholder="Lokasi Pembelian"
                   label="Lokasi Pembelian"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.lokasiPembelian`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      lokasiPembelian: val.currentTarget.value,
+                    })
+                  }
                 />
                 <TextInput
                   placeholder="Garansi"
                   label="Garansi"
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.garansi`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      garansi: val.currentTarget.value,
+                    })
+                  }
                 />
 
                 <Group position="left" pt={20}>
@@ -145,7 +290,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                     color="orange.9"
                     bg={COLOR.orange}
                     radius={"xl"}
-                    onClick={onEdit}
+                    onClick={onCreate}
                   >
                     Simpan
                   </Button>
@@ -159,10 +304,15 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                     label: e.name,
                     value: e.id,
                   }))}
+                  onChange={(val: any) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      masterStatusAsetId: val,
+                    })
+                  }
                   placeholder={"Status Aset"}
                   label={"Status Aset"}
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.statusAset`)}
                 />
                 <Textarea
                   placeholder="Bergerak, contoh: dengan kondisi ban belakang kurang angin, dll"
@@ -171,7 +321,12 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   minRows={2}
                   maxRows={4}
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.keteranagnAset`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      keterangan: val.currentTarget.value,
+                    })
+                  }
                 />
 
                 <Select
@@ -179,10 +334,15 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                     label: e.name,
                     value: e.id,
                   }))}
+                  onChange={(val: any) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      masterKategoriAsetId: val,
+                    })
+                  }
                   placeholder={"Kategori Aset"}
                   label={"Kategori Aset"}
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.kategoriAset`)}
                 />
                 <Textarea
                   placeholder="contoh: barang berwarna merah, memiliki ban serep 2, dll"
@@ -191,7 +351,12 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   minRows={2}
                   maxRows={4}
                   withAsterisk
-                  {...formDataAset.getInputProps(`data.deskripsiAset`)}
+                  onChange={(val) =>
+                    setDataKirim({
+                      ...dataKirim,
+                      deskripsi: val.currentTarget.value,
+                    })
+                  }
                 />
               </Flex>
             </Box>

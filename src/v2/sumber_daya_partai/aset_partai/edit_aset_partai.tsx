@@ -6,6 +6,7 @@ import {
   Grid,
   Group,
   Image,
+  Loader,
   NumberInput,
   Paper,
   Select,
@@ -27,40 +28,139 @@ import {
 } from "@/s_state/sumber_daya_partai/s_aset";
 import { DateInput } from "@mantine/dates";
 import toast from "react-simple-toasts";
+import { useState } from "react";
+import { ModelAsetPartai } from "@/model/interface_aset_partai";
+import { api } from "@/lib/api-backend";
+import { useShallowEffect } from "@mantine/hooks";
+import _ from "lodash";
+import { useAtom } from "jotai";
+import {
+  _kategoriAsetPartai,
+  _listDataAset_BySearch,
+  _loadDataAset_BySearch,
+  _loadListDataAset,
+  _loadMaster_Kategori,
+  _loadMaster_StatusAset,
+  _searchDataAsetPartai,
+  _select_KategoriAsetPartai,
+  _select_StatusAsetPartai,
+  _statusAsetPartai,
+} from "@/load_data/sumber_daya_partai/load_aset_partai";
+import moment from "moment";
+import { _listData_AsetPartai } from "@/load_data/sumber_daya_partai/load_aset_partai";
 
-const EditAsetPartaiV2 = ({ thisClosed }: any) => {
+const EditAsetPartaiV2 = ({
+  thisClosed,
+  idValue,
+}: {
+  thisClosed: any;
+  idValue: any;
+}) => {
+  const [targetEdit, setTargetEdit] = useState<ModelAsetPartai | null>(null);
+  const [changeData, setChangeData] = useState("");
+  const [statusAset, setStatusAset] = useAtom(_statusAsetPartai);
+  const [selectStatusAset, setSelectStatusAset] = useAtom(
+    _select_StatusAsetPartai
+  );
+  const [kategoriAset, setKategoriAset] = useAtom(_kategoriAsetPartai);
+  const [selectKategoriAset, setSelectKategoriAset] = useAtom(
+    _select_KategoriAsetPartai
+  );
+  const [dataAset, setDataAset] = useAtom(_listData_AsetPartai);
+  const [search, setSearch] = useState("");
+  const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
+  const [inputSearch, setInputSearch] = useAtom(_searchDataAsetPartai);
+
+  useShallowEffect(() => {
+    loadEditAsetPartai_ById(idValue);
+    _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
+    _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
+  }, []);
+
+  const loadEditAsetPartai_ById = async (id: string) => {
+    await fetch(api.apiAsetPartaiGetOne + `?id=${id}`)
+      .then((res) => res.json())
+      .then(setTargetEdit);
+  };
+
   const formEditAset = useForm({
     initialValues: {
       data: {
-        namaAset: "",
-        nomorSeri: "",
+        name: "",
+        serialNumber: "",
         pengguna: "",
         penanggungJawab: "",
         harga: "",
-        tanggalPembelian: "",
+        tglPembelian: "",
         lokasiPembelian: "",
         garansi: "",
-        statusAset: "",
-        keteranagnAset: "",
-        kategoriAset: "",
-        deskripsiAset: "",
+        masterStatusAsetId: "",
+        keterangan: "",
+        masterKategoriAsetId: "",
+        deskripsi: "",
+        img: "test",
       },
     },
   });
 
   const onEditLampiran = () => {
-    console.log(formEditAset.values.data);
-    // buttonSimpan();
-    if (Object.values(formEditAset.values.data).includes("")) {
+    // console.log(formEditAset.values.data);
+    const body = {
+      id: targetEdit?.id,
+      name: targetEdit?.name,
+      serialNumber: targetEdit?.serialNumber,
+      pengguna: targetEdit?.pengguna,
+      penanggungJawab: targetEdit?.penanggungJawab,
+      harga: targetEdit?.harga,
+      tglPembelian: targetEdit?.tglPembelian,
+      lokasiPembelian: targetEdit?.lokasiPembelian,
+      garansi: targetEdit?.garansi,
+      masterStatusAsetId: targetEdit?.MasterStatusAset?.id,
+      keterangan: targetEdit?.keterangan,
+      masterKategoriAsetId: targetEdit?.MasterKategoriAset?.id,
+      deskripsi: targetEdit?.deskripsi,
+      img: "test",
+    };
+    // console.log(body);
+
+    if (Object.values(body).includes("")) {
       return toast("Lengkapi Semua Data");
     } else {
-      toast("Data Berhasil Di Edit");
-      thisClosed();
+      // toast("Data Berhasil Di Edit");
+      fetch(api.apiAsetPartaiUpdate, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }).then(async (res) => {
+        if (res.status == 201) {
+          const data = await res.json();
+          if (data.success) {
+            thisClosed();
+            _loadDataAset_BySearch(inputSearch, setDataAset_Search);
+            return toast("Data Terupdate ");
+          }
+          return toast("Gagal Update");
+        }
+        return toast("Error");
+      });
+      // .then((val) => {
+      //   _loadListDataAset(setDataAset);
+
+      // });
     }
   };
+  if (!targetEdit)
+    return (
+      <>
+        <Loader />
+      </>
+    );
 
   return (
     <>
+      {/* {JSON.stringify(targetEdit.tglPembelian)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -111,7 +211,7 @@ const EditAsetPartaiV2 = ({ thisClosed }: any) => {
                 </Paper>
               </Box>
             </Grid.Col>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
               <Box pt={20}>
                 {/* <Paper bg={COLOR.abuabu}> */}
                 <Tabs defaultValue={"1"} variant={"outline"}>
@@ -121,113 +221,177 @@ const EditAsetPartaiV2 = ({ thisClosed }: any) => {
                     <Tabs.Tab value="3">Lampiran</Tabs.Tab>
                   </Tabs.List>
                   <Tabs.Panel value="1">
-                    <Box>
-                      <Box>
-                        <Flex direction={"column"}>
-                          <TextInput
-                            placeholder="Nama Aset"
-                            label="Nama Aset"
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.namaAset`)}
-                          />
-                          <TextInput
-                            placeholder="Nomor Serial"
-                            label="Nomor Serial"
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.nomorSeri`)}
-                          />
-                          <TextInput
-                            placeholder="Pengguna"
-                            label="Pengguna"
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.pengguna`)}
-                          />
-                          <TextInput
-                            placeholder="Penangung Jawab"
-                            label="Penangung Jawab"
-                            withAsterisk
-                            {...formEditAset.getInputProps(
-                              `data.penanggungJawab`
-                            )}
-                          />
-                          <NumberInput
-                            placeholder="Harga"
-                            label="Harga"
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.harga`)}
-                          />
-                          <DateInput
-                            placeholder="Tanggal Pembelian"
-                            label="Tanggal Pembelian"
-                            withAsterisk
-                            {...formEditAset.getInputProps(
-                              `data.tanggalPembelian`
-                            )}
-                          />
-                          <TextInput
-                            placeholder="Lokasi Pembelian"
-                            label="Lokasi Pembelian"
-                            withAsterisk
-                            {...formEditAset.getInputProps(
-                              `data.lokasiPembelian`
-                            )}
-                          />
-                          <TextInput
-                            placeholder="Garansi"
-                            label="Garansi"
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.garansi`)}
-                          />
-                        </Flex>
-                      </Box>
-                      <Box>
-                        <Flex direction={"column"}>
-                          <Select
-                            data={sStatusAset.value.map((e) => ({
-                              label: e.name,
-                              value: e.id,
-                            }))}
-                            placeholder={"Status Aset"}
-                            label={"Status Aset"}
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.statusAset`)}
-                          />
-                          <Textarea
-                            placeholder="Bergerak, contoh: dengan kondisi ban belakang kurang angin, dll"
-                            label="Keterangan Status"
-                            autosize
-                            minRows={2}
-                            maxRows={4}
-                            withAsterisk
-                            {...formEditAset.getInputProps(
-                              `data.keteranagnAset`
-                            )}
-                          />
+                    <Grid>
+                      <Grid.Col span={6}>
+                        <TextInput
+                          label="Nama Aset"
+                          withAsterisk
+                          value={targetEdit?.name}
+                          // placeholder={targetEdit?.name}
+                          onChange={(val) => {
+                            // console.log(val.currentTarget.value)
+                            const data = _.clone(targetEdit);
+                            data.name = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <TextInput
+                          placeholder="Nomor Serial"
+                          label="Nomor Serial"
+                          withAsterisk
+                          value={targetEdit?.serialNumber}
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.serialNumber = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <TextInput
+                          placeholder="Pengguna"
+                          label="Pengguna"
+                          withAsterisk
+                          value={targetEdit.pengguna}
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.pengguna = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <TextInput
+                          label="Penangung Jawab"
+                          value={targetEdit.penanggungJawab}
+                          withAsterisk
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.penanggungJawab = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <NumberInput
+                          label="Harga"
+                          value={targetEdit.harga}
+                          withAsterisk
+                          onChange={(val) => {
+                            const data: any = _.clone(targetEdit);
+                            data.harga = val;
+                            setTargetEdit(data);
+                          }}
+                        />
 
-                          <Select
-                            data={sKategoriAset.value.map((e) => ({
-                              label: e.name,
-                              value: e.id,
-                            }))}
-                            placeholder={"Kategori Aset"}
-                            label={"Kategori Aset"}
-                            withAsterisk
-                            {...formEditAset.getInputProps(`data.kategoriAset`)}
-                          />
-                          <Textarea
-                            placeholder="contoh: barang berwarna merah, memiliki ban serep 2, dll"
-                            label="Deskripsi Aset"
-                            autosize
-                            minRows={2}
-                            maxRows={4}
-                            withAsterisk
-                            {...formEditAset.getInputProps(
-                              `data.deskripsiAset`
-                            )}
-                          />
-                        </Flex>
-                      </Box>
-                    </Box>
+                        {/* {JSON.stringify(targetEdit.tglPembelian)} */}
+
+                        <DateInput
+                          label="Tanggal Pembelian"
+                          placeholder={moment(targetEdit.tglPembelian).format(
+                            "YYYY-MM-DD"
+                          )}
+                          // value={moment(targetEdit.tglPembelian)}
+                          withAsterisk
+                          onChange={(val) => {
+                            // const data: any = _.clone(targetEdit);
+                            // data.tglPembelian =
+                            //   moment(val).format("YYYY-MM-DD");
+                            setTargetEdit({
+                              ...targetEdit,
+                              tglPembelian: moment(val).format("YYYY-MM-DD"),
+                            });
+                          }}
+                        />
+                        <TextInput
+                          label="Lokasi Pembelian"
+                          withAsterisk
+                          value={targetEdit.lokasiPembelian}
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.lokasiPembelian = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <TextInput
+                          label="Garansi"
+                          withAsterisk
+                          value={targetEdit.garansi}
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.garansi = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                      </Grid.Col>
+                      <Grid.Col span={6}>
+                        <Select
+                          label={"Status Aset"}
+                          withAsterisk
+                          value={selectStatusAset.name}
+                          placeholder={
+                            selectStatusAset.name
+                              ? selectStatusAset.name
+                              : targetEdit.MasterStatusAset?.name
+                          }
+                          data={statusAset.map((e) => ({
+                            value: e.id,
+                            label: e.name,
+                          }))}
+                          onChange={(val) => {
+                            setSelectStatusAset(
+                              statusAset.find((e) => e.id === val)
+                            );
+                            const data: any = _.clone(targetEdit);
+                            data.MasterStatusAset.id = val;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <Textarea
+                          value={targetEdit.keterangan}
+                          label="Keterangan Status"
+                          autosize
+                          minRows={2}
+                          maxRows={4}
+                          withAsterisk
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.keterangan = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+
+                        <Select
+                          label={"Kategori Aset"}
+                          withAsterisk
+                          value={selectKategoriAset.name}
+                          placeholder={
+                            selectKategoriAset.name
+                              ? selectKategoriAset.name
+                              : targetEdit.MasterKategoriAset?.name
+                          }
+                          data={kategoriAset.map((e) => ({
+                            value: e.id,
+                            label: e.name,
+                          }))}
+                          onChange={(val) => {
+                            setSelectKategoriAset(
+                              kategoriAset.find((e) => e.id === val)
+                            );
+                            const data: any = _.clone(targetEdit);
+                            data.MasterKategoriAset.id = val;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <Textarea
+                          label="Deskripsi Aset"
+                          value={targetEdit.deskripsi}
+                          autosize
+                          minRows={2}
+                          maxRows={4}
+                          withAsterisk
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.deskripsi = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                      </Grid.Col>
+                    </Grid>
                   </Tabs.Panel>
                   {/* <Tabs.Panel value="2">
                     <AsetPembelianV2 />

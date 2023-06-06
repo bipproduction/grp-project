@@ -3,6 +3,7 @@ import {
   _editLoadSayap_ByStatusSeacrh,
   _loadData_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import {
   _new_loadTingkatPengurus,
@@ -91,6 +92,7 @@ export const SayapEditV2 = ({
   const [select_PAnakCabang, setSelect_PAnakCabang] = useAtom(
     _selectPAnakCabang_Sayap
   );
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(setId, setTargetEdit);
@@ -160,7 +162,7 @@ export const SayapEditV2 = ({
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then(async (val) => _loadData_ByStatus_BySeach(2, search, setDataTable));
+      .then(async (val) => _loadData_ByStatus_BySeach(2, inputSearch, setDataTable));
   };
 
   if (!targetEdit)
