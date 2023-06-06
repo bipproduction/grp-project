@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 const logUserPost = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const body = req.body
-        console.log(body)
         await client.logUser.create({
             data: body
         })

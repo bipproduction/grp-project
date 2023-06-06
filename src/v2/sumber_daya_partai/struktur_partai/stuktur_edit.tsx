@@ -57,6 +57,7 @@ import {
 } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { api } from "@/lib/api-backend";
 import { buttonSimpan } from "@/v2/component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
@@ -178,6 +179,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
     })
       .then((res) => res.json())
       .then(async (val) => _loadData_ByStatus_BySeach(1, search, setDataTable));
+      _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
   };
 
   if (!targetEdit)

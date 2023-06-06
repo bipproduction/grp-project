@@ -11,6 +11,7 @@ import { data } from "jquery";
 import { on } from "events";
 import { _dataLegislatifNasional, _dataSearchLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
   const [dataDiri, setDataDiri] = useState<ModelEksekutifDataDiri | undefined>(undefined);
@@ -66,6 +67,7 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
         buttonSimpan();
         tutupModal();
         _loadDataLegislatif(1, inputSearch, setListDataNew)
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data legislatif tingkat DPR RI")
       } else {
         toast(data.message);
       }

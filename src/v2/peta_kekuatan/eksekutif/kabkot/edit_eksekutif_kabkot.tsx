@@ -38,6 +38,7 @@ import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
 import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [value, setValue] = useState<any>();
@@ -139,6 +140,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
         buttonSimpan();
         thisClosed();
         _loadDataEksekutif(3, inputSearch, setListDataNew);
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data eksekutif tingkat kabupaten/kota")
       } else {
         toast(data.message);
       }
