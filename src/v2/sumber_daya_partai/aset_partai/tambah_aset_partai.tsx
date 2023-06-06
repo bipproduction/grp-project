@@ -21,6 +21,8 @@ import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import {
   _listData_AsetPartai,
+  _listDataAset_BySearch,
+  _loadDataAset_BySearch,
   _loadKategoriAset,
   _loadListDataAset,
   _loadStatusAset,
@@ -51,6 +53,8 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
     deskripsi: "",
     img: "test",
   });
+  const [search, setSearch] = useState("");
+  const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
 
   useShallowEffect(() => {
     _loadKategoriAset();
@@ -117,7 +121,8 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
     }).then(async (res) => {
       if (res.status == 201) {
         thisClosed();
-        _loadListDataAset(setDataAset);
+        // _loadListDataAset(setDataAset);
+        _loadDataAset_BySearch(search, setDataAset_Search)
         return toast("Berhasil");
       } else {
         if (res.status == 209) {
