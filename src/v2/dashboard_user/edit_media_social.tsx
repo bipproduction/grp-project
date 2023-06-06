@@ -12,6 +12,7 @@ import _ from "lodash";
 import { val_loading } from "@/xg_state.ts/val_loading";
 import { useRouter } from "next/router";
 import { buttonSimpan } from "../component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const _mediaSocialGet = atomWithStorage<ModelUserMediaSosial[] | null>(
   "media",
@@ -44,12 +45,12 @@ function EditMediaSocial({ thisClosed }: any) {
         const data = await res.json()
         if (res.status === 201) {
           // router.reload()
-         
           thisClosed()
         }
       })
       ))}
       buttonSimpan()
+      _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data sosial media user");
       // loadDatadiri()
       
       router.reload()
