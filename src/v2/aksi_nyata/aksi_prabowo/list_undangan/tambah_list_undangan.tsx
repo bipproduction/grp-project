@@ -97,20 +97,21 @@ const TambahListUndanganPrabowoV2 = ({ thisClosed }: any) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <SimpleGrid cols={2}>
+                    <SimpleGrid pt={20}>
                         <Box>
                             <Flex direction={"column"}>
                                 <Select data={listRencanaKunjungan.map((data) => ({
                                     value: data.id,
                                     label: data.judul,
                                 }))}
+                                mt={10}
                                     placeholder={"Pilih Rencana Kunjungan"}
                                     searchable={true}
                                     {...formTambahListUndangan.getInputProps("data.rencanaKunjunganPrabowoId")}
                                 />
                                 {/* <TextInput placeholder="Masukkan Judul Rencana & Agenda" label="**" {...formTambahListUndangan.getInputProps("data.judul")} /> */}
                                 {/* <DateInput placeholder="Tanggal Kunjungan" label="**" {...formTambahListUndangan.getInputProps("data.tanggalKunjungan")} /> */}
-                                <TextInput placeholder="Nama Tamu Undangan" label="**" {...formTambahListUndangan.getInputProps("data.nama")} />
+                                <TextInput mt={10} placeholder="Nama Tamu Undangan" label="**" {...formTambahListUndangan.getInputProps("data.nama")} />
                                 {/* <TextInput placeholder="Tambah List Undangan" mt={20} /> */}
 
                                 <Group position="left" pt={20}>

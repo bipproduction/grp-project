@@ -20,4 +20,8 @@ export const _dataAnggota = atomWithStorage<ModelSumberDayaPartai[]>(
   "_anggota_database",
   []
 );
+export const _dataKeanggotaan = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_Keanggotaan_database",
+  []
+);
 

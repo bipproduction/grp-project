@@ -2,20 +2,65 @@ import {
   Box,
   Button,
   Container,
+  Flex,
   Grid,
   Group,
   Input,
   Menu,
+  Modal,
   Paper,
   Select,
   Text,
   TextInput,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../fun/WARNA";
+import { AiOutlineEdit } from "react-icons/ai";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import { api } from "@/lib/api-backend";
+import { data } from "jquery";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import {
+  DataDiri,
+  ModelSumberDayaPartai,
+} from "@/model/interface_sumber_daya_partai";
+import {
+  _dataStruktur,
+  _loadUserSumberDayaPartai_ById,
+} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
+import { _dataKeanggotaan } from "@/load_data/sayap_partai/load_sayap_partai";
+
+export const _keanggotaan_user = atomWithStorage<ModelSumberDayaPartai[] | null>(
+  "_list_database_Keaggotaan",
+  null
+);
+
 const StatusKeanggotaanV2 = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [listDataKeanggotaan, setListDataKeanggotaan] = useAtom(_keanggotaan_user)
+
+  useShallowEffect(() => {
+    fetch(api.apiSumberDayaPartaiGetByUser + `?user=${localStorage.getItem("user_id")}`)
+      // .then((val) => val.json())
+      // .then(setListData);
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setListDataKeanggotaan(data);
+          return;
+        }
+      });
+  }, []);
+
   return (
     <>
+      {/* <pre>{JSON.stringify(listDataKeanggotaan, null, 2)}</pre> */}
+      {/* <Modal opened={opened} onClose={close} centered size={"xl"}>
+        <EditKeanggotaan />
+      </Modal> */}
+
       <Paper
         p={2}
         pt={3.5}
@@ -27,7 +72,7 @@ const StatusKeanggotaanV2 = () => {
       >
         <Grid>
           <Grid.Col span={12}>
-            <Text mt={5} ml={10} mb={5}>
+            <Text mt={5} mb={5} fz={25} ml={10} fw={700}>
               {" "}
               Status Keanggotaan
             </Text>
@@ -35,17 +80,23 @@ const StatusKeanggotaanV2 = () => {
         </Grid>
       </Paper>
 
-      <Grid>
-        <Grid.Col span={6}>
-          <Box mt={30}>
-          <Box mt={10}>
-            <Text fz={15}>Status Keanggotaan</Text>
-            <Text fw={700}>Struktur Partai</Text>
+      <Box pt={20}>
+        <Box
+          pl={30}
+          p={20}
+          sx={{
+            backgroundColor: COLOR.coklat,
+            borderRadius: 10,
+          }}
+        >
+          {/* <Text fz={15} color="white">Status Keanggotaan</Text> */}
+          {listDataKeanggotaan?.map((v, i) => (
+          <Box key={i}>
+            <Text fw={700} color="white" fz={20}>{v.MasterStatusKeanggotaan.name}</Text>
           </Box>
-          </Box>
-        </Grid.Col>
-        {/* <Button mt={20} radius={"md"} fullWidth bg={COLOR.coklat} color="orange.9">Pilih Status Keanggotaan</Button> */}
-      </Grid>
+          ))}
+        </Box>
+      </Box>
     </>
   );
 };

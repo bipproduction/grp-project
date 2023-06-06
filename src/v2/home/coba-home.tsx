@@ -405,6 +405,10 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                         <Group
                           // onClick={open}
                           onClick={() => setOpenLogout(true)}
+                          // onClick={() => {
+                          //   localStorage.removeItem("user_id");
+                          //   sUser.value = {};
+                          // }}
                         // onClick={() => {
                         //   localStorage.removeItem("user_id");
                         //   sUser.value = {};
@@ -600,6 +604,7 @@ export function ModalLogout({ thisClosed }: any) {
                   _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
                   localStorage.removeItem("user_id");
                   sUser.value = {};
+                  setOpenLogout(false);
                 }}
               >
                 YA
