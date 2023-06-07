@@ -49,6 +49,7 @@ export interface DataDiri {
   MasterKabKot: MasterKabKot
   MasterKecamatan: MasterKecamatan
   MasterDesa: MasterDesa
+  img: MasterUpdateImg
 }
 
 export interface MasterJenisKelamin {
@@ -186,6 +187,10 @@ export interface MasterUserRole {
   name: string
 }
 export interface MasterOrganisasiAfiliatif {
+  id: number,
+  name: string
+}
+export interface MasterUpdateImg {
   id: number,
   name: string
 }
