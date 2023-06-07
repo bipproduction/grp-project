@@ -18,6 +18,13 @@ const calonPemilihPotensialGetAll = async (
       tanggalLahir: true,
       phoneNumber: true,
       statusSosial: true,
+      pendidikan: true,
+      MasterCalonPemilihPotensial: {
+        select: {
+            id: true,
+            name: true,
+          },
+      },
       MasterProvince: {
         select: {
           id: true,

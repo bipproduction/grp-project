@@ -19,13 +19,28 @@ import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import { TableCPTV2 } from "./table_calon_pemilih_potensial";
 import TambahCPTV2 from "./tambah_calon_pemilih_potensial";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import { useState } from "react";
+import { api } from "@/lib/api-backend";
+import { ModelCalonPemilihPotensial } from "@/model/interface_calon_pemilih_potensial";
 
 export const ViewCalonPemilihPotensialV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [listDataCPP, setListDataCPP] = useState<ModelCalonPemilihPotensial[]>(
+    []
+  );
+
+  useShallowEffect(() => {
+    // _loadDataCalonPemilihPotensial("");
+  }, []);
+
+
 
   return (
     <>
+      {/* <pre>
+    {JSON.stringify(listDataCPP, null, 2)}
+    </pre> */}
       {/* Tambah Modal */}
       <Modal
         opened={opened}
@@ -48,30 +63,30 @@ export const ViewCalonPemilihPotensialV2 = () => {
               </Text>
             </Grid.Col>
             {/* <Grid.Col span={4}>
-                            <Group position="right">
-                                <Button
-                                    w={100}
-                                    bg={COLOR.merah}
-                                    color={"orange"}
-                                    radius={50}
-                                    leftIcon={<AiOutlineSave />}
-                                >
-                                    Save
-                                </Button>
-                                <Button
-                                    w={100}
-                                    bg={COLOR.merah}
-                                    color={"orange"}
-                                    radius={50}
-                                    leftIcon={<CiFilter />}
-                                >
-                                    Fillter
-                                </Button>
-                            </Group>
-                        </Grid.Col> */}
+              <Group position="right">
+                <Button
+                  w={100}
+                  bg={COLOR.merah}
+                  color={"orange"}
+                  radius={50}
+                  leftIcon={<AiOutlineSave />}
+                >
+                  Save
+                </Button>
+                <Button
+                  w={100}
+                  bg={COLOR.merah}
+                  color={"orange"}
+                  radius={50}
+                  leftIcon={<CiFilter />}
+                >
+                  Fillter
+                </Button>
+              </Group>
+            </Grid.Col> */}
           </Grid>
         </Paper>
-        <Box pt={20}>
+        <Box >
           <Box pt={20}>
             <Grid>
               <Grid.Col md={4} lg={4}>
