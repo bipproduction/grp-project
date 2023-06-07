@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
@@ -8,8 +8,9 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { useAtom } from "jotai";
-import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataPageEksekutifNasional, _dataSearchEksekutifNasional, _dataTotalPageEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
+import _ from "lodash";
 
 export const TableEksekutifNasionalV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -17,6 +18,9 @@ export const TableEksekutifNasionalV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [dataId, setDataId] = useState<string>("");
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifNasional);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadData = () => {
   //   fetch(api.apiEksekutifGetAll+`?tingkat=1`)
@@ -38,8 +42,10 @@ export const TableEksekutifNasionalV2 = () => {
 
   useShallowEffect(() => {
     //loadData();
-    _loadDataEksekutif(1, inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataEksekutif(1, inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
+
 
   const tbHead = (
     <tr>
@@ -57,12 +63,12 @@ export const TableEksekutifNasionalV2 = () => {
         <Group position="center">Aksi</Group>
       </th>
     </tr>
-    
+
   );
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.namaLembaga}</td>
@@ -98,7 +104,7 @@ export const TableEksekutifNasionalV2 = () => {
   return (
     <>
       <Modal opened={opened} onClose={close} centered size={"lg"}>
-        <EditEksekutifNasionalV2 thisClosed={close} data={dataId}/>
+        <EditEksekutifNasionalV2 thisClosed={close} data={dataId} />
       </Modal>
       <Box pt={20}>
         <ScrollArea>
@@ -106,6 +112,13 @@ export const TableEksekutifNasionalV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataEksekutif(1, inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

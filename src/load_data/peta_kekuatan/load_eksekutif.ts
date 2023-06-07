@@ -24,15 +24,29 @@ export const _dataEksekutifKabKot = atomWithStorage<ModelEksekutif[]>(
 export const _dataSearchEksekutifNasional = atom("");
 export const _dataSearchEksekutifProvinsi = atom("");
 export const _dataSearchEksekutifKabKot = atom("");
+export const _dataPageEksekutifNasional = atom("");
+export const _dataPageEksekutifProvinsi = atom("");
+export const _dataPageEksekutifKabKot = atom("");
+export const _dataTotalPageEksekutifNasional = atom("");
+export const _dataTotalPageEksekutifProvinsi = atom("");
+export const _dataTotalPageEksekutifKabKot = atom("");
+
 
 
 
 export async function _loadDataEksekutif(
     tingkat: any,
     search: any,
-    setDataEksekutif: any
+    setDataEksekutif: any,
+    page: any,
+    setTotalPage: any,
 ) {
-    await fetch(api.apiEksekutifSearchAll + `?tingkat=${tingkat}&search=${search}`)
+    // if (page === undefined) { page = 1 }
+    await fetch(api.apiEksekutifSearchAll + `?tingkat=${tingkat}&search=${search}&page=${page}`)
         .then((res) => res.json())
         .then((val) => setDataEksekutif(val));
+
+    await fetch(api.apiEksekutifCountPage + `?tingkat=${tingkat}&search=${search}`)
+        .then((res) => res.json())
+        .then((val) => setTotalPage(val));
 }

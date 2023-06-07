@@ -1,11 +1,15 @@
 import client from "@/lib/prisma";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const eksekutifSearchAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { tingkat, search } = req.query;
+    const { tingkat, search, page } = req.query;
+    const dataSkip = _.toNumber(page) * 10 - 10;
     let data;
     if (search != "") {
         data = await client.eksekutif.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 masterTingkatEksekutifId: Number(tingkat),
@@ -90,6 +94,8 @@ const eksekutifSearchAll = async (req: NextApiRequest, res: NextApiResponse) => 
         })
     } else {
         data = await client.eksekutif.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 masterTingkatEksekutifId: Number(tingkat)
@@ -167,7 +173,7 @@ const eksekutifSearchAll = async (req: NextApiRequest, res: NextApiResponse) => 
     }
 
     // const data2 = data.filter((val) => val.User.DataDiri?.name.includes(search as string))
-    return res.status(200).json(data)
+    return res.status(200).json(data ?? [])
 }
 
 export default eksekutifSearchAll

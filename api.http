@@ -251,13 +251,14 @@ Content-Type: application/json
     "masterDesaId" : 1,
     "masterNomorUrutTPSId" : 1,
     "masterJenisKelaminId" : 1,
-    "nik" : "12345123456",
+    "nik" : "21232312312",
     "nama" : "Amalia Dwi",
-    "email" : "amaliadwi@gmail.com",
+    "email" : "iam.amaliadwi@gmail.com",
     "tanggalLahir" : "1999-12-07",
     "phoneNumber" : "0898978678",
     "alamat" : "Panjer",
-    "statusSosial" : "Kaya"
+    "statusSosial" : "Kaya",
+    "pendidikan" : "S1"
 }
 
 ### UPDATE CALON PEMILIH POTENSIAL
@@ -265,7 +266,7 @@ POST http://localhost:3000/api/peta-kekuatan/cpt/cpt-update HTTP/1.1
 Content-Type: application/json
 
 {
-    "id" : "clhiuqvf5000jsmw0ouhhhcyp",
+    "id" : "clil5dinf0001smsgv5haecnk",
     "masterCalonPemilihPotensialId" : 1,
     "masterAgamaId" : 1,
     "masterPekerjaanId" : 1,
@@ -275,18 +276,19 @@ Content-Type: application/json
     "masterDesaId" : 1,
     "masterNomorUrutTPSId" : 1,
     "masterJenisKelaminId" : 2,
-    "nik" : "4568893487",
+    "nik" : "23432432423",
     "nama" : "Amalia Dwi",
-    "email" : "amalia@gmail.com",
+    "email" : "iam.amaliadwi@gmail.com",
     "tanggalLahir" : "2000-12-07",
     "phoneNumber" : "0898978678",
     "alamat" : "Panjer",
-    "statusSosial" : "Kaya"
+    "statusSosial" : "Kaya", 
+    "pendidikan" : "S2"
 }
 
 
 ### GET ONE CALON PEMILIH POTENSIAL
-GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-one?id=clhiuqvf5000jsmw0ouhhhcyp HTTP/1.1
+GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-one?id=clil5dinf0001smsgv5haecnk HTTP/1.1
 
 
 ### GET ALL CALON PEMILIH POTENSIAL
@@ -294,7 +296,7 @@ GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-get-all HTTP/1.1
 
 
 ### GET SEARCH CALON PEMILIH POTENSIAL
-GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-search?search=ads HTTP/1.1
+GET http://localhost:3000/api/peta-kekuatan/cpt/cpt-search?search=ama HTTP/1.1
 
 
 ### POST RENCANA KUNJUNGAN PRABOWO 
@@ -683,3 +685,24 @@ Content-Type: application/json
 
 ### GET ALL LOG USER
 GET http://localhost:3000/api/log-user/log-user-get-all HTTP/1.1
+
+
+
+### POST LAMPIRAN ASET PARTAI
+POST http://localhost:3000/api/aset-partai/lampiran/lampiran-post HTTP/1.1
+Content-Type: application/json
+
+{
+    "asetPartaiId":"clhiubniw0007smw0oilb9qro",
+    "name":"fds",
+    "deskripsi":"lfdson",
+    "file" : "file.jpg"
+}
+
+
+### GET LAMPIRAN ASET PARTAI BY ASET 
+GET http://localhost:3000/api/aset-partai/lampiran/lampiran-get-by-aset?aset=clhiubniw0007smw0oilb9qro HTTP/1.1
+
+
+### HAPUS LAMPIRAN ASET PARTAI 
+GET http://localhost:3000/api/aset-partai/lampiran/lampiran-hapus?id=clijyhsi30001smbk67tpo6rk HTTP/1.1

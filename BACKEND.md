@@ -89,3 +89,7 @@
   - get all = api/sumber-daya-partai/sumber-daya-partai-get-all?status= (by master status keanggotaan)
   - search = api/sumber-daya-partai/sumber-daya-partai-search?status=...&search=... (by status = id master status keanggotaan & search = name data diri)
   - get by user = api/sumber-daya-partai/sumber-daya-partai-get-by-user?user= (by user id)
+- **Lampiran Aset Partai**
+  - tambah = api/aset-partai/lampiran/lampiran-post
+  - get by aset = api/aset-partai/lampiran/lampiran-get-by-aset?aset= (by aset partai id)
+  - hapus = api/aset-partai/lampiran/lampiran-hapus?id= (by lampiran id) 

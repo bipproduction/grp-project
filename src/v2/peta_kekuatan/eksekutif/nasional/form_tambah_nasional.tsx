@@ -7,7 +7,7 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
-import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataPageEksekutifNasional, _dataSearchEksekutifNasional, _dataTotalPageEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -23,6 +23,8 @@ export const FormTambahEksekutifNasionalV2 = ({
   const [inputJabatanNasional, setInputJabatanNasional] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifNasional);
 
   async function onFind() {
     const res = await fetch(api.apiDataDiriGetByNIK + `?nik=${inputNIK}`);
@@ -62,7 +64,7 @@ export const FormTambahEksekutifNasionalV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataEksekutif(1, inputSearch, setListDataNew);
+        _loadDataEksekutif(1, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data eksekutif tingkat nasional")
       } else {
         toast(data.message);

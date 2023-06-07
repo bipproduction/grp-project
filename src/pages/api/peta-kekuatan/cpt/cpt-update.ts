@@ -44,7 +44,8 @@ const calonPemilihPotensialUpdate = async (req: NextApiRequest, res: NextApiResp
                 tanggalLahir: body.tanggalLahir,
                 phoneNumber: body.phoneNumber,
                 alamat: body.alamat,
-                statusSosial: body.statusSosial
+                statusSosial: body.statusSosial,
+                pendidikan: body.pendidikan
             }
         })
 

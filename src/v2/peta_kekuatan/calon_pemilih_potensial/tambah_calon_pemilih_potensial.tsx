@@ -36,6 +36,50 @@ import COLOR from "../../../../fun/WARNA";
 
 const TambahCPTV2 = ({ thisClosed }: any) => {
   const [kerja, setKerja] = useState<any[]>([]);
+  const [dataKirim, setDataKirim] = useState({
+    select: {
+      id: "",
+      nama: "",
+      nik: "",
+      email: "",
+      alamat: "",
+      tanggalLahir: "",
+      phoneNumber: 0,
+      statusSosial: "",
+      MasterProvince: {
+        id: new Number(),
+        name: "",
+      },
+      MasterKabKot: {
+        id: new Number(),
+        name: "",
+      },
+      MasterKecamatan: {
+        id: new Number(),
+        name: "",
+      },
+      MasterDesa: {
+        id: new Number(),
+        name: "",
+      },
+      MasterNomorUrutTPS: {
+        id: new Number(),
+        name: "",
+      },
+      MasterAgama: {
+        id: new Number(),
+        name: "",
+      },
+      MasterJenisKelamin: {
+        id: new Number(),
+        name: "",
+      },
+      MasterPekerjaan: {
+        id: new Number(),
+        name: "",
+      },
+    },
+  });
 
   useShallowEffect(() => {
     _loadKategoriPemilihPotensial();
@@ -110,7 +154,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   data={sProvinsi.value.map((e) => ({
                     value: e.id,
                     label: e.name,
-                    
                   }))}
                   onChange={_loadKabkot}
                   radius={"md"}
@@ -280,7 +323,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   label="Twitter"
                 />
                 <Center>
-                  <Box  mt={20}>
+                  <Box mt={20}>
                     <Button
                       w={100}
                       color="orange.9"

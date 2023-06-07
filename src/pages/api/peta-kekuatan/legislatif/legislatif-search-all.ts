@@ -1,11 +1,15 @@
 import client from "@/lib/prisma_db";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const legislatifSearchAll = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { tingkat, search } = req.query;
+    const { tingkat, search, page } = req.query;
+    const dataSkip = _.toNumber(page) * 10 - 10;
     let data
     if (search != "") {
         data = await client.legislatif.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 masterTingkatLegislatifId: Number(tingkat),
@@ -73,6 +77,8 @@ const legislatifSearchAll = async (req: NextApiRequest, res: NextApiResponse) =>
         });
     } else {
         data = await client.legislatif.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 masterTingkatLegislatifId: Number(tingkat),
                 active: true
@@ -132,7 +138,7 @@ const legislatifSearchAll = async (req: NextApiRequest, res: NextApiResponse) =>
             }
         })
     }
-    return res.status(200).json(data)
+    return res.status(200).json(data ?? [])
 }
 
 export default legislatifSearchAll

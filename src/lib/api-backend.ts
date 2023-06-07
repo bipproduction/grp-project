@@ -93,6 +93,7 @@ export const api = {
     "apiEksekutifSearch": "/api/peta-kekuatan/eksekutif/eksekutif-search",
     "apiEksekutifHapus": "/api/peta-kekuatan/eksekutif/eksekutif-hapus",
     "apiEksekutifSearchAll": "/api/peta-kekuatan/eksekutif/eksekutif-search-all",
+    "apiEksekutifCountPage": "/api/peta-kekuatan/eksekutif/eksekutif-count",
 
 
     // LEGISLATIF
@@ -103,6 +104,7 @@ export const api = {
     "apiLegislatifSearch": "/api/peta-kekuatan/legislatif/legislatif-search",
     "apiLegislatifHapus": "/api/peta-kekuatan/legislatif/legislatif-hapus",
     "apiLegislatifSearchAll": "/api/peta-kekuatan/legislatif/legislatif-search-all",
+    "apiLegislatifCountPage": "/api/peta-kekuatan/legislatif/legislatif-count",
 
 
     // PARTAI PENGUSUNG EKSEKUTIF
@@ -133,9 +135,16 @@ export const api = {
 
 
 
-    //  LOG USER 
+    // LOG USER 
     "apiLogUserPost": "/api/log-user/log-user-post",
     "apiLogUserGetAll": "/api/log-user/log-user-get-all",
+
+
+
+    // LAMPIRAN ASET PARTAI
+    "apiLampiranPost": "/api/aset-partai/lampiran/lampiran-post",
+    "apiLampiranGetByAset": "/api/aset-partai/lampiran/lampiran-get-by-aset",
+    "apiLampiranHapus": "/api/aset-partai/lampiran/lampiran-hapus",
 
 
 
