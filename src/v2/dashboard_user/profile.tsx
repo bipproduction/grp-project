@@ -39,6 +39,7 @@ import {
   AiOutlineEdit,
 } from "react-icons/ai";
 import EditMediaSocial from "./edit_media_social";
+import EditFoto from "./edit_foto";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
@@ -128,138 +129,125 @@ const DataProfileV2 = () => {
                 }}
               ></Box>
             </Center>
-            <Center>
-              <Flex gap="md" pt={20} pb={10}>
-                <Box w={150}>
-                  <Button
-                    fullWidth
-                    color="pink.9"
-                    bg={COLOR.orange}
-                    radius={"xl"}
-                    // onClick={() => setOpenKta(true)}
-                    leftIcon={<AiOutlineCloudUpload size={20} />}
-                  >
-                    Upload Foto
-                  </Button>
-                </Box>
-              </Flex>
-            </Center>
+            {/* UPLOAD FOTO */}
+            <EditFoto/>
           </Box>
+          <Box p={10}>
+            <SimpleGrid
+              cols={2}
+              breakpoints={[
+                { maxWidth: 980, cols: 2, spacing: "xl" },
+                { maxWidth: 755, cols: 1, spacing: "xl" },
+              ]}
+            >
+              {" "}
+              <Box pt={20}>
+                <Box
+                  p={20}
+                  pl={30}
+                  pr={30}
+                  h={620}
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: 10,
+                  }}
+                >
+                  <Box>
+                    <Text fz={15}>NIK</Text>
+                    <Text fw={700}>{listData?.nik}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Nama</Text>
+                    <Text fw={700}>{listData?.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Email</Text>
+                    <Text fw={700}>{listData2?.User?.email}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Tempat Lahir</Text>
+                    <Text fw={700}>{listData?.tempatLahir}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Tanggal Lahir</Text>
+                    <Text fw={700}>
+                      {moment(listData?.tanggalLahir).format("LL")}
+                    </Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Jenis Kelamin</Text>
+                    <Text fw={700}>{listData?.MasterJenisKelamin.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Nomor Handphone</Text>
+                    <Text fw={700}>{listData?.phoneNumber}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Agama</Text>
+                    <Text fw={700}>{listData?.MasterAgama.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Pekerjaan</Text>
+                    <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Alamat</Text>
+                    <Text fw={700}>{listData?.alamat}</Text>
+                  </Box>
 
-          <SimpleGrid
-            cols={2}
-            breakpoints={[
-              { maxWidth: 980, cols: 2, spacing: "xl" },
-              { maxWidth: 755, cols: 1, spacing: "xl" },
-            ]}
-          >
-            {" "}
-            <Box pt={20} pl={10}>
-              <Box
-                p={20}
-                pl={30}
-                pr={30}
-                h={620}
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: 10,
-                }}
-              >
-                <Box>
-                  <Text fz={15}>NIK</Text>
-                  <Text fw={700}>{listData?.nik}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Nama</Text>
-                  <Text fw={700}>{listData?.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Email</Text>
-                  <Text fw={700}>{listData2?.User?.email}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Tempat Lahir</Text>
-                  <Text fw={700}>{listData?.tempatLahir}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Tanggal Lahir</Text>
-                  <Text fw={700}>
-                    {moment(listData?.tanggalLahir).format("LL")}
-                  </Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Jenis Kelamin</Text>
-                  <Text fw={700}>{listData?.MasterJenisKelamin.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Nomor Handphone</Text>
-                  <Text fw={700}>{listData?.phoneNumber}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Agama</Text>
-                  <Text fw={700}>{listData?.MasterAgama.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Pekerjaan</Text>
-                  <Text fw={700}>{listData?.MasterPekerjaan.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Alamat</Text>
-                  <Text fw={700}>{listData?.alamat}</Text>
-                </Box>
-
-                {/* BATAS */}
-              </Box>
-            </Box>
-            <Box pt={20} pr={10}>
-              <Box
-                p={20}
-                pl={30}
-                pr={30}
-                pt={10}
-                h={620}
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: 10,
-                }}
-              >
-                <Box mt={10}>
-                  <Text fz={15}>
-                    {listData2?.User?.UserMediaSocial.map((v, i) => (
-                      <Box key={i}>
-                        <Text fz={15} mt={10}>
-                          {v.MasterMediaSocial.name}
-                        </Text>
-                        <Text fw={700}>{v.name}</Text>
-                      </Box>
-                    ))}
-                  </Text>
-                  <Text fw={700}></Text>
-                </Box>
-
-                <Box mt={10}>
-                  <Text fz={15}>Provinsi</Text>
-                  <Text fw={700}>{listData?.MasterProvince.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Kabupaten / Kota</Text>
-                  <Text fw={700}>{listData?.MasterKabKot.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Kecamatan</Text>
-                  <Text fw={700}>{listData?.MasterKecamatan.name}</Text>
-                </Box>
-                <Box mt={10}>
-                  <Text fz={15}>Desa</Text>
-                  <Text fw={700}>{listData?.MasterDesa.name}</Text>
-                </Box>
-                <Box mt={10} mb={7}>
-                  <Text fz={15}>RT/RW</Text>
-                  <Text fw={700}>{listData?.rtRw}</Text>
+                  {/* BATAS */}
                 </Box>
               </Box>
-            </Box>
-          </SimpleGrid>
+              <Box pt={20}>
+                <Box
+                  p={20}
+                  pl={30}
+                  pr={30}
+                  pt={10}
+                  h={620}
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: 10,
+                  }}
+                >
+                  <Box mt={10}>
+                    <Text fz={15}>
+                      {listData2?.User?.UserMediaSocial.map((v, i) => (
+                        <Box key={i}>
+                          <Text fz={15} mt={10}>
+                            {v.MasterMediaSocial.name}
+                          </Text>
+                          <Text fw={700}>{v.name}</Text>
+                        </Box>
+                      ))}
+                    </Text>
+                    <Text fw={700}></Text>
+                  </Box>
+
+                  <Box mt={10}>
+                    <Text fz={15}>Provinsi</Text>
+                    <Text fw={700}>{listData?.MasterProvince.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Kabupaten / Kota</Text>
+                    <Text fw={700}>{listData?.MasterKabKot.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Kecamatan</Text>
+                    <Text fw={700}>{listData?.MasterKecamatan.name}</Text>
+                  </Box>
+                  <Box mt={10}>
+                    <Text fz={15}>Desa</Text>
+                    <Text fw={700}>{listData?.MasterDesa.name}</Text>
+                  </Box>
+                  <Box mt={10} mb={7}>
+                    <Text fz={15}>RT/RW</Text>
+                    <Text fw={700}>{listData?.rtRw}</Text>
+                  </Box>
+                </Box>
+              </Box>
+            </SimpleGrid>
+          </Box>
           <Group>
             <Flex gap="md" pt={20} pl={10} pb={30}>
               <Box w={200}>
@@ -333,7 +321,7 @@ export function ModalEditMediaSocial() {
           opacity: 0.5,
         }}
       >
-        <EditMediaSocial thisClosed={() => setOpenMedia(false)}  />
+        <EditMediaSocial thisClosed={() => setOpenMedia(false)} />
       </Modal>
     </>
   );

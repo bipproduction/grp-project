@@ -24,6 +24,7 @@ import {
   Alert,
   MediaQuery,
   Burger,
+  Stack,
 } from "@mantine/core";
 import { useState } from "react";
 import {
@@ -244,16 +245,21 @@ const LayoutDashboarSuperdAdminV2 = () => {
                       </Menu.Target>
                       <Menu.Dropdown>
                         {/* <Menu.Item> */}
-                          <Group p={11}>
-                            <AiOutlineUser color="black" size="1.3rem" />
-                            <Text fw={700}>{sUser.value?.username}</Text>
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
                           </Group>
-                        {/* </Menu.Item> */}
-                        {/* <Menu.Item> */}
-                          <Group p={11}>
-                            <MdAlternateEmail color="black" size="1.3rem" />
-                            <Text>{sUser.value?.email}</Text>
+
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
                           </Group>
+                        </Stack>
                         {/* </Menu.Item> */}
                         <Menu.Item>
                           <Group
