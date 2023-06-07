@@ -5,13 +5,13 @@ import { buttonSimpan } from "@/v2/component/button-toast";
 import { Box, Button, Flex, Select, TextInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useShallowEffect } from "@mantine/hooks";
-import { useState } from "react";
+import { use, useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifProvinsi, _dataPageLegislatifProvinsi, _dataSearchLegislatifProvinsi, _dataTotalPageLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -30,6 +30,8 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifProvinsi);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifProvinsi);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifProvinsi);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifProvinsi);
 
 
   async function onFind() {
@@ -76,7 +78,7 @@ export const FormTambahLegislatifDprdProvinsiV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataLegislatif(2, inputSearch, setListDataNew);
+        _loadDataLegislatif(2, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data legislatif tingkat DPRD Provinsi")
       } else {
         toast(data.message);

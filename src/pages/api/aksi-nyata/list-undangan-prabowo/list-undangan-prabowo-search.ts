@@ -3,10 +3,13 @@ import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const listUndanganPrabowoSearch = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { search } = req.query;
+    const { search, page } = req.query;
+    const dataSkip = _.toNumber(page) * 10 - 10;
     let data;
     if (search != "") {
         data = await client.listUndanganPrabowo.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 nama: {
@@ -19,13 +22,15 @@ const listUndanganPrabowoSearch = async (req: NextApiRequest, res: NextApiRespon
                 RencanaKunjunganPrabowo: {
                     select: {
                         judul: true,
-                        tanggal:true
+                        tanggal: true
                     }
                 }
             }
         })
     } else {
         data = await client.listUndanganPrabowo.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true
             },
@@ -48,7 +53,7 @@ const listUndanganPrabowoSearch = async (req: NextApiRequest, res: NextApiRespon
         tanggal: v.RencanaKunjunganPrabowo.tanggal
     }))
 
-    return res.status(200).json(result)
+    return res.status(200).json(result ?? [])
 }
 
 export default listUndanganPrabowoSearch

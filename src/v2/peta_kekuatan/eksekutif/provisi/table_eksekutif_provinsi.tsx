@@ -10,6 +10,7 @@ import toast from "react-simple-toasts";
 import { _dataEksekutifProvinsi, _dataPageEksekutifProvinsi, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
+import _ from "lodash";
 
 export const TableEksekutifProvinsiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false)
@@ -19,6 +20,7 @@ export const TableEksekutifProvinsiV2 = () => {
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
   const [inputPage, setInputPage] = useAtom(_dataPageEksekutifProvinsi);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifProvinsi);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=2`)
@@ -64,7 +66,7 @@ export const TableEksekutifProvinsiV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterProvince?.name}</td>

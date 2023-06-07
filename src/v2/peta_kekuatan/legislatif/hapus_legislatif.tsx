@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataLegislatifKabKot, _dataLegislatifNasional, _dataLegislatifProvinsi, _dataSearchLegislatifKabKot, _dataSearchLegislatifNasional, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataLegislatifNasional, _dataLegislatifProvinsi, _dataPageLegislatifKabKot, _dataPageLegislatifNasional, _dataPageLegislatifProvinsi, _dataSearchLegislatifKabKot, _dataSearchLegislatifNasional, _dataSearchLegislatifProvinsi, _dataTotalPageLegislatifKabKot, _dataTotalPageLegislatifNasional, _dataTotalPageLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteLegislatif({
@@ -37,6 +37,12 @@ export function ButtonDeleteLegislatif({
     const [inputSearchNasional, setInputNasional] = useAtom(_dataSearchLegislatifNasional);
     const [inputSearchProvinsi, setInputSearchProvinsi] = useAtom(_dataSearchLegislatifProvinsi);
     const [inputSearchKabKot, setInputSearchKebKot] = useAtom(_dataSearchLegislatifKabKot);
+    const [inputPageNasional, setInputPageNasional] = useAtom(_dataPageLegislatifNasional);
+    const [inputPageProvinsi, setInputPageProvinsi] = useAtom(_dataPageLegislatifProvinsi);
+    const [inputPageKabKot, setInputPageKabKot] = useAtom(_dataPageLegislatifKabKot);
+    const [totalPageNasional, setTotalPageNasional] = useAtom(_dataTotalPageLegislatifNasional);
+    const [totalPageProvinsi, setTotalPageProvinsi] = useAtom(_dataTotalPageLegislatifProvinsi);
+    const [totalPageKabKot, setTotalPageKabKot] = useAtom(_dataTotalPageLegislatifKabKot);
 
     const onDelete = () => {
         fetch(api.apiLegislatifHapus + `?id=${setId}`)
@@ -45,13 +51,13 @@ export function ButtonDeleteLegislatif({
                     toast("Success");
                     let desk_log
                     if (setTingkat == 1) {
-                        _loadDataLegislatif(1, inputSearchNasional, setListDataNasional);
+                        _loadDataLegislatif(1, inputSearchNasional, setListDataNasional, inputPageNasional, setTotalPageNasional);
                         desk_log = 'User menghapus data legislatif tingkat DPRD RI'
                     } else if (setTingkat == 2) {
-                        _loadDataLegislatif(2, inputSearchProvinsi, setListDataProv);
+                        _loadDataLegislatif(2, inputSearchProvinsi, setListDataProv, inputPageProvinsi, setTotalPageProvinsi);
                         desk_log = 'User menghapus data legislatif tingkat DPRD Provinsi'
                     } else {
-                        _loadDataLegislatif(3, inputSearchKabKot, setListDataKabKot);
+                        _loadDataLegislatif(3, inputSearchKabKot, setListDataKabKot, inputPageKabKot, setTotalPageKabKot);
                         desk_log = 'User menghapus data legislatif tingkat DPRD Kabupaten/Kota'
                     }
                     _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)

@@ -3,16 +3,19 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TambahLegislatifV2 } from "../tambah_legislatif";
 import { TableLegislatifKabKotV2 } from "./table_legislatif_kabkot";
-import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataPageLegislatifKabKot, _dataSearchLegislatifKabKot, _dataTotalPageLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 
 
 export const LegislatifKabKotV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifKabKot);
 
   function onSearch(text: string) {
-    _loadDataLegislatif(3, text, setListDataNew);
+    _loadDataLegislatif(3, text, setListDataNew, "1", setTotalPage);
+    setInputPage("1");
     setInputSearch(text);
   }
   return (

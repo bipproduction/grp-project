@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import EditListUndanganGerindraV2 from "./edit_list_undangan";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -7,8 +7,9 @@ import { ModelListUndanganGerindra } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataPageListUndanganGerindra, _dataSearchListUndanganGerindra, _dataTotalPageListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
+import _ from "lodash";
 const moment = require('moment')
 
 export const TableListUndanganGerindraV2 = () => {
@@ -16,6 +17,9 @@ export const TableListUndanganGerindraV2 = () => {
     const [dataId, setDataId] = useState<string>("");
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganGerindra);
+    const [inputPage, setInputPage] = useAtom(_dataPageListUndanganGerindra);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganGerindra);
+    let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
     // const loadListUndanganGerindra = () => {
     //     fetch(api.apiListUndanganGerindraGetAll)
@@ -27,7 +31,8 @@ export const TableListUndanganGerindraV2 = () => {
 
     useShallowEffect(() => {
         //loadListUndanganGerindra();
-        _loadDataListUndanganGerindra(inputSearch, setListDataNew);
+        setInputPage("1");
+        _loadDataListUndanganGerindra(inputSearch, setListDataNew, "1", setTotalPage);
     }, []);
 
     // const onDelete = (id: string) => {
@@ -107,7 +112,7 @@ export const TableListUndanganGerindraV2 = () => {
                         <thead>{tbHead}</thead>
                         <tbody>{listDataNew && listDataNew.map((e, i) => (
                             <tr key={i}>
-                                <td>{i + 1}</td>
+                                <td>{noAwal++}</td>
                                 <td>{e.judul}</td>
                                 <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
                                 <td>{e.nama}</td>
@@ -134,6 +139,13 @@ export const TableListUndanganGerindraV2 = () => {
                             </tr>
                         ))}</tbody>
                     </Table>
+                    <Group position="right" py={10}>
+                        <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+                            onChange={(val: any) => {
+                                setInputPage(val);
+                                _loadDataListUndanganGerindra(inputSearch, setListDataNew, val, setTotalPage);
+                            }} />
+                    </Group>
                 </ScrollArea>
             </Box>
         </>

@@ -5,15 +5,18 @@ import { TableListUndanganGerindraV2 } from "./table_list_undangan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahListUndanganGerindraV2 from "./tambah_list_undangan";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _dataSearchListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataPageListUndanganGerindra, _dataSearchListUndanganGerindra, _dataTotalPageListUndanganGerindra, _loadDataListUndanganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 
 export const ListUndanganGerindraV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganGerindra);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganGerindra);
+    const [inputPage, setInputPage] = useAtom(_dataPageListUndanganGerindra);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganGerindra);
 
     function onSearch(text: string) {
-        _loadDataListUndanganGerindra(text, setListDataNew);
+        _loadDataListUndanganGerindra(text, setListDataNew, "1", setTotalPage);
+        setInputPage("1");
         setInputSearch(text);
     }
 

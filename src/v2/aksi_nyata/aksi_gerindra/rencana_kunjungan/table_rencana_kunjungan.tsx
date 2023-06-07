@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import EditRencanaKunjunganGerindraV2 from "./edit_rencana_kunjungan";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -7,14 +7,18 @@ import { api } from "@/lib/api-backend";
 import moment from "moment";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataPageRencanaKunjunganGerindra, _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _dataTotalPageRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
+import _ from "lodash";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
   const [listData, setListData] = useState<any[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
+  const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganGerindra);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganGerindra);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadData = () => {
   //   fetch(api.apiRencanaKunjunganGerindraGetAll)
@@ -36,7 +40,8 @@ export const TableRencanaKunjunganGerindraV2 = () => {
 
   useShallowEffect(() => {
     // loadData();
-    _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
 
   const tbHead = (
@@ -52,7 +57,7 @@ export const TableRencanaKunjunganGerindraV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.judul}</td>
       <td>{e.MasterStatusAksiNyata.name}</td>
       <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
@@ -107,6 +112,13 @@ export const TableRencanaKunjunganGerindraV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

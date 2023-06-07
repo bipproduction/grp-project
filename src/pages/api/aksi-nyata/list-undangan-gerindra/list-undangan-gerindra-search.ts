@@ -3,10 +3,13 @@ import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const listUndanganGerindraSearch = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { search } = req.query;
+    const { search, page } = req.query;
+    const dataSkip = _.toNumber(page) * 10 - 10;
     let data;
     if (search != "") {
         data = await client.listUndanganGerindra.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 nama: {
@@ -26,6 +29,8 @@ const listUndanganGerindraSearch = async (req: NextApiRequest, res: NextApiRespo
         })
     } else {
         data = await client.listUndanganGerindra.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true
             },
@@ -48,7 +53,7 @@ const listUndanganGerindraSearch = async (req: NextApiRequest, res: NextApiRespo
         tanggal: v.RencanaKunjunganGerindra.tanggal
     }))
 
-    return res.status(200).json(result)
+    return res.status(200).json(result ?? [])
 }
 
 export default listUndanganGerindraSearch

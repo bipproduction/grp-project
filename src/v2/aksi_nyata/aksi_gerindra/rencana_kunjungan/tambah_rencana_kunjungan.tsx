@@ -22,8 +22,10 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { useShallowEffect } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import {
+  _dataPageRencanaKunjunganGerindra,
   _dataRencanaKunjunganGerindra,
   _dataSearchRencanaKunjunganGerindra,
+  _dataTotalPageRencanaKunjunganGerindra,
   _loadDataRencanaKunjunganGerindra,
 } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
@@ -43,6 +45,9 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
   const [inputImg, setInputImg] = useState("");
   const [inputMasterStatusAksiNyata, setInputMasterStatusAksiNyata] =
     useState("");
+
+  const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganGerindra);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganGerindra);
 
   const loadStatusAksiNyata = async () => {
     const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -78,7 +83,7 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
+        _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data rencana kunjungan gerindra");
       } else {
         toast(data.message);

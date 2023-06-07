@@ -4,16 +4,19 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableRencanaKunjunganPrabowoV2 } from "./table_rencana_kunjungan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahRencanaKunjunganPrabowoV2 from "./tambah_rencana_kunjungan";
-import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataPageRencanaKunjunganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _dataTotalPageRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 
 export const RencanaKunjunganPrabowoV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+    const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganPrabowo);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganPrabowo);
 
     function onSearch(text: string) {
-        _loadDataRencanaKunjunganPrabowo(text, setListDataNew);
+        _loadDataRencanaKunjunganPrabowo(text, setListDataNew, "1", setTotalPage);
+        setInputPage("1");
         setInputSearch(text);
     }
     return <>

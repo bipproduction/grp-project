@@ -16,7 +16,7 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import toast from "react-simple-toasts";
-import { _dataLegislatifNasional, _dataSearchLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifNasional, _dataPageLegislatifNasional, _dataSearchLegislatifNasional, _dataTotalPageLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -30,6 +30,8 @@ export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifNasional);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifNasional);
 
   const loadData = () => {
     fetch(api.apiLegislatifGetOne + `?id=${data}`)
@@ -56,7 +58,7 @@ export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
   }
 
   const onEdit = () => {
-    console.log(body);
+    // console.log(body);
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -72,7 +74,7 @@ export const EditLegislatifDprRiV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataLegislatif(1, inputSearch, setListDataNew);
+        _loadDataLegislatif(1, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data legislatif tingkat DPR RI")
       } else {
         toast(data.message);

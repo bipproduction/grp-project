@@ -22,7 +22,7 @@ import { ModelListUndanganPrabowo } from "@/model/model_aksi_nyata";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
-import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataPageListUndanganPrabowo, _dataSearchListUndanganPrabowo, _dataTotalPageListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -31,6 +31,8 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
     const [listRencanaKunjungan, setListRencanaKunjungan] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
+    const [inputPage, setInputPage] = useAtom(_dataPageListUndanganPrabowo);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganPrabowo);
 
     const loadRencanaKunjunganPrabowo = async () => {
         const res = await fetch(api.apiRencanaKunjunganPrabowoGetAll);
@@ -73,7 +75,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
+                _loadDataListUndanganPrabowo(inputSearch, setListDataNew, inputPage, setTotalPage);
                 _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data list undangan prabowo")
             } else {
                 toast(data.message);
@@ -113,7 +115,7 @@ const EditListUndanganPrabowoV2 = ({ thisClosed, data }: any) => {
                                     value: data.id,
                                     label: data.judul,
                                 }))}
-                                mt={10}
+                                    mt={10}
                                     placeholder={dataEdit?.RencanaKunjunganPrabowo.judul}
                                     searchable={true}
                                     onChange={(val) => {
