@@ -3,15 +3,18 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../../fun/WARNA";
 import { TableEksekutifNasionalV2 } from "./table_eksekutif_nasional";
 import { TambahEksekutifV2 } from "../tambah_eksekutif";
-import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataPageEksekutifNasional, _dataSearchEksekutifNasional, _dataTotalPageEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 
 export const EksekutifNasionalV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifNasional);
 
   function onSearch(text: string) {
-    _loadDataEksekutif(1, text, setListDataNew);
+    _loadDataEksekutif(1, text, setListDataNew, 1, setTotalPage);
+    setInputPage("1");
     setInputSearch(text);
   }
   return (

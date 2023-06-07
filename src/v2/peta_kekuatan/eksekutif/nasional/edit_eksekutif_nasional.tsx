@@ -19,9 +19,10 @@ import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import _ from "lodash";
 import toast from "react-simple-toasts";
-import { _dataEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifNasional, _dataPageEksekutifNasional, _dataSearchEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { _dataTotalPageEksekutifNasional } from "@/load_data/peta_kekuatan/load_eksekutif";
 
 export const EditEksekutifNasionalV2 = ({ thisClosed, data }: any) => {
   const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
@@ -31,6 +32,8 @@ export const EditEksekutifNasionalV2 = ({ thisClosed, data }: any) => {
   const [inputJabatanNasional, setInputJabatanNasional] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifNasional);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifNasional);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetOne + `?id=${data}`)
@@ -70,7 +73,7 @@ export const EditEksekutifNasionalV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataEksekutif(1, inputSearch, setListDataNew);
+        _loadDataEksekutif(1, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data eksekutif tingkat nasional")
       } else {
         toast(data.message);

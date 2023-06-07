@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 // const data_dummy = require("../data_dummy_pk")
@@ -7,7 +7,7 @@ import { EditEksekutifProvinsiV2 } from "./edit_eksekutif_provinsi";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataPageEksekutifProvinsi, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 
@@ -17,6 +17,8 @@ export const TableEksekutifProvinsiV2 = () => {
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifProvinsi);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifProvinsi);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=2`)
@@ -38,7 +40,8 @@ export const TableEksekutifProvinsiV2 = () => {
 
   useShallowEffect(() => {
     loadData();
-    _loadDataEksekutif(2, inputSearch, setListDataNew);
+    setInputPage("1")
+    _loadDataEksekutif(2, inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
 
   const tbHead = (
@@ -110,6 +113,13 @@ export const TableEksekutifProvinsiV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataEksekutif(2, inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

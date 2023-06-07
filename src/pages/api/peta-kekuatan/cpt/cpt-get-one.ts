@@ -6,6 +6,48 @@ const calonPemilihPotensialGetOne = async (req: NextApiRequest, res: NextApiResp
     const data = await client.calonPemilihPotensial.findUnique({
         where: {
             id: id as any
+        },
+        select: {
+            id: true,
+            nama: true,
+            alamat: true,
+            email: true,
+            phoneNumber: true,
+            pendidikan: true,
+            MasterKabKot: {
+                select: {
+                    name: true
+                }
+            },
+            MasterKecamatan: {
+                select: {
+                    name: true
+                }
+            },
+            MasterDesa: {
+                select: {
+                    name: true
+                }
+            },
+            MasterJenisKelamin: {
+                select: {
+                    name: true
+                }
+            },
+            CPTMediaSocial: {
+                where: {
+                    active: true
+                },
+                select: {
+                    name: true,
+                    MasterMediaSocial: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            }
+
         }
     })
 

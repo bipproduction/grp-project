@@ -14,7 +14,7 @@ import {
     TextInput,
 } from "@mantine/core";
 import _ from "lodash";
-import { _dataEksekutifKabKot, _dataEksekutifNasional, _dataEksekutifProvinsi, _dataSearchEksekutifKabKot, _dataSearchEksekutifNasional, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataEksekutifNasional, _dataEksekutifProvinsi, _dataPageEksekutifKabKot, _dataPageEksekutifNasional, _dataPageEksekutifProvinsi, _dataSearchEksekutifKabKot, _dataSearchEksekutifNasional, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifKabKot, _dataTotalPageEksekutifNasional, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { FiAlertCircle } from "react-icons/fi";
 import COLOR from "../../../../fun/WARNA";
 import { useDisclosure } from "@mantine/hooks";
@@ -37,6 +37,12 @@ export function ButtonDeleteEksekutif({
     const [inputSearchNasional, setInputSearchNasional] = useAtom(_dataSearchEksekutifNasional);
     const [inputSearchProvinsi, setInputSearchProvinsi] = useAtom(_dataSearchEksekutifProvinsi);
     const [inputSearchKabKot, setInputSearchKabKot] = useAtom(_dataSearchEksekutifKabKot);
+    const [inputPageNasional, setInputPageNasional] = useAtom(_dataPageEksekutifNasional);
+    const [inputPageProvinsi, setInputPageProvinsi] = useAtom(_dataPageEksekutifProvinsi);
+    const [inputPageKabKot, setInputPageKabKot] = useAtom(_dataPageEksekutifKabKot);
+    const [totalPageNasional, setTotalPageNasional] = useAtom(_dataTotalPageEksekutifNasional);
+    const [totalPageProvinsi, setTotalPageProvinsi] = useAtom(_dataTotalPageEksekutifProvinsi);
+    const [totalPageKabKot, setTotalPageKabKot] = useAtom(_dataTotalPageEksekutifKabKot);
 
     const onDelete = () => {
         fetch(api.apiEksekutifHapus + `?id=${setId}`)
@@ -46,13 +52,13 @@ export function ButtonDeleteEksekutif({
                     let desk_log
                     if (setTingkat == 1) {
                         desk_log = 'User menghapus data eksekutif tingkat nasional'
-                        _loadDataEksekutif(1, inputSearchNasional, setListDataNasional);
+                        _loadDataEksekutif(1, inputSearchNasional, setListDataNasional, inputPageNasional, setTotalPageNasional);
                     } else if (setTingkat == 2) {
                         desk_log = 'User menghapus data eksekutif tingkat provinsi'
-                        _loadDataEksekutif(2, inputSearchProvinsi, setListDataProv);
+                        _loadDataEksekutif(2, inputSearchProvinsi, setListDataProv, inputPageProvinsi, setTotalPageProvinsi);
                     } else {
                         desk_log = 'User menghapus data eksekutif tingkat kabupaten/kota'
-                        _loadDataEksekutif(3, inputSearchKabKot, setListDataKabKot);
+                        _loadDataEksekutif(3, inputSearchKabKot, setListDataKabKot, inputPageKabKot, setTotalPageKabKot);
                     }
                     _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log);
 
