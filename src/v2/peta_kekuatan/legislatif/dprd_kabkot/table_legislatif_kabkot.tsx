@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../data_legis_dummy.json";
@@ -8,8 +8,9 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataPageLegislatifKabKot, _dataSearchLegislatifKabKot, _dataTotalPageLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { ButtonDeleteLegislatif } from "../hapus_legislatif";
+import _ from "lodash";
 
 export const TableLegislatifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -17,6 +18,9 @@ export const TableLegislatifKabKotV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
   const [dataId, setDataId] = useState<string>("");
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifKabKot);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadData = () => {
   //   fetch(api.apiLegislatifGetAll + `?tingkat=3`)
@@ -38,7 +42,8 @@ export const TableLegislatifKabKotV2 = () => {
 
   useShallowEffect(() => {
     //loadData();
-    _loadDataLegislatif(3, inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataLegislatif(3, inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
 
   const tbHead = (
@@ -62,7 +67,7 @@ export const TableLegislatifKabKotV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.noUrut}</td>
@@ -114,6 +119,13 @@ export const TableLegislatifKabKotV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataLegislatif(3, inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

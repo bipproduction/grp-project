@@ -24,7 +24,7 @@ import { useShallowEffect } from "@mantine/hooks";
 import { ModelRencanaKunjungan } from "../../../../model/model_aksi_nyata";
 import { apiGetMaster } from "@/lib/api-get-master";
 import { atomWithStorage } from "jotai/utils";
-import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataPageRencanaKunjunganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _dataTotalPageRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 import moment from "moment";
 import "moment/locale/id";
@@ -37,6 +37,8 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
     const [listStatusAksiNyata, setListStatusAksiNyata] = useState<any[]>([]);
     const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+    const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganPrabowo);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganPrabowo);
 
     const loadStatusAksiNyata = async () => {
         const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -94,7 +96,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
             if (res.status === 201) {
                 buttonSimpan();
                 thisClosed();
-                _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
+                _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew, inputPage, setTotalPage);
                 _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data rencana kunjungan prabowo")
             } else {
                 toast(data.message);
@@ -133,7 +135,7 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                             <Flex direction={"column"}>
                                 <TextInput label="**" placeholder={dataEdit?.judul} onChange={(val) => {
                                     body.judul = val.target.value;
-                                }}  mt={10}/>
+                                }} mt={10} />
                                 <Textarea
                                     label="**"
                                     autosize
@@ -147,11 +149,11 @@ const EditRencanaKunjunganPrabowoV2 = ({ thisClosed, data }: { [key: string]: an
                                 />
                                 <DateInput label="**" onChange={(val) => {
                                     body.tanggal = moment(val).format("YYYY-MM-DD");
-                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")} 
-                                mt={10}
+                                }} placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")}
+                                    mt={10}
                                 />
                                 <Select
-                                mt={10}
+                                    mt={10}
                                     data={listStatusAksiNyata.map((data) => ({
                                         value: data.id,
                                         label: data.name,

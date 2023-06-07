@@ -1,11 +1,15 @@
 import client from "@/lib/prisma_db";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const rencanaKunjunganGerindraSearch = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { search } = req.query;
+    const { search, page } = req.query;
+    const dataSkip = _.toNumber(page) * 10 - 10;
     let data;
     if (search != "") {
         data = await client.rencanaKunjunganGerindra.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true,
                 judul: {
@@ -26,6 +30,8 @@ const rencanaKunjunganGerindraSearch = async (req: NextApiRequest, res: NextApiR
         })
     } else {
         data = await client.rencanaKunjunganGerindra.findMany({
+            skip: dataSkip,
+            take: 10,
             where: {
                 active: true
             },
@@ -44,7 +50,7 @@ const rencanaKunjunganGerindraSearch = async (req: NextApiRequest, res: NextApiR
     }
 
 
-    return res.status(200).json(data)
+    return res.status(200).json(data ?? [])
 }
 
 export default rencanaKunjunganGerindraSearch

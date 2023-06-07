@@ -1,12 +1,16 @@
 import { data } from "jquery";
 import client from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
+import _ from "lodash";
 
 const asetPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { search } = req.query;
+  const { search, page } = req.query;
   let data;
+  const dataSkip = _.toNumber(1) * 10 - 10; //ubah angka 1 menjadi page 
   if (search != "") {
     data = await client.asetPartai.findMany({
+      skip: dataSkip,
+      take: 10,
       where: {
         active: true,
         name: {
@@ -41,6 +45,8 @@ const asetPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   } else {
     data = await client.asetPartai.findMany({
+      skip: dataSkip,
+      take: 10,
       where: {
         active: true,
       },
@@ -72,7 +78,7 @@ const asetPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  return res.status(200).json(data);
+  return res.status(200).json(data ?? []);
 };
 
 export default asetPartaiGetAll;

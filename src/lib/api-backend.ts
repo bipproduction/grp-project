@@ -22,6 +22,7 @@ export const api = {
     "apiRencanaKunjunganPrabowoUpdate": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update",
     "apiRencanaKunjunganPrabowoSearch": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-search",
     "apiRencanaKunjunganPrabowoHapus": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-hapus",
+    "apiRencanaKunjunganPrabowoCountPage": "/api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-count",
 
 
     // AKSI NYATA - LIST UNDANGAN PRABOWO
@@ -31,6 +32,7 @@ export const api = {
     "apiListUndanganPrabowoUpdate": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-update",
     "apiListUndanganPrabowoSearch": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-search",
     "apiListUndanganPrabowoHapus": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-hapus",
+    "apiListUndanganPrabowoCountPage": "/api/aksi-nyata/list-undangan-prabowo/list-undangan-prabowo-count",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN GERINDRA
@@ -40,6 +42,7 @@ export const api = {
     "apiRencanaKunjunganGerindraUpdate": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-update",
     "apiRencanaKunjunganGerindraSearch": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-search",
     "apiRencanaKunjunganGerindraHapus": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-hapus",
+    "apiRencanaKunjunganGerindraCountPage": "/api/aksi-nyata/rencana-kunjungan-gerindra/rencana-kunjungan-gerindra-count",
 
 
     // AKSI NYATA - LIST UNDANGAN GERINDRA
@@ -49,6 +52,7 @@ export const api = {
     "apiListUndanganGerindraUpdate": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-update",
     "apiListUndanganGerindraSearch": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-search",
     "apiListundanganGerindraHapus": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-hapus",
+    "apiListUndanganGerindraCountPage": "/api/aksi-nyata/list-undangan-gerindra/list-undangan-gerindra-count",
 
 
     // ANGGOTA AFILIATIF
@@ -58,6 +62,7 @@ export const api = {
     "apiAnggotaAfiliatifUpdate": "/api/anggota-afiliatif/anggota-afiliatif-update",
     "apiAnggotaAfiliatifSearch": "/api/anggota-afiliatif/anggota-afiliatif-search",
     "apiAnggotaAfiliatifHapus": "/api/anggota-afiliatif/anggota-afiliatif-hapus",
+    "apiAnggotaAfiliatifCountPage": "/api/anggota-afiliatif/anggota-afiliatif-count-page",
 
 
     // ASET PARTAI
@@ -67,6 +72,7 @@ export const api = {
     "apiAsetPartaiUpdate": "/api/aset-partai/aset-partai-update",
     "apiAsetPartaiSearch": "/api/aset-partai/aset-partai-search",
     "apiAsetPartaiHapus": "/api/aset-partai/aset-partai-hapus",
+    "apiAsetPartaiCountPage": "/api/aset-partai/aset-partai-count-page",
 
 
     // MEDIA SOSIAL USER
@@ -83,6 +89,7 @@ export const api = {
     "apiCPTUpdate": "/api/peta-kekuatan/cpt/cpt-update",
     "apiCPTSearch": "/api/peta-kekuatan/cpt/cpt-search",
     "apiCPTHapus": "/api/peta-kekuatan/cpt/cpt-hapus",
+    "apiCPTCountPage": "/api/peta-kekuatan/cpt/cpt-count-page",
 
 
     // EKSEKUTIF
@@ -132,6 +139,7 @@ export const api = {
     "apiSumberDayaPartai_KaderCount": "/api/sumber-daya-partai/kader-partai-count",
     "apiSumberDayaPartai_AnggotaCount": "/api/sumber-daya-partai/anggota-partai-count",
     "apiSumberDayaPartaiGetByUser": "/api/sumber-daya-partai/sumber-daya-partai-get-by-user",
+    "apiSumberDayaPartaiCountPage": "/api/sumber-daya-partai/sumber-daya-partai-count-page",
 
 
 

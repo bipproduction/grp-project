@@ -16,7 +16,7 @@ import _ from "lodash";
 import { _loadSelectKabkot } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
-import { _dataLegislatifKabKot, _dataSearchLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifKabKot, _dataPageLegislatifKabKot, _dataSearchLegislatifKabKot, _dataTotalPageLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahLegislatifDprdKabkotV2 = ({
@@ -39,7 +39,8 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
   const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifKabKot);
-
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifKabKot);
 
   async function onFind() {
     const res = await fetch(api.apiDataDiriGetByNIK + `?nik=${inputNIK}`);
@@ -87,7 +88,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataLegislatif(3, inputSearch, setListDataNew);
+        _loadDataLegislatif(3, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data legislatif tingkat DPRD Kabupaten/Kota")
       } else {
         toast(data.message);

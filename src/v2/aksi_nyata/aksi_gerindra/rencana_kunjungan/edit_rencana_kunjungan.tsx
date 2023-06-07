@@ -24,8 +24,10 @@ import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
 import {
+  _dataPageRencanaKunjunganGerindra,
   _dataRencanaKunjunganGerindra,
   _dataSearchRencanaKunjunganGerindra,
+  _dataTotalPageRencanaKunjunganGerindra,
   _loadDataRencanaKunjunganGerindra,
 } from "@/load_data/aksi_nyata/load_gerindra";
 import { useAtom } from "jotai";
@@ -41,6 +43,8 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
   const [inputSearch, setInputSearch] = useAtom(
     _dataSearchRencanaKunjunganGerindra
   );
+  const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganGerindra);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganGerindra);
 
   const loadStatusAksiNyata = async () => {
     const res = await fetch(apiGetMaster.apiGetStatusAksiNyata);
@@ -96,7 +100,7 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew);
+        _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data rencana kunjungan gerindra")
       } else {
         toast(data.message);
