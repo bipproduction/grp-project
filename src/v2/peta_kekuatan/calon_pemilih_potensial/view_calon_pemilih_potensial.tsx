@@ -24,18 +24,15 @@ import { useDisclosure } from "@mantine/hooks";
 export const ViewCalonPemilihPotensialV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
-
-
   return (
     <>
       {/* Tambah Modal */}
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
-        // fullScreen
+        size="xl"
+        centered
         overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
@@ -83,7 +80,6 @@ export const ViewCalonPemilihPotensialV2 = () => {
                   icon={<AiOutlineSearch size={20} />}
                   placeholder="Search"
                   radius={"md"}
-                  
                 />
               </Grid.Col>
               <Grid.Col md={8} lg={8}>

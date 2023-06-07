@@ -5,8 +5,12 @@ import TambahCPTV2 from "./tambah_calon_pemilih_potensial";
 import COLOR from "../../../../fun/WARNA";
 import { useDisclosure } from "@mantine/hooks";
 import EditCPTV2 from "./edit_calon_pemilih_potensial";
+import { useState } from "react";
 
 export const TableCPTV2 = () => {
+    const [listDataCPP, setListDataCPP] = useState('')
+
+
     const tbHead = (
         <tr>
             <th>No</th>
