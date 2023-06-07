@@ -13,45 +13,81 @@ const calonPemilihPotensialSearch = async (req: NextApiRequest, res: NextApiResp
         select: {
             id: true,
             nama: true,
-            alamat: true,
+            nik: true,
             email: true,
+            alamat: true,
+            tanggalLahir: true,
             phoneNumber: true,
+            statusSosial: true,
             pendidikan: true,
+            MasterCalonPemilihPotensial: {
+              select: {
+                  id: true,
+                  name: true,
+                },
+            },
+            MasterProvince: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
             MasterKabKot: {
-                select: {
-                    name: true
-                }
+              select: {
+                id: true,
+                name: true,
+              },
             },
             MasterKecamatan: {
-                select: {
-                    name: true
-                }
+              select: {
+                id: true,
+                name: true,
+              },
             },
             MasterDesa: {
-                select: {
-                    name: true
-                }
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            MasterNomorUrutTPS: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            MasterAgama: {
+              select: {
+                id: true,
+                name: true,
+              },
             },
             MasterJenisKelamin: {
-                select: {
-                    name: true
-                }
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            MasterPekerjaan: {
+              select: {
+                id: true,
+                name: true,
+              },
             },
             CPTMediaSocial: {
-                where: {
-                    active: true
-                },
-                select: {
+              where: {
+                active: true,
+              },
+              select: {
+                name: true,
+                MasterMediaSocial: {
+                  select: {
                     name: true,
-                    MasterMediaSocial: {
-                        select: {
-                            name: true
-                        }
-                    }
-                }
-            }
-
-        }
+                  },
+                },
+              },
+            },
+          },
     })
 
     return res.status(200).json(data)

@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const calonPemilihPotensial = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         let body = req.body
+        // console.log(body)
 
         //cek nik
         const datanik = await client.calonPemilihPotensial.findUnique({
