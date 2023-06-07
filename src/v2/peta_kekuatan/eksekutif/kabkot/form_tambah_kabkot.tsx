@@ -38,7 +38,7 @@ import _ from "lodash";
 import { _loadSelectKabkot, _loadSelectProvinsi } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
-import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataPageEksekutifKabKot, _dataSearchEksekutifKabKot, _dataTotalPageEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
@@ -60,6 +60,8 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
   const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifKabKot);
 
   useShallowEffect(() => {
     _loadProvinsi();
@@ -114,7 +116,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataEksekutif(3, inputSearch, setListDataNew);
+        _loadDataEksekutif(3, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data eksekutif tingkat kabupaten/kota")
       } else {
         toast(data.message);

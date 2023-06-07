@@ -16,6 +16,7 @@ const calonPemilihPotensialSearch = async (req: NextApiRequest, res: NextApiResp
             alamat: true,
             email: true,
             phoneNumber: true,
+            pendidikan: true,
             MasterKabKot: {
                 select: {
                     name: true

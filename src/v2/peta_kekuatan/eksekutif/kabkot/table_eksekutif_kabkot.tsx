@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
@@ -8,7 +8,7 @@ import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataPageEksekutifKabKot, _dataSearchEksekutifKabKot, _dataTotalPageEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 
 export const TableEksekutifKabKotV2 = () => {
@@ -17,14 +17,16 @@ export const TableEksekutifKabKotV2 = () => {
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifKabKot);
 
-  const loadData = () => {
-    fetch(api.apiEksekutifGetAll + `?tingkat=3`)
-      .then((v) => v.json())
-      .then((v) => {
-        setListData(v);
-      });
-  }
+  // const loadData = () => {
+  //   fetch(api.apiEksekutifGetAll + `?tingkat=3`)
+  //     .then((v) => v.json())
+  //     .then((v) => {
+  //       setListData(v);
+  //     });
+  // }
 
   // const onDelete = (id: string) => {
   //   fetch(api.apiEksekutifHapus + `?id=${id}`)
@@ -37,8 +39,9 @@ export const TableEksekutifKabKotV2 = () => {
   // }
 
   useShallowEffect(() => {
-    loadData();
-    _loadDataEksekutif(3, inputSearch, setListDataNew);
+    //loadData();
+    setInputPage("1");
+    _loadDataEksekutif(3, inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
 
   const tbHead = (
@@ -109,6 +112,13 @@ export const TableEksekutifKabKotV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataEksekutif(3, inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

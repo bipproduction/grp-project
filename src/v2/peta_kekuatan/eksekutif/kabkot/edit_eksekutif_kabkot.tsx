@@ -36,7 +36,7 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
-import { _dataEksekutifKabKot, _dataSearchEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifKabKot, _dataPageEksekutifKabKot, _dataSearchEksekutifKabKot, _dataTotalPageEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -54,6 +54,8 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifKabKot);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifKabKot);
 
   const loadData = () => {
     fetch(api.apiEksekutifGetOne + `?id=${data}`)
@@ -139,7 +141,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataEksekutif(3, inputSearch, setListDataNew);
+        _loadDataEksekutif(3, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data eksekutif tingkat kabupaten/kota")
       } else {
         toast(data.message);

@@ -533,6 +533,7 @@ model CalonPemilihPotensial {
   phoneNumber                   String
   alamat                        String
   statusSosial                  String
+  pendidikan                    String?
   active                        Boolean                     @default(true)
   createdAt                     DateTime                    @default(now())
   updatedAt                     DateTime                    @default(now()) @updatedAt

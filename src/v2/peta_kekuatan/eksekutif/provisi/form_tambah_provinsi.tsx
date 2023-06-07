@@ -25,7 +25,7 @@ import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _dataEksekutifProvinsi, _dataSearchEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import { _dataEksekutifProvinsi, _dataPageEksekutifProvinsi, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -42,6 +42,8 @@ export const FormTambahEksekutifProvinsiV2 = ({
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
+  const [inputPage, setInputPage] = useAtom(_dataPageEksekutifProvinsi);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifProvinsi);
 
   useShallowEffect(() => {
     _loadProvinsi();
@@ -91,7 +93,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataEksekutif(2, inputSearch, setListDataNew);
+        _loadDataEksekutif(2, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data eksekutif tingkat provinsi")
       } else {
         toast(data.message);
