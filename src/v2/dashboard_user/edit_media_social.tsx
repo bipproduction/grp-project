@@ -14,6 +14,8 @@ import { useRouter } from "next/router";
 import { buttonSimpan } from "../component/button-toast";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
+const val_media_social_edit = atomWithStorage("val_media_social_edit", false)
+
 export const _mediaSocialGet = atomWithStorage<ModelUserMediaSosial[] | null>(
   "media",
   null
@@ -28,6 +30,7 @@ function EditMediaSocial({ thisClosed }: any) {
   const [getMediaSocial, setGetMediaSocial] = useAtom(_mediaSocialGet);
   const [listData, setListData] = useAtom(_mediaSocialUp);
   const [ubah, setUbah] = useAtom(_listDataMedia);
+  const [openMediaSocial, setOpenMediaSocial] = useAtom(val_media_social_edit)
   const [isLoading, setLoading] = useAtom(val_loading);
   const router = useRouter()
 
@@ -41,20 +44,17 @@ function EditMediaSocial({ thisClosed }: any) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(v),
-      }).then( async (res) => {
-        const data = await res.json()
-        if (res.status === 201) {
-          // router.reload()
-          thisClosed()
-        }
       })
       ))}
+      thisClosed(true)
+      setLoading(false);
+      setOpenMediaSocial(false)
       buttonSimpan()
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data sosial media user");
       // loadDatadiri()
       
       router.reload()
-      setLoading(false);
+
       
     };
     

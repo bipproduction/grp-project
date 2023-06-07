@@ -26,6 +26,8 @@ import {
   Title,
   Modal,
   Alert,
+  Stack,
+  Divider,
 } from "@mantine/core";
 import { useDisclosure, useWindowScroll } from "@mantine/hooks";
 import { MantineLogo } from "@mantine/ds";
@@ -40,10 +42,14 @@ import {
 } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import { FiAlertCircle } from "react-icons/fi";
+import { ImProfile } from "react-icons/im";
+import { RiDashboardLine } from "react-icons/ri";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { data } from "jquery";
+import _ from "lodash";
 
 const HEADER_HEIGHT = rem(80);
 
@@ -187,10 +193,10 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
     link_dashboard = "/v2/dashboard-super-admin";
   }
   // const [opened, { open, close }] = useDisclosure(false);
-
   return (
     <>
       <ModalLogout thisClosed={close} />
+
       <Header
         height={80}
         px="md"
@@ -258,55 +264,103 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
               >
                 Contact Us
               </Button>
-              {/* </Group> */}
-              <Group pr={20}>
-                <Menu position="bottom-end" withArrow>
-                  <Menu.Target>
-                    <Tooltip label="Profile">
-                      <Group style={{ cursor: "pointer" }}>
-                        <Avatar radius="xl" />
-                      </Group>
-                    </Tooltip>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <AiOutlineUser color="black" size="1.3rem" />
-                      <Text fw={700}>{sUser.value?.username}</Text>
-                    </Group>
-                    {/* </Menu.Item> */}
-                    {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <MdAlternateEmail color="black" size="1.3rem" />
-                      <Text>{sUser.value?.email}</Text>
-                    </Group>
-                    {/* </Menu.Item> */}
-                    <Menu.Item>
-                      <Group
-                        onClick={() => {
-                          router.push(link_dashboard);
-                        }}
-                      >
-                        <AiOutlineProfile color="black" size="1.3rem" />
-                        <Text>Lihat Profile</Text>
-                      </Group>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Group
-                        onClick={() => setOpenLogout(true)}
-                      // onClick={setOpenModal.open}
-                      // onClick={() => {
-                      //   localStorage.removeItem("user_id");
-                      //   sUser.value = {};
-                      // }}
-                      >
-                        <AiOutlineLogout color="red" size="1.3rem" />
-                        <Text color="red">Logout</Text>
-                      </Group>
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </Group>
+              <Box>
+                <Box>
+                  {/* MENU ADMIN*/}
+                  <Group
+                    pr={20}
+                    onClick={() => {
+                      sUser.value.masterUserRoleId == "2";
+                    }}
+                  >
+                    <Menu position="bottom-end" withArrow>
+                      <Menu.Target>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                            <Avatar radius="xl" />
+                          </Group>
+                        </Tooltip>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
+                          </Group>
+
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                          </Group>
+                        </Stack>
+                        {/* </Menu.Item> */}
+                        
+                        {sUser.value.masterUserRoleId == "2" &&  (
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push(link_dashboard);
+                              }}
+                            >
+                              <RiDashboardLine color="black" size="1.3rem" />
+                              <Text>Dashboard</Text>
+                            </Group>
+                          </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "3" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "1" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => setOpenLogout(true)}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
+                </Box>
+              </Box>
             </Group>
           </Group>
 
@@ -379,46 +433,81 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       </Tooltip>
                     </Menu.Target>
                     <Menu.Dropdown>
-                      {/* <Menu.Item> */}
-                      <Group p={11}>
-                        <AiOutlineUser color="black" size="1.3rem" />
-                        <Text fw={700}>{sUser.value?.username}</Text>
-                      </Group>
-                      {/* </Menu.Item> */}
-                      {/* <Menu.Item> */}
-                      <Group p={11}>
-                        <MdAlternateEmail color="black" size="1.3rem" />
-                        <Text>{sUser.value?.email}</Text>
-                      </Group>
-                      {/* </Menu.Item> */}
-                      <Menu.Item>
-                        <Group
-                          onClick={() => {
-                            router.push(link_dashboard);
-                          }}
-                        >
-                          <AiOutlineProfile color="black" size="1.3rem" />
-                          <Text>Lihat Profile</Text>
-                        </Group>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Group
-                          // onClick={open}
-                          onClick={() => setOpenLogout(true)}
-                          // onClick={() => {
-                          //   localStorage.removeItem("user_id");
-                          //   sUser.value = {};
-                          // }}
-                        // onClick={() => {
-                        //   localStorage.removeItem("user_id");
-                        //   sUser.value = {};
-                        // }}
-                        >
-                          <AiOutlineLogout color="red" size="1.3rem" />
-                          <Text color="red">Logout</Text>
-                        </Group>
-                      </Menu.Item>
-                    </Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
+                          </Group>
+
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                          </Group>
+                        </Stack>
+                        {/* </Menu.Item> */}
+                        
+                        {sUser.value.masterUserRoleId == "2" &&  (
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push(link_dashboard);
+                              }}
+                            >
+                              <RiDashboardLine color="black" size="1.3rem" />
+                              <Text>Dashboard</Text>
+                            </Group>
+                          </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "3" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "1" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => setOpenLogout(true)}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
                   </Menu>
                 </Group>
               </Center>
@@ -493,7 +582,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
             >
               <Image radius={20} src={"/../gerindra.png"} alt="a" />
               <Box>
-                <form onSubmit={form.onSubmit(() => { })}>
+                <form onSubmit={form.onSubmit(() => {})}>
                   <Title
                     order={2}
                     size="h1"
@@ -601,7 +690,11 @@ export function ModalLogout({ thisClosed }: any) {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
-                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
+                  _postLogUser(
+                    localStorage.getItem("user_id"),
+                    "LOGOUT",
+                    "User logout"
+                  );
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                   setOpenLogout(false);

@@ -260,6 +260,16 @@ const HomeUserV2 = () => {
                       }}
                     >
                       <AiOutlineProfile color="black" size="1.3rem" />
+                      <Text>Lihat Dashboard</Text>
+                    </Group>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Group
+                      onClick={() => {
+                        router.push("/v2/dashboard-user");
+                      }}
+                    >
+                      <AiOutlineProfile color="black" size="1.3rem" />
                       <Text>Lihat Profile</Text>
                     </Group>
                   </Menu.Item>
