@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganGerindra, _dataRencanaKunjunganGerindra, _dataSearchListUndanganGerindra, _dataSearchRencanaKunjunganGerindra, _loadDataListUndanganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import { _dataListUndanganGerindra, _dataPageListUndanganGerindra, _dataPageRencanaKunjunganGerindra, _dataRencanaKunjunganGerindra, _dataSearchListUndanganGerindra, _dataSearchRencanaKunjunganGerindra, _dataTotalPageListUndanganGerindra, _dataTotalPageRencanaKunjunganGerindra, _loadDataListUndanganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteAksiGerindra({
@@ -35,6 +35,10 @@ export function ButtonDeleteAksiGerindra({
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganGerindra);
     const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganGerindra);
     const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganGerindra);
+    const [inputPageRencanaKunjungan, setInputPageRencanaKunjungan] = useAtom(_dataPageRencanaKunjunganGerindra);
+    const [inputPageListUndangan, setInputPageListUndangan] = useAtom(_dataPageListUndanganGerindra);
+    const [totalPageRencanaKunjungan, setTotalPageRencanaKunjungan] = useAtom(_dataTotalPageRencanaKunjunganGerindra);
+    const [totalPageListUndangan, setTotalPageListUndangan] = useAtom(_dataTotalPageListUndanganGerindra);
     let text, desk_log: string;
 
     if (setKategori == 1) {
@@ -51,8 +55,8 @@ export function ButtonDeleteAksiGerindra({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataRencanaKunjunganGerindra(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
-                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
+                        _loadDataRencanaKunjunganGerindra(inputSearchRencanaKunjungan, setListDataRencanaKunjungan, inputPageRencanaKunjungan, setTotalPageRencanaKunjungan);
+                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan, inputPageListUndangan, setTotalPageListUndangan);
                         _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
@@ -61,7 +65,7 @@ export function ButtonDeleteAksiGerindra({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan);
+                        _loadDataListUndanganGerindra(inputSearchListUndangan, setListDataUndangan, inputPageListUndangan, setTotalPageListUndangan);
                         _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });

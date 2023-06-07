@@ -18,7 +18,7 @@ import { useState } from "react";
 import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifProvinsi, _dataPageLegislatifProvinsi, _dataSearchLegislatifProvinsi, _dataTotalPageLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -33,6 +33,8 @@ export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifProvinsi);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifProvinsi);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifProvinsi);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifProvinsi);
 
   const loadData = () => {
     fetch(api.apiLegislatifGetOne + `?id=${data}`)
@@ -62,7 +64,7 @@ export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
   }
 
   const onEdit = () => {
-    console.log(body);
+    // console.log(body);
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -78,7 +80,7 @@ export const EditLegislatifDprdProvinsiV2 = ({ thisClosed, data }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         thisClosed();
-        _loadDataLegislatif(2, inputSearch, setListDataNew);
+        _loadDataLegislatif(2, inputSearch, setListDataNew, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data legislatif tingkat DPRD Provinsi")
       } else {
         toast(data.message);

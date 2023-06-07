@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchListUndanganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataListUndanganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataPageListUndanganPrabowo, _dataPageRencanaKunjunganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchListUndanganPrabowo, _dataSearchRencanaKunjunganPrabowo, _dataTotalPageListUndanganPrabowo, _dataTotalPageRencanaKunjunganPrabowo, _loadDataListUndanganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export function ButtonDeleteAksiPrabowo({
@@ -35,6 +35,10 @@ export function ButtonDeleteAksiPrabowo({
     const [lisDataUndangan, setListDataUndangan] = useAtom(_dataListUndanganPrabowo);
     const [inputSearchRencanaKunjungan, setInputSearchRencanaKunjungan] = useAtom(_dataSearchRencanaKunjunganPrabowo);
     const [inputSearchListUndangan, setInputSearchListUndangan] = useAtom(_dataSearchListUndanganPrabowo);
+    const [inputPageRencanaKunjungan, setInputPageRencanaKunjungan] = useAtom(_dataPageRencanaKunjunganPrabowo);
+    const [inputPageListUndangan, setInputPageListUndangan] = useAtom(_dataPageListUndanganPrabowo);
+    const [totalPageRencanaKunjungan, setTotalPageRencanaKunjungan] = useAtom(_dataTotalPageRencanaKunjunganPrabowo);
+    const [totalPageListUndangan, setTotalPageListUndangan] = useAtom(_dataTotalPageListUndanganPrabowo);
     let text, desk_log: string;
 
     if (setKategori == 1) {
@@ -51,8 +55,8 @@ export function ButtonDeleteAksiPrabowo({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataRencanaKunjunganPrabowo(inputSearchRencanaKunjungan, setListDataRencanaKunjungan);
-                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
+                        _loadDataRencanaKunjunganPrabowo(inputSearchRencanaKunjungan, setListDataRencanaKunjungan, inputPageRencanaKunjungan, setTotalPageRencanaKunjungan);
+                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan, inputPageListUndangan, setTotalPageListUndangan);
                         _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });
@@ -61,7 +65,7 @@ export function ButtonDeleteAksiPrabowo({
                 .then(async (res) => {
                     if (res.status === 200) {
                         toast("Success");
-                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan);
+                        _loadDataListUndanganPrabowo(inputSearchListUndangan, setListDataUndangan, inputPageListUndangan, setTotalPageListUndangan);
                         _postLogUser(localStorage.getItem("user_id"), "HAPUS", desk_log)
                     }
                 });

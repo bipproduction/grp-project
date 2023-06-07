@@ -10,6 +10,7 @@ import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import { _dataEksekutifKabKot, _dataPageEksekutifKabKot, _dataSearchEksekutifKabKot, _dataTotalPageEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
+import _ from "lodash";
 
 export const TableEksekutifKabKotV2 = () => {
   const [opened, { open, close }] = useDisclosure(false)
@@ -19,6 +20,7 @@ export const TableEksekutifKabKotV2 = () => {
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
   const [inputPage, setInputPage] = useAtom(_dataPageEksekutifKabKot);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifKabKot);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadData = () => {
   //   fetch(api.apiEksekutifGetAll + `?tingkat=3`)
@@ -63,7 +65,7 @@ export const TableEksekutifKabKotV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterProvince?.name}</td>

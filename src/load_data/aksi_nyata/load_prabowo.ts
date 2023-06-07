@@ -15,26 +15,38 @@ export const _dataListUndanganPrabowo = atomWithStorage<ModelListUndanganPrabowo
 
 export const _dataSearchRencanaKunjunganPrabowo = atom("");
 export const _dataSearchListUndanganPrabowo = atom("");
+export const _dataPageRencanaKunjunganPrabowo = atom("");
+export const _dataPageListUndanganPrabowo = atom("");
+export const _dataTotalPageRencanaKunjunganPrabowo = atom("");
+export const _dataTotalPageListUndanganPrabowo = atom("");
 
 export async function _loadDataRencanaKunjunganPrabowo(
     search: any,
-    setDataRencanaKunjungan: any
+    setDataRencanaKunjungan: any,
+    page: any,
+    setTotalPage: any,
 ) {
-    await fetch(api.apiRencanaKunjunganPrabowoSearch + `?search=${search}`)
+    await fetch(api.apiRencanaKunjunganPrabowoSearch + `?search=${search}&page=${page}`)
         .then((res) => res.json())
         .then((val) => setDataRencanaKunjungan(val));
+
+    await fetch(api.apiRencanaKunjunganPrabowoCountPage + `?search=${search}`)
+        .then((res) => res.json())
+        .then((val) => setTotalPage(val));
 }
 
 
 export async function _loadDataListUndanganPrabowo(
     search: any,
-    setDataListUndangan: any
+    setDataListUndangan: any,
+    page: any,
+    setTotalPage: any,
 ) {
-    await fetch(api.apiListUndanganPrabowoSearch + `?search=${search}`)
+    await fetch(api.apiListUndanganPrabowoSearch + `?search=${search}&page=${page}`)
         .then((res) => res.json())
-        .then((val) => {
-            setDataListUndangan(val)
-            //console.log(val);
-        }
-        );
+        .then((val) => setDataListUndangan(val));
+
+    await fetch(api.apiListUndanganPrabowoCountPage + `?search=${search}`)
+        .then((res) => res.json())
+        .then((val) => setTotalPage(val));
 }

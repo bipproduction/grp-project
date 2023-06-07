@@ -4,16 +4,19 @@ import COLOR from "../../../../../fun/WARNA";
 import { TableListUndanganPrabowoV2 } from "./table_list_undangan";
 import { useDisclosure } from "@mantine/hooks";
 import TambahListUndanganPrabowoV2 from "./tambah_list_undangan";
-import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataPageListUndanganPrabowo, _dataSearchListUndanganPrabowo, _dataTotalPageListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { useAtom } from "jotai";
 
 export const ListUndanganPrabowoV2 = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
     const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
+    const [inputPage, setInputPage] = useAtom(_dataPageListUndanganPrabowo);
+    const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganPrabowo);
 
     function onSearch(text: string) {
-        _loadDataListUndanganPrabowo(text, setListDataNew);
+        _loadDataListUndanganPrabowo(text, setListDataNew, "1", setTotalPage);
+        setInputPage("1");
         setInputSearch(text);
     }
 

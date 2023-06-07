@@ -1,13 +1,13 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditListUndanganPrabowoV2 from "./edit_list_undangan";
-import { useState } from "react";
+import { use, useState } from "react";
 import { api } from "@/lib/api-backend";
 import { ModelListUndanganPrabowo } from "@/model/model_aksi_nyata";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganPrabowo, _dataSearchListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataListUndanganPrabowo, _dataPageListUndanganPrabowo, _dataSearchListUndanganPrabowo, _dataTotalPageListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import _ from "lodash";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 const moment = require('moment')
@@ -17,6 +17,9 @@ export const TableListUndanganPrabowoV2 = () => {
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
+  const [inputPage, setInputPage] = useAtom(_dataPageListUndanganPrabowo);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganPrabowo);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   const loadListUndanganPrabowo = () => {
     fetch(api.apiListUndanganPrabowoGetAll)
@@ -28,7 +31,8 @@ export const TableListUndanganPrabowoV2 = () => {
 
   useShallowEffect(() => {
     loadListUndanganPrabowo();
-    _loadDataListUndanganPrabowo(inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataListUndanganPrabowo(inputSearch, setListDataNew, "1", setTotalPage);
   }, []);
 
   // const onDelete = (id: string) => {
@@ -120,7 +124,7 @@ export const TableListUndanganPrabowoV2 = () => {
             </tbody> */}
             <tbody>{listDataNew && listDataNew.map((v, i) => (
               <tr key={i}>
-                <td>{i + 1}</td>
+                <td>{noAwal++}</td>
                 <td>{v.judul}</td>
                 <td>{moment(v.tanggal).format("DD MMM YYYY")}</td>
                 <td>{v.nama}</td>
@@ -147,6 +151,14 @@ export const TableListUndanganPrabowoV2 = () => {
               </tr>
             ))}</tbody>
           </Table>
+
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataListUndanganPrabowo(inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

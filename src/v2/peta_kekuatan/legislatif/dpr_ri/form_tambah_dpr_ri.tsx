@@ -9,7 +9,7 @@ import toast from "react-simple-toasts";
 import _ from "lodash"
 import { data } from "jquery";
 import { on } from "events";
-import { _dataLegislatifNasional, _dataSearchLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifNasional, _dataPageLegislatifNasional, _dataSearchLegislatifNasional, _dataTotalPageLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
@@ -24,6 +24,8 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
   const [inputAkd, setInputAkd] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifNasional);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifNasional);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifNasional);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifNasional);
 
 
   async function onFind() {
@@ -66,7 +68,7 @@ export const FormTambahLegislatifDprRiV2 = ({ tutupModal, setNilai }: any) => {
       if (res.status === 201) {
         buttonSimpan();
         tutupModal();
-        _loadDataLegislatif(1, inputSearch, setListDataNew)
+        _loadDataLegislatif(1, inputSearch, setListDataNew, inputPage, setTotalPage)
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data legislatif tingkat DPR RI")
       } else {
         toast(data.message);

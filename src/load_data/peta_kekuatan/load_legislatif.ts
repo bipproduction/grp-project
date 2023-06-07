@@ -40,15 +40,15 @@ export async function _loadDataLegislatif(
   tingkat: any,
   search: any,
   setDataLegislatif: any,
-  // page: any,
-  // setTotalPage: any,
+  page: any,
+  setTotalPage: any,
 ) {
   //if (page === undefined) { page = 1 }
-  await fetch(api.apiLegislatifSearchAll + `?tingkat=${tingkat}&search=${search}&page=1`)
+  await fetch(api.apiLegislatifSearchAll + `?tingkat=${tingkat}&search=${search}&page=${page}`)
     .then((res) => res.json())
     .then((val) => setDataLegislatif(val));
 
-  // await fetch(api.apiLegislatifCountPage + `?tingkat=${tingkat}&search=${search}`)
-  //   .then((res) => res.json())
-  //   .then((val) => setTotalPage(val));
+  await fetch(api.apiLegislatifCountPage + `?tingkat=${tingkat}&search=${search}`)
+    .then((res) => res.json())
+    .then((val) => setTotalPage(val));
 }

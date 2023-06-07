@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditRencanaKunjunganPrabowoV2 from "./edit_rencana_kunjungan";
@@ -6,10 +6,11 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import { _dataPageRencanaKunjunganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _dataTotalPageRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 import moment from "moment";
 import "moment/locale/id";
+import _ from "lodash";
 moment.locale("id");
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
@@ -17,6 +18,9 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
   const [dataId, setDataId] = useState<string>("");
   const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+  const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganPrabowo);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganPrabowo);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadRencanaKunjunganPrabowo = () => {
   //   fetch(api.apiRencanaKunjunganPrabowoGetAll)
@@ -28,7 +32,8 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
 
   useShallowEffect(() => {
     //loadRencanaKunjunganPrabowo();
-    _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew, "1", setTotalPage);
   }, []);
 
   // const onDelete = (id: string) => {
@@ -54,7 +59,7 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.judul}</td>
       <td>{e.MasterStatusAksiNyata.name}</td>
       <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
@@ -109,6 +114,13 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>

@@ -1,15 +1,18 @@
 import client from "@/lib/prisma_db";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const sumberDayaPartaiSearch = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { status, search } = req.query;
-  // console.log(search)
+  const { status, search, page } = req.query;
+  const dataSkip = _.toNumber(1) * 10 - 10; //ubah angka 1 menjadi page 
   let data
-  if(search != ""){
+  if (search != "") {
     data = await client.sumberDayaPartai.findMany({
+      skip: dataSkip,
+      take: 10,
       where: {
         active: true,
         masterStatusKeanggotaanId: Number(status),
@@ -211,6 +214,8 @@ const sumberDayaPartaiSearch = async (
     });
   } else {
     data = await client.sumberDayaPartai.findMany({
+      skip: dataSkip,
+      take: 10,
       where: {
         active: true,
         masterStatusKeanggotaanId: Number(status),
@@ -405,7 +410,7 @@ const sumberDayaPartaiSearch = async (
       },
     });
   }
-  
+
   return res.status(200).json(data);
 };
 

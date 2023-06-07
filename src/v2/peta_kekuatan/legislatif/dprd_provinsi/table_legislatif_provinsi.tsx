@@ -1,4 +1,4 @@
-import { Box, Button, Group, Modal, ScrollArea, Table } from "@mantine/core";
+import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../data_legis_dummy.json";
@@ -8,8 +8,9 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataLegislatifProvinsi, _dataSearchLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import { _dataLegislatifProvinsi, _dataPageLegislatifProvinsi, _dataSearchLegislatifProvinsi, _dataTotalPageLegislatifProvinsi, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { ButtonDeleteLegislatif } from "../hapus_legislatif";
+import _ from "lodash";
 
 export const TableLegislatifProvinsiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -17,6 +18,9 @@ export const TableLegislatifProvinsiV2 = () => {
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifProvinsi);
   const [dataId, setDataId] = useState<string>("");
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifProvinsi);
+  const [inputPage, setInputPage] = useAtom(_dataPageLegislatifProvinsi);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifProvinsi);
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
 
   // const loadData = () => {
   //   fetch(api.apiLegislatifGetAll+`?tingkat=2`)
@@ -38,7 +42,8 @@ export const TableLegislatifProvinsiV2 = () => {
 
   useShallowEffect(() => {
     //loadData();
-    _loadDataLegislatif(2, inputSearch, setListDataNew);
+    setInputPage("1");
+    _loadDataLegislatif(2, inputSearch, setListDataNew, "1", setTotalPage);
   }, [])
 
 
@@ -64,7 +69,7 @@ export const TableLegislatifProvinsiV2 = () => {
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.noUrut}</td>
@@ -90,7 +95,7 @@ export const TableLegislatifProvinsiV2 = () => {
           >
             Edit
           </Button>
-          <ButtonDeleteLegislatif setId={e.id} setTingkat="2" setNama={e.User.DataDiri.name}/>
+          <ButtonDeleteLegislatif setId={e.id} setTingkat="2" setNama={e.User.DataDiri.name} />
           {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
             Hapus
           </Button> */}
@@ -113,6 +118,13 @@ export const TableLegislatifProvinsiV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Group position="right" py={10}>
+            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataLegislatif(2, inputSearch, setListDataNew, val, setTotalPage);
+              }} />
+          </Group>
         </ScrollArea>
       </Box>
     </>
