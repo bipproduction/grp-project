@@ -1,6 +1,7 @@
 import { json } from 'stream/consumers';
 import formidable from "formidable";
 import { PageConfig } from 'next';
+import { randomUUID } from 'crypto';
 
 export default async function handler(req: any, res: any){
   if (req.method != "POST") {
@@ -15,8 +16,12 @@ export default async function handler(req: any, res: any){
       const form = new formidable.IncomingForm({
         keepExtensions: true,
         uploadDir: "./images",
-        filename: (v) => {
-          img = v+".png"
+        // filename: (v) => {
+        //   img = v+".png"
+        //   return img
+        // },
+        filename: () => {
+          img =randomUUID() +".png"
           return img
         },
       });
