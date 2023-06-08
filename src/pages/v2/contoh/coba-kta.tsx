@@ -26,7 +26,7 @@ import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
 import { AiOutlineCloudDownload } from "react-icons/ai";
-import COLOR from "../../../fun/WARNA";
+import COLOR from "../../../../fun/WARNA";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);

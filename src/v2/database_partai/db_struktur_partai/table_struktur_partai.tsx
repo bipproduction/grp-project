@@ -1,74 +1,41 @@
 import {
   Box,
   Button,
-  Center,
   Grid,
   Group,
-  Modal,
-  Pagination,
   Paper,
-  ScrollArea,
-  Select,
-  Stack,
-  Switch,
   Table,
   Text,
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import {
-  AiOutlineCheck,
-  AiOutlineCheckCircle,
-  AiOutlineClose,
-  AiOutlineCloseCircle,
-  AiOutlineDownload,
-  AiOutlineSave,
-  AiOutlineSearch,
-  AiOutlineUpload,
-} from "react-icons/ai";
-import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 // import EditStrukturPartaiV2 from "./edit_struktur_partai";
-import dataTable from "../../../v2/sumber_daya_partai/data_table.json";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
 import {
   _dataStruktur,
+  _dataStrukturTable_ByStatusSearch,
+  _editLoadStruktur_ByStatusSeacrh,
   _loadDataStruktur_ByIdStatus,
   _loadData_ByStatus_BySeach,
+  _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
-import { data } from "jquery";
 import _, { keyBy } from "lodash";
-import { useForm } from "@mantine/form";
-import { sUser } from "@/s_state/s_user";
 import { atomWithStorage } from "jotai/utils";
-import { _dataTable_ByStatusSearch_SuperAdmin, _loadData_ByStatus_BySeach_Super_Admin } from "@/load_data/super_admin/load_sumber_data_super_admin";
+import { _dataPageStrukturPartai, _dataSearchStrukturPartai, _dataSearchSuperAdmin, _dataStrukturTable_ByStatusSearchSuper, _dataTable_ByStatusSearch_SuperAdmin, _dataTotalPageStrukturPartai, _loadData_ByStatus_BySeachSuper, _loadData_ByStatus_BySeach_Super_Admin, _searchDataSumberDayaPartaiSuperAdmin } from "@/load_data/super_admin/load_sumber_data_super_admin";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
 const TableStruktutPartaiV2 = () => {
-  const [opened, { open, close }] = useDisclosure(false);
-  const [activePage, setActivePage] = useState();
-  const [search, setSearch] = useState("")
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [valueAktif, setValueAktif] = useState<string>("");
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
-  const theme = useMantineTheme();
-  const [checked, setChecked] = useState(false);
-  const [dataTableSuper, setDatatableSuper] = useAtom(_dataTable_ByStatusSearch_SuperAdmin)
-
-  const [status, setStatus] = useState<any[]>([]);
-  const [selectStatus, setSelectStatus] = useState({
-    id: "",
-    name: "",
-  });
-  const [value, setValue] = useAtom(_valueStatus);
 
   const BodyAktif = {
     id: valueAktif,
@@ -127,14 +94,26 @@ const TableStruktutPartaiV2 = () => {
   //     .then((val) => setStatus(val));
   // };
 
+  const [search, setSearch] = useState('')
+  // const [dataTable, setDataTable] = useAtom(_editLoadStruktur_ByStatusSeacrh)
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartaiSuperAdmin)
+  useShallowEffect(() => {
+    onSearch("");
+  }, []);
+
+
+
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur);
     // loadDataStatus();
-  });
+  },[]);
 
   function onSearch(text: string) {
-    _loadData_ByStatus_BySeach(1, text, setDataStruktur)
+    _loadData_ByStatus_BySeachSuper(1, text, setDataStruktur)
+    setInputSearch(text)
   }
+
+
 
 
   const tbHead = (
@@ -165,7 +144,7 @@ const TableStruktutPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
-        {/* <Grid>
+        <Grid>
           <Grid.Col md={4} lg={4}>
           <TextInput
           mt={20}
@@ -175,7 +154,7 @@ const TableStruktutPartaiV2 = () => {
           onChange={(val) => onSearch(val.currentTarget.value) }
           />
           </Grid.Col>
-        </Grid> */}
+        </Grid>
         <Group>
           <Box sx={{ overflow: "scroll" }} py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">

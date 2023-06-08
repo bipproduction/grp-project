@@ -5,11 +5,13 @@ import {
   Flex,
   Grid,
   Group,
+  Image,
   Modal,
   Paper,
   ScrollArea,
   Select,
   SimpleGrid,
+  Stack,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -50,6 +52,7 @@ export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_data_diri",
   null
 );
+export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 const val_open_edit_media = atomWithStorage("val_open_edit_media", false);
@@ -89,9 +92,26 @@ const DataProfileV2 = () => {
         }
       });
   }, []);
+  const [image, setImage] = useAtom(_dataImages);
+  const [gambarDataDiri, setGambarDataDiri] = useState<any | null>(null);
+
+  // useShallowEffect(() => {
+  //   fetch(api.apiDataDiriGetGambar + `?id=${image?.id}`)
+  //   .then(async (val) => {
+  //     if (val.status == 200) {
+  //       console.log(val)
+  //       // const data = await val.json()
+  //       // console.log(data);
+  //       // setGambarDataDiri(data);
+  //       return
+  //     }
+  //   })
+  // })
 
   return (
     <>
+      {/* {JSON.stringify(image?.id)} */}
+
       {/* <pre>{JSON.stringify(listData2, null, 2)}</pre> */}
       <Paper
         p={2}
@@ -127,10 +147,22 @@ const DataProfileV2 = () => {
                   backgroundColor: "white",
                   borderRadius: 10,
                 }}
-              ></Box>
+              >
+                <Stack>
+                  <Center p={10}>
+                    <Image
+                      src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
+                      width={170}
+                      height={180}
+                      alt="img"
+                      radius={5}
+                    />
+                  </Center>
+                </Stack>
+              </Box>
             </Center>
             {/* UPLOAD FOTO */}
-            <EditFoto/>
+            <EditFoto />
           </Box>
           <Box p={10}>
             <SimpleGrid

@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any){
     const data = await new Promise(function(resulve, reject){
       const form = new formidable.IncomingForm({
         keepExtensions: true,
-        uploadDir: "./images",
+        uploadDir: "./src/uploads/data-diri",
         // filename: (v) => {
         //   img = v+".png"
         //   return img

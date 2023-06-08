@@ -8,6 +8,10 @@ export const _dataStruktur = atomWithStorage<ModelSumberDayaPartai[]>(
   "_database_struktur",
   []
 );
+export const _dataSayapSuper = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_database_sayap",
+  []
+);
 export const _new_loadEditByModel =
   atomWithStorage<ModelSumberDayaPartai | null>("_new_model", null);
 // export const _new_loadEditByModel2 =

@@ -27,13 +27,18 @@ import {
 import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../../../v2/sumber_daya_partai/data_table.json";
-import { _dataAnggota } from "@/load_data/sayap_partai/load_sayap_partai";
+import { _dataAnggota, _dataAnggotaSearch } from "@/load_data/sayap_partai/load_sayap_partai";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _loadDataStruktur_ByIdStatus } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import {
+  _dataAnggotaTable_ByStatusSearch,
+  _loadDataStruktur_ByIdStatus,
+  _loadData_ByStatus_BySeach,
+} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { _loadData_ByStatus_BySeachSuper, _loadData_ByStatus_BySeachSuperAdmin, _searchDataSumberDayaPartaiSuperAdmin } from "@/load_data/super_admin/load_sumber_data_super_admin";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -42,10 +47,19 @@ const TableAnggotaPartaiV2 = () => {
   const [activePage, setActivePage] = useState();
 
   const [dataKader, setDataKader] = useAtom(_dataAnggota);
+  const [dataTabel, setTabel] = useAtom(_dataAnggotaSearch);
   const [valueAktif, setValueAktif] = useState<string>("");
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
   const theme = useMantineTheme();
   const [checked, setChecked] = useState(false);
+  const [search, setSearch] = useState("");
+
+
+  useShallowEffect(() => {
+    _loadDataStruktur_ByIdStatus(4, setDataKader);
+    // loadDataStatus();
+  },[]);
+
 
   const BodyAktif = {
     id: valueAktif,
@@ -63,7 +77,11 @@ const TableAnggotaPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
-        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengaktifkan status admin");
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "UBAH",
+          "User mengaktifkan status admin"
+        );
       } else {
         toast("Gagal");
       }
@@ -88,7 +106,11 @@ const TableAnggotaPartaiV2 = () => {
       console.log(res.status);
       if (res.status === 201) {
         toast("Success");
-        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User menonaktifkan status admin");
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "UBAH",
+          "User menonaktifkan status admin"
+        );
       } else {
         toast("Gagal");
       }
@@ -96,11 +118,18 @@ const TableAnggotaPartaiV2 = () => {
     });
     // console.log(onUpdate)
   };
-
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartaiSuperAdmin)
   useShallowEffect(() => {
-    _loadDataStruktur_ByIdStatus(4, setDataKader);
-    // loadDataStatus();
-  });
+    onSearch("");
+  }, []);
+
+  function onSearch(search: string) {
+    _loadData_ByStatus_BySeachSuper(4, search, setDataKader);
+    setInputSearch(search)
+  }
+  console.log(onSearch)
+
+
 
   const tbHead = (
     <tr>
@@ -131,6 +160,17 @@ const TableAnggotaPartaiV2 = () => {
           </Grid>
         </Paper>
         {/* <pre>{JSON.stringify(dataKader, null, 2)}</pre> */}
+        <Grid>
+          <Grid.Col md={4} lg={4}>
+            <TextInput
+              mt={20}
+              icon={<AiOutlineSearch size={20} />}
+              placeholder="Search"
+              radius={"md"}
+              onChange={(val) => onSearch(val.currentTarget.value)}
+            />
+          </Grid.Col>
+        </Grid>
         <Group>
           <Box sx={{ overflow: "scroll" }} py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
