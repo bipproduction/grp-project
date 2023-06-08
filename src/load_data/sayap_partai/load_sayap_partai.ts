@@ -25,3 +25,16 @@ export const _dataKeanggotaan = atomWithStorage<ModelSumberDayaPartai[]>(
   []
 );
 
+export const _dataSayapSearch = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_dataSayapSearch",
+  []
+);
+export const _dataKaderSearch = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_dataKaderSearch",
+  []
+);
+export const _dataAnggotaSearch = atomWithStorage<ModelSumberDayaPartai[]>(
+  "_dataAnggotaSearch",
+  []
+);
+

@@ -29,11 +29,12 @@ import COLOR from "../../../../fun/WARNA";
 import dataTable from "../../../v2/sumber_daya_partai/data_table.json";
 import { atomWithStorage } from "jotai/utils";
 import { useAtom } from "jotai";
-import { _dataKader, _dataSayap } from "@/load_data/sayap_partai/load_sayap_partai";
+import { _dataKader, _dataKaderSearch, _dataSayap } from "@/load_data/sayap_partai/load_sayap_partai";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _loadDataStruktur_ByIdStatus } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { _loadData_ByStatus_BySeachSuper, _searchDataSumberDayaPartaiSuperAdmin } from "@/load_data/super_admin/load_sumber_data_super_admin";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -42,10 +43,12 @@ const TableKaderPartaiV2 = () => {
   const [activePage, setActivePage] = useState();
 
   const [dataKader, setDataKader] = useAtom(_dataKader);
+  const [dataTable, setdataTable] = useAtom(_dataKaderSearch);
   const [valueAktif, setValueAktif] = useState<string>("");
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
   const theme = useMantineTheme();
   const [checked, setChecked] = useState(false);
+
 
   const BodyAktif = {
     id: valueAktif,
@@ -96,11 +99,22 @@ const TableKaderPartaiV2 = () => {
     });
     // console.log(onUpdate)
   };
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartaiSuperAdmin)
+  useShallowEffect(() => {
+    onSearch("");
+  }, []);
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(3, setDataKader);
     // loadDataStatus();
-  });
+  },[]);
+
+
+  const onSearch = (search: string) => {
+    _loadData_ByStatus_BySeachSuper(3, search, setDataKader)
+    setInputSearch(search)
+  }
+
 
   const tbHead = (
     <tr>
@@ -130,6 +144,17 @@ const TableKaderPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
+        <Grid>
+          <Grid.Col md={4} lg={4}>
+            <TextInput
+              mt={20}
+              icon={<AiOutlineSearch size={20} />}
+              placeholder="Search"
+              radius={"md"}
+              onChange={(val) => onSearch(val.currentTarget.value)}
+            />
+          </Grid.Col>
+        </Grid>
         <Group>
           <Box sx={{ overflow: "scroll" }} py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">

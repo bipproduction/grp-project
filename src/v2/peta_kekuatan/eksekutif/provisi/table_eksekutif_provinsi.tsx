@@ -24,7 +24,7 @@ export const TableEksekutifProvinsiV2 = () => {
 
   const loadData = () => {
     fetch(api.apiEksekutifGetAll + `?tingkat=2`)
-      .then((v) => v.json())
+      .then((v) => v.json()) 
       .then((v) => {
         setListData(v);
       });
