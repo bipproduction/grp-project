@@ -176,7 +176,7 @@ const DataProfileV2 = () => {
                   </Box>
                   <Box mt={10}>
                     <Text fz={15}>Jenis Kelamin</Text>
-                    <Text fw={700}>{listData?.MasterJenisKelamin.name}</Text>
+                    <Text fw={700}>{listData?.MasterJenisKelamin?.name}</Text>
                   </Box>
                   <Box mt={10}>
                     <Text fz={15}>Nomor Handphone</Text>
@@ -321,7 +321,7 @@ export function ModalEditMediaSocial() {
           opacity: 0.5,
         }}
       >
-        <EditMediaSocial thisClosed={() => setOpenMedia(false)} />
+        <EditMediaSocial keluarMedia={() => setOpenMedia(false)} />
       </Modal>
     </>
   );

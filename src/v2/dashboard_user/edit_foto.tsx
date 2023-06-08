@@ -6,38 +6,24 @@ import toast from "react-simple-toasts";
 import COLOR from "../../../fun/WARNA";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import ImageUpload from "./image-upload";
+import { atomWithStorage } from "jotai/utils";
+import { useAtom } from "jotai";
+const val_modal_img = atomWithStorage("val_modal_img", false);
 
 function EditFoto() {
-  const [opened, { open, close }] = useDisclosure(false);
-  const onEditFoto = async () => {
-    const body = {
-      id: localStorage.getItem("user_id"),
-      img: "2323323",
-    };
-    // if (Object.values(body).includes("")) {
-    //   return toast("Lengkapi Foto");
-    // }
-    // await fetch(api.apiDataDiriUpdateImg, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(body),
-    // });
-    // console.log(body)
-  };
+  const [openImg, setOpenImg] = useAtom(val_modal_img);
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={close}
+        opened={openImg}
+        onClose={() => setOpenImg(false)}
         size={"md"}
         centered
         overlayProps={{
           opacity: 0.5,
         }}
       >
-        <ImageUpload/>
+        <ImageUpload keluar={() => setOpenImg(false)}/>
       </Modal>
       <Center>
         <Flex gap="md" pt={20} pb={10}>
@@ -47,7 +33,7 @@ function EditFoto() {
               color="pink.9"
               bg={COLOR.orange}
               radius={"xl"}
-              onClick={open}
+              onClick={() => setOpenImg(true)}
               leftIcon={<AiOutlineCloudUpload size={20} />}
             >
               Upload Foto

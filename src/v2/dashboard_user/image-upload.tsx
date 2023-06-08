@@ -11,87 +11,75 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
 import _ from "lodash";
-import { DataDiri, ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import {
+  DataDiri,
+  ModelSumberDayaPartai,
+} from "@/model/interface_sumber_daya_partai";
 import { data } from "jquery";
-export const _getupload = atomWithStorage<ModelUserMediaSosial[] | null>(
-  "media",
-  null
-);
+import { DataDiriImage } from "@/model/interface_upload";
+export const _image = atomWithStorage<DataDiriImage | null>("media", null);
 
-export const _dataImages = atomWithStorage<DataDiri | null>(
-  "dataDiri",
-  null
-);
+export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
-function ImageUpload() {
+function ImageUpload({ keluar }: any) {
   const router = useRouter();
-  const [dataImage, setDataImage] = useAtom(_getupload);
+  const [image, setImage] = useAtom(_dataImages);
   const [valueAktif, setValueAktif] = useState<string>("");
-  const [dataImages, setDataImages] = useState({
-    id: "",
+  // const [dataImages, setDataImages] = useState({
+  //   id: "",
+  //   img: "",
+  // });
+
+  // const [listData, setListData] = useAtom(_dataImages);
+
+  const [listData, setListData] = useState({
     img: "",
   });
-
-  const [listData, setListData] = useAtom(_dataImages);
+  const [imgFoto, setImgFoto] = useState("");
 
   const onUpload = async () => {
     const body = {
-      id: listData?.id,
-      img: imgFoto
+      id: image?.id,
+      img: listData?.img,
     }
-    console.log(body)
-    // if (Object.values(dataImages).includes("")) {
-    //   return toast("Lengkapi Foto");
-    // }
-    // await fetch(api.apiDataDiriUpdateImg, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(dataImages),
-    // });
+    console.log(body);
+    await fetch(api.apiDataDiriUpdateImg, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    keluar(true)
   };
-  const [imgFoto, setImgFoto] = useState("")
+
 
   return (
     <>
       {/* {JSON.stringify(listData)} */}
-      {imgFoto}
+      {/* {JSON.stringify(image, null, 2)} */}
       <Stack>
         <Group>
           <Dropzone
             onDrop={(files) => {
               const form_data = new FormData();
               form_data.append("image", files[0]);
-              // console.log(form_data);
-
               fetch(apiUpload.apiUploadImages, {
                 method: "POST",
                 body: form_data,
-              }).then(async(v) => {
-                const data = await v.json()
-                setImgFoto(data.img)
+              }).then(async (v) => {
+                const data = await v.json();
+                setListData(data.img)
+                listData.img! = data.img
 
                 toast("success");
-                console.log(data)
-              });
-              // fetch(api.apiDataDiriUpdateImg, {
-              //   method: "POST",
-              //   body: form_data
-              // }).then(async(v) => {
-              //   const upload = await v.json()
-              //   setImgFoto(upload.img)
-              //   console.log(onUpload)
-              // })
-              // router.reload()
+                console.log(data);
+                onUpload()
+              })
             }}
             onReject={(files) => console.log("rejected files", files)}
             maxSize={3 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
-            // onChange={(val) => {
-            //   const perubahan = _.clone(listData)
-            //   listData?.User.DataDiri.img
-            // }}
           >
             <Group position="center" spacing={"xl"}>
               <Dropzone.Accept>
