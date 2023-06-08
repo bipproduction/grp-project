@@ -12,12 +12,14 @@
   - get one = api/aset-partai/aset-partai-get-one?id=
   - get all = api/aset-partai/aset-partai-get-all
   - search = api/aset-partai/aset-partai-search?search= (by name)
+  - get gambar = api/aset-partai/aset-partai-get-gambar?id (by aset partai id)
 - **Data Diri**
   - tambah = api/form-data-diri/data-diri-post
   - update = api/form-data-diri/data-diri-update
   - update foto profil = api/form-data-diri/data-diri-update-img
   - get one = api/form-data-diri/data-diri-get-one?id= (yg dipake adalah userId)
   - get all = api/form-data-diri/data-diri-get-all
+  - get gambar = api/form-data-diri/data-diri-get-gambar?id= (by data diri id)
 - **Anggota Afiliatif**
   - tambah = api/anggota-afiliatif/anggota-afiliatif-post
   - update = api/anggota-afiliatif/anggota-afiliatif-update
@@ -93,3 +95,10 @@
   - tambah = api/aset-partai/lampiran/lampiran-post
   - get by aset = api/aset-partai/lampiran/lampiran-get-by-aset?aset= (by aset partai id)
   - hapus = api/aset-partai/lampiran/lampiran-hapus?id= (by lampiran id) 
+  - get file = api/aset-partai/lampiran/lampiran-get-file?id= (by lampiran id)
+
+
+
+
+
+  ** UPLOAD GAMBAR / FILE -> ADA DI FOLDER src/uploads/(sesuaikan dg kebutuhan)

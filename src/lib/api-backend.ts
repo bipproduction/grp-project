@@ -13,6 +13,7 @@ export const api = {
     "apiDataDiriUpdate": "/api/form-data-diri/data-diri-update",
     "apiDataDiriGetByNIK": "/api/form-data-diri/data-diri-get-by-nik",
     "apiDataDiriUpdateImg": "/api/form-data-diri/data-diri-update-img",
+    "apiDataDiriGetGambar": "/api/form-data-diri/data-diri-get-gambar",
 
 
     // AKSI NYATA - RENCANA KUNJUNGAN PRABOWO
@@ -73,6 +74,7 @@ export const api = {
     "apiAsetPartaiSearch": "/api/aset-partai/aset-partai-search",
     "apiAsetPartaiHapus": "/api/aset-partai/aset-partai-hapus",
     "apiAsetPartaiCountPage": "/api/aset-partai/aset-partai-count-page",
+    "apiAsetPartaiGetGambar": "/api/aset-partai/aset-partai-get-gambar",
 
 
     // MEDIA SOSIAL USER
@@ -153,6 +155,7 @@ export const api = {
     "apiLampiranPost": "/api/aset-partai/lampiran/lampiran-post",
     "apiLampiranGetByAset": "/api/aset-partai/lampiran/lampiran-get-by-aset",
     "apiLampiranHapus": "/api/aset-partai/lampiran/lampiran-hapus",
+    "apiLampiranGetFile": "/api/aset-partai/lampiran/lampiran-get-file",
 
 
 
