@@ -168,28 +168,6 @@ function EditDataDiriNew({ thisClosed }: any) {
       });
   }
 
-  // async function loadUserMediaSosial() {
-  //   fetch(
-  //     api.apiMediaSosialUserGetByUser +
-  //       `?user=${localStorage.getItem("user_id")}`
-  //   ).then(async (val) => {
-  //     if (val.status == 200) {
-  //       const data = await val.json();
-  //       setMediaSocialGet(data);
-  //       return;
-  //     }
-  //   });
-  // }
-
-  // useShallowEffect(() => {
-  //   fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-  //     .then((val) => val.json())
-  //     .then(setDataDiri);
-  // }, []);
-
-  // useShallowEffect(() => {
-  //   loadUserMediaSosial();
-  // }, []);
 
   useShallowEffect(() => {
     _loadJenisKelamin();

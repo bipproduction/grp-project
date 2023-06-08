@@ -9,7 +9,7 @@ import COLOR from "../../../fun/WARNA";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { val_loading } from "@/xg_state.ts/val_loading";
+import { val_loading, val_loadingMedia } from "@/xg_state.ts/val_loading";
 import { useRouter } from "next/router";
 import { buttonSimpan } from "../component/button-toast";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
@@ -26,16 +26,16 @@ export const _mediaSocialUp = atomWithStorage<ModelUserMediaSosial[] | any>(
 );
 export const _listDataMedia = atom<ModelUserMediaSosial[] | null>([]);
 
-function EditMediaSocial({ thisClosed }: any) {
+function EditMediaSocial({ keluarMedia }: any) {
   const [getMediaSocial, setGetMediaSocial] = useAtom(_mediaSocialGet);
   const [listData, setListData] = useAtom(_mediaSocialUp);
-  const [ubah, setUbah] = useAtom(_listDataMedia);
+  const [ubahMedia, setUbahMedia] = useAtom(_listDataMedia);
   const [openMediaSocial, setOpenMediaSocial] = useAtom(val_media_social_edit)
-  const [isLoading, setLoading] = useAtom(val_loading);
+  const [isLoading, setLoadingMedia] = useAtom(val_loadingMedia);
   const router = useRouter()
 
   const onEditMediaSocial = async () => {
-    setLoading(true);
+    setLoadingMedia(true);
     console.log(getMediaSocial)
     {getMediaSocial?.map((v) => (
       fetch(api.apiMediaSosialUserUpdate, {
@@ -46,17 +46,36 @@ function EditMediaSocial({ thisClosed }: any) {
         body: JSON.stringify(v),
       })
       ))}
-      thisClosed(true)
-      setLoading(false);
+      keluarMedia(true)
+      setLoadingMedia(false);
       setOpenMediaSocial(false)
       buttonSimpan()
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data sosial media user");
+      // loadMediaEdit()
       // loadDatadiri()
       
       router.reload()
 
       
     };
+    // useShallowEffect(() => {
+    //   loadMediaEdit()
+    // },[])
+
+    // async function loadMediaEdit() {
+    //   fetch(
+    //     api.apiMediaSosialUserGetByUser +
+    //       `?user=${localStorage.getItem("user_id")}`
+    //   )
+    //   .then(async (val) => {
+    //     if (val.status == 200) {
+    //       const data = await val.json();
+    //       setListData(data);
+    //       return;
+    //     }
+    //     // router.reload()
+    //   });
+    // }
     
   useShallowEffect(() => {
     fetch(
@@ -99,12 +118,11 @@ function EditMediaSocial({ thisClosed }: any) {
                     radius={"md"}
                     mt={10}
                     value={e.name}
-                    placeholder={e.name}
                     label={e.MasterMediaSocial.name}
                     onChange={(val) => {
                       const perubahan = _.clone(getMediaSocial);
                       e.name = val.currentTarget.value;
-                      setUbah(perubahan);
+                      setUbahMedia(perubahan);
                     }}
                   />
                 </Box>

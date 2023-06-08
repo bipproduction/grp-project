@@ -10,6 +10,7 @@ export default async function handler(req: any, res: any){
   }
   try {
     let img;
+    let id;
     const data = await new Promise(function(resulve, reject){
       const form = new formidable.IncomingForm({
         keepExtensions: true,
@@ -25,7 +26,7 @@ export default async function handler(req: any, res: any){
       })
     }) 
     console.log(data)
-    res.status(201).json({success: true, img: img})
+    res.status(201).json({success: true, img: img, id: id})
   } catch (e) {
     res.status(400).end()
   }
