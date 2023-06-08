@@ -8,10 +8,16 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import ImageUpload from "./image-upload";
 import { atomWithStorage } from "jotai/utils";
 import { useAtom } from "jotai";
+import { DataDiri } from "@/model/interface_sumber_daya_partai";
 const val_modal_img = atomWithStorage("val_modal_img", false);
+
+
+
 
 function EditFoto() {
   const [openImg, setOpenImg] = useAtom(val_modal_img);
+
+
   return (
     <>
       <Modal

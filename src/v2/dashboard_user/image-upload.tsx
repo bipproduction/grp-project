@@ -50,6 +50,7 @@ function ImageUpload({ keluar }: any) {
       },
       body: JSON.stringify(body),
     });
+    router.reload()
     keluar(true)
   };
 

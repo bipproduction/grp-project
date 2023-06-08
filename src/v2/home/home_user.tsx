@@ -1,46 +1,125 @@
+import { useState } from "react";
 import {
-  ActionIcon,
-  Alert,
-  AspectRatio,
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Center,
-  Flex,
-  Group,
+  createStyles,
   Header,
+  Container,
+  Group,
+  Burger,
+  Paper,
+  Transition,
+  rem,
+  Text,
+  Flex,
+  Button,
+  Box,
+  Card,
+  AspectRatio,
   Image,
   Menu,
-  Modal,
-  SimpleGrid,
-  Text,
-  TextInput,
-  Textarea,
-  ThemeIcon,
-  Title,
   Tooltip,
+  Avatar,
   TypographyStylesProvider,
-  createStyles,
+  Center,
+  SimpleGrid,
+  Textarea,
+  TextInput,
+  Title,
+  Modal,
+  Alert,
+  Stack,
+  Divider,
 } from "@mantine/core";
+import { useDisclosure, useWindowScroll } from "@mantine/hooks";
+import { MantineLogo } from "@mantine/ds";
 import COLOR from "../../../fun/WARNA";
+import { useForm } from "@mantine/form";
+import { useRouter } from "next/router";
 import { sUser } from "@/s_state/s_user";
 import {
-  AiFillSetting,
   AiOutlineLogout,
-  AiOutlineMail,
   AiOutlineProfile,
   AiOutlineUser,
 } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
-import { FiAlertCircle, FiLogOut } from "react-icons/fi";
-import { useForm } from "@mantine/form";
-import { useDisclosure, useWindowScroll } from "@mantine/hooks";
-import { constant } from "lodash";
-import { useRouter } from "next/router";
-import Head from "next/head";
+import { FiAlertCircle } from "react-icons/fi";
+import { ImProfile } from "react-icons/im";
+import { RiDashboardLine } from "react-icons/ri";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { data } from "jquery";
+import _ from "lodash";
+import { api } from "@/lib/api-backend";
+import { DataDiri } from "@/model/interface_sumber_daya_partai";
 
-const HomeUserV2 = () => {
+export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+
+
+const HEADER_HEIGHT = rem(80);
+
+const useStyles = createStyles((theme) => ({
+  dropdown: {
+    position: "absolute",
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: "hidden",
+
+    // [theme.fn.largerThan("sm")]: {
+    //   display: "none",
+    // },
+  },
+
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "100%",
+  },
+
+  links: {
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
+    },
+  },
+
+  burger: {
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+  },
+  card: {
+    transition: "transform 150ms ease, box-shadow 150ms ease",
+
+    "&:hover": {
+      transform: "scale(1.01)",
+      boxShadow: theme.shadows.md,
+    },
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 600,
+  },
+
+  btn: {
+    "&:hover": {
+      color: COLOR.merah,
+    },
+  },
+}));
+
+const val_modal_logout = atomWithStorage("val_modal_logout", false);
+
+const HomeUserNewV2 = ({ thisClosed }: any) => {
+  const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
+  const [image, setImage] = useAtom(_dataImages);
+
   const mockdata = [
     {
       description:
@@ -73,31 +152,6 @@ const HomeUserV2 = () => {
       image: "/../kegiatan.jpeg",
     },
   ];
-
-  const [scroll, scrollTo] = useWindowScroll();
-
-  const useStyles = createStyles((theme) => ({
-    card: {
-      transition: "transform 150ms ease, box-shadow 150ms ease",
-
-      "&:hover": {
-        transform: "scale(1.01)",
-        boxShadow: theme.shadows.md,
-      },
-    },
-
-    title: {
-      fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-      fontWeight: 600,
-    },
-
-    btn: {
-      "&:hover": {
-        color: COLOR.merah,
-      },
-    },
-  }));
-
   const { classes } = useStyles();
 
   const cards = mockdata.map((article, i) => (
@@ -118,7 +172,6 @@ const HomeUserV2 = () => {
       </Text>
     </Card>
   ));
-
   const form = useForm({
     initialValues: {
       name: "",
@@ -133,6 +186,9 @@ const HomeUserV2 = () => {
     },
   });
 
+  const [scroll, scrollTo] = useWindowScroll();
+  const [openeModal, setOpenModal] = useDisclosure(false);
+  const [opened, { toggle, close, open }] = useDisclosure(false);
   const router = useRouter();
 
   let link_dashboard = "";
@@ -143,66 +199,51 @@ const HomeUserV2 = () => {
   } else if (sUser.value.masterUserRoleId == "3") {
     link_dashboard = "/v2/dashboard-super-admin";
   }
-  const [opened, { open, close }] = useDisclosure(false);
-
+  // const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      {/* HEADER */}
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
-        <Alert
-          icon={<FiAlertCircle size="2rem" color="red" />}
-          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
-          color="gray"
-        >
-          <Group pt={10}>
-            <Box w={150}>
-              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={close}>
-                TIDAK
-              </Button>
-            </Box>
-            <Box w={150}>
-              <Button
-                fullWidth
-                color="green.9"
-                bg={COLOR.hijautua}
-                onClick={() => {
-                  localStorage.removeItem("user_id");
-                  sUser.value = {};
-                }}
-              >
-                YA
-              </Button>
-            </Box>
-          </Group>
-        </Alert>
-      </Modal>
-      <Box>
-        <Header
-          height={70}
-          bg={COLOR.merah}
-          sx={{ position: "sticky", top: 0 }}
-        >
-          <Group position="apart" sx={{ height: "100%" }}>
-            <Flex
-              justify="flex-start"
-              align="flex-start"
-              direction="column"
-              wrap="wrap"
-              pl={20}
-            >
-              <Text fz={25} color="white">
-                GARUDA
-              </Text>
-              <Text fz={15} color="white">
-                RESOURCE PLANNING
-              </Text>
-            </Flex>
-            <Group sx={{ height: "100%" }} spacing={0} hidden>
+      <ModalLogout thisClosed={close} />
+
+      <Header
+        height={80}
+        px="md"
+        bg={COLOR.coklat}
+        sx={{ position: "sticky", top: 0 }}
+      >
+        <Group position="apart" sx={{ height: "100%" }}>
+          {/* <MantineLogo size={28} /> */}
+          <Flex
+            justify="flex-start"
+            align="flex-start"
+            direction="column"
+            wrap="wrap"
+            pl={20}
+            style={{ cursor: "pointer" }}
+          >
+            <Text fz={25} color="white">
+              GARUDA
+            </Text>
+            <Text fz={15} color="white">
+              RESOURCE PLANNING
+            </Text>
+          </Flex>
+          <Group
+            spacing={5}
+            className={classes.links}
+            onClick={(event) => {
+              event.preventDefault();
+              close();
+            }}
+          >
+            {/* {items} */}
+
+            <Group position="apart" sx={{ height: "100%" }}>
+              {/* <Group sx={{ height: "100%" }} spacing={0} hidden position="center" > */}
               <Button
                 variant="subtle"
                 color="gray.0"
                 className={classes.btn}
-                onClick={() => scrollTo({ y: 100 })}
+                onClick={() => scrollTo({ y: 0 })}
               >
                 Home
               </Button>
@@ -230,110 +271,297 @@ const HomeUserV2 = () => {
               >
                 Contact Us
               </Button>
-            </Group>
-            <Group pr={20}>
-              <Menu position="bottom-end" withArrow>
-                <Menu.Target>
-                  <Tooltip label="Profile">
-                    <Group style={{ cursor: "pointer" }}>
-                      <Avatar radius="xl" />
-                    </Group>
-                  </Tooltip>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <AiOutlineUser color="black" size="1.3rem" />
-                      <Text fw={700}>{sUser.value?.username}</Text>
-                    </Group>
-                  {/* </Menu.Item> */}
-                  {/* <Menu.Item> */}
-                    <Group p={11}>
-                      <MdAlternateEmail color="black" size="1.3rem" />
-                      <Text>{sUser.value?.email}</Text>
-                    </Group>
-                  {/* </Menu.Item> */}
-                  <Menu.Item>
-                    <Group
-                      onClick={() => {
-                        router.push(link_dashboard);
-                      }}
-                    >
-                      <AiOutlineProfile color="black" size="1.3rem" />
-                      <Text>Lihat Dashboard</Text>
-                    </Group>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Group
-                      onClick={() => {
-                        router.push("/v2/dashboard-user");
-                      }}
-                    >
-                      <AiOutlineProfile color="black" size="1.3rem" />
-                      <Text>Lihat Profile</Text>
-                    </Group>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Group
-                    onClick={open}
-                      // onClick={() => {
-                      //   localStorage.removeItem("user_id");
-                      //   sUser.value = {};
-                      // }}
-                    >
-                      <AiOutlineLogout color="red" size="1.3rem" />
-                      <Text color="red">Logout</Text>
-                    </Group>
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+              <Box>
+                <Box>
+                  {/* MENU ADMIN*/}
+                  <Group
+                    pr={20}
+                    onClick={() => {
+                      sUser.value.masterUserRoleId == "2";
+                    }}
+                  >
+                    <Menu position="bottom-end" withArrow>
+                      <Menu.Target>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                          <Avatar src={api.apiDataDiriGetGambar + `?id=${image?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                          </Group>
+                        </Tooltip>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
+                          </Group>
+
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                          </Group>
+                        </Stack>
+                        {/* </Menu.Item> */}
+                        
+                        {sUser.value.masterUserRoleId == "2" &&  (
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push(link_dashboard);
+                              }}
+                            >
+                              <RiDashboardLine color="black" size="1.3rem" />
+                              <Text>Dashboard</Text>
+                            </Group>
+                          </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "3" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "1" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => setOpenLogout(true)}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
+                </Box>
+              </Box>
             </Group>
           </Group>
-        </Header>
 
-        {/* HOME */}
-        <Group pt={20} p={5}>
-          <Image src="/../gerindra.png" alt="a" />
-        </Group>
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            className={classes.burger}
+            size="lg"
+            color="white"
+          />
 
-        {/* ABOUT */}
-        <Box p={10} pt={30} pb={40}>
-          <Text fw={700} fz={20}>
-            GARUDA RESOURCE PLANNING
-          </Text>
-          <Box
-            sx={{
-              border: "1px solid red",
-              borderRadius: 10,
-            }}
-            p={10}
+          <Transition
+            transition="pop-top-right"
+            duration={200}
+            mounted={opened}
           >
-            <TypographyStylesProvider>
-              Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat,
-              bersatu, demokratis, adil dan makmur serta beradab dan
-              berketuhanan yang berlandaskan Pancasila, sebagaimana termaktub di
-              dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh
-              rakyat Indonesia. Untuk mewujudkan cita-cita tersebut, hanya dapat
-              dicapai dengan mempertahankan persatuan dan kesatuan bangsa,
-              dengan landasan Pancasila. Budaya bangsa dan wawasan kebangsaan
-              harus menjadi modal utama untuk mengeratkan persatuan dan
-              kesatuan. Sehingga perbedaan di antara kita justru menjadi rahmat
-              dan menjadi kekuatan bangsa Indonesia. Namun demikian, mayoritas
-              rakyat masih berkubang dalam penderitaan, sistem politik kita tak
-              kunjung mampu merumuskan dan melaksanakan perekonomian Nasional
-              untuk mengangkat harkat dan martabat mayoritas rakyat Indonesia
-              dari kemelaratan. Bahkan dalam upaya membangun bangsa, dalam
-              perjalanannya kita telah terjebak sistem ekonomi pasar. Sistem
-              ekonomi pasar telah memporak-porandakan perekonomian bangsa, yang
-              menyebabkan situasi yang sulit bagi kehidupan rakyat dan bangsa.
-              Hal itu berakibat menggelembungnya jumlah rakyat yang miskin dan
-              menganggur. Pada situasi demikian, tidak ada pilihan lain bagi
-              bangsa ini kecuali harus menciptakan suasana kemandirian bangsa
-              dengan membangun sistem ekonomi kerakyatan.
-            </TypographyStylesProvider>
-          </Box>
-        </Box>
+            {(styles) => (
+              <Center
+                className={classes.dropdown}
+                p={10}
+                style={styles}
+                bg={COLOR.coklat}
+              >
+                {/* {items} */}
+                <Group>
+                  <Button
+                    variant="subtle"
+                    color="gray.0"
+                    className={classes.btn}
+                    onClick={() => scrollTo({ y: 0 })}
+                  >
+                    Home
+                  </Button>
+                  <Button
+                    variant="subtle"
+                    color="gray.0"
+                    className={classes.btn}
+                    onClick={() => scrollTo({ y: 250 })}
+                  >
+                    About
+                  </Button>
+                  <Button
+                    variant="subtle"
+                    color="gray.0"
+                    className={classes.btn}
+                    onClick={() => scrollTo({ y: 837 })}
+                  >
+                    Blog
+                  </Button>
+                  <Button
+                    variant="subtle"
+                    color="gray.0"
+                    className={classes.btn}
+                    onClick={() => scrollTo({ y: 3178 })}
+                  >
+                    Contact Us
+                  </Button>
+                  <Menu
+                    withArrow
+                    width={300}
+                    position="bottom"
+                    transitionProps={{ transition: "pop" }}
+                    withinPortal
+                  >
+                    <Menu.Target>
+                      <Tooltip label="Profile">
+                        <Group style={{ cursor: "pointer" }}>
+                        <Avatar src={api.apiDataDiriGetGambar + `?id=${image?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                        </Group>
+                      </Tooltip>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
+                          </Group>
 
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                          </Group>
+                        </Stack>
+                        {/* </Menu.Item> */}
+                        
+                        {sUser.value.masterUserRoleId == "2" &&  (
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push(link_dashboard);
+                              }}
+                            >
+                              <RiDashboardLine color="black" size="1.3rem" />
+                              <Text>Dashboard</Text>
+                            </Group>
+                          </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "3" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "1" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push("/v2/dashboard-user");
+                            }}
+                          >
+                            <AiOutlineProfile color="black" size="1.3rem" />
+                            <Text>Profile</Text>
+                          </Group>
+                        </Menu.Item>
+                        )}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => setOpenLogout(true)}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                  </Menu>
+                </Group>
+              </Center>
+            )}
+          </Transition>
+        </Group>
+      </Header>
+
+      {/* HOME */}
+      <Image src="/../gerindra.png" alt="a" />
+
+      {/* ABOUT */}
+      <Box p={10} pt={30} pb={40}>
+        <Text fw={700} fz={20}>
+          GARUDA RESOURCE PLANNING
+        </Text>
+        <Box
+          sx={{
+            border: "1px solid red",
+            borderRadius: 10,
+          }}
+          p={10}
+        >
+          <TypographyStylesProvider>
+            Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat,
+            bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan
+            yang berlandaskan Pancasila, sebagaimana termaktub di dalam
+            Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat
+            Indonesia. Untuk mewujudkan cita-cita tersebut, hanya dapat dicapai
+            dengan mempertahankan persatuan dan kesatuan bangsa, dengan landasan
+            Pancasila. Budaya bangsa dan wawasan kebangsaan harus menjadi modal
+            utama untuk mengeratkan persatuan dan kesatuan. Sehingga perbedaan
+            di antara kita justru menjadi rahmat dan menjadi kekuatan bangsa
+            Indonesia. Namun demikian, mayoritas rakyat masih berkubang dalam
+            penderitaan, sistem politik kita tak kunjung mampu merumuskan dan
+            melaksanakan perekonomian Nasional untuk mengangkat harkat dan
+            martabat mayoritas rakyat Indonesia dari kemelaratan. Bahkan dalam
+            upaya membangun bangsa, dalam perjalanannya kita telah terjebak
+            sistem ekonomi pasar. Sistem ekonomi pasar telah memporak-porandakan
+            perekonomian bangsa, yang menyebabkan situasi yang sulit bagi
+            kehidupan rakyat dan bangsa. Hal itu berakibat menggelembungnya
+            jumlah rakyat yang miskin dan menganggur. Pada situasi demikian,
+            tidak ada pilihan lain bagi bangsa ini kecuali harus menciptakan
+            suasana kemandirian bangsa dengan membangun sistem ekonomi
+            kerakyatan.
+          </TypographyStylesProvider>
+        </Box>
         {/* BLOG */}
         <Box>
           {/* {JSON.stringify(sUser.value)} */}
@@ -345,7 +573,6 @@ const HomeUserV2 = () => {
             {cards}
           </SimpleGrid>
         </Box>
-
         {/* CONTACT */}
         <Box p={10} pt={30}>
           <Box
@@ -437,4 +664,57 @@ const HomeUserV2 = () => {
   );
 };
 
-export default HomeUserV2;
+export function ModalLogout({ thisClosed }: any) {
+  const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
+
+  return (
+    <>
+      <Modal
+        opened={openLogout}
+        onClose={() => setOpenLogout(false)}
+        centered
+        withCloseButton={false}
+      >
+        <Alert
+          icon={<FiAlertCircle size="2rem" color="red" />}
+          title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
+          color="gray"
+        >
+          <Group pt={10}>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="red.9"
+                bg={COLOR.merah}
+                onClick={() => setOpenLogout(false)}
+              >
+                TIDAK
+              </Button>
+            </Box>
+            <Box w={150}>
+              <Button
+                fullWidth
+                color="green.9"
+                bg={COLOR.hijautua}
+                onClick={() => {
+                  _postLogUser(
+                    localStorage.getItem("user_id"),
+                    "LOGOUT",
+                    "User logout"
+                  );
+                  localStorage.removeItem("user_id");
+                  sUser.value = {};
+                  setOpenLogout(false);
+                }}
+              >
+                YA
+              </Button>
+            </Box>
+          </Group>
+        </Alert>
+      </Modal>
+    </>
+  );
+}
+
+export default HomeUserNewV2;
