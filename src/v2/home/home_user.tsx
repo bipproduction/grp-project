@@ -52,9 +52,9 @@ import { data } from "jquery";
 import _ from "lodash";
 import { api } from "@/lib/api-backend";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
+import toast from "react-simple-toasts";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
-
 
 const HEADER_HEIGHT = rem(80);
 
@@ -122,34 +122,40 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
 
   const mockdata = [
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Arahan Prabowo, DPC Partai Gerindra Aceh Tengah Bantu Korban Kebakaran di Dua Lokasi",
+      image: "/../foto1.png",
+      berita: "Diantaranya Kampung Simpang Empat Rejewali Kecamatan Ketol dan Kampung Paya Kolak Kecamatan Celala Kabupaten Aceh Tengah. Diketahui dalam satu pekan terakhir telah terjadi musibah kebakaran di dua lokasi diantaranya tujuh unit rumah hangus terbakar di Kampung Simpang Empat Rejewali Kecamatan Ketol Kabupaten Aceh."
     },
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Sufmi Dasco Pimpin Langsung Rombongan Anggota DPR RI Cek Proyek Meikarta",
+      image: "/../foto2.png",
+      berita: "Wakil Ketua DPR RI Sufmi Dasco Ahmad memimpin rombongan anggota DPR lintas komisi dalam kunjungan ke kawasan pembangunan Apartemen Meikarta di Cikarang, Kabupaten Bekasi, Jawa Barat. Kunjungan ini merupakan tindak lanjut dari upaya mencari penyelesaian yang dialami oleh para konsumen Meikarta, yang telah berulang kali mengadukan persoalannya ke DPR."
     },
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Bantu Kesejahteraan Nelayan, Seno Aji Serahkan Ratusan Mesin Kapal Ke Kelompok Nelayan Se-Kukar",
+      image: "/../foto3.png",
+      berita: "Jalankan misi peningkatan kesejahteraan para nelayan, Wakil Ketua DPRD Provinsi Kalimantan Timur, Ir. Seno Aji serahkan bantuan mesin kapal untuk ratusan masyarakat nelayan di wilayah Kabupaten Kutai Kartanegara. Penyerahan bantuan mesin kapal berkapasitas 30 PK lengkap tersebut di mulai dari kelompok nelayan di Kecamatan Muara Jawa."
     },
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Berikan Bantuan Korban Banjir Jateng, Muzani: Ini Wujud Simpati dan Empati Partai Gerindra",
+      image: "/../foto4.png",
+      berita: "Sekretaris Jenderal DPP Partai Gerindra Ahmad Muzani menyalurkan bantuan kebutuhan pokok untuk warga di sejumlah lokasi terdampak banjir di Jawa Tengah, Minggu (8/1). Bantuan sembako itu antara lain disalurkan di Desa Trimulyo, Kecamatan Genuk, Kota Semarang, Desa Prampelan, Kecamatan Sayung, Kabupaten Demak, dan Desa Tanjungkarang, Kecamatan Jati, Kabupaten Kudus, serta Desa Gadudero, Kecamatan Sukolilo, Kabupaten Pati."
     },
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Peduli Banjir DPC Gerindra Kudus Beri Bantuan Logistik untuk Warga Terdampak Banjir",
+      image: "/../foto5.png",
+      berita: "Ketua DPC Gerindra Kudus, Sulistiyo Utomo memberikan bantuan sembako dan makanan siap saji kepada warga yang terdampak bencana banjir di sejumlah wilayah di Kudus(1/1/2023). Lokasi pertama yang dikunjungi di desa Jetis kapuan dilanjutkan desa jati Wetan kec. Jati kab. Kudus. Bencana banjir di Kudus disebabkan intensitas hujan yang tinggi sejak sepekan ini, ditambah aliran sungai wulan yang meluap."
     },
     {
-      description:
-        "Terwujudnya tatanan masyarakat Indonesia yang merdeka, berdaulat, bersatu, demokratis, adil dan makmur serta beradab dan berketuhanan  yang berlandaskan Pancasila, sebagaimana termaktub di dalam Pembukaan UUD 1945, merupakan cita-cita bersama dari seluruh rakyat Indonesia",
-      image: "/../kegiatan.jpeg",
+      tittle:
+        "Fraksi Gerindra Malang Raya Kompak Bantu Korban Gempa",
+      image: "/../foto6.png",
+      berita: "Fraksi Partai Gerakan Indonesia Raya (Gerindra) Malang Raya meliputi Kabupaten Malang, Kota Malang dan Kota Batu kompak membantu korban gempa yang yang terjadi, Sabtu 10 April 2021 yang lalu dengan kekuatan gempa 6,1 skala richter. Anggota Dewan Perwakilan Rakyat Daerah (DPRD) Fraksi Gerindra pun turun langsung ke lokasi terdampak gempa untuk memberikan sumbangan bantuan berupa paket sembako dan keperluan lainnya yang dibutuhkan oleh warga."
     },
   ];
   const { classes } = useStyles();
@@ -158,17 +164,20 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
     <Card
       key={i}
       p="md"
-      radius="md"
+      radius={"md"}
       sx={{
         backgroundColor: COLOR.merah,
       }}
       className={classes.card}
     >
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.image} alt="a" radius={10} />
+        <Image src={article.image} alt="a"  />
       </AspectRatio>
-      <Text pt={10} color="white" fz={13} className={classes.title} mt={5}>
-        {article.description}
+      <Text pt={10} fw={700} color="white" fz={15} className={classes.title} mt={5}>
+        {article.tittle}
+      </Text>
+      <Text pt={10} fw={700} color="white" fz={10} className={classes.title} mt={5}>
+        {article.berita}
       </Text>
     </Card>
   ));
@@ -185,6 +194,12 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
       subject: (value) => value.trim().length === 0,
     },
   });
+
+  // const dataContactUs = () => {
+  //   if (Object.values(form.values)) {
+  //     return toast("sussess")
+  //   }
+  // }
 
   const [scroll, scrollTo] = useWindowScroll();
   const [openeModal, setOpenModal] = useDisclosure(false);
@@ -284,7 +299,14 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       <Menu.Target>
                         <Tooltip label="Profile">
                           <Group style={{ cursor: "pointer" }}>
-                          <Avatar src={api.apiDataDiriGetGambar + `?id=${image?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                            <Avatar
+                              src={
+                                api.apiDataDiriGetGambar + `?id=${image?.id}`
+                              }
+                              alt="it's me"
+                              radius={"xl"}
+                              color="indigo"
+                            />
                           </Group>
                         </Tooltip>
                       </Menu.Target>
@@ -302,12 +324,14 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                           {/* <Menu.Item> */}
                           <Group spacing={0}>
                             <MdAlternateEmail color="white" size="1.3rem" />
-                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                            <Text c={"white"} pl={10}>
+                              {sUser.value?.email}
+                            </Text>
                           </Group>
                         </Stack>
                         {/* </Menu.Item> */}
-                        
-                        {sUser.value.masterUserRoleId == "2" &&  (
+
+                        {sUser.value.masterUserRoleId == "2" && (
                           <Menu.Item>
                             <Group
                               onClick={() => {
@@ -320,45 +344,43 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                           </Menu.Item>
                         )}
                         {sUser.value.masterUserRoleId == "3" && (
-                        <Menu.Item>
-                          <Group
-                            onClick={() => {
-                              router.push("/v2/dashboard-user");
-                            }}
-                          >
-                            <AiOutlineProfile color="black" size="1.3rem" />
-                            <Text>Dashboard</Text>
-                          </Group>
-                        </Menu.Item>
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push("/v2/dashboard-user");
+                              }}
+                            >
+                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <Text>Dashboard</Text>
+                            </Group>
+                          </Menu.Item>
                         )}
                         {sUser.value.masterUserRoleId == "1" && (
-                        <Menu.Item>
-                          <Group
-                            onClick={() => {
-                              router.push("/v2/dashboard-user");
-                            }}
-                          >
-                            <AiOutlineProfile color="black" size="1.3rem" />
-                            <Text>Profile</Text>
-                          </Group>
-                        </Menu.Item>
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push("/v2/dashboard-user");
+                              }}
+                            >
+                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <Text>Profile</Text>
+                            </Group>
+                          </Menu.Item>
                         )}
                         {sUser.value.masterUserRoleId == "2" && (
-                        <Menu.Item>
-                          <Group
-                            onClick={() => {
-                              router.push("/v2/dashboard-user");
-                            }}
-                          >
-                            <AiOutlineProfile color="black" size="1.3rem" />
-                            <Text>Profile</Text>
-                          </Group>
-                        </Menu.Item>
+                          <Menu.Item>
+                            <Group
+                              onClick={() => {
+                                router.push("/v2/dashboard-user");
+                              }}
+                            >
+                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <Text>Profile</Text>
+                            </Group>
+                          </Menu.Item>
                         )}
                         <Menu.Item>
-                          <Group
-                            onClick={() => setOpenLogout(true)}
-                          >
+                          <Group onClick={() => setOpenLogout(true)}>
                             <AiOutlineLogout color="red" size="1.3rem" />
                             <Text color="red">Logout</Text>
                           </Group>
@@ -435,42 +457,49 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                     <Menu.Target>
                       <Tooltip label="Profile">
                         <Group style={{ cursor: "pointer" }}>
-                        <Avatar src={api.apiDataDiriGetGambar + `?id=${image?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                          <Avatar
+                            src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
+                            alt="it's me"
+                            radius={"xl"}
+                            color="indigo"
+                          />
                         </Group>
                       </Tooltip>
                     </Menu.Target>
                     <Menu.Dropdown>
-                        {/* <Menu.Item> */}
-                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
-                          <Group spacing={0}>
-                            <AiOutlineUser color="white" size="1.3rem" />
-                            <Text c={"white"} fw={700} pl={10}>
-                              {sUser.value?.username}
-                            </Text>
-                          </Group>
+                      {/* <Menu.Item> */}
+                      <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                        <Group spacing={0}>
+                          <AiOutlineUser color="white" size="1.3rem" />
+                          <Text c={"white"} fw={700} pl={10}>
+                            {sUser.value?.username}
+                          </Text>
+                        </Group>
 
-                          {/* </Menu.Item> */}
-                          {/* <Menu.Item> */}
-                          <Group spacing={0}>
-                            <MdAlternateEmail color="white" size="1.3rem" />
-                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
-                          </Group>
-                        </Stack>
                         {/* </Menu.Item> */}
-                        
-                        {sUser.value.masterUserRoleId == "2" &&  (
-                          <Menu.Item>
-                            <Group
-                              onClick={() => {
-                                router.push(link_dashboard);
-                              }}
-                            >
-                              <RiDashboardLine color="black" size="1.3rem" />
-                              <Text>Dashboard</Text>
-                            </Group>
-                          </Menu.Item>
-                        )}
-                        {sUser.value.masterUserRoleId == "3" && (
+                        {/* <Menu.Item> */}
+                        <Group spacing={0}>
+                          <MdAlternateEmail color="white" size="1.3rem" />
+                          <Text c={"white"} pl={10}>
+                            {sUser.value?.email}
+                          </Text>
+                        </Group>
+                      </Stack>
+                      {/* </Menu.Item> */}
+
+                      {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push(link_dashboard);
+                            }}
+                          >
+                            <RiDashboardLine color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                      )}
+                      {sUser.value.masterUserRoleId == "3" && (
                         <Menu.Item>
                           <Group
                             onClick={() => {
@@ -481,8 +510,8 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                             <Text>Dashboard</Text>
                           </Group>
                         </Menu.Item>
-                        )}
-                        {sUser.value.masterUserRoleId == "1" && (
+                      )}
+                      {sUser.value.masterUserRoleId == "1" && (
                         <Menu.Item>
                           <Group
                             onClick={() => {
@@ -493,8 +522,8 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                             <Text>Profile</Text>
                           </Group>
                         </Menu.Item>
-                        )}
-                        {sUser.value.masterUserRoleId == "2" && (
+                      )}
+                      {sUser.value.masterUserRoleId == "2" && (
                         <Menu.Item>
                           <Group
                             onClick={() => {
@@ -505,16 +534,14 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                             <Text>Profile</Text>
                           </Group>
                         </Menu.Item>
-                        )}
-                        <Menu.Item>
-                          <Group
-                            onClick={() => setOpenLogout(true)}
-                          >
-                            <AiOutlineLogout color="red" size="1.3rem" />
-                            <Text color="red">Logout</Text>
-                          </Group>
-                        </Menu.Item>
-                      </Menu.Dropdown>
+                      )}
+                      <Menu.Item>
+                        <Group onClick={() => setOpenLogout(true)}>
+                          <AiOutlineLogout color="red" size="1.3rem" />
+                          <Text color="red">Logout</Text>
+                        </Group>
+                      </Menu.Item>
+                    </Menu.Dropdown>
                   </Menu>
                 </Group>
               </Center>
@@ -566,7 +593,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
         <Box>
           {/* {JSON.stringify(sUser.value)} */}
           <SimpleGrid
-            p={10}
+            pt={40}
             cols={3}
             breakpoints={[{ maxWidth: "sm", cols: 1 }]}
           >
@@ -650,6 +677,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       size="md"
                       bg={COLOR.merah}
                       color="orange.9"
+                      // onClick={dataContactUs}
                     >
                       Kirim Pesan
                     </Button>
@@ -706,7 +734,7 @@ export function ModalLogout({ thisClosed }: any) {
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                   setOpenLogout(false);
-                  setImage(null)
+                  setImage(null);
                 }}
               >
                 YA

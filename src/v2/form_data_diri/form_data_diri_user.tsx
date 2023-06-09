@@ -322,7 +322,7 @@ const FormDataDiriUser = () => {
             <TextInput
               description={
                 valNik && valNik.length != 16 ? (
-                  <Text>Nik 16 Angka Length</Text>
+                  <Text>Panjang Nik Harus 16 Angka</Text>
                 ) : (
                   ""
                 )

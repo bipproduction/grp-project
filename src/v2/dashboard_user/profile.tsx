@@ -31,7 +31,7 @@ import {
 } from "@/model/interface_sumber_daya_partai";
 import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import EditDataDiriNew from "./edit_data_diri_new";
-import { Router } from "next/router";
+import { Router, useRouter } from "next/router";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
 import "moment/locale/id";
@@ -52,7 +52,7 @@ export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_data_diri",
   null
 );
-export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+export const _dataImagesData = atomWithStorage<DataDiri | null>("dataDiri", null);
 
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 const val_open_edit_media = atomWithStorage("val_open_edit_media", false);
@@ -66,6 +66,7 @@ const DataProfileV2 = () => {
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [openMedia, setOpenMedia] = useAtom(val_open_edit_media);
+  const router = useRouter()
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -92,21 +93,9 @@ const DataProfileV2 = () => {
         }
       });
   }, []);
-  const [image, setImage] = useAtom(_dataImages);
+  const [image, setImage] = useAtom(_dataImagesData);
   const [gambarDataDiri, setGambarDataDiri] = useState<any | null>(null);
 
-  // useShallowEffect(() => {
-  //   fetch(api.apiDataDiriGetGambar + `?id=${image?.id}`)
-  //   .then(async (val) => {
-  //     if (val.status == 200) {
-  //       console.log(val)
-  //       // const data = await val.json()
-  //       // console.log(data);
-  //       // setGambarDataDiri(data);
-  //       return
-  //     }
-  //   })
-  // })
 
   return (
     <>
@@ -162,7 +151,7 @@ const DataProfileV2 = () => {
               </Box>
             </Center>
             {/* UPLOAD FOTO */}
-            <EditFoto />
+            <EditFoto  />
           </Box>
           <Box p={10}>
             <SimpleGrid

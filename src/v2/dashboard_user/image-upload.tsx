@@ -17,13 +17,15 @@ import {
 } from "@/model/interface_sumber_daya_partai";
 import { data } from "jquery";
 import { DataDiriImage } from "@/model/interface_upload";
+import { _dataImagesData } from "./profile";
 export const _image = atomWithStorage<DataDiriImage | null>("media", null);
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
+
 function ImageUpload({ keluar }: any) {
   const router = useRouter();
-  const [image, setImage] = useAtom(_dataImages);
+  const [image, setImage] = useAtom(_dataImagesData);
   const [valueAktif, setValueAktif] = useState<string>("");
   // const [dataImages, setDataImages] = useState({
   //   id: "",
