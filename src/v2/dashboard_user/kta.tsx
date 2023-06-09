@@ -115,6 +115,8 @@ const KTAV2 = () => {
                           align="flex-start"
                           direction="column"
                           wrap="wrap"
+                          pl={20}
+                          pt={25}
                         >
 
                            <Image
@@ -125,8 +127,7 @@ const KTAV2 = () => {
                             height={152}
                             alt="img"
                             radius={5}
-                            pl={20}
-                            pt={25}
+
                           />
                         </Flex>
                       </Grid.Col>
