@@ -38,6 +38,8 @@ import {
   _desa_CalonPP,
   _kabkot_CalonPP,
   _kecamatan_CalonPP,
+  _listData_CalonPemilihPotensial,
+  _loadDataCalonPemilihPotensial_BySearch,
   _provinsi_CalonPP,
   _selectDesa_CalonPP,
   _selectKabkot_CalonPP,
@@ -89,6 +91,10 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
   );
   const [dataDesa, setIsDesa] = useAtom(_desa_CalonPP);
   const [selectDesa, setSelectDesa] = useAtom(_selectDesa_CalonPP);
+  const [search, setSearch] = useState("");
+  const [listDataCPP, setListDataCPP] = useAtom(
+    _listData_CalonPemilihPotensial
+  );
 
   useShallowEffect(() => {
     _loadKategoriPemilihPotensial();
@@ -129,15 +135,16 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
       }
     }
     // console.log(dataKirim)
-    fetch(api.apiCPTPost, { method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-
-  },
-  body: JSON.stringify(dataKirim)
-  }).then(async (res) => {
+    fetch(api.apiCPTPost, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataKirim),
+    }).then(async (res) => {
       if (res.status == 201) {
-        // thisClosed();
+        thisClosed();
+        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP);
         return toast("Data Tersimpan");
       } else {
         return toast("Data Tidak Tersimpan");
@@ -177,325 +184,320 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               { maxWidth: 755, cols: 1, spacing: "xl" },
             ]}
           >
-            <Box
-              sx={{
-                backgroundColor: COLOR.abuabu,
-                borderRadius: 10,
-                padding: 30,
-              }}
-              pb={40}
-            >
-              <Box>
-                <Select
-                  data={sKategoriPemilihPotensial.value.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  placeholder="Pilih Kategori Calon Pemilik Potensial"
-                  label="Pilih Kategori Calon Pemilik Potensial"
-                  withAsterisk
-                  onChange={(val: any) =>
-                    setDataKirim({
-                      ...dataKirim,
-                      masterCalonPemilihPotensialId: val,
-                    })
-                  }
-                />
-                <Box sx={{ fontSize: 10 }} pl={10}>
-                  <Text>
-                    A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
-                  </Text>
-                  <Text>
-                    A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
-                  </Text>
-                  <Text>
-                    A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)
-                  </Text>
-                </Box>
-
-                <TextInput
-                  type="number"
-                  placeholder="NIK"
-                  label="NIK"
-                  withAsterisk
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      nik: val.target.value,
-                    });
-                  }}
-                />
-
-                <TextInput
-                  placeholder="Nama"
-                  label="Nama"
-                  withAsterisk
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      nama: val.target.value,
-                    });
-                  }}
-                />
-                <TextInput
-                  type="email"
-                  placeholder="Email"
-                  label="Email"
-                  withAsterisk
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      email: val.target.value,
-                    });
-                  }}
-                />
-
-                <Select
-                  label="Pilih Provinsi"
-                  searchable
-                  clearable
-                  withAsterisk
-                  data={dataProvinsi.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setSelectProvince(dataProvinsi.find((e) => e.id == val));
-                    setDataKirim({
-                      ...dataKirim,
-                      masterProvinceId: val as any,
-                    });
-                    _loadSelectKabkot(
-                      val as any,
-                      setIsKabupaten,
-                      setSelectKabupaten
-                    );
-                  }}
-                  value={selectProvinsi.name}
-                  placeholder={
-                    selectProvinsi.name ? selectProvinsi.name : "Pilih Provinsi"
-                  }
-                />
-                <Select
-                  label="Pilih Kabupaten / Kota"
-                  withAsterisk
-                  searchable
-                  clearable
-                  data={dataKabkot.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setSelectKabupaten(dataKabkot.find((e) => e.id === val));
-                    setDataKirim({
-                      ...dataKirim,
-                      masterKabKotId: val as any,
-                    });
-                    _loadSelectKecamatan(
-                      val as any,
-                      setIsKecamatan,
-                      setSelectKecamatan
-                    );
-                  }}
-                  value={
-                    selectKabkot.name
-                      ? selectKabkot.name
-                      : "Pilih Kabupaten / Kota"
-                  }
-                  placeholder={
-                    selectKabkot.name
-                      ? selectKabkot.name
-                      : "Pilih Kabupaten / Kota"
-                  }
-                />
-                {/* {JSON.stringify(typeof dataKabkot)} */}
-                <Select
-                  label="Pilih Kecamatan"
-                  searchable
-                  clearable
-                  withAsterisk
-                  data={
-                    _.isEmpty(dataKecamatan)
-                      ? []
-                      : dataKecamatan.map((e) => ({
-                          value: e.id,
-                          label: e.name,
-                        }))
-                  }
-                  onChange={(val) => {
-                    setSelectKecamatan(dataKecamatan.find((e) => e.id == val));
-                    setDataKirim({
-                      ...dataKirim,
-                      masterKecamatanId: val as any,
-                    });
-                    _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
-                  }}
-                  value={
-                    selectKecamatan.name
-                      ? selectKecamatan.name
-                      : "Pilih Kecamatan"
-                  }
-                  placeholder={
-                    selectKecamatan.name
-                      ? selectKecamatan.name
-                      : "Pilih Kecamatan"
-                  }
-                />
-
-                <Select
-                  label="Pilih Desa"
-                  withAsterisk
-                  searchable
-                  clearable
-                  data={dataDesa.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setSelectDesa(dataDesa.find((e) => e.id == val));
-                    setDataKirim({
-                      ...dataKirim,
-                      masterDesaId: val as any,
-                    });
-                  }}
-                  value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
-                  placeholder={selectDesa.name ? selectDesa.name : "Pilih Desa"}
-                />
-                <Select
-                  data={sListNoTPS.value.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  placeholder="NO TPS"
-                  label="TPS 01 -50"
-                  withAsterisk
-                  searchable
-                  clearable
-                  nothingFound="Tidak Ditemukan"
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      masterNomorUrutTPSId: val as any,
-                    });
-                  }}
-                />
+            <Box>
+              <Select
+                data={sKategoriPemilihPotensial.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                placeholder="Pilih Kategori Calon Pemilik Potensial"
+                label="Pilih Kategori Calon Pemilik Potensial"
+                withAsterisk
+                onChange={(val: any) =>
+                  setDataKirim({
+                    ...dataKirim,
+                    masterCalonPemilihPotensialId: val,
+                  })
+                }
+              />
+              <Box sx={{ fontSize: 10 }} pl={10}>
+                <Text>
+                  A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
+                </Text>
+                <Text>
+                  A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
+                </Text>
+                <Text>A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)</Text>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                backgroundColor: COLOR.abuabu,
-                borderRadius: 10,
-                padding: 30,
-              }}
-              pb={40}
-            >
-              <Box>
-                <Select
-                  label="Agama"
-                  placeholder="Pilih Agama"
-                  withAsterisk
-                  data={sAgama.value.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      masterAgamaId: val as any,
-                    });
-                  }}
-                />
-                <DateInput
-                  placeholder="Tanggal Lahir"
-                  label="Tanggal Lahir"
-                  withAsterisk
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      tanggalLahir: moment(val).format("YYYY-MM-DD"),
-                    });
-                  }}
-                />
-                <TextInput
-                  type="number"
-                  placeholder="Nomor Handphone"
-                  label="Nomor Handphone"
-                  withAsterisk
-                  onChange={(val: any) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      phoneNumber: val.target.value,
-                    });
-                  }}
-                />
-                <Select
-                  data={sListPekerjaan.value.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      masterPekerjaanId: val as any,
-                    });
-                  }}
-                  placeholder="Pekerjaan"
-                  label="Pekerjaan"
-                  clearable
-                  nothingFound="Tidak Ditemukan"
-                  searchable
-                  withAsterisk
-                />
 
-                <Select
-                  data={sJenisKelamin.value.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))}
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      masterJenisKelaminId: val as any,
-                    });
-                  }}
-                  placeholder="Jenis Kelamin"
-                  label="Jenis Kelamin"
-                  withAsterisk
-                />
-                <TextInput
-                  placeholder="Alamat"
-                  label="Alamat"
-                  withAsterisk
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      alamat: val.target.value,
-                    });
-                  }}
-                />
-                <Select
-                  label="Pendidikan"
-                  placeholder="Pendidikan terakhir"
-                  data={["SD", "SMP", "SMA / SMK", "Perguruan Tinggi"]}
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      pendidikan: val as any,
-                    });
-                  }}
-                />
-                <Select
-                  label="Status Sosial"
-                  placeholder="Pilih Status Sosial"
-                  data={["Menengah Kebawah", "Menengah Keatas", "Berkecukupan"]}
-                  onChange={(val) => {
-                    setDataKirim({
-                      ...dataKirim,
-                      statusSosial: val as any,
-                    });
-                  }}
-                />
-                {/* <TextInput
+              <TextInput
+                type="number"
+                placeholder="NIK"
+                label="NIK"
+                withAsterisk
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    nik: val.target.value,
+                  });
+                }}
+              />
+
+              <TextInput
+                placeholder="Nama"
+                label="Nama"
+                withAsterisk
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    nama: val.target.value,
+                  });
+                }}
+              />
+              <TextInput
+                type="email"
+                placeholder="Email"
+                label="Email"
+                withAsterisk
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    email: val.target.value,
+                  });
+                }}
+              />
+
+              <Select
+                label="Pilih Provinsi"
+                searchable
+                clearable
+                withAsterisk
+                data={
+                  _.isEmpty(dataProvinsi)
+                    ? []
+                    : dataProvinsi.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))
+                }
+                onChange={(val) => {
+                  setSelectProvince(dataProvinsi.find((e) => e.id == val));
+                  setDataKirim({
+                    ...dataKirim,
+                    masterProvinceId: val as any,
+                  });
+                  _loadSelectKabkot(
+                    val as any,
+                    setIsKabupaten,
+                    setSelectKabupaten
+                  );
+                }}
+                value={selectProvinsi.name}
+                placeholder={
+                  selectProvinsi.name ? selectProvinsi.name : "Pilih Provinsi"
+                }
+              />
+              <Select
+                label="Pilih Kabupaten / Kota"
+                withAsterisk
+                searchable
+                clearable
+                data={
+                  _.isEmpty(dataKabkot)
+                    ? []
+                    : dataKabkot.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))
+                }
+                onChange={(val) => {
+                  setSelectKabupaten(dataKabkot.find((e) => e.id === val));
+                  setDataKirim({
+                    ...dataKirim,
+                    masterKabKotId: val as any,
+                  });
+                  _loadSelectKecamatan(
+                    val as any,
+                    setIsKecamatan,
+                    setSelectKecamatan
+                  );
+                }}
+                value={
+                  selectKabkot.name
+                    ? selectKabkot.name
+                    : "Pilih Kabupaten / Kota"
+                }
+                placeholder={
+                  selectKabkot.name
+                    ? selectKabkot.name
+                    : "Pilih Kabupaten / Kota"
+                }
+              />
+              {/* {JSON.stringify(typeof dataKabkot)} */}
+              <Select
+                label="Pilih Kecamatan"
+                searchable
+                clearable
+                withAsterisk
+                data={
+                  _.isEmpty(dataKecamatan)
+                    ? []
+                    : dataKecamatan.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))
+                }
+                onChange={(val) => {
+                  setSelectKecamatan(dataKecamatan.find((e) => e.id == val));
+                  setDataKirim({
+                    ...dataKirim,
+                    masterKecamatanId: val as any,
+                  });
+                  _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
+                }}
+                value={
+                  selectKecamatan.name
+                    ? selectKecamatan.name
+                    : "Pilih Kecamatan"
+                }
+                placeholder={
+                  selectKecamatan.name
+                    ? selectKecamatan.name
+                    : "Pilih Kecamatan"
+                }
+              />
+
+              <Select
+                label="Pilih Desa"
+                withAsterisk
+                searchable
+                clearable
+                data={
+                  _.isEmpty(dataDesa)
+                    ? []
+                    : dataDesa.map((e) => ({
+                        value: e.id,
+                        label: e.name,
+                      }))
+                }
+                onChange={(val) => {
+                  setSelectDesa(dataDesa.find((e) => e.id == val));
+                  setDataKirim({
+                    ...dataKirim,
+                    masterDesaId: val as any,
+                  });
+                }}
+                value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
+                placeholder={selectDesa.name ? selectDesa.name : "Pilih Desa"}
+              />
+              <Select
+                data={sListNoTPS.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                placeholder="NO TPS"
+                label="TPS 01 -50"
+                withAsterisk
+                searchable
+                clearable
+                nothingFound="Tidak Ditemukan"
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    masterNomorUrutTPSId: val as any,
+                  });
+                }}
+              />
+            </Box>
+
+            {/* Form di kanan */}
+            <Box>
+              <Select
+                label="Agama"
+                placeholder="Pilih Agama"
+                withAsterisk
+                data={sAgama.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    masterAgamaId: val as any,
+                  });
+                }}
+              />
+              <DateInput
+                placeholder="Tanggal Lahir"
+                label="Tanggal Lahir"
+                withAsterisk
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    tanggalLahir: moment(val).format("YYYY-MM-DD"),
+                  });
+                }}
+              />
+              <TextInput
+                type="number"
+                placeholder="Nomor Handphone"
+                label="Nomor Handphone"
+                withAsterisk
+                onChange={(val: any) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    phoneNumber: val.target.value,
+                  });
+                }}
+              />
+              <Select
+                data={sListPekerjaan.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    masterPekerjaanId: val as any,
+                  });
+                }}
+                placeholder="Pekerjaan"
+                label="Pekerjaan"
+                clearable
+                nothingFound="Tidak Ditemukan"
+                searchable
+                withAsterisk
+              />
+
+              <Select
+                data={sJenisKelamin.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    masterJenisKelaminId: val as any,
+                  });
+                }}
+                placeholder="Jenis Kelamin"
+                label="Jenis Kelamin"
+                withAsterisk
+              />
+              <TextInput
+                placeholder="Alamat"
+                label="Alamat"
+                withAsterisk
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    alamat: val.target.value,
+                  });
+                }}
+              />
+              <Select
+                label="Pendidikan"
+                placeholder="Pendidikan terakhir"
+                data={["SD", "SMP", "SMA / SMK", "Perguruan Tinggi"]}
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    pendidikan: val as any,
+                  });
+                }}
+              />
+              <Select
+                label="Status Sosial"
+                placeholder="Pilih Status Sosial"
+                data={["Menengah Kebawah", "Menengah Keatas", "Berkecukupan"]}
+                onChange={(val) => {
+                  setDataKirim({
+                    ...dataKirim,
+                    statusSosial: val as any,
+                  });
+                }}
+              />
+              {/* <TextInput
                   placeholder="Facebook"
                   label="Facebook"
                   onChange={(val) => {}}
@@ -503,23 +505,22 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 <TextInput placeholder="Instargram" label="Instargram" />
                 <TextInput placeholder="TikTok" label="TikTok" />
                 <TextInput placeholder="Twitter" label="Twitter" /> */}
-                <Center>
-                  <Box mt={50}>
-                    <Button
-                      w={100}
-                      color="orange.9"
-                      bg={COLOR.orange}
-                      radius={"xl"}
-                      onClick={() => {
-                        // buttonSimpan();
-                        onCreate();
-                      }}
-                    >
-                      Simpan
-                    </Button>
-                  </Box>
-                </Center>
-              </Box>
+              <Center>
+                <Box mt={50}>
+                  <Button
+                    w={100}
+                    color="orange.9"
+                    bg={COLOR.orange}
+                    radius={"xl"}
+                    onClick={() => {
+                      // buttonSimpan();
+                      onCreate();
+                    }}
+                  >
+                    Simpan
+                  </Button>
+                </Box>
+              </Center>
             </Box>
           </SimpleGrid>
         </Box>

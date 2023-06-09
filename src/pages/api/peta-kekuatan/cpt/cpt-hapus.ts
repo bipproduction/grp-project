@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const calonPemilihPotensialHapus = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { id } = req.query
+    
     await client.calonPemilihPotensial.update({
         where: {
             id: id as string
