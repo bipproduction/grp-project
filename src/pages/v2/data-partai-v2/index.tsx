@@ -52,16 +52,6 @@ function DataPartaiV2() {
   const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
-  let ada
-  const dataDiri = fetch(api.apiSumberDayaPartaiGetByUser + `?id=${localStorage.getItem("user_id")}`)
-  .then(async (res) => {
-
-      if (res.status === 200) {
-          router.push("/v2/home");
-          ada=1;
-      }
-  });
-  if(isEmpty(ada))return<></>
 
   function StrukturPartai() {
     router.push("/v2/data-partai-v2/struktur-partai-v2");

@@ -106,6 +106,7 @@ const TableStruktutPartaiV2 = () => {
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur);
     // loadDataStatus();
+    
   },[]);
 
   function onSearch(text: string) {
