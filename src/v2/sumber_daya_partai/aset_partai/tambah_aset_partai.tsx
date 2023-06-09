@@ -123,8 +123,10 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
       if (res.status == 201) {
         thisClosed();
         // _loadListDataAset(setDataAset);
+
         _loadDataAset_BySearch(search, setDataAset_Search)
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data aset partai")
+
         return toast("Berhasil");
       } else {
         if (res.status == 209) {
@@ -133,7 +135,6 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
         return toast("Gagal");
       }
     });
-
 
     // thisClosed();
   };
@@ -279,29 +280,6 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                     })
                   }
                 />
-                <TextInput
-                  placeholder="Garansi"
-                  label="Garansi"
-                  withAsterisk
-                  onChange={(val) =>
-                    setDataKirim({
-                      ...dataKirim,
-                      garansi: val.currentTarget.value,
-                    })
-                  }
-                />
-
-                <Group position="left" pt={20}>
-                  <Button
-                    w={100}
-                    color="orange.9"
-                    bg={COLOR.orange}
-                    radius={"xl"}
-                    onClick={onCreate}
-                  >
-                    Simpan
-                  </Button>
-                </Group>
               </Flex>
             </Box>
             <Box>
@@ -366,6 +344,29 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   }
                 />
               </Flex>
+              <TextInput
+                placeholder="Garansi"
+                label="Garansi"
+                withAsterisk
+                onChange={(val) =>
+                  setDataKirim({
+                    ...dataKirim,
+                    garansi: val.currentTarget.value,
+                  })
+                }
+              />
+
+              <Group position="center" pt={25}>
+                <Button
+                  w={100}
+                  color="orange.9"
+                  bg={COLOR.orange}
+                  radius={"xl"}
+                  onClick={onCreate}
+                >
+                  Simpan
+                </Button>
+              </Group>
             </Box>
           </SimpleGrid>
         </Box>

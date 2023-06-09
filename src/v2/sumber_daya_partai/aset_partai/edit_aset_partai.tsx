@@ -15,6 +15,8 @@ import {
   Text,
   TextInput,
   Textarea,
+  rem,
+  useMantineTheme,
 } from "@mantine/core";
 import { AiOutlineUpload } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
@@ -48,7 +50,12 @@ import {
 } from "@/load_data/sumber_daya_partai/load_aset_partai";
 import moment from "moment";
 import { _listData_AsetPartai } from "@/load_data/sumber_daya_partai/load_aset_partai";
+
+import { Dropzone } from "@mantine/dropzone";
+import { RiEjectLine } from "react-icons/ri";
+import { MdAssistantPhoto } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+
 
 const EditAsetPartaiV2 = ({
   thisClosed,
@@ -104,7 +111,7 @@ const EditAsetPartaiV2 = ({
     },
   });
 
-  const onEditLampiran = () => {
+  const onEditAset = () => {
     // console.log(formEditAset.values.data);
     const body = {
       id: targetEdit?.id,
@@ -153,6 +160,7 @@ const EditAsetPartaiV2 = ({
       // });
     }
   };
+  const theme = useMantineTheme();
   if (!targetEdit)
     return (
       <>
@@ -173,33 +181,38 @@ const EditAsetPartaiV2 = ({
             </Grid.Col>
           </Grid>
         </Paper>
-        <Group position="left" pt={20}>
-          <Button
-            w={100}
-            color="orange.9"
-            bg={COLOR.orange}
-            radius={"xl"}
-            onClick={() => {
-              onEditLampiran();
-            }}
-          >
-            Simpan
-          </Button>
-        </Group>
+
         <Box>
           <Grid>
             <Grid.Col span={"auto"}>
               <Box pt={20}>
                 <Paper bg={"gray.4"} p={20}>
-                  <Image
+                  {/* <Image
                     maw={300}
                     mx="auto"
                     radius="md"
                     src="/v2/image/mobil.jpg"
                     alt="Random image"
-                  />
+                  /> */}
+                  <Dropzone
+                    onDrop={(file) => {
+                      const form = new FormData();
+                    }}
+                    onReject={(files) => {
+                      console.log("Reject Files", files);
+                    }}
+                  >
+                    <Group
+                      position="center"
+                      spacing="xl"
+                      style={{ minHeight: rem(200), pointerEvents: "none" }}
+                    >
+                      <Dropzone.Accept>Masuk</Dropzone.Accept>
+                      <Dropzone.Reject>Gagal</Dropzone.Reject>
+                    </Group>
+                  </Dropzone>
                   <Group position="center" pt={20}>
-                    <Button
+                    {/* <Button
                       w={150}
                       color="orange.9"
                       bg={COLOR.orange}
@@ -208,7 +221,7 @@ const EditAsetPartaiV2 = ({
                       onClick={() => {}}
                     >
                       Unggah Foto
-                    </Button>
+                    </Button> */}
                   </Group>
                 </Paper>
               </Box>
@@ -309,16 +322,6 @@ const EditAsetPartaiV2 = ({
                             setTargetEdit(data);
                           }}
                         />
-                        <TextInput
-                          label="Garansi"
-                          withAsterisk
-                          value={targetEdit.garansi}
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.garansi = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
                       </Grid.Col>
                       <Grid.Col span={6}>
                         <Select
@@ -392,6 +395,29 @@ const EditAsetPartaiV2 = ({
                             setTargetEdit(data);
                           }}
                         />
+                        <TextInput
+                          label="Garansi"
+                          withAsterisk
+                          value={targetEdit.garansi}
+                          onChange={(val) => {
+                            const data = _.clone(targetEdit);
+                            data.garansi = val.target.value;
+                            setTargetEdit(data);
+                          }}
+                        />
+                        <Group position="center" pt={25}>
+                          <Button
+                            w={100}
+                            color="orange.9"
+                            bg={COLOR.orange}
+                            radius={"xl"}
+                            onClick={() => {
+                              onEditAset();
+                            }}
+                          >
+                            Simpan
+                          </Button>
+                        </Group>
                       </Grid.Col>
                     </Grid>
                   </Tabs.Panel>

@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  Center,
   Flex,
   Group,
   Modal,
@@ -55,7 +56,7 @@ const TableViewAsetV2 = () => {
       <th>Tanggal Pembelian</th>
       <th>Lokasi Pembelian</th>
       <th>Garansi</th>
-      <th>Aksi</th>
+      <th><Center>Aksi</Center></th>
     </tr>
   );
 
@@ -76,7 +77,7 @@ const TableViewAsetV2 = () => {
       <td>{e.garansi}</td>
 
       <td>
-        <Group position="right">
+        <Group position="center">
           <Button
             variant={"outline"}
             color={"green"}
@@ -115,7 +116,7 @@ const TableViewAsetV2 = () => {
       </Modal>
       <Box>
         <ScrollArea py={20}>
-          <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
+          <Table withBorder highlightOnHover horizontalSpacing={"md"} >
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
