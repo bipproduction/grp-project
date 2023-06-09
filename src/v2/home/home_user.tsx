@@ -666,6 +666,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
 
 export function ModalLogout({ thisClosed }: any) {
   const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
+  const [image, setImage] = useAtom(_dataImages);
 
   return (
     <>
@@ -705,6 +706,7 @@ export function ModalLogout({ thisClosed }: any) {
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                   setOpenLogout(false);
+                  setImage(null)
                 }}
               >
                 YA

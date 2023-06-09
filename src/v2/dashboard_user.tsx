@@ -41,7 +41,7 @@ import { useHookstate } from "@hookstate/core";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
 import KTAV2 from "./dashboard_user/kta";
-import DataProfileV2 from "./dashboard_user/profile";
+import DataProfileV2, { _datapartai_form, _datapartai_user } from "./dashboard_user/profile";
 import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
@@ -91,6 +91,8 @@ const LayoutDashboardV2 = () => {
   const [openednya, setOpenedNya] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [image, setImage] = useAtom(_dataImages);
+  const [listData2, setListData2] = useAtom(_datapartai_user);
+  const [listData, setListData] = useAtom(_datapartai_form);
 
 
   const [select, setSelect] = useState("Data Profile");
@@ -137,6 +139,8 @@ const LayoutDashboardV2 = () => {
                   _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
                   localStorage.removeItem("user_id");
                   sUser.value = {};
+                  setListData(null)
+                  setListData2(null)
                 }}
               >
                 YA
