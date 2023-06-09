@@ -59,6 +59,7 @@ import { sAgama } from "@/s_state/sumber_daya_partai/s_agama";
 import { _loadAgama } from "@/load_data/load_agama";
 import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const TambahCPTV2 = ({ thisClosed }: any) => {
   const [kerja, setKerja] = useState<any[]>([]);
@@ -145,6 +146,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
       if (res.status == 201) {
         thisClosed();
         _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP);
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data calon pemilih potensial");
         return toast("Data Tersimpan");
       } else {
         return toast("Data Tidak Tersimpan");
