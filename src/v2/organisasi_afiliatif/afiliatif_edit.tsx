@@ -29,6 +29,7 @@ import { api } from "@/lib/api-backend";
 import { buttonSimpan } from "../component/button-toast";
 import toast from "react-simple-toasts";
 import { json } from "stream/consumers";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const AfiliatifEditV2 = ({
   setId,
@@ -71,6 +72,7 @@ export const AfiliatifEditV2 = ({
         const data = await res.json();
         if (data.success) {
           return toast(data.message);
+          _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data organisasi afiliatif")
         }
         return toast("Gagal Update");
       }
