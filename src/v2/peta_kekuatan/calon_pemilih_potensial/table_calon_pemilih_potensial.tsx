@@ -28,6 +28,7 @@ import { ModelCalonPemilihPotensial } from "@/model/interface_calon_pemilih_pote
 import { FiAlertCircle } from "react-icons/fi";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const TableCPTV2 = () => {
   const [listDataCPP, setListDataCPP] = useAtom(
@@ -125,6 +126,7 @@ function DeleteButton({ setId, search, setListDataCPP }: { setId: ModelCalonPemi
       if (res.status === 200) {
         toast("Hapus Data")
         _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP)
+        _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data calon pemilih potensial")
       } else {
         toast("Gagal Hapus")
       }

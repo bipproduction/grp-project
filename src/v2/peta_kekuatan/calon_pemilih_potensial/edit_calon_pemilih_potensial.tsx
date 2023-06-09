@@ -78,6 +78,7 @@ import { _new_loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { _sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import toast from "react-simple-toasts";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
   const [dataEdit, setDataEdit] = useState<ModelCalonPemilihPotensial | null>(
@@ -180,6 +181,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
       if (res.status === 201) {
         thisClosed();
         _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP);
+        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data calon pemilih potensial")
         return buttonSimpan();
       } else {
         return toast("Gagal Update");

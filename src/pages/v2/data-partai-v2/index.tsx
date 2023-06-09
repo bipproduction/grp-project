@@ -13,14 +13,14 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 import { useRouter } from "next/router";
 import {
   IoArrowForwardCircleOutline,
   IoChevronDownCircle,
 } from "react-icons/io5";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import KaderPartai from "./kader-partai";
 import AngotaPartaiV2 from "./angota-partai";
 import { useAtom } from "jotai";
@@ -65,9 +65,30 @@ function DataPartaiV2() {
   function Afiliatif() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
   }
+
+
+  const [ada, setAda] = useState<boolean | null>(null)
+  useShallowEffect(() => {
+    loadData()
+  }, [])
+
+  async function loadData() {
+    const dataUserPartai = await fetch(api.apiSumberDayaPartaiGetByUser + `?user=${localStorage.getItem("user_id")}`)
+
+    if (dataUserPartai.status == 200) {
+      setAda(true)
+      router.push("/v2/home")
+    } else {
+      setAda(false)
+    }
+  }
+
+  // console.log(ada);
+
+  if (ada == null || ada == true) return <></>
   return (
     <>
-    <LayoutDataPartaiV2>
+      <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
@@ -132,7 +153,7 @@ function DataPartaiV2() {
             {/* Anggota Partai */}
           </Stack>
         </Box>
-    </LayoutDataPartaiV2>
+      </LayoutDataPartaiV2>
 
     </>
   );

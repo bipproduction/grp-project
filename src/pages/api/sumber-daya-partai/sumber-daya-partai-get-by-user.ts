@@ -1,8 +1,10 @@
 import client from "@/lib/prisma";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const sumberDayaPartaiGetByUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const { user } = req.query
+    //console.log(user)
     const data = await client.sumberDayaPartai.findMany({
         where: {
             userId: user as any
@@ -187,8 +189,8 @@ const sumberDayaPartaiGetByUser = async (req: NextApiRequest, res: NextApiRespon
             
         }
     })
-
-    if (!data) return res.status(204).end()
+    //console.log(data)
+    if (_.isEmpty(data)) return res.status(204).end()
 
     return res.status(200).json(data)
 }

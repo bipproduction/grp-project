@@ -30,6 +30,12 @@ const sumberDayaPartaiSearch = async (
         waAdmin: true,
         User: {
           select: {
+            MasterUserRole: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
             id: true,
             email: true,
             DataDiri: {
@@ -227,6 +233,12 @@ const sumberDayaPartaiSearch = async (
         waAdmin: true,
         User: {
           select: {
+            MasterUserRole: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
             id: true,
             email: true,
             DataDiri: {
