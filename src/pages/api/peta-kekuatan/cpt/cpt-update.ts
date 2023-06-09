@@ -4,6 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 const calonPemilihPotensialUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         let body = req.body
+        // console.log(body)
+        
 
         //cek nik
         const datanik = await client.calonPemilihPotensial.findUnique({
@@ -22,7 +24,6 @@ const calonPemilihPotensialUpdate = async (req: NextApiRequest, res: NextApiResp
         if (datanik && datanik.id != body.id) return res.status(209).json({ success: false, message: "NIK telah digunakan" })
         if (dataemail && dataemail.id != body.id) return res.status(209).json({ success: false, message: "Email telah digunakan" })
 
-        body.tanggalLahir = new Date(body.tanggalLahir)
 
         await client.calonPemilihPotensial.update({
             where: {
@@ -41,7 +42,7 @@ const calonPemilihPotensialUpdate = async (req: NextApiRequest, res: NextApiResp
                 nik: body.nik,
                 nama: body.nama,
                 email: body.email,
-                tanggalLahir: body.tanggalLahir,
+                tanggalLahir: new Date(body.tanggalLahir),
                 phoneNumber: body.phoneNumber,
                 alamat: body.alamat,
                 statusSosial: body.statusSosial,

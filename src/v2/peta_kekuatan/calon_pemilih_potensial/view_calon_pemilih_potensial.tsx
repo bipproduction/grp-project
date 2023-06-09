@@ -23,18 +23,29 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import { ModelCalonPemilihPotensial } from "@/model/interface_calon_pemilih_potensial";
+import { useAtom } from "jotai";
+import {
+  _listData_CalonPemilihPotensial,
+  _loadDataCalonPemilihPotensial_BySearch,
+  _searchData_CalonPemilihPotensial,
+} from "@/load_data/peta_kekuatan/load_calon_pemilih_potensial";
 
 export const ViewCalonPemilihPotensialV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [listDataCPP, setListDataCPP] = useState<ModelCalonPemilihPotensial[]>(
-    []
+  const [listDataCPP, setListDataCPP] = useAtom(
+    _listData_CalonPemilihPotensial
   );
+  const [inputSearch, setInputSearch] = useAtom(_searchData_CalonPemilihPotensial)
 
   useShallowEffect(() => {
     // _loadDataCalonPemilihPotensial("");
+    onSearch('');
   }, []);
 
-
+  const onSearch = (inputSearch: string) => {
+    _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP);
+    setInputSearch(inputSearch)
+  };
 
   return (
     <>
@@ -86,7 +97,7 @@ export const ViewCalonPemilihPotensialV2 = () => {
             </Grid.Col> */}
           </Grid>
         </Paper>
-        <Box >
+        <Box>
           <Box pt={20}>
             <Grid>
               <Grid.Col md={4} lg={4}>
@@ -95,6 +106,9 @@ export const ViewCalonPemilihPotensialV2 = () => {
                   icon={<AiOutlineSearch size={20} />}
                   placeholder="Search"
                   radius={"md"}
+                  onChange={(val) => {
+                    onSearch(val.target.value);
+                  }}
                 />
               </Grid.Col>
               <Grid.Col md={8} lg={8}>
