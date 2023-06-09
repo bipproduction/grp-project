@@ -34,6 +34,7 @@ import {
 } from "@/s_state/sumber_daya_partai/s_aset";
 import { api } from "@/lib/api-backend";
 import moment from "moment";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
   const [dataAset, setDataAset] = useAtom(_listData_AsetPartai);
@@ -123,6 +124,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
         thisClosed();
         // _loadListDataAset(setDataAset);
         _loadDataAset_BySearch(search, setDataAset_Search)
+        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data aset partai")
         return toast("Berhasil");
       } else {
         if (res.status == 209) {

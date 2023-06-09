@@ -48,6 +48,7 @@ import {
 } from "@/load_data/sumber_daya_partai/load_aset_partai";
 import moment from "moment";
 import { _listData_AsetPartai } from "@/load_data/sumber_daya_partai/load_aset_partai";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditAsetPartaiV2 = ({
   thisClosed,
@@ -139,6 +140,7 @@ const EditAsetPartaiV2 = ({
           if (data.success) {
             thisClosed();
             _loadDataAset_BySearch(inputSearch, setDataAset_Search);
+            _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data aset partai")
             return toast("Data Terupdate ");
           }
           return toast("Gagal Update");
