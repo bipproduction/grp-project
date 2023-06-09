@@ -39,6 +39,7 @@ import {
 } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { _loadData_ByStatus_BySeachSuper, _loadData_ByStatus_BySeachSuperAdmin, _searchDataSumberDayaPartaiSuperAdmin } from "@/load_data/super_admin/load_sumber_data_super_admin";
+import { sUser } from "@/s_state/s_user";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -46,7 +47,7 @@ const TableAnggotaPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
 
-  const [dataKader, setDataKader] = useAtom(_dataAnggota);
+  const [dataAnggota, setDataAnggota] = useAtom(_dataAnggota);
   const [dataTabel, setTabel] = useAtom(_dataAnggotaSearch);
   const [valueAktif, setValueAktif] = useState<string>("");
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
@@ -56,7 +57,7 @@ const TableAnggotaPartaiV2 = () => {
 
 
   useShallowEffect(() => {
-    _loadDataStruktur_ByIdStatus(4, setDataKader);
+    _loadDataStruktur_ByIdStatus(4, setTabel);
     // loadDataStatus();
   },[]);
 
@@ -76,7 +77,7 @@ const TableAnggotaPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success");
+        toast("Success Menjadi Admin");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",
@@ -105,7 +106,7 @@ const TableAnggotaPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success");
+        toast("Success Menjadi User");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",
@@ -124,7 +125,7 @@ const TableAnggotaPartaiV2 = () => {
   }, []);
 
   function onSearch(search: string) {
-    _loadData_ByStatus_BySeachSuper(4, search, setDataKader);
+    _loadData_ByStatus_BySeachSuper(4, search, setTabel);
     setInputSearch(search)
   }
   console.log(onSearch)
@@ -167,7 +168,7 @@ const TableAnggotaPartaiV2 = () => {
               icon={<AiOutlineSearch size={20} />}
               placeholder="Search"
               radius={"md"}
-              onChange={(val) => onSearch(val.currentTarget.value)}
+              // onChange={(val) => onSearch(val.currentTarget.value)}
             />
           </Grid.Col>
         </Grid>
@@ -176,7 +177,7 @@ const TableAnggotaPartaiV2 = () => {
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
               <thead>{tbHead}</thead>
               <tbody>
-                {dataKader.map((e, i) => (
+                {dataTabel.map((e, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{e.User.DataDiri.name}</td>

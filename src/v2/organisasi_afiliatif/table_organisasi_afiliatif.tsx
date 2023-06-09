@@ -29,6 +29,7 @@ import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const TableOrganisasiAfiliatifV2 = () => {
   // const [editAfiliatif, setEditAfiliatif] = useAtom(_dataAfiliatif);
@@ -52,6 +53,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
           const data = await res.json();
           if (data.success) {
             return data.message;
+            _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data organisasi afiliatif")
           }
           return toast("Gagal");
         }

@@ -27,6 +27,7 @@ import moment from "moment";
 import toast from "react-simple-toasts";
 import { FiAlertCircle } from "react-icons/fi";
 import COLOR from "../../../../fun/WARNA";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const TableViewAsetV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -145,6 +146,7 @@ function DeleteDataAset({
       if (res.status === 200) {
         toast("Hapus Data");
         _loadDataAset_BySearch(search, setDataAset_Search);
+        _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data aset partai")
       }
     });
   };

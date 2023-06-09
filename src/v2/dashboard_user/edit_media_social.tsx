@@ -117,6 +117,7 @@ function EditMediaSocial({ keluarMedia }: any) {
                   <TextInput
                     radius={"md"}
                     mt={10}
+                    placeholder={e.name}
                     value={e.name}
                     label={e.MasterMediaSocial.name}
                     onChange={(val) => {
