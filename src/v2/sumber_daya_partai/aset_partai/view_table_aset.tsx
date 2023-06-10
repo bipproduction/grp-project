@@ -120,9 +120,9 @@ const TableViewAsetV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Group position="right" pt={10}>
+          {/* <Group position="right" pt={10}>
             <Pagination total={10} color={"orange"} />
-          </Group>
+          </Group> */}
         </ScrollArea>
       </Box>
     </>

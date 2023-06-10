@@ -78,6 +78,15 @@ export const _loadMaster_Kategori = async (
     });
 };
 
+// Get One Data by id
+export const _loadEdit_Aset = atomWithStorage<ModelAsetPartai | null>("_loadEditAset",null)
+export const _loadEditAsetPartai_ById = async (id: string, setTargetEdit: any) => {
+  await fetch(api.apiAsetPartaiGetOne + `?id=${id}`)
+    .then((res) => res.json())
+    .then((val) => setTargetEdit(val));
+};
+
+
 // Get Master with signal
 export const _loadKategoriAset = () =>
   fetch(apiGetMaster.apiGetKategoriAset)
