@@ -80,6 +80,7 @@ const TableSayapPartaiV2 = () => {
           "UBAH",
           "User mengaktifkan status admin"
         );
+        _loadData_ByStatus_BySeachSuper(2, inputSearch, setDataSayap)
       } else {
         toast("Gagal");
       }
@@ -109,6 +110,7 @@ const TableSayapPartaiV2 = () => {
           "UBAH",
           "User menonaktifkan status admin"
         );
+        _loadData_ByStatus_BySeachSuper(2, inputSearch, setDataSayap)
       } else {
         toast("Gagal");
       }
@@ -120,7 +122,7 @@ const TableSayapPartaiV2 = () => {
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(2, setDataSayap);
     // loadDataStatus();
-  },[]);
+  }, []);
 
   const onSearch = (search: string) => {
     _loadData_ByStatus_BySeachSuper(2, search, setDataSayap)
