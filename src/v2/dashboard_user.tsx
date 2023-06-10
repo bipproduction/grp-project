@@ -93,6 +93,7 @@ const LayoutDashboardV2 = () => {
   const [image, setImage] = useAtom(_dataImages);
   const [listData2, setListData2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_datapartai_form);
+  const [listData1, setListData1] = useAtom(_datapartai_form);
 
 
   const [select, setSelect] = useState("Data Profile");
@@ -141,6 +142,7 @@ const LayoutDashboardV2 = () => {
                   sUser.value = {};
                   setListData(null)
                   setListData2(null)
+                  setListData1(null)
                 }}
               >
                 YA

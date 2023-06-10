@@ -52,6 +52,8 @@ const KTAV2 = () => {
           const data = await val.json();
           setListData1(data);
           return;
+        }else{
+          setListData1(null)
         }
       });
   }

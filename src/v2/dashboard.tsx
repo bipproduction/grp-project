@@ -23,6 +23,7 @@ import {
   Tooltip,
   Modal,
   Alert,
+  Stack,
 } from "@mantine/core";
 import SumberDayaPartai from "@/layout/sumber_daya_partai/sumber_daya_partai";
 import StrukturPartai from "@/layout/sumber_daya_partai/struktur_partai/struktur_partai";
@@ -82,7 +83,14 @@ import { useRouter } from "next/router";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { api } from "@/lib/api-backend";
+import { DataDiri } from "@prisma/client";
+import { atomWithStorage } from "jotai/utils";
+import { useAtom } from "jotai";
+import { _datapartai_form, _datapartai_user } from "./dashboard_user/profile";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
+export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+
 
 const listSidebar = [
   {
@@ -208,6 +216,12 @@ const DashboardAdminV2 = () => {
   const [opened, setOpened] = useState(false);
   const [open, setOpen] = useDisclosure(false);
   const [select, setSelect] = useState("Dashboard");
+  const [image, setImage] = useAtom(_dataImages);
+  const [listData2, setListData2] = useAtom(_datapartai_user);
+  const [listData, setListData] = useAtom(_datapartai_form);
+  const [listData1, setListData1] = useAtom(_datapartai_form);
+
+
 
   const lSelectedPage = useHookstate(gSelectedPage);
   // const SelectedView = signal<string>('');
@@ -230,7 +244,12 @@ const DashboardAdminV2 = () => {
   }
   return (
     <>
-      <Modal opened={open} onClose={setOpen.close} centered withCloseButton={false}>
+      <Modal
+        opened={open}
+        onClose={setOpen.close}
+        centered
+        withCloseButton={false}
+      >
         {/* localStorage.removeItem("user_id");
                             sUser.value = {}; */}
         <Alert
@@ -240,7 +259,12 @@ const DashboardAdminV2 = () => {
         >
           <Group pt={10}>
             <Box w={150}>
-              <Button fullWidth color="red.9" bg={COLOR.merah} onClick={setOpen.close}>
+              <Button
+                fullWidth
+                color="red.9"
+                bg={COLOR.merah}
+                onClick={setOpen.close}
+              >
                 TIDAK
               </Button>
             </Box>
@@ -250,9 +274,16 @@ const DashboardAdminV2 = () => {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
-                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
+                  _postLogUser(
+                    localStorage.getItem("user_id"),
+                    "LOGOUT",
+                    "User logout"
+                  );
                   localStorage.removeItem("user_id");
                   sUser.value = {};
+                  setListData(null)
+                  setListData2(null)
+                  setListData1(null)
                 }}
               >
                 YA
@@ -359,41 +390,59 @@ const DashboardAdminV2 = () => {
                       RESOURCE PLANNING
                     </Text>
                   </Flex>
+                  <Group pr={20}>
+                    <Menu position="bottom-end" withArrow>
+                      <Menu.Target>
+                        <Tooltip label="Profile">
+                          <Group style={{ cursor: "pointer" }}>
+                            <Avatar
+                              src={
+                                api.apiDataDiriGetGambar + `?id=${image?.id}`
+                              }
+                              alt="it's me"
+                              radius={"xl"}
+                              color="indigo"
+                            />
+                          </Group>
+                        </Tooltip>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {/* <Menu.Item> */}
+                        <Stack bg={COLOR.merah} spacing={"xs"} p={12}>
+                          <Group spacing={0}>
+                            <AiOutlineUser color="white" size="1.3rem" />
+                            <Text c={"white"} fw={700} pl={10}>
+                              {sUser.value?.username}
+                            </Text>
+                          </Group>
 
-                  <Menu position="bottom-end" withArrow>
-                    <Menu.Target>
-                      <Group style={{ cursor: "pointer" }}>
-                        <Avatar radius="xl" />
-                      </Group>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Item>
-                        <Group>
-                          <AiOutlineUser color="black" size="1.3rem" />
-                          <Text fw={700}>{sUser.value?.username}</Text>
-                        </Group>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Group>
-                          <MdAlternateEmail color="black" size="1.3rem" />
-
-                          <Text>{sUser.value?.email}</Text>
-                        </Group>
-                      </Menu.Item>
-                      <Menu.Divider />
-                      <Menu.Item>
-                        <Group
-                          onClick={() => {
-                            setOpen.open();
-                          }}
-                        >
-                          <AiOutlineLogout color="red" size="1.3rem" />
-
-                          <Text color="red">Logout</Text>
-                        </Group>
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
+                          {/* </Menu.Item> */}
+                          {/* <Menu.Item> */}
+                          <Group spacing={0}>
+                            <MdAlternateEmail color="white" size="1.3rem" />
+                            <Text c={"white"} pl={10}>
+                              {sUser.value?.email}
+                            </Text>
+                          </Group>
+                        </Stack>
+                        {/* </Menu.Item> */}
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              setOpen.open();
+                            }}
+                            // onClick={() => {
+                            //   localStorage.removeItem("user_id");
+                            //   sUser.value = {};
+                            // }}
+                          >
+                            <AiOutlineLogout color="red" size="1.3rem" />
+                            <Text color="red">Logout</Text>
+                          </Group>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
                 </Group>
               </Box>
               {/* <Grid>
