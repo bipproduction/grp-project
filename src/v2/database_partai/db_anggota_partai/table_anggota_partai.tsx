@@ -83,6 +83,7 @@ const TableAnggotaPartaiV2 = () => {
           "UBAH",
           "User mengaktifkan status admin"
         );
+        _loadData_ByStatus_BySeachSuper(4, inputSearch, setTabel);
       } else {
         toast("Gagal");
       }
@@ -112,6 +113,7 @@ const TableAnggotaPartaiV2 = () => {
           "UBAH",
           "User menonaktifkan status admin"
         );
+        _loadData_ByStatus_BySeachSuper(4, inputSearch, setTabel);
       } else {
         toast("Gagal");
       }

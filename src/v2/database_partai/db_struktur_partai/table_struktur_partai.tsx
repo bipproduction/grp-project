@@ -54,6 +54,7 @@ const TableStruktutPartaiV2 = () => {
       if (res.status === 201) {
         toast("Success");
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengaktifkan status admin")
+        _loadData_ByStatus_BySeachSuper(1, inputSearch, setDataStruktur)
       } else {
         toast("Gagal");
       }
@@ -80,6 +81,7 @@ const TableStruktutPartaiV2 = () => {
       if (res.status === 201) {
         toast("Success");
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User menonaktifkan status admin");
+        _loadData_ByStatus_BySeachSuper(1, inputSearch, setDataStruktur)
       } else {
         toast("Gagal");
       }
