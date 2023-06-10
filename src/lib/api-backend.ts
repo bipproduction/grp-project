@@ -75,6 +75,7 @@ export const api = {
     "apiAsetPartaiHapus": "/api/aset-partai/aset-partai-hapus",
     "apiAsetPartaiCountPage": "/api/aset-partai/aset-partai-count-page",
     "apiAsetPartaiGetGambar": "/api/aset-partai/aset-partai-get-gambar",
+    "apiAsetUpdateGambar": "/api/aset-partai/aset-partai-update-image",
 
 
     // MEDIA SOSIAL USER
@@ -156,6 +157,7 @@ export const api = {
     "apiLampiranGetByAset": "/api/aset-partai/lampiran/lampiran-get-by-aset",
     "apiLampiranHapus": "/api/aset-partai/lampiran/lampiran-hapus",
     "apiLampiranGetFile": "/api/aset-partai/lampiran/lampiran-get-file",
+    
 
 
 

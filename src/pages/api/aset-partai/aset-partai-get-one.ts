@@ -19,6 +19,7 @@ const asetPartaiGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
         garansi: true,
         keterangan: true,
         deskripsi: true,
+        img: true,
         MasterStatusAset: {
           select: {
             id: true,

@@ -40,6 +40,8 @@ import {
   _kategoriAsetPartai,
   _listDataAset_BySearch,
   _loadDataAset_BySearch,
+  _loadEditAsetPartai_ById,
+  _loadEdit_Aset,
   _loadListDataAset,
   _loadMaster_Kategori,
   _loadMaster_StatusAset,
@@ -55,7 +57,7 @@ import { Dropzone } from "@mantine/dropzone";
 import { RiEjectLine } from "react-icons/ri";
 import { MdAssistantPhoto } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
-
+import AsetImageUpload, { _dataImageAset } from "./image-upload-aset";
 
 const EditAsetPartaiV2 = ({
   thisClosed,
@@ -64,7 +66,7 @@ const EditAsetPartaiV2 = ({
   thisClosed: any;
   idValue: any;
 }) => {
-  const [targetEdit, setTargetEdit] = useState<ModelAsetPartai | null>(null);
+  const [targetEdit, setTargetEdit] = useAtom(_loadEdit_Aset);
   const [changeData, setChangeData] = useState("");
   const [statusAset, setStatusAset] = useAtom(_statusAsetPartai);
   const [selectStatusAset, setSelectStatusAset] = useAtom(
@@ -78,38 +80,13 @@ const EditAsetPartaiV2 = ({
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
   const [inputSearch, setInputSearch] = useAtom(_searchDataAsetPartai);
+  const [imageId, setImageId] = useAtom(_dataImageAset);
 
   useShallowEffect(() => {
-    loadEditAsetPartai_ById(idValue);
+    _loadEditAsetPartai_ById(idValue, setTargetEdit);
     _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
     _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
   }, []);
-
-  const loadEditAsetPartai_ById = async (id: string) => {
-    await fetch(api.apiAsetPartaiGetOne + `?id=${id}`)
-      .then((res) => res.json())
-      .then(setTargetEdit);
-  };
-
-  const formEditAset = useForm({
-    initialValues: {
-      data: {
-        name: "",
-        serialNumber: "",
-        pengguna: "",
-        penanggungJawab: "",
-        harga: "",
-        tglPembelian: "",
-        lokasiPembelian: "",
-        garansi: "",
-        masterStatusAsetId: "",
-        keterangan: "",
-        masterKategoriAsetId: "",
-        deskripsi: "",
-        img: "test",
-      },
-    },
-  });
 
   const onEditAset = () => {
     // console.log(formEditAset.values.data);
@@ -127,7 +104,7 @@ const EditAsetPartaiV2 = ({
       keterangan: targetEdit?.keterangan,
       masterKategoriAsetId: targetEdit?.MasterKategoriAset?.id,
       deskripsi: targetEdit?.deskripsi,
-      img: "test",
+      // img: "test",
     };
     // console.log(body);
 
@@ -147,7 +124,11 @@ const EditAsetPartaiV2 = ({
           if (data.success) {
             thisClosed();
             _loadDataAset_BySearch(inputSearch, setDataAset_Search);
-            _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data aset partai")
+            _postLogUser(
+              localStorage.getItem("user_id"),
+              "UBAH",
+              "User mengubah data aset partai"
+            );
             return toast("Data Terupdate ");
           }
           return toast("Gagal Update");
@@ -170,7 +151,7 @@ const EditAsetPartaiV2 = ({
 
   return (
     <>
-      {/* {JSON.stringify(targetEdit.tglPembelian)} */}
+      {/* {JSON.stringify(targetEdit.img)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -186,44 +167,20 @@ const EditAsetPartaiV2 = ({
           <Grid>
             <Grid.Col span={"auto"}>
               <Box pt={20}>
-                <Paper bg={"gray.4"} p={20}>
-                  {/* <Image
+                {/* <Paper bg={"gray.4"} p={20}>
+                  <Image
+                    src={
+                     api.apiAsetPartaiGetGambar + `?id=${targetEdit.id}`
+                    }
+                    alt="img"
                     maw={300}
                     mx="auto"
                     radius="md"
-                    src="/v2/image/mobil.jpg"
-                    alt="Random image"
-                  /> */}
-                  <Dropzone
-                    onDrop={(file) => {
-                      const form = new FormData();
-                    }}
-                    onReject={(files) => {
-                      console.log("Reject Files", files);
-                    }}
-                  >
-                    <Group
-                      position="center"
-                      spacing="xl"
-                      style={{ minHeight: rem(200), pointerEvents: "none" }}
-                    >
-                      <Dropzone.Accept>Masuk</Dropzone.Accept>
-                      <Dropzone.Reject>Gagal</Dropzone.Reject>
-                    </Group>
-                  </Dropzone>
+                  />
                   <Group position="center" pt={20}>
-                    {/* <Button
-                      w={150}
-                      color="orange.9"
-                      bg={COLOR.orange}
-                      radius={"xl"}
-                      leftIcon={<AiOutlineUpload />}
-                      onClick={() => {}}
-                    >
-                      Unggah Foto
-                    </Button> */}
+                    <AsetImageUpload idVal={targetEdit.id} />
                   </Group>
-                </Paper>
+                </Paper> */}
               </Box>
             </Grid.Col>
             <Grid.Col span={12}>
@@ -233,7 +190,7 @@ const EditAsetPartaiV2 = ({
                   <Tabs.List>
                     <Tabs.Tab value="1">Umum</Tabs.Tab>
                     {/* <Tabs.Tab value="2">Pembelian</Tabs.Tab> */}
-                    <Tabs.Tab value="3">Lampiran</Tabs.Tab>
+                    {/* <Tabs.Tab value="3">Lampiran</Tabs.Tab> */}
                   </Tabs.List>
                   <Tabs.Panel value="1">
                     <Grid>
@@ -241,7 +198,7 @@ const EditAsetPartaiV2 = ({
                         <TextInput
                           label="Nama Aset"
                           withAsterisk
-                          value={targetEdit?.name}
+                          value={targetEdit.name}
                           // placeholder={targetEdit?.name}
                           onChange={(val) => {
                             // console.log(val.currentTarget.value)

@@ -12,6 +12,7 @@ export interface ModelAsetPartai {
     deskripsi: string
     MasterStatusAset: MasterStatusAset
     MasterKategoriAset: MasterKategoriAset
+    img: string
   }
   
   export interface MasterStatusAset {
