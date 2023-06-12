@@ -42,6 +42,9 @@ import {
 } from "react-icons/ai";
 import EditMediaSocial from "./edit_media_social";
 import EditFoto from "./edit_foto";
+import { ModelUserMediaSosial } from "@/model/interface_media_social";
+import { _dataImagesData } from "@/load_data/media_social/load_media_social";
+import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
@@ -52,14 +55,20 @@ export const _datapartai_user = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_data_diri",
   null
 );
-export const _dataImagesData = atomWithStorage<DataDiri | null>("dataDiri", null);
+
+export const _mediaSocialGet = atomWithStorage<ModelUserMediaSosial[] | null>(
+  "media",
+  null
+);
 
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 const val_open_edit_media = atomWithStorage("val_open_edit_media", false);
 
+
 const DataProfileV2 = () => {
   // const [opened, { open, close }] = useDisclosure(false);
   // const [listData, setListData] = useState<string | any>("");
+  const [getMediaSocial, setGetMediaSocial] = useAtom(_mediaSocialGet);
   const [listData2, setListData2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_datapartai_form);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
@@ -67,6 +76,9 @@ const DataProfileV2 = () => {
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [openMedia, setOpenMedia] = useAtom(val_open_edit_media);
   const router = useRouter()
+
+  const [imageget, setImageget] = useState(null);
+  const [createObjectURL, setCreateObjectURL] = useState(null);
 
   useShallowEffect(() => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
@@ -93,13 +105,37 @@ const DataProfileV2 = () => {
         }
       });
   }, []);
+
+  useShallowEffect(() => {
+    fetch(api.apiMediaSosialUserGetByUser +  `?user=${localStorage.getItem("user_id")}`)
+    .then(async (val) => {
+      if (val.status == 200) {
+        const data = await val.json()
+        setGetMediaSocial(data)
+        return
+      }
+    })
+  })
+
+  // useShallowEffect(() => [
+  //   fetch(api.apiDataDiriGetGambar + `?id=${image?.id}`)
+  //   // .then(() => setImage)
+  // ])
+
+
+  const loadGetImage = (id: string) => {
+    fetch(api.apiDataDiriGetGambar + `?id=${image?.id}`)
+    .then(() => setImage)
+  }
+
+
   const [image, setImage] = useAtom(_dataImagesData);
   const [gambarDataDiri, setGambarDataDiri] = useState<any | null>(null);
 
 
   return (
     <>
-      {/* {JSON.stringify(image?.id)} */}
+      {/* {JSON.stringify(image)} */}
 
       {/* <pre>{JSON.stringify(listData2, null, 2)}</pre> */}
       <Paper
@@ -145,6 +181,7 @@ const DataProfileV2 = () => {
                       height={180}
                       alt="img"
                       radius={5}
+                      onChange={() => loadGetImage}
                     />
                   </Center>
                 </Stack>
@@ -231,7 +268,7 @@ const DataProfileV2 = () => {
                     borderRadius: 10,
                   }}
                 >
-                  <Box mt={10}>
+                  {/* <Box mt={10}>
                     <Text fz={15}>
                       {listData2?.User?.UserMediaSocial.map((v, i) => (
                         <Box key={i}>
@@ -243,6 +280,18 @@ const DataProfileV2 = () => {
                       ))}
                     </Text>
                     <Text fw={700}></Text>
+                  </Box> */}
+                  <Box mt={10}>
+                    <Text fz={15}>
+                     {getMediaSocial?.map((v, i) => (
+                      <Box key={i}>
+                        <Text fz={15} mt={10}>
+                          {v.MasterMediaSocial.name}
+                        </Text>
+                        <Text fw={700}>{v.name}</Text>
+                      </Box>
+                     ))}
+                    </Text>
                   </Box>
 
                   <Box mt={10}>
