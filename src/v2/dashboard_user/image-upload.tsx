@@ -17,8 +17,8 @@ import {
 } from "@/model/interface_sumber_daya_partai";
 import { data } from "jquery";
 import { DataDiriImage } from "@/model/interface_upload";
-import { _dataImagesData } from "./profile";
-export const _image = atomWithStorage<DataDiriImage | null>("media", null);
+import { _dataImagesData } from "@/load_data/media_social/load_media_social";
+
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
@@ -52,7 +52,7 @@ function ImageUpload({ keluar }: any) {
       },
       body: JSON.stringify(body),
     });
-    router.reload()
+    // router.reload()
     keluar(true)
   };
 

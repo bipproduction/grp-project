@@ -110,7 +110,7 @@ const KTAV2 = () => {
                   // pt={{ sm: 25, base: 15, xs: 16 }}
                   >
                     <Grid gutter="xs" pl={5}>
-                      <Grid.Col span={3}>
+                      <Grid.Col span={2}>
                         <Flex
                           gap={5}
                           justify="flex-start"
@@ -123,10 +123,8 @@ const KTAV2 = () => {
 
                            <Image
                             src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
-                            // w={{sm: 130, base: 300 }}
-                            // h={{sm: 152, base: 300 }}
                             width={130}
-                            height={152}
+                            // height={152}
                             alt="img"
                             radius={5}
 
@@ -140,66 +138,66 @@ const KTAV2 = () => {
                           align="flex-start"
                           direction="column"
                           wrap="wrap"
-                          pl={40}
-                          pt={20}
+                          pl={78}
+                          pt={23}
                         >
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Name
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Tempat
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Tanggal
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Kelurahan
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Kecamatan
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Kabupaten
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Provinsi
                           </Text>
-                          <Text fw={"bold"} fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fw={"bold"} fz={{ base: 5, sm: 12, xs: 9 }}>
                             Jenis Kelamin
                           </Text>
                         </Flex>
                       </Grid.Col>
-                      <Grid.Col span={5}>
+                      <Grid.Col span={6}>
                         <Flex
                           gap={5}
                           justify="flex-start"
                           align="flex-start"
                           direction="column"
                           wrap="wrap"
-                          pt={20}
+                          pt={23}
                         >
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.name}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.tempatLahir}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {moment(listData1?.tanggalLahir).format("LL")}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.MasterDesa?.name}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.MasterKecamatan?.name}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.MasterKabKot.name}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.MasterProvince.name}
                           </Text>
-                          <Text fz={{ base: 7, sm: 14, xs: 9 }}>
+                          <Text fz={{ base: 5, sm: 12, xs: 9 }}>
                             : {listData1?.MasterJenisKelamin.name}
                           </Text>
                         </Flex>
@@ -232,7 +230,7 @@ const KTAV2 = () => {
                   bg={COLOR.orange}
                   radius={"xl"}
                   leftIcon={<AiOutlineCloudDownload size={25} />}
-                  onClick={() => gambar!.exportComponentAsPNG(ref as any)}
+                  onClick={() => gambar!.exportComponentAsJPEG(ref as any)}
                 >
                   Cetak KTA
                 </Button>
