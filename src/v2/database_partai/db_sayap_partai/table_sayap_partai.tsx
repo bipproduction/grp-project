@@ -40,8 +40,15 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _dataSayap } from "@/load_data/sayap_partai/load_sayap_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
-import { _dataSayappartaiPage, _dataStrukturTable_ByStatusSearchSuper, _dataTotalPageSayapPartai, _loadData_ByStatus_BySeachSuper, _searchDataSumberDayaPartaiSuperAdmin } from "@/load_data/super_admin/load_sumber_data_super_admin";
-import _ from "lodash";
+import {
+
+  _dataSayapPartaiPage,
+  _dataStrukturTable_ByStatusSearchSuper,
+  _dataTotalSayapPartaiPage,
+  _loadData_ByStatus_BySeachSuperSayapPartai,
+  _searchDataSumberDayaPartaiSuperAdmin,
+} from "@/load_data/super_admin/load_sumber_data_super_admin";
+import _, { set } from "lodash";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -51,10 +58,12 @@ const TableSayapPartaiV2 = () => {
   const [valueNoAktif, setValueNoAktif] = useState<string>("");
   const theme = useMantineTheme();
   const [checked, setChecked] = useState(false);
-  const [inputPage, setInputPage] = useAtom(_dataSayappartaiPage);
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSayapPartai);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
-  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartaiSuperAdmin);
+  const [pageInput, setPageInput] = useAtom(_dataSayapPartaiPage);
+  const [inputTotalPage, setInputTotalPage] = useAtom(_dataTotalSayapPartaiPage);
+  let noPertamaSayap = ((_.toNumber(pageInput) - 1) * 10) + 1;
+  const [inputSearch, setInputSearch] = useAtom(
+    _searchDataSumberDayaPartaiSuperAdmin
+  );
   useShallowEffect(() => {
     onSearch("");
   }, []);
@@ -74,13 +83,13 @@ const TableSayapPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success");
+        toast("Success Menjadi Admin");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",
           "User mengaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuper(2, inputSearch, setDataSayap)
+        _loadData_ByStatus_BySeachSuperSayapPartai(2, inputSearch, setDataSayap, "1", setInputTotalPage);
       } else {
         toast("Gagal");
       }
@@ -104,13 +113,13 @@ const TableSayapPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success");
+        toast("Success Menjadi User");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",
           "User menonaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuper(2, inputSearch, setDataSayap)
+        _loadData_ByStatus_BySeachSuperSayapPartai(2, inputSearch, setDataSayap,  "1", setInputTotalPage);
       } else {
         toast("Gagal");
       }
@@ -121,12 +130,15 @@ const TableSayapPartaiV2 = () => {
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(2, setDataSayap);
+    setPageInput("1")
+    _loadData_ByStatus_BySeachSuperSayapPartai(2, inputSearch, setDataSayap,  "1", setInputTotalPage);
     // loadDataStatus();
   }, []);
 
   const onSearch = (search: string) => {
-    _loadData_ByStatus_BySeachSuper(2, search, setDataSayap)
-    setInputSearch(search)
+    setPageInput("1")
+    _loadData_ByStatus_BySeachSuperSayapPartai(2, search, setDataSayap,  "1", setInputTotalPage);
+    setInputSearch(search);
   };
 
   const tbHead = (
@@ -176,7 +188,7 @@ const TableSayapPartaiV2 = () => {
               <tbody>
                 {dataSayap.map((e, i) => (
                   <tr key={i}>
-                    <td>{i + 1}</td>
+                    <td>{noPertamaSayap++}</td>
                     <td>{e.User.DataDiri.name}</td>
                     <td>{e.MasterSayapPartai?.name}</td>
                     <td>{e.User.DataDiri.MasterProvince.name}</td>
@@ -218,6 +230,14 @@ const TableSayapPartaiV2 = () => {
                 ))}
               </tbody>
             </Table>
+            <Group position="right" py={10}>
+            <Pagination total={Number(inputTotalPage)} color="orange" my={10} value={Number(pageInput)}
+              onChange={(val: any) => {
+                setPageInput(val)
+                _loadData_ByStatus_BySeachSuperSayapPartai(2, inputSearch, setDataSayap, val, setInputTotalPage)
+              }}
+              />
+            </Group>
           </Box>
         </Group>
       </Box>

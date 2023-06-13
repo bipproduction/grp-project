@@ -7,32 +7,8 @@ export const _dataTable_ByStatusSearch_SuperAdmin = atomWithStorage<
   ModelSumberDayaPartai[]
 >("_dataTable_ByStatusSearch>", []);
 
-export const _loadData_ByStatus_BySeach_Super_Admin = async (
-    status: any,
-    search: any,
-    setDataTable: any
-  ) => {
-    await fetch(
-      api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}`
-    )
-      .then((res) => res.json())
-      .then((val) => {
-        // console.table(val);
-        // console.log(search)
-        setDataTable(val);
-      });
-  };
 
-  export const _dataSearchSuperAdmin = atomWithStorage<ModelSumberDayaPartai[]>(
-    "_dataSearch",
-    []
-  );
-
-  export const _dataSearchStrukturPartai = atom("");
-  export const _dataPageStrukturPartai = atom("");
-  export const _dataTotalPageStrukturPartai = atom("");
-
-  // Load Data by Status Keanggotaan dan Search by name
+// Load Data by Status Keanggotaan dan Search by name
 export const _loadData_ByStatus_BySeachSuperAdmin = async (
   status: any,
   search: any,
@@ -43,32 +19,121 @@ export const _loadData_ByStatus_BySeachSuperAdmin = async (
   )
     .then((res) => res.json())
     .then((val) => {
- 
       setDataTable(val);
     });
 };
 
-export const _dataStrukturTable_ByStatusSearchSuper = atomWithStorage<
-  ModelSumberDayaPartai | null
->("_dataTable_ByStatusSearchSuper", null);
+export const _dataStrukturTable_ByStatusSearchSuper =
+  atomWithStorage<ModelSumberDayaPartai | null>(
+    "_dataTable_ByStatusSearchSuper",
+    null
+  );
 
-export const _searchDataSumberDayaPartaiSuperAdmin = atom("")
+export const _searchDataSumberDayaPartaiSuperAdmin = atom("");
 
-// Load Data by Status Keanggotaan dan Search by name
-export const _loadData_ByStatus_BySeachSuper = async (
+// Anggota Partai
+export async function _loadData_ByStatus_BySeachSuperAnggotaPartai(
   status: any,
   search: any,
-  setDataTable: any
-) => {
+  setDataTable: any,
+  page: any,
+  setInputTotalPage: any
+) {
   await fetch(
-    api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}`
+    api.apiSumberDayaPartaiSearch +
+      `?status=${status}&search=${search}&page=${page}`
   )
     .then((res) => res.json())
-    .then((val) => {
- 
-      setDataTable(val);
-    });
-};
+    .then((val) => setDataTable(val));
+    
+  await fetch(
+    api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
+  )
+    .then((res) => res.json())
+    .then((val) => setInputTotalPage(val));
+}
 
-export const _dataSayappartaiPage = atom("");
-export const _dataTotalPageSayapPartai = atom("");
+// Sayap Partai
+export async function _loadData_ByStatus_BySeachSuperSayapPartai(
+  status: any,
+  search: any,
+  setDataTable: any,
+  page: any,
+  setInputTotalPage: any
+) {
+  await fetch(
+    api.apiSumberDayaPartaiSearch +
+      `?status=${status}&search=${search}&page=${page}`
+  )
+    .then((res) => res.json())
+    .then((val) => setDataTable(val));
+    
+  await fetch(
+    api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
+  )
+    .then((res) => res.json())
+    .then((val) => setInputTotalPage(val));
+}
+
+// Kader Partai
+export async function _loadData_ByStatus_BySeachSuperKaderPartai(
+  status: any,
+  search: any,
+  setDataTable: any,
+  page: any,
+  setInputTotalPage: any
+) {
+  await fetch(
+    api.apiSumberDayaPartaiSearch +
+      `?status=${status}&search=${search}&page=${page}`
+  )
+    .then((res) => res.json())
+    .then((val) => setDataTable(val));
+    
+  await fetch(
+    api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
+  )
+    .then((res) => res.json())
+    .then((val) => setInputTotalPage(val));
+}
+
+// Struktur Partai
+export async function _loadData_ByStatus_BySeachSuperStrukturPartai(
+  status: any,
+  search: any,
+  setDataTable: any,
+  page: any,
+  setInputTotalPage: any
+) {
+  await fetch(
+    api.apiSumberDayaPartaiSearch +
+      `?status=${status}&search=${search}&page=${page}`
+  )
+    .then((res) => res.json())
+    .then((val) => setDataTable(val));
+    
+  await fetch(
+    api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
+  )
+    .then((res) => res.json())
+    .then((val) => setInputTotalPage(val));
+}
+
+// Struktur Partai
+export const _dataStrukturPartaiPage = atom("");
+export const _dataTotalStrukturPartaiPage = atom("");
+
+// Sayap Partai
+export const _dataSayapPartaiPage = atom("");
+export const _dataTotalSayapPartaiPage = atom("");
+
+// Kader Partai
+export const _dataKaderPartaiPage = atom("");
+export const _dataTotalKaderPartaiPage = atom("");
+
+// Anggota Partai
+export const _dataAnggotaPartaiPage = atom("");
+export const _dataTotalAnggotaPartaiPage = atom("");
+
+
+
