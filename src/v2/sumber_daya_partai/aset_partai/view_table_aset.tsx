@@ -1,18 +1,22 @@
 import {
+  ActionIcon,
   Alert,
   Box,
   Button,
   Center,
   Flex,
   Group,
+  HoverCard,
+  Menu,
   Modal,
   Pagination,
+  Popover,
   ScrollArea,
   Table,
+  Text,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import data_aset from "./data_aset.json";
-import EditAsetPartaiV2 from "./edit_aset_partai";
 import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import { ModelAsetPartai } from "@/model/interface_aset_partai";
@@ -22,12 +26,17 @@ import {
   _loadDataAset_BySearch,
   _loadListDataAset,
 } from "@/load_data/sumber_daya_partai/load_aset_partai";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import moment from "moment";
 import toast from "react-simple-toasts";
 import { FiAlertCircle } from "react-icons/fi";
 import COLOR from "../../../../fun/WARNA";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { AiFillDelete, AiFillEdit, AiOutlineMenu } from "react-icons/ai";
+import { RiDeleteBin6Fill, RiMenuUnfoldLine } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+import { _val_reload_gambar } from "./image-upload-aset";
+import EditAsetPartaiV2 from "./edit_aset_partai";
 
 const TableViewAsetV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -35,6 +44,7 @@ const TableViewAsetV2 = () => {
   const [idValue, setIdValue] = useState("");
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
+  const [reloadGambar, setReloadGambar] = useAtom(_val_reload_gambar);
 
   useShallowEffect(() => {
     _loadListDataAset(setDataAset);
@@ -44,6 +54,11 @@ const TableViewAsetV2 = () => {
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama Aset</th>
       <th>Serial Number</th>
       <th>Status Aset</th>
@@ -56,13 +71,42 @@ const TableViewAsetV2 = () => {
       <th>Tanggal Pembelian</th>
       <th>Lokasi Pembelian</th>
       <th>Garansi</th>
-      <th><Center>Aksi</Center></th>
     </tr>
   );
 
   const rows = dataAset_Search.map((e, i) => (
     <tr key={e.id}>
       <td>{i + 1}</td>
+      <td>
+        <Group position="center" spacing={"xs"}>
+          {/* <Button
+            variant={"outline"}
+            color={"green"}
+            radius={50}
+            w={100}
+            onClick={() => {
+              open();
+              setIdValue(e.id);
+            }}
+          >
+            Edit
+          </Button> */}
+          <ActionIcon
+            color="green"
+            onClick={() => {
+              open();
+              setIdValue(e.id);
+            }}
+          >
+            <AiFillEdit />
+          </ActionIcon>
+          <DeleteDataAset
+            setId={e}
+            search={search}
+            setDataAset_Search={setDataAset_Search}
+          />
+        </Group>
+      </td>
       <td>{e.name}</td>
       <td>{e.serialNumber}</td>
       <td>{e.MasterStatusAset?.name}</td>
@@ -75,34 +119,13 @@ const TableViewAsetV2 = () => {
       <td>{moment(e.tglPembelian).format("YYYY-MM-DD")}</td>
       <td>{e.lokasiPembelian}</td>
       <td>{e.garansi}</td>
-
-      <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={() => {
-              open();
-              setIdValue(e.id);
-            }}
-          >
-            Edit
-          </Button>
-          <DeleteDataAset
-            setId={e}
-            search={search}
-            setDataAset_Search={setDataAset_Search}
-          />
-        </Group>
-      </td>
     </tr>
   ));
   return (
     <>
       {/* <pre>{JSON.stringify(dataAset_Search, null, 2)}</pre> */}
       <Modal
+        key={reloadGambar.toString()}
         opened={opened}
         onClose={close}
         size="lg"
@@ -116,7 +139,7 @@ const TableViewAsetV2 = () => {
       </Modal>
       <Box>
         <ScrollArea py={20}>
-          <Table withBorder highlightOnHover horizontalSpacing={"md"} >
+          <Table withBorder highlightOnHover horizontalSpacing={"md"}>
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
@@ -128,7 +151,7 @@ const TableViewAsetV2 = () => {
     </>
   );
 };
-
+export const _ModalDeleteAset = atom(false);
 function DeleteDataAset({
   setId,
   search,
@@ -138,38 +161,50 @@ function DeleteDataAset({
   search: any;
   setDataAset_Search: any;
 }) {
-  const [opened, setOpen] = useDisclosure(false)
-
+  const [opened, setOpen] = useDisclosure(false);
+  const [popOpen, popSetOpen] = useDisclosure(false);
 
   const onDelete = async (id: any) => {
     await fetch(api.apiAsetPartaiHapus + `?id=${id}`).then(async (res) => {
       if (res.status === 200) {
         toast("Hapus Data");
         _loadDataAset_BySearch(search, setDataAset_Search);
-        _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data aset partai")
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "HAPUS",
+          "User menghapus data aset partai"
+        );
       }
     });
   };
   return (
     <>
-      <Button
+      <ActionIcon
+        color="red"
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        <AiFillDelete />
+      </ActionIcon>
+      {/* <Button
         variant={"outline"}
         color={"red"}
         radius={50}
         w={100}
         onClick={() => {
-          setOpen.open()
+          setOpen.open();
         }}
       >
         Hapus
-      </Button>
+      </Button> */}
 
       <Modal
-      opened={opened}
-      onClose={setOpen.close}
-      centered
-      withCloseButton={false}
-      size={"xs"}
+        opened={opened}
+        onClose={setOpen.close}
+        centered
+        withCloseButton={false}
+        size={"xs"}
       >
         <Alert
           icon={<FiAlertCircle size="1rem" />}
@@ -189,7 +224,7 @@ function DeleteDataAset({
             <Button
               onClick={() => {
                 setOpen.close();
-                onDelete(setId.id)
+                onDelete(setId.id);
               }}
               radius={"xl"}
               w={100}
