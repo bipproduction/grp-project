@@ -52,7 +52,7 @@ function ImageUpload({ keluar }: any) {
       },
       body: JSON.stringify(body),
     });
-    // router.reload()
+    router.reload()
     keluar(true)
   };
 
@@ -102,6 +102,9 @@ function ImageUpload({ keluar }: any) {
                 <Box pt={10}>
                   <Text size={"sm"} ta={"center"} color="dimmed" inline mt={7}>
                     File tidak boleh melebihi 5mb
+                  </Text>
+                  <Text size={"sm"} ta={"center"} color="dimmed" inline mt={7}>
+                    Foto Ukuran 3 x 4 atau 4 x 6
                   </Text>
                 </Box>
               </Box>

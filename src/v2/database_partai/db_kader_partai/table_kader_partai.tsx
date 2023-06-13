@@ -1,10 +1,13 @@
 import WarpPage from "@/v2/component/my-wrap";
 import {
+  ActionIcon,
   Box,
   Button,
   Center,
+  Divider,
   Grid,
   Group,
+  Menu,
   Modal,
   Pagination,
   Paper,
@@ -12,6 +15,7 @@ import {
   Table,
   Text,
   TextInput,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -45,6 +49,7 @@ import {
   _searchDataSumberDayaPartaiSuperAdmin,
 } from "@/load_data/super_admin/load_sumber_data_super_admin";
 import _ from "lodash";
+import { FaUserEdit } from "react-icons/fa";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
 
@@ -59,7 +64,9 @@ const TableKaderPartaiV2 = () => {
   const theme = useMantineTheme();
   const [checked, setChecked] = useState(false);
   const [pageInput, setPageInput] = useAtom(_dataKaderPartaiPage);
-  const [inputTotalPage, setInputTotalPage] = useAtom(_dataTotalKaderPartaiPage);
+  const [inputTotalPage, setInputTotalPage] = useAtom(
+    _dataTotalKaderPartaiPage
+  );
   let noPertamaKader = (_.toNumber(pageInput) - 1) * 10 + 1;
 
   const BodyAktif = {
@@ -83,7 +90,13 @@ const TableKaderPartaiV2 = () => {
           "UBAH",
           "User mengaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuperKaderPartai(3, inputSearch, setDataKader, "1", setInputTotalPage);
+        _loadData_ByStatus_BySeachSuperKaderPartai(
+          3,
+          inputSearch,
+          setDataKader,
+          "1",
+          setInputTotalPage
+        );
       } else {
         toast("Gagal");
       }
@@ -113,7 +126,13 @@ const TableKaderPartaiV2 = () => {
           "UBAH",
           "User menonaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuperKaderPartai(3, inputSearch, setDataKader, "1", setInputTotalPage);
+        _loadData_ByStatus_BySeachSuperKaderPartai(
+          3,
+          inputSearch,
+          setDataKader,
+          "1",
+          setInputTotalPage
+        );
       } else {
         toast("Gagal");
       }
@@ -131,13 +150,25 @@ const TableKaderPartaiV2 = () => {
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(3, setDataKader);
     // loadDataStatus();
-    setPageInput("1")
-    _loadData_ByStatus_BySeachSuperKaderPartai(3, inputSearch, setDataKader, "1", setInputTotalPage);
+    setPageInput("1");
+    _loadData_ByStatus_BySeachSuperKaderPartai(
+      3,
+      inputSearch,
+      setDataKader,
+      "1",
+      setInputTotalPage
+    );
   }, []);
 
   const onSearch = (search: string) => {
-    setPageInput("1")
-    _loadData_ByStatus_BySeachSuperKaderPartai(3, search, setDataKader, "1", setInputTotalPage);
+    setPageInput("1");
+    _loadData_ByStatus_BySeachSuperKaderPartai(
+      3,
+      search,
+      setDataKader,
+      "1",
+      setInputTotalPage
+    );
     setInputSearch(search);
   };
 
@@ -152,7 +183,17 @@ const TableKaderPartaiV2 = () => {
       <th>Desa / Cabang</th>
       <th>Status</th>
       <th>
-        <Group position="center">Aksi</Group>
+        <Group position="center">
+          <Tooltip label="Klik Icon dibawah untuk edit Admin & User">
+            <Text
+              ta={"center"}
+              style={{ cursor: "pointer" }}
+              color={COLOR.coklat}
+            >
+              Aksi
+            </Text>
+          </Tooltip>
+        </Group>
       </th>
     </tr>
   );
@@ -198,45 +239,72 @@ const TableKaderPartaiV2 = () => {
                       <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
                     </td>
                     <td>
-                      <Group position="center">
-                        <Button
-                          w={120}
-                          variant="outline"
-                          color="teal"
-                          radius="xl"
-                          onClick={() => {
-                            BodyAktif.id = e.User.id;
-                            onAktif();
-                          }}
-                        >
-                          Admin
-                        </Button>
-                        <Button
-                          w={120}
-                          variant="outline"
-                          color="red"
-                          radius="xl"
-                          onClick={() => {
-                            BodyNonAktif.id = e.User.id;
-                            NonAktif();
-                          }}
-                        >
-                          Non Admin
-                        </Button>
-                      </Group>
+                      <Menu withArrow>
+                        <Menu.Target>
+                          <ActionIcon>
+                            <FaUserEdit color={COLOR.coklat} size={25} />
+                          </ActionIcon>
+                        </Menu.Target>
+                        <Menu.Dropdown bg={COLOR.coklat}>
+                          <Group>
+                            <Button
+                              w={90}
+                              onClick={() => {
+                                BodyAktif.id = e.User.id;
+                                onAktif();
+                              }}
+                              style={{ cursor: "pointer" }}
+                              bg={COLOR.coklat}
+                              color="orange.9"
+                              mb={5}
+                            >
+                              <Text color="white" fw={700}>
+                                Admin
+                              </Text>
+                            </Button>
+                          </Group>
+                          <Divider />
+                          <Group>
+                            <Button
+                              mt={5}
+                              w={90}
+                              onClick={() => {
+                                BodyNonAktif.id = e.User.id;
+                                NonAktif();
+                              }}
+                              style={{ cursor: "pointer" }}
+                              bg={COLOR.coklat}
+                              color="orange.9"
+                            >
+                              <Text color="white" fw={700}>
+                                User
+                              </Text>
+                            </Button>
+                          </Group>
+                        </Menu.Dropdown>
+                      </Menu>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
 
-
             <Group position="right" py={10}>
-              <Pagination total={Number(inputTotalPage)} color="orange" my={10} value={Number(pageInput)}
-              onChange={(val: any) => {
-                setPageInput(val)
-                _loadData_ByStatus_BySeachSuperKaderPartai(3, inputSearch, setDataKader, val, setInputTotalPage)
-              }}
+              <Pagination
+                total={Number(inputTotalPage)}
+                color="orange"
+                my={10}
+                value={Number(pageInput)}
+                onChange={(val: any) => {
+                  setPageInput(val);
+                  _loadData_ByStatus_BySeachSuperKaderPartai(
+                    3,
+                    inputSearch,
+                    setDataKader,
+                    val,
+                    setInputTotalPage
+                  );
+                }}
               />
             </Group>
           </Box>

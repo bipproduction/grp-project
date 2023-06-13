@@ -53,6 +53,7 @@ import _ from "lodash";
 import { api } from "@/lib/api-backend";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import toast from "react-simple-toasts";
+import { BsPersonVcard } from "react-icons/bs";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
@@ -350,7 +351,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                                 router.push("/v2/dashboard-user");
                               }}
                             >
-                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <RiDashboardLine color="black" size="1.3rem" />
                               <Text>Dashboard</Text>
                             </Group>
                           </Menu.Item>
@@ -362,7 +363,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                                 router.push("/v2/dashboard-user");
                               }}
                             >
-                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <BsPersonVcard color="black" size="1.3rem" />
                               <Text>Profile</Text>
                             </Group>
                           </Menu.Item>
@@ -374,7 +375,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                                 router.push("/v2/dashboard-user");
                               }}
                             >
-                              <AiOutlineProfile color="black" size="1.3rem" />
+                              <BsPersonVcard color="black" size="1.3rem" />
                               <Text>Profile</Text>
                             </Group>
                           </Menu.Item>

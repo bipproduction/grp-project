@@ -1,10 +1,14 @@
 import WarpPage from "@/v2/component/my-wrap";
 import {
+  ActionIcon,
+  Alert,
   Box,
   Button,
   Center,
+  Divider,
   Grid,
   Group,
+  Menu,
   Modal,
   Pagination,
   Paper,
@@ -12,6 +16,7 @@ import {
   Table,
   Text,
   TextInput,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -50,13 +55,26 @@ import {
 } from "@/load_data/super_admin/load_sumber_data_super_admin";
 import { sUser } from "@/s_state/s_user";
 import _ from "lodash";
+import { FiAlertCircle } from "react-icons/fi";
+import { FaUserEdit } from "react-icons/fa";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
+
+//Anggota
+const val_open_onAdmin_Anggota = atomWithStorage(
+  "val_open_onAdmin_Anggota",
+  false
+);
+const val_open_onUser_Anggota = atomWithStorage(
+  "val_open_onUser_Anggota",
+  false
+);
 
 const TableAnggotaPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
-
+  const [openOnAdmin, setOpenOnAdmin] = useAtom(val_open_onAdmin_Anggota);
+  const [openOnUser, setOpenOnUser] = useAtom(val_open_onUser_Anggota);
   const [dataAnggota, setDataAnggota] = useAtom(_dataAnggota);
   const [dataTabel, setTabel] = useAtom(_dataAnggotaSearch);
   const [valueAktif, setValueAktif] = useState<string>("");
@@ -65,14 +83,22 @@ const TableAnggotaPartaiV2 = () => {
   const [checked, setChecked] = useState(false);
   const [search, setSearch] = useState("");
   const [pageInput, setPageInput] = useAtom(_dataAnggotaPartaiPage);
-  const [inputTotalPage, setInputTotalPage] = useAtom(_dataTotalAnggotaPartaiPage);
+  const [inputTotalPage, setInputTotalPage] = useAtom(
+    _dataTotalAnggotaPartaiPage
+  );
   let noPertamaAnggota = (_.toNumber(pageInput) - 1) * 10 + 1;
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(4, setTabel);
     // loadDataStatus();
     setPageInput("1");
-    _loadData_ByStatus_BySeachSuperAnggotaPartai(4, search, setTabel, "1", setInputTotalPage);
+    _loadData_ByStatus_BySeachSuperAnggotaPartai(
+      4,
+      search,
+      setTabel,
+      "1",
+      setInputTotalPage
+    );
   }, []);
 
   const BodyAktif = {
@@ -96,7 +122,13 @@ const TableAnggotaPartaiV2 = () => {
           "UBAH",
           "User mengaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuperAnggotaPartai(4, inputSearch, setTabel, "1", setInputTotalPage);
+        _loadData_ByStatus_BySeachSuperAnggotaPartai(
+          4,
+          inputSearch,
+          setTabel,
+          "1",
+          setInputTotalPage
+        );
       } else {
         toast("Gagal");
       }
@@ -126,7 +158,13 @@ const TableAnggotaPartaiV2 = () => {
           "UBAH",
           "User menonaktifkan status admin"
         );
-        _loadData_ByStatus_BySeachSuperAnggotaPartai(4, inputSearch, setTabel, "1", setInputTotalPage);
+        _loadData_ByStatus_BySeachSuperAnggotaPartai(
+          4,
+          inputSearch,
+          setTabel,
+          "1",
+          setInputTotalPage
+        );
       } else {
         toast("Gagal");
       }
@@ -143,7 +181,13 @@ const TableAnggotaPartaiV2 = () => {
 
   function onSearch(search: string) {
     setPageInput("1");
-    _loadData_ByStatus_BySeachSuperAnggotaPartai(4, search, setTabel, "1", setInputTotalPage);
+    _loadData_ByStatus_BySeachSuperAnggotaPartai(
+      4,
+      search,
+      setTabel,
+      "1",
+      setInputTotalPage
+    );
     setInputSearch(search);
   }
 
@@ -160,7 +204,17 @@ const TableAnggotaPartaiV2 = () => {
       <th>Desa / Cabang</th>
       <th>Status</th>
       <th>
-        <Group position="center">Aksi</Group>
+        <Group position="center">
+          <Tooltip label="Klik Icon dibawah untuk edit Admin & User">
+            <Text
+              ta={"center"}
+              style={{ cursor: "pointer" }}
+              color={COLOR.coklat}
+            >
+              Aksi
+            </Text>
+          </Tooltip>
+        </Group>
       </th>
     </tr>
   );
@@ -207,32 +261,50 @@ const TableAnggotaPartaiV2 = () => {
                       <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
                     </td>
                     <td>
-                      <Group position="center">
-                        <Button
-                          w={120}
-                          variant="outline"
-                          color="teal"
-                          radius="xl"
-                          onClick={() => {
-                            BodyAktif.id = e.User.id;
-                            onAktif();
-                          }}
-                        >
-                          Admin
-                        </Button>
-                        <Button
-                          w={120}
-                          variant="outline"
-                          color="red"
-                          radius="xl"
-                          onClick={() => {
-                            BodyNonAktif.id = e.User.id;
-                            NonAktif();
-                          }}
-                        >
-                          Non Admin
-                        </Button>
-                      </Group>
+                      <Menu withArrow>
+                        <Menu.Target>
+                          <ActionIcon>
+                            <FaUserEdit color={COLOR.coklat} size={25} />
+                          </ActionIcon>
+                        </Menu.Target>
+                        <Menu.Dropdown bg={COLOR.coklat}>
+                          <Group>
+                            <Button
+                              w={90}
+                              onClick={() => {
+                                BodyAktif.id = e.User.id;
+                                onAktif();
+                              }}
+                              style={{ cursor: "pointer" }}
+                              bg={COLOR.coklat}
+                              color="orange.9"
+                              mb={5}
+                            >
+                              <Text color="white" fw={700}>
+                                Admin
+                              </Text>
+                            </Button>
+                          </Group>
+                          <Divider />
+                          <Group>
+                            <Button
+                              mt={5}
+                              w={90}
+                              onClick={() => {
+                                BodyNonAktif.id = e.User.id;
+                                NonAktif();
+                              }}
+                              style={{ cursor: "pointer" }}
+                              bg={COLOR.coklat}
+                              color="orange.9"
+                            >
+                              <Text color="white" fw={700}>
+                                User
+                              </Text>
+                            </Button>
+                          </Group>
+                        </Menu.Dropdown>
+                      </Menu>
                     </td>
                   </tr>
                 ))}
@@ -240,11 +312,21 @@ const TableAnggotaPartaiV2 = () => {
             </Table>
 
             <Group position="right" py={10}>
-              <Pagination total={Number(inputTotalPage)} color="orange" my={10} value={Number(pageInput)}
-              onChange={(val: any) => {
-                setPageInput(val)
-                _loadData_ByStatus_BySeachSuperAnggotaPartai(4, inputSearch, setTabel, val, setInputTotalPage)
-              }}
+              <Pagination
+                total={Number(inputTotalPage)}
+                color="orange"
+                my={10}
+                value={Number(pageInput)}
+                onChange={(val: any) => {
+                  setPageInput(val);
+                  _loadData_ByStatus_BySeachSuperAnggotaPartai(
+                    4,
+                    inputSearch,
+                    setTabel,
+                    val,
+                    setInputTotalPage
+                  );
+                }}
               />
             </Group>
           </Box>

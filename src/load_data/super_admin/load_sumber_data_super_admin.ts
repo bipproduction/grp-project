@@ -119,6 +119,7 @@ export async function _loadData_ByStatus_BySeachSuperStrukturPartai(
     .then((val) => setInputTotalPage(val));
 }
 
+// PAGINATION
 // Struktur Partai
 export const _dataStrukturPartaiPage = atom("");
 export const _dataTotalStrukturPartaiPage = atom("");
@@ -134,6 +135,7 @@ export const _dataTotalKaderPartaiPage = atom("");
 // Anggota Partai
 export const _dataAnggotaPartaiPage = atom("");
 export const _dataTotalAnggotaPartaiPage = atom("");
+
 
 
 
