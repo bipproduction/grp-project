@@ -239,7 +239,7 @@ const TableKaderPartaiV2 = () => {
                       <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
                     </td>
                     <td>
-                      <Menu withArrow>
+                      <Menu withArrow offset={1}>
                         <Menu.Target>
                           <ActionIcon>
                             <FaUserEdit color={COLOR.coklat} size={25} />
