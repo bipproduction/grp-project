@@ -1,5 +1,6 @@
 import { buttonSimpan } from "@/v2/component/button-toast";
 import {
+  AspectRatio,
   Box,
   Button,
   Flex,
@@ -35,7 +36,7 @@ import { ModelAsetPartai } from "@/model/interface_aset_partai";
 import { api } from "@/lib/api-backend";
 import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import {
   _kategoriAsetPartai,
   _listDataAset_BySearch,
@@ -59,6 +60,7 @@ import { MdAssistantPhoto } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import AsetImageUpload, { _dataImageAset } from "./image-upload-aset";
 
+
 const EditAsetPartaiV2 = ({
   thisClosed,
   idValue,
@@ -67,7 +69,6 @@ const EditAsetPartaiV2 = ({
   idValue: any;
 }) => {
   const [targetEdit, setTargetEdit] = useAtom(_loadEdit_Aset);
-  const [changeData, setChangeData] = useState("");
   const [statusAset, setStatusAset] = useAtom(_statusAsetPartai);
   const [selectStatusAset, setSelectStatusAset] = useAtom(
     _select_StatusAsetPartai
@@ -76,17 +77,23 @@ const EditAsetPartaiV2 = ({
   const [selectKategoriAset, setSelectKategoriAset] = useAtom(
     _select_KategoriAsetPartai
   );
-  const [dataAset, setDataAset] = useAtom(_listData_AsetPartai);
-  const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
   const [inputSearch, setInputSearch] = useAtom(_searchDataAsetPartai);
   const [imageId, setImageId] = useAtom(_dataImageAset);
+  const [dataGambar, setDataGambar] = useState("");
 
   useShallowEffect(() => {
     _loadEditAsetPartai_ById(idValue, setTargetEdit);
     _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
     _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
+    DataGambar(targetEdit?.id as any);
   }, []);
+
+  const DataGambar = async (id: string) => {
+    await fetch(api.apiAsetPartaiGetGambar + `?id=${id}`)
+      .then((res) => res.url)
+      .then((val) => setDataGambar(val));
+  };
 
   const onEditAset = () => {
     // console.log(formEditAset.values.data);
@@ -104,7 +111,7 @@ const EditAsetPartaiV2 = ({
       keterangan: targetEdit?.keterangan,
       masterKategoriAsetId: targetEdit?.MasterKategoriAset?.id,
       deskripsi: targetEdit?.deskripsi,
-      // img: "test",
+      img: imageId.img,
     };
     // console.log(body);
 
@@ -141,7 +148,22 @@ const EditAsetPartaiV2 = ({
       // });
     }
   };
-  const theme = useMantineTheme();
+
+  const Gambar = () => (
+    <Box h={300} pos={"relative"} sx={{
+      overflow: "auto"
+    }}>
+      <Image
+        height={"auto"}
+        maw={"100%"}
+        src={`/api/aset-partai/aset-partai-get-gambar?id=${targetEdit!.id}`}
+        alt="img"
+        mx="auto"
+        radius="md"
+      />
+    </Box>
+  );
+
   if (!targetEdit)
     return (
       <>
@@ -151,7 +173,7 @@ const EditAsetPartaiV2 = ({
 
   return (
     <>
-      {/* {JSON.stringify(targetEdit.img)} */}
+      {/* {JSON.stringify(dataGambar)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -167,20 +189,13 @@ const EditAsetPartaiV2 = ({
           <Grid>
             <Grid.Col span={"auto"}>
               <Box pt={20}>
-                {/* <Paper bg={"gray.4"} p={20}>
-                  <Image
-                    src={
-                     api.apiAsetPartaiGetGambar + `?id=${targetEdit.id}`
-                    }
-                    alt="img"
-                    maw={300}
-                    mx="auto"
-                    radius="md"
-                  />
+                <Paper bg={"gray.4"} p={20}>
+                  <Gambar/>
                   <Group position="center" pt={20}>
                     <AsetImageUpload idVal={targetEdit.id} />
+
                   </Group>
-                </Paper> */}
+                </Paper>
               </Box>
             </Grid.Col>
             <Grid.Col span={12}>
