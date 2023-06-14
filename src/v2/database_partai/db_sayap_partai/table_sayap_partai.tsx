@@ -105,9 +105,7 @@ const TableSayapPartaiV2 = () => {
       } else {
         toast("Gagal");
       }
-      //   return null
     });
-    // console.log(onUpdate)
   };
 
   const BodyNonAktif = {
@@ -141,9 +139,7 @@ const TableSayapPartaiV2 = () => {
       } else {
         toast("Gagal");
       }
-      //   return null
     });
-    // console.log(onUpdate)
   };
 
   useShallowEffect(() => {
@@ -239,7 +235,7 @@ const TableSayapPartaiV2 = () => {
                       <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
                     </td>
                     <td>
-                      <Menu withArrow>
+                      <Menu withArrow offset={1}>
                         <Menu.Target>
                           <ActionIcon>
                             <FaUserEdit color={COLOR.coklat} size={25} />
