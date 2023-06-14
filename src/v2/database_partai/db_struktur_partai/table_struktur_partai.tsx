@@ -43,7 +43,7 @@ import {
   _searchDataSumberDayaPartaiSuperAdmin,
 } from "@/load_data/super_admin/load_sumber_data_super_admin";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { FaUserEdit } from "react-icons/fa";
 
 const _valueStatus = atomWithStorage<any | null>("_status", null);
@@ -180,7 +180,7 @@ const TableStruktutPartaiV2 = () => {
               style={{ cursor: "pointer" }}
               color={COLOR.coklat}
             >
-              Aksi
+              <AiOutlineMenu size={20} />
             </Text>
           </Tooltip>
         </Group>
@@ -232,7 +232,7 @@ const TableStruktutPartaiV2 = () => {
                       <Menu withArrow offset={1}>
                         <Menu.Target>
                           <ActionIcon>
-                            <FaUserEdit color={COLOR.coklat} size={25} />
+                            <FaUserEdit color={COLOR.coklat} size={20} />
                           </ActionIcon>
                         </Menu.Target>
                         <Menu.Dropdown bg={COLOR.coklat}>

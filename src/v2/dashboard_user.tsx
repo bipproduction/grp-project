@@ -52,6 +52,7 @@ import { atomWithStorage } from "jotai/utils";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import { useAtom } from "jotai";
 import { api } from "@/lib/api-backend";
+import { _val_reload_image } from "./dashboard_user/image-upload";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
@@ -94,6 +95,8 @@ const LayoutDashboardV2 = () => {
   const [listData2, setListData2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_datapartai_form);
   const [listData1, setListData1] = useAtom(_datapartai_form);
+  const [reloadImage, setReloadImage] = useAtom(_val_reload_image);
+
 
 
   const [select, setSelect] = useState("Data Profile");
@@ -119,7 +122,9 @@ const LayoutDashboardV2 = () => {
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
+      <Modal opened={opened} onClose={close} withCloseButton={false} centered 
+      key={reloadImage.toString()}
+      >
         <Alert
           icon={<FiAlertCircle size="2rem" color="red" />}
           title="APAKAH ANDA YAKIN UNTUK LOGOUT?"

@@ -7,7 +7,7 @@ import { apiUpload } from "@/lib/api-upload-images";
 import { useRouter } from "next/router";
 import { api } from "@/lib/api-backend";
 import { _dataAnggota } from "@/load_data/sayap_partai/load_sayap_partai";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
 import _ from "lodash";
@@ -17,16 +17,24 @@ import {
 } from "@/model/interface_sumber_daya_partai";
 import { data } from "jquery";
 import { DataDiriImage } from "@/model/interface_upload";
-import { _dataImagesData } from "@/load_data/media_social/load_media_social";
+import { useForceUpdate } from "@mantine/hooks";
 
 
-export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+// export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+export const _dataImagesNew = atomWithStorage<DataDiri | null>(
+  "dataDiri",
+  null
+);
 
+export const _val_reload_image = atom(false)
 
 function ImageUpload({ keluar }: any) {
   const router = useRouter();
-  const [image, setImage] = useAtom(_dataImagesData);
+  const [image, setImage] = useAtom(_dataImagesNew);
   const [valueAktif, setValueAktif] = useState<string>("");
+  const [reloadImage, setReloadImage] = useAtom(_val_reload_image)
+
+
   // const [dataImages, setDataImages] = useState({
   //   id: "",
   //   img: "",
@@ -51,8 +59,18 @@ function ImageUpload({ keluar }: any) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    });
-    router.reload()
+    }).then(async (res) => {
+      if (res.status == 201) {
+        toast("update berhasil")
+        setReloadImage(false)
+        await new Promise((r) => setTimeout(r, 1))
+        setReloadImage(true)
+      } else {
+        return toast("gagal update")
+      }
+    })
+
+    // router.reload()
     keluar(true)
   };
 
@@ -77,12 +95,15 @@ function ImageUpload({ keluar }: any) {
 
                 toast("success");
                 console.log(data);
+                // onUpload()
+                router.reload()
                 onUpload()
               })
             }}
             onReject={(files) => console.log("rejected files", files)}
             maxSize={3 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
+            key={reloadImage.toString()}
           >
             <Group position="center" spacing={"xl"}>
               <Dropzone.Accept>

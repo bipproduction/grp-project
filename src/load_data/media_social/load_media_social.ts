@@ -8,7 +8,4 @@ export const _loadMediaSocial = () =>
     .then((e) => e.json())
     .then((e) => (sMediaSocial.value = e));
 
-export const _dataImagesData = atomWithStorage<DataDiri | null>(
-  "dataDiri",
-  null
-);
+

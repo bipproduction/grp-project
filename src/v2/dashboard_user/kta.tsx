@@ -32,7 +32,12 @@ moment.locale("id");
 export const _datapartai_form = atomWithStorage<DataDiri | null>("", null);
 const val_open_edit_kta2 = atomWithStorage("val_open_edit_kta2", false);
 
-export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+export const _dataImagesNew = atomWithStorage<DataDiri | null>(
+  "dataDiri",
+  null
+);
+
+// export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
 const KTAV2 = () => {
   const ref = useRef();
@@ -41,7 +46,7 @@ const KTAV2 = () => {
   const [listData1, setListData1] = useAtom(_datapartai_form);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta2, setOpenKta2] = useAtom(val_open_edit_kta2);
-  const [image, setImage] = useAtom(_dataImages);
+  const [image, setImage] = useAtom(_dataImagesNew);
 
   async function loadKTA() {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
