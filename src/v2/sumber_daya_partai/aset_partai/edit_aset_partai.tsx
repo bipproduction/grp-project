@@ -21,7 +21,7 @@ import {
 } from "@mantine/core";
 import { AiOutlineUpload } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
-import { AsetLampiranV2 } from "./aset_lampiran";
+import { AsetLampiranV2 } from "./lampiran/aset_lampiran";
 import { AsetPembelianV2 } from "./aset_pembelian";
 import { AsetUmumV2 } from "./aset_umum";
 import { useForm } from "@mantine/form";
@@ -50,15 +50,16 @@ import {
   _select_KategoriAsetPartai,
   _select_StatusAsetPartai,
   _statusAsetPartai,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import moment from "moment";
-import { _listData_AsetPartai } from "@/load_data/sumber_daya_partai/load_aset_partai";
+import { _listData_AsetPartai } from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 
 import { Dropzone } from "@mantine/dropzone";
 import { RiEjectLine } from "react-icons/ri";
 import { MdAssistantPhoto } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import AsetImageUpload, { _dataImageAset } from "./image-upload-aset";
+import { _loadLampiranPartai_ById, _getAll_LampiranPartai_ById } from "@/load_data/sumber_daya_partai/aset_partai/load_lampiran_aset";
 
 
 const EditAsetPartaiV2 = ({
@@ -81,12 +82,14 @@ const EditAsetPartaiV2 = ({
   const [inputSearch, setInputSearch] = useAtom(_searchDataAsetPartai);
   const [imageId, setImageId] = useAtom(_dataImageAset);
   const [dataGambar, setDataGambar] = useState("");
+  const [dataLampiran, setDataLampiran] = useAtom(_getAll_LampiranPartai_ById);
 
   useShallowEffect(() => {
     _loadEditAsetPartai_ById(idValue, setTargetEdit);
     _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
     _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
     DataGambar(targetEdit?.id as any);
+    _loadLampiranPartai_ById(targetEdit?.id as any,setDataLampiran )
   }, []);
 
   const DataGambar = async (id: string) => {
@@ -193,22 +196,12 @@ const EditAsetPartaiV2 = ({
                   <Gambar/>
                   <Group position="center" pt={20}>
                     <AsetImageUpload idVal={targetEdit.id} />
-
                   </Group>
                 </Paper>
               </Box>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Box pt={20}>
-                {/* <Paper bg={COLOR.abuabu}> */}
-                <Tabs defaultValue={"1"} variant={"outline"}>
-                  <Tabs.List>
-                    <Tabs.Tab value="1">Umum</Tabs.Tab>
-                    {/* <Tabs.Tab value="2">Pembelian</Tabs.Tab> */}
-                    {/* <Tabs.Tab value="3">Lampiran</Tabs.Tab> */}
-                  </Tabs.List>
-                  <Tabs.Panel value="1">
-                    <Grid>
+            <Grid>
                       <Grid.Col span={6}>
                         <TextInput
                           label="Nama Aset"
@@ -392,16 +385,6 @@ const EditAsetPartaiV2 = ({
                         </Group>
                       </Grid.Col>
                     </Grid>
-                  </Tabs.Panel>
-                  {/* <Tabs.Panel value="2">
-                    <AsetPembelianV2 />
-                  </Tabs.Panel> */}
-                  <Tabs.Panel value="3">
-                    <AsetLampiranV2 />
-                  </Tabs.Panel>
-                </Tabs>
-                {/* </Paper> */}
-              </Box>
             </Grid.Col>
           </Grid>
         </Box>

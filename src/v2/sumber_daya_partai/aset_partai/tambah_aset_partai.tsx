@@ -26,7 +26,7 @@ import {
   _loadKategoriAset,
   _loadListDataAset,
   _loadStatusAset,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import { useAtom } from "jotai";
 import {
   sKategoriAset,
