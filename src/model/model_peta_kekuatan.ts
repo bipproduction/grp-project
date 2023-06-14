@@ -64,7 +64,8 @@ export interface ModelEksekutif {
   alamatKantor: string
   periode: string
   jabatanNasional: string
-  masterJabatanEksekutifKabKotId:string
+  partaiPengusung?: []
+  masterJabatanEksekutifKabKotId: string
   MasterJabatanEksekutifProvinsi?: MasterJabatanEksekutifProvinsi
   MasterProvince?: MasterProvince
   MasterJabatanEksekutifKabKot?: MasterJabatanEksekutifKabKot
@@ -72,42 +73,42 @@ export interface ModelEksekutif {
   MasterJabatanEksekutifKota?: MasterJabatanEksekutifKota
   MasterStatusEksekutif?: MasterStatusEksekutif
   MasterKabKot?: MasterKabKot
-  userId:string,
+  userId: string,
   User: User
 }
 
 export interface MasterJabatanEksekutifKabKot {
-  id:string
+  id: string
   name: string
 }
 
 export interface MasterJabatanEksekutifKabupaten {
-  id:string
+  id: string
   name: string
 }
 
 export interface MasterJabatanEksekutifKota {
-  id:string
+  id: string
   name: string
 }
 
 export interface MasterStatusEksekutif {
-  id:string
+  id: string
   name: string
 }
 
 export interface MasterKabKot {
-  id:number
+  id: number
   name: string
 }
 
 export interface MasterJabatanEksekutifProvinsi {
-  id:string
+  id: string
   name: string
 }
 
 export interface MasterProvince {
-  id:number
+  id: number
   name: string
 }
 
@@ -145,8 +146,8 @@ export interface ModelLegislatif {
   cakupanWilayah: string
   akd: string,
   userId: string,
-  masterProvinceId:number,
-  masterKabKotId:number,
+  masterProvinceId: number,
+  masterKabKotId: number,
   MasterProvince?: MasterProvince
   MasterKabKot?: MasterKabKot
   User: User

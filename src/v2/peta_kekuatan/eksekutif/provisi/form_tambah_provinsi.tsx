@@ -35,9 +35,10 @@ export const FormTambahEksekutifProvinsiV2 = ({
 }: any) => {
   const [dataDiri, setDataDiri] = useState<ModelEksekutifDataDiri | undefined>(undefined);
   const [inputNIK, setInputNIK] = useState("");
-  const [inputProvince, setInputProvince] = useState<any | null>(null);
-  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>(null);
-  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
+  const [inputProvince, setInputProvince] = useState<any | null>("");
+  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>("");
+  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>("");
+  const [inputPartaiPengusung, setInputPartaiPengusung] = useState<any | null>("");
   const [inputPeriode, setInputPeriode] = useState("");
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
@@ -74,10 +75,12 @@ export const FormTambahEksekutifProvinsiV2 = ({
     masterStatusEksekutifId: inputStatusEksekutif,
     periode: inputPeriode,
     alamatKantor: inputAlamatKantor,
+    partaiPengusung: inputPartaiPengusung,
   }
 
   const onAdd = () => {
-    if (Object.values(body).includes("")) {
+    console.log(body);
+    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
 
@@ -166,7 +169,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
                 withAsterisk
                 onChange={(val) => { setInputStatusEksekutif(val) }}
               />
-              {/* <MultiSelect
+              <MultiSelect
                 data={sListPartaiPengusung.value.map((e) => ({
                   value: e.id,
                   label: e.name,
@@ -174,7 +177,8 @@ export const FormTambahEksekutifProvinsiV2 = ({
                 label={"Pilih Partai"}
                 placeholder={"Pilih Partai"}
                 withAsterisk
-              /> */}
+                onChange={(val) => { setInputPartaiPengusung(val) }}
+              />
               <Box pt={20}>
                 <Button
                   w={100}

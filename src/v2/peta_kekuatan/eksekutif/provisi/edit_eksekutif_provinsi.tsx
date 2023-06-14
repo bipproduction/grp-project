@@ -29,15 +29,18 @@ import toast from "react-simple-toasts";
 import { _dataEksekutifProvinsi, _dataPageEksekutifProvinsi, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import _ from "lodash";
 
 export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
-  const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  //const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  const [dataEdit, setDataEdit] = useState<any>({});
   const [dataEks, setEks] = useState<any | []>([]);
-  const [inputProvince, setInputProvince] = useState<any | null>(null);
-  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>(null);
-  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
-  const [inputPeriode, setInputPeriode] = useState<any | null>(null);
-  const [inputAlamatKantor, setInputAlamatKantor] = useState<any | null>(null);
+  const [inputProvince, setInputProvince] = useState<any | null>("");
+  const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>("");
+  const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>("");
+  const [inputPeriode, setInputPeriode] = useState<any | null>("");
+  const [inputAlamatKantor, setInputAlamatKantor] = useState<any | null>("");
+  const [inputPartaiPengusung, setInputPartaiPengusung] = useState<any | null>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifProvinsi);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifProvinsi);
   const [inputPage, setInputPage] = useAtom(_dataPageEksekutifProvinsi);
@@ -69,10 +72,13 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
     masterStatusEksekutifId: inputStatusEksekutif ? inputStatusEksekutif : dataEdit?.MasterStatusEksekutif?.id,
     periode: inputPeriode ? inputPeriode : dataEdit?.periode,
     alamatKantor: inputAlamatKantor ? inputAlamatKantor : dataEdit?.alamatKantor,
+    partaiPengusung: inputPartaiPengusung ? inputPartaiPengusung : dataEdit?.partaiPengusung,
   }
 
   const onEdit = () => {
-    if (Object.values(body).includes("")) {
+    // console.log(body);
+    // console.log(inputPartaiPengusung.length)
+    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
     // disini pengaplikasian api
@@ -94,6 +100,7 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
       }
     });
   }
+
 
   if (dataEdit === undefined) return <></>
   return (
@@ -176,15 +183,27 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
                 setInputStatusEksekutif(val)
               }}
             />
-            {/* <MultiSelect
-              data={sListPartaiPengusung.value.map((e) => ({
-                value: e.id,
-                label: e.name,
-              }))}
+            <MultiSelect
+              withAsterisk
+              data={
+                sListPartaiPengusung.value.map((e) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
               label={"Pilih Partai"}
               placeholder={"Pilih Partai"}
-              withAsterisk
-            /> */}
+              value={
+                !dataEdit
+                  ? []
+                  : !dataEdit.partaiPengusung
+                    ? []
+                    : dataEdit.partaiPengusung.map((v: any) => v)
+              }
+              onChange={(val) => {
+                setInputPartaiPengusung(val)
+                setDataEdit({ ...dataEdit, partaiPengusung: val })
+              }}
+            />
             <Box pt={20}>
               <Button
                 w={100}

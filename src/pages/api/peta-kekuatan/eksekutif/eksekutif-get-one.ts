@@ -15,6 +15,7 @@ const eksekutifGetOne = async (req: NextApiRequest, res: NextApiResponse) => {
             jabatanNasional: true,
             userId: true,
             masterJabatanEksekutifKabKotId:true,
+            partaiPengusung: true,
             MasterJabatanEksekutifProvinsi: {
                 select: {
                     name: true,

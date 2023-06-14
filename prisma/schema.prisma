@@ -623,6 +623,7 @@ model Eksekutif {
   jabatanNasional                   String?                          @default("")
   periode                           String?
   alamatKantor                      String?
+  partaiPengusung                   Json?
   active                            Boolean                          @default(true)
   createdAt                         DateTime                         @default(now())
   updatedAt                         DateTime                         @default(now()) @updatedAt

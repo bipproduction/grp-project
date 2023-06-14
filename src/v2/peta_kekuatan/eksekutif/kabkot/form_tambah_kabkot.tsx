@@ -54,6 +54,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
   const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
   const [inputPeriode, setInputPeriode] = useState("");
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
+  const [inputPartaiPengusung, setInputPartaiPengusung] = useState<any | null>(null);
   const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
   const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
   const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
@@ -97,10 +98,11 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
     masterStatusEksekutifId: inputStatusEksekutif,
     periode: inputPeriode,
     alamatKantor: inputAlamatKantor,
+    partaiPengusung: inputPartaiPengusung
   }
 
   const onAdd = () => {
-    if (Object.values(body).includes("")) {
+    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
 
@@ -261,7 +263,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                   setInputStatusEksekutif(val)
                 }}
               />
-              {/* <MultiSelect
+              <MultiSelect
                 withAsterisk
                 data={sListPartaiPengusung.value.map((e) => ({
                   value: e.id,
@@ -269,7 +271,8 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                 }))}
                 label={"Pilih Partai Pengusung"}
                 placeholder={"Pilih Partai Pengusung"}
-              /> */}
+                onChange={(val) => { setInputPartaiPengusung(val) }}
+              />
               <Box pt={20}>
                 <Button
                   w={100}

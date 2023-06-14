@@ -42,7 +42,8 @@ import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [value, setValue] = useState<any>();
-  const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  //const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
+  const [dataEdit, setDataEdit] = useState<any>({});
   const [inputProvince, setInputProvince] = useState<any | null>(null);
   const [inputKabKot, setInputKabKot] = useState<any | null>(null);
   const [inputJabatanProvince, setInputJabatanProvince] = useState<any | null>(null);
@@ -52,6 +53,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [inputStatusEksekutif, setInputStatusEksekutif] = useState<any | null>(null);
   const [inputPeriode, setInputPeriode] = useState("");
   const [inputAlamatKantor, setInputAlamatKantor] = useState("");
+  const [inputPartaiPengusung, setInputPartaiPengusung] = useState<any | null>("");
   const [listDataNew, setListDataNew] = useAtom(_dataEksekutifKabKot);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifKabKot);
   const [inputPage, setInputPage] = useAtom(_dataPageEksekutifKabKot);
@@ -123,10 +125,11 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
     masterStatusEksekutifId: inputStatusEksekutif ? inputStatusEksekutif : dataEdit?.MasterStatusEksekutif?.id,
     periode: inputPeriode ? inputPeriode : dataEdit?.periode,
     alamatKantor: inputAlamatKantor ? inputAlamatKantor : dataEdit?.alamatKantor,
+    partaiPengusung: inputPartaiPengusung ? inputPartaiPengusung : dataEdit?.partaiPengusung
   }
 
   const onEdit = () => {
-    if (Object.values(body).includes("")) {
+    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
     // disini pengaplikasian api
@@ -253,15 +256,26 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
                 setInputStatusEksekutif(val)
               }}
             />
-            {/* <MultiSelect
-              withAsterisk
+            <MultiSelect
               data={sListPartaiPengusung.value.map((e) => ({
                 value: e.id,
                 label: e.name,
               }))}
+              withAsterisk
               label={"Pilih Partai Pengusung"}
               placeholder={"Pilih Partai Pengusung"}
-            /> */}
+              value={
+                !dataEdit
+                  ? []
+                  : !dataEdit.partaiPengusung
+                    ? []
+                    : dataEdit.partaiPengusung.map((v: any) => v)
+              }
+              onChange={(val) => {
+                setInputPartaiPengusung(val)
+                setDataEdit({ ...dataEdit, partaiPengusung: val })
+              }}
+            />
             <Box pt={20}>
               <Button
                 w={100}
