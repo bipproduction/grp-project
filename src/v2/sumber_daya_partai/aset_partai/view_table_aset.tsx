@@ -22,6 +22,8 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import { ModelAsetPartai } from "@/model/interface_aset_partai";
 import {
+  _dataPageAsetPartai,
+  _dataTotalPageAsetPartai,
   _listDataAset_BySearch,
   _listData_AsetPartai,
   _loadDataAset_BySearch,
@@ -45,6 +47,7 @@ import { _val_reload_gambar } from "./image-upload-aset";
 import EditAsetPartaiV2 from "./edit_aset_partai";
 import { CiEdit } from "react-icons/ci";
 import { ViewLampiranAsetV2 } from "./lampiran/view_lampiran";
+import _ from "lodash";
 
 const TableViewAsetV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -53,10 +56,15 @@ const TableViewAsetV2 = () => {
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
   const [reloadGambar, setReloadGambar] = useAtom(_val_reload_gambar);
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai)
+  let noUrut = ((_.toNumber(inputPage) -1) * 10) +1
+
 
   useShallowEffect(() => {
     _loadListDataAset(setDataAset);
-    _loadDataAset_BySearch(search, setDataAset_Search);
+    _loadDataAset_BySearch(search, setDataAset_Search, "1", setTotalPage);
+    setInputPage("1")
   }, []);
 
   const tbHead = (
@@ -85,7 +93,7 @@ const TableViewAsetV2 = () => {
 
   const rows = dataAset_Search.map((e, i) => (
     <tr key={e.id}>
-      <td>{i + 1}</td>
+      <td>{noUrut++}</td>
       <td>
           <Grid grow>
             <Grid.Col span={"auto"}>
@@ -149,10 +157,16 @@ const TableViewAsetV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
-          {/* <Group position="right" pt={10}>
-            <Pagination total={10} color={"orange"} />
-          </Group> */}
+          
         </ScrollArea>
+        <Group position="center" pt={10}>
+            <Pagination total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
+            onChange={(val : any) => {
+              setInputPage(val);
+              _loadDataAset_BySearch(search, setDataAset_Search, val, setTotalPage);
+            }}
+            />
+          </Group>
       </Box>
     </>
   );
@@ -169,12 +183,15 @@ function DeleteDataAset({
 }) {
   const [opened, setOpen] = useDisclosure(false);
   const [popOpen, popSetOpen] = useDisclosure(false);
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai)
+
 
   const onDelete = async (id: any) => {
     await fetch(api.apiAsetPartaiHapus + `?id=${id}`).then(async (res) => {
       if (res.status === 200) {
         toast("Hapus Data");
-        _loadDataAset_BySearch(search, setDataAset_Search);
+        _loadDataAset_BySearch(search, setDataAset_Search, inputPage, setTotalPage);
         _postLogUser(
           localStorage.getItem("user_id"),
           "HAPUS",

@@ -20,6 +20,8 @@ import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
 import {
+  _dataPageAsetPartai,
+  _dataTotalPageAsetPartai,
   _listData_AsetPartai,
   _listDataAset_BySearch,
   _loadDataAset_BySearch,
@@ -56,6 +58,10 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
   });
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai)
+
+
 
   useShallowEffect(() => {
     _loadKategoriAset();
@@ -124,7 +130,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
         thisClosed();
         // _loadListDataAset(setDataAset);
 
-        _loadDataAset_BySearch(search, setDataAset_Search)
+        _loadDataAset_BySearch(search, setDataAset_Search, inputPage, setTotalPage)
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data aset partai")
 
         return toast("Berhasil");

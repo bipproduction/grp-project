@@ -1,11 +1,13 @@
 import {
   _dataSeach,
   _dataStrukturTable_ByStatusSearch,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+  _dataPageSDP_Strukturr,
+  _dataTotalPageSDP_Strukturr,
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import {
   Alert,
   Box,
@@ -45,10 +47,20 @@ export const TableStrukturV2 = () => {
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
   const [search, setSearch] = useState("");
-  useShallowEffect(() => {
-    onSearch("");
-  }, []);
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
+
+  useShallowEffect(() => {
+    onSearch(search);
+  }, []);
+
+  function onSearch(text: string) {
+    _loadDataSDP_ByStatus_BySeach(1, text, setDataTable, "1", setTotalPage );
+    setInputSearch(text)
+    setInputPage("1")
+  }
 
   const thHead = (
     <tr>
@@ -65,7 +77,7 @@ export const TableStrukturV2 = () => {
 
   const tbBody = dataTable.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterTingkatPengurus.name}</td>
@@ -98,22 +110,17 @@ export const TableStrukturV2 = () => {
     </tr>
   ));
 
-  function onSearch(text: string) {
-    _loadData_ByStatus_BySeach(1, text, setDataTable);
-    setInputSearch(text)
-  }
-
+  
   return (
     <>
       {/* <pre>{JSON.stringify(dataTable.map((e) => e.MasterStatusKeanggotaan.id), null, 2)}</pre> */}
+      {/* {JSON.stringify(inputPage)} */}
       <Modal
         centered
         opened={opened}
         onClose={setOpen.close}
         size="lg"
-        // fullScreen
         overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
@@ -128,28 +135,6 @@ export const TableStrukturV2 = () => {
                 Data Struktur Partai
               </Text>
             </Grid.Col>
-            {/* <Grid.Col span={4}>
-              <Group position="right">
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<AiOutlineSave />}
-                >
-                  Save
-                </Button>
-                <Button
-                  w={100}
-                  bg={COLOR.merah}
-                  color={"orange"}
-                  radius={50}
-                  leftIcon={<CiFilter />}
-                >
-                  Fillter
-                </Button>
-              </Group>
-            </Grid.Col> */}
           </Grid>
         </Paper>
         <Box pt={20}>
@@ -163,37 +148,21 @@ export const TableStrukturV2 = () => {
                 onChange={(val) => onSearch(val.currentTarget.value)}
               />
             </Grid.Col>
-            {/* <Grid.Col md={8} lg={8}>
-              <Group position="right">
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineDownload size={20} />}
-                  radius={"xl"}
-                  bg={COLOR.orange}
-                >
-                  Download Tamplate
-                </Button>
-                <Button
-                  color="orange.9"
-                  leftIcon={<AiOutlineUpload size={20} />}
-                  radius={"xl"}
-                  m={5}
-                  bg={COLOR.orange}
-                >
-                  Import File
-                </Button>
-              </Group>
-            </Grid.Col> */}
           </Grid>
         </Box>
         <ScrollArea py={20}>
-          <Table withBorder>
+          <Table withBorder highlightOnHover horizontalSpacing={"lg"} >
             <thead>{thHead}</thead>
             <tbody>{tbBody}</tbody>
           </Table>
-          {/* <Group position="right" pt={10}>
-            <Pagination total={10} color={"orange"} />
-          </Group> */}
+          <Group position="right" pt={10}>
+            <Pagination total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
+            onChange={(val : any) => { 
+              setInputPage(val)
+              _loadDataSDP_ByStatus_BySeach(1, inputSearch, setDataTable, val, setTotalPage );
+            }}
+            />
+          </Group>
         </ScrollArea>
       </Box>
     </>

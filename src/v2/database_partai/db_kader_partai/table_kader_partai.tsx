@@ -40,7 +40,7 @@ import {
 } from "@/load_data/sayap_partai/load_sayap_partai";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
-import { _loadDataStruktur_ByIdStatus } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _loadDataStruktur_ByIdStatus } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import {
   _dataKaderPartaiPage,

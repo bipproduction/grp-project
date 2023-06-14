@@ -19,7 +19,7 @@ import EChartStrukturPartaiV2 from "./chart_struktur_partai";
 import { useState } from "react";
 import { useShallowEffect } from "@mantine/hooks";
 import { api } from "@/lib/api-backend";
-import { _loadData_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _loadDataSDP_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 
 const DashAdmin = () => {
   const [totalStruktur, setTotalStruktur] = useState([]);
@@ -28,15 +28,13 @@ const DashAdmin = () => {
   const [totalAnggota, setTotalAnggota] = useState([]);
   const [search, setSearch] = useState("");
   const [dataTable, setDataTable] = useState([]);
+  const [totalPage, setTotalPage] = useState("")
 
   useShallowEffect(() => {
     loadDataCountStruktur();
     loadDataCountSayap();
     loadDataCountKader();
     loadDataCountAnggota();
-
-    _loadData_ByStatus_BySeach(3, search, setDataTable);
-    _loadData_ByStatus_BySeach(4, search, setDataTable);
   }, []);
 
   const loadDataCountStruktur = async () => {
@@ -44,7 +42,7 @@ const DashAdmin = () => {
       .then((res) => res.json())
       .then(async (val) => {
         setTotalStruktur(val);
-        _loadData_ByStatus_BySeach(1, search, setDataTable);
+        _loadDataSDP_ByStatus_BySeach(1, search, setDataTable, "1", setTotalPage);
       });
   };
   const loadDataCountSayap = async () => {
@@ -52,18 +50,24 @@ const DashAdmin = () => {
       .then((res) => res.json())
       .then((val) => {
         setTotalSayap(val);
-        _loadData_ByStatus_BySeach(2, search, setDataTable);
+        _loadDataSDP_ByStatus_BySeach(2, search, setDataTable,  "1", setTotalPage);
       });
   };
   const loadDataCountKader = async () => {
     await fetch(api.apiSumberDayaPartaiCount + `?id=${3}`)
       .then((res) => res.json())
-      .then((val) => setTotalKader(val));
+      .then((val) => {
+        setTotalKader(val);
+        _loadDataSDP_ByStatus_BySeach(3, search, setDataTable,  "1", setTotalPage);
+      });
   };
   const loadDataCountAnggota = async () => {
     await fetch(api.apiSumberDayaPartaiCount + `?id=${4}`)
       .then((res) => res.json())
-      .then((val) => setTotalAnggota(val));
+      .then((val) => {
+        setTotalAnggota(val);
+        _loadDataSDP_ByStatus_BySeach(4, search, setDataTable,  "1", setTotalPage);
+      });
   };
 
   const listDataDashboard = [

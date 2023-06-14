@@ -32,12 +32,17 @@ import { useAmp } from "next/amp";
 import { useAtom } from "jotai";
 import {
   _dataKaderTable_ByStatusSearch,
-  _loadData_ByStatus_BySeach,
+  _dataPageSDP_Kader,
+
+  _dataTotalPageSDP_Kader,
+
+  _loadDataSDP_ByStatus_BySeach,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { KaderEditv2 } from "./kader_edit";
 import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
+import _ from "lodash";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -46,13 +51,18 @@ const TableKaderPartaiV2 = () => {
   const [valueId, setValueId] = useState("");
   const [search, setSearch] = useState("");
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Kader)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader)
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
+
 
   useShallowEffect(() => {
     onSearch("");
   }, []);
 
   const onSearch = (search: string) => {
-    _loadData_ByStatus_BySeach(3, search, setDataTable);
+    _loadDataSDP_ByStatus_BySeach(3, search, setDataTable, "1", setTotalPage);
+    setInputPage("1")
     setInputSearch(search)
   };
 
@@ -87,7 +97,7 @@ const TableKaderPartaiV2 = () => {
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterKaderPartai.name}</td>
@@ -208,9 +218,14 @@ const TableKaderPartaiV2 = () => {
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            {/* <Group position="right" pt={10}>
-              <Pagination total={10} color={"orange"} />
-            </Group> */}
+            <Group position="right" pt={10}>
+            <Pagination total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
+            onChange={(val : any) => {
+              setInputPage(val)
+              _loadDataSDP_ByStatus_BySeach(3, inputSearch, setDataTable, val, setTotalPage );
+            }}
+            />
+          </Group>
           </ScrollArea>
         </Box>
       </Box>

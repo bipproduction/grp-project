@@ -32,14 +32,17 @@ import { useAtom } from "jotai";
 import {
   _dataSayapTable_ByStatusSearch,
   _dataStrukturTable_ByStatusSearch,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+  _dataPageSDP_Sayap,
+  _dataTotalPageSDP_Sayap,
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { SayapEditV2 } from "./sayap_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
+import _ from "lodash";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -48,10 +51,18 @@ const TableSayapPartaiV2 = () => {
   const [search, setSearch] = useState("");
   const [valueId, setValueId] = useState("");
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Sayap)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Sayap)
+  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
 
   useShallowEffect(() => {
     onSearch("")
   }, []);
+  const onSearch = (search: string) => {
+    _loadDataSDP_ByStatus_BySeach(2, search, setDataTable, "1", setTotalPage);
+    setInputPage("1")
+    setInputSearch(search)
+  };
 
   const tbHead = (
     <tr>
@@ -86,7 +97,7 @@ const TableSayapPartaiV2 = () => {
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
-      <td>{i + 1}</td>
+      <td>{noAwal++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterSayapPartai?.name}</td>
@@ -120,11 +131,6 @@ const TableSayapPartaiV2 = () => {
       </td>
     </tr>
   ));
-
-  const onSearch = (search: string) => {
-    _loadData_ByStatus_BySeach(2, search, setDataTable);
-    setInputSearch(search)
-  };
 
   return (
     <>
@@ -217,9 +223,12 @@ const TableSayapPartaiV2 = () => {
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            {/* <Group position="right" pt={10}>
-              <Pagination total={10} color={"orange"} />
-            </Group> */}
+            <Pagination position="right" pt={10} total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
+            onChange={(val : any) => {
+              setInputPage(val)
+              _loadDataSDP_ByStatus_BySeach(2, inputSearch, setDataTable, val, setTotalPage );
+            }}
+            />
           </ScrollArea>
         </Box>
       </Box>

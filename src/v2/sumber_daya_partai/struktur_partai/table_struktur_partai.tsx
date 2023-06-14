@@ -45,10 +45,12 @@ import { StrukturEditV2 } from "./stuktur_edit";
 import {
   _dataStruktur,
   _loadDataStruktur_ByIdStatus,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _editLoadStruktur_ByStatusSeacrh,
+  _dataPageSDP_Strukturr,
+  _dataTotalPageSDP_Strukturr,
   // _new_loadEditByModel,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 
 export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
   "_list_database_struktur",
@@ -65,10 +67,13 @@ const TableStruktutPartaiV2 = () => {
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [search, setSearch] = useState('')
   const [dataTable, setDataTable] = useAtom(_editLoadStruktur_ByStatusSeacrh)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
 
   useShallowEffect(() => {
     _loadDataStruktur_ByIdStatus(1, setDataStruktur)
-    _loadData_ByStatus_BySeach(1, setSearch, setDataTable)
+    _loadDataSDP_ByStatus_BySeach(1, setSearch, setDataTable, "1", setTotalPage)
+    setInputPage("1")
   }, []);
 
   const tbHead = (

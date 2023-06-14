@@ -38,6 +38,8 @@ import { useShallowEffect } from "@mantine/hooks";
 import _ from "lodash";
 import { atom, useAtom } from "jotai";
 import {
+  _dataPageAsetPartai,
+  _dataTotalPageAsetPartai,
   _kategoriAsetPartai,
   _listDataAset_BySearch,
   _loadDataAset_BySearch,
@@ -59,8 +61,10 @@ import { RiEjectLine } from "react-icons/ri";
 import { MdAssistantPhoto } from "react-icons/md";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import AsetImageUpload, { _dataImageAset } from "./image-upload-aset";
-import { _loadLampiranPartai_ById, _getAll_LampiranPartai_ById } from "@/load_data/sumber_daya_partai/aset_partai/load_lampiran_aset";
-
+import {
+  _loadLampiranPartai_ById,
+  _getAll_LampiranPartai_ById,
+} from "@/load_data/sumber_daya_partai/aset_partai/load_lampiran_aset";
 
 const EditAsetPartaiV2 = ({
   thisClosed,
@@ -83,13 +87,15 @@ const EditAsetPartaiV2 = ({
   const [imageId, setImageId] = useAtom(_dataImageAset);
   const [dataGambar, setDataGambar] = useState("");
   const [dataLampiran, setDataLampiran] = useAtom(_getAll_LampiranPartai_ById);
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai);
 
   useShallowEffect(() => {
     _loadEditAsetPartai_ById(idValue, setTargetEdit);
     _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
     _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
     DataGambar(targetEdit?.id as any);
-    _loadLampiranPartai_ById(targetEdit?.id as any,setDataLampiran )
+    _loadLampiranPartai_ById(targetEdit?.id as any, setDataLampiran);
   }, []);
 
   const DataGambar = async (id: string) => {
@@ -114,9 +120,9 @@ const EditAsetPartaiV2 = ({
       keterangan: targetEdit?.keterangan,
       masterKategoriAsetId: targetEdit?.MasterKategoriAset?.id,
       deskripsi: targetEdit?.deskripsi,
-      img: imageId.img,
+      img: imageId.img ? imageId.img : targetEdit?.img,
     };
-    // console.log(body);
+    console.log(body);
 
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Semua Data");
@@ -133,7 +139,12 @@ const EditAsetPartaiV2 = ({
           const data = await res.json();
           if (data.success) {
             thisClosed();
-            _loadDataAset_BySearch(inputSearch, setDataAset_Search);
+            _loadDataAset_BySearch(
+              inputSearch,
+              setDataAset_Search,
+              inputPage,
+              setTotalPage
+            );
             _postLogUser(
               localStorage.getItem("user_id"),
               "UBAH",
@@ -153,17 +164,21 @@ const EditAsetPartaiV2 = ({
   };
 
   const Gambar = () => (
-    <Box h={300} pos={"relative"} sx={{
-      overflow: "auto"
-    }}>
-      <Image
-        height={"auto"}
-        maw={"100%"}
-        src={`/api/aset-partai/aset-partai-get-gambar?id=${targetEdit!.id}`}
-        alt="img"
-        mx="auto"
-        radius="md"
-      />
+    <Box
+      h={300}
+      pos={"relative"}
+      sx={{
+        overflow: "auto",
+      }}
+    >
+      <AspectRatio maw={"100%"} ratio={16 / 9} mx="auto">
+        <Image
+          height={"auto"}
+          src={`/api/aset-partai/aset-partai-get-gambar?id=${targetEdit!.id}`}
+          alt="img"
+          radius={"sm"}
+        />
+      </AspectRatio>
     </Box>
   );
 
@@ -192,199 +207,197 @@ const EditAsetPartaiV2 = ({
           <Grid>
             <Grid.Col span={"auto"}>
               <Box pt={20}>
-                <Paper bg={"gray.4"} p={20}>
-                  <Gambar/>
+                {/* <Paper bg={"gray.1"} p={10}> */}
+                  <Gambar />
                   <Group position="center" pt={20}>
                     <AsetImageUpload idVal={targetEdit.id} />
                   </Group>
-                </Paper>
+                {/* </Paper> */}
               </Box>
             </Grid.Col>
             <Grid.Col span={12}>
-            <Grid>
-                      <Grid.Col span={6}>
-                        <TextInput
-                          label="Nama Aset"
-                          withAsterisk
-                          value={targetEdit.name}
-                          // placeholder={targetEdit?.name}
-                          onChange={(val) => {
-                            // console.log(val.currentTarget.value)
-                            const data = _.clone(targetEdit);
-                            data.name = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <TextInput
-                          placeholder="Nomor Serial"
-                          label="Nomor Serial"
-                          withAsterisk
-                          value={targetEdit?.serialNumber}
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.serialNumber = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <TextInput
-                          placeholder="Pengguna"
-                          label="Pengguna"
-                          withAsterisk
-                          value={targetEdit.pengguna}
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.pengguna = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <TextInput
-                          label="Penangung Jawab"
-                          value={targetEdit.penanggungJawab}
-                          withAsterisk
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.penanggungJawab = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <NumberInput
-                          label="Harga"
-                          value={targetEdit.harga}
-                          withAsterisk
-                          onChange={(val) => {
-                            const data: any = _.clone(targetEdit);
-                            data.harga = val;
-                            setTargetEdit(data);
-                          }}
-                        />
+              <Grid>
+                <Grid.Col span={6}>
+                  <TextInput
+                    label="Nama Aset"
+                    withAsterisk
+                    value={targetEdit.name}
+                    // placeholder={targetEdit?.name}
+                    onChange={(val) => {
+                      // console.log(val.currentTarget.value)
+                      const data = _.clone(targetEdit);
+                      data.name = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <TextInput
+                    placeholder="Nomor Serial"
+                    label="Nomor Serial"
+                    withAsterisk
+                    value={targetEdit?.serialNumber}
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.serialNumber = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <TextInput
+                    placeholder="Pengguna"
+                    label="Pengguna"
+                    withAsterisk
+                    value={targetEdit.pengguna}
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.pengguna = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <TextInput
+                    label="Penangung Jawab"
+                    value={targetEdit.penanggungJawab}
+                    withAsterisk
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.penanggungJawab = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <NumberInput
+                    label="Harga"
+                    value={targetEdit.harga}
+                    withAsterisk
+                    onChange={(val) => {
+                      const data: any = _.clone(targetEdit);
+                      data.harga = val;
+                      setTargetEdit(data);
+                    }}
+                  />
 
-                        {/* {JSON.stringify(targetEdit.tglPembelian)} */}
+                  {/* {JSON.stringify(targetEdit.tglPembelian)} */}
 
-                        <DateInput
-                          label="Tanggal Pembelian"
-                          placeholder={moment(targetEdit.tglPembelian).format(
-                            "YYYY-MM-DD"
-                          )}
-                          // value={moment(targetEdit.tglPembelian)}
-                          withAsterisk
-                          onChange={(val) => {
-                            // const data: any = _.clone(targetEdit);
-                            // data.tglPembelian =
-                            //   moment(val).format("YYYY-MM-DD");
-                            setTargetEdit({
-                              ...targetEdit,
-                              tglPembelian: moment(val).format("YYYY-MM-DD"),
-                            });
-                          }}
-                        />
-                        <TextInput
-                          label="Lokasi Pembelian"
-                          withAsterisk
-                          value={targetEdit.lokasiPembelian}
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.lokasiPembelian = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                      </Grid.Col>
-                      <Grid.Col span={6}>
-                        <Select
-                          label={"Status Aset"}
-                          withAsterisk
-                          value={selectStatusAset.name}
-                          placeholder={
-                            selectStatusAset.name
-                              ? selectStatusAset.name
-                              : targetEdit.MasterStatusAset?.name
-                          }
-                          data={statusAset.map((e) => ({
-                            value: e.id,
-                            label: e.name,
-                          }))}
-                          onChange={(val) => {
-                            setSelectStatusAset(
-                              statusAset.find((e) => e.id === val)
-                            );
-                            const data: any = _.clone(targetEdit);
-                            data.MasterStatusAset.id = val;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <Textarea
-                          value={targetEdit.keterangan}
-                          label="Keterangan Status"
-                          autosize
-                          minRows={2}
-                          maxRows={4}
-                          withAsterisk
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.keterangan = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
+                  <DateInput
+                    label="Tanggal Pembelian"
+                    placeholder={moment(targetEdit.tglPembelian).format(
+                      "YYYY-MM-DD"
+                    )}
+                    // value={moment(targetEdit.tglPembelian)}
+                    withAsterisk
+                    onChange={(val) => {
+                      // const data: any = _.clone(targetEdit);
+                      // data.tglPembelian =
+                      //   moment(val).format("YYYY-MM-DD");
+                      setTargetEdit({
+                        ...targetEdit,
+                        tglPembelian: moment(val).format("YYYY-MM-DD"),
+                      });
+                    }}
+                  />
+                  <TextInput
+                    label="Lokasi Pembelian"
+                    withAsterisk
+                    value={targetEdit.lokasiPembelian}
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.lokasiPembelian = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                </Grid.Col>
+                <Grid.Col span={6}>
+                  <Select
+                    label={"Status Aset"}
+                    withAsterisk
+                    value={selectStatusAset.name}
+                    placeholder={
+                      selectStatusAset.name
+                        ? selectStatusAset.name
+                        : targetEdit.MasterStatusAset?.name
+                    }
+                    data={statusAset.map((e) => ({
+                      value: e.id,
+                      label: e.name,
+                    }))}
+                    onChange={(val) => {
+                      setSelectStatusAset(statusAset.find((e) => e.id === val));
+                      const data: any = _.clone(targetEdit);
+                      data.MasterStatusAset.id = val;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <Textarea
+                    value={targetEdit.keterangan}
+                    label="Keterangan Status"
+                    autosize
+                    minRows={2}
+                    maxRows={4}
+                    withAsterisk
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.keterangan = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
 
-                        <Select
-                          label={"Kategori Aset"}
-                          withAsterisk
-                          value={selectKategoriAset.name}
-                          placeholder={
-                            selectKategoriAset.name
-                              ? selectKategoriAset.name
-                              : targetEdit.MasterKategoriAset?.name
-                          }
-                          data={kategoriAset.map((e) => ({
-                            value: e.id,
-                            label: e.name,
-                          }))}
-                          onChange={(val) => {
-                            setSelectKategoriAset(
-                              kategoriAset.find((e) => e.id === val)
-                            );
-                            const data: any = _.clone(targetEdit);
-                            data.MasterKategoriAset.id = val;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <Textarea
-                          label="Deskripsi Aset"
-                          value={targetEdit.deskripsi}
-                          autosize
-                          minRows={2}
-                          maxRows={4}
-                          withAsterisk
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.deskripsi = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <TextInput
-                          label="Garansi"
-                          withAsterisk
-                          value={targetEdit.garansi}
-                          onChange={(val) => {
-                            const data = _.clone(targetEdit);
-                            data.garansi = val.target.value;
-                            setTargetEdit(data);
-                          }}
-                        />
-                        <Group position="center" pt={25}>
-                          <Button
-                            w={100}
-                            color="orange.9"
-                            bg={COLOR.orange}
-                            radius={"xl"}
-                            onClick={() => {
-                              onEditAset();
-                            }}
-                          >
-                            Simpan
-                          </Button>
-                        </Group>
-                      </Grid.Col>
-                    </Grid>
+                  <Select
+                    label={"Kategori Aset"}
+                    withAsterisk
+                    value={selectKategoriAset.name}
+                    placeholder={
+                      selectKategoriAset.name
+                        ? selectKategoriAset.name
+                        : targetEdit.MasterKategoriAset?.name
+                    }
+                    data={kategoriAset.map((e) => ({
+                      value: e.id,
+                      label: e.name,
+                    }))}
+                    onChange={(val) => {
+                      setSelectKategoriAset(
+                        kategoriAset.find((e) => e.id === val)
+                      );
+                      const data: any = _.clone(targetEdit);
+                      data.MasterKategoriAset.id = val;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <Textarea
+                    label="Deskripsi Aset"
+                    value={targetEdit.deskripsi}
+                    autosize
+                    minRows={2}
+                    maxRows={4}
+                    withAsterisk
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.deskripsi = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <TextInput
+                    label="Garansi"
+                    withAsterisk
+                    value={targetEdit.garansi}
+                    onChange={(val) => {
+                      const data = _.clone(targetEdit);
+                      data.garansi = val.target.value;
+                      setTargetEdit(data);
+                    }}
+                  />
+                  <Group position="center" pt={25}>
+                    <Button
+                      w={100}
+                      color="orange.9"
+                      bg={COLOR.orange}
+                      radius={"xl"}
+                      onClick={() => {
+                        onEditAset();
+                      }}
+                    >
+                      Simpan
+                    </Button>
+                  </Group>
+                </Grid.Col>
+              </Grid>
             </Grid.Col>
           </Grid>
         </Box>

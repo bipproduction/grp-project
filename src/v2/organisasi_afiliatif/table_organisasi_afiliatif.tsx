@@ -22,7 +22,7 @@ import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import { useAtom } from "jotai";
 import { _datapartai_form } from "@/pages/v2/contoh/table-edit";
 import { _EditDataDiri } from "@/load_data/data_diri_partai/load_edit_data_partai";
-import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import moment from "moment";
 import { AfiliatifEditV2 } from "./afiliatif_edit";
 import { useState } from "react";
