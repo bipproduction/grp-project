@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const asetPartaiPost = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     let body = req.body;
-    console.log(body)
+    // console.log(body)
 
     const aset = await client.asetPartai.findUnique({
         where: {
