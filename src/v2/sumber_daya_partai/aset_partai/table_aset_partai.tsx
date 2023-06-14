@@ -21,7 +21,7 @@ import {
   _listDataAset_BySearch,
   _loadDataAset_BySearch,
   _searchDataAsetPartai,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import { useState } from "react";
 import { useAtom } from "jotai";
 

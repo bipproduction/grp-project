@@ -11,7 +11,7 @@ import {
   _loadEditAsetPartai_ById,
   _loadEdit_Aset,
   _searchDataAsetPartai,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import { atom, useAtom } from "jotai";
 import { useState } from "react";
 import toast from "react-simple-toasts";

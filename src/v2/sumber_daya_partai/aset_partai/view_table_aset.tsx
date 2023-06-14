@@ -5,6 +5,7 @@ import {
   Button,
   Center,
   Flex,
+  Grid,
   Group,
   HoverCard,
   Menu,
@@ -25,7 +26,7 @@ import {
   _listData_AsetPartai,
   _loadDataAset_BySearch,
   _loadListDataAset,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import { atom, useAtom } from "jotai";
 import moment from "moment";
 import toast from "react-simple-toasts";
@@ -33,10 +34,17 @@ import { FiAlertCircle } from "react-icons/fi";
 import COLOR from "../../../../fun/WARNA";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { AiFillDelete, AiFillEdit, AiOutlineMenu } from "react-icons/ai";
-import { RiDeleteBin6Fill, RiMenuUnfoldLine } from "react-icons/ri";
+import { GrAttachment } from "react-icons/gr";
+import {
+  RiDeleteBin5Line,
+  RiDeleteBin6Fill,
+  RiMenuUnfoldLine,
+} from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { _val_reload_gambar } from "./image-upload-aset";
 import EditAsetPartaiV2 from "./edit_aset_partai";
+import { CiEdit } from "react-icons/ci";
+import { ViewLampiranAsetV2 } from "./lampiran/view_lampiran";
 
 const TableViewAsetV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -59,6 +67,7 @@ const TableViewAsetV2 = () => {
           <AiOutlineMenu />
         </Center>
       </th>
+      {/* <th>Aset ID , delete soon</th> */}
       <th>Nama Aset</th>
       <th>Serial Number</th>
       <th>Status Aset</th>
@@ -78,35 +87,32 @@ const TableViewAsetV2 = () => {
     <tr key={e.id}>
       <td>{i + 1}</td>
       <td>
-        <Group position="center" spacing={"xs"}>
-          {/* <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={() => {
-              open();
-              setIdValue(e.id);
-            }}
-          >
-            Edit
-          </Button> */}
-          <ActionIcon
-            color="green"
-            onClick={() => {
-              open();
-              setIdValue(e.id);
-            }}
-          >
-            <AiFillEdit />
-          </ActionIcon>
-          <DeleteDataAset
-            setId={e}
-            search={search}
-            setDataAset_Search={setDataAset_Search}
-          />
-        </Group>
+          <Grid grow>
+            <Grid.Col span={"auto"}>
+              <ActionIcon
+                color="green"
+                onClick={() => {
+                  open();
+                  setIdValue(e.id);
+                }}
+              >
+                <CiEdit />
+              </ActionIcon>
+              <ViewLampiranAsetV2 dataAset={e} />
+              <DeleteDataAset
+                setId={e}
+                search={search}
+                setDataAset_Search={setDataAset_Search}
+              />
+            </Grid.Col>
+            {/* <Grid.Col>
+            </Grid.Col>
+            <Grid.Col>
+            </Grid.Col> */}
+          </Grid>
+        
       </td>
+      {/* <td>{e.id}</td> */}
       <td>{e.name}</td>
       <td>{e.serialNumber}</td>
       <td>{e.MasterStatusAset?.name}</td>
@@ -185,7 +191,7 @@ function DeleteDataAset({
           setOpen.open();
         }}
       >
-        <AiFillDelete />
+        <RiDeleteBin5Line />
       </ActionIcon>
       {/* <Button
         variant={"outline"}

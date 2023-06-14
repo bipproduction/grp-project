@@ -1,7 +1,7 @@
 import {
   _loadKategoriAset,
   _loadStatusAset,
-} from "@/load_data/sumber_daya_partai/load_aset_partai";
+} from "@/load_data/sumber_daya_partai/aset_partai/load_aset_partai";
 import {
   sKategoriAset,
   sStatusAset,
