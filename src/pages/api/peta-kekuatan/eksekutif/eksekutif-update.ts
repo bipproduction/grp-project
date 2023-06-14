@@ -23,6 +23,7 @@ const eksekutifUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
                 periode: body.periode,
                 alamatKantor: body.alamatKantor,
                 jabatanNasional:body.jabatanNasional,
+                partaiPengusung:body.partaiPengusung,
             }
         })
 
