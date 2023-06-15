@@ -25,6 +25,8 @@ import { api } from "@/lib/api-backend";
 import { ModelCalonPemilihPotensial } from "@/model/interface_calon_pemilih_potensial";
 import { useAtom } from "jotai";
 import {
+  _dataPageCalonPemilihPotensial,
+  _dataTotalPageCalonPemilihPotensial,
   _listData_CalonPemilihPotensial,
   _loadDataCalonPemilihPotensial_BySearch,
   _searchData_CalonPemilihPotensial,
@@ -36,14 +38,18 @@ export const ViewCalonPemilihPotensialV2 = () => {
     _listData_CalonPemilihPotensial
   );
   const [inputSearch, setInputSearch] = useAtom(_searchData_CalonPemilihPotensial)
-
+  const [inputPage, setInputPage] = useAtom(_dataPageCalonPemilihPotensial);
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageCalonPemilihPotensial
+  );
   useShallowEffect(() => {
     // _loadDataCalonPemilihPotensial("");
     onSearch('');
   }, []);
 
   const onSearch = (inputSearch: string) => {
-    _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP);
+    _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP, "1", setTotalPage);
+    setInputPage("1")
     setInputSearch(inputSearch)
   };
 

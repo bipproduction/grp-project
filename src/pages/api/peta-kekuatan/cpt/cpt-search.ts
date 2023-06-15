@@ -12,7 +12,7 @@ const calonPemilihPotensialSearch = async (
   if (search != "") {
     data = await client.calonPemilihPotensial.findMany({
       skip: dataSkip,
-      take: 10,
+      take: 2,
       where: {
         active: true,
         nama: {
