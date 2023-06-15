@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   AiOutlineDownload,
+  AiOutlineMenu,
   AiOutlineSave,
   AiOutlineSearch,
   AiOutlineUpload,
@@ -210,11 +211,12 @@ const TableAnggotaPartaiV2 = () => {
               style={{ cursor: "pointer" }}
               color={COLOR.coklat}
             >
-              Aksi
+              <AiOutlineMenu size={20}/>
             </Text>
           </Tooltip>
         </Group>
       </th>
+
     </tr>
   );
 
@@ -263,7 +265,7 @@ const TableAnggotaPartaiV2 = () => {
                       <Menu withArrow offset={1}>
                         <Menu.Target>
                           <ActionIcon>
-                            <FaUserEdit color={COLOR.coklat} size={25} />
+                            <FaUserEdit color={COLOR.coklat} size={20} />
                           </ActionIcon>
                         </Menu.Target>
                         <Menu.Dropdown bg={COLOR.coklat}>
@@ -305,6 +307,7 @@ const TableAnggotaPartaiV2 = () => {
                         </Menu.Dropdown>
                       </Menu>
                     </td>
+
                   </tr>
                 ))}
               </tbody>

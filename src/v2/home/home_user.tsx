@@ -54,8 +54,10 @@ import { api } from "@/lib/api-backend";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import toast from "react-simple-toasts";
 import { BsPersonVcard } from "react-icons/bs";
+import { _dataImgNew } from "@/load_data/load_gambar_user";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
+
 
 const HEADER_HEIGHT = rem(80);
 
@@ -120,6 +122,8 @@ const val_modal_logout = atomWithStorage("val_modal_logout", false);
 const HomeUserNewV2 = ({ thisClosed }: any) => {
   const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
   const [image, setImage] = useAtom(_dataImages);
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
+
 
   const mockdata = [
     {
@@ -302,7 +306,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                           <Group style={{ cursor: "pointer" }}>
                             <Avatar
                               src={
-                                api.apiDataDiriGetGambar + `?id=${image?.id}`
+                                api.apiDataDiriGetGambar + `?id=${imgNew?.id}`
                               }
                               alt="it's me"
                               radius={"xl"}
