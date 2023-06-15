@@ -45,6 +45,8 @@ import EditFoto from "./edit_foto";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
 import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
 import { _val_reload_image } from "./image-upload";
+import { ModalImageUser } from "@/model/interface_image_user";
+import { _dataImgNew } from "@/load_data/load_gambar_user";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
@@ -66,6 +68,11 @@ export const _dataImagesNew = atomWithStorage<DataDiri | null>(
   null
 );
 
+export const _dataImageUser = atomWithStorage<ModalImageUser | null>(
+  "_dataImageUserUpdate",
+  null
+);
+
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 const val_open_edit_media = atomWithStorage("val_open_edit_media", false);
 
@@ -81,8 +88,11 @@ const DataProfileV2 = () => {
   const [openMedia, setOpenMedia] = useAtom(val_open_edit_media);
   const router = useRouter();
   const [reloadImage, setReloadImage] = useAtom(_val_reload_image);
-  const [image, setImage] = useAtom(_dataImagesNew);
-  const [dataImage, setDataImage] = useState("")
+  const [imageUserGet, setImageUserGet] = useAtom(_dataImageUser);
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
+  // const [image, setImage] = useAtom(_dataImagesNew);
+
+  const [dataImage, setDataImage] = useState("");
 
   const [imageget, setImageget] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -95,6 +105,7 @@ const DataProfileV2 = () => {
         if (val.status == 200) {
           const data = await val.json();
           setListData(data);
+          setImgNew(data);
           return;
         }
       });
@@ -126,27 +137,32 @@ const DataProfileV2 = () => {
     });
   });
 
-  const loadGetImage = (id: string) => {
-    fetch(api.apiDataDiriGetGambar + `?id=${image?.id}`).then(() => setImage);
-  };
-
+  // const loadGetImage = () => {
+  //   api.apiDataDiriGetGambar + `?id=${image?.id}`
+  // };
+  // function GraphCMSImageLoader()  {
+  //   api.apiDataDiriGetGambar + `?id=${image?.id}`;
+  //  }
 
   const [gambarDataDiri, setGambarDataDiri] = useState<any | null>(null);
 
-  const GambarImage = () => (
-    <Image
-    width={170}
-    height={180}
-    radius={5}
-    src={`/api/form-data-diri/data-diri-get-gambar?id=${image?.id}`}
-    alt="gambar"
-    key={reloadImage.toString()}
-    />
-  )
+  // const GambarImage = () => (
+  //   <Box>
+  //     {JSON.stringify(imgNew?.img)}
+  //     <Image
+  //       width={170}
+  //       height={180}
+  //       radius={5}
+  //       src={api.apiDataDiriGetGambar + `?id=${imgNew?.id}`}
+  //       alt="gambar"
+  //       key={reloadImage.toString()}
+  //     />
+  //   </Box>
+  // );
 
   return (
     <>
-      {/* {JSON.stringify(image)} */}
+      {/* {JSON.stringify(imgNew)} */}
       {/* <pre>{JSON.stringify(listData2, null, 2)}</pre> */}
       <Paper
         p={2}
@@ -185,19 +201,19 @@ const DataProfileV2 = () => {
               >
                 <Stack>
                   <Center p={10}>
-                    {/* <Image
-                    // key={reloadImage.toString()}
+                    <Image
+                    key={reloadImage.toString()}
                       // src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
-                      src={`/api/form-data-diri/data-diri-get-gambar?id=${image!.id}`}
+                      src={`/api/form-data-diri/data-diri-get-gambar?id=${imgNew?.id}`}
                       width={170}
                       height={180}
                       alt="img"
                       radius={5}
                       // onChange={() => loadGetImage}
-                    /> */}
+                    />
 
                     {/* <Box key={reloadImage.toString()}>Image Data</Box> */}
-                    <GambarImage/>
+                    {/* <GambarImage /> */}
                   </Center>
                 </Stack>
               </Box>

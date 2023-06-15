@@ -10,30 +10,36 @@ import { _dataAnggota } from "@/load_data/sayap_partai/load_sayap_partai";
 import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
-import _ from "lodash";
+import _, { isNull } from "lodash";
 import {
   DataDiri,
   ModelSumberDayaPartai,
 } from "@/model/interface_sumber_daya_partai";
 import { data } from "jquery";
 import { DataDiriImage } from "@/model/interface_upload";
-import { useForceUpdate } from "@mantine/hooks";
-
+import { useForceUpdate, useShallowEffect } from "@mantine/hooks";
+import { ModalImageUser } from "@/model/interface_image_user";
+import { _dataImgNew } from "@/load_data/load_gambar_user";
 
 // export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
-export const _dataImagesNew = atomWithStorage<DataDiri | null>(
-  "dataDiri",
+// export const _dataImagesNew = atomWithStorage<DataDiri | null>(
+//   "dataDiri",
+//   null
+// );
+export const _dataImageUser = atomWithStorage<ModalImageUser | null>(
+  "_dataImageUserUpdate",
   null
 );
 
-export const _val_reload_image = atom(false)
+export const _val_reload_image = atom(false);
 
 function ImageUpload({ keluar }: any) {
   const router = useRouter();
-  const [image, setImage] = useAtom(_dataImagesNew);
+  // const [image, setImage] = useAtom(_dataImagesNew);
+  const [imageUserGet, setImageUserGet] = useAtom(_dataImageUser);
   const [valueAktif, setValueAktif] = useState<string>("");
-  const [reloadImage, setReloadImage] = useAtom(_val_reload_image)
-
+  const [reloadImage, setReloadImage] = useAtom(_val_reload_image);
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
 
   // const [dataImages, setDataImages] = useState({
   //   id: "",
@@ -43,16 +49,42 @@ function ImageUpload({ keluar }: any) {
   // const [listData, setListData] = useAtom(_dataImages);
 
   const [listData, setListData] = useState({
-    img: "",
+    img: imageUserGet,
   });
   const [imgFoto, setImgFoto] = useState("");
+  // useShallowEffect(() => {
+  //   loadImageEdit();
+  // }, []);
+  // async function loadImageEdit() {
+  //   fetch(
+  //     api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`
+  //   ).then(async (val) => {
+  //     if (val.status == 200) {
+  //       const data = await val.json();
+  //       setImageUserGet(data);
+  //       setImgNew(data);
+  //       return;
+  //     }
+  //   });
+  // }
+  useShallowEffect(() => {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setImageUserGet(data);
+          setImgNew(data);
+          return;
+        }
+      });
+  }, []);
 
   const onUpload = async () => {
     const body = {
-      id: image?.id,
+      id: imageUserGet?.id,
       img: listData?.img,
-    }
-    console.log(body);
+    };
+    // console.log(body);
     await fetch(api.apiDataDiriUpdateImg, {
       method: "POST",
       headers: {
@@ -61,24 +93,23 @@ function ImageUpload({ keluar }: any) {
       body: JSON.stringify(body),
     }).then(async (res) => {
       if (res.status == 201) {
-        toast("update berhasil")
-        setReloadImage(false)
-        await new Promise((r) => setTimeout(r, 1))
-        setReloadImage(true)
+        toast("update berhasil");
+        setReloadImage(false);
+        await new Promise((r) => setTimeout(r, 1));
+        setReloadImage(true);
       } else {
-        return toast("gagal update")
+        return toast("gagal update");
       }
-    })
-
-    // router.reload()
-    keluar(true)
+    });
+    // loadImageEdit();
+    router.reload()
+    keluar(true);
   };
-
 
   return (
     <>
       {/* {JSON.stringify(listData)} */}
-      {/* {JSON.stringify(image, null, 2)} */}
+      {/* {JSON.stringify(imgNew)} */}
       <Stack>
         <Group>
           <Dropzone
@@ -90,15 +121,17 @@ function ImageUpload({ keluar }: any) {
                 body: form_data,
               }).then(async (v) => {
                 const data = await v.json();
-                setListData(data.img)
-                listData.img! = data.img
+                // setListData(data.img);
+                // listData.img! = data.img;
+                listData.img = data.img
+                setImageUserGet(data.img)
 
                 toast("success");
-                console.log(data);
+                //console.log(data);
                 // onUpload()
-                router.reload()
-                onUpload()
-              })
+                // router.reload()
+                onUpload();
+              });
             }}
             onReject={(files) => console.log("rejected files", files)}
             maxSize={3 * 1024 ** 2}

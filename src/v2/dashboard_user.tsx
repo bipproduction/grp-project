@@ -53,6 +53,7 @@ import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import { useAtom } from "jotai";
 import { api } from "@/lib/api-backend";
 import { _val_reload_image } from "./dashboard_user/image-upload";
+import { _dataImgNew } from "@/load_data/load_gambar_user";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
@@ -96,8 +97,7 @@ const LayoutDashboardV2 = () => {
   const [listData, setListData] = useAtom(_datapartai_form);
   const [listData1, setListData1] = useAtom(_datapartai_form);
   const [reloadImage, setReloadImage] = useAtom(_val_reload_image);
-
-
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
 
   const [select, setSelect] = useState("Data Profile");
 
@@ -262,7 +262,7 @@ const LayoutDashboardV2 = () => {
                       <Menu.Target>
                         <Tooltip label="Profile">
                           <Group style={{ cursor: "pointer" }}>
-                          <Avatar src={api.apiDataDiriGetGambar + `?id=${image?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                          <Avatar src={api.apiDataDiriGetGambar + `?id=${imgNew?.id}`} alt="it's me" radius={"xl"} color="indigo" />
                           </Group>
                         </Tooltip>
                       </Menu.Target>
