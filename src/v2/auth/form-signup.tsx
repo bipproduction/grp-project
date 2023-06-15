@@ -21,6 +21,7 @@ import { useState } from "react";
 
 const FormSignUp = () => {
   const [email, setEmail] = useState<string>();
+  const [inputKonfirmasiPass, setInputKonfirmasiPass] = useState<string>();
   const router = useRouter();
   const formRegister = useForm({
     initialValues: {
@@ -49,6 +50,10 @@ const FormSignUp = () => {
       formRegister.values.validate.email(formRegister.values.data.email) != null
     ) {
       return toast("Invalid email");
+    }
+
+    if (formRegister.values.data.password != inputKonfirmasiPass) {
+      return toast("Konfirmasi password salah");
     }
 
     fetch(api.apiAuthSignUp, {
@@ -132,6 +137,12 @@ const FormSignUp = () => {
                   placeholder="Password"
                   radius={10}
                   {...formRegister.getInputProps("data.password")}
+                />
+                <PasswordInput
+                  mt={20}
+                  placeholder="Konfirmasi Password"
+                  radius={10}
+                  onChange={(val) => setInputKonfirmasiPass(val.target.value)}
                 />
                 <Button
                   mt={20}
