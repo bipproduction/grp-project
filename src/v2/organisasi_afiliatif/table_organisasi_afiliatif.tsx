@@ -5,6 +5,7 @@ import {
   Grid,
   Group,
   Modal,
+  Pagination,
   ScrollArea,
   Table,
   TextInput,
@@ -14,15 +15,18 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditOrganisasiAfiliatifV2 from "./edit_organisasi_afiliatif";
 import {
   _dataAfiliatif,
+  _dataPage_Afiliatif,
+  _dataTotalPage_Afiliatif,
   _loadDataAfiliatif_ById_Search,
   _loadGetAfiliatif,
+  _searchDataOrganisasiAfiliatif,
 } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
 import { atomWithStorage } from "jotai/utils";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import { useAtom } from "jotai";
 import { _datapartai_form } from "@/pages/v2/contoh/table-edit";
 import { _EditDataDiri } from "@/load_data/data_diri_partai/load_edit_data_partai";
-import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import moment from "moment";
 import { AfiliatifEditV2 } from "./afiliatif_edit";
 import { useState } from "react";
@@ -30,6 +34,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { toNumber } from "lodash";
 
 export const TableOrganisasiAfiliatifV2 = () => {
   // const [editAfiliatif, setEditAfiliatif] = useAtom(_dataAfiliatif);
@@ -37,13 +42,26 @@ export const TableOrganisasiAfiliatifV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [idValue, setIdValue] = useState("");
   const [search, setSearch] = useState("");
+  const [inputPage, setInputPage] = useAtom(_dataPage_Afiliatif);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPage_Afiliatif);
+  const [inputSearch, setInputSearch] = useAtom(_searchDataOrganisasiAfiliatif);
+
+  let noUrut = (toNumber(inputPage) - 1) * 10 + 1;
+
   useShallowEffect(() => {
     // _loadGetAfiliatif(setEditAfiliatif);
     onSearch("");
   }, []);
 
   const onSearch = (search: string) => {
-    _loadDataAfiliatif_ById_Search(search, setListDataAfiliatif);
+    _loadDataAfiliatif_ById_Search(
+      search,
+      setListDataAfiliatif,
+      "1",
+      setTotalPage
+    );
+    setInputPage("1");
+    setInputSearch(search);
   };
 
   const onDelete = async (id: string) => {
@@ -52,15 +70,24 @@ export const TableOrganisasiAfiliatifV2 = () => {
         if (res.status === 200) {
           const data = await res.json();
           if (data.success) {
+            _postLogUser(
+              localStorage.getItem("user_id"),
+              "HAPUS",
+              "User menghapus data organisasi afiliatif"
+            );
             return data.message;
-            _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data organisasi afiliatif")
           }
           return toast("Gagal");
         }
         return toast("Error");
       })
       .then((val) =>
-        _loadDataAfiliatif_ById_Search(search, setListDataAfiliatif)
+        _loadDataAfiliatif_ById_Search(
+          search,
+          setListDataAfiliatif,
+          "1",
+          setTotalPage
+        )
       );
   };
 
@@ -84,7 +111,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
 
   const tbBody = listDataAfiliatif.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noUrut++}</td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.MasterOrganisasiAfiliatif?.name}</td>
       <td>{e.User.DataDiri.tempatLahir}</td>
@@ -158,11 +185,30 @@ export const TableOrganisasiAfiliatifV2 = () => {
             </Grid.Col>
           </Grid>
         </Box>
-        <Box pt={20} sx={{ overflow: "scroll" }}>
-          <Table withBorder horizontalSpacing={"xl"} verticalSpacing={"sm"}>
-            <thead>{tbHead}</thead>
-            <tbody>{tbBody}</tbody>
-          </Table>
+        <Box py={20}>
+          <ScrollArea>
+            <Table withBorder horizontalSpacing={"xl"} verticalSpacing={"sm"}>
+              <thead>{tbHead}</thead>
+              <tbody>{tbBody}</tbody>
+            </Table>
+          </ScrollArea>
+
+          <Group position="right" pt={10}>
+            <Pagination
+              color="orange"
+              total={Number(totalPage)}
+              value={Number(inputPage)}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataAfiliatif_ById_Search(
+                  search,
+                  setListDataAfiliatif,
+                  val,
+                  setTotalPage
+                );
+              }}
+            />
+          </Group>
         </Box>
       </Box>
     </>

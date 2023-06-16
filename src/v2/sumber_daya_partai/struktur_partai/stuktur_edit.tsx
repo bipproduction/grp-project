@@ -18,12 +18,15 @@ import {
   _dataStrukturTable_ByStatusSearch,
   _listChangeData,
   _loadDataStruktur_ByIdStatus,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
   _editLoadStruktur_ByStatusSeacrh,
   _new_loadEditByModel,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+  _dataPageSDP_Strukturr,
+  _dataTotalPageSDP_Strukturr,
+
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import {
   _editTingkatPengurus,
   _new_loadTingkatPengurus,
@@ -107,6 +110,8 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
     _selectPerwakilanLuarNegeri
   );
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
@@ -181,7 +186,7 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
     })
       .then((res) => res.json())
 
-      .then(async (val) => _loadData_ByStatus_BySeach(1, inputSearch, setDataTable));
+      .then(async (val) => _loadDataSDP_ByStatus_BySeach(1, inputSearch, setDataTable, "1", setTotalPage));
       _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
 
   };

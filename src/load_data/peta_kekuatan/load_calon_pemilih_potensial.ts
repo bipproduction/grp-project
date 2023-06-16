@@ -34,13 +34,22 @@ export const _listData_CalonPemilihPotensial = atomWithStorage<
   ModelCalonPemilihPotensial[]
 >("_listData_CalonPemilihPotensial", []);
 export const _searchData_CalonPemilihPotensial = atom("");
+export const _dataPageCalonPemilihPotensial = atom("")
+export const _dataTotalPageCalonPemilihPotensial = atom("")
+
 export const _loadDataCalonPemilihPotensial_BySearch = async (
   search: any,
-  setListDataCPP: any
+  setListDataCPP: any,
+  page: any,
+  setTotalPage: any,
 ) => {
-  await fetch(api.apiCPTSearch + `?search=${search}`)
+  await fetch(api.apiCPTSearch + `?search=${search}&page=${page}`)
     .then((res) => res.json())
     .then((val) => setListDataCPP(val));
+
+  await fetch(api.apiCPTCountPage + `?search=${search}`)
+  .then((res) => res.json())
+  .then((val) => setTotalPage(val))
 };
 
 // Get Master Kategori Calon Pemilih POtensial

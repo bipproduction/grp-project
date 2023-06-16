@@ -6,7 +6,7 @@ import _ from "lodash";
 const asetPartaiGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   const { search, page } = req.query;
   let data;
-  const dataSkip = _.toNumber(1) * 10 - 10; //ubah angka 1 menjadi page 
+  const dataSkip = _.toNumber(page) * 10 - 10; //ubah angka 1 menjadi page 
   if (search != "") {
     data = await client.asetPartai.findMany({
       skip: dataSkip,

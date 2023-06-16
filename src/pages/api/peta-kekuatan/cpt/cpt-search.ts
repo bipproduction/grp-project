@@ -1,14 +1,18 @@
 import client from "@/lib/prisma_db";
+import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const calonPemilihPotensialSearch = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { search } = req.query;
+  const { search, page } = req.query;
+  const dataSkip = _.toNumber(page) * 10 - 10
   let data;
   if (search != "") {
     data = await client.calonPemilihPotensial.findMany({
+      skip: dataSkip,
+      take: 2,
       where: {
         active: true,
         nama: {
@@ -96,6 +100,8 @@ const calonPemilihPotensialSearch = async (
     });
   } else {
     data = await client.calonPemilihPotensial.findMany({
+      skip: dataSkip,
+      take: 10,
       where: {
         active: true,
       },
@@ -180,7 +186,7 @@ const calonPemilihPotensialSearch = async (
     });
   }
 
-  return res.status(200).json(data);
+  return res.status(200).json(data ?? []);
 };
 
 export default calonPemilihPotensialSearch;

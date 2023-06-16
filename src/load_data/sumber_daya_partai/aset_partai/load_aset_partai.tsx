@@ -29,6 +29,8 @@ export const _select_KategoriAsetPartai = atom({
 });
 
 export const _searchDataAsetPartai = atom("");
+export const _dataPageAsetPartai = atom("")
+export const _dataTotalPageAsetPartai = atom("")
 
 // New Get Data with Jotai
 export const _loadListDataAset = async (setDataAset: any) => {
@@ -39,11 +41,18 @@ export const _loadListDataAset = async (setDataAset: any) => {
 
 export async function _loadDataAset_BySearch  (
   search: any,
-  setDataAset_Search: any
+  setDataAset_Search: any,
+  page: any,
+  setTotalPage: any
+
 ) {
-  await fetch(api.apiAsetPartaiSearch + `?search=${search}`)
+  await fetch(api.apiAsetPartaiSearch + `?search=${search}&page=${page}`)
     .then((res) => res.json())
     .then((val) => setDataAset_Search(val));
+  
+  await fetch(api.apiAsetPartaiCountPage + `?search=${search}`)
+  .then((res) => res.json())
+  .then((val) => setTotalPage(val))
 };
 
 export const _loadMaster_StatusAset = async (

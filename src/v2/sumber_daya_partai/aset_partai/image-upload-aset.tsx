@@ -75,14 +75,14 @@ function UploadImage({ closeModal, idVal }: { closeModal: any; idVal: any }) {
     }).then(async (res) => {
       if (res.status == 201) {
         closeModal();
-        toast("Update Berhasil");
+        toast("Update Gambar Berhasil");
         await _loadEditAsetPartai_ById(idVal, setTargetEdit);
 
         setReloadGambar(false);
         await new Promise((r) => setTimeout(r, 1));
         setReloadGambar(true);
       } else {
-        return toast("Gagal Update");
+        return toast("Gagal Update Gambar");
       }
     });
   }
@@ -106,7 +106,7 @@ function UploadImage({ closeModal, idVal }: { closeModal: any; idVal: any }) {
                   });
 
                   onUpload(data.img);
-                  toast("Upload Berhasil");
+                  // toast("Upload Berhasil");
                   //   console.log(data.img);
                 } else {
                   toast("Upload Gagal");

@@ -19,6 +19,7 @@ export const _select_Afiliatif = atom({
   id: new Number(),
   name: "",
 });
+export const _searchDataOrganisasiAfiliatif = atom('')
 
 // Get Nama Afiliatif with signal
 export const _loadOrganisasiAfiliatif = () =>
@@ -27,6 +28,8 @@ export const _loadOrganisasiAfiliatif = () =>
     .then((e) => (sOrganisasiAfiliatif.value = e));
 
 // Get Nama Afiliatif with Jotai
+export const _dataPage_Afiliatif = atom("")
+export const _dataTotalPage_Afiliatif = atom("")
 export const _loadGetAfiliatif = async (setEditAfiliatif: any) => {
   fetch(api.apiAnggotaAfiliatifGetAll)
     .then((val) => val.json())
@@ -35,11 +38,17 @@ export const _loadGetAfiliatif = async (setEditAfiliatif: any) => {
 
 export const _loadDataAfiliatif_ById_Search = async (
   search: string,
-  setListDataAfiliatif: any
+  setListDataAfiliatif: any,
+  page: any,
+  setTotalPage: any
 ) => {
-  await fetch(api.apiAnggotaAfiliatifSearch + `?search=${search}`)
+  await fetch(api.apiAnggotaAfiliatifSearch + `?search=${search}&page=${page}`)
     .then((res) => res.json())
     .then((val) => setListDataAfiliatif(val));
+  
+    await fetch(api.apiAnggotaAfiliatifCountPage + `?search=${search}`)
+    .then((res) => res.json())
+    .then((val) => setTotalPage(val))
 };
 
 export const _loadDataAfiliatif_GetOne = async (id: string, setTargetEdit: any) => {

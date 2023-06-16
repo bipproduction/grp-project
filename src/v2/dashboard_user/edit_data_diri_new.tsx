@@ -9,7 +9,7 @@ import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
 import {
   _dataStruktur,
   _listChangeData,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { _editTingkatPengurus } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
 import {
   _loadSelectDesa,

@@ -29,7 +29,7 @@ import {
   ModelSumberDayaPartai,
   UserMediaSocial,
 } from "@/model/interface_sumber_daya_partai";
-import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import EditDataDiriNew from "./edit_data_diri_new";
 import { Router, useRouter } from "next/router";
 import moment from "moment";

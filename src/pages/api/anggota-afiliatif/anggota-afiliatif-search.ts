@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const anggotaAfiliatifSearch = async (req: NextApiRequest, res: NextApiResponse) => {
     const { search, page } = req.query;
-    const dataSkip = _.toNumber(1) * 10 - 10; //ubah angka 1 menjadi page 
+    const dataSkip = _.toNumber(page) * 10 - 10; //ubah angka 1 menjadi page 
     let data;
     if (search != "") {
         data = await client.anggotaAfiliatif.findMany({

@@ -43,6 +43,8 @@ import { ModelCalonPemilihPotensial } from "@/model/interface_calon_pemilih_pote
 import { api } from "@/lib/api-backend";
 import { useAtom, useSetAtom } from "jotai";
 import {
+  _dataPageCalonPemilihPotensial,
+  _dataTotalPageCalonPemilihPotensial,
   _desa_CalonPP,
   _kabkot_CalonPP,
   _kecamatan_CalonPP,
@@ -113,6 +115,10 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
   const [listDataCPP, setListDataCPP] = useAtom(
     _listData_CalonPemilihPotensial
   );
+  const [inputPage, setInputPage] = useAtom(_dataPageCalonPemilihPotensial);
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageCalonPemilihPotensial
+  );
 
   useShallowEffect(() => {
     getOne_ListDataCPP_ById(idVal);
@@ -180,7 +186,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     }).then(async (res) => {
       if (res.status === 201) {
         thisClosed();
-        _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP);
+        _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data calon pemilih potensial")
         return buttonSimpan();
       } else {

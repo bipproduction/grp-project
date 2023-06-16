@@ -51,21 +51,39 @@ export const _editLoadKader_ByStatusSeacrh =
   );
 export const _dataSeach = atom<any>("");
 export const _searchDataSumberDayaPartai = atom("")
+// Pagination storage
+export const _dataPageSDP_Strukturr = atom("")
+export const _dataPageSDP_Sayap = atom("")
+export const _dataPageSDP_Kader = atom("")
+export const _dataPageSDP_Anggota = atom("")
+export const _dataTotalPageSDP_Strukturr = atom("")
+export const _dataTotalPageSDP_Sayap = atom("")
+export const _dataTotalPageSDP_Kader = atom("")
+export const _dataTotalPageSDP_Anggota = atom("")
+
 
 // Load Data by Status Keanggotaan dan Search by name
-export const _loadData_ByStatus_BySeach = async (
+// New update: Penambahan pagination
+export const _loadDataSDP_ByStatus_BySeach = async (
   status: any,
   search: any,
-  setDataTable: any
+  setDataTable: any,
+  page: any,
+  setTotalPage: any
 ) => {
   await fetch(
-    api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}`
+    api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}&page=${page}`
   )
     .then((res) => res.json())
     .then((val) => {
- 
       setDataTable(val);
     });
+
+  await fetch(
+    api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
+  )
+  .then((res) => res.json())
+  .then((val) => (setTotalPage(val)))
 };
 
 // Load Data by Status Kenanggotaan

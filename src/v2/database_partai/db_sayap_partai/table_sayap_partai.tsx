@@ -37,9 +37,9 @@ import {
   _dataSayapSuper,
   _dataStruktur,
   _loadDataStruktur_ByIdStatus,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { atomWithStorage } from "jotai/utils";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";

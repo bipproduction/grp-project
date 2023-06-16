@@ -40,7 +40,6 @@ export const ViewOrganisasiAfiliatifV2 = () => {
                         </Grid.Col> */}
                     </Grid>
                 </Paper>
-                
                 <TableOrganisasiAfiliatifV2 />
             </Box>
         </>

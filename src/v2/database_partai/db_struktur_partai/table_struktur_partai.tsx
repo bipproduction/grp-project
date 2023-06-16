@@ -28,9 +28,9 @@ import {
   _dataStrukturTable_ByStatusSearch,
   _editLoadStruktur_ByStatusSeacrh,
   _loadDataStruktur_ByIdStatus,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import _, { keyBy } from "lodash";
 import { atomWithStorage } from "jotai/utils";
 import {

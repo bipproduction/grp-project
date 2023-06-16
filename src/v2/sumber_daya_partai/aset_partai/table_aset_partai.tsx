@@ -18,6 +18,8 @@ import EditAsetPartaiV2 from "./edit_aset_partai";
 import TableViewAsetV2 from "./view_table_aset";
 import TambahAsetPartaiV2 from "./tambah_aset_partai";
 import {
+  _dataPageAsetPartai,
+  _dataTotalPageAsetPartai,
   _listDataAset_BySearch,
   _loadDataAset_BySearch,
   _searchDataAsetPartai,
@@ -30,13 +32,16 @@ const TableAsetPartaiV2 = () => {
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
   const [inputSearch, setInputSearch] = useAtom(_searchDataAsetPartai);
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai)
 
   useShallowEffect(() => {
     onSearch('')
   },[])
 
   function onSearch(search: string) {
-    _loadDataAset_BySearch(search, setDataAset_Search);
+    _loadDataAset_BySearch(search, setDataAset_Search, "1", setTotalPage);
+    setInputPage("1")
     setInputSearch(search);
   }
 
@@ -48,9 +53,7 @@ const TableAsetPartaiV2 = () => {
         onClose={close}
         size="lg"
         centered
-        // fullScreen
         overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >

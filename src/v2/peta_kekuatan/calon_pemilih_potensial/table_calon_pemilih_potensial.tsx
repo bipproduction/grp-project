@@ -6,6 +6,7 @@ import {
   Grid,
   Group,
   Modal,
+  Pagination,
   ScrollArea,
   Table,
   TextInput,
@@ -18,6 +19,8 @@ import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditCPTV2 from "./edit_calon_pemilih_potensial";
 import { useState } from "react";
 import {
+  _dataPageCalonPemilihPotensial,
+  _dataTotalPageCalonPemilihPotensial,
   _listData_CalonPemilihPotensial,
   _loadDataCalonPemilihPotensial_BySearch,
   _searchData_CalonPemilihPotensial,
@@ -29,6 +32,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { toNumber } from "lodash";
 
 export const TableCPTV2 = () => {
   const [listDataCPP, setListDataCPP] = useAtom(
@@ -38,9 +42,20 @@ export const TableCPTV2 = () => {
     _searchData_CalonPemilihPotensial
   );
   const [idVal, setIdVal] = useState("");
+  const [inputPage, setInputPage] = useAtom(_dataPageCalonPemilihPotensial);
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageCalonPemilihPotensial
+  );
+  let noUrut = ((toNumber(inputPage) -1) * 10) +1
 
   useShallowEffect(() => {
-    _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP);
+    _loadDataCalonPemilihPotensial_BySearch(
+      inputSearch,
+      setListDataCPP,
+      "1",
+      setTotalPage
+    );
+    setInputPage("1");
   }, []);
 
   const tbHead = (
@@ -60,7 +75,7 @@ export const TableCPTV2 = () => {
 
   const rows = listDataCPP.map((e, i) => (
     <tr key={i}>
-      <td>{i + 1}</td>
+      <td>{noUrut++}</td>
       <td>{e.nama}</td>
       <td>{e.email}</td>
       <td>{e.nik}</td>
@@ -82,7 +97,13 @@ export const TableCPTV2 = () => {
           >
             Edit
           </Button>
-          <DeleteButton setId={e} search={inputSearch} setListDataCPP={setListDataCPP} />
+          <DeleteButton
+            setId={e}
+            search={inputSearch}
+            setListDataCPP={setListDataCPP}
+            inputPage={inputPage}
+            setTotalPage={setTotalPage}
+          />
         </Group>
       </td>
     </tr>
@@ -111,33 +132,66 @@ export const TableCPTV2 = () => {
             <tbody>{rows}</tbody>
           </Table>
         </ScrollArea>
+        <Group position="right" pt={10}>
+          <Pagination color="orange" total={Number(totalPage)} value={Number(inputPage)}
+          onChange={(val : any) => {
+            setInputPage(val)
+            _loadDataCalonPemilihPotensial_BySearch(
+              inputSearch,
+              setListDataCPP,
+              val,
+              setTotalPage
+            );
+          }}
+          />
+        </Group>
       </Box>
     </>
   );
 };
 
-function DeleteButton({ setId, search, setListDataCPP }: { setId: ModelCalonPemilihPotensial, search: any, setListDataCPP: any }) {
+function DeleteButton({
+  setId,
+  search,
+  setListDataCPP,
+  inputPage,
+  setTotalPage
+}: {
+  setId: ModelCalonPemilihPotensial;
+  search: any;
+  setListDataCPP: any;
+  inputPage: any;
+  setTotalPage: any
+}) {
   const [opened, setOpen] = useDisclosure(false);
 
   const onDelete = async (id: any) => {
     // console.log(setId)
-    await fetch(api.apiCPTHapus +`?id=${id}`)
-    .then(async (res) => {
+    await fetch(api.apiCPTHapus + `?id=${id}`).then(async (res) => {
       if (res.status === 200) {
-        toast("Hapus Data")
-        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP)
-        _postLogUser(localStorage.getItem("user_id"), "HAPUS", "User menghapus data calon pemilih potensial")
+        toast("Hapus Data");
+        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP, inputPage, setTotalPage);
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "HAPUS",
+          "User menghapus data calon pemilih potensial"
+        );
       } else {
-        toast("Gagal Hapus")
+        toast("Gagal Hapus");
       }
-    })
-
-  }
+    });
+  };
 
   return (
     <>
-      <Modal opened={opened} onClose={setOpen.close} centered withCloseButton={false} size={"xs"} >
-      <Alert
+      <Modal
+        opened={opened}
+        onClose={setOpen.close}
+        centered
+        withCloseButton={false}
+        size={"xs"}
+      >
+        <Alert
           icon={<FiAlertCircle size="1rem" />}
           title={`Hapus Data ${setId.nama} ?`}
           color="orange"
@@ -155,7 +209,7 @@ function DeleteButton({ setId, search, setListDataCPP }: { setId: ModelCalonPemi
             <Button
               onClick={() => {
                 setOpen.close();
-                onDelete(setId.id)
+                onDelete(setId.id);
               }}
               radius={"xl"}
               w={100}

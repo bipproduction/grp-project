@@ -44,8 +44,8 @@ import toast from "react-simple-toasts";
 import {
   _dataAnggotaTable_ByStatusSearch,
   _loadDataStruktur_ByIdStatus,
-  _loadData_ByStatus_BySeach,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+  _loadDataSDP_ByStatus_BySeach,
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import {
   _dataAnggotaPartaiPage,

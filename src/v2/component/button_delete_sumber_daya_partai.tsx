@@ -1,5 +1,5 @@
 import { api } from "@/lib/api-backend";
-import { _loadData_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+import { _dataPageSDP_Strukturr, _dataTotalPageSDP_Strukturr, _loadDataSDP_ByStatus_BySeach } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { Modal, Alert, Flex, Button, Popover, Text, ActionIcon } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -7,6 +7,9 @@ import { FiAlertCircle } from "react-icons/fi";
 import toast from "react-simple-toasts";
 import COLOR from "../../../fun/WARNA";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { useAtom } from "jotai";
+import { useState } from "react";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 export function ButtonDeleteData({
   setId,
@@ -21,6 +24,8 @@ export function ButtonDeleteData({
 }) {
   const [opened, setOpen] = useDisclosure(false);
   const [openPop, { open, close }] = useDisclosure(false);
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
+  const [totalPage, setTotalPage] = useState("")
 
   useShallowEffect(() => {
     // hapusData(setId.id)
@@ -42,10 +47,12 @@ export function ButtonDeleteData({
         return toast("Error");
       })
       .then((val) =>
-        _loadData_ByStatus_BySeach(
+        _loadDataSDP_ByStatus_BySeach(
           setId.MasterStatusKeanggotaan.id,
           search,
-          setDataTable
+          setDataTable,
+          "1",
+          setTotalPage
         )
       );
   };
@@ -108,17 +115,25 @@ export function ButtonDeleteData({
           </Flex>
         </Alert>
       </Modal>
-      <Button
+      {/* <Button
         variant={"outline"}
-        color={"red"}
         radius={50}
         w={100}
+        color={"red"}
         onClick={() => {
           setOpen.open();
         }}
       >
         Hapus
-      </Button>
+      </Button> */}
+      <ActionIcon
+        color={"red"}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        <RiDeleteBin5Line />
+      </ActionIcon>
     </>
   );
 }

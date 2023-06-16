@@ -12,11 +12,15 @@ import COLOR from "../../../../fun/WARNA";
 import { useShallowEffect } from "@mantine/hooks";
 import {
   _dataKaderTable_ByStatusSearch,
+  _dataPageSDP_Kader,
+
+  _dataTotalPageSDP_Kader,
+
   _editLoadKader_ByStatusSeacrh,
-  _loadData_ByStatus_BySeach,
+  _loadDataSDP_ByStatus_BySeach,
   _loadEditSumberDayaPartai_ById,
   _searchDataSumberDayaPartai,
-} from "@/load_data/sumber_daya_partai/load_edit_sumber_daya_partai";
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { useAtom } from "jotai";
 import {
   _list_KaderPartai,
@@ -47,6 +51,8 @@ export const KaderEditv2 = ({
     null
   );
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Kader)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader)
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(valueId, setTargetEdit);
@@ -97,7 +103,7 @@ export const KaderEditv2 = ({
     })
       .then((res) => res.json())
 
-      .then(async (val) => _loadData_ByStatus_BySeach(3, inputSearch, setDataTable));
+      .then(async (val) => _loadDataSDP_ByStatus_BySeach(3, inputSearch, setDataTable, inputPage, setTotalPage));
       _postLogUser(localStorage.getItem("user_id"), "UBAH" ,"User mengubah data kader partai")
 
       // .then(console.log)
