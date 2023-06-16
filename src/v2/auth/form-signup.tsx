@@ -84,7 +84,7 @@ const FormSignUp = () => {
         <Center pt={100}>
           <Box
             bg={COLOR.orange}
-            h={560}
+            h={600}
             w={500}
             sx={{
               borderRadius: 10,
