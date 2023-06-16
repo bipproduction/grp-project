@@ -119,8 +119,8 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
               <Flex direction={"column"}>
                 <TextInput
                   placeholder="Masukkan Judul Rencana & Agenda"
-                  label="**"
-                  mt={10}
+                  label="Judul Rencana & Agenda"
+                 withAsterisk
                   onChange={(val) => {
                     // body1.judul = val.target.value
                     setInputJudul(val.target.value);
@@ -128,10 +128,10 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                 />
 
                 <Textarea
-                  placeholder="Potret Lokasi Kunjungan"
-                  label="**"
+                  placeholder="Potret Lokasi Kunjungan & Situasi nya"
+                  label="Potret Lokasi"
                   autosize
-                  mt={10}
+                 withAsterisk
                   minRows={2}
                   maxRows={4}
                   onChange={(val) => {
@@ -141,8 +141,8 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                 />
                 <DateInput
                   placeholder="Tanggal Kunjungan"
-                  label="**"
-                  mt={10}
+                  label="Tanggal"
+                 withAsterisk
                   onChange={(val) => {
                     // body1.tanggal = moment(val).format("YYYY-MM-DD")
                     setInputTanggal(moment(val).format("YYYY-MM-DD"));
@@ -154,8 +154,8 @@ const TambahRencanaKunjunganGerindraV2 = ({ thisClosed }: any) => {
                     label: data.name,
                   }))}
                   placeholder={"Pilih Status Kunjungan"}
-                  label={"**"}
-                  mt={10}
+                  label={"Pilih Status"}
+                 withAsterisk
                   onChange={(val: any) => {
                     body1.masterStatusAksiNyataId = val;
                     setInputMasterStatusAksiNyata(val);

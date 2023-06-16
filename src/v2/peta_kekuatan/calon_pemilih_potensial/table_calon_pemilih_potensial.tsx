@@ -1,7 +1,9 @@
 import {
+  ActionIcon,
   Alert,
   Box,
   Button,
+  Center,
   Flex,
   Grid,
   Group,
@@ -12,7 +14,11 @@ import {
   TextInput,
 } from "@mantine/core";
 import myData from "../calon_pemilih_potensial/data_dummy_cpt.json";
-import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
+import {
+  AiFillPlusCircle,
+  AiOutlineMenu,
+  AiOutlineSearch,
+} from "react-icons/ai";
 import TambahCPTV2 from "./tambah_calon_pemilih_potensial";
 import COLOR from "../../../../fun/WARNA";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -33,6 +39,8 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { toNumber } from "lodash";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 export const TableCPTV2 = () => {
   const [listDataCPP, setListDataCPP] = useAtom(
@@ -46,7 +54,7 @@ export const TableCPTV2 = () => {
   const [totalPage, setTotalPage] = useAtom(
     _dataTotalPageCalonPemilihPotensial
   );
-  let noUrut = ((toNumber(inputPage) -1) * 10) +1
+  let noUrut = (toNumber(inputPage) - 1) * 10 + 1;
 
   useShallowEffect(() => {
     _loadDataCalonPemilihPotensial_BySearch(
@@ -61,42 +69,34 @@ export const TableCPTV2 = () => {
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama</th>
       <th>NIK</th>
       <th>Email</th>
       <th>Kategori</th>
       <th>Nomor TPS</th>
       {/* <th>Tanggal</th> */}
-      <th>
-        <Group position="center">Aksi</Group>
-      </th>
     </tr>
   );
 
   const rows = listDataCPP.map((e, i) => (
     <tr key={i}>
       <td>{noUrut++}</td>
-      <td>{e.nama}</td>
-      <td>{e.email}</td>
-      <td>{e.nik}</td>
-      <td>{e.MasterCalonPemilihPotensial.name}</td>
-      <td>{e.MasterNomorUrutTPS.name}</td>
-      {/* <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td> */}
-
       <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
             color={"green"}
-            radius={50}
-            w={100}
             onClick={() => {
               open();
               setIdVal(e.id);
             }}
           >
-            Edit
-          </Button>
+            <CiEdit />
+          </ActionIcon>
           <DeleteButton
             setId={e}
             search={inputSearch}
@@ -104,8 +104,16 @@ export const TableCPTV2 = () => {
             inputPage={inputPage}
             setTotalPage={setTotalPage}
           />
-        </Group>
+        </Flex>
       </td>
+      <td>{e.nama}</td>
+      <td>{e.email}</td>
+      <td>{e.nik}</td>
+      <td>{e.MasterCalonPemilihPotensial.name}</td>
+      <td>{e.MasterNomorUrutTPS.name}</td>
+      {/* <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td> */}
+
+      
     </tr>
   ));
 
@@ -125,7 +133,7 @@ export const TableCPTV2 = () => {
       >
         <EditCPTV2 thisClosed={close} idVal={idVal} />
       </Modal>
-      <Box pt={20}>
+      <Box py={20}>
         <ScrollArea>
           <Table withBorder horizontalSpacing={"lg"}>
             <thead>{tbHead}</thead>
@@ -133,16 +141,19 @@ export const TableCPTV2 = () => {
           </Table>
         </ScrollArea>
         <Group position="right" pt={10}>
-          <Pagination color="orange" total={Number(totalPage)} value={Number(inputPage)}
-          onChange={(val : any) => {
-            setInputPage(val)
-            _loadDataCalonPemilihPotensial_BySearch(
-              inputSearch,
-              setListDataCPP,
-              val,
-              setTotalPage
-            );
-          }}
+          <Pagination
+            color="orange"
+            total={Number(totalPage)}
+            value={Number(inputPage)}
+            onChange={(val: any) => {
+              setInputPage(val);
+              _loadDataCalonPemilihPotensial_BySearch(
+                inputSearch,
+                setListDataCPP,
+                val,
+                setTotalPage
+              );
+            }}
           />
         </Group>
       </Box>
@@ -155,13 +166,13 @@ function DeleteButton({
   search,
   setListDataCPP,
   inputPage,
-  setTotalPage
+  setTotalPage,
 }: {
   setId: ModelCalonPemilihPotensial;
   search: any;
   setListDataCPP: any;
   inputPage: any;
-  setTotalPage: any
+  setTotalPage: any;
 }) {
   const [opened, setOpen] = useDisclosure(false);
 
@@ -170,7 +181,12 @@ function DeleteButton({
     await fetch(api.apiCPTHapus + `?id=${id}`).then(async (res) => {
       if (res.status === 200) {
         toast("Hapus Data");
-        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP, inputPage, setTotalPage);
+        _loadDataCalonPemilihPotensial_BySearch(
+          search,
+          setListDataCPP,
+          inputPage,
+          setTotalPage
+        );
         _postLogUser(
           localStorage.getItem("user_id"),
           "HAPUS",
@@ -221,7 +237,7 @@ function DeleteButton({
           </Flex>
         </Alert>
       </Modal>
-      <Button
+      {/* <Button
         variant={"outline"}
         color={"red"}
         radius={50}
@@ -229,7 +245,10 @@ function DeleteButton({
         onClick={setOpen.open}
       >
         Hapus
-      </Button>
+      </Button> */}
+      <ActionIcon color={"red"} onClick={setOpen.open}>
+        <RiDeleteBin5Line />
+      </ActionIcon>
     </>
   );
 }
