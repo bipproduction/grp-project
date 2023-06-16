@@ -112,35 +112,35 @@ const FormSignUp = () => {
               required
               mt="lg"
               icon={<FiUser size={17} />}
-              // {...formRegister.getInputProps("data.username")}
+              {...formRegister.getInputProps("data.username")}
             />
             <TextInput
               placeholder="Email"
               mt="lg"
               required
               icon={<MdOutlineAlternateEmail size={17} />}
-              // {...formRegister.getInputProps("data.email")}
+              {...formRegister.getInputProps("data.email")}
             />
             <PasswordInput
               placeholder="Password"
               required
               mt="lg"
               icon={<FiLock size={17} />}
-              // {...formRegister.getInputProps("data.password")}
+              {...formRegister.getInputProps("data.password")}
             />
             <PasswordInput
               placeholder="Konfirmasi Password"
               required
               mt="lg"
               icon={<FiLock size={17} />}
-              // onChange={(val) => setInputKonfirmasiPass(val.target.value)}
+              onChange={(val) => setInputKonfirmasiPass(val.target.value)}
             />
             <Button
               fullWidth
               mt="xl"
               bg={COLOR.coklat}
               color="orange.9"
-              // onClick={onRegister}
+              onClick={onRegister}
             >
               REGISTER
             </Button>
