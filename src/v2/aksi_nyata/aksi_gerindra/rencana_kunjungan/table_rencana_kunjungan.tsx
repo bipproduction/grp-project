@@ -1,4 +1,15 @@
-import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  Pagination,
+  ScrollArea,
+  Table,
+} from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import EditRencanaKunjunganGerindraV2 from "./edit_rencana_kunjungan";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -7,18 +18,31 @@ import { api } from "@/lib/api-backend";
 import moment from "moment";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataPageRencanaKunjunganGerindra, _dataRencanaKunjunganGerindra, _dataSearchRencanaKunjunganGerindra, _dataTotalPageRencanaKunjunganGerindra, _loadDataRencanaKunjunganGerindra } from "@/load_data/aksi_nyata/load_gerindra";
+import {
+  _dataPageRencanaKunjunganGerindra,
+  _dataRencanaKunjunganGerindra,
+  _dataSearchRencanaKunjunganGerindra,
+  _dataTotalPageRencanaKunjunganGerindra,
+  _loadDataRencanaKunjunganGerindra,
+} from "@/load_data/aksi_nyata/load_gerindra";
 import { ButtonDeleteAksiGerindra } from "../hapus_aksi_gerindra";
 import _ from "lodash";
+import { AiOutlineMenu } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
+import { ButtonDeleteAksiPrabowo } from "../../aksi_prabowo/hapus_aksi_prabowo";
 
 export const TableRencanaKunjunganGerindraV2 = () => {
   const [listData, setListData] = useState<any[]>([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganGerindra);
-  const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganGerindra);
+  const [inputSearch, setInputSearch] = useAtom(
+    _dataSearchRencanaKunjunganGerindra
+  );
   const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganGerindra);
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganGerindra);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageRencanaKunjunganGerindra
+  );
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   // const loadData = () => {
   //   fetch(api.apiRencanaKunjunganGerindraGetAll)
@@ -41,47 +65,54 @@ export const TableRencanaKunjunganGerindraV2 = () => {
   useShallowEffect(() => {
     // loadData();
     setInputPage("1");
-    _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, "1", setTotalPage);
-  }, [])
+    _loadDataRencanaKunjunganGerindra(
+      inputSearch,
+      setListDataNew,
+      "1",
+      setTotalPage
+    );
+  }, []);
 
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Rencana Agenda</th>
       <th>Status Kunjungan</th>
       <th>Tanggal Kunjungan</th>
       <th>Potret Lokasi</th>
-      <th><Group position="center">Aksi</Group></th>
     </tr>
   );
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{noAwal++}</td>
-      <td>{e.judul}</td>
-      <td>{e.MasterStatusAksiNyata.name}</td>
-      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
-      <td>{e.img}</td>
       <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
             color={"green"}
-            radius={50}
-            w={100}
             onClick={() => {
               setDataId(e.id);
               open();
             }}
           >
-            Edit
-          </Button>
-          <ButtonDeleteAksiGerindra setId={e.id} setKategori="1" setNama={e.judul} />
-          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
-            Hapus
-          </Button> */}
-        </Group>
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteAksiGerindra
+            setId={e.id}
+            setKategori="1"
+            setNama={e.judul}
+          />
+        </Flex>
       </td>
+      <td>{e.judul}</td>
+      <td>{e.MasterStatusAksiNyata.name}</td>
+      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
+      <td>{e.img}</td>
     </tr>
   ));
 
@@ -89,7 +120,6 @@ export const TableRencanaKunjunganGerindraV2 = () => {
 
   return (
     <>
-
       {/* Edit Modal */}
       <Modal
         opened={opened}
@@ -105,7 +135,6 @@ export const TableRencanaKunjunganGerindraV2 = () => {
         <EditRencanaKunjunganGerindraV2 thisClosed={close} data={dataId} />
       </Modal>
 
-
       <Box pt={20}>
         <ScrollArea>
           <Table withBorder horizontalSpacing={"lg"}>
@@ -113,11 +142,21 @@ export const TableRencanaKunjunganGerindraV2 = () => {
             <tbody>{rows}</tbody>
           </Table>
           <Group position="right" py={10}>
-            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+            <Pagination
+              total={Number(totalPage)}
+              color={"orange"}
+              my={10}
+              value={Number(inputPage)}
               onChange={(val: any) => {
                 setInputPage(val);
-                _loadDataRencanaKunjunganGerindra(inputSearch, setListDataNew, val, setTotalPage);
-              }} />
+                _loadDataRencanaKunjunganGerindra(
+                  inputSearch,
+                  setListDataNew,
+                  val,
+                  setTotalPage
+                );
+              }}
+            />
           </Group>
         </ScrollArea>
       </Box>

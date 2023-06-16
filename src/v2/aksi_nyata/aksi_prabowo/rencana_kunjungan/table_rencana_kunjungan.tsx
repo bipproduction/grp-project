@@ -1,4 +1,15 @@
-import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  Pagination,
+  ScrollArea,
+  Table,
+} from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditRencanaKunjunganPrabowoV2 from "./edit_rencana_kunjungan";
@@ -6,21 +17,34 @@ import { useState } from "react";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataPageRencanaKunjunganPrabowo, _dataRencanaKunjunganPrabowo, _dataSearchRencanaKunjunganPrabowo, _dataTotalPageRencanaKunjunganPrabowo, _loadDataRencanaKunjunganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import {
+  _dataPageRencanaKunjunganPrabowo,
+  _dataRencanaKunjunganPrabowo,
+  _dataSearchRencanaKunjunganPrabowo,
+  _dataTotalPageRencanaKunjunganPrabowo,
+  _loadDataRencanaKunjunganPrabowo,
+} from "@/load_data/aksi_nyata/load_prabowo";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
 import moment from "moment";
 import "moment/locale/id";
 import _ from "lodash";
+import { AiOutlineMenu } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
 moment.locale("id");
 
 export const TableRencanaKunjunganPrabowoV2 = () => {
-  const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] = useState<any[]>([]);
+  const [listDataRencanaKunjunganPrabowo, setDataRencanaKunjunganPrabowo] =
+    useState<any[]>([]);
   const [listDataNew, setListDataNew] = useAtom(_dataRencanaKunjunganPrabowo);
   const [dataId, setDataId] = useState<string>("");
-  const [inputSearch, setInputSearch] = useAtom(_dataSearchRencanaKunjunganPrabowo);
+  const [inputSearch, setInputSearch] = useAtom(
+    _dataSearchRencanaKunjunganPrabowo
+  );
   const [inputPage, setInputPage] = useAtom(_dataPageRencanaKunjunganPrabowo);
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageRencanaKunjunganPrabowo);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageRencanaKunjunganPrabowo
+  );
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   // const loadRencanaKunjunganPrabowo = () => {
   //   fetch(api.apiRencanaKunjunganPrabowoGetAll)
@@ -33,7 +57,12 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
   useShallowEffect(() => {
     //loadRencanaKunjunganPrabowo();
     setInputPage("1");
-    _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew, "1", setTotalPage);
+    _loadDataRencanaKunjunganPrabowo(
+      inputSearch,
+      setListDataNew,
+      "1",
+      setTotalPage
+    );
   }, []);
 
   // const onDelete = (id: string) => {
@@ -49,50 +78,50 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Rencana Agenda</th>
       <th>Status Kunjungan</th>
       <th>Tanggal Kunjungan</th>
       <th>Potret Lokasi</th>
-      <th><Group position="center">Aksi</Group></th>
     </tr>
   );
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{noAwal++}</td>
-      <td>{e.judul}</td>
-      <td>{e.MasterStatusAksiNyata.name}</td>
-      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
-      <td>{e.img}</td>
       <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
             color={"green"}
-            radius={50}
-            w={100}
             onClick={() => {
               setDataId(e.id);
               open();
             }}
           >
-            Edit
-          </Button>
-          <ButtonDeleteAksiPrabowo setId={e.id} setKategori="1" setNama={e.judul} />
-          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
-            Hapus
-          </Button> */}
-        </Group>
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteAksiPrabowo
+            setId={e.id}
+            setKategori="1"
+            setNama={e.judul}
+          />
+        </Flex>
       </td>
+      <td>{e.judul}</td>
+      <td>{e.MasterStatusAksiNyata.name}</td>
+      <td>{moment(e.tanggal).format("DD MMM YYYY")}</td>
+      <td>{e.img}</td>
     </tr>
   ));
 
   const [opened, { open, close }] = useDisclosure(false);
 
-
   return (
     <>
-
       {/* Edit Modal */}
       <Modal
         opened={opened}
@@ -115,11 +144,21 @@ export const TableRencanaKunjunganPrabowoV2 = () => {
             <tbody>{rows}</tbody>
           </Table>
           <Group position="right" py={10}>
-            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+            <Pagination
+              total={Number(totalPage)}
+              color={"orange"}
+              my={10}
+              value={Number(inputPage)}
               onChange={(val: any) => {
                 setInputPage(val);
-                _loadDataRencanaKunjunganPrabowo(inputSearch, setListDataNew, val, setTotalPage);
-              }} />
+                _loadDataRencanaKunjunganPrabowo(
+                  inputSearch,
+                  setListDataNew,
+                  val,
+                  setTotalPage
+                );
+              }}
+            />
           </Group>
         </ScrollArea>
       </Box>

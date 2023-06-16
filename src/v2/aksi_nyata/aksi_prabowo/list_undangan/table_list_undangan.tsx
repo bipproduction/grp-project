@@ -1,4 +1,15 @@
-import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  Pagination,
+  ScrollArea,
+  Table,
+} from "@mantine/core";
 import myData from "../../data_dummy_an.json";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import EditListUndanganPrabowoV2 from "./edit_list_undangan";
@@ -7,19 +18,29 @@ import { api } from "@/lib/api-backend";
 import { ModelListUndanganPrabowo } from "@/model/model_aksi_nyata";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataListUndanganPrabowo, _dataPageListUndanganPrabowo, _dataSearchListUndanganPrabowo, _dataTotalPageListUndanganPrabowo, _loadDataListUndanganPrabowo } from "@/load_data/aksi_nyata/load_prabowo";
+import {
+  _dataListUndanganPrabowo,
+  _dataPageListUndanganPrabowo,
+  _dataSearchListUndanganPrabowo,
+  _dataTotalPageListUndanganPrabowo,
+  _loadDataListUndanganPrabowo,
+} from "@/load_data/aksi_nyata/load_prabowo";
 import _ from "lodash";
 import { ButtonDeleteAksiPrabowo } from "../hapus_aksi_prabowo";
-const moment = require('moment')
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineMenu } from "react-icons/ai";
+const moment = require("moment");
 
 export const TableListUndanganPrabowoV2 = () => {
-  const [listUndanganPrabowo, setListUndanganPrabowo] = useState<ModelListUndanganPrabowo[]>([]);
+  const [listUndanganPrabowo, setListUndanganPrabowo] = useState<
+    ModelListUndanganPrabowo[]
+  >([]);
   const [dataId, setDataId] = useState<string>("");
   const [listDataNew, setListDataNew] = useAtom(_dataListUndanganPrabowo);
   const [inputSearch, setInputSearch] = useAtom(_dataSearchListUndanganPrabowo);
   const [inputPage, setInputPage] = useAtom(_dataPageListUndanganPrabowo);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageListUndanganPrabowo);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   const loadListUndanganPrabowo = () => {
     fetch(api.apiListUndanganPrabowoGetAll)
@@ -32,7 +53,12 @@ export const TableListUndanganPrabowoV2 = () => {
   useShallowEffect(() => {
     loadListUndanganPrabowo();
     setInputPage("1");
-    _loadDataListUndanganPrabowo(inputSearch, setListDataNew, "1", setTotalPage);
+    _loadDataListUndanganPrabowo(
+      inputSearch,
+      setListDataNew,
+      "1",
+      setTotalPage
+    );
   }, []);
 
   // const onDelete = (id: string) => {
@@ -48,10 +74,14 @@ export const TableListUndanganPrabowoV2 = () => {
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Rencana Agenda</th>
       <th>Tanggal Kunjungan</th>
       <th>List Undangan</th>
-      <th><Group position="center">Aksi</Group></th>
     </tr>
   );
 
@@ -105,7 +135,6 @@ export const TableListUndanganPrabowoV2 = () => {
         <EditListUndanganPrabowoV2 thisClosed={close} data={dataId} />
       </Modal>
 
-
       <Box pt={20}>
         {/* {JSON.stringify(listDataNew)} */}
         <ScrollArea>
@@ -122,42 +151,56 @@ export const TableListUndanganPrabowoV2 = () => {
                 </td>)}
               </tr>)}
             </tbody> */}
-            <tbody>{listDataNew && listDataNew.map((v, i) => (
-              <tr key={i}>
-                <td>{noAwal++}</td>
-                <td>{v.judul}</td>
-                <td>{moment(v.tanggal).format("DD MMM YYYY")}</td>
-                <td>{v.nama}</td>
-                <td>
-                  <Group position="center">
-                    <Button
-                      variant={"outline"}
-                      color={"green"}
-                      radius={50}
-                      w={100}
-                      onClick={() => {
-                        open();
-                        setDataId(v.id);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <ButtonDeleteAksiPrabowo setId={v.id} setKategori="2" setNama={v.nama} />
-                    {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(v.id) }}>
-                    Hapus
-                  </Button> */}
-                  </Group>
-                </td>
-              </tr>
-            ))}</tbody>
+            <tbody>
+              {listDataNew &&
+                listDataNew.map((v, i) => (
+                  <tr key={i}>
+                    <td>{noAwal++}</td>
+                    <td>
+                      <Flex
+                        direction={{ base: "column", sm: "row" }}
+                        justify={"center"}
+                      >
+                        <ActionIcon
+                          color={"green"}
+                          onClick={() => {
+                            open();
+                            setDataId(v.id);
+                          }}
+                        >
+                          <CiEdit />
+                        </ActionIcon>
+                        <ButtonDeleteAksiPrabowo
+                          setId={v.id}
+                          setKategori="2"
+                          setNama={v.nama}
+                        />
+                      </Flex>
+                    </td>
+                    <td>{v.judul}</td>
+                    <td>{moment(v.tanggal).format("DD MMM YYYY")}</td>
+                    <td>{v.nama}</td>
+                  </tr>
+                ))}
+            </tbody>
           </Table>
 
           <Group position="right" py={10}>
-            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
+            <Pagination
+              total={Number(totalPage)}
+              color={"orange"}
+              my={10}
+              value={Number(inputPage)}
               onChange={(val: any) => {
                 setInputPage(val);
-                _loadDataListUndanganPrabowo(inputSearch, setListDataNew, val, setTotalPage);
-              }} />
+                _loadDataListUndanganPrabowo(
+                  inputSearch,
+                  setListDataNew,
+                  val,
+                  setTotalPage
+                );
+              }}
+            />
           </Group>
         </ScrollArea>
       </Box>

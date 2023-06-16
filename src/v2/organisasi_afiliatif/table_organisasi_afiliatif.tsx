@@ -1,7 +1,10 @@
 import {
+  ActionIcon,
+  Alert,
   Box,
   Button,
   Center,
+  Flex,
   Grid,
   Group,
   Modal,
@@ -30,11 +33,16 @@ import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_p
 import moment from "moment";
 import { AfiliatifEditV2 } from "./afiliatif_edit";
 import { useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { toNumber } from "lodash";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { FiAlertCircle } from "react-icons/fi";
+import COLOR from "../../../fun/WARNA";
+import { ModelOrganisasiAfiliatif } from "@/model/interface_afiliatif";
 
 export const TableOrganisasiAfiliatifV2 = () => {
   // const [editAfiliatif, setEditAfiliatif] = useAtom(_dataAfiliatif);
@@ -64,36 +72,15 @@ export const TableOrganisasiAfiliatifV2 = () => {
     setInputSearch(search);
   };
 
-  const onDelete = async (id: string) => {
-    await fetch(api.apiAnggotaAfiliatifHapus + `?id=${id}`)
-      .then(async (res) => {
-        if (res.status === 200) {
-          const data = await res.json();
-          if (data.success) {
-            _postLogUser(
-              localStorage.getItem("user_id"),
-              "HAPUS",
-              "User menghapus data organisasi afiliatif"
-            );
-            return data.message;
-          }
-          return toast("Gagal");
-        }
-        return toast("Error");
-      })
-      .then((val) =>
-        _loadDataAfiliatif_ById_Search(
-          search,
-          setListDataAfiliatif,
-          "1",
-          setTotalPage
-        )
-      );
-  };
-
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
+
       <th>Nama</th>
       <th>Organisasi Afiliatif</th>
       <th>Tempat Lahir</th>
@@ -103,15 +90,31 @@ export const TableOrganisasiAfiliatifV2 = () => {
       <th>Kabupaten / Kota</th>
       <th>Kecamatan</th>
       <th>Desa</th>
-      <th>
-        <Center>Aksi</Center>
-      </th>
     </tr>
   );
 
   const tbBody = listDataAfiliatif.map((e, i) => (
     <tr key={i}>
       <td>{noUrut++}</td>
+      <td>
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color={"green"}
+            onClick={() => {
+              open();
+              setIdValue(e.id);
+            }}
+          >
+            <CiEdit />
+          </ActionIcon>
+          <DeleteButtonAfiliatif
+            dataVal={e}
+            setListDataAfiliatif={setListDataAfiliatif}
+            search={search}
+            setTotalPage={setTotalPage}
+          />
+        </Flex>
+      </td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.MasterOrganisasiAfiliatif?.name}</td>
       <td>{e.User.DataDiri.tempatLahir}</td>
@@ -121,7 +124,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
       <td>{e.User.DataDiri.MasterKabKot.name}</td>
       <td>{e.User.DataDiri.MasterKecamatan.name}</td>
       <td>{e.User.DataDiri.MasterDesa.name}</td>
-      <td>
+      {/* <td>
         <Group position="center">
           <Button
             variant={"outline"}
@@ -148,7 +151,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
             Hapus
           </Button>
         </Group>
-      </td>
+      </td> */}
     </tr>
   ));
 
@@ -187,7 +190,7 @@ export const TableOrganisasiAfiliatifV2 = () => {
         </Box>
         <Box py={20}>
           <ScrollArea>
-            <Table withBorder horizontalSpacing={"xl"} verticalSpacing={"sm"}>
+            <Table withBorder horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{tbBody}</tbody>
             </Table>
@@ -214,3 +217,89 @@ export const TableOrganisasiAfiliatifV2 = () => {
     </>
   );
 };
+
+function DeleteButtonAfiliatif({
+  dataVal,
+  setListDataAfiliatif,
+  search,
+  setTotalPage,
+}: {
+  dataVal: any;
+  setListDataAfiliatif: any;
+  search: any;
+  setTotalPage: any;
+}) {
+  const [opened, setOpen] = useDisclosure(false);
+  const onDelete = async (id: string) => {
+    await fetch(api.apiAnggotaAfiliatifHapus + `?id=${id}`)
+      .then(async (res) => {
+        if (res.status === 200) {
+          const data = await res.json();
+          if (data.success) {
+            _postLogUser(
+              localStorage.getItem("user_id"),
+              "HAPUS",
+              "User menghapus data organisasi afiliatif"
+            );
+            toast("Hapus Data");
+            return data.message;
+          }
+          return toast("Gagal");
+        }
+        return toast("Error");
+      })
+      .then((val) =>
+        _loadDataAfiliatif_ById_Search(
+          search,
+          setListDataAfiliatif,
+          "1",
+          setTotalPage
+        )
+      );
+  };
+  return (
+    <>
+      <Modal opened={opened} onClose={setOpen.close} centered size={"md"}>
+        
+        {/* {JSON.stringify(dataVal)} */}
+        <Alert
+          icon={<FiAlertCircle size="1rem" />}
+          title={`Hapus Data ${dataVal.User.DataDiri.name} ?`}
+          color="orange"
+        >
+          <Flex gap={"lg"}>
+            <Button
+              onClick={() => setOpen.close()}
+              radius={"xl"}
+              w={100}
+              color="green"
+              bg={COLOR.hijautua}
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={() => {
+                setOpen.close();
+                onDelete(dataVal.id);
+              }}
+              radius={"xl"}
+              w={100}
+              color="red"
+              bg={COLOR.merah}
+            >
+              Hapus
+            </Button>
+          </Flex>
+        </Alert>
+      </Modal>
+      <ActionIcon
+        color={"red"}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        <RiDeleteBin5Line />
+      </ActionIcon>
+    </>
+  );
+}

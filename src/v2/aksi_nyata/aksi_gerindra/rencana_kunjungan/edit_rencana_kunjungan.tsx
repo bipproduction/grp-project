@@ -136,8 +136,8 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
               <Flex direction={"column"}>
                 <TextInput
                   placeholder={dataEdit?.judul}
-                  label="**"
-                  mt={10}
+                  label="Judul Rencana & Agenda"
+                  withAsterisk
                   onChange={(val) => {
                     body.judul = val.target.value;
                   }}
@@ -145,19 +145,19 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
 
                 <Textarea
                   placeholder={dataEdit?.img}
-                  label="**"
+                  label="Potret Lokasi"
                   autosize
                   minRows={2}
                   maxRows={4}
-                  mt={10}
+                  withAsterisk
                   onChange={(val) => {
                     body.img = val.target.value;
                   }}
                 />
                 <DateInput
                   placeholder={moment(dataEdit?.tanggal).format("DD MMM YYYY")}
-                  label="**"
-                  mt={10}
+                  label="Tanggal"
+                  withAsterisk
                   onChange={(val) => {
                     body.tanggal = moment(val).format("YYYY-MM-DD");
                   }}
@@ -167,9 +167,9 @@ const EditRencanaKunjunganGerindraV2 = ({ thisClosed, data }: any) => {
                     value: data.id,
                     label: data.name,
                   }))}
-                  mt={10}
+                  withAsterisk
                   placeholder={dataEdit?.MasterStatusAksiNyata.name}
-                  label={"**"}
+                  label={"Pilih Status"}
                   onChange={(val: any) => {
                     body.masterStatusAksiNyataId = val;
                   }}
