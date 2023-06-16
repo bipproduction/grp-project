@@ -1,11 +1,11 @@
 import {
   Anchor,
-  BackgroundImage,
   Box,
   Button,
   Center,
+  Checkbox,
   Container,
-  Flex,
+  Divider,
   Group,
   Image,
   Paper,
@@ -13,67 +13,19 @@ import {
   Stack,
   Text,
   TextInput,
-  Title,
 } from "@mantine/core";
-import COLOR from "../../../fun/WARNA";
-import { useForm } from "@mantine/form";
-import toast from "react-simple-toasts";
-import { api } from "@/lib/api-backend";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import React from "react";
+import COLOR from "../../../../fun/WARNA";
 import { FiLock, FiUser } from "react-icons/fi";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { useRouter } from "next/router";
 
-const FormSignUp = () => {
-  const [email, setEmail] = useState<string>();
-  const [inputKonfirmasiPass, setInputKonfirmasiPass] = useState<string>();
-  const router = useRouter();
-  const formRegister = useForm({
-    initialValues: {
-      data: {
-        username: "",
-        email: "",
-        password: "",
-      },
-      validate: {
-        email: (value: string) =>
-          /^\S+@\S+$/.test(value) ? null : "Invalid email",
-      },
-    },
-  });
+function RegisterContoh() {
+  const router = useRouter()
 
-
-  const onRegister = () => {
-    if (Object.values(formRegister.values.data).includes("")) {
-      return toast("Lengkapi Data diri");
-    }
-
-    if (
-      formRegister.values.validate.email(formRegister.values.data.email) != null
-    ) {
-      return toast("Invalid email");
-    }
-
-    if (formRegister.values.data.password != inputKonfirmasiPass) {
-      return toast("Konfirmasi password salah");
-    }
-
-    fetch(api.apiAuthSignUp, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formRegister.values.data),
-    }).then(async (res) => {
-      const data = await res.json();
-      if (res.status === 201) {
-        toast("Sukses. Silahkan lakukan login");
-        //router.reload();
-      } else {
-        toast(data.message);
-      }
-    });
-  };
+  function login(){
+    router.push("/")
+  }
   return (
     <>
       <Box
@@ -135,23 +87,14 @@ const FormSignUp = () => {
               icon={<FiLock size={17} />}
               // onChange={(val) => setInputKonfirmasiPass(val.target.value)}
             />
-            <Button
-              fullWidth
-              mt="xl"
-              bg={COLOR.coklat}
-              color="orange.9"
-              // onClick={onRegister}
+            <Button fullWidth mt="xl" bg={COLOR.coklat} color="orange.9"
+            // onClick={onRegister}
             >
               REGISTER
             </Button>
             <Text color={COLOR.coklat} size="sm" align="center" mt={20}>
-              Sudah memiliki akun?{" "}
-              <Anchor
-                size="sm"
-                component="a"
-                color={COLOR.coklat}
-                href="/"
-              >
+              Tidak memiliki akun?{" "}
+              <Anchor size="sm" component="button" color={COLOR.coklat} onClick={login}>
                 Login
               </Anchor>
             </Text>
@@ -160,6 +103,6 @@ const FormSignUp = () => {
       </Box>
     </>
   );
-};
+}
 
-export default FormSignUp;
+export default RegisterContoh;
