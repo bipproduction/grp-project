@@ -1,4 +1,15 @@
-import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  Pagination,
+  ScrollArea,
+  Table,
+} from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../../data_dummy_pk.json";
@@ -8,9 +19,17 @@ import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { ModelEksekutif } from "@/model/model_peta_kekuatan";
 import { useAtom } from "jotai";
-import { _dataEksekutifNasional, _dataPageEksekutifNasional, _dataSearchEksekutifNasional, _dataTotalPageEksekutifNasional, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
+import {
+  _dataEksekutifNasional,
+  _dataPageEksekutifNasional,
+  _dataSearchEksekutifNasional,
+  _dataTotalPageEksekutifNasional,
+  _loadDataEksekutif,
+} from "@/load_data/peta_kekuatan/load_eksekutif";
 import { ButtonDeleteEksekutif } from "../hapus_eksekutif";
 import _ from "lodash";
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export const TableEksekutifNasionalV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -20,7 +39,7 @@ export const TableEksekutifNasionalV2 = () => {
   const [inputSearch, setInputSearch] = useAtom(_dataSearchEksekutifNasional);
   const [inputPage, setInputPage] = useAtom(_dataPageEksekutifNasional);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageEksekutifNasional);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   // const loadData = () => {
   //   fetch(api.apiEksekutifGetAll+`?tingkat=1`)
@@ -44,12 +63,15 @@ export const TableEksekutifNasionalV2 = () => {
     //loadData();
     setInputPage("1");
     _loadDataEksekutif(1, inputSearch, setListDataNew, "1", setTotalPage);
-  }, [])
-
+  }, []);
 
   const tbHead = (
     <tr>
-      <th>No</th>
+      <th>No</th><th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama</th>
       <th>NIK</th>
       <th>Nama Kementrian</th>
@@ -59,16 +81,31 @@ export const TableEksekutifNasionalV2 = () => {
       <th>Alamat Kantor</th>
       <th>Email</th>
       {/* <th>Media Social</th> */}
-      <th>
-        <Group position="center">Aksi</Group>
-      </th>
+     
     </tr>
-
   );
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{noAwal++}</td>
+      <td>
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color={"green"}
+            onClick={() => {
+              open();
+              setDataId(e.id);
+            }}
+          >
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteEksekutif
+            setId={e.id}
+            setTingkat="1"
+            setNama={e.User.DataDiri.name}
+          />
+        </Flex>
+      </td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.namaLembaga}</td>
@@ -78,26 +115,7 @@ export const TableEksekutifNasionalV2 = () => {
       <td>{e.alamatKantor}</td>
       <td>{e.User.email}</td>
       {/* <td>{e.Media_social}</td> */}
-      <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={() => {
-              open();
-              setDataId(e.id);
-            }}
-          >
-            Edit
-          </Button>
-          <ButtonDeleteEksekutif setId={e.id} setTingkat="1" setNama={e.User.DataDiri.name} />
-          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={()=>{onDelete(e.id)}}>
-            Hapus
-          </Button> */}
-        </Group>
-      </td>
+     
     </tr>
   ));
 
@@ -112,14 +130,25 @@ export const TableEksekutifNasionalV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Group position="right" py={10}>
-            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
-              onChange={(val: any) => {
-                setInputPage(val);
-                _loadDataEksekutif(1, inputSearch, setListDataNew, val, setTotalPage);
-              }} />
-          </Group>
         </ScrollArea>
+        <Group position="right" py={10}>
+          <Pagination
+            total={Number(totalPage)}
+            color={"orange"}
+            my={10}
+            value={Number(inputPage)}
+            onChange={(val: any) => {
+              setInputPage(val);
+              _loadDataEksekutif(
+                1,
+                inputSearch,
+                setListDataNew,
+                val,
+                setTotalPage
+              );
+            }}
+          />
+        </Group>
       </Box>
     </>
   );

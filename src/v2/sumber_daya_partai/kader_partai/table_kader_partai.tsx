@@ -1,8 +1,10 @@
 import WarpPage from "@/v2/component/my-wrap";
 import {
+  ActionIcon,
   Box,
   Button,
   Center,
+  Flex,
   Grid,
   Group,
   Modal,
@@ -24,7 +26,7 @@ import {
   AiOutlineSearch,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { CiFilter } from "react-icons/ci";
+import { CiEdit, CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../data_table.json";
 import EditKaderPartaiV2 from "./edit_kader_partai";
@@ -33,9 +35,7 @@ import { useAtom } from "jotai";
 import {
   _dataKaderTable_ByStatusSearch,
   _dataPageSDP_Kader,
-
   _dataTotalPageSDP_Kader,
-
   _loadDataSDP_ByStatus_BySeach,
   _searchDataSumberDayaPartai,
 } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
@@ -43,6 +43,7 @@ import { KaderEditv2 } from "./kader_edit";
 import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import _ from "lodash";
+import { AiOutlineMenu } from "react-icons/ai";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -50,11 +51,10 @@ const TableKaderPartaiV2 = () => {
   const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
   const [valueId, setValueId] = useState("");
   const [search, setSearch] = useState("");
-  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
-  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Kader)
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader)
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
-
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Kader);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader);
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   useShallowEffect(() => {
     onSearch("");
@@ -62,72 +62,51 @@ const TableKaderPartaiV2 = () => {
 
   const onSearch = (search: string) => {
     _loadDataSDP_ByStatus_BySeach(3, search, setDataTable, "1", setTotalPage);
-    setInputPage("1")
-    setInputSearch(search)
+    setInputPage("1");
+    setInputSearch(search);
   };
 
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama</th>
       <th>NIK</th>
       <th>Tingkat Kader</th>
-      {/* <th>Email</th>
-      <th>Tempat Lahir</th>
-      <th>Tanggal Lahir</th>
-      <th>Jenis Kelamin</th>
-      <th>Nomor Tlpn</th>
-      <th>Agama</th>
-      <th>Pekerjaan</th>
-      <th>Alamat</th>
-      <th>Provinsi</th>
-      <th>Kabupaten</th>
-      <th>Kecamatan</th>
-      <th>Desa / Cabang</th>
-      <th>RT/RW</th>
-      <th>Instagram</th>
-      <th>Facebook</th>
-      <th>TikTok</th>
-      <th>Twitter</th> */}
-      <th>
-        <Center>Aksi</Center>
-      </th>
     </tr>
   );
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
       <td>{noAwal++}</td>
-      <td>{e.User.DataDiri.name}</td>
-      <td>{e.User.DataDiri.nik}</td>
-      <td>{e.MasterKaderPartai.name}</td>
-
       <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color="green"
             onClick={() => {
               setValueId(e.id);
-
               open();
             }}
           >
-            Edit
-          </Button>
-          <ButtonDeleteData 
-          setId={e}
-          search={search}
-          setDataTable={setDataTable}
-          setTingkat="kader partai"
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteData
+            setId={e}
+            search={search}
+            setDataTable={setDataTable}
+            setTingkat="kader partai"
           />
-        </Group>
+        </Flex>
       </td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.MasterKaderPartai.name}</td>
     </tr>
   ));
-
 
   return (
     <>
@@ -212,21 +191,31 @@ const TableKaderPartaiV2 = () => {
             </Grid.Col> */}
           </Grid>
         </Box>
-        <Box>
-          <ScrollArea py={20}>
+        <Box py={20}>
+          <ScrollArea>
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            <Group position="right" pt={10}>
-            <Pagination total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
-            onChange={(val : any) => {
-              setInputPage(val)
-              _loadDataSDP_ByStatus_BySeach(3, inputSearch, setDataTable, val, setTotalPage );
-            }}
+          </ScrollArea>
+
+          <Group position="right" pt={10}>
+            <Pagination
+              total={Number(totalPage)}
+              value={Number(inputPage)}
+              color={"orange"}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataSDP_ByStatus_BySeach(
+                  3,
+                  inputSearch,
+                  setDataTable,
+                  val,
+                  setTotalPage
+                );
+              }}
             />
           </Group>
-          </ScrollArea>
         </Box>
       </Box>
     </>

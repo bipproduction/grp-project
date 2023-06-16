@@ -9,6 +9,7 @@ import {
   _dataTotalPageSDP_Strukturr,
 } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import {
+  ActionIcon,
   Alert,
   Box,
   Button,
@@ -34,83 +35,84 @@ import { useAtom } from "jotai";
 import _ from "lodash";
 import { StrukturEditV2 } from "./stuktur_edit";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import COLOR from "../../../../fun/WARNA";
 import { api } from "@/lib/api-backend";
 import { useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import toast from "react-simple-toasts";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
+import { CiEdit } from "react-icons/ci";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
   const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
   const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
   const [search, setSearch] = useState("");
-  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
-  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr);
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   useShallowEffect(() => {
     onSearch(search);
   }, []);
 
   function onSearch(text: string) {
-    _loadDataSDP_ByStatus_BySeach(1, text, setDataTable, "1", setTotalPage );
-    setInputSearch(text)
-    setInputPage("1")
+    _loadDataSDP_ByStatus_BySeach(1, text, setDataTable, "1", setTotalPage);
+    setInputSearch(text);
+    setInputPage("1");
   }
 
   const thHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama</th>
       <th>NIK</th>
       <th>Tingkat Pengurus</th>
       <th>Jabatan</th>
-      <th>
-        <Center>Aksi</Center>
-      </th>
     </tr>
   );
 
   const tbBody = dataTable.map((e, i) => (
     <tr key={i}>
       <td>{noAwal++}</td>
+      <td>
+        <Center>
+          <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+            <ActionIcon
+              color={"green"}
+              onClick={() => {
+                setOpen.open();
+                setTargetStruktur(e.id as any);
+                // console.log(e.id)
+              }}
+            >
+              <CiEdit />
+            </ActionIcon>
+            <ButtonDeleteData
+              setId={e}
+              search={search}
+              setDataTable={setDataTable}
+              setTingkat="struktur partai"
+            />
+          </Flex>
+        </Center>
+      </td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.MasterTingkatPengurus.name}</td>
       <td>
         <DataJabatan setTingkat={e} />
       </td>
-      <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={(val) => {
-              setOpen.open();
-              setTargetStruktur(e.id as any);
-              // console.log(e.id)
-            }}
-          >
-            Edit
-          </Button>
-          <ButtonDeleteData
-            setId={e}
-            search={search}
-            setDataTable={setDataTable}
-            setTingkat="struktur partai"
-          />
-        </Group>
-      </td>
     </tr>
   ));
 
-  
   return (
     <>
       {/* <pre>{JSON.stringify(dataTable.map((e) => e.MasterStatusKeanggotaan.id), null, 2)}</pre> */}
@@ -127,7 +129,7 @@ export const TableStrukturV2 = () => {
         <StrukturEditV2 thisClosed={setOpen.close} />
       </Modal>
 
-      <Box sx={{ overflow: "scroll" }}>
+      <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
@@ -150,20 +152,32 @@ export const TableStrukturV2 = () => {
             </Grid.Col>
           </Grid>
         </Box>
-        <ScrollArea py={20}>
-          <Table withBorder highlightOnHover horizontalSpacing={"lg"} >
-            <thead>{thHead}</thead>
-            <tbody>{tbBody}</tbody>
-          </Table>
+        <Box py={20}>
+          <ScrollArea>
+            <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
+              <thead>{thHead}</thead>
+              <tbody>{tbBody}</tbody>
+            </Table>
+          </ScrollArea>
+
           <Group position="right" pt={10}>
-            <Pagination total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
-            onChange={(val : any) => { 
-              setInputPage(val)
-              _loadDataSDP_ByStatus_BySeach(1, inputSearch, setDataTable, val, setTotalPage );
-            }}
+            <Pagination
+              total={Number(totalPage)}
+              value={Number(inputPage)}
+              color={"orange"}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataSDP_ByStatus_BySeach(
+                  1,
+                  inputSearch,
+                  setDataTable,
+                  val,
+                  setTotalPage
+                );
+              }}
             />
           </Group>
-        </ScrollArea>
+        </Box>
       </Box>
     </>
   );
@@ -253,5 +267,3 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
     </>
   );
 }
-
-

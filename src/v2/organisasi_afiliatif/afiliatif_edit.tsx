@@ -13,11 +13,14 @@ import COLOR from "../../../fun/WARNA";
 import { useShallowEffect } from "@mantine/hooks";
 import {
     _dataAfiliatif,
+  _dataPage_Afiliatif,
+  _dataTotalPage_Afiliatif,
   _listEdit_DataAfiliatif,
   _list_Afiliatif,
   _loadDataAfiliatif_ById_Search,
   _loadDataAfiliatif_GetOne,
   _loadNama_Afiliatif,
+  _searchDataOrganisasiAfiliatif,
   _select_Afiliatif,
 } from "@/load_data/organisasi_afiliatif/load_organisasi_afiliatif";
 import { useAtom } from "jotai";
@@ -46,6 +49,9 @@ export const AfiliatifEditV2 = ({
   const [changeData, setChangeData] = useState("");
   const [search,setSearch] = useState('')
   const [listDataAfiliatif,setListDataAfiliatif] = useAtom(_dataAfiliatif)
+  const [inputPage, setInputPage] = useAtom(_dataPage_Afiliatif)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPage_Afiliatif)
+  const [inputSearch, setInputSearch] = useAtom(_searchDataOrganisasiAfiliatif)
 
   useShallowEffect(() => {
     _loadNama_Afiliatif(setNamaAfiliatif, setSelectAfiliatif);
@@ -71,14 +77,14 @@ export const AfiliatifEditV2 = ({
       if (res.status == 201) {
         const data = await res.json();
         if (data.success) {
-          return toast(data.message);
           _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data organisasi afiliatif")
+          _loadDataAfiliatif_ById_Search(inputSearch, setListDataAfiliatif, inputPage, setTotalPage)
+          return toast(data.message);
         }
         return toast("Gagal Update");
       }
       return toast("Error");
     })
-    .then((val) => _loadDataAfiliatif_ById_Search(search, setListDataAfiliatif))
   };
 
   if (!targerEdit)

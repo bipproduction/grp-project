@@ -1,4 +1,15 @@
-import { Box, Button, Group, Modal, Pagination, ScrollArea, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Group,
+  Modal,
+  Pagination,
+  ScrollArea,
+  Table,
+} from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 // const data_dummy = require("../data_dummy_pk")
 import myData from "../data_legis_dummy.json";
@@ -8,19 +19,27 @@ import { ModelLegislatif } from "@/model/model_peta_kekuatan";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import { useAtom } from "jotai";
-import { _dataLegislatifNasional, _dataPageLegislatifNasional, _dataSearchLegislatifNasional, _dataTotalPageLegislatifNasional, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
+import {
+  _dataLegislatifNasional,
+  _dataPageLegislatifNasional,
+  _dataSearchLegislatifNasional,
+  _dataTotalPageLegislatifNasional,
+  _loadDataLegislatif,
+} from "@/load_data/peta_kekuatan/load_legislatif";
 import { ButtonDeleteLegislatif } from "../hapus_legislatif";
 import _ from "lodash";
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export const TableLegislatifRIV2 = () => {
-  const [opened, { open, close }] = useDisclosure(false)
+  const [opened, { open, close }] = useDisclosure(false);
   const [listData, setListData] = useState<ModelLegislatif[]>([]);
   const [listDataNew, setListDataNew] = useAtom(_dataLegislatifNasional);
   const [dataId, setDataId] = useState<string>("");
   const [inputSearch, setInputSearch] = useAtom(_dataSearchLegislatifNasional);
   const [inputPage, setInputPage] = useAtom(_dataPageLegislatifNasional);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageLegislatifNasional);
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1;
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   // const loadData = () => {
   //   fetch(api.apiLegislatifGetAll + `?tingkat=1`)
@@ -44,11 +63,16 @@ export const TableLegislatifRIV2 = () => {
     //loadData();
     setInputPage("1");
     _loadDataLegislatif(1, inputSearch, setListDataNew, "1", setTotalPage);
-  }, [])
+  }, []);
 
   const tbHead = (
     <tr>
       <th>No</th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
       <th>Nama</th>
       <th>NIK</th>
       <th>No Urut</th>
@@ -60,15 +84,30 @@ export const TableLegislatifRIV2 = () => {
       <th>Periode</th>
       <th>Jabatan</th>
       {/* <th>Media Social</th> */}
-      <th>
-        <Group position="center">Aksi</Group>
-      </th>
     </tr>
   );
 
   const rows = listDataNew.map((e, i) => (
     <tr key={i}>
       <td>{noAwal++}</td>
+      <td>
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color={"green"}
+            onClick={() => {
+              open();
+              setDataId(e.id);
+            }}
+          >
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteLegislatif
+            setId={e.id}
+            setTingkat="1"
+            setNama={e.User.DataDiri.name}
+          />
+        </Flex>
+      </td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
       <td>{e.noUrut}</td>
@@ -80,41 +119,13 @@ export const TableLegislatifRIV2 = () => {
       <td>{e.periode}</td>
       <td>{e.jabatan}</td>
       {/* <td>{e.Media_Social}</td> */}
-      <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
-            onClick={() => {
-              open();
-              setDataId(e.id);
-            }}
-          >
-            Edit
-          </Button>
-          <ButtonDeleteLegislatif setId={e.id} setTingkat="1" setNama={e.User.DataDiri.name} />
-          {/* <Button variant={"outline"} color={"red"} radius={50} w={100} onClick={() => { onDelete(e.id) }}>
-            Hapus
-          </Button> */}
-        </Group>
-      </td>
     </tr>
   ));
 
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        centered size={"lg"}
-      >
-        <EditLegislatifDprRiV2
-          thisClosed={close}
-          data={dataId}
-        />
-
+      <Modal opened={opened} onClose={close} centered size={"lg"}>
+        <EditLegislatifDprRiV2 thisClosed={close} data={dataId} />
       </Modal>
       <Box pt={20}>
         <ScrollArea>
@@ -122,14 +133,25 @@ export const TableLegislatifRIV2 = () => {
             <thead>{tbHead}</thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Group position="right" py={10}>
-            <Pagination total={Number(totalPage)} color={"orange"} my={10} value={Number(inputPage)}
-              onChange={(val: any) => {
-                setInputPage(val);
-                _loadDataLegislatif(1, inputSearch, setListDataNew, val, setTotalPage);
-              }} />
-          </Group>
         </ScrollArea>
+        <Group position="right" py={10}>
+          <Pagination
+            total={Number(totalPage)}
+            color={"orange"}
+            my={10}
+            value={Number(inputPage)}
+            onChange={(val: any) => {
+              setInputPage(val);
+              _loadDataLegislatif(
+                1,
+                inputSearch,
+                setListDataNew,
+                val,
+                setTotalPage
+              );
+            }}
+          />
+        </Group>
       </Box>
     </>
   );

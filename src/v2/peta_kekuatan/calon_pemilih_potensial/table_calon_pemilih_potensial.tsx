@@ -132,7 +132,7 @@ export const TableCPTV2 = () => {
             <tbody>{rows}</tbody>
           </Table>
         </ScrollArea>
-        <Group position="center" pt={20}>
+        <Group position="right" pt={10}>
           <Pagination color="orange" total={Number(totalPage)} value={Number(inputPage)}
           onChange={(val : any) => {
             setInputPage(val)

@@ -1,8 +1,10 @@
 import WarpPage from "@/v2/component/my-wrap";
 import {
+  ActionIcon,
   Box,
   Button,
   Center,
+  Flex,
   Grid,
   Group,
   Modal,
@@ -20,11 +22,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   AiOutlineDownload,
+  AiOutlineMenu,
   AiOutlineSave,
   AiOutlineSearch,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { CiFilter } from "react-icons/ci";
+import { CiEdit, CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../data_table.json";
 import EditSayapPartaiV2 from "./edit_sayap_partai";
@@ -50,84 +53,75 @@ const TableSayapPartaiV2 = () => {
   const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
   const [search, setSearch] = useState("");
   const [valueId, setValueId] = useState("");
-  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
-  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Sayap)
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Sayap)
-  let noAwal = ((_.toNumber(inputPage) - 1) * 10) + 1
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Sayap);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Sayap);
+  let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
 
   useShallowEffect(() => {
-    onSearch("")
+    onSearch("");
   }, []);
-  const onSearch = (search: string) => {
-    _loadDataSDP_ByStatus_BySeach(2, search, setDataTable, "1", setTotalPage);
-    setInputPage("1")
-    setInputSearch(search)
+  const onSearch = async (search: string) => {
+    await _loadDataSDP_ByStatus_BySeach(
+      2,
+      search,
+      setDataTable,
+      "1",
+      setTotalPage
+    );
+    setInputPage("1");
+    setInputSearch(search);
   };
 
   const tbHead = (
     <tr>
-      <th>No</th>
+      <th>
+        No
+      </th>
+      <th>
+        <Center>
+          <AiOutlineMenu />
+        </Center>
+      </th>
+
       <th>Nama</th>
       <th>NIK</th>
       <th>Nama Sayap</th>
       <th>Tingkat Pengurus</th>
       <th>Jabatan</th>
-      {/* <th>Email</th>
-      <th>Tempat Lahir</th>
-      <th>Tanggal Lahir</th>
-      <th>Jenis Kelamin</th>
-      <th>Nomor Tlpn</th>
-      <th>Agama</th>
-      <th>Pekerjaan</th>
-      <th>Alamat</th>
-      <th>Provinsi</th>
-      <th>Kabupaten</th>
-      <th>Kecamatan</th>
-      <th>Desa / Cabang</th>
-      <th>RT/RW</th>
-      <th>Instagram</th>
-      <th>Facebook</th>
-      <th>TikTok</th>
-      <th>Twitter</th> */}
-      <th>
-        <Center>Aksi</Center>
-      </th>
     </tr>
   );
 
   const rows = dataTable.map((e, i) => (
     <tr key={e.id}>
-      <td>{noAwal++}</td>
-      <td>{e.User.DataDiri.name}</td>
-      <td>{e.User.DataDiri.nik}</td>
-      <td>{e.MasterSayapPartai?.name}</td>
-      <td>{e.MasterTingkatSayap?.name}</td>
-      {/* <td>{e.MasterTingkatPengurus.name}</td> */}
       <td>
-        <JabatanSayapPartai setJabtan={e} />
+        {noAwal++}
       </td>
-
       <td>
-        <Group position="center">
-          <Button
-            variant={"outline"}
-            color={"green"}
-            radius={50}
-            w={100}
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color="green"
             onClick={() => {
               setValueId(e.id);
               open();
             }}
           >
-            Edit
-          </Button>
-          <ButtonDeleteData 
-          setId={e}
-          search={search}
-          setDataTable={setDataTable}
-          setTingkat="sayap partai"
+            <CiEdit />
+          </ActionIcon>
+          <ButtonDeleteData
+            setId={e}
+            search={search}
+            setDataTable={setDataTable}
+            setTingkat="sayap partai"
           />
-        </Group>
+        </Flex>
+      </td>
+      <td>{e.User.DataDiri.name}</td>
+      <td>{e.User.DataDiri.nik}</td>
+      <td>{e.MasterSayapPartai?.name}</td>
+      <td>{e.MasterTingkatSayap?.name}</td>
+      <td>
+        <JabatanSayapPartai setJabtan={e} />
       </td>
     </tr>
   ));
@@ -151,7 +145,7 @@ const TableSayapPartaiV2 = () => {
         {/* <EditSayapPartaiV2 thisClosed={close} /> */}
         <SayapEditV2 thisClosed={close} setId={valueId} />
       </Modal>
-      <Box sx={{overflow: "scroll"}}>
+      <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
             <Grid.Col span={8}>
@@ -217,19 +211,31 @@ const TableSayapPartaiV2 = () => {
             </Grid.Col> */}
           </Grid>
         </Box>
-        <Box>
-          <ScrollArea py={20}>
+        <Box py={20}>
+          <ScrollArea>
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>
               <tbody>{rows}</tbody>
             </Table>
-            <Pagination position="right" pt={10} total={Number(totalPage)} value={Number(inputPage)} color={"orange"} 
-            onChange={(val : any) => {
-              setInputPage(val)
-              _loadDataSDP_ByStatus_BySeach(2, inputSearch, setDataTable, val, setTotalPage );
-            }}
-            />
           </ScrollArea>
+
+          <Group position="right" pt={10}>
+            <Pagination
+              total={Number(totalPage)}
+              value={Number(inputPage)}
+              color={"orange"}
+              onChange={(val: any) => {
+                setInputPage(val);
+                _loadDataSDP_ByStatus_BySeach(
+                  2,
+                  inputSearch,
+                  setDataTable,
+                  val,
+                  setTotalPage
+                );
+              }}
+            />
+          </Group>
         </Box>
       </Box>
     </>
@@ -257,9 +263,11 @@ function JabatanSayapPartai({
               if (setJabtan.MasterTingkatSayap?.id == 4) {
                 return <>{setJabtan.MasterJabatanPimpinanAnakCabang.name}</>;
               } else {
-                return<>
-                <Text>undefined</Text>
-                </>
+                return (
+                  <>
+                    <Text>undefined</Text>
+                  </>
+                );
               }
             }
           }

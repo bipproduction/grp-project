@@ -9,6 +9,7 @@ import COLOR from "../../../fun/WARNA";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { useAtom } from "jotai";
 import { useState } from "react";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 export function ButtonDeleteData({
   setId,
@@ -114,17 +115,25 @@ export function ButtonDeleteData({
           </Flex>
         </Alert>
       </Modal>
-      <Button
+      {/* <Button
         variant={"outline"}
-        color={"red"}
         radius={50}
         w={100}
+        color={"red"}
         onClick={() => {
           setOpen.open();
         }}
       >
         Hapus
-      </Button>
+      </Button> */}
+      <ActionIcon
+        color={"red"}
+        onClick={() => {
+          setOpen.open();
+        }}
+      >
+        <RiDeleteBin5Line />
+      </ActionIcon>
     </>
   );
 }

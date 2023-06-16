@@ -35,6 +35,8 @@ import { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
 import {
+  _dataPageCalonPemilihPotensial,
+  _dataTotalPageCalonPemilihPotensial,
   _desa_CalonPP,
   _kabkot_CalonPP,
   _kecamatan_CalonPP,
@@ -96,6 +98,10 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
   const [listDataCPP, setListDataCPP] = useAtom(
     _listData_CalonPemilihPotensial
   );
+  const [inputPage, setInputPage] = useAtom(_dataPageCalonPemilihPotensial);
+  const [totalPage, setTotalPage] = useAtom(
+    _dataTotalPageCalonPemilihPotensial
+  );
 
   useShallowEffect(() => {
     _loadKategoriPemilihPotensial();
@@ -145,7 +151,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     }).then(async (res) => {
       if (res.status == 201) {
         thisClosed();
-        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP);
+        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP, inputPage, setTotalPage);
         _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data calon pemilih potensial");
         return toast("Data Tersimpan");
       } else {
