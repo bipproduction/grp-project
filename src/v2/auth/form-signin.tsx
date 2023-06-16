@@ -1,11 +1,17 @@
 import {
+  Anchor,
   BackgroundImage,
   Box,
   Button,
   Center,
+  Checkbox,
   Container,
+  Flex,
+  Grid,
   Group,
   Image,
+  Modal,
+  Paper,
   PasswordInput,
   Stack,
   Text,
@@ -20,9 +26,14 @@ import { useRouter } from "next/router";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { useAtom } from "jotai";
 import { _dataImages } from "../dashboard_user";
+import { useDisclosure } from "@mantine/hooks";
+import ModalLupaPassword from "./modal-lupa-password";
+import { CiLock } from "react-icons/ci";
+import { FiLock, FiUser } from "react-icons/fi";
 
 const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
   const [image, setImage] = useAtom(_dataImages);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const formLogin = useForm({
     initialValues: {
@@ -60,88 +71,88 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
 
   return (
     <>
-      {/* <BackgroundImage src="../BG.png" h={"100vh"}> */}
+      <Modal opened={opened} onClose={close} size={"md"} centered>
+        <ModalLupaPassword />
+      </Modal>
       <Box
         sx={{
           backgroundColor: COLOR.hitam,
           height: "100vh",
         }}
       >
-        <Box>
-          <Center pt={130}>
-            <Box
-              bg={COLOR.orange}
-              h={500}
-              w={500}
-              sx={{
-                borderRadius: 10,
-              }}
-            >
-              <Box>
-                <Center>
-                  <Box>
-                    <Group position="center">
-                      <Text fz={60} mt={5} fw={700} color="white" style={{textShadow: "1px 1px 1px black"}}>
-                        GARUDA
-                      </Text>
-                    </Group>
-                    <Group position="center">
-                      <Text mb={10} color="white" style={{textShadow: "1px 1px 1px black"}}>
-                        RESOURCE PLANNING
-                      </Text>
-                    </Group>
-                  </Box>
-                </Center>
-              </Box>
-              {/* <Text pt={10} ta={"center"} color="white" fz={60}>Garuda</Text> */}
-              <Center pt={10}>
-                <Image src={"../logo.png"} width={200} alt="a" />
-              </Center>
-              <Stack pt={20}>
-                <Container w={350}>
-                  {/* component="a" href="../../../formDataDiri/form_data_diri" */}
-                  <TextInput
-                    placeholder="Email"
-                    radius={10}
-                    {...formLogin.getInputProps("data.email")}
-                  />
-                  <PasswordInput
-                    mt={20}
-                    placeholder="Password"
-                    radius={10}
-                    required
-                    {...formLogin.getInputProps("data.password")}
-                  />
-                  <Button
-                    mt={20}
-                    color="orange.9"
-                    fullWidth
-                    radius={"lg"}
-                    bg={COLOR.merah}
-                    onClick={onLogin}
-                  >
-                    Login
-                  </Button>
-                  <Box component="a" onClick={onSignUp}>
-                    <Text
-                      style={{ cursor: "pointer" }}
-                      align="right"
-                      color="black"
-                      mt={10}
-                      fz={10}
-                    >
-                      <strong>Klik disini </strong>Untuk Daftar!
-                      {/* <ButtonRegister /> */}
-                    </Text>
-                  </Box>
-                </Container>
-              </Stack>
-              {/* <Anchor href="../../dashboard">login</Anchor> */}
+        <Container size="30rem" px={0} pt={100}>
+          <Paper withBorder shadow="xl" p={40} radius="md" bg={COLOR.orange}>
+            <Center mb={10}>
+              <Image src={"..//..//..//../../logo.png"} width={100} alt="a" />
+            </Center>
+            <Box mb={20}>
+              <Text
+                ta={"center"}
+                color={"white"}
+                fz={40}
+                fw={700}
+                style={{ textShadow: "1px 1px 1px black" }}
+              >
+                GARUDA
+              </Text>
+              <Text
+                ta={"center"}
+                color={"white"}
+                fz={14}
+                style={{ textShadow: "1px 1px 1px black" }}
+              >
+                RESOURCE PLANNING
+              </Text>
             </Box>
-          </Center>
-        </Box>
+
+            <TextInput
+              placeholder="Email / Username"
+              required
+              mt="lg"
+              icon={<FiUser size={17} />}
+              {...formLogin.getInputProps("data.email")}
+            />
+            <PasswordInput
+              placeholder="Password"
+              required
+              mt="lg"
+              icon={<FiLock size={17} />}
+              {...formLogin.getInputProps("data.password")}
+            />
+            <Group position="apart" mt="lg">
+              <Checkbox label="Remember me" color="orange.9" />
+              <Anchor
+                component="button"
+                size="sm"
+                color={COLOR.coklat}
+                onClick={open}
+              >
+                Forgot password?
+              </Anchor>
+            </Group>
+            <Button
+              fullWidth
+              mt="xl"
+              bg={COLOR.coklat}
+              color="orange.9"
+              onClick={onLogin}
+            >
+              LOGIN
+            </Button>
+            <Text color={COLOR.coklat} size="sm" align="center" mt={20}>
+              Tidak memiliki akun?{" "}
+              <Anchor
+                size="sm"
+                component="button"
+                color={COLOR.coklat}
+                onClick={onSignUp}
+              >
+                Register
+              </Anchor>
+            </Text>
+          </Paper>
+        </Container>
       </Box>
-      {/* </BackgroundImage> */}
     </>
   );
 };

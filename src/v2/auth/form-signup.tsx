@@ -1,11 +1,14 @@
 import {
+  Anchor,
   BackgroundImage,
   Box,
   Button,
   Center,
   Container,
+  Flex,
   Group,
   Image,
+  Paper,
   PasswordInput,
   Stack,
   Text,
@@ -18,6 +21,8 @@ import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FiLock, FiUser } from "react-icons/fi";
+import { MdOutlineAlternateEmail } from "react-icons/md";
 
 const FormSignUp = () => {
   const [email, setEmail] = useState<string>();
@@ -37,9 +42,6 @@ const FormSignUp = () => {
     },
   });
 
-  function homeData() {
-    router.push("/");
-  }
 
   const onRegister = () => {
     if (Object.values(formRegister.values.data).includes("")) {
@@ -74,103 +76,88 @@ const FormSignUp = () => {
   };
   return (
     <>
-      {/* <BackgroundImage src="../BG.png" h={"100vh"}> */}
       <Box
         sx={{
           backgroundColor: COLOR.hitam,
           height: "100vh",
         }}
       >
-        <Center pt={100}>
-          <Box
-            bg={COLOR.orange}
-            h={600}
-            w={500}
-            sx={{
-              borderRadius: 10,
-            }}
-          >
-            <Box>
-              <Center>
-                <Box>
-                  <Group position="center">
-                    <Text
-                      fz={60}
-                      mt={5}
-                      fw={700}
-                      color="white"
-                      style={{ textShadow: "1px 1px 1px black" }}
-                    >
-                      GARUDA
-                    </Text>
-                  </Group>
-                  <Group position="center">
-                    <Text
-                      mb={10}
-                      color="white"
-                      style={{ textShadow: "1px 1px 1px black" }}
-                    >
-                      RESOURCE PLANNING
-                    </Text>
-                  </Group>
-                </Box>
-              </Center>
-            </Box>
-            <Center pt={10}>
-              <Image src={"../logo.png"} width={200} alt="a" />
+        <Container size="30rem" px={0} pt={100}>
+          <Paper withBorder shadow="md" p={40} radius="md" bg={COLOR.orange}>
+            <Center mb={10}>
+              <Image src={"..//..//..//../../logo.png"} width={100} alt="a" />
             </Center>
-            <Stack pt={20}>
-              <Container w={350}>
-                <TextInput
-                  placeholder="Username"
-                  radius={10}
-                  {...formRegister.getInputProps("data.username")}
-                />
-                <TextInput
-                  mt={20}
-                  placeholder="Email"
-                  radius={10}
-                  {...formRegister.getInputProps("data.email")}
-                />
-                <PasswordInput
-                  mt={20}
-                  placeholder="Password"
-                  radius={10}
-                  {...formRegister.getInputProps("data.password")}
-                />
-                <PasswordInput
-                  mt={20}
-                  placeholder="Konfirmasi Password"
-                  radius={10}
-                  onChange={(val) => setInputKonfirmasiPass(val.target.value)}
-                />
-                <Button
-                  mt={20}
-                  color="orange.9"
-                  fullWidth
-                  radius={"lg"}
-                  bg={COLOR.merah}
-                  onClick={onRegister}
-                >
-                  Registrasi
-                </Button>
-                <Box component="a" href="/">
-                  <Text
-                    style={{ cursor: "pointer" }}
-                    align="right"
-                    color="black"
-                    mt={10}
-                    fz={10}
-                  >
-                    <strong>Klik Disini,</strong> Untuk Login!
-                  </Text>
-                </Box>
-              </Container>
-            </Stack>
-          </Box>
-        </Center>
+            <Box mb={20}>
+              <Text
+                ta={"center"}
+                color={"white"}
+                fz={40}
+                fw={700}
+                style={{ textShadow: "1px 1px 1px black" }}
+              >
+                GARUDA
+              </Text>
+              <Text
+                ta={"center"}
+                color={"white"}
+                fz={14}
+                style={{ textShadow: "1px 1px 1px black" }}
+              >
+                RESOURCE PLANNING
+              </Text>
+            </Box>
+
+            <TextInput
+              placeholder="Username"
+              required
+              mt="lg"
+              icon={<FiUser size={17} />}
+              {...formRegister.getInputProps("data.username")}
+            />
+            <TextInput
+              placeholder="Email"
+              mt="lg"
+              required
+              icon={<MdOutlineAlternateEmail size={17} />}
+              {...formRegister.getInputProps("data.email")}
+            />
+            <PasswordInput
+              placeholder="Password"
+              required
+              mt="lg"
+              icon={<FiLock size={17} />}
+              {...formRegister.getInputProps("data.password")}
+            />
+            <PasswordInput
+              placeholder="Konfirmasi Password"
+              required
+              mt="lg"
+              icon={<FiLock size={17} />}
+              onChange={(val) => setInputKonfirmasiPass(val.target.value)}
+            />
+            <Button
+              fullWidth
+              mt="xl"
+              bg={COLOR.coklat}
+              color="orange.9"
+              onClick={onRegister}
+            >
+              REGISTER
+            </Button>
+            <Text color={COLOR.coklat} size="sm" align="center" mt={20}>
+              Sudah memiliki akun?{" "}
+              <Anchor
+                size="sm"
+                component="a"
+                color={COLOR.coklat}
+                href="/"
+              >
+                Login
+              </Anchor>
+            </Text>
+          </Paper>
+        </Container>
       </Box>
-      {/* </BackgroundImage> */}
     </>
   );
 };
