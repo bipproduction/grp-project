@@ -75,6 +75,7 @@ export const TableCPTV2 = () => {
         </Center>
       </th>
       <th>Nama</th>
+      <th>Tanggal</th>
       <th>NIK</th>
       <th>Email</th>
       <th>Kategori</th>
@@ -107,11 +108,11 @@ export const TableCPTV2 = () => {
         </Flex>
       </td>
       <td>{e.nama}</td>
+      <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td>
       <td>{e.email}</td>
       <td>{e.nik}</td>
       <td>{e.MasterCalonPemilihPotensial.name}</td>
       <td>{e.MasterNomorUrutTPS.name}</td>
-      {/* <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td> */}
 
       
     </tr>
