@@ -130,15 +130,15 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
   useShallowEffect(() => {
     if (hash == `#auto`) {
       setDataKirim({
-        nama: "Bagas",
-        nik: "6465465465675751",
-        email: "ba@gmail.com",
-        alamat: "jalan sendiri",
+        nama: "Bila",
+        nik: "3123465465675431",
+        email: "bila@gmail.com",
+        alamat: "jalan in aja dulu",
         tanggalLahir: dataKirim.tanggalLahir,
-        phoneNumber: "082312312312",
-        statusSosial: "Kaya",
+        phoneNumber: "082312312331",
+        statusSosial: "Berkecukupan",
         pendidikan: "s10",
-        masterCalonPemilihPotensialId: new Number(3),
+        masterCalonPemilihPotensialId: new Number(2),
         masterProvinceId: new Number(5),
         masterKabKotId: new Number(2),
         masterKecamatanId: new Number(1),
@@ -183,7 +183,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
       body: JSON.stringify(dataKirim),
     }).then(async (res) => {
       if (res.status == 201) {
-        thisClosed();
+        // thisClosed();
         _loadDataCalonPemilihPotensial_BySearch(
           search,
           setListDataCPP,
@@ -206,32 +206,32 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
   /**
    *
    * @param val: DateInput
-   * - Cek Usia < 17 Tahun
+   * - Validasi usia < 17 Tahun
    */
   const OnCekUsia = (val: any) => {
     let year = new Date();
     const tahunIni = year.getFullYear();
-    // console.log(moment(val).format("YYYY"))
-    // console.log(tahunIni)
     let data = moment(val).format("YYYY");
     let usia = _.toNumber(data);
     const umurUser = tahunIni - usia;
     setCekUsia(umurUser);
-    // console.log(umurUser);
-    if (umurUser > 17) {
+    if (umurUser >= 17) {
       setDataKirim({
         ...dataKirim,
         tanggalLahir: moment(val).format("YYYY-MM-DD"),
       });
     } else {
-      // toast("Cukup Usia");
+      setDataKirim({
+        ...dataKirim,
+        tanggalLahir: moment(val).format("YYYY-MM-DD"),
+      });
       toast("Usia Anda Belum Cukup");
     }
   };
 
   return (
     <>
-      {JSON.stringify(cekUsia)}
+      {/* {JSON.stringify(cekUsia)} */}
 
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -491,23 +491,24 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="Tanggal Lahir"
                 withAsterisk
                 onChange={(val) => {
-                  let year = new Date();
-                  const tahunIni = year.getFullYear();
-                  let data = moment(val).format("YYYY");
-                  let usia = _.toNumber(data);
-                  const umurUser = tahunIni - usia;
-                  setCekUsia(umurUser);
-                  // console.log(umurUser);
-                  if (umurUser > 17) {
-                    // toast("Cukup Usia");
-                  } else {
-                    toast("Usia Anda Belum Cukup");
-                  }
-                  console.log(data);
-                  setDataKirim({
-                    ...dataKirim,
-                    tanggalLahir: moment(val).format("YYYY-MM-DD"),
-                  });
+                  OnCekUsia(val);
+                  // let year = new Date();
+                  // const tahunIni = year.getFullYear();
+                  // let data = moment(val).format("YYYY");
+                  // let usia = _.toNumber(data);
+                  // const umurUser = tahunIni - usia;
+                  // setCekUsia(umurUser);
+                  // // console.log(umurUser);
+                  // if (umurUser > 17) {
+                  //   // toast("Cukup Usia");
+                  // } else {
+                  //   toast("Usia Anda Belum Cukup");
+                  // }
+                  // console.log(data);
+                  // setDataKirim({
+                  //   ...dataKirim,
+                  //   tanggalLahir: moment(val).format("YYYY-MM-DD"),
+                  // });
                 }}
               />
               {/* {cekUsia && <>usia belum cukup {cekUsia}</>} */}
