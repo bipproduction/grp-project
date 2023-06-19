@@ -23,9 +23,23 @@ import { CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSProvinsiV2 } from "./chart_provinsi";
 import { TambahDataTPSdanDPTV2 } from "./tambah_data_tps_dpt";
+import {
+  _loadTpsDptProvinsiSearch,
+  _tpsDpt_ListProvinsi,
+  _tpsDpt_ProvinsiSearch,
+} from "@/load_data/peta_kekuatan/load_tps_dpt";
+import { useAtom } from "jotai";
 
 export const ViewTPSdanDPTV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [provinsi, setProvinsi] = useAtom(_tpsDpt_ListProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_tpsDpt_ProvinsiSearch);
+
+  const onSearch = async (search: any) => {
+    _loadTpsDptProvinsiSearch(setProvinsi, search);
+    setInputSearch(inputSearch);
+  };
+
   return (
     <>
       <Modal opened={opened} onClose={() => close()}>
@@ -72,7 +86,9 @@ export const ViewTPSdanDPTV2 = () => {
                   icon={<AiOutlineSearch size={20} />}
                   placeholder="Search"
                   radius={"md"}
-                  onChange={(val) => console.log(val.target.value)}
+                  onChange={(val) => {
+                    onSearch(val.target.value);
+                  }}
                 />
               </Grid.Col>
               <Grid.Col md={8} lg={8}>

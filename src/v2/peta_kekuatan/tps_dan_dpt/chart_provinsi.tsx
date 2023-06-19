@@ -12,10 +12,12 @@ import {
   Group,
   List,
   Loader,
+  LoadingOverlay,
   Modal,
   Paper,
   SimpleGrid,
   Text,
+  TextInput,
   Title,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
@@ -26,13 +28,23 @@ import { FaRegListAlt } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSKabKotV2 } from "./chart_kabkot";
+import { api } from "@/lib/api-backend";
+import { useAtom } from "jotai";
+import {
+  _loadTpsDptProvinsiSearch,
+  _tpsDpt_ListProvinsi,
+  _tpsDpt_ProvinsiSearch,
+} from "@/load_data/peta_kekuatan/load_tps_dpt";
 
 export const ChartTPSProvinsiV2 = () => {
   const [opt, setOpt] = useState<EChartsOption>({});
+  const [provinsi, setProvinsi] = useAtom(_tpsDpt_ListProvinsi);
+  const [inputSearch, setInputSearch] = useAtom(_tpsDpt_ProvinsiSearch);
 
   useShallowEffect(() => {
     loadData();
     _loadProvinsi();
+    _loadTpsDptProvinsiSearch(setProvinsi, inputSearch);
   }, []);
 
   const loadData = () => {
@@ -74,15 +86,15 @@ export const ChartTPSProvinsiV2 = () => {
     return (
       <>
         <Center h={"100vh"} w={"100%"}>
-          <Loader color={"red"} />
+          <LoadingOverlay visible overlayBlur={2} transitionDuration={3000}/>
         </Center>
       </>
     );
   } else {
     return (
       <>
-        {/* {JSON.stringify(dataProv)} */}
-        {sProvinsi.value.map((e) => (
+        {/* {JSON.stringify(provinsi)} */}
+        {provinsi.map((e) => (
           <Box
             key={e.id}
             sx={{

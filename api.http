@@ -706,3 +706,6 @@ GET http://localhost:3000/api/aset-partai/lampiran/lampiran-get-by-aset?aset=clh
 
 ### HAPUS LAMPIRAN ASET PARTAI 
 GET http://localhost:3000/api/aset-partai/lampiran/lampiran-hapus?id=clijyhsi30001smbk67tpo6rk HTTP/1.1
+
+### GET SEARCH PROVINSI TPS DPT 
+GET http://localhost:3000/api/peta-kekuatan/tps-dpt/wilayah/tps-dpt-provinsi-search?search=bali
