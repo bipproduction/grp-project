@@ -29,8 +29,8 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useShallowEffect } from "@mantine/hooks";
-import _, { includes, isEmpty } from "lodash";
+import { useHash, useShallowEffect } from "@mantine/hooks";
+import _, { includes, isEmpty, toNumber } from "lodash";
 import { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
@@ -71,7 +71,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     email: "",
     alamat: "",
     tanggalLahir: "",
-    phoneNumber: new Number(),
+    phoneNumber: "",
     statusSosial: "",
     pendidikan: "",
     masterCalonPemilihPotensialId: new Number(),
@@ -103,6 +103,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     _dataTotalPageCalonPemilihPotensial
   );
 
+  const [hash, setHash] = useHash();
+  const [cekUsia, setCekUsia] = useState<number>(0);
+
   useShallowEffect(() => {
     _loadKategoriPemilihPotensial();
     _loadProvinsi();
@@ -122,15 +125,42 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     _loadAgama();
   }, []);
 
-  const onNik = () => {
-    const maxNIK = 16;
-    if (maxNIK <= 16) {
-      return "Data Kurang";
-    }
-  };
+  // HASH RANDOM CREATE
 
+  useShallowEffect(() => {
+    if (hash == `#auto`) {
+      setDataKirim({
+        nama: "Bila",
+        nik: "3123465465675431",
+        email: "bila@gmail.com",
+        alamat: "jalan in aja dulu",
+        tanggalLahir: dataKirim.tanggalLahir,
+        phoneNumber: "082312312331",
+        statusSosial: "Berkecukupan",
+        pendidikan: "s10",
+        masterCalonPemilihPotensialId: new Number(2),
+        masterProvinceId: new Number(5),
+        masterKabKotId: new Number(2),
+        masterKecamatanId: new Number(1),
+        masterDesaId: new Number(2),
+        masterNomorUrutTPSId: new Number(1),
+        masterAgamaId: new Number(2),
+        masterJenisKelaminId: new Number(2),
+        masterPekerjaanId: new Number(1),
+      });
+    }
+  }, [hash]);
+  //``````````````````````HASH````````````````````````//
+
+  /**
+   * ### Note
+   * - Untuk Mengirim Data ke Api & Database
+   * - Kondisi ada value yang kosong
+   * - Kondisi NIK kurang atau lebih dari 16 karakter
+   * - Kondisi usia dibawah 17 tahun
+   */
   const onCreate = () => {
-    // console.log(dataKirim);
+    console.log(dataKirim);
     if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -141,6 +171,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
         return toast("NIK Lebih Dari 16 Digit");
       }
     }
+    if (cekUsia < 17) {
+      return toast("Usia Anda Belum Cukup");
+    }
     // console.log(dataKirim)
     fetch(api.apiCPTPost, {
       method: "POST",
@@ -150,9 +183,18 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
       body: JSON.stringify(dataKirim),
     }).then(async (res) => {
       if (res.status == 201) {
-        thisClosed();
-        _loadDataCalonPemilihPotensial_BySearch(search, setListDataCPP, inputPage, setTotalPage);
-        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data calon pemilih potensial");
+        // thisClosed();
+        _loadDataCalonPemilihPotensial_BySearch(
+          search,
+          setListDataCPP,
+          inputPage,
+          setTotalPage
+        );
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "TAMBAH",
+          "User menambah data calon pemilih potensial"
+        );
         return toast("Data Tersimpan");
       } else {
         return toast("Data Tidak Tersimpan");
@@ -160,9 +202,37 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     });
   };
 
+  // ````````````````````` CEK USIA ```````````````````````//
+  /**
+   *
+   * @param val: DateInput
+   * - Validasi usia < 17 Tahun
+   */
+  const OnCekUsia = (val: any) => {
+    let year = new Date();
+    const tahunIni = year.getFullYear();
+    let data = moment(val).format("YYYY");
+    let usia = _.toNumber(data);
+    const umurUser = tahunIni - usia;
+    setCekUsia(umurUser);
+    if (umurUser >= 17) {
+      setDataKirim({
+        ...dataKirim,
+        tanggalLahir: moment(val).format("YYYY-MM-DD"),
+      });
+    } else {
+      setDataKirim({
+        ...dataKirim,
+        tanggalLahir: moment(val).format("YYYY-MM-DD"),
+      });
+      toast("Usia Anda Belum Cukup");
+    }
+  };
+
   return (
     <>
-      {/* {JSON.stringify(dataProvinsi)} */}
+      {/* {JSON.stringify(cekUsia)} */}
+
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -415,17 +485,34 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   });
                 }}
               />
+
               <DateInput
                 placeholder="Tanggal Lahir"
                 label="Tanggal Lahir"
                 withAsterisk
                 onChange={(val) => {
-                  setDataKirim({
-                    ...dataKirim,
-                    tanggalLahir: moment(val).format("YYYY-MM-DD"),
-                  });
+                  OnCekUsia(val);
+                  // let year = new Date();
+                  // const tahunIni = year.getFullYear();
+                  // let data = moment(val).format("YYYY");
+                  // let usia = _.toNumber(data);
+                  // const umurUser = tahunIni - usia;
+                  // setCekUsia(umurUser);
+                  // // console.log(umurUser);
+                  // if (umurUser > 17) {
+                  //   // toast("Cukup Usia");
+                  // } else {
+                  //   toast("Usia Anda Belum Cukup");
+                  // }
+                  // console.log(data);
+                  // setDataKirim({
+                  //   ...dataKirim,
+                  //   tanggalLahir: moment(val).format("YYYY-MM-DD"),
+                  // });
                 }}
               />
+              {/* {cekUsia && <>usia belum cukup {cekUsia}</>} */}
+
               <TextInput
                 type="number"
                 placeholder="Nomor Handphone"
@@ -522,6 +609,8 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     radius={"xl"}
                     onClick={() => {
                       // buttonSimpan();
+                      console.log(dataKirim);
+
                       onCreate();
                     }}
                   >

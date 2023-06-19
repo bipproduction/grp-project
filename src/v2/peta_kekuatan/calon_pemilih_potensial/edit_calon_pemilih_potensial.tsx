@@ -119,6 +119,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
   const [totalPage, setTotalPage] = useAtom(
     _dataTotalPageCalonPemilihPotensial
   );
+  const [cekUsia, setCekUsia] = useState<number>(0);
 
   useShallowEffect(() => {
     getOne_ListDataCPP_ById(idVal);
@@ -176,6 +177,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
         return toast("NIK Lebih Dari 16 Digit");
       }
     }
+    if (cekUsia < 17) {
+      return toast("Usia Anda Belum Cukup");
+    }
 
     fetch(api.apiCPTUpdate, {
       method: "POST",
@@ -186,13 +190,41 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     }).then(async (res) => {
       if (res.status === 201) {
         thisClosed();
-        _loadDataCalonPemilihPotensial_BySearch(inputSearch, setListDataCPP, inputPage, setTotalPage);
-        _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data calon pemilih potensial")
+        _loadDataCalonPemilihPotensial_BySearch(
+          inputSearch,
+          setListDataCPP,
+          inputPage,
+          setTotalPage
+        );
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "UBAH",
+          "User mengubah data calon pemilih potensial"
+        );
         return buttonSimpan();
       } else {
         return toast("Gagal Update");
       }
     });
+  };
+
+  const OnCekUsia = (val: any) => {
+    let year = new Date();
+    const tahunIni = year.getFullYear();
+    let data = moment(val).format("YYYY");
+    let usia = _.toNumber(data);
+    const umurUser = tahunIni - usia;
+    setCekUsia(umurUser);
+    if (umurUser >= 17) {
+      const dataX: any = _.clone(dataEdit);
+      dataX.tanggalLahir = moment(val).format("YYYY-MM-DD");
+      setDataEdit(dataX);
+    } else {
+      const dataX: any = _.clone(dataEdit);
+      dataX.tanggalLahir = moment(val).format("YYYY-MM-DD");
+      setDataEdit(dataX);
+      toast("Usia Anda Belum Cukup");
+    }
   };
 
   if (!dataEdit)
@@ -205,6 +237,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
   return (
     <>
       {/* {JSON.stringify(dataEdit.tanggalLahir)} */}
+      {/* {JSON.stringify(cekUsia)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -496,9 +529,10 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                 withAsterisk
                 placeholder={moment(dataEdit.tanggalLahir).format("YYYY-MM-DD")}
                 onChange={(val) => {
-                  const data = _.clone(dataEdit);
-                  data.tanggalLahir = moment(val).format("YYYY-MM-DD")
-                  setDataEdit(data);
+                  OnCekUsia(val);
+                  // const data = _.clone(dataEdit);
+                  // data.tanggalLahir = moment(val).format("YYYY-MM-DD");
+                  // setDataEdit(data);
                 }}
               />
               <TextInput
