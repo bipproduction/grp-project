@@ -23,8 +23,8 @@ import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import WrapperDataDiriPartai from "../wrapper_data_diri_partai/wrapper_data_diri_partai";
 import toast from "react-simple-toasts";
-import { useShallowEffect } from "@mantine/hooks";
-import _, { isEmpty, isNumber, min, uniqueId, values } from "lodash";
+import { useHash, useHotkeys, useShallowEffect } from "@mantine/hooks";
+import _, { isEmpty, isNumber, min, toNumber, uniqueId, values } from "lodash";
 import { data } from "jquery";
 import { api } from "@/lib/api-backend";
 import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
@@ -42,6 +42,8 @@ import { useAtom } from "jotai";
 import LayoutDataPartaiV2 from "../layout_data_partai/layout_data_partai";
 import LayoutDataDiriV2 from "../layout_data_partai/layout_data_diri";
 import moment from "moment";
+import { val_loading } from "@/xg_state.ts/val_loading";
+import { generateName } from "@/pages/v2/use-hash";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -85,6 +87,10 @@ const FormDataDiriUser = () => {
   });
   const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
   const [selectJenisKelamin, setSelectJenisKelamin] = useAtom(_sJenisKelamin);
+  const [isLoading, setIsLoading] = useAtom(val_loading);
+  const [hash, setHash] = useHash();
+
+  useHotkeys([["mod+a", otomatis]]);
 
   useShallowEffect(() => {
     _loadJenisKelamin();
@@ -202,10 +208,12 @@ const FormDataDiriUser = () => {
   }
 
   const onDatadiri = async () => {
+    console.log(formDataDiri.values.data);
     listData.find((val) => _.values(val).includes(""));
     // if (adaKosong) return toast("Lengkapi data diri");
 
-    if (valNik?.length != 16) return toast("nik harus 16 angka");
+    if (formDataDiri.values.data.nik.length != 16)
+      return toast("nik harus 16 angka");
 
     formDataDiri.values.data.nik = valNik!;
 
@@ -226,8 +234,12 @@ const FormDataDiriUser = () => {
       if (res.status === 201) {
         const data = await res.json();
         console.log(data);
+        setIsLoading(true);
+        await new Promise((r) => setTimeout(r, 500));
         return data;
       }
+      setIsLoading(false);
+      await new Promise((r) => setTimeout(r, 500));
       return null;
     });
 
@@ -241,8 +253,8 @@ const FormDataDiriUser = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(item),
-      })
-// console.log(item)
+      });
+      // console.log(item)
     }
 
     // localStorage.setItem("user_id", pertama.id);
@@ -250,6 +262,7 @@ const FormDataDiriUser = () => {
     // console.log(sUser.value);
     toast("succes");
     router.push("/v2/data-partai-v2");
+    setIsLoading(false);
   };
 
   const formMediaSocial = useForm({
@@ -275,13 +288,13 @@ const FormDataDiriUser = () => {
         phoneNumber: "",
         alamat: "",
         rtRw: "",
-        masterJenisKelaminId: "",
-        masterAgamaId: "",
-        masterPekerjaanId: "",
-        masterProvinceId: "",
-        masterKabKotId: "",
-        masterKecamatanId: "",
-        masterDesaId: "",
+        masterJenisKelaminId: new Number(),
+        masterAgamaId: new Number(),
+        masterPekerjaanId: new Number(),
+        masterProvinceId: new Number(),
+        masterKabKotId: new Number(),
+        masterKecamatanId: new Number(),
+        masterDesaId: new Number(),
       },
       validate: {
         email: (value: string) =>
@@ -308,6 +321,49 @@ const FormDataDiriUser = () => {
       .then(setListMediaSocial);
   }, []);
 
+  // `````````````` HASH ``````````````//
+  const onExCreate = (coba: any) => {
+    setIsLoading(true);
+    console.log(formDataDiri.values.data);
+    if (coba == 1) {
+      router.push("/v2/use-hash");
+      setIsLoading(false);
+    }
+  };
+
+  function otomatis() {
+    setValNik(
+      "" +
+        `${
+          Math.floor(Math.random() * 9999999999999999 - 1111111111111111) +
+          1111111111111111
+        }`
+    );
+    formDataDiri.setValues({
+      data: {
+        userId: localStorage.getItem("user_id"),
+        nik: `1234123412341234`,
+        name: generateName(),
+        tempatLahir: "Denpasar",
+        tanggalLahir: moment("2002-01-01").format("YYYY-MM-DD"),
+        phoneNumber: "082341908765",
+        alamat: `Jalan Toh Pati no : ${Math.floor(Math.random() * 100)}`,
+        rtRw: `${Math.floor(Math.random() * 100)}`,
+        masterJenisKelaminId: _.toNumber(
+          `${Math.floor(Math.random() * 2 - 0) + 1}`
+        ),
+        masterAgamaId: _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`),
+        masterPekerjaanId: toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`),
+        masterProvinceId: toNumber(`${Math.floor(Math.random() * 38 - 0) + 1}`),
+        masterKabKotId: toNumber(`${Math.floor(Math.random() * 500 - 0) + 1}`),
+        masterKecamatanId: toNumber(
+          `${Math.floor(Math.random() * 1000 - 0) + 1}`
+        ),
+        masterDesaId: toNumber(`${Math.floor(Math.random() * 3000 - 0) + 1}`),
+      },
+    });
+  }
+
   if (!formDataDiri) return <></>;
   return (
     <>
@@ -320,6 +376,7 @@ const FormDataDiriUser = () => {
             onSubmit={formDataDiri.onSubmit(() => {})}
           >
             <TextInput
+              value={`${valNik}`}
               description={
                 valNik && valNik.length != 16 ? (
                   <Text>Panjang Nik Harus 16 Angka</Text>
@@ -550,7 +607,7 @@ const FormDataDiriUser = () => {
               label="Provinsi"
               withAsterisk
               searchable
-              onChange={(val) => {
+              onChange={(val: any) => {
                 if (val) {
                   setSelectedProvince(provinsi.find((v) => v.id == val));
                   loadKabupaten(val);
@@ -579,7 +636,7 @@ const FormDataDiriUser = () => {
               label="Kabupaten / Kota"
               withAsterisk
               searchable
-              onChange={(val) => {
+              onChange={(val: any) => {
                 setSelectedKabupaten(kabupaten.find((v) => v.id == val));
                 loadKecamatan(val!);
                 formDataDiri.values.data.masterKabKotId = val!;
@@ -606,7 +663,7 @@ const FormDataDiriUser = () => {
               label="Kecamatan"
               withAsterisk
               searchable
-              onChange={(val) => {
+              onChange={(val: any) => {
                 setSelectedKecamatan(kecamatan.find((v) => v.id == val));
                 loadDesa(val!);
                 formDataDiri.values.data.masterKecamatanId = val!;
@@ -632,7 +689,7 @@ const FormDataDiriUser = () => {
               value={selectedDesa.name}
               label="Desa"
               withAsterisk
-              onChange={(val) => {
+              onChange={(val: any) => {
                 setSelectedDesa(desa.find((v) => v.id == val));
                 formDataDiri.values.data.masterDesaId = val!;
               }}
@@ -659,7 +716,9 @@ const FormDataDiriUser = () => {
               //   console.log(formDataDiri.values, formMediaSocial.values)
               // }
               onClick={onDatadiri}
-              // onClick={onMediaSocial}
+              // onClick={() => {
+              //   onExCreate(1)
+              // }}
             >
               Simpan
             </Button>

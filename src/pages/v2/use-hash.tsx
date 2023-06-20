@@ -88,7 +88,7 @@ function capFirst(string: string) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   
-  function generateName() {
+export function generateName() {
     var name1 = [
       "abandoned",
       "able",
