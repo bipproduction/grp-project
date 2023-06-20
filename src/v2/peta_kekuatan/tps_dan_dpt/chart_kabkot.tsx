@@ -11,6 +11,7 @@ import {
   Group,
   List,
   Loader,
+  LoadingOverlay,
   Modal,
   Paper,
   SimpleGrid,
@@ -26,6 +27,7 @@ import { FaRegListAlt } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
 import COLOR from "../../../../fun/WARNA";
 import { ChartTPSKecamatanV2 } from "./chart_kecamatan";
+import _ from "lodash";
 
 export const ChartTPSKabKotV2 = ({ idProv }: { idProv: any }) => {
   const [opt, setOpt] = useState<EChartsOption>({});
@@ -79,7 +81,12 @@ export const ChartTPSKabKotV2 = ({ idProv }: { idProv: any }) => {
     return (
       <>
         <Center h={"100vh"} w={"100%"}>
-          <Loader color={"red"} />
+          <LoadingOverlay
+            visible
+            overlayBlur={2}
+            transitionDuration={10000}
+            color="red"
+          />
         </Center>
       </>
     );
@@ -87,43 +94,54 @@ export const ChartTPSKabKotV2 = ({ idProv }: { idProv: any }) => {
     return (
       <>
         {/* {JSON.stringify(listKabupaten)} */}
-        {listKabupaten!.map((e) => (
-          <Box
-            key={e.id}
-            sx={{
-              backgroundColor: "#A3A6EB",
-              borderRadius: 10,
-              padding: 20,
-            }}
-          >
-            <Flex direction={"column"}>
-              <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
-                {e.name}
-              </Text>
-              <Box pl={10}>
-                <Text size={15}>Jumlah TPS:</Text>
-                <List>
-                  <List.Item sx={{ fontSize: 12 }}>
-                    Total TPS:{" "}
-                    {`${Math.floor(Math.random() * (100 - 1 + 10) + 1)}`}
-                  </List.Item>
-                  <List.Item sx={{ fontSize: 12 }}>
-                    TPS Baru :{" "}
-                    {`${Math.floor(Math.random() * (100 - 1 + 10) + 1)}`}
-                  </List.Item>
-                  <List.Item sx={{ fontSize: 12 }}>
-                    Total DPT :{" "}
-                    {`${Math.floor(Math.random() * (1000 - 1 + 10) - 1)}`}
-                  </List.Item>
-                </List>
-              </Box>
+       
+       {_.isEmpty(listKabupaten) ? (
+          <Center >
+            <Flex gap={"lg"}>
+              <Text fz={20} fw={"bold"}>On Progress! </Text>
+              <Loader />
             </Flex>
-            <EChartsReact style={{ height: 300 }} option={opt} />
-            <Center>
-              <TombolHalamanKecamatan e={e} />
-            </Center>
-          </Box>
-        ))}
+          </Center>
+        ) : (
+          listKabupaten!.map((e) => (
+            <Box
+              key={e.id}
+              sx={{
+                backgroundColor: "#A3A6EB",
+                borderRadius: 10,
+                padding: 20,
+              }}
+            >
+              <Flex direction={"column"}>
+                <Text ta={"left"} fz={20} fw={700} c={COLOR.merah}>
+                  {e.name}
+                </Text>
+                <Box pl={10}>
+                  <Text size={15}>Jumlah TPS:</Text>
+                  <List>
+                    <List.Item sx={{ fontSize: 12 }}>
+                      Total TPS:{" "}
+                      {`${Math.floor(Math.random() * (100 - 1 + 10) + 1)}`}
+                    </List.Item>
+                    <List.Item sx={{ fontSize: 12 }}>
+                      TPS Baru :{" "}
+                      {`${Math.floor(Math.random() * (100 - 1 + 10) + 1)}`}
+                    </List.Item>
+                    <List.Item sx={{ fontSize: 12 }}>
+                      Total DPT :{" "}
+                      {`${Math.floor(Math.random() * (1000 - 1 + 10) - 1)}`}
+                    </List.Item>
+                  </List>
+                </Box>
+              </Flex>
+              <EChartsReact style={{ height: 300 }} option={opt} />
+              <Center>
+                <TombolHalamanKecamatan e={e} />
+              </Center>
+            </Box>
+          ))
+        )}
+       
       </>
     );
   }

@@ -30,10 +30,12 @@ import { useDisclosure } from "@mantine/hooks";
 import ModalLupaPassword from "./modal-lupa-password";
 import { CiLock } from "react-icons/ci";
 import { FiLock, FiUser } from "react-icons/fi";
+import { val_loading } from "@/xg_state.ts/val_loading";
 
 const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
   const [image, setImage] = useAtom(_dataImages);
   const [opened, { open, close }] = useDisclosure(false);
+  const [isLoading, setLoading] = useAtom(val_loading);
 
   const formLogin = useForm({
     initialValues: {
@@ -46,8 +48,11 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
 
   const router = useRouter();
 
-  const onLogin = () => {
+  const onLogin = async () => {
+    setLoading(true);
+    // await new Promise((r) => setTimeout(r, 1000));
     if (Object.values(formLogin.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi form login");
     }
     fetch(api.apiAuthLogin, {
@@ -58,12 +63,14 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
       body: JSON.stringify(formLogin.values.data),
     }).then(async (res) => {
       if (res.status === 200) {
+        setLoading(false);
         const data = await res.json();
         localStorage.setItem("user_id", data.id);
         sUser.value = data;
         toast("Success");
         _postLogUser(data.id, "LOGIN", "User login");
       } else {
+        setLoading(false);
         toast("Email atau password salah");
       }
     });
