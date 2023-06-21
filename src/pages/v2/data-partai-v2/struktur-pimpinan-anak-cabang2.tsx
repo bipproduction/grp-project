@@ -29,6 +29,7 @@ import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -47,6 +48,7 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturPimpinanAnakCabang2() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const router = useRouter();
@@ -130,7 +132,9 @@ function StrukturPimpinanAnakCabang2() {
     _loadJabatanPimpinanAnakCabang();
   }, []);
 
-  const PimpinanAnakCabang = () => {
+  const PimpinanAnakCabang = async () => {
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     // console.log(formStrukturPimpinanAnakCabang.values.data)
     if (
       Object.values(formStrukturPimpinanAnakCabang.values.data).includes("")
@@ -143,10 +147,12 @@ function StrukturPimpinanAnakCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturPimpinanAnakCabang.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
@@ -232,7 +238,7 @@ function StrukturPimpinanAnakCabang2() {
               }}
               radius={"md"}
               placeholder={selectedProvince.name}
-              value={selectedProvince.name}
+              value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
               searchable
@@ -255,7 +261,7 @@ function StrukturPimpinanAnakCabang2() {
               }}
               radius={"md"}
               placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.name}
+              value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
               searchable
@@ -278,7 +284,7 @@ function StrukturPimpinanAnakCabang2() {
               }}
               radius={"md"}
               placeholder={selectedKecamatan.name}
-              value={selectedKecamatan.name}
+              value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk
               searchable

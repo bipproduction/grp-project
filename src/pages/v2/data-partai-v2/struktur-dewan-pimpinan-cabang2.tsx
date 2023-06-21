@@ -30,6 +30,7 @@ import { _loadJabatanDewanPimpinanCabang } from "@/load_data/sumber_daya_partai/
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturDewanPimpinanCabang2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [provinsi, setProvinsi] = useState<any[]>([]);
@@ -130,8 +132,10 @@ function StrukturDewanPimpinanCabang2() {
     _loadJabatanDewanPimpinanCabang();
   }, []);
 
-  const PimpinanCabang = () => {
+  const PimpinanCabang = async () => {
     // console.log(formStrukturDewanPimpinanCabang.values.data)
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     if (
       Object.values(formStrukturDewanPimpinanCabang.values.data).includes("")
     ) {
@@ -143,10 +147,12 @@ function StrukturDewanPimpinanCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPimpinanCabang.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
@@ -235,7 +241,7 @@ function StrukturDewanPimpinanCabang2() {
               }))}
               radius={"md"}
               placeholder={selectedProvince.name}
-              value={selectedProvince.name}
+              value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
               searchable
@@ -253,7 +259,7 @@ function StrukturDewanPimpinanCabang2() {
               }
               radius={"md"}
               placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.name}
+              value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
               searchable

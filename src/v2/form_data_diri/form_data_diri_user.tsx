@@ -237,6 +237,11 @@ const FormDataDiriUser = () => {
         setIsLoading(true);
         await new Promise((r) => setTimeout(r, 500));
         return data;
+      } else {
+        res.status === 209;
+        const data = await res.json();
+        console.log(data.message);
+        toast(data.message);
       }
       setIsLoading(false);
       await new Promise((r) => setTimeout(r, 500));
@@ -265,17 +270,6 @@ const FormDataDiriUser = () => {
     setIsLoading(false);
   };
 
-  const formMediaSocial = useForm({
-    initialValues: {
-      data: {
-        // listData(),
-        // link: "prosess",
-        // name: "",
-        // userId: localStorage.getItem("user_id"),
-        // masterMediaSocialId: onchange={()},
-      },
-    },
-  });
 
   const formDataDiri = useForm({
     initialValues: {
@@ -302,16 +296,6 @@ const FormDataDiriUser = () => {
       },
     },
   });
-  // const onDataPartai = () => {
-  //   if (Object.values(formDataDiri.values.data).includes("")) {
-  //     return toast("Lengkapi Data diri");
-  //   }
-  //   // if (
-  //   //   formDataDiri.values.validate.email(formDataDiri.values.data.email) != null) {
-  //   //   return toast("Invalid email");
-  //   // }
-  //   router.replace("/v2/form-data-partai");
-  // };
 
   const [listMediaSocial, setListMediaSocial] = useState<any[] | undefined>();
 
@@ -331,6 +315,7 @@ const FormDataDiriUser = () => {
     }
   };
 
+  // pengisian otomatis
   function otomatis() {
     setValNik(
       "" +
@@ -399,6 +384,7 @@ const FormDataDiriUser = () => {
                 const data = val.currentTarget.value;
                 if (val) {
                   setValNik(val.currentTarget.value);
+                  formDataDiri.values.data.nik = val.currentTarget.value;
                 }
               }}
             />
@@ -410,13 +396,6 @@ const FormDataDiriUser = () => {
               radius={"md"}
               {...formDataDiri.getInputProps("data.name")}
             />
-            {/* <TextInput
-                                placeholder="Email"
-                                withAsterisk
-                                label="Email"
-                                radius={"md"}
-                                {...formDataDiri.getInputProps("data.email")}
-                              /> */}
             <TextInput
               placeholder="Tempat Lahir"
               withAsterisk
@@ -603,7 +582,7 @@ const FormDataDiriUser = () => {
               radius={"md"}
               mt={10}
               placeholder={selectedProvince.name}
-              value={selectedProvince.name}
+              value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
               searchable
@@ -630,7 +609,7 @@ const FormDataDiriUser = () => {
               }
               // {...formDataDiri.getInputProps("data.kabkot")}
               placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.name}
+              value={selectedKabupaten.id}
               radius={"md"}
               mt={10}
               label="Kabupaten / Kota"
@@ -659,7 +638,7 @@ const FormDataDiriUser = () => {
               // {...formDataDiri.getInputProps(
               //   "data.kecamatan"
               // )}
-              value={selectedKecamatan.name}
+              value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk
               searchable
@@ -686,7 +665,7 @@ const FormDataDiriUser = () => {
               // {...formDataDiri.getInputProps(
               //   "data.desa"
               // )}
-              value={selectedDesa.name}
+              value={selectedDesa.id}
               label="Desa"
               withAsterisk
               onChange={(val: any) => {

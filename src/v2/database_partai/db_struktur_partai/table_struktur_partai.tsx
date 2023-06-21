@@ -219,12 +219,12 @@ const TableStruktutPartaiV2 = () => {
                 {dataStuktur.map((e, i) => (
                   <tr key={i}>
                     <td>{noPertamaStruktur++}</td>
-                    <td>{e.User.DataDiri.name}</td>
+                    <td>{e.User.DataDiri?.name}</td>
                     <td>{e.MasterTingkatPengurus?.name}</td>
-                    <td>{e.User.DataDiri.MasterProvince.name}</td>
-                    <td>{e.User.DataDiri.MasterKabKot.name}</td>
-                    <td>{e.User.DataDiri.MasterKecamatan.name}</td>
-                    <td>{e.User.DataDiri.MasterDesa.name}</td>
+                    <td>{e.User.DataDiri?.MasterProvince.name}</td>
+                    <td>{e.User.DataDiri?.MasterKabKot.name}</td>
+                    <td>{e.User.DataDiri?.MasterKecamatan.name}</td>
+                    <td>{e.User.DataDiri?.MasterDesa.name}</td>
                     <td>
                       <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
                     </td>

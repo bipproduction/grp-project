@@ -31,6 +31,7 @@ import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -49,6 +50,7 @@ const useStyles = createStyles((theme) => ({
 
 function SayapPimpinanAnakCabang2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
@@ -133,7 +135,9 @@ function SayapPimpinanAnakCabang2() {
     _loadJabatanPimpinanAnakCabang();
   }, []);
 
-  const PimpinanAnakCabang = () => {
+  const PimpinanAnakCabang = async () => {
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     console.log(formSayapDewanPimpinanAnakCabang.values.data)
     if (
       Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
@@ -146,10 +150,12 @@ function SayapPimpinanAnakCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
@@ -257,7 +263,7 @@ function SayapPimpinanAnakCabang2() {
               radius={"md"}
               mt={10}
               placeholder={selectedProvince.name}
-              value={selectedProvince.name}
+              value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
               searchable
@@ -281,7 +287,7 @@ function SayapPimpinanAnakCabang2() {
               mt={10}
               radius={"md"}
               placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.name}
+              value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
               searchable
@@ -305,7 +311,7 @@ function SayapPimpinanAnakCabang2() {
               mt={10}
               radius={"md"}
               placeholder={selectedKecamatan.name}
-              value={selectedKecamatan.name}
+              value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk
               searchable

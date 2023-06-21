@@ -30,6 +30,7 @@ import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,13 +49,16 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturDewanPimpinanDaerah2() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
   const router = useRouter();
   const [value, setValue] = useState("");
   const [ambilData, setAmbilData] = useAtom(ambil_data);
 
-  const PimpinanDaerah = () => {
+  const PimpinanDaerah = async () => {
     // console.log(formStrukturDewanPimpinanDaerah.values.data)
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     if (
       Object.values(formStrukturDewanPimpinanDaerah.values.data).includes("")
     ) {
@@ -66,10 +70,12 @@ function StrukturDewanPimpinanDaerah2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPimpinanDaerah.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
