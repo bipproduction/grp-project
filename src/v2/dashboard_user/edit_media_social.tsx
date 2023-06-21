@@ -35,13 +35,16 @@ function EditMediaSocial({ keluarMedia }: any) {
   const [listData, setListData] = useAtom(_mediaSocialUp);
   const [ubahMedia, setUbahMedia] = useAtom(_listDataMedia);
   const [openMediaSocial, setOpenMediaSocial] = useAtom(val_media_social_edit);
-  const [isLoading, setLoadingMedia] = useAtom(val_loadingMedia);
+  // const [isLoading, setLoadingMedia] = useAtom(val_loadingMedia);
   const router = useRouter();
+  const [isLoading, setLoading] = useAtom(val_loading) 
 
   const onEditMediaSocial = async () => {
     // setLoadingMedia(true);
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     {
-      getMediaSocial?.map((v) => {
+      getMediaSocial?.map(async(v) => {
         const body = {
           id: v.id,
           MasterMediaSocial: v.MasterMediaSocial,
@@ -56,12 +59,13 @@ function EditMediaSocial({ keluarMedia }: any) {
           body: JSON.stringify(body),
         });
         console.log(body);
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
         // router.reload();
       });
     }
     loadMediaEdit()
     keluarMedia(true);
-    setLoadingMedia(false);
     setOpenMediaSocial(false);
     buttonSimpan();
     _postLogUser(

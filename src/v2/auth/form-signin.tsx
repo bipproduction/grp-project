@@ -50,7 +50,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
 
   const onLogin = async () => {
     setLoading(true);
-    // await new Promise((r) => setTimeout(r, 1000));
+    // await new Promise((r) => setTimeout(r, 500));
     if (Object.values(formLogin.values.data).includes("")) {
       setLoading(false);
       return toast("Lengkapi form login");

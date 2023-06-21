@@ -37,3 +37,7 @@ export const ambil_data_sayap = atom({
   masterTingkatSayapId: "",
   masterStatusKeanggotaanId: "",
 });
+export const ambil_data_edit_keanggotaan = atom({
+  masterTingkatPengurusId: "",
+  masterStatusKeanggotaanId: "",
+});

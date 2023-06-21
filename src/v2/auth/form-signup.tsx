@@ -23,10 +23,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiLock, FiUser } from "react-icons/fi";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { components } from "react-select";
+import { useAtom } from "jotai";
+import { val_loading } from "@/xg_state.ts/val_loading";
 
 const FormSignUp = () => {
   const [email, setEmail] = useState<string>();
   const [inputKonfirmasiPass, setInputKonfirmasiPass] = useState<string>();
+  const [isLoading, setLoading] = useAtom(val_loading)
   const router = useRouter();
   const formRegister = useForm({
     initialValues: {
@@ -43,7 +47,9 @@ const FormSignUp = () => {
   });
 
 
-  const onRegister = () => {
+  const onRegister = async () => {
+    // setLoading(true)
+    // await new Promise((r) => setTimeout(r, 50))
     if (Object.values(formRegister.values.data).includes("")) {
       return toast("Lengkapi Data diri");
     }
@@ -68,12 +74,19 @@ const FormSignUp = () => {
       const data = await res.json();
       if (res.status === 201) {
         toast("Sukses. Silahkan lakukan login");
-        //router.reload();
+        // setLoading(false)
+        router.reload();
+        
       } else {
         toast(data.message);
       }
+      router.push("http://localhost:3000/")
     });
   };
+
+  function home(){
+    router.push("/");
+  }
   return (
     <>
       <Box
@@ -140,7 +153,12 @@ const FormSignUp = () => {
               mt="xl"
               bg={COLOR.coklat}
               color="orange.9"
-              onClick={onRegister}
+              // component="a"
+              // href="/"
+              onClick={() => {
+                onRegister()
+                router.push("/")
+              }}
             >
               REGISTER
             </Button>

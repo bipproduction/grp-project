@@ -30,6 +30,7 @@ import { _loadJabatanPimpinanRanting } from "@/load_data/sumber_daya_partai/load
 import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 
 function StrukturPimpinanRanting2() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [provinsi, setProvinsi] = useState<any[]>([]);
@@ -132,7 +134,9 @@ function StrukturPimpinanRanting2() {
   const router = useRouter();
   const [value, setValue] = useState("");
 
-  const PimpinanRanting = () => {
+  const PimpinanRanting = async () => {
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     // console.log(formStrukturPimpinanRanting.values.data)
     if (Object.values(formStrukturPimpinanRanting.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
@@ -143,10 +147,12 @@ function StrukturPimpinanRanting2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturPimpinanRanting.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
@@ -233,7 +239,7 @@ function StrukturPimpinanRanting2() {
               }}
               radius={"md"}
               placeholder={selectedProvince.name}
-              value={selectedProvince.name}
+              value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
               searchable
@@ -256,7 +262,7 @@ function StrukturPimpinanRanting2() {
               }}
               radius={"md"}
               placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.name}
+              value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
               searchable
@@ -280,7 +286,7 @@ function StrukturPimpinanRanting2() {
               }}
               radius={"md"}
               placeholder={selectedKecamatan.name}
-              value={selectedKecamatan.name}
+              value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk
               searchable
@@ -302,7 +308,7 @@ function StrukturPimpinanRanting2() {
               }}
               radius={"md"}
               placeholder={selectedDesa.name}
-              value={selectedDesa.name}
+              value={selectedDesa.id}
               label="Desa / Kelurahan"
               withAsterisk
               searchable

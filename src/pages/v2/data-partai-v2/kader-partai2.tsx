@@ -25,6 +25,7 @@ import { useAtom } from "jotai";
 import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -46,10 +47,13 @@ function KaderPartai2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const [value, setValue] = useState("");
+  const [isLoading, setLoading] = useAtom(val_loading);
   const router = useRouter();
 
-  const KaderPartai = () => {
+  const KaderPartai = async () => {
     // console.log(formKaderPartai.values.data)
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     if (Object.values(formKaderPartai.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
@@ -59,10 +63,12 @@ function KaderPartai2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formKaderPartai.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };

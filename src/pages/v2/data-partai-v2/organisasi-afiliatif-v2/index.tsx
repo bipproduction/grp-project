@@ -28,6 +28,8 @@ import { api } from "@/lib/api-backend";
 import { sUser } from "@/s_state/s_user";
 import { useForm } from "@mantine/form";
 import { sOrganisasiAfiliatif } from "@/s_state/organisasi_afiliatif/s_organisasi_afiliatif";
+import { val_loading } from "@/xg_state.ts/val_loading";
+import { useAtom } from "jotai";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -48,6 +50,7 @@ const useStyles = createStyles((theme) => ({
 function OrganisasiAfiliatifV2() {
   const { classes } = useStyles();
   const router = useRouter();
+  const [isLoading, setLoading] = useAtom(val_loading);
   const [opened, { open, close }] = useDisclosure(false);
   function Afiliatif() {
     router.push("/v2/data-partai-v2");
@@ -57,7 +60,9 @@ function OrganisasiAfiliatifV2() {
     _loadOrganisasiAfiliatif()
   },[])
 
-  const onDataAfiliatif = () => {
+  const onDataAfiliatif = async () => {
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     if (Object.values(formAnggotaAfiliatif.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
@@ -67,10 +72,12 @@ function OrganisasiAfiliatifV2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formAnggotaAfiliatif.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };

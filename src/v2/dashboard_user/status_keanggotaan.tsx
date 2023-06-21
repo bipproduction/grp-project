@@ -31,18 +31,22 @@ import {
 } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
 import { _dataKeanggotaan } from "@/load_data/sayap_partai/load_sayap_partai";
+import EditStatusKeanggotaan from "./edit_status_keanggotaan/edit_status_keanggotaan";
 
-export const _keanggotaan_user = atomWithStorage<ModelSumberDayaPartai[] | null>(
-  "_list_database_Keaggotaan",
-  null
-);
+export const _keanggotaan_user = atomWithStorage<
+  ModelSumberDayaPartai[] | null
+>("_list_database_Keaggotaan", null);
 
 const StatusKeanggotaanV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [listDataKeanggotaan, setListDataKeanggotaan] = useAtom(_keanggotaan_user)
+  const [listDataKeanggotaan, setListDataKeanggotaan] =
+    useAtom(_keanggotaan_user);
 
   useShallowEffect(() => {
-    fetch(api.apiSumberDayaPartaiGetByUser + `?user=${localStorage.getItem("user_id")}`)
+    fetch(
+      api.apiSumberDayaPartaiGetByUser +
+        `?user=${localStorage.getItem("user_id")}`
+    )
       // .then((val) => val.json())
       // .then(setListData);
       .then(async (val) => {
@@ -57,9 +61,9 @@ const StatusKeanggotaanV2 = () => {
   return (
     <>
       {/* <pre>{JSON.stringify(listDataKeanggotaan, null, 2)}</pre> */}
-      {/* <Modal opened={opened} onClose={close} centered size={"xl"}>
-        <EditKeanggotaan />
-      </Modal> */}
+      <Modal opened={opened} onClose={close} centered size={"lg"} >
+        <EditStatusKeanggotaan/>
+      </Modal>
 
       <Paper
         p={2}
@@ -90,11 +94,18 @@ const StatusKeanggotaanV2 = () => {
           }}
         >
           {/* <Text fz={15} color="white">Status Keanggotaan</Text> */}
-          {listDataKeanggotaan?.map((v, i) => (
-          <Box key={i}>
-            <Text fw={700} color="white" fz={20}>{v.MasterStatusKeanggotaan.name}</Text>
-          </Box>
-          ))}
+          <Group position="apart">
+            <Box>
+              {listDataKeanggotaan?.map((v, i) => (
+                <Box key={i}>
+                  <Text fw={700} color="white" fz={20}>
+                    {v.MasterStatusKeanggotaan.name}
+                  </Text>
+                </Box>
+              ))}
+            </Box>
+          <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button>
+          </Group>
         </Box>
       </Box>
     </>

@@ -30,6 +30,7 @@ import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 import LayoutDataDiriV2 from "@/v2/layout_data_partai/layout_data_diri";
 import LayoutDataDiriCabangV2 from "@/v2/layout_data_partai/layout_data_cabang";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 
 function SayapDewanPimpinanCabang2() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
@@ -133,8 +135,10 @@ function SayapDewanPimpinanCabang2() {
   const [value, setValue] = useState("")
   const router = useRouter()
 
-  const PimpinanCabang = () => {
+  const PimpinanCabang = async () => {
     // console.log(formSayapDewanPimpinanCabang.values.data)
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     if (
       Object.values(formSayapDewanPimpinanCabang.values.data).includes("")
     ) {
@@ -146,10 +150,12 @@ function SayapDewanPimpinanCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapDewanPimpinanCabang.values.data),
-    }).then((v) => {
+    }).then( async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
@@ -256,7 +262,7 @@ function SayapDewanPimpinanCabang2() {
           radius={"md"}
           // mt={10}
           placeholder={selectedProvince.name}
-          value={selectedProvince.name}
+          value={selectedProvince.id}
           label="Provinsi"
           withAsterisk
           searchable
@@ -281,7 +287,7 @@ function SayapDewanPimpinanCabang2() {
           radius={"md"}
           // mt={10}
           placeholder={selectedKabupaten.name}
-          value={selectedKabupaten.name}
+          value={selectedKabupaten.id}
           label="Kabupaten / Kota"
           withAsterisk
           searchable

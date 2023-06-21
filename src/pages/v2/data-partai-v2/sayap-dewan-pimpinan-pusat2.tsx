@@ -30,6 +30,7 @@ import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { sSayapPartai } from "@/s_state/sayap_partai/s_sayap_partai";
 import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
+import { val_loading } from "@/xg_state.ts/val_loading";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -48,13 +49,16 @@ const useStyles = createStyles((theme) => ({
 
 function SayapDewanPimpinanPusat2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [value, setValue] = useState<any>();
   const router = useRouter();
 
-  const PimpinanPusat = () => {
+  const PimpinanPusat = async () => {
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 500))
     console.log(formSayapPimpinanPusat.values.data)
     if (Object.values(formSayapPimpinanPusat.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
@@ -65,10 +69,12 @@ function SayapDewanPimpinanPusat2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapPimpinanPusat.values.data),
-    }).then((v) => {
+    }).then(async(v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
+        setLoading(false)
+        await new Promise((r) => setTimeout(r, 500))
       }
     });
   };
