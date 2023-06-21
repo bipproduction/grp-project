@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
-import { useHash, useShallowEffect } from "@mantine/hooks";
+import { useHash, useHotkeys, useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../../fun/WARNA";
@@ -37,6 +37,11 @@ import {
 import { api } from "@/lib/api-backend";
 import moment from "moment";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import _ from "lodash";
+import { generateRandomId } from "../../../../fun/fun_random_id";
+import { generateRandomProvinsi } from "../../../../fun/fun_random_provinsi";
+import { generateRandomAset } from "../../../../fun/random_aset/fun_random_aset";
+import { generateRandomName } from "../../../../fun/random_name/fun_random_name";
 
 const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
   const [dataAset, setDataAset] = useAtom(_listData_AsetPartai);
@@ -54,65 +59,58 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
     keterangan: "",
     masterKategoriAsetId: new Number(),
     deskripsi: "",
-    img: "test",
+    img: "a",
   });
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
-  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai)
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai)
-
-
+  const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai);
+  const [valOtomatis, setValOtomatis] = useState("");
 
   useShallowEffect(() => {
     _loadKategoriAset();
     _loadStatusAset();
   }, []);
 
-  // useShallowEffect(() => {
-  //   console.log(hash);
-  //   if (hash && hash == "#auto") {
-  //     setDataKirim({
-  //       name: "Baba",
-  //       serialNumber: "23F4FF4223",
-  //       pengguna: "Bagas",
-  //       penanggungJawab: "Nusa",
-  //       harga: 430000,
-  //       tglPembelian: "2023-02-01",
-  //       lokasiPembelian: "Denpasar",
-  //       garansi: "4 Tahun",
-  //       masterStatusAsetId: 1,
-  //       keterangan: "bagus",
-  //       masterKategoriAsetId: 2,
-  //       deskripsi: "warna hitam",
-  //       img: "test",
-  //     });
-  //   } toast("Berhasil")
-  // }, [hash]);
+  // ```````` ````````Otomatis Value `````````````````//
+  useHotkeys([["ctrl+a", otomatis]]);
 
-  // useShallowEffect(() => {
-  //   console.log(hash);
-  //   if (hash && hash == "#auto") {
-  //     formDataAset.setValues({
-  //       data: {
-  //         name: "dsdsdsds",
-  //         serialNumber: "dssdsds",
-  //         pengguna: "dsdsds",
-  //         penanggungJawab: "dssdsdsds",
-  //         harga: "3000",
-  //         tglPembelian: "2023-06-05",
-  //         lokasiPembelian: "sdfsds",
-  //         garansi: "dsdsd",
-  //         masterStatusAsetId: "1",
-  //         keterangan: "sdfdsds",
-  //         masterKategoriAsetId: "1",
-  //         deskripsi: "sdssdsds",
-  //         img: "test",
-  //       },
-  //     });
+  
 
-  //     toast("set data success");
-  //   }
-  // }, [hash]);
+  function otomatis() {
+    setValOtomatis(
+      "Nilai pada form sudah terisi otomatis, abaikan yang tidak tampil atau user bisa input manual!"
+    );
+    setDataKirim({
+      name: generateRandomAset(),
+      serialNumber: generateRandomId(),
+      pengguna: generateRandomName(),
+      penanggungJawab: generateRandomName(),
+      harga: _.toNumber(
+        `${Math.floor(Math.random() * 100000000 - 1000000) + 1000}`
+      )
+        ? _.toNumber(
+            `${Math.floor(Math.random() * 100000000 - 1000000) + 1000}`
+          )
+        : dataKirim.harga,
+      tglPembelian: "Aug 13, 2023" ? "Aug 13, 2023" : dataKirim.tglPembelian,
+      lokasiPembelian: generateRandomProvinsi(),
+      garansi: `${Math.floor(Math.random() * 12 - 0) + 1} Bulan`,
+      masterStatusAsetId: _.toNumber(`${Math.floor(Math.random() * 2 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 2 - 0) + 1}`)
+        : dataKirim.masterStatusAsetId,
+      keterangan: "bagus",
+      masterKategoriAsetId: _.toNumber(
+        `${Math.floor(Math.random() * 5 - 0) + 1}`
+      )
+        ? _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`)
+        : dataKirim.masterKategoriAsetId,
+      deskripsi: "warna hitam",
+      img: "a",
+    });
+  }
+  // ```````` ````````Otomatis Value `````````````````//
+
   const onCreate = async () => {
     console.log(dataKirim);
     if (Object.values(dataKirim).includes("")) {
@@ -130,8 +128,17 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
         thisClosed();
         // _loadListDataAset(setDataAset);
 
-        _loadDataAset_BySearch(search, setDataAset_Search, inputPage, setTotalPage)
-        _postLogUser(localStorage.getItem("user_id"), "TAMBAH", "User menambah data aset partai")
+        _loadDataAset_BySearch(
+          search,
+          setDataAset_Search,
+          inputPage,
+          setTotalPage
+        );
+        _postLogUser(
+          localStorage.getItem("user_id"),
+          "TAMBAH",
+          "User menambah data aset partai"
+        );
 
         return toast("Berhasil");
       } else {
@@ -145,41 +152,6 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
     // thisClosed();
   };
 
-  const onEdit = () => {
-    console.log(dataKirim);
-    // if (Object.values(dataKirim).includes("")) {
-    //   return toast("Lengkapi Data Diri");
-    // }
-
-    // formDataAset.values.data.tglPembelian = moment(
-    //   formDataAset.values.data.tglPembelian
-    // ).format("YYYY-MM-DD");
-
-    fetch(api.apiAsetPartaiPost, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataKirim),
-    }).then(async (res) => {
-      if (res.status == 201) {
-        // const data = res.json();
-        // console.log(data)
-
-        // TODO: disini
-        // thisClosed();
-        // _loadListDataAset(setDataAset);
-
-        return toast("success");
-        // return data;
-      }
-      return toast("gagal");
-      // return null;
-    });
-    buttonSimpan();
-
-    // thisClosed();
-  };
   // if (!sStatusAset) return <></>;
 
   return (
@@ -202,7 +174,8 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                 <Text span c={"red"}>
                   **
                 </Text>{" "}
-                Wajib diisi
+                Wajib diisi{" "}
+                {valOtomatis && <Text color="red">{valOtomatis}</Text>}
               </Text>
             </Flex>
           </Box>
@@ -213,6 +186,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Nama Aset"
                   label="Nama Aset"
                   withAsterisk
+                  value={dataKirim.name}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -224,6 +198,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Nomor Serial"
                   label="Serial Number"
                   withAsterisk
+                  value={dataKirim.serialNumber}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -235,6 +210,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Pengguna"
                   label="Pengguna"
                   withAsterisk
+                  value={dataKirim.pengguna}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -246,6 +222,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Penangung Jawab"
                   label="Penangung Jawab"
                   withAsterisk
+                  value={dataKirim.penanggungJawab}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -279,6 +256,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   placeholder="Lokasi Pembelian"
                   label="Lokasi Pembelian"
                   withAsterisk
+                  value={dataKirim.lokasiPembelian}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -312,6 +290,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   minRows={2}
                   maxRows={4}
                   withAsterisk
+                  value={dataKirim.keterangan}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -342,6 +321,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                   minRows={2}
                   maxRows={4}
                   withAsterisk
+                  value={dataKirim.deskripsi}
                   onChange={(val) =>
                     setDataKirim({
                       ...dataKirim,
@@ -354,6 +334,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
                 placeholder="Garansi"
                 label="Garansi"
                 withAsterisk
+                value={dataKirim.garansi}
                 onChange={(val) =>
                   setDataKirim({
                     ...dataKirim,
