@@ -37,7 +37,7 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
 import { _datapartai_form, _datapartai_user } from "./profile";
 import { _sJenisKelamin, _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
 

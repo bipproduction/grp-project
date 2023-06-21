@@ -29,7 +29,7 @@ import {
   _dataStruktur,
   _loadUserSumberDayaPartai_ById,
 } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
-import { _editDataStruktur } from "../sumber_daya_partai/struktur_partai/table_struktur_partai";
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
 import { _dataKeanggotaan } from "@/load_data/sayap_partai/load_sayap_partai";
 import EditStatusKeanggotaan from "./edit_status_keanggotaan/edit_status_keanggotaan";
 
