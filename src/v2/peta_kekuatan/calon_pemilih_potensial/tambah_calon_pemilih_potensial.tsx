@@ -29,7 +29,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useHash, useShallowEffect } from "@mantine/hooks";
+import { useHash, useHotkeys, useShallowEffect } from "@mantine/hooks";
 import _, { includes, isEmpty, toNumber } from "lodash";
 import { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
@@ -62,6 +62,9 @@ import { _loadAgama } from "@/load_data/load_agama";
 import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { generateName } from "@/pages/v2/use-hash";
+import { generateRandomEmail } from "../../../../fun/fun_random_email";
+import { generateRandomAlamat } from "../../../../fun/fun_random_alamat";
 
 const TambahCPTV2 = ({ thisClosed }: any) => {
   const [kerja, setKerja] = useState<any[]>([]);
@@ -105,6 +108,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
 
   const [hash, setHash] = useHash();
   const [cekUsia, setCekUsia] = useState<number>(0);
+  const [valOtomatis, setValOtomatis] = useState("");
 
   useShallowEffect(() => {
     _loadKategoriPemilihPotensial();
@@ -125,45 +129,84 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     _loadAgama();
   }, []);
 
-  // HASH RANDOM CREATE
+  // RANDOM CREATE //
+  useHotkeys([["ctrl+a", otomatis]]);
 
-  useShallowEffect(() => {
-    if (hash == `#auto`) {
-      setDataKirim({
-        nama: "Bila",
-        nik: "3123465465675431",
-        email: "bila@gmail.com",
-        alamat: "jalan in aja dulu",
-        tanggalLahir: dataKirim.tanggalLahir,
-        phoneNumber: "082312312331",
-        statusSosial: "Berkecukupan",
-        pendidikan: "s10",
-        masterCalonPemilihPotensialId: new Number(2),
-        masterProvinceId: new Number(5),
-        masterKabKotId: new Number(2),
-        masterKecamatanId: new Number(1),
-        masterDesaId: new Number(2),
-        masterNomorUrutTPSId: new Number(1),
-        masterAgamaId: new Number(2),
-        masterJenisKelaminId: new Number(2),
-        masterPekerjaanId: new Number(1),
-      });
-    }
-  }, [hash]);
-  //``````````````````````HASH````````````````````````//
+  function otomatis() {
+    setValOtomatis(
+      "Nilai pada form sudah terisi otomatis, abaikan yang tidak tampil atau user bisa input manual!"
+    );
+    setCekUsia(18);
+    setDataKirim({
+      nik: `${
+        Math.floor(Math.random() * 9999999999999999 - 1000000000000000) +
+        1111111111111111
+      }`,
+      nama: generateName(),
+      email: generateRandomEmail(),
+      alamat: generateRandomAlamat(),
+      tanggalLahir: `${cekUsia}`
+        ? moment("2002-01-01").format("YYYY-MM-DD")
+        : dataKirim.tanggalLahir,
+      phoneNumber: `${
+        Math.floor(Math.random() * 6289999999999 - 6280000000000) +
+        6281111111111
+      }`,
+      statusSosial: "Berkecukupan" ? "Berkecukupan" : dataKirim.statusSosial,
+      pendidikan: "SMA / SMK" ? "SMA / SMK" : dataKirim.pendidikan,
+      masterCalonPemilihPotensialId: _.toNumber(
+        `${Math.floor(Math.random() * 3 - 0) + 1}`
+      )
+        ? _.toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`)
+        : dataKirim.masterCalonPemilihPotensialId,
+      masterProvinceId: _.toNumber(`${Math.floor(Math.random() * 38 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 38 - 0) + 1}`)
+        : dataKirim.masterProvinceId,
+      masterKabKotId: _.toNumber(`${Math.floor(Math.random() * 500 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 500 - 0) + 1}`)
+        : dataKirim.masterKabKotId,
+      masterKecamatanId: _.toNumber(
+        `${Math.floor(Math.random() * 1000 - 0) + 1}`
+      )
+        ? _.toNumber(`${Math.floor(Math.random() * 1000 - 0) + 1}`)
+        : dataKirim.masterKecamatanId,
+      masterDesaId: _.toNumber(`${Math.floor(Math.random() * 3000 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 3000 - 0) + 1}`)
+        : dataKirim.masterDesaId,
+      masterNomorUrutTPSId: _.toNumber(
+        `${Math.floor(Math.random() * 50 - 0) + 1}`
+      )
+        ? _.toNumber(`${Math.floor(Math.random() * 50 - 0) + 1}`)
+        : dataKirim.masterCalonPemilihPotensialId,
+      masterAgamaId: _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`)
+        : dataKirim.masterAgamaId,
+      masterJenisKelaminId: _.toNumber(
+        `${Math.floor(Math.random() * 2 - 0) + 1}`
+      )
+        ? _.toNumber(`${Math.floor(Math.random() * 2 - 0) + 1}`)
+        : dataKirim.masterJenisKelaminId,
+      masterPekerjaanId: _.toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`)
+        ? _.toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`)
+        : dataKirim.masterPekerjaanId,
+    });
+  }
+  //``````````````````````Otomatis````````````````````````//
 
   /**
-   * ### Note
+   * ### Create New Data
    * - Untuk Mengirim Data ke Api & Database
    * - Kondisi ada value yang kosong
    * - Kondisi NIK kurang atau lebih dari 16 karakter
    * - Kondisi usia dibawah 17 tahun
    */
   const onCreate = () => {
-    console.log(dataKirim);
+    // console.log(dataKirim);
+    // Cek Kelengkapan form
     if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data");
     }
+    // Cek jumlah NIK
     if (dataKirim.nik.length < 16) {
       return toast("NIK Kurang Dari 16 Digit");
     } else {
@@ -171,10 +214,21 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
         return toast("NIK Lebih Dari 16 Digit");
       }
     }
+    // Validasi Email
+    if (
+      dataKirim.email.indexOf("@") != -1 &&
+      dataKirim.email.indexOf(".") != -1
+    ) {
+      // toast("");
+    } else {
+      toast("Invalid email");
+    }
+    // Validasi Usia
     if (cekUsia < 17) {
       return toast("Usia Anda Belum Cukup");
     }
-    // console.log(dataKirim)
+    // console.log(dataKirim);
+    // Kirim data ke server
     fetch(api.apiCPTPost, {
       method: "POST",
       headers: {
@@ -183,7 +237,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
       body: JSON.stringify(dataKirim),
     }).then(async (res) => {
       if (res.status == 201) {
-        // thisClosed();
+        thisClosed();
         _loadDataCalonPemilihPotensial_BySearch(
           search,
           setListDataCPP,
@@ -197,7 +251,11 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
         );
         return toast("Data Tersimpan");
       } else {
-        return toast("Data Tidak Tersimpan");
+        if (res.status == 204) {
+          return toast("Data Gagal Tersimpan");
+        } else {
+          return toast("Data Tidak Tersimpan");
+        }
       }
     });
   };
@@ -206,7 +264,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
   /**
    *
    * @param val: DateInput
-   * - Validasi usia < 17 Tahun
+   * - Validasi usia > 17 Tahun
    */
   const OnCekUsia = (val: any) => {
     let year = new Date();
@@ -229,10 +287,11 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     }
   };
 
+  if (!dataKirim) return <></>;
+
   return (
     <>
       {/* {JSON.stringify(cekUsia)} */}
-
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
@@ -251,6 +310,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   **
                 </Text>{" "}
                 Wajib diisi
+                {valOtomatis && <Text color="red">{valOtomatis}</Text>}
               </Text>
             </Flex>
           </Box>
@@ -277,22 +337,35 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     masterCalonPemilihPotensialId: val,
                   })
                 }
+                description={
+                  <Box sx={{ fontSize: 8 }} pl={10}>
+                    <Text>
+                      A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
+                    </Text>
+                    <Text>
+                      A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
+                    </Text>
+                    <Text>
+                      A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)
+                    </Text>
+                  </Box>
+                }
               />
-              <Box sx={{ fontSize: 10 }} pl={10}>
-                <Text>
-                  A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
-                </Text>
-                <Text>
-                  A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
-                </Text>
-                <Text>A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)</Text>
-              </Box>
 
               <TextInput
                 type="number"
-                placeholder="NIK"
+                placeholder={"NIK"}
                 label="NIK"
                 withAsterisk
+                description={
+                  dataKirim.nik && dataKirim.nik.length != 16 ? (
+                    <Text color="red">NIK Harus 16 Digit</Text>
+                  ) : (
+                    ""
+                  )
+                }
+                error={dataKirim.nik.length != 16}
+                value={dataKirim.nik}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -305,6 +378,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 placeholder="Nama"
                 label="Nama"
                 withAsterisk
+                value={dataKirim.nama}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -317,6 +391,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 placeholder="Email"
                 label="Email"
                 withAsterisk
+                value={dataKirim.email}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -328,7 +403,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               <Select
                 label="Pilih Provinsi"
                 searchable
-                clearable
                 withAsterisk
                 data={
                   _.isEmpty(dataProvinsi)
@@ -350,7 +424,11 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     setSelectKabupaten
                   );
                 }}
-                value={selectProvinsi.name}
+                value={
+                  (selectProvinsi.id as any)
+                    ? (selectProvinsi.id as any)
+                    : "Pilih Provinsi"
+                }
                 placeholder={
                   selectProvinsi.name ? selectProvinsi.name : "Pilih Provinsi"
                 }
@@ -359,7 +437,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="Pilih Kabupaten / Kota"
                 withAsterisk
                 searchable
-                clearable
                 data={
                   _.isEmpty(dataKabkot)
                     ? []
@@ -381,8 +458,8 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   );
                 }}
                 value={
-                  selectKabkot.name
-                    ? selectKabkot.name
+                  (selectKabkot.id as any)
+                    ? (selectKabkot.id as any)
                     : "Pilih Kabupaten / Kota"
                 }
                 placeholder={
@@ -395,7 +472,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               <Select
                 label="Pilih Kecamatan"
                 searchable
-                clearable
                 withAsterisk
                 data={
                   _.isEmpty(dataKecamatan)
@@ -414,8 +490,8 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
                 }}
                 value={
-                  selectKecamatan.name
-                    ? selectKecamatan.name
+                  (selectKecamatan.id as any)
+                    ? (selectKecamatan.id as any)
                     : "Pilih Kecamatan"
                 }
                 placeholder={
@@ -429,7 +505,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="Pilih Desa"
                 withAsterisk
                 searchable
-                clearable
                 data={
                   _.isEmpty(dataDesa)
                     ? []
@@ -445,7 +520,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     masterDesaId: val as any,
                   });
                 }}
-                value={selectDesa.name ? selectDesa.name : "Pilih Desa"}
+                value={
+                  (selectDesa.id as any) ? (selectDesa.id as any) : "Pilih Desa"
+                }
                 placeholder={selectDesa.name ? selectDesa.name : "Pilih Desa"}
               />
               <Select
@@ -457,7 +534,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="TPS 01 -50"
                 withAsterisk
                 searchable
-                clearable
                 nothingFound="Tidak Ditemukan"
                 onChange={(val) => {
                   setDataKirim({
@@ -492,32 +568,15 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 withAsterisk
                 onChange={(val) => {
                   OnCekUsia(val);
-                  // let year = new Date();
-                  // const tahunIni = year.getFullYear();
-                  // let data = moment(val).format("YYYY");
-                  // let usia = _.toNumber(data);
-                  // const umurUser = tahunIni - usia;
-                  // setCekUsia(umurUser);
-                  // // console.log(umurUser);
-                  // if (umurUser > 17) {
-                  //   // toast("Cukup Usia");
-                  // } else {
-                  //   toast("Usia Anda Belum Cukup");
-                  // }
-                  // console.log(data);
-                  // setDataKirim({
-                  //   ...dataKirim,
-                  //   tanggalLahir: moment(val).format("YYYY-MM-DD"),
-                  // });
                 }}
               />
-              {/* {cekUsia && <>usia belum cukup {cekUsia}</>} */}
 
               <TextInput
                 type="number"
                 placeholder="Nomor Handphone"
                 label="Nomor Handphone"
                 withAsterisk
+                value={dataKirim.phoneNumber}
                 onChange={(val: any) => {
                   setDataKirim({
                     ...dataKirim,
@@ -538,7 +597,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 }}
                 placeholder="Pekerjaan"
                 label="Pekerjaan"
-                clearable
                 nothingFound="Tidak Ditemukan"
                 searchable
                 withAsterisk
@@ -563,6 +621,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 placeholder="Alamat"
                 label="Alamat"
                 withAsterisk
+                value={dataKirim.alamat}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -574,6 +633,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="Pendidikan"
                 placeholder="Pendidikan terakhir"
                 data={["SD", "SMP", "SMA / SMK", "Perguruan Tinggi"]}
+                value={dataKirim.pendidikan}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -585,6 +645,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                 label="Status Sosial"
                 placeholder="Pilih Status Sosial"
                 data={["Menengah Kebawah", "Menengah Keatas", "Berkecukupan"]}
+                value={dataKirim.statusSosial}
                 onChange={(val) => {
                   setDataKirim({
                     ...dataKirim,
@@ -608,9 +669,6 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     bg={COLOR.orange}
                     radius={"xl"}
                     onClick={() => {
-                      // buttonSimpan();
-                      console.log(dataKirim);
-
                       onCreate();
                     }}
                   >

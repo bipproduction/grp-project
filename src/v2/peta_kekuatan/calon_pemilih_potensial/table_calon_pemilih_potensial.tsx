@@ -75,11 +75,22 @@ export const TableCPTV2 = () => {
         </Center>
       </th>
       <th>Nama</th>
-      <th>Tanggal</th>
       <th>NIK</th>
       <th>Email</th>
       <th>Kategori</th>
       <th>Nomor TPS</th>
+      <th>Tanggal Lahir</th>
+      <th>Provinsi</th>
+      <th>Kabupaten/Kota</th>
+      <th>Kecamatan</th>
+      <th>Desa</th>
+      <th>Agama</th>
+      <th>Nomor Telephone</th>
+      <th>Pekerjaan</th>
+      <th>J. Kelamin</th>
+      <th>Alamat</th>
+      <th>Pendidikan</th>
+      <th>Status Sosial</th>
       {/* <th>Tanggal</th> */}
     </tr>
   );
@@ -108,13 +119,23 @@ export const TableCPTV2 = () => {
         </Flex>
       </td>
       <td>{e.nama}</td>
-      <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td>
-      <td>{e.email}</td>
       <td>{e.nik}</td>
+      <td>{e.email}</td>
       <td>{e.MasterCalonPemilihPotensial.name}</td>
       <td>{e.MasterNomorUrutTPS.name}</td>
+      <td>{moment(e.tanggalLahir).format("YYYY-MM-DD")}</td>
+      <td>{e.MasterProvince.name}</td>
+      <td>{e.MasterKabKot.name}</td>
+      <td>{e.MasterKecamatan.name}</td>
+      <td>{e.MasterDesa.name}</td>
+      <td>{e.MasterAgama.name}</td>
+      <td>{e.phoneNumber}</td>
+      <td>{e.MasterPekerjaan.name}</td>
+      <td>{e.MasterJenisKelamin.name}</td>
+      <td>{e.alamat}</td>
+      <td>{e.pendidikan}</td>
+      <td>{e.statusSosial}</td>
 
-      
     </tr>
   ));
 
