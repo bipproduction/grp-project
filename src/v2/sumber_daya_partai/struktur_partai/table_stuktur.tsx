@@ -43,6 +43,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import toast from "react-simple-toasts";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import { CiEdit } from "react-icons/ci";
+import { EditStrukturV2 } from "./edit_struktur";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
@@ -126,7 +127,8 @@ export const TableStrukturV2 = () => {
           opacity: 0.1,
         }}
       >
-        <StrukturEditV2 thisClosed={setOpen.close} />
+        <EditStrukturV2 thisClosed={setOpen.close} />
+        {/* <StrukturEditV2 thisClosed={setOpen.close} /> */}
       </Modal>
 
       <Box>

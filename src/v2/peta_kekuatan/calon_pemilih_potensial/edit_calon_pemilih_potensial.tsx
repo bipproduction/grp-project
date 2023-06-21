@@ -79,7 +79,7 @@ import moment from "moment";
 import { _new_loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
 import { _sJenisKelamin } from "@/s_state/s_jenis_kelamin";
 import { _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
-import toast from "react-simple-toasts";
+import toast, { clearToasts } from "react-simple-toasts";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
 const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
@@ -138,6 +138,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     _new_LoadAgama(setAgama, setSelectAgama);
     _new_loadPekerjaan(setPekerjaan, setSelectPekerjaan);
     _new_loadJenisKelamin(setJenisKelamin, setSelectJenisKelamin);
+    // clearToasts()
   }, []);
 
   const getOne_ListDataCPP_ById = async (id: string) => {
@@ -177,8 +178,13 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
         return toast("NIK Lebih Dari 16 Digit");
       }
     }
-    if (cekUsia < 17) {
-      return toast("Usia Anda Belum Cukup");
+
+    const dataTgl = moment(dataEdit?.tanggalLahir).format("YYYY");
+    const tahunUser = _.toNumber(dataTgl);
+    const usiaUser = tahunIni - tahunUser;
+
+    if (usiaUser < 17) {
+      return toast("Usia Anda Belum Cukup!");
     }
 
     fetch(api.apiCPTUpdate, {
@@ -208,9 +214,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     });
   };
 
+  let year = new Date();
+  const tahunIni = year.getFullYear();
   const OnCekUsia = (val: any) => {
-    let year = new Date();
-    const tahunIni = year.getFullYear();
     let data = moment(val).format("YYYY");
     let usia = _.toNumber(data);
     const umurUser = tahunIni - usia;
@@ -236,7 +242,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
 
   return (
     <>
-      {/* {JSON.stringify(dataEdit.tanggalLahir)} */}
+      {/* {JSON.stringify(moment(dataEdit?.tanggalLahir).format("YYYY-MM-DD"))} */}
       {/* {JSON.stringify(cekUsia)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -269,6 +275,10 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
           >
             <Box>
               <Select
+                label="Pilih Kategori Calon Pemilik Potensial"
+                value={dataEdit.MasterCalonPemilihPotensial.id as any}
+                placeholder={dataEdit?.MasterCalonPemilihPotensial.name}
+                withAsterisk
                 data={
                   _.isEmpty(kategoriCPP)
                     ? []
@@ -284,19 +294,20 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   setDataEdit(data);
                   // console.log(data.MasterCalonPemilihPotensial.id);
                 }}
-                placeholder={dataEdit?.MasterCalonPemilihPotensial.name}
-                label="Pilih Kategori Calon Pemilik Potensial"
-                withAsterisk
+                description={
+                  <Box sx={{ fontSize: 8 }} pl={10}>
+                    <Text>
+                      A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
+                    </Text>
+                    <Text>
+                      A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
+                    </Text>
+                    <Text>
+                      A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)
+                    </Text>
+                  </Box>
+                }
               />
-              <Box sx={{ fontSize: 10 }} pl={10}>
-                <Text>
-                  A1 : Pemilih Pasti / Fanatik (Kader, Anggota, Simpatik)
-                </Text>
-                <Text>
-                  A2 : Pemilih Potensial (Keluarga, Saudara, Tetangga)
-                </Text>
-                <Text>A3 : Pemilih Pragmatis (Karena uang, Koalisi, Dst)</Text>
-              </Box>
 
               <TextInput
                 placeholder="NIK"
@@ -357,8 +368,8 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    selectProvinsi.name
-                      ? selectProvinsi.name
+                    (selectProvinsi.name)
+                      ? (selectProvinsi.name)
                       : dataEdit?.MasterProvince.name
                   }
                   placeholder={
@@ -391,9 +402,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    selectKabkot.name
-                      ? selectKabkot.name
-                      : dataEdit?.MasterKabKot.name
+                    (selectKabkot.name)
+                      ? (selectKabkot.name)
+                      : dataEdit.MasterKabKot.name
                   }
                   placeholder={
                     selectKabkot.name
@@ -421,11 +432,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     setDataEdit(data);
                     _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
                   }}
-                  value={
-                    selectKecamatan.name
-                      ? selectKecamatan.name
-                      : dataEdit?.MasterKecamatan.name
-                  }
+                  value={ selectKecamatan.name
+                    ? selectKecamatan.name
+                    : dataEdit?.MasterKecamatan.name}
                   placeholder={
                     selectKecamatan.name
                       ? selectKecamatan.name
@@ -450,11 +459,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     data.MasterDesa.id = val;
                     setDataEdit(data);
                   }}
-                  value={
-                    selectDesa.name
-                      ? selectDesa.name
-                      : dataEdit?.MasterDesa.name
-                  }
+                  value={selectDesa.name
+                    ? selectDesa.name
+                    : dataEdit?.MasterDesa.name}
                   placeholder={
                     selectDesa.name
                       ? selectDesa.name
@@ -464,6 +471,12 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
               </Box>
 
               <Select
+                value={dataEdit.MasterNomorUrutTPS.id as any}
+                placeholder={dataEdit.MasterNomorUrutTPS.name}
+                label="TPS 01 -50"
+                withAsterisk
+                searchable
+                nothingFound="Tidak Ditemukan"
                 data={
                   _.isEmpty(noTPS)
                     ? []
@@ -478,20 +491,6 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   dataEdit.MasterNomorUrutTPS.id = val as any;
                   setDataEdit(data);
                 }}
-                // value={
-                //   selectNoTPS.name
-                //     ? selectNoTPS.name
-                //     : dataEdit.MasterNomorUrutTPS.name
-                // }
-                placeholder={
-                  selectNoTPS.name
-                    ? selectNoTPS.name
-                    : dataEdit.MasterNomorUrutTPS.name
-                }
-                label="TPS 01 -50"
-                withAsterisk
-                searchable
-                nothingFound="Tidak Ditemukan"
               />
             </Box>
 
@@ -514,9 +513,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   setDataEdit(data);
                 }}
                 value={
-                  selectAgama.name
-                    ? selectAgama.name
-                    : dataEdit.MasterAgama.name
+                  (selectAgama.id as any)
+                    ? (selectAgama.id as any)
+                    : dataEdit.MasterAgama.id
                 }
                 placeholder={
                   selectAgama.name
@@ -524,6 +523,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     : dataEdit.MasterAgama.name
                 }
               />
+
               <DateInput
                 label="Tanggal Lahir"
                 withAsterisk
@@ -569,9 +569,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   setDataEdit(data);
                 }}
                 value={
-                  selectPekerjaan.name
-                    ? selectPekerjaan.name
-                    : dataEdit.MasterPekerjaan.name
+                  (selectPekerjaan.id as any)
+                    ? (selectPekerjaan.id as any)
+                    : dataEdit.MasterPekerjaan.id
                 }
                 placeholder={
                   selectPekerjaan.name
@@ -598,9 +598,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   setDataEdit(data);
                 }}
                 value={
-                  selectJenisKelamin.name
-                    ? selectJenisKelamin.name
-                    : dataEdit.MasterJenisKelamin.name
+                  (selectJenisKelamin.id as any)
+                    ? (selectJenisKelamin.id as any)
+                    : (dataEdit.MasterJenisKelamin.id as any)
                 }
                 placeholder={
                   selectJenisKelamin.name

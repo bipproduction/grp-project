@@ -4,6 +4,10 @@ import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+export const _editDataStruktur = atomWithStorage<ModelSumberDayaPartai | null>(
+  "_list_database_struktur",
+  null
+);
 export const _dataStruktur = atomWithStorage<ModelSumberDayaPartai[]>(
   "_database_struktur",
   []
