@@ -1,12 +1,4 @@
 import {
-  _listChangeData,
-  _loadEditSumberDayaPartai_ById,
-  _new_loadEditByModel,
-} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
-import { useShallowEffect } from "@mantine/hooks";
-import { useAtom } from "jotai";
-import { _editDataStruktur } from "./table_struktur_partai";
-import {
   Box,
   Button,
   Grid,
@@ -15,142 +7,188 @@ import {
   Select,
   Text,
   TextInput,
+  Title,
 } from "@mantine/core";
-import _ from "lodash";
 import COLOR from "../../../../fun/WARNA";
-import { _sJenisKelamin, _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
+import { useAtom } from "jotai";
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
+import { useShallowEffect } from "@mantine/hooks";
 import {
-  _provinsi,
-  _selected_Provinisi,
-  _kabupaten,
-  _selected_Kabkot,
-  _kecamatan,
-  _selected_Kecamatan,
-  _desa,
-  _selected_Desa,
-} from "@/s_state/wilayah/select_wilayah";
-import { _loadAgama } from "@/load_data/load_agama";
-import { _new_loadJenisKelamin } from "@/load_data/load_jenis_kelamin";
-import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
+  _dataStruktur,
+  _dataStrukturTable_ByStatusSearch,
+  _listChangeData,
+  _loadDataStruktur_ByIdStatus,
+  _loadDataSDP_ByStatus_BySeach,
+  _loadEditSumberDayaPartai_ById,
+  _editLoadStruktur_ByStatusSeacrh,
+  _new_loadEditByModel,
+  _searchDataSumberDayaPartai,
+  _dataPageSDP_Strukturr,
+  _dataTotalPageSDP_Strukturr,
+
+} from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import {
-  _loadJabatanDewanPembina,
-  _loadJabatanDewanPimpinanPusat,
-  _loadJabatanDewanPimpinanDaerah,
-  _loadJabatanDewanPimpinanCabang,
-  _loadJabatanPimpinanAnakCabang,
-  _loadJabatanPimpinanRanting,
-  _loadJabtanPerwakilanLuarNegeri,
-} from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
-import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
-import {
-    _editTingkatPengurus,
-  _loadTingkatPengurus,
+  _editTingkatPengurus,
   _new_loadTingkatPengurus,
   _selectTingkatPengurus_Struktur,
   _tingkatPengurus_Struktur,
 } from "@/load_data/sumber_daya_partai/load_tingkat_pengurus";
-import {
-  _loadSelectDesa,
-  _loadSelectKabkot,
-  _loadSelectKecamatan,
-  _loadSelectProvinsi,
-} from "@/load_data/wilayah/load_selected_wilayah";
-import { sTingkatPengurus } from "@/s_state/sumber_daya_partai/s_tingkat_pengurus";
+import _ from "lodash";
+import { ModelTingkatPengurus } from "@/model/interface_tingkat_pengurus";
 import { useState } from "react";
 import {
-  sJabatanDewanPembina,
-  sJabatanDewanPimpinanCabang,
-  sJabatanDewanPimpinanDaerah,
-  sJabatanDewanPimpinanPusat,
-  sJabatanPerwakilanLuarNegeri,
-  sJabatanPimpinanAnakCabang,
-  sJabatanPimpinanRanting,
-} from "@/s_state/sumber_daya_partai/s_jabatan_struktur_partai";
+  _dewanPembina,
+  _pimpinanAnakCabang as _pimpinanAnakCabang,
+  _dewanPimpinanCabang,
+  _dewanPimpinanDaerah,
+  _dewanPimpinanPusat,
+  _new_loadJabatanDewanPembina,
+  _new_loadJabatanDewanPimpinanCabang,
+  _new_loadJabatanDewanPimpinanDaerah,
+  _new_loadJabatanDewanPimpinanPusat,
+  _new_loadJabatanPimpinanAnakCabang,
+  _selectDewabPimpinanCabang,
+  _selectDewanPembina,
+  _selectDewanPimpinanDaerah,
+  _selectDewanPimpinanPusat,
+  _selectPimpinanAnakCabang,
+  _pimpinanRanting as _pimpinanRanting,
+  _selectPimpinanRanting,
+  _new_loadJabatanPimpinanRanting,
+  _perwakilanLuarNegeri,
+  _selectPerwakilanLuarNegeri,
+  _new_loadPerwakilanLuarNegeri,
+} from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
+import { api } from "@/lib/api-backend";
+import { buttonSimpan } from "@/v2/component/button-toast";
+import { _postLogUser } from "@/load_data/log_user/post_log_user";
 
-export const EditStrukturV2 = (thisClosed: any) => {
-  const [targetStruktur, setTargetStruktur] = useAtom(_editDataStruktur);
-  const [targetEdit, setTargetEdit] = useAtom(_editTingkatPengurus);
-  const [changeData, setChangeData] = useAtom(_listChangeData);
-  const [isProvinsi, setIsProvinsi] = useAtom(_provinsi);
-  const [selectProvince, setSelectProvince] = useAtom(_selected_Provinisi);
-  const [isKabupaten, setIsKabupaten] = useAtom(_kabupaten);
-  const [selectKabupaten, setSelectKabupaten] = useAtom(_selected_Kabkot);
-  const [isKecamatan, setIsKecamatan] = useAtom(_kecamatan);
-  const [selectKecamatan, setSelectKecamatan] = useAtom(_selected_Kecamatan);
-  const [isDesa, setIsDesa] = useAtom(_desa);
-  const [selectDesa, setSelectDesa] = useAtom(_selected_Desa);
-  const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
-  const [selectJenisKelamin, setSelectJenisKelamin] =
-    useAtom(_selectJenisKelamin);
-  const [isJabatan, setJabatan] = useState<any>();
-  const [tingkatPengurus, setTingkatPengurus] = useAtom(_tingkatPengurus_Struktur);
+export const EditStrukturV2 = ({ thisClosed }: { thisClosed: any }) => {
+  const [dataTable, setDataTable] = useAtom(_dataStrukturTable_ByStatusSearch);
+  const [search, setSearch] = useState("");
+  const [targetStruktur, setTargetStruktur] = useAtom(_new_loadEditByModel);
+  const [targetEdit, setTargetEdit] = useAtom(_editLoadStruktur_ByStatusSeacrh);
+  const [tingkatPengurus, setTingkatPengurus] = useAtom(
+    _tingkatPengurus_Struktur
+  );
   const [selectTingkatPengurus, setSelectTingkatPengurus] = useAtom(
     _selectTingkatPengurus_Struktur
   );
+  const [changeData, setChangeData] = useAtom(_listChangeData);
+  // List dan Select Jabatan
+  const [listJabatan_DPembina, setListJabatan_DPembina] =
+    useAtom(_dewanPembina);
+  const [selectDPembina, setSelectDPembina] = useAtom(_selectDewanPembina);
+  const [listJabatan_DPimpinanPusat, setListJabatan_DPimpinanPusat] =
+    useAtom(_dewanPimpinanPusat);
+  const [select_DPimpinanPusat, setSelect_DPimpinanPusat] = useAtom(
+    _selectDewanPimpinanPusat
+  );
+  const [listJabatan_DPimpinanDaerah, setListJabatan_DPimpinanDaerah] =
+    useAtom(_dewanPimpinanDaerah);
+  const [select_DPimpinanDaerah, setSelect_DPimpinanDaerah] = useAtom(
+    _selectDewanPimpinanDaerah
+  );
+  const [listJabatan_DPimpinanCabang, setList_DPimpinanCabang] =
+    useAtom(_dewanPimpinanCabang);
+  const [select_DPimpinanCabang, setSelect_DPimpinanCabang] = useAtom(
+    _selectDewabPimpinanCabang
+  );
+  const [listJabatan_PAnakCabang, setListJabatan_PAnakCabang] =
+    useAtom(_pimpinanAnakCabang);
+  const [select_PAnakCabang, setSelect_PAnakCabang] = useAtom(
+    _selectPimpinanAnakCabang
+  );
+  const [listJabatan_PRanting, setListJabatan_PRanting] =
+    useAtom(_pimpinanRanting);
+  const [select_PRanting, setSelect_PRanting] = useAtom(_selectPimpinanRanting);
+  const [
+    listJabatan_PerwakilanLuarNegeri,
+    setListJabatan_PerwakilanLuarNegeri,
+  ] = useAtom(_perwakilanLuarNegeri);
+  const [select_PerwakilanLuarNegeri, setSelect_PerwakilanLuarNegeri] = useAtom(
+    _selectPerwakilanLuarNegeri
+  );
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
 
   useShallowEffect(() => {
-    _loadStatusKeanggotaan();
-    _loadTingkatPengurus();
-    _loadJabatanDewanPembina();
-    _loadJabatanDewanPimpinanPusat();
-    _loadJabatanDewanPimpinanDaerah();
-    _loadJabatanDewanPimpinanCabang();
-    _loadJabatanPimpinanAnakCabang();
-    _loadJabatanPimpinanRanting();
-    _loadJabtanPerwakilanLuarNegeri();
-    _loadAgama();
-    _loadListPekerjaan();
-    _loadSelectProvinsi(
-      setIsProvinsi,
-      setIsKabupaten,
-      setIsKecamatan,
-      setIsDesa,
-      setSelectProvince,
-      setSelectKabupaten,
-      setSelectKecamatan,
-      setSelectDesa
-    );
-    _new_loadJenisKelamin(setIsJenisKelamin, setSelectJenisKelamin);
     _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
     _new_loadTingkatPengurus(setTingkatPengurus, setSelectTingkatPengurus);
+    _new_loadJabatanDewanPembina(setListJabatan_DPembina, setSelectDPembina);
+    _new_loadJabatanDewanPimpinanPusat(
+      setListJabatan_DPimpinanPusat,
+      setSelect_DPimpinanPusat
+    );
+    _new_loadJabatanDewanPimpinanDaerah(
+      setListJabatan_DPimpinanDaerah,
+      setSelect_DPimpinanDaerah
+    );
+    _new_loadJabatanDewanPimpinanCabang(
+      setList_DPimpinanCabang,
+      setSelect_DPimpinanCabang
+    );
+    _new_loadJabatanPimpinanAnakCabang(
+      setListJabatan_PAnakCabang,
+      setSelect_PAnakCabang
+    );
+    _new_loadJabatanPimpinanRanting(
+      setListJabatan_PRanting,
+      setSelect_PRanting
+    );
+    _new_loadPerwakilanLuarNegeri(
+      setListJabatan_PerwakilanLuarNegeri,
+      setSelect_PerwakilanLuarNegeri
+    );
   }, []);
 
-  const onEdit = async () => {
-    console.log(targetEdit);
+  const onEdit = () => {
+    thisClosed();
+    buttonSimpan();
     const body = {
-      userId: targetEdit?.userId,
-      masterStatusKeanggotaanId: null,
-      masterTingkatPengurusId: targetEdit?.masterTingkatPengurusId,
-      masterJabatanId: targetEdit?.masterJabatanId,
-      masterJabatanDewanPembinaId: targetEdit?.masterJabatanDewanPembinaId,
+      id: targetEdit?.id!,
+      userId: targetEdit?.User.id!,
+      masterStatusKeanggotaanId: 1,
+      masterTingkatPengurusId: targetEdit?.MasterTingkatPengurus.id!,
+      masterJabatanId: targetEdit?.MasterJabatan!,
+      masterJabatanDewanPembinaId: targetEdit?.MasterJabatanDewanPembina?.id!,
       masterJabatanDewanPimpinanPusatId:
-        targetEdit?.masterJabatanDewanPimpinanPusatId,
+        targetEdit?.MasterJabatanDewanPimpinanPusat?.id!,
       masterJabatanDewanPimpinanDaerahId:
-        targetEdit?.masterJabatanDewanPimpinanDaerahId,
+        targetEdit?.MasterJabatanDewanPimpinanDaerah?.id!,
       masterJabatanDewanPimpinanCabangId:
-        targetEdit?.masterJabatanDewanPimpinanCabangId,
+        targetEdit?.MasterJabatanDewanPimpinanCabang?.id!,
       masterJabatanPimpinanAnakCabangId:
-        targetEdit?.masterJabatanPimpinanAnakCabangId,
-      masterJabatanPimpinanRantingId: targetEdit?.masterJabatanPimpinanRantingId,
+        targetEdit?.MasterJabatanPimpinanAnakCabang?.id!,
+      masterJabatanPimpinanRantingId:
+        targetEdit?.MasterJabatanPimpinanRanting?.id!,
       masterJabatanPerwakilanPartaiDiLuarNegeriId:
-        targetEdit?.masterJabatanPerwakilanPartaiDiLuarNegeriId,
-      masterSayapPartaiId: targetEdit?.masterSayapPartaiId,
-      masterKaderPartaiId: targetEdit?.masterKaderPartaiId,
-      masterProvinceId: targetEdit?.masterProvinceId,
-      masterKabKotId: targetEdit?.masterKabKotId,
-      masterKecamatanId: targetEdit?.masterKecamatanId,
-      masterDesaId: targetEdit?.masterDesaId,
-      masterNegaraId: targetEdit?.masterNegaraId,
-      alamatKantor: targetEdit?.alamatKantor,
-      waAdmin: targetEdit?.waAdmin,
+        targetEdit?.MasterJabatanPerwakilanPartaiDiLuarNegeri?.id!,
+      masterSayapPartaiId: targetEdit?.MasterSayapPartai?.id!,
+      masterKaderPartaiId: targetEdit?.MasterKaderPartai?.id!,
+      masterProvinceId: targetEdit?.MasterProvince?.id!,
+      masterKabKotId: targetEdit?.MasterKabKot?.id!,
+      masterKecamatanId: targetEdit?.MasterKecamatan?.id!,
+      masterDesaId: targetEdit?.MasterDesa?.id!,
+      masterNegaraId: targetEdit?.MasterNegara?.id!,
+      alamatKantor: targetEdit?.alamatKantor!,
+      waAdmin: targetEdit?.waAdmin!,
     };
-    await fetch("/api/sumber-daya-partai/sumber-daya-partai-update", {
+    // console.log(body);
+
+    fetch(api.apiSumberDayaPartaiUpdate, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    });
+    })
+      .then((res) => res.json())
+
+      .then(async (val) => _loadDataSDP_ByStatus_BySeach(1, inputSearch, setDataTable, "1", setTotalPage));
+      _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
+
   };
 
   if (!targetEdit)
@@ -162,27 +200,30 @@ export const EditStrukturV2 = (thisClosed: any) => {
 
   return (
     <>
-      {/* {JSON.stringify(targetStruktur, null, "\t")} */}
-      {/* {JSON.stringify(changeData)} */}
-
+      {/* <pre>{JSON.stringify(targetEdit, null, "\t")}</pre> */}
+      {/* {JSON.stringify(listJabatan_PRanting)} */}
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col span={12}>
               <Text size={20} fw={"bold"}>
-                Edit Data Struktur Partai
+                Edit Data Struktur Partai V2
               </Text>
             </Grid.Col>
           </Grid>
         </Paper>
-        <Box pt={30}>
+        <Box pt={"xl"}>
           <Box w={100}>
             <Button
+              sx={{
+                position: "relative",
+                bottom: 10,
+              }}
               fullWidth
               color="orange.9"
               bg={COLOR.orange}
               radius={"xl"}
-              onClick={() => {
+              onClick={(val) => {
                 onEdit();
               }}
             >
@@ -190,327 +231,308 @@ export const EditStrukturV2 = (thisClosed: any) => {
             </Button>
           </Box>
         </Box>
-        {/* DATA DIRI */}
-        {/* <Box pt={10}>
+        <Box>
           <TextInput
             label="Nama"
-            placeholder={targetEdit?.User.DataDiri.name}
-            onChange={(val) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.name = val.target.value;
-              setChangeData(data);
-            }}
+            disabled
+            value={targetEdit.User.DataDiri.name}
           />
           <Select
-            label="Jenis Kelamin"
-            searchable
+            maxDropdownHeight={150}
+            // disabled
+            label="Tingkat Pengurus"
             value={
-              selectJenisKelamin.name
-                ? selectJenisKelamin.name
-                : targetEdit?.User.DataDiri.MasterJenisKelamin.name
+              selectTingkatPengurus?.id
+                ? selectTingkatPengurus?.id
+                : targetEdit.MasterTingkatPengurus.name
             }
             placeholder={
-              selectJenisKelamin.name
-                ? selectJenisKelamin.name
-                : targetEdit?.User.DataDiri.MasterJenisKelamin.name
-            }
-            data={isJenisKelamin.map((e) => ({
-              value: e.id,
-              label: e.name,
-            }))}
-            onChange={(val) => {
-              const data: any = _.clone(targetEdit);
-              data.User.DataDiri.MasterJenisKelamin = val;
-              setChangeData(data);
-              setSelectJenisKelamin(isJenisKelamin.find((e) => e.id == val));
-            }}
-          />
-        </Box> */}
-        {/* DATA WILAYAH */}
-        {/* <Box>
-          <Select
-            label="Pilih Provinsi"
-            searchable
-            value={
-              selectProvince.name
-                ? selectProvince.name
-                : targetEdit.User.DataDiri.MasterProvince.name
-            }
-            placeholder={
-              selectProvince.name
-                ? selectProvince.name
-                : targetEdit.User.DataDiri.MasterProvince.name
-            }
-            data={isProvinsi.map((e) => ({
-              value: e.id,
-              label: e.name,
-            }))}
-            onChange={(val: any) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.MasterProvince = val;
-              setChangeData(data);
-              setSelectProvince(isProvinsi.find((e) => e.id == val));
-              _loadSelectKabkot(val, setIsKabupaten, setSelectKabupaten);
-            }}
-          />
-
-          <Select
-            label="Pilih Kabupaten / Kota"
-            searchable
-            value={
-              selectKabupaten.name
-                ? selectKabupaten.name
-                : targetEdit.User.DataDiri.MasterKabKot.name
-            }
-            placeholder={
-              selectKabupaten.name
-                ? selectKabupaten.name
-                : targetEdit.User.DataDiri.MasterKabKot.name
-            }
-            data={
-              _.isEmpty(isKabupaten)
-                ? []
-                : isKabupaten.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))
-            }
-            onChange={(val: any) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.MasterKabKot = val;
-              setChangeData(data);
-              setSelectKabupaten(isKabupaten.find((e) => e.id == val));
-              _loadSelectKecamatan(val, setIsKecamatan, setSelectKecamatan);
-            }}
-          />
-
-          <Select
-            label="Pilih Kecamatan"
-            searchable
-            value={
-              selectKecamatan.name
-                ? selectKecamatan.name
-                : targetEdit.User.DataDiri.MasterKecamatan.name
-            }
-            placeholder={
-              selectKecamatan.name
-                ? selectKecamatan.name
-                : targetEdit.User.DataDiri.MasterKecamatan.name
-            }
-            data={
-              _.isEmpty(isKecamatan)
-                ? []
-                : isKecamatan.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))
-            }
-            onChange={(val: any) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.MasterKecamatan = val;
-              setChangeData(data);
-              setSelectKecamatan(isKecamatan.find((e) => e.id == val));
-              _loadSelectDesa(val, setIsDesa, setSelectDesa);
-              // console.log(val)
-            }}
-          />
-
-          <Select
-            label="Plih Desa"
-            searchable
-            value={
-              selectDesa.name
-                ? selectDesa.name
-                : targetEdit.User.DataDiri.MasterDesa.name
-            }
-            placeholder={
-              selectDesa.name
-                ? selectDesa.name
-                : targetEdit.User.DataDiri.MasterDesa.name
-            }
-            data={
-              _.isEmpty(isDesa)
-                ? []
-                : isDesa.map((e) => ({
-                    value: e.id,
-                    label: e.name,
-                  }))
-            }
-            onChange={(val: any) => {
-              const data = _.clone(targetEdit);
-              data.User.DataDiri.MasterDesa = val;
-              setChangeData(data);
-              setSelectDesa(isDesa.find((e) => e.id == val));
-            }}
-          />
-          <TextInput placeholder="RT - __, RW - __" label="RT / RW" />
-        </Box> */}
-        {/* STATUS KENAGGOATAAN */}
-        <Box pt={50}>
-            
-          {/* <Select
-            label="Ex T.Pengurus"
-            value={
-              selectTingkatPengurus?.name
-                ? selectTingkatPengurus?.name
-                : targetEdit.masterTingkatPengurusId
-            }
-            placeholder={
-              selectTingkatPengurus?.name
-                ? selectTingkatPengurus?.name
+              selectTingkatPengurus?.id
+                ? selectTingkatPengurus?.id
                 : targetEdit.MasterTingkatPengurus.name
             }
             data={tingkatPengurus.map((e) => ({
               value: e.id,
               label: e.name,
             }))}
-            onChange={(val: any) => {
-              const data = _.clone(targetEdit);
-              data.MasterTingkatPengurus.name = val;
-              setChangeData(data);
+            onChange={(val) => {
+              // console.log(val)
               setSelectTingkatPengurus(
                 tingkatPengurus.find((e) => e.id == val)
               );
-
-          
+              const dataT: any = _.clone(targetEdit);
+              dataT.MasterTingkatPengurus.id = val;
+              setChangeData(targetEdit);
             }}
-          /> */}
+          />
+          {(() => {
+            let dataTarget = targetEdit;
 
-          {/* <Select
-            value={targetEdit.MasterTingkatPengurus.name}
-            label="Pilih Tingkat Pengurus"
-            // placeholder={targetStruktur.MasterTingkatPengurus.name}
-            nothingFound="No options"
-            withAsterisk
-            data={sTingkatPengurus.value.map((e) => ({
-              value: e.id,
-              label: e.name,
-            }))}
-            onChange={(val) => {
-              // console.log(sTingkatPengurus.value)
-              if (val == "1") {
-                setJabatan(
+            if (dataTarget.MasterTingkatPengurus.id == 1) {
+              return (
+                <>
                   <Select
-                    label="Pilih Jabatan D. Pembina"
-                    placeholder="Pilih Jabatan"
-                    nothingFound="No options"
-                    withAsterisk
-                    data={sJabatanDewanPembina.value.map((e) => ({
+                    maxDropdownHeight={200}
+                    label="Jabatan Dewan Pembina"
+                    value={
+                      selectDPembina?.name
+                        ? selectDPembina.name
+                        : targetEdit.MasterJabatanDewanPembina?.name
+                    }
+                    placeholder={
+                      selectDPembina?.name
+                        ? selectDPembina.name
+                        : targetEdit.MasterJabatanDewanPembina?.name
+                    }
+                    data={listJabatan_DPembina.map((e) => ({
                       value: e.id,
                       label: e.name,
                     }))}
-                    onChange={(val) => {}}
+                    onChange={(val) => {
+                      setSelectDPembina(
+                        listJabatan_DPembina.find((e) => e.id == val)
+                      );
+                      const data1: any = _.clone(targetEdit);
+                      data1.MasterJabatanDewanPembina.id = val;
+                      setChangeData(targetEdit);
+                      // console.log(data1);
+                    }}
                   />
-                );
-              } else {
-                if (val == "2") {
-                  setJabatan(
+                </>
+              );
+            } else {
+              if (dataTarget.MasterTingkatPengurus.id == 2) {
+                return (
+                  <>
                     <Select
-                      label="Pilih Jabatan D. Pimpinan Pusat"
-                      placeholder="Pilih Jabatan"
-                      nothingFound="No options"
-                      withAsterisk
-                      data={sJabatanDewanPimpinanPusat.value.map((e) => ({
+                      maxDropdownHeight={200}
+                      label="Jabatan Dewan Pimpinan Pusat"
+                      value={
+                        select_DPimpinanPusat?.name
+                          ? select_DPimpinanPusat.name
+                          : targetEdit.MasterJabatanDewanPimpinanPusat?.name
+                      }
+                      placeholder={
+                        select_DPimpinanPusat?.name
+                          ? select_DPimpinanPusat.name
+                          : targetEdit.MasterJabatanDewanPimpinanPusat?.name
+                      }
+                      data={listJabatan_DPimpinanPusat.map((e) => ({
                         value: e.id,
                         label: e.name,
                       }))}
-                      onChange={(val) => {}}
+                      onChange={(val) => {
+                        setSelect_DPimpinanPusat(
+                          listJabatan_DPimpinanPusat.find((e) => e.id == val)
+                        );
+                        const data2: any = _.clone(targetEdit);
+                        data2.MasterJabatanDewanPimpinanPusat.id = val;
+                        setChangeData(targetEdit);
+                      }}
                     />
-                  );
-                } else {
-                  if (val == "3") {
-                    //   formEditStrukturPartai.values.data.tingkatPengurus =
-                    //     val!;
-                    setJabatan(
+                  </>
+                );
+              } else {
+                if (dataTarget.MasterTingkatPengurus.id == 3) {
+                  return (
+                    <>
                       <Select
-                        label="Pilih Jabatan D. Pimpinan Daerah"
-                        placeholder="Pilih Jabatan"
-                        nothingFound="No options"
-                        withAsterisk
-                        data={sJabatanDewanPimpinanDaerah.value.map((e) => ({
+                        label="Jabatan Pimpinan Daerah"
+                        maxDropdownHeight={200}
+                        value={
+                          select_DPimpinanDaerah.name
+                            ? select_DPimpinanDaerah.name
+                            : targetEdit.MasterJabatanDewanPimpinanDaerah?.name
+                        }
+                        placeholder={
+                          select_DPimpinanDaerah.name
+                            ? select_DPimpinanDaerah.name
+                            : targetEdit.MasterJabatanDewanPimpinanDaerah?.name
+                        }
+                        data={listJabatan_DPimpinanDaerah.map((e) => ({
                           value: e.id,
                           label: e.name,
                         }))}
-                        onChange={(val) => {}}
+                        onChange={(val) => {
+                          setSelect_DPimpinanDaerah(
+                            listJabatan_DPimpinanDaerah.find((e) => e.id == val)
+                          );
+                          //   console.log(val)
+                          const data3: any = _.clone(targetEdit);
+                          data3.MasterJabatanDewanPimpinanDaerah.id = val;
+                          setChangeData(targetEdit);
+                        }}
                       />
-                    );
-                  } else {
-                    if (val == "4") {
-                      setJabatan(
+                    </>
+                  );
+                } else {
+                  if (dataTarget.MasterTingkatPengurus.id == 4) {
+                    return (
+                      <>
                         <Select
-                          label="Pilih Jabatan D. Pimpinan Cabang"
-                          placeholder="Pilih Jabatan"
-                          nothingFound="No options"
-                          withAsterisk
-                          data={sJabatanDewanPimpinanCabang.value.map((e) => ({
+                          label="Jabatan Dewan Pimpinan Cabang"
+                          maxDropdownHeight={200}
+                          value={
+                            select_DPimpinanCabang.name
+                              ? select_DPimpinanCabang.name
+                              : targetEdit.MasterJabatanDewanPimpinanCabang
+                                  ?.name
+                          }
+                          placeholder={
+                            select_DPimpinanCabang.name
+                              ? select_DPimpinanCabang.name
+                              : targetEdit.MasterJabatanDewanPimpinanCabang
+                                  ?.name
+                          }
+                          data={listJabatan_DPimpinanCabang.map((e) => ({
                             value: e.id,
                             label: e.name,
                           }))}
-                          onChange={(val) => {}}
+                          onChange={(val) => {
+                            setSelect_DPimpinanCabang(
+                              listJabatan_DPimpinanCabang.find(
+                                (e) => e.id == val
+                              )
+                            );
+                            //   console.log(val)
+                            const data4: any = _.clone(targetEdit);
+                            data4.MasterJabatanDewanPimpinanCabang.id = val;
+                            setChangeData(targetEdit);
+                          }}
                         />
-                      );
-                    } else {
-                      if (val == "5") {
-                        setJabatan(
+                      </>
+                    );
+                  } else {
+                    if (dataTarget.MasterTingkatPengurus.id == 5) {
+                      return (
+                        <>
                           <Select
-                            label="Pilih Jabatan P. Anak Cabang"
-                            placeholder="Pilih Jabatan"
-                            nothingFound="No options"
-                            withAsterisk
-                            data={sJabatanPimpinanAnakCabang.value.map((e) => ({
+                            label="Jabatan Pimpinan Anak Cabang"
+                            maxDropdownHeight={200}
+                            value={
+                              select_PAnakCabang.name
+                                ? select_PAnakCabang.name
+                                : targetEdit.MasterJabatanPimpinanAnakCabang
+                                    ?.name
+                            }
+                            placeholder={
+                              select_PAnakCabang.name
+                                ? select_PAnakCabang.name
+                                : targetEdit.MasterJabatanPimpinanAnakCabang
+                                    ?.name
+                            }
+                            data={listJabatan_PAnakCabang.map((e) => ({
                               value: e.id,
                               label: e.name,
                             }))}
-                            onChange={(val) => {}}
+                            onChange={(val) => {
+                              setSelect_PAnakCabang(
+                                listJabatan_PAnakCabang.find((e) => e.id == val)
+                              );
+                              //   console.log(val)
+                              const data5: any = _.clone(targetEdit);
+                              data5.MasterJabatanPimpinanAnakCabang.id = val;
+                              setChangeData(targetEdit);
+                            }}
                           />
-                        );
-                      } else {
-                        if (val == "6") {
-                          setJabatan(
+                        </>
+                      );
+                    } else {
+                      if (dataTarget.MasterTingkatPengurus.id == 6) {
+                        return (
+                          <>
                             <Select
-                              label="Pilih Jabatan P. Ranting"
-                              placeholder="Pilih Jabatan"
-                              nothingFound="No options"
-                              withAsterisk
-                              data={sJabatanPimpinanRanting.value.map((e) => ({
+                              label="Jabatan Pimpinan Ranting"
+                              maxDropdownHeight={200}
+                              value={
+                                select_PRanting.name
+                                  ? select_PRanting.name
+                                  : targetEdit.MasterJabatanPimpinanRanting
+                                      ?.name
+                              }
+                              placeholder={
+                                select_PRanting.name
+                                  ? select_PRanting.name
+                                  : targetEdit.MasterJabatanPimpinanRanting
+                                      ?.name
+                              }
+                              data={listJabatan_PRanting.map((e) => ({
                                 value: e.id,
                                 label: e.name,
                               }))}
-                              onChange={(val) => {}}
+                              onChange={(val) => {
+                                setSelect_PRanting(
+                                  listJabatan_PRanting.find((e) => e.id == val)
+                                );
+                                //   console.log(val)
+                                const data6: any = _.clone(targetEdit);
+                                data6.MasterJabatanPimpinanRanting.id = val;
+                                setChangeData(targetEdit);
+                              }}
                             />
-                          );
-                        } else {
-                          if (val == "7") {
-                            setJabatan(
+                          </>
+                        );
+                      } else {
+                        if (dataTarget.MasterTingkatPengurus.id == 7) {
+                          return (
+                            <>
                               <Select
-                                label="Pilih Jabatan P. Luar Negeri"
-                                placeholder="Pilih Jabatan"
-                                nothingFound="No options"
-                                withAsterisk
-                                data={sJabatanPerwakilanLuarNegeri.value.map(
+                                label="Jabatan Perwakilan Partai di Luar Negeri"
+                                maxDropdownHeight={200}
+                                value={
+                                  select_PerwakilanLuarNegeri.name
+                                    ? select_PerwakilanLuarNegeri.name
+                                    : targetEdit
+                                        .MasterJabatanPerwakilanPartaiDiLuarNegeri
+                                        ?.name
+                                }
+                                placeholder={
+                                  select_PerwakilanLuarNegeri.name
+                                    ? select_PerwakilanLuarNegeri.name
+                                    : targetEdit
+                                        .MasterJabatanPerwakilanPartaiDiLuarNegeri
+                                        ?.name
+                                }
+                                data={listJabatan_PerwakilanLuarNegeri.map(
                                   (e) => ({
                                     value: e.id,
                                     label: e.name,
                                   })
                                 )}
-                                onChange={(val) => {}}
+                                onChange={(val) => {
+                                  setSelect_PerwakilanLuarNegeri(
+                                    listJabatan_PerwakilanLuarNegeri.find(
+                                      (e) => e.id == val
+                                    )
+                                  );
+                                  //   console.log(val)
+                                  const data7: any = _.clone(targetEdit);
+                                  data7.MasterJabatanPerwakilanPartaiDiLuarNegeri.id =
+                                    val;
+                                  setChangeData(targetEdit);
+                                }}
                               />
-                            );
-                          } else {
-                            setJabatan("Data Tidak Ada !");
-                          }
+                            </>
+                          );
+                        } else {
+                          return (
+                            <>
+                              <Text>undefined</Text>
+                            </>
+                          );
                         }
                       }
                     }
                   }
                 }
               }
-              // console.log(
-              //   formEditStrukturPartai.values.data.tingkatPengurus = val
-              // )
-            }}
-          /> */}
-          {isJabatan && isJabatan}
+            }
+            return (
+              <>
+                <Loader />
+              </>
+            );
+          })()}
         </Box>
       </Box>
     </>

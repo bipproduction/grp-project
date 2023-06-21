@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
-import { _editDataStruktur } from "./table_struktur_partai";
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
 import { useShallowEffect } from "@mantine/hooks";
 import {
   _dataStruktur,
