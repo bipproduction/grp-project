@@ -1,7 +1,5 @@
 import {
-  Alert,
-  Box,
-  Button,
+  Drawer,
   Group,
   Modal,
   Text,
@@ -11,15 +9,12 @@ import {
 } from "@mantine/core";
 import React from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { FiAlertCircle } from "react-icons/fi";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { useRouter } from "next/router";
-import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
-import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
-import { useAtom } from "jotai";
-import { useForm } from "@mantine/form";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { useAtom } from "jotai";
+import { useRouter } from "next/router";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { atomWithStorage } from "jotai/utils";
+import ModalAnggotaPartai from "../modal_anggota_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -32,33 +27,28 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 8,
     color: "white",
 
-    backgroundColor: COLOR.merah,
+    backgroundColor: COLOR.coklat,
   },
 }));
 
-function AngotaPartaiV2() {
+const val_open_anggota = atomWithStorage("val_open_anggota", false);
+
+function AnggotaPartaiTsx() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const router = useRouter();
-  const [opened, { open, close }] = useDisclosure(false);
-  function AnggotaPartai() {
-    router.push("/v2/home");
-  }
-  
-  const formAnggota = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
-
-  useShallowEffect(() => {
-    _loadStatusKeanggotaan;
-  });
+  const [openAnggota, setOpenAnggota] = useAtom(val_open_anggota);
   return (
     <>
+      <Modal
+        size={"md"}
+        opened={openAnggota}
+        onClose={() => setOpenAnggota(false)}
+        // onClose={}
+        centered
+      >
+        <ModalAnggotaPartai />
+      </Modal>
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -68,7 +58,8 @@ function AngotaPartaiV2() {
             ...ambilData,
             masterStatusKeanggotaanId: "4",
           });
-          router.push("/v2/data-partai-v2/anggota-partai2");
+          setOpenAnggota(true);
+          // router.push("/v2/data-partai-v2/anggota-partai2");
         }}
       >
         <Group>
@@ -84,4 +75,4 @@ function AngotaPartaiV2() {
   );
 }
 
-export default AngotaPartaiV2;
+export default AnggotaPartaiTsx;

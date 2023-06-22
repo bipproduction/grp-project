@@ -48,9 +48,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturDewanPimpinanCabang2() {
-  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [isLoading, setLoading] = useAtom(val_loading);
   const [opened, { open, close }] = useDisclosure(false);
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
@@ -134,8 +134,8 @@ function StrukturDewanPimpinanCabang2() {
 
   const PimpinanCabang = async () => {
     // console.log(formStrukturDewanPimpinanCabang.values.data)
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     if (
       Object.values(formStrukturDewanPimpinanCabang.values.data).includes("")
     ) {
@@ -147,12 +147,12 @@ function StrukturDewanPimpinanCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPimpinanCabang.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -188,7 +188,8 @@ function StrukturDewanPimpinanCabang2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -225,106 +226,101 @@ function StrukturDewanPimpinanCabang2() {
                 </Group>
               </UnstyledButton>
             </Box>
-            <ScrollArea h={{sm: 405, base: 300}} scrollbarSize={0}>
-            <Select
-              onChange={(val) => {
-                if (val) {
-                  setSelectedProvince(provinsi.find((v) => v.id == val));
-                  loadKabupaten(val);
+            <ScrollArea h={{ sm: 405, base: 300 }} scrollbarSize={0}>
+              <Select
+                onChange={(val) => {
+                  if (val) {
+                    setSelectedProvince(provinsi.find((v) => v.id == val));
+                    loadKabupaten(val);
+                  }
+                  formStrukturDewanPimpinanCabang.values.data.masterProvinceId =
+                    val!;
+                }}
+                data={provinsi.map((pro) => ({
+                  value: pro.id,
+                  label: pro.name,
+                }))}
+                radius={"md"}
+                placeholder={selectedProvince.name}
+                value={selectedProvince.id}
+                label="Provinsi"
+                withAsterisk
+                searchable
+                mt={1}
+              />
+              <Select
+                key={Math.random()}
+                data={
+                  _.isEmpty(kabupaten)
+                    ? []
+                    : kabupaten.map((v) => ({
+                        value: v.id,
+                        label: v.name,
+                      }))
                 }
-                formStrukturDewanPimpinanCabang.values.data.masterProvinceId =
-                  val!;
-              }}
-              data={provinsi.map((pro) => ({
-                value: pro.id,
-                label: pro.name,
-              }))}
-              radius={"md"}
-              placeholder={selectedProvince.name}
-              value={selectedProvince.id}
-              label="Provinsi"
-              withAsterisk
-              searchable
-              mt={1}
-            />
-            <Select
-              key={Math.random()}
-              data={
-                _.isEmpty(kabupaten)
-                  ? []
-                  : kabupaten.map((v) => ({
-                      value: v.id,
-                      label: v.name,
-                    }))
-              }
-              radius={"md"}
-              placeholder={selectedKabupaten.name}
-              value={selectedKabupaten.id}
-              label="Kabupaten / Kota"
-              withAsterisk
-              searchable
-              mt={10}
-              onChange={(val) => {
-                setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-                loadKecamatan(val!);
-                formStrukturDewanPimpinanCabang.values.data.masterKabKotId =
-                  val!;
-              }}
-            />
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
-                  val!;
-              }}
-              data={sJabatanDewanPimpinanCabang.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              mt={10}
-              label="Jabatan"
-              withAsterisk
-              radius={"md"}
-              placeholder="Jabatan"
-              // data={jabatan}
-              searchable
-            />
-            <TextInput
-              {...formStrukturDewanPimpinanCabang.getInputProps(
-                "data.alamatKantor"
-              )}
-              radius={"md"}
-              withAsterisk
-              placeholder="Alamat Kantor"
-              label="Alamat Kantor"
-              mt={10}
-            />
-            <TextInput
-              {...formStrukturDewanPimpinanCabang.getInputProps("data.waAdmin")}
-              radius={"md"}
-              withAsterisk
-              placeholder="Nomor WA Admin"
-              label="Nomor WA Admin"
-              type="number"
-              mt={10}
-            />
-            {/* <TextInput
-        {...formStrukturDewanPimpinanCabang.getInputProps("data.medsos")}
-        radius={"md"}
-        withAsterisk
-        placeholder="Add Media Social"
-        label="Add Media Social"
-      /> */}
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanCabang}
-            >
-              SIMPAN
-            </Button>
+                radius={"md"}
+                placeholder={selectedKabupaten.name}
+                value={selectedKabupaten.id}
+                label="Kabupaten / Kota"
+                withAsterisk
+                searchable
+                mt={10}
+                onChange={(val) => {
+                  setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+                  loadKecamatan(val!);
+                  formStrukturDewanPimpinanCabang.values.data.masterKabKotId =
+                    val!;
+                }}
+              />
+              <Select
+                onChange={(val) => {
+                  setValue(val!);
+                  formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
+                    val!;
+                }}
+                data={sJabatanDewanPimpinanCabang.value.map((val) => ({
+                  value: val.id,
+                  label: val.name,
+                }))}
+                mt={10}
+                label="Jabatan"
+                withAsterisk
+                radius={"md"}
+                placeholder="Jabatan"
+                // data={jabatan}
+                searchable
+              />
+              <TextInput
+                {...formStrukturDewanPimpinanCabang.getInputProps(
+                  "data.alamatKantor"
+                )}
+                radius={"md"}
+                withAsterisk
+                placeholder="Alamat Kantor"
+                label="Alamat Kantor"
+                mt={10}
+              />
+              <TextInput
+                {...formStrukturDewanPimpinanCabang.getInputProps(
+                  "data.waAdmin"
+                )}
+                radius={"md"}
+                withAsterisk
+                placeholder="Nomor WA Admin"
+                label="Nomor WA Admin"
+                type="number"
+                mt={10}
+              />
+              <Button
+                mt={20}
+                fullWidth
+                bg={COLOR.coklat}
+                color="red.9"
+                radius={"md"}
+                onClick={PimpinanCabang}
+              >
+                SIMPAN
+              </Button>
             </ScrollArea>
           </Stack>
         </Box>

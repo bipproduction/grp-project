@@ -14,7 +14,10 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from "react-icons/io5";
+import {
+  IoArrowBackCircleSharp,
+  IoArrowForwardCircleOutline,
+} from "react-icons/io5";
 import { sKaderPartai } from "@/s_state/kader_partai/s_kader_partai";
 import { _loadKaderPartai } from "@/load_data/kader_partai/load_kader_partai";
 import { useForm } from "@mantine/form";
@@ -43,7 +46,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function KaderPartai2() {
-  const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const [value, setValue] = useState("");
@@ -52,8 +54,8 @@ function KaderPartai2() {
 
   const KaderPartai = async () => {
     // console.log(formKaderPartai.values.data)
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     if (Object.values(formKaderPartai.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
@@ -63,12 +65,12 @@ function KaderPartai2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formKaderPartai.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -87,7 +89,6 @@ function KaderPartai2() {
     },
   });
 
-
   function Afiliatif() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
   }
@@ -96,51 +97,57 @@ function KaderPartai2() {
   }
   return (
     <>
-          <LayoutDataPartaiV2>
+      <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
-          <ActionIcon onClick={Back} variant="transparent">
-            <IoArrowBackCircleSharp size="2rem"  color={COLOR.merah}/>
-          </ActionIcon>
-            <UnstyledButton className={classes.user} pr={20} pl={20} bg={"white"}>
+            <ActionIcon onClick={Back} variant="transparent">
+              <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
+            </ActionIcon>
+            <UnstyledButton
+              className={classes.user}
+              pr={20}
+              pl={20}
+              bg={"white"}
+            >
               <Group>
                 <div style={{ flex: 1 }}>
-                  <Text size={15}  color="dark">
+                  <Text size={15} color="dark">
                     Kader Partai
                   </Text>
                 </div>
               </Group>
             </UnstyledButton>
             <Select
-          label="Pilih Tingkat Pengurus"
-          placeholder="Pilih Tingkat Pengurus"
-          withAsterisk
-          radius={"md"}
-          data={sKaderPartai.value.map((v) => ({
-            value: v.id,
-            label: v.name,
-          }))}
-          onChange={(val) => {
-            setValue(val!);
-            formKaderPartai.values.data.masterKaderPartaiId = val!;
-          }}
-        />
-        <Button
-          mt={20}
-          fullWidth
-          bg={COLOR.coklat}
-          color="red.9"
-          radius={"md"}
-          onClick={KaderPartai}
-        >
-          SIMPAN
-        </Button>
+              label="Pilih Tingkat Pengurus"
+              placeholder="Pilih Tingkat Pengurus"
+              withAsterisk
+              radius={"md"}
+              data={sKaderPartai.value.map((v) => ({
+                value: v.id,
+                label: v.name,
+              }))}
+              onChange={(val) => {
+                setValue(val!);
+                formKaderPartai.values.data.masterKaderPartaiId = val!;
+              }}
+            />
+            <Button
+              mt={20}
+              fullWidth
+              bg={COLOR.coklat}
+              color="red.9"
+              radius={"md"}
+              onClick={KaderPartai}
+            >
+              SIMPAN
+            </Button>
           </Stack>
         </Box>
       </LayoutDataPartaiV2>

@@ -1,7 +1,4 @@
 import {
-  Alert,
-  Box,
-  Button,
   Group,
   Modal,
   Text,
@@ -11,15 +8,14 @@ import {
 } from "@mantine/core";
 import React from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { FiAlertCircle } from "react-icons/fi";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { useRouter } from "next/router";
-import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
-import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
 import { useAtom } from "jotai";
-import { useForm } from "@mantine/form";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/router";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { atomWithStorage } from "jotai/utils";
+import ModalStrukturCabang from "../modal_struktur_cabang";
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,29 +32,30 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function AngotaPartaiV2() {
+const val_open_struktur_cabang = atomWithStorage(
+  "val_open_struktur_cabang",
+  false
+);
+
+function PimpinanCabang() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
-  const [opened, { open, close }] = useDisclosure(false);
-  function AnggotaPartai() {
-    router.push("/v2/home");
-  }
-  
-  const formAnggota = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
+  const [openStrukturCabang, setOpenStrukturCabang] = useAtom(
+    val_open_struktur_cabang
+  );
 
-  useShallowEffect(() => {
-    _loadStatusKeanggotaan;
-  });
   return (
     <>
+      <Modal
+        size={"md"}
+        opened={openStrukturCabang}
+        onClose={() => setOpenStrukturCabang(false)}
+        centered
+      >
+        <ModalStrukturCabang />
+      </Modal>
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -66,15 +63,16 @@ function AngotaPartaiV2() {
         onClick={() => {
           setAmbilData({
             ...ambilData,
-            masterStatusKeanggotaanId: "4",
+            masterTingkatPengurusId: "4",
           });
-          router.push("/v2/data-partai-v2/anggota-partai2");
+          setOpenStrukturCabang(true)
+          // router.push("/v2/data-partai-v2/struktur-dewan-pimpinan-cabang2");
         }}
       >
         <Group>
           <div style={{ flex: 1 }}>
             <Text size={15} fw={700}>
-              Anggota Partai
+              Dewan Pimpinan Cabang
             </Text>
           </div>
           <IoArrowForwardCircleOutline size="1.5rem" />
@@ -84,4 +82,4 @@ function AngotaPartaiV2() {
   );
 }
 
-export default AngotaPartaiV2;
+export default PimpinanCabang;

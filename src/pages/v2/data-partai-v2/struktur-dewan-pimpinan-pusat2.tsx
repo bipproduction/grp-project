@@ -55,8 +55,8 @@ function DewanPimpinanPusat2() {
 
   const PimpinanPusat = async () => {
     // console.log(formStrukturDewanPimpinanPusat.values.data)
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     if (
       Object.values(formStrukturDewanPimpinanPusat.values.data).includes("")
     ) {
@@ -68,12 +68,12 @@ function DewanPimpinanPusat2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPimpinanPusat.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -106,7 +106,8 @@ function DewanPimpinanPusat2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -137,7 +138,7 @@ function DewanPimpinanPusat2() {
                 <Group>
                   <div style={{ flex: 1 }}>
                     <Text size={15} color="dark">
-                    Dewan Pimpinan Pusat
+                      Dewan Pimpinan Pusat
                     </Text>
                   </div>
                 </Group>

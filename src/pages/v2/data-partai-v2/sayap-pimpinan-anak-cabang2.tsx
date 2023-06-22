@@ -32,6 +32,7 @@ import COLOR from "../../../../fun/WARNA";
 import LayoutDataPartaiV2 from "@/v2/layout_data_partai/layout_data_partai";
 import { ambil_data, ambil_data_sayap } from "@/xg_state.ts/g_selected_page";
 import { val_loading } from "@/xg_state.ts/val_loading";
+import { _loadSayapPartai } from "@/load_data/sayap_partai/load_sayap_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -132,6 +133,7 @@ function SayapPimpinanAnakCabang2() {
 
   useShallowEffect(() => {
     loadProvinsi();
+    _loadSayapPartai();
     _loadJabatanPimpinanAnakCabang();
   }, []);
 

@@ -133,8 +133,8 @@ function StrukturPimpinanAnakCabang2() {
   }, []);
 
   const PimpinanAnakCabang = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     // console.log(formStrukturPimpinanAnakCabang.values.data)
     if (
       Object.values(formStrukturPimpinanAnakCabang.values.data).includes("")
@@ -147,12 +147,12 @@ function StrukturPimpinanAnakCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturPimpinanAnakCabang.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -185,7 +185,8 @@ function StrukturPimpinanAnakCabang2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -216,7 +217,7 @@ function StrukturPimpinanAnakCabang2() {
                 <Group>
                   <div style={{ flex: 1 }}>
                     <Text size={15} color="dark">
-                     Pimpinan Anak Cabang
+                      Pimpinan Anak Cabang
                     </Text>
                   </div>
                 </Group>

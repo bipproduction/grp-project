@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Container,
+  Drawer,
   Flex,
   Grid,
   Group,
@@ -61,7 +62,7 @@ const StatusKeanggotaanV2 = () => {
   return (
     <>
       {/* <pre>{JSON.stringify(listDataKeanggotaan, null, 2)}</pre> */}
-      <Modal opened={opened} onClose={close} centered size={"lg"} >
+      <Modal  opened={opened} onClose={close}  size={"md"} centered>
         <EditStatusKeanggotaan/>
       </Modal>
 

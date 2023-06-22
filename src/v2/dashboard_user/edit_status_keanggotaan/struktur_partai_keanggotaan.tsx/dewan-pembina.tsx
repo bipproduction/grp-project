@@ -1,7 +1,4 @@
 import {
-  Alert,
-  Box,
-  Button,
   Group,
   Modal,
   Text,
@@ -9,17 +6,14 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { FiAlertCircle } from "react-icons/fi";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
-import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
 import { useAtom } from "jotai";
-import { useForm } from "@mantine/form";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { atomWithStorage } from "jotai/utils";
+import ModalStrukturPembina from "../modal_struktur_pembina";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,29 +30,31 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function AngotaPartaiV2() {
+const val_open_struktur_pembina = atomWithStorage(
+  "val_open_struktur_pembina",
+  false
+);
+
+function DewanPembina() {
+  const router = useRouter();
+  const [value, setValue] = useState("");
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
-  const router = useRouter();
-  const [opened, { open, close }] = useDisclosure(false);
-  function AnggotaPartai() {
-    router.push("/v2/home");
-  }
-  
-  const formAnggota = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
+  const [openStrukturPembina, setOpenStrukturPembina] = useAtom(
+    val_open_struktur_pembina
+  );
 
-  useShallowEffect(() => {
-    _loadStatusKeanggotaan;
-  });
   return (
     <>
+      <Modal
+        size={"md"}
+        opened={openStrukturPembina}
+        onClose={() => setOpenStrukturPembina(false)}
+        centered
+      >
+        <ModalStrukturPembina />
+      </Modal>
+      {/* {JSON.stringify(ambilData)} */}
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -66,15 +62,16 @@ function AngotaPartaiV2() {
         onClick={() => {
           setAmbilData({
             ...ambilData,
-            masterStatusKeanggotaanId: "4",
+            masterTingkatPengurusId: "1",
           });
-          router.push("/v2/data-partai-v2/anggota-partai2");
+          setOpenStrukturPembina(true)
+          // router.push('/v2/data-partai-v2/struktur-dewan-pembina2')
         }}
       >
         <Group>
           <div style={{ flex: 1 }}>
             <Text size={15} fw={700}>
-              Anggota Partai
+              Dewan Pembina
             </Text>
           </div>
           <IoArrowForwardCircleOutline size="1.5rem" />
@@ -84,4 +81,4 @@ function AngotaPartaiV2() {
   );
 }
 
-export default AngotaPartaiV2;
+export default DewanPembina;
