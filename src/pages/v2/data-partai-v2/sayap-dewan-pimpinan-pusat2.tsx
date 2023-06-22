@@ -57,9 +57,9 @@ function SayapDewanPimpinanPusat2() {
   const router = useRouter();
 
   const PimpinanPusat = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
-    console.log(formSayapPimpinanPusat.values.data)
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
+    console.log(formSayapPimpinanPusat.values.data);
     if (Object.values(formSayapPimpinanPusat.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
     }
@@ -69,12 +69,12 @@ function SayapDewanPimpinanPusat2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapPimpinanPusat.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -103,13 +103,14 @@ function SayapDewanPimpinanPusat2() {
     router.push("/v2/data-partai-v2/sayap-partai-v2");
   }
   return (
-   <>
-         <LayoutDataPartaiV2>
+    <>
+      <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -140,59 +141,59 @@ function SayapDewanPimpinanPusat2() {
                 <Group>
                   <div style={{ flex: 1 }}>
                     <Text size={15} color="dark">
-                    Dewan Pimpinan Pusat
+                      Dewan Pimpinan Pusat
                     </Text>
                   </div>
                 </Group>
               </UnstyledButton>
             </Box>
             <Select
-          onChange={(val) => {
-            setValue(val!);
-            formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
-          }}
-          data={sSayapPartai.value.map((val) => ({
-            value: val.id,
-            label: val.name,
-          }))}
-          label="Pilih Sayap Partai"
-          mt={10}
-          radius={"md"}
-          withAsterisk
-          placeholder="Pilih Sayap Partai"
-          searchable
-        />
-        <Select
-          onChange={(val) => {
-            setValue(val!);
-            formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
-              val!;
-          }}
-          label="Jabatan"
-          withAsterisk
-          mt={10}
-          radius={"md"}
-          placeholder="Jabatan"
-          data={sJabatanDewanPimpinanPusat.value.map((val) => ({
-            value: val.id,
-            label: val.name,
-          }))}
-          searchable
-        />
-        <Button
-          mt={20}
-          fullWidth
-          bg={COLOR.coklat}
-          color="red.9"
-          radius={"md"}
-          onClick={PimpinanPusat}
-        >
-          SIMPAN
-        </Button>
+              onChange={(val) => {
+                setValue(val!);
+                formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
+              }}
+              data={sSayapPartai.value.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))}
+              label="Pilih Sayap Partai"
+              mt={10}
+              radius={"md"}
+              withAsterisk
+              placeholder="Pilih Sayap Partai"
+              searchable
+            />
+            <Select
+              onChange={(val) => {
+                setValue(val!);
+                formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
+                  val!;
+              }}
+              label="Jabatan"
+              withAsterisk
+              mt={10}
+              radius={"md"}
+              placeholder="Jabatan"
+              data={sJabatanDewanPimpinanPusat.value.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))}
+              searchable
+            />
+            <Button
+              mt={20}
+              fullWidth
+              bg={COLOR.coklat}
+              color="red.9"
+              radius={"md"}
+              onClick={PimpinanPusat}
+            >
+              SIMPAN
+            </Button>
           </Stack>
         </Box>
       </LayoutDataPartaiV2>
-   </>
+    </>
   );
 }
 

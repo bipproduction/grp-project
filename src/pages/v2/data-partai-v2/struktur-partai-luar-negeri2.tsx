@@ -51,16 +51,16 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StrukturPartaiLuarNegeri2() {
-  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [opened, { open, close }] = useDisclosure(false);
+  const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
   const router = useRouter();
   const [value, setValue] = useState("");
 
   const PerwakilanLuarNegeri = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     // console.log(formPerwakilanLuarNegeri.values.data)
     if (Object.values(formPerwakilanLuarNegeri.values.data).includes("")) {
       return toast("Lengkapi Data Diri");
@@ -71,12 +71,12 @@ function StrukturPartaiLuarNegeri2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formPerwakilanLuarNegeri.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+        setLoading(false);
+        await new Promise((r) => setTimeout(r, 500));
       }
     });
   };
@@ -111,7 +111,8 @@ function StrukturPartaiLuarNegeri2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>

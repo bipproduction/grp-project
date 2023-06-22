@@ -1,7 +1,5 @@
 import {
-  Alert,
-  Box,
-  Button,
+  Drawer,
   Group,
   Modal,
   Text,
@@ -9,17 +7,17 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { FiAlertCircle } from "react-icons/fi";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
-import { useRouter } from "next/router";
-import { _loadStatusKeanggotaan } from "@/load_data/sumber_daya_partai/load_status_keanggotaan";
-import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keanggotaan";
 import { useAtom } from "jotai";
-import { useForm } from "@mantine/form";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { useRouter } from "next/router";
+import { _loadKaderPartai } from "@/load_data/kader_partai/load_kader_partai";
+import { useForm } from "@mantine/form";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { atomWithStorage } from "jotai/utils";
+import ModalKaderPartai from "../modal_kader_partai";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -32,33 +30,29 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 8,
     color: "white",
 
-    backgroundColor: COLOR.merah,
+    backgroundColor: COLOR.coklat,
   },
 }));
 
-function AngotaPartaiV2() {
+const val_open_kader = atomWithStorage("val_open_kader", false);
+
+function KaderPartaiKeanggotaanTsx() {
+  const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
+  const [value, setValue] = useState("");
   const router = useRouter();
-  const [opened, { open, close }] = useDisclosure(false);
-  function AnggotaPartai() {
-    router.push("/v2/home");
-  }
-  
-  const formAnggota = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
-
-  useShallowEffect(() => {
-    _loadStatusKeanggotaan;
-  });
+  const [openKader, setOpenKader] = useAtom(val_open_kader);
   return (
     <>
+      <Modal
+      size={"md"}
+        opened={openKader}
+        onClose={() => setOpenKader(false)}
+        centered
+      >
+        <ModalKaderPartai/>
+      </Modal>
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -66,15 +60,16 @@ function AngotaPartaiV2() {
         onClick={() => {
           setAmbilData({
             ...ambilData,
-            masterStatusKeanggotaanId: "4",
+            masterStatusKeanggotaanId: "3",
           });
-          router.push("/v2/data-partai-v2/anggota-partai2");
+          setOpenKader(true)
+          // router.push("/v2/data-partai-v2/kader-partai2");
         }}
       >
         <Group>
           <div style={{ flex: 1 }}>
             <Text size={15} fw={700}>
-              Anggota Partai
+              Kader Partai
             </Text>
           </div>
           <IoArrowForwardCircleOutline size="1.5rem" />
@@ -84,4 +79,4 @@ function AngotaPartaiV2() {
   );
 }
 
-export default AngotaPartaiV2;
+export default KaderPartaiKeanggotaanTsx;

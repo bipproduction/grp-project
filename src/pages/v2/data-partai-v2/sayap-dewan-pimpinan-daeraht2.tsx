@@ -92,6 +92,7 @@ function SayapDewanPimpinanDaeraht2() {
       data: {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
+        masterProvinceId: "",
         masterJabatanDewanPimpinanDaerahId: "",
         masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
         masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
@@ -100,8 +101,9 @@ function SayapDewanPimpinanDaeraht2() {
   });
 
   useShallowEffect(() => {
-    _loadJabatanDewanPimpinanPusat();
+    _loadJabatanDewanPimpinanDaerah();
     _loadSayapPartai();
+    _loadProvinsi();
   }, []);
 
   function Afiliatif() {
@@ -154,6 +156,23 @@ function SayapDewanPimpinanDaeraht2() {
                 </Group>
               </UnstyledButton>
             </Box>
+            <Select
+              // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
+              data={sProvinsi.value.map((val) => ({
+                value: val.id,
+                label: val.name,
+              }))}
+              radius={"md"}
+              placeholder="Provinsi"
+              label="Provinsi"
+              withAsterisk
+              searchable
+              onChange={(val) => {
+                setValue(val!);
+                formSayapPimpinanDaerah.values.data.masterProvinceId =
+                  val!;
+              }}
+            />
             <Select
               onChange={(val) => {
                 setValue(val!);

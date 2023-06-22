@@ -47,10 +47,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function DewanPembina2() {
-  const router = useRouter();
   const [value, setValue] = useState("");
+  const router = useRouter();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [isLoading, setLoading] = useAtom(val_loading);
+  const { classes } = useStyles();
 
 
   const PimpinanDewanPembina = async () => {
@@ -92,7 +93,7 @@ function DewanPembina2() {
   }, []);
 
   const [opened, { open, close }] = useDisclosure(false);
-  const { classes } = useStyles();
+
 
   function Afiliatif() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");

@@ -205,16 +205,6 @@ function StrukturDewanPimpinanDaerah2() {
               //   setValue(formStrukturDewanPimpinanDaerah.values.data.waAdmin)
               // }}
             />
-            {/* <TextInput
-        {...formStrukturDewanPimpinanDaerah.getInputProps("data.medsos")}
-        radius={"m
-        withAsterisk
-        placeholder="Add Media Social"
-        label="Add Media Social"
-        // onChange={() => {
-        //   setValue(formStrukturDewanPimpinanDaerah.values.data.medsos)
-        // }}
-      /> */}
             <Button
               mt={20}
               fullWidth

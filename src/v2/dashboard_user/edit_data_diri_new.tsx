@@ -367,8 +367,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectProvinceDT.name
-                  ? selectProvinceDT.name
+                selectProvinceDT.id
+                  ? selectProvinceDT.id
                   : listData.MasterProvince.name
               }
               placeholder={
@@ -395,8 +395,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKabupatenDT.name
-                  ? selectKabupatenDT.name
+                selectKabupatenDT.id
+                  ? selectKabupatenDT.id
                   : listData.MasterKabKot.name
               }
               placeholder={
@@ -427,8 +427,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKecamatanDT.name
-                  ? selectKecamatanDT.name
+                selectKecamatanDT.id
+                  ? selectKecamatanDT.id
                   : listData.MasterKecamatan.name
               }
               placeholder={
@@ -459,7 +459,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               radius={"md"}
               value={
-                selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
+                selectDesaDT.id? selectDesaDT.id : listData.MasterDesa.name
               }
               placeholder={
                 selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
