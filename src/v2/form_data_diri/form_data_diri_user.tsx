@@ -621,8 +621,11 @@ const FormDataDiriUser = () => {
                 if (val) {
                   setSelectedProvince(provinsi.find((v) => v.id == val));
                   loadKabupaten(val);
+                  
                 }
                 formDataDiri.values.data.masterProvinceId = val!;
+                selectedKabupaten.name=""
+                selectedKabupaten.id=""
               }}
 
               // onChange={selectedProvince}
@@ -650,6 +653,8 @@ const FormDataDiriUser = () => {
                 setSelectedKabupaten(kabupaten.find((v) => v.id == val));
                 loadKecamatan(val!);
                 formDataDiri.values.data.masterKabKotId = val!;
+                selectedKecamatan.name=""
+                selectedKecamatan.id=""
               }}
             />
             {/* {JSON.stringify(selectedKecamatan.name)} */}
@@ -677,6 +682,8 @@ const FormDataDiriUser = () => {
                 setSelectedKecamatan(kecamatan.find((v) => v.id == val));
                 loadDesa(val!);
                 formDataDiri.values.data.masterKecamatanId = val!;
+                selectedDesa.name=""
+                selectedDesa.id=""
               }}
             />
             {/* {JSON.stringify(selectedDesa.name)} */}

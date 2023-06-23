@@ -374,7 +374,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectProvinceDT.id
                   ? selectProvinceDT.id
-                  : listData.MasterProvince.name
+                  : listData.MasterProvince.id as any
                   // : selectProvinceDT.name
               }
               placeholder={
@@ -394,7 +394,10 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
                 setSelectProvinceDT(itProvinsi.find((e) => e.id == val));
                 _loadSelectKabkot(val, setItKabupaten, setSelectKabupatenDT);
-                setUbah(null)
+                // setUbah(null)
+                listData.MasterKabKot.name="";
+                listData.MasterKabKot.id=0;
+
               }}
             />
             {/* {JSON.stringify(selectKabupatenDT.name)} */}
@@ -406,7 +409,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectKabupatenDT.id
                   ? selectKabupatenDT.id
-                  : listData.MasterKabKot.name
+                  : listData.MasterKabKot.id as any
                   // :selectKabupatenDT.name
               }
               placeholder={
@@ -429,7 +432,8 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
                 setSelectKabupatenDT(itKabupaten.find((e) => e.id == val));
                 _loadSelectKecamatan(val, setItKecamatan, setSelectKecamatanDT);
-                setUbah(null)
+                listData.MasterKecamatan.name=""
+                listData.MasterKecamatan.id=0
               }}
             />
 {/* {JSON.stringify(selectKecamatanDT.name)} */}
@@ -441,7 +445,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectKecamatanDT.id
                   ? selectKecamatanDT.id
-                  : listData.MasterKecamatan.name
+                  : listData.MasterKecamatan.id as any
                   // : selectKecamatanDT.name
               }
               placeholder={
@@ -465,7 +469,8 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setSelectKecamatanDT(itKecamatan.find((e) => e.id == val));
                 _loadSelectDesa(val, setItDesa, setSelectDesaDT);
                 // console.log(val)
-                setUbah(null)
+                listData.MasterDesa.name=""
+                listData.MasterDesa.id=0
               }}
             />
             {/* {JSON.stringify(selectDesaDT.name)} */}
@@ -478,7 +483,7 @@ function EditDataDiriNew({ thisClosed }: any) {
                 selectDesaDT.id 
                 ? selectDesaDT.id 
                 // : selectDesaDT.name
-                : listData.MasterDesa.name
+                : listData.MasterDesa.id as any
               }
               placeholder={
                 selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
