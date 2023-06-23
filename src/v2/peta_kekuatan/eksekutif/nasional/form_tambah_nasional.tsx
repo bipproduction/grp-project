@@ -91,7 +91,10 @@ export const FormTambahEksekutifNasionalV2 = ({
             onChange={(val) => { setInputJabatanNasional(val.target.value) }}
           />
           <TextInput placeholder="Periode" label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
-          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { setInputNIK(val.target.value) }} />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { 
+            setInputNIK(val.target.value);
+            setDataDiri(undefined);
+            }} />
           <Button onClick={onFind}>Cek</Button>
           {dataDiri && (
             <>

@@ -79,7 +79,7 @@ export const FormTambahEksekutifProvinsiV2 = ({
   }
 
   const onAdd = () => {
-    console.log(body);
+    //console.log(body);
     if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
@@ -131,7 +131,10 @@ export const FormTambahEksekutifProvinsiV2 = ({
             onChange={(val) => { setInputJabatanProvince(val) }}
           />
           <TextInput placeholder="Periode" label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
-          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { setInputNIK(val.target.value) }} />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => {
+            setInputNIK(val.target.value);
+            setDataDiri(undefined);
+          }} />
           <Button onClick={onFind}>Cek</Button>
           {dataDiri && (
             <>

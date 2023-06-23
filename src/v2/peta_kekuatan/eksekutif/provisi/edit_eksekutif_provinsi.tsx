@@ -29,7 +29,7 @@ import toast from "react-simple-toasts";
 import { _dataEksekutifProvinsi, _dataPageEksekutifProvinsi, _dataSearchEksekutifProvinsi, _dataTotalPageEksekutifProvinsi, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
-import _ from "lodash";
+import _, { isNull } from "lodash";
 
 export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
   //const [dataEdit, setDataEdit] = useState<ModelEksekutif | null>(null);
@@ -77,8 +77,9 @@ export const EditEksekutifProvinsiV2 = ({ thisClosed, data }: any) => {
 
   const onEdit = () => {
     // console.log(body);
-    // console.log(inputPartaiPengusung.length)
-    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
+    // console.log(body.partaiPengusung.length)
+    if (isNull(body.partaiPengusung)) return toast("Lengkapi Data")
+    if (Object.values(body).includes("") || body.partaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
     // disini pengaplikasian api

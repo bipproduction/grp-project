@@ -34,7 +34,7 @@ import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
 import { ModelEksekutifDataDiri } from "@/model/model_peta_kekuatan";
 import toast from "react-simple-toasts";
-import _ from "lodash";
+import _, { isNull } from "lodash";
 import { _loadSelectKabkot, _loadSelectProvinsi } from "@/load_data/wilayah/load_selected_wilayah";
 import { useAtom } from "jotai";
 import { _kabupaten, _provinsi, _selected_Kabkot, _selected_Provinisi } from "@/s_state/wilayah/select_wilayah";
@@ -102,6 +102,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
   }
 
   const onAdd = () => {
+    if (isNull(body.partaiPengusung)) return toast("Lengkapi Data")
     if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
@@ -200,6 +201,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                 setSelectKabupaten
               );
               setInputProvince(val)
+              setInputKabKot("");
             }}
           />
 
@@ -208,6 +210,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
             searchable
             label={"Pilih Kabupaten/Kota"}
             placeholder={"Pilih Kabupaten/Kota"}
+            value={inputKabKot}
             data={
               _.isEmpty(isKabupaten)
                 ? []
@@ -222,7 +225,10 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
           />
 
           <TextInput placeholder="Periode" label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
-          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { setInputNIK(val.target.value) }} />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => {
+            setInputNIK(val.target.value);
+            setDataDiri(undefined);
+          }} />
           <Button onClick={onFind}>Cek</Button>
           {dataDiri && (
             <>

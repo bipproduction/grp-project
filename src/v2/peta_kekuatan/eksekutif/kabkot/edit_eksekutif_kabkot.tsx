@@ -39,6 +39,7 @@ import toast from "react-simple-toasts";
 import { _dataEksekutifKabKot, _dataPageEksekutifKabKot, _dataSearchEksekutifKabKot, _dataTotalPageEksekutifKabKot, _loadDataEksekutif } from "@/load_data/peta_kekuatan/load_eksekutif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { isNull, isUndefined } from "lodash";
 
 export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   const [value, setValue] = useState<any>();
@@ -129,7 +130,11 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
   }
 
   const onEdit = () => {
-    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
+    // console.log(body);
+    if (body.masterJabatanEksekutifKabKotId == 2 && (isNull(body.masterJabatanEksekutifKotaId) || isUndefined(body.masterJabatanEksekutifKotaId))) return toast("Lengkapi Data")
+    if (body.masterJabatanEksekutifKabKotId == 1 && (isNull(body.masterJabatanEksekutifKabupatenId) || isUndefined(body.masterJabatanEksekutifKabupatenId))) return toast("Lengkapi Data")
+    if (isNull(body.partaiPengusung)) return toast("Lengkapi Data")
+    if (Object.values(body).includes("") || body.partaiPengusung.length == 0) {
       return toast("Lengkapi Data");
     }
     // disini pengaplikasian api
@@ -200,6 +205,9 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
               onChange={(val: any) => {
                 _loadKabkot(val);
                 setInputProvince(val);
+                dataEdit.MasterKabKot.name = "";
+                dataEdit.MasterKabKot.id = "";
+                setInputKabKot("");
               }}
             />
 
@@ -212,6 +220,7 @@ export const EditEksekutifKabkotV2 = ({ thisClosed, data }: any) => {
                 value: e.id,
                 label: e.name,
               }))}
+              value={inputKabKot}
               onChange={(val) => {
                 setInputKabKot(val);
               }}
