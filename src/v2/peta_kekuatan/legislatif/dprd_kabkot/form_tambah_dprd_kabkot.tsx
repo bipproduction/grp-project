@@ -115,6 +115,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
                 isProvinsi.find((e) => e.id == val)
               );
               _loadSelectKabkot(val, setIsKabupaten, setSelectKabupaten);
+              setInputKabKot("");
             }}
           />
 
@@ -122,6 +123,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
             withAsterisk
             placeholder="Pilih Kabupaten"
             label="Pilih Kabupaten"
+            value={inputKabKot}
             data={
               _.isEmpty(isKabupaten)
                 ? []
@@ -157,7 +159,10 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
           />
           <TextInput placeholder="Periode" label="Periode" withAsterisk onChange={(val) => { setInputPeriode(val.target.value) }} />
           <TextInput placeholder="Jabatan" label="Jabatan" withAsterisk onChange={(val) => { setInputJabatan(val.target.value) }} />
-          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => { setInputNIK(val.target.value) }} />
+          <TextInput placeholder="NIK" label="NIK" withAsterisk onChange={(val) => {
+            setInputNIK(val.target.value);
+            setDataDiri(undefined);
+          }} />
           <Button onClick={onFind}>Cek</Button>
           {dataDiri && (
             <>

@@ -14,6 +14,7 @@ import toast from "react-simple-toasts";
 import { _dataLegislatifKabKot, _dataPageLegislatifKabKot, _dataSearchLegislatifKabKot, _dataTotalPageLegislatifKabKot, _loadDataLegislatif } from "@/load_data/peta_kekuatan/load_legislatif";
 import { useAtom } from "jotai";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import _ from "lodash";
 
 
 
@@ -106,7 +107,6 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
         <Flex direction={"column"}>
           {/* <TextInput placeholder="NIK" label="NIK" withAsterisk />
           <TextInput placeholder="Nama" label="Nama" withAsterisk /> */}
-
           <Select
             withAsterisk
             placeholder={dataEdit?.MasterProvince?.name}
@@ -118,6 +118,12 @@ export const EditLegislatifDprdKabkotV2 = ({ thisClosed, data }: any) => {
             onChange={(val: any) => {
               _loadKabkot(val)
               setInputProvince(val)
+              let dataNya: any = _.clone(dataEdit);
+              dataNya.MasterKabKot.name = "";
+              dataNya.MasterKabKot.id = 0;
+              dataNya.masterKabKotId = "";
+              setDataEdit(dataNya)
+              setinputKabKot("")
             }}
           />
 
