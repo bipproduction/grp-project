@@ -101,24 +101,24 @@ function AngotaPartai2() {
   }
   return (
     <>
-      <LayoutDataPartaiV2>
-        <Box h={"100%"}>
-          <Box pl={40}></Box>
-          <Box pl={40}>
+      {/* <LayoutDataPartaiV2> */}
+        {/* <Box h={"100%"}>
+          <Box pl={40}></Box> */}
+          {/* <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
               Jika Termasuk Organisasi Afiliatif,{" "}
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
-          </Box>
-          <Stack p={30} pt={35}>
-            <ActionIcon onClick={Back} variant="transparent">
+          </Box> */}
+          <Stack  pt={35}>
+            {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
-            </ActionIcon>
+            </ActionIcon> */}
             <UnstyledButton
               className={classes.user}
               pr={20}
               pl={20}
-              bg={"white"}
+              bg={COLOR.abuabu}
             >
               <Group>
                 <div style={{ flex: 1 }}>
@@ -139,8 +139,8 @@ function AngotaPartai2() {
               SIMPAN
             </Button>
           </Stack>
-        </Box>
-      </LayoutDataPartaiV2>
+        {/* </Box> */}
+      {/* </LayoutDataPartaiV2> */}
     </>
   );
 }

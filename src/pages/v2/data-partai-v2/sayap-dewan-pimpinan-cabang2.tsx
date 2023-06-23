@@ -206,7 +206,7 @@ function SayapDewanPimpinanCabang2() {
     <>
       {/* <LayoutDataPartaiV2> */}
       {/* <LayoutDataDiriV2> */}
-      <LayoutDataDiriCabangV2>
+      {/* <LayoutDataDiriCabangV2>
         <Box h={"100%"} bg={COLOR.abuabu}>
           <Box pl={40}></Box>
           <Box pl={40}>
@@ -214,16 +214,16 @@ function SayapDewanPimpinanCabang2() {
               Jika Termasuk Organisasi Afiliatif,{" "}
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
-          </Box>
-          <Stack p={30} pt={35}>
-            <ActionIcon onClick={Back} variant="transparent">
+          </Box> */}
+          <Stack pt={35}>
+            {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
-            </ActionIcon>
+            </ActionIcon> */}
             <UnstyledButton
               className={classes.user}
               pr={20}
               pl={20}
-              bg={"white"}
+              bg={COLOR.abuabu}
             >
               <Group>
                 <div style={{ flex: 1 }}>
@@ -238,7 +238,7 @@ function SayapDewanPimpinanCabang2() {
                 className={classes.user}
                 pr={20}
                 pl={20}
-                bg={"white"}
+                bg={COLOR.abuabu}
               >
                 <Group>
                   <div style={{ flex: 1 }}>
@@ -376,8 +376,8 @@ function SayapDewanPimpinanCabang2() {
               SIMPAN
             </Button>
           </Stack>
-        </Box>
-      </LayoutDataDiriCabangV2>
+        {/* </Box>
+      </LayoutDataDiriCabangV2> */}
       {/* </LayoutDataDiriV2> */}
       {/* </LayoutDataPartaiV2> */}
     </>
