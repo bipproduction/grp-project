@@ -110,7 +110,7 @@ export const AsetLampiranV2 = ({ dataAset }: { dataAset: any }) => {
         <Grid>
           <Grid.Col span={8}>
             <Text size={20} fw={"bold"}>
-              Tambah Lampiran Aset Partai
+              Data Lampiran Aset Partai
             </Text>
           </Grid.Col>
         </Grid>
