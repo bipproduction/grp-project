@@ -46,17 +46,29 @@ import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import _ from "lodash";
+import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
+import { new_state_refresh, refresh_page } from "../force_refresh";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
   const [dataTable, setDataTable] = useAtom(_dataSayapTable_ByStatusSearch);
   const [search, setSearch] = useState("");
-  const [valueId, setValueId] = useState("");
+  const [valueId, setValueId] = useState<ModelSumberDayaPartai>();
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
   const [inputPage, setInputPage] = useAtom(_dataPageSDP_Sayap);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Sayap);
   let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
+
+  const [stateBaru, setStateBaru] = useAtom(new_state_refresh);
+  const [refresh, setRefresh] = useAtom(refresh_page);
+
+  useShallowEffect(() => {
+    if (refresh) {
+      setStateBaru(Math.random().toString());
+      _loadDataSDP_ByStatus_BySeach(2, search, setDataTable, "1", setTotalPage);
+    }
+  }, [refresh]);
 
   useShallowEffect(() => {
     onSearch("");
@@ -102,7 +114,7 @@ const TableSayapPartaiV2 = () => {
           <ActionIcon
             color="green"
             onClick={() => {
-              setValueId(e.id);
+              setValueId(e);
               open();
             }}
           >
@@ -143,7 +155,8 @@ const TableSayapPartaiV2 = () => {
         }}
       >
         {/* <EditSayapPartaiV2 thisClosed={close} /> */}
-        <SayapEditV2 thisClosed={close} setId={valueId} />
+        {/* <SayapEditV2 thisClosed={close} setId={valueId} /> */}
+        <EditSumberDayaPartaiV2 valId={valueId} closeModal={close}/>
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>

@@ -54,17 +54,16 @@ export const _editLoadKader_ByStatusSeacrh =
     null
   );
 export const _dataSeach = atom<any>("");
-export const _searchDataSumberDayaPartai = atom("")
+export const _searchDataSumberDayaPartai = atom("");
 // Pagination storage
-export const _dataPageSDP_Strukturr = atom("")
-export const _dataPageSDP_Sayap = atom("")
-export const _dataPageSDP_Kader = atom("")
-export const _dataPageSDP_Anggota = atom("")
-export const _dataTotalPageSDP_Strukturr = atom("")
-export const _dataTotalPageSDP_Sayap = atom("")
-export const _dataTotalPageSDP_Kader = atom("")
-export const _dataTotalPageSDP_Anggota = atom("")
-
+export const _dataPageSDP_Strukturr = atom("");
+export const _dataPageSDP_Sayap = atom("");
+export const _dataPageSDP_Kader = atom("");
+export const _dataPageSDP_Anggota = atom("");
+export const _dataTotalPageSDP_Strukturr = atom("");
+export const _dataTotalPageSDP_Sayap = atom("");
+export const _dataTotalPageSDP_Kader = atom("");
+export const _dataTotalPageSDP_Anggota = atom("");
 
 // Load Data by Status Keanggotaan dan Search by name
 // New update: Penambahan pagination
@@ -75,8 +74,10 @@ export const _loadDataSDP_ByStatus_BySeach = async (
   page: any,
   setTotalPage: any
 ) => {
+  
   await fetch(
-    api.apiSumberDayaPartaiSearch + `?status=${status}&search=${search}&page=${page}`
+    api.apiSumberDayaPartaiSearch +
+      `?status=${status}&search=${search}&page=${page}`
   )
     .then((res) => res.json())
     .then((val) => {
@@ -86,8 +87,8 @@ export const _loadDataSDP_ByStatus_BySeach = async (
   await fetch(
     api.apiSumberDayaPartaiCountPage + `?status=${status}&search=${search}`
   )
-  .then((res) => res.json())
-  .then((val) => (setTotalPage(val)))
+    .then((res) => res.json())
+    .then((val) => setTotalPage(val));
 };
 
 // Load Data by Status Kenanggotaan
@@ -105,19 +106,18 @@ export const _loadEditSumberDayaPartai_ById = async (
   setTargetEdit: any
 ) => {
   await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
-    .then((e) => e.json())
+    .then(async (e) => await e.json())
     .then((val) => setTargetEdit(val));
 };
 export const _loadUserSumberDayaPartai_ById = async (
   id: any,
   setDatKeanggotan: any
 ) => {
-  await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`)
-  .then(async (val) => {
-        if (val.status == 200) {
-          const data = await val.json();
-          setDatKeanggotan(data);
-          return;
-        }
-      });
+  await fetch(api.apiSumberDayaPartaiGetOne + `?id=${id}`).then(async (val) => {
+    if (val.status == 200) {
+      const data = await val.json();
+      setDatKeanggotan(data);
+      return;
+    }
+  });
 };
