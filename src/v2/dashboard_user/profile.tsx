@@ -30,7 +30,7 @@ import {
   UserMediaSocial,
 } from "@/model/interface_sumber_daya_partai";
 import { _dataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
-import EditDataDiriNew from "./edit_data_diri_new";
+import EditDataDiriNew, { _datapartaiedit } from "./edit_data_diri_new";
 import { Router, useRouter } from "next/router";
 import moment from "moment";
 import { val_edit_modal } from "@/xg_state.ts/val_edit_modal";
@@ -47,6 +47,7 @@ import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
 import { _val_reload_image } from "./image-upload";
 import { ModalImageUser } from "@/model/interface_image_user";
 import { _dataImgNew } from "@/load_data/load_gambar_user";
+import { _datapartaiEditProfile } from "@/load_data/sumber_daya_partai/load_edit_profile";
 moment.locale("id");
 
 export const _datapartai_form = atomWithStorage<DataDiri | null>(
@@ -81,7 +82,7 @@ const DataProfileV2 = () => {
   // const [listData, setListData] = useState<string | any>("");
   const [getMediaSocial, setGetMediaSocial] = useAtom(_mediaSocialGet);
   const [listData2, setListData2] = useAtom(_datapartai_user);
-  const [listData, setListData] = useAtom(_datapartai_form);
+  const [listData, setListData] = useAtom(_datapartaiEditProfile);
   const [dataStuktur, setDataStruktur] = useAtom(_dataStruktur);
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
