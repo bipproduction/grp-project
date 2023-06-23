@@ -69,12 +69,17 @@ import "moment/locale/id";
 import { ModelUserMediaSosial } from "@/model/interface_media_social";
 import { buttonSimpan } from "../component/button-toast";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { _datapartaiEditProfile } from "@/load_data/sumber_daya_partai/load_edit_profile";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
 // export const _MediaSocialGet = atomWithStorage<ModelUserMediaSosial | null>(
 //   "",
 //   null
 // );
+export const _datapartaiedit = atomWithStorage<DataDiri | null>(
+  "dataDiri",
+  null
+);
 
 const val_open_edit_kta = atomWithStorage("val_open_edit_kta", false);
 
@@ -83,7 +88,8 @@ export const _listData = atom<DataDiri | null>(null);
 function EditDataDiriNew({ thisClosed }: any) {
   const [targetEditDataDIri, setTargetEditDataDiri] = useAtom(_EditDataDiri);
   const router = useRouter();
-  const [listData, setListData] = useAtom(_datapartai_form);
+  const [listData, setListData] = useAtom(_datapartaiEditProfile);
+  const [noHP, setNoHP] = useState<string | null>(null);
   const [dataDiri, setDataDiri] = useAtom(_dataedit);
   // const [changeData, setChangeData] = useAtom(_listData);
   const [ubah, setUbah] = useAtom(_listData);
@@ -123,23 +129,36 @@ function EditDataDiriNew({ thisClosed }: any) {
       masterKabKotId: listData?.MasterKabKot.id,
       masterKecamatanId: listData?.MasterKecamatan.id,
       masterDesaId: listData?.MasterDesa.id,
-      // masterProvinceId: selectProvinceDT.id,
-      // masterKabKotId: selectKabupatenDT.id,
-      // masterKecamatanId: selectKecamatanDT.id,
-      // masterDesaId: selectDesaDT.id,
-      nik: listData?.nik,
+      nik: listData?.nik!,
       tempatLahir: listData?.tempatLahir,
       tanggalLahir: listData?.tanggalLahir,
       masterJenisKelaminId: listData?.MasterJenisKelamin.id,
-      phoneNumber: listData?.phoneNumber,
+      phoneNumber: listData?.phoneNumber!,
       alamat: listData?.alamat,
       rtRw: listData?.rtRw,
       name: listData?.name,
     };
     console.log(body);
+
     if (Object.values(body).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
+
+    if (Object.values(body.nik).length != 16){
+      setLoading(false);
+      return toast("NIK harus 16 angka");
+    }
+
+    if(Object.values(body.phoneNumber).length <= 10 ) {
+      setLoading(false);
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+    if(Object.values(body.phoneNumber).length >= 16 ) {
+      setLoading(false);
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+
     await fetch("/api/form-data-diri/data-diri-update", {
       method: "POST",
       headers: {
@@ -147,12 +166,17 @@ function EditDataDiriNew({ thisClosed }: any) {
       },
       body: JSON.stringify(body),
     });
-    buttonSimpan()
+    buttonSimpan();
     loadDatadiri();
     setLoading(false);
     setOpenKta(false);
-    _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data profile");
+    _postLogUser(
+      localStorage.getItem("user_id"),
+      "UBAH",
+      "User mengubah data profile"
+    );
   };
+
 
   useShallowEffect(() => {
     loadDatadiri();
@@ -171,7 +195,6 @@ function EditDataDiriNew({ thisClosed }: any) {
         // router.reload()
       });
   }
-
 
   useShallowEffect(() => {
     _loadJenisKelamin();
@@ -272,8 +295,6 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
               }}
             />
-            {/* <Text>{listData.tanggalLahir}</Text> */}
-            {/* <Text>{listData.tanggalLahir}</Text> */}
 
             <DateInput
               // key={moment(listData.tanggalLahir).format("YYYY-MM-DD")}
@@ -309,6 +330,24 @@ function EditDataDiriNew({ thisClosed }: any) {
 
             <TextInput
               // placeholder="Nomor Handphone"
+              description={
+                noHP && noHP.length < 11 ? (
+                  <Text></Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHP && noHP.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
               placeholder={listData?.phoneNumber}
               withAsterisk
               label="Nomor Handphone"
@@ -318,6 +357,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={listData?.phoneNumber}
               onChange={(val) => {
                 const perubahan = _.clone(listData);
+                setNoHP(val.currentTarget.value);
                 listData.phoneNumber = val.currentTarget.value;
                 setUbah(perubahan);
               }}
@@ -374,14 +414,14 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectProvinceDT.id
                   ? selectProvinceDT.id
-                  : listData.MasterProvince.id as any
-                  // : selectProvinceDT.name
+                  : (listData.MasterProvince.id as any)
+                // : selectProvinceDT.name
               }
               placeholder={
                 selectProvinceDT.name
                   ? selectProvinceDT.name
                   : listData.MasterProvince.name
-                  // : selectProvinceDT.name
+                // : selectProvinceDT.name
               }
               data={itProvinsi.map((e) => ({
                 value: e.id,
@@ -395,9 +435,8 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setSelectProvinceDT(itProvinsi.find((e) => e.id == val));
                 _loadSelectKabkot(val, setItKabupaten, setSelectKabupatenDT);
                 // setUbah(null)
-                listData.MasterKabKot.name="";
-                listData.MasterKabKot.id=0;
-
+                listData.MasterKabKot.name = "";
+                listData.MasterKabKot.id = 0;
               }}
             />
             {/* {JSON.stringify(selectKabupatenDT.name)} */}
@@ -409,14 +448,14 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectKabupatenDT.id
                   ? selectKabupatenDT.id
-                  : listData.MasterKabKot.id as any
-                  // :selectKabupatenDT.name
+                  : (listData.MasterKabKot.id as any)
+                // :selectKabupatenDT.name
               }
               placeholder={
                 selectKabupatenDT.name
                   ? selectKabupatenDT.name
                   : listData.MasterKabKot.name
-                  // :selectKabupatenDT.name
+                // :selectKabupatenDT.name
               }
               data={
                 _.isEmpty(itKabupaten)
@@ -432,11 +471,11 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
                 setSelectKabupatenDT(itKabupaten.find((e) => e.id == val));
                 _loadSelectKecamatan(val, setItKecamatan, setSelectKecamatanDT);
-                listData.MasterKecamatan.name=""
-                listData.MasterKecamatan.id=0
+                listData.MasterKecamatan.name = "";
+                listData.MasterKecamatan.id = 0;
               }}
             />
-{/* {JSON.stringify(selectKecamatanDT.name)} */}
+            {/* {JSON.stringify(selectKecamatanDT.name)} */}
             <Select
               label="Pilih Kecamatan"
               mt={10}
@@ -445,14 +484,14 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={
                 selectKecamatanDT.id
                   ? selectKecamatanDT.id
-                  : listData.MasterKecamatan.id as any
-                  // : selectKecamatanDT.name
+                  : (listData.MasterKecamatan.id as any)
+                // : selectKecamatanDT.name
               }
               placeholder={
                 selectKecamatanDT.name
                   ? selectKecamatanDT.name
                   : listData.MasterKecamatan.name
-                  // : selectKecamatanDT.name
+                // : selectKecamatanDT.name
               }
               data={
                 _.isEmpty(itKecamatan)
@@ -469,8 +508,8 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setSelectKecamatanDT(itKecamatan.find((e) => e.id == val));
                 _loadSelectDesa(val, setItDesa, setSelectDesaDT);
                 // console.log(val)
-                listData.MasterDesa.name=""
-                listData.MasterDesa.id=0
+                listData.MasterDesa.name = "";
+                listData.MasterDesa.id = 0;
               }}
             />
             {/* {JSON.stringify(selectDesaDT.name)} */}
@@ -480,10 +519,10 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               radius={"md"}
               value={
-                selectDesaDT.id 
-                ? selectDesaDT.id 
-                // : selectDesaDT.name
-                : listData.MasterDesa.id as any
+                selectDesaDT.id
+                  ? selectDesaDT.id
+                  : // : selectDesaDT.name
+                    (listData.MasterDesa.id as any)
               }
               placeholder={
                 selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
@@ -501,7 +540,7 @@ function EditDataDiriNew({ thisClosed }: any) {
                 perubahan.MasterDesa.id = val;
                 setUbah(perubahan);
                 setSelectDesaDT(itDesa.find((e) => e.id == val));
-                setUbah(null)
+                setUbah(null);
               }}
             />
             <Button
@@ -512,8 +551,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               type="submit"
               mt={35}
               onClick={() => {
-                onEdit()
-                setUbah(null)
+                onEdit();
+                setUbah(null);
               }}
             >
               Simpan
