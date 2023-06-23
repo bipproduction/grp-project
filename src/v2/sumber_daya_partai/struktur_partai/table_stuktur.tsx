@@ -44,6 +44,8 @@ import toast from "react-simple-toasts";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import { CiEdit } from "react-icons/ci";
 import { EditStrukturV2 } from "./edit_struktur";
+import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
+import { new_state_refresh, refresh_page } from "../force_refresh";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
@@ -53,7 +55,18 @@ export const TableStrukturV2 = () => {
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
   const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr);
+  const [valueId, setValueId] = useState<ModelSumberDayaPartai>();
   let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
+
+  const [stateBaru, setStateBaru] = useAtom(new_state_refresh);
+  const [refresh, setRefresh] = useAtom(refresh_page);
+
+  useShallowEffect(() => {
+    if (refresh) {
+      setStateBaru(Math.random().toString());
+      _loadDataSDP_ByStatus_BySeach(1, search, setDataTable, "1", setTotalPage);
+    }
+  }, [refresh]);
 
   useShallowEffect(() => {
     onSearch(search);
@@ -80,43 +93,55 @@ export const TableStrukturV2 = () => {
     </tr>
   );
 
-  const tbBody = dataTable.map((e, i) => (
-    <tr key={i}>
-      <td>{noAwal++}</td>
-      <td>
-        <Center>
-          <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
-            <ActionIcon
-              color={"green"}
-              onClick={() => {
-                setOpen.open();
-                setTargetStruktur(e.id as any);
-                // console.log(e.id)
-              }}
-            >
-              <CiEdit />
-            </ActionIcon>
-            <ButtonDeleteData
-              setId={e}
-              search={search}
-              setDataTable={setDataTable}
-              setTingkat="struktur partai"
-            />
-          </Flex>
-        </Center>
-      </td>
-      <td>{e.User.DataDiri.name}</td>
-      <td>{e.User.DataDiri.nik}</td>
-      <td>{e.MasterTingkatPengurus.name}</td>
-      <td>
-        <DataJabatan setTingkat={e} />
-      </td>
-    </tr>
-  ));
+  const tbBody = _.isEmpty(dataTable)
+    ? []
+    : dataTable.map((e, i) => (
+        <tr key={i}>
+          <td>{noAwal++}</td>
+          <td>
+            <Center>
+              <Flex
+                direction={{ base: "column", sm: "row" }}
+                justify={"center"}
+              >
+                <ActionIcon
+                  color={"green"}
+                  onClick={() => {
+                    setOpen.open();
+                    setTargetStruktur(e);
+                    setValueId(e);
+                    // console.log(e.id)
+                  }}
+                >
+                  <CiEdit />
+                </ActionIcon>
+                <ButtonDeleteData
+                  setId={e}
+                  search={search}
+                  setDataTable={setDataTable}
+                  setTingkat="struktur partai"
+                />
+              </Flex>
+            </Center>
+          </td>
+          <td>{e.User.DataDiri.name}</td>
+          <td>{e.User.DataDiri.nik}</td>
+          <td>{e.MasterTingkatPengurus?.name}</td>
+          <td>
+            <DataJabatan setTingkat={e} />
+          </td>
+        </tr>
+      ));
 
   return (
     <>
-      {/* <pre>{JSON.stringify(dataTable.map((e) => e.MasterStatusKeanggotaan.id), null, 2)}</pre> */}
+      {/* <pre>
+        {JSON.stringify(
+          dataTable.map((e) => e.MasterTingkatPengurus.name),
+          null,
+          2
+        )}
+      </pre> */}
       {/* {JSON.stringify(inputPage)} */}
       <Modal
         centered
@@ -127,8 +152,9 @@ export const TableStrukturV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditStrukturV2 thisClosed={setOpen.close} />
+        {/* <EditStrukturV2 thisClosed={setOpen.close} /> */}
         {/* <StrukturEditV2 thisClosed={setOpen.close} /> */}
+        <EditSumberDayaPartaiV2 valId={valueId} closeModal={setOpen.close} />
       </Modal>
 
       <Box>
@@ -227,7 +253,7 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
                   return (
                     <>
                       <Text>
-                        {setTingkat.MasterJabatanPimpinanAnakCabang.name}
+                        {setTingkat.MasterJabatanPimpinanAnakCabang?.name}
                       </Text>
                     </>
                   );
@@ -236,7 +262,7 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
                     return (
                       <>
                         <Text>
-                          {setTingkat.MasterJabatanPimpinanRanting.name}
+                          {setTingkat.MasterJabatanPimpinanRanting?.name}
                         </Text>
                       </>
                     );
@@ -247,7 +273,7 @@ function DataJabatan({ setTingkat }: { setTingkat: ModelSumberDayaPartai }) {
                           <Text>
                             {
                               setTingkat
-                                .MasterJabatanPerwakilanPartaiDiLuarNegeri.name
+                                .MasterJabatanPerwakilanPartaiDiLuarNegeri?.name
                             }
                           </Text>
                         </>

@@ -55,7 +55,7 @@ export const KaderEditv2 = ({
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader)
 
   useShallowEffect(() => {
-    _loadEditSumberDayaPartai_ById(valueId, setTargetEdit);
+    _loadEditSumberDayaPartai_ById(valueId.id, setTargetEdit);
     _loadNama_KaderPartai(setKaderPartai, setSelectKaderPartai);
    
   }, []);

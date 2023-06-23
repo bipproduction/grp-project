@@ -16,7 +16,12 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import {
+  randomId,
+  useDisclosure,
+  useForceUpdate,
+  useShallowEffect,
+} from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -44,17 +49,31 @@ import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import _ from "lodash";
 import { AiOutlineMenu } from "react-icons/ai";
+import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
+import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import { refresh_page } from "../force_refresh";
+import { new_state_refresh } from "../force_refresh";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activePage, setActivePage] = useState();
   const [dataTable, setDataTable] = useAtom(_dataKaderTable_ByStatusSearch);
-  const [valueId, setValueId] = useState("");
+  const [valueId, setValueId] = useState<ModelSumberDayaPartai>();
   const [search, setSearch] = useState("");
   const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
   const [inputPage, setInputPage] = useAtom(_dataPageSDP_Kader);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Kader);
   let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
+
+  const [stateBaru, setStateBaru] = useAtom(new_state_refresh);
+  const [refresh, setRefresh] = useAtom(refresh_page);
+
+  useShallowEffect(() => {
+    if (refresh) {
+      setStateBaru(Math.random().toString());
+      _loadDataSDP_ByStatus_BySeach(3, search, setDataTable, "1", setTotalPage);
+    }
+  }, [refresh]);
 
   useShallowEffect(() => {
     onSearch("");
@@ -88,7 +107,7 @@ const TableKaderPartaiV2 = () => {
           <ActionIcon
             color="green"
             onClick={() => {
-              setValueId(e.id);
+              setValueId(e);
               open();
             }}
           >
@@ -116,14 +135,13 @@ const TableKaderPartaiV2 = () => {
         onClose={close}
         size="lg"
         centered
-        // fullScreen
         overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
         {/* <EditKaderPartaiV2 thisClosed={close} valueId={valueId} /> */}
-        <KaderEditv2 thisClosed={close} valueId={valueId} />
+        {/* <KaderEditv2 thisClosed={close} valueId={valueId} /> */}
+        <EditSumberDayaPartaiV2 valId={valueId} closeModal={close} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -191,7 +209,7 @@ const TableKaderPartaiV2 = () => {
             </Grid.Col> */}
           </Grid>
         </Box>
-        <Box py={20}>
+        <Box key={Math.random()} py={20}>
           <ScrollArea>
             <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
               <thead>{tbHead}</thead>

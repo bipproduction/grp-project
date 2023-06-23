@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
-import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { useShallowEffect } from "@mantine/hooks";
 import {
   _dataStruktur,
@@ -25,7 +25,6 @@ import {
   _searchDataSumberDayaPartai,
   _dataPageSDP_Strukturr,
   _dataTotalPageSDP_Strukturr,
-
 } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import {
   _editTingkatPengurus,
@@ -109,9 +108,9 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [select_PerwakilanLuarNegeri, setSelect_PerwakilanLuarNegeri] = useAtom(
     _selectPerwakilanLuarNegeri
   );
-  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai)
-  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr)
-  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr)
+  const [inputSearch, setInputSearch] = useAtom(_searchDataSumberDayaPartai);
+  const [inputPage, setInputPage] = useAtom(_dataPageSDP_Strukturr);
+  const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Strukturr);
 
   useShallowEffect(() => {
     _loadEditSumberDayaPartai_ById(targetStruktur, setTargetEdit);
@@ -186,9 +185,20 @@ export const StrukturEditV2 = ({ thisClosed }: { thisClosed: any }) => {
     })
       .then((res) => res.json())
 
-      .then(async (val) => _loadDataSDP_ByStatus_BySeach(1, inputSearch, setDataTable, "1", setTotalPage));
-      _postLogUser(localStorage.getItem("user_id"), "UBAH", "User mengubah data struktur partai")
-
+      .then(async (val) =>
+        _loadDataSDP_ByStatus_BySeach(
+          1,
+          inputSearch,
+          setDataTable,
+          "1",
+          setTotalPage
+        )
+      );
+    _postLogUser(
+      localStorage.getItem("user_id"),
+      "UBAH",
+      "User mengubah data struktur partai"
+    );
   };
 
   if (!targetEdit)

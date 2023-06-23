@@ -1,8 +1,10 @@
 import WarpPage from "@/v2/component/my-wrap";
 import {
+  ActionIcon,
   Box,
   Button,
   Center,
+  Flex,
   Grid,
   Group,
   Modal,
@@ -12,9 +14,14 @@ import {
   Table,
   Text,
   TextInput,
+  Title,
   useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure, useShallowEffect } from "@mantine/hooks";
+import {
+  useDisclosure,
+  useForceUpdate,
+  useShallowEffect,
+} from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -25,7 +32,7 @@ import {
   AiOutlineSearch,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { CiFilter } from "react-icons/ci";
+import { CiEdit, CiFilter } from "react-icons/ci";
 import COLOR from "../../../../fun/WARNA";
 import dataTable from "../data_table.json";
 import EditAnggotaPartaiV2 from "./edit_anggota_partai";
@@ -38,6 +45,10 @@ import {
 import { useAtom } from "jotai";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import _ from "lodash";
+import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
+import { refresh_page } from "../force_refresh";
+import { new_state_refresh } from "../force_refresh"; 
 
 const TableAnggotaPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -46,7 +57,17 @@ const TableAnggotaPartaiV2 = () => {
   const [search, setSearch] = useState("");
   const [inputPage, setInputPage] = useAtom(_dataPageSDP_Anggota);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageSDP_Anggota);
+  const [valueId, setValueId] = useState<ModelSumberDayaPartai>();
   let noAwal = (_.toNumber(inputPage) - 1) * 10 + 1;
+  const [stateBaru, setStateBaru] = useAtom(new_state_refresh);
+  const [refresh, setRefresh] = useAtom(refresh_page);
+
+  useShallowEffect(() => {
+    if (refresh) {
+      setStateBaru(Math.random().toString());
+      _loadDataSDP_ByStatus_BySeach(4, search, setDataTable, "1", setTotalPage);
+    }
+  }, [refresh]);
 
   useShallowEffect(() => {
     onSearch("");
@@ -61,7 +82,7 @@ const TableAnggotaPartaiV2 = () => {
     <tr>
       <th>No</th>
       <th>
-      <Center>
+        <Center>
           <AiOutlineMenu />
         </Center>
       </th>
@@ -74,7 +95,6 @@ const TableAnggotaPartaiV2 = () => {
       <th>Kecamatan</th>
       <th>Desa / Cabang</th>
       <th>RT/RW</th>
-
     </tr>
   );
 
@@ -82,14 +102,23 @@ const TableAnggotaPartaiV2 = () => {
     <tr key={e.id}>
       <td>{noAwal++}</td>
       <td>
-        <Group position="center">
+        <Flex direction={{ base: "column", sm: "row" }} justify={"center"}>
+          <ActionIcon
+            color="green"
+            onClick={() => {
+              setValueId(e);
+              open();
+            }}
+          >
+            <CiEdit />
+          </ActionIcon>
           <ButtonDeleteData
             setId={e}
             search={search}
             setDataTable={setDataTable}
             setTingkat="anggota partai"
           />
-        </Group>
+        </Flex>
       </td>
       <td>{e.User.DataDiri.name}</td>
       <td>{e.User.DataDiri.nik}</td>
@@ -100,8 +129,6 @@ const TableAnggotaPartaiV2 = () => {
       <td>{e.User.DataDiri.MasterKecamatan.name}</td>
       <td>{e.User.DataDiri.MasterDesa.name}</td>
       <td>{e.User.DataDiri.rtRw}</td>
-
-      
     </tr>
   ));
 
@@ -111,14 +138,14 @@ const TableAnggotaPartaiV2 = () => {
       <Modal
         opened={opened}
         onClose={close}
-        size="100%"
-        // fullScreen
+        size="lg"
+        centered
         overlayProps={{
-          // color: theme.colorScheme === 'light' ? theme.colors.dark[9] : theme.colors.dark[2],
           opacity: 0.1,
         }}
       >
-        <EditAnggotaPartaiV2 thisClosed={close} />
+        {/* <EditAnggotaPartaiV2 thisClosed={close} /> */}
+        <EditSumberDayaPartaiV2 valId={valueId} closeModal={close} />
       </Modal>
       <Box>
         <Paper bg={COLOR.abuabu} p={10}>
@@ -128,6 +155,7 @@ const TableAnggotaPartaiV2 = () => {
                 Data Anggota Partai
               </Text>
             </Grid.Col>
+            {/* <Title>{stateBaru}</Title> */}
             {/* <Grid.Col span={4}>
               <Group position="right">
                 <Button
@@ -162,6 +190,21 @@ const TableAnggotaPartaiV2 = () => {
                 radius={"md"}
                 onChange={(val) => onSearch(val.currentTarget.value)}
               />
+
+              {/* <Button
+                onClick={() => {
+                  setRefresh(Math.random().toString());
+                  _loadDataSDP_ByStatus_BySeach(
+                    4,
+                    search,
+                    setDataTable,
+                    "1",
+                    setTotalPage
+                  );
+                }}
+              >
+                refres
+              </Button> */}
             </Grid.Col>
             {/* <Grid.Col md={8} lg={8}>
               <Group position="right">
