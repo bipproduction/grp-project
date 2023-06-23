@@ -129,6 +129,8 @@ const KTAV2 = () => {
                            <Image
                             src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
                             width={130}
+                            height={152}
+                            // width={110}
                             // height={152}
                             alt="img"
                             radius={5}

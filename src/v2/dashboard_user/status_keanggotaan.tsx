@@ -105,7 +105,7 @@ const StatusKeanggotaanV2 = () => {
                 </Box>
               ))}
             </Box>
-          <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button>
+          {/* <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button> */}
           </Group>
         </Box>
       </Box>

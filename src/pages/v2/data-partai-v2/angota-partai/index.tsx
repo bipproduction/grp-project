@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  Drawer,
   Group,
   Modal,
   Text,
@@ -20,6 +21,9 @@ import { sStatusKeanggotaan } from "@/s_state/sumber_daya_partai/s_status_keangg
 import { useAtom } from "jotai";
 import { useForm } from "@mantine/form";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { atomWithStorage } from "jotai/utils";
+import FormAnggotaPartai from "@/layout/form_data_diri/anggotaPartai/FormAnggotaPartai";
+import AngotaPartai2 from "../anggota-partai2";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,15 +40,18 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const val_open_Anggota = atomWithStorage("val_open_Anggota", false);
+
 function AngotaPartaiV2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const router = useRouter();
-  const [opened, { open, close }] = useDisclosure(false);
+  // const [opened, { open, close }] = useDisclosure(false);
+  const [openAnggota, setOpenAnggota] = useAtom(val_open_Anggota);
   function AnggotaPartai() {
     router.push("/v2/home");
   }
-  
+
   const formAnggota = useForm({
     initialValues: {
       data: {
@@ -59,6 +66,13 @@ function AngotaPartaiV2() {
   });
   return (
     <>
+      <Drawer
+        opened={openAnggota}
+        onClose={() => setOpenAnggota(false)}
+        size={490}
+      >
+        <AngotaPartai2/>
+      </Drawer>
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -68,7 +82,8 @@ function AngotaPartaiV2() {
             ...ambilData,
             masterStatusKeanggotaanId: "4",
           });
-          router.push("/v2/data-partai-v2/anggota-partai2");
+          setOpenAnggota(true)
+          // router.push("/v2/data-partai-v2/anggota-partai2");
         }}
       >
         <Group>

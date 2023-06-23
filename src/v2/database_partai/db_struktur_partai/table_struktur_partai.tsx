@@ -72,7 +72,7 @@ const TableStruktutPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success Menjadi Admin");
+        toast("Sukses Menjadi Admin");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",
@@ -109,7 +109,7 @@ const TableStruktutPartaiV2 = () => {
     }).then(async (res) => {
       console.log(res.status);
       if (res.status === 201) {
-        toast("Success Menjadi User");
+        toast("Sukses Menjadi User");
         _postLogUser(
           localStorage.getItem("user_id"),
           "UBAH",

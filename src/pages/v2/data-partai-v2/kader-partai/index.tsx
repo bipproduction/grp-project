@@ -21,6 +21,8 @@ import { api } from "@/lib/api-backend";
 import { Router, useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { atomWithStorage } from "jotai/utils";
+import KaderPartai2 from "../kader-partai2";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,74 +38,21 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: COLOR.merah,
   },
 }));
+
+const val_open_kader = atomWithStorage("val_open_kader", false);
+
 function KaderPartai() {
   const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const [value, setValue] = useState("");
   const router = useRouter();
-
-  const KaderPartai = () => {
-    console.log(formKaderPartai.values.data)
-    // if (Object.values(formKaderPartai.values.data).includes("")) {
-    //   return toast("Lengkapi Data Diri");
-    // }
-    // fetch(api.apiSumberDayaPartaiPost, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formKaderPartai.values.data),
-    // }).then((v) => {
-    //   if (v.status === 201) {
-    //     toast("Sukses");
-    //     router.push("/v2/home");
-    //   }
-    // });
-  };
-
-  useShallowEffect(() => {
-    _loadKaderPartai();
-  }, []);
-
-  const formKaderPartai = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterKaderPartaiId: "",
-        masterStatusKeanggotaanId: ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
+  const [openKader, setOpenKader] = useAtom(val_open_kader);
 
   return (
     <>
-      <Drawer opened={opened} onClose={close} title="Kader Partai" size={"sm"}>
-        <Select
-          label="Pilih Tingkat Pengurus"
-          placeholder="Pilih Tingkat Pengurus"
-          withAsterisk
-          radius={"md"}
-          mt={10}
-          data={sKaderPartai.value.map((v) => ({
-            value: v.id,
-            label: v.name,
-          }))}
-          onChange={(val) => {
-            setValue(val!);
-            formKaderPartai.values.data.masterKaderPartaiId = val!;
-          }}
-        />
-        <Button
-          mt={20}
-          fullWidth
-          bg={COLOR.coklat}
-          color="red.9"
-          radius={"md"}
-          onClick={KaderPartai}
-        >
-          SIMPAN
-        </Button>
+      <Drawer opened={openKader} onClose={() => setOpenKader(false)} size={490}>
+        <KaderPartai2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -112,9 +61,10 @@ function KaderPartai() {
         onClick={() => {
           setAmbilData({
             ...ambilData,
-            masterStatusKeanggotaanId: '3'
-          })
-          router.push("/v2/data-partai-v2/kader-partai2");
+            masterStatusKeanggotaanId: "3",
+          });
+          setOpenKader(true);
+          // router.push("/v2/data-partai-v2/kader-partai2");
         }}
       >
         <Group>

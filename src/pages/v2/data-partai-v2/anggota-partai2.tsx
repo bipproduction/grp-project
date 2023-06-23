@@ -54,8 +54,9 @@ function AngotaPartai2() {
   const FormAnggotaPartai = async () => {
     // console.log(formAnggota.values.data);
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
     if (Object.values(formAnggota.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -66,14 +67,18 @@ function AngotaPartai2() {
       body: JSON.stringify(formAnggota.values.data),
     }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
+      } else {
         setLoading(false);
-        await new Promise((r) => setTimeout(r, 500));
+        toast("Sukses");
+        router.push("/v2/home");
       }
       // router.replace("v2/home");
     });
   };
+
 
   const formAnggota = useForm({
     initialValues: {
@@ -96,24 +101,24 @@ function AngotaPartai2() {
   }
   return (
     <>
-      <LayoutDataPartaiV2>
-        <Box h={"100%"}>
-          <Box pl={40}></Box>
-          <Box pl={40}>
+      {/* <LayoutDataPartaiV2> */}
+        {/* <Box h={"100%"}>
+          <Box pl={40}></Box> */}
+          {/* <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
               Jika Termasuk Organisasi Afiliatif,{" "}
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
-          </Box>
-          <Stack p={30} pt={35}>
-            <ActionIcon onClick={Back} variant="transparent">
+          </Box> */}
+          <Stack  pt={35}>
+            {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
-            </ActionIcon>
+            </ActionIcon> */}
             <UnstyledButton
               className={classes.user}
               pr={20}
               pl={20}
-              bg={"white"}
+              bg={COLOR.abuabu}
             >
               <Group>
                 <div style={{ flex: 1 }}>
@@ -134,8 +139,8 @@ function AngotaPartai2() {
               SIMPAN
             </Button>
           </Stack>
-        </Box>
-      </LayoutDataPartaiV2>
+        {/* </Box> */}
+      {/* </LayoutDataPartaiV2> */}
     </>
   );
 }

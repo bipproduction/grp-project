@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 import { _loadJabatanDewanPimpinanPusat } from "@/load_data/sumber_daya_partai/load_jabatan_struktur_partai";
 import { useAtom } from "jotai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
+import { atomWithStorage } from "jotai/utils";
+import DewanPimpinanPusat2 from "../struktur-dewan-pimpinan-pusat2";
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: rem(764),
@@ -36,48 +38,29 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: COLOR.merah,
   },
 }));
+
+const val_open_struktur_pusat = atomWithStorage(
+  "val_open_struktur_pusat",
+  false
+);
+
 function DewanPimpinanPusat() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
   const [value, setValue] = useState("");
   const [ambilData, setAmbilData] = useAtom(ambil_data);
-
-  const PimpinanPusat = () => {
-    if (
-      Object.values(formStrukturDewanPimpinanPusat.values.data).includes("")
-    ) {
-      return toast("Lengkapi Data Diri");
-    }
-    fetch(api.apiSumberDayaPartaiPost, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formStrukturDewanPimpinanPusat.values.data),
-    }).then((v) => {
-      if (v.status === 201) {
-        toast("Sukses");
-        router.push("/v2/home");
-      }
-    });
-  };
-
-  const formStrukturDewanPimpinanPusat = useForm({
-    initialValues: {
-      data: {
-        userId: localStorage.getItem("user_id"),
-        masterJabatanDewanPimpinanPusatId: "",
-      },
-    },
-  });
-
-  useShallowEffect(() => {
-    _loadJabatanDewanPimpinanPusat();
-  }, []);
+  const [openStrukturPus, SetOpenStrukturPu] = useAtom(val_open_struktur_pusat);
 
   return (
     <>
+      <Drawer
+        opened={openStrukturPus}
+        onClose={() => SetOpenStrukturPu(false)}
+        size={490}
+      >
+        <DewanPimpinanPusat2 />
+      </Drawer>
       <UnstyledButton
         className={classes.user}
         pr={20}
@@ -87,7 +70,8 @@ function DewanPimpinanPusat() {
             ...ambilData,
             masterTingkatPengurusId: "2",
           });
-          router.push("/v2/data-partai-v2/struktur-dewan-pimpinan-pusat2");
+          SetOpenStrukturPu(true);
+          // router.push("/v2/data-partai-v2/struktur-dewan-pimpinan-pusat2");
         }}
       >
         <Group>
