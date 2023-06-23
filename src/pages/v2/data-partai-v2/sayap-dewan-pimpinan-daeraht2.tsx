@@ -58,31 +58,47 @@ const useStyles = createStyles((theme) => ({
 function SayapDewanPimpinanDaeraht2() {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [isLoading, setLoading] = useAtom(val_loading);
+  const [noHpSayapDaerah, setNoHpSayapDaerah] = useState<string | null>(null);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [value, setValue] = useState<any>();
   const router = useRouter();
 
-  const PimpinanDaerah =  async() => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
-    console.log(formSayapPimpinanDaerah.values.data)
+  const PimpinanDaerah = async () => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
+    console.log(formSayapPimpinanDaerah.values.data);
+
     if (Object.values(formSayapPimpinanDaerah.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
+
+    if(formSayapPimpinanDaerah.values.data.waAdmin.length <= 10){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+    if(formSayapPimpinanDaerah.values.data.waAdmin.length >= 16){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+
     fetch(api.apiSumberDayaPartaiPost, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapPimpinanDaerah.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+      } else {
+        setLoading(false);
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };
@@ -93,6 +109,8 @@ function SayapDewanPimpinanDaeraht2() {
         userId: localStorage.getItem("user_id"),
         masterSayapPartaiId: "",
         masterProvinceId: "",
+        alamatKantor: "",
+        waAdmin: "",
         masterJabatanDewanPimpinanDaerahId: "",
         masterTingkatSayapId: +ambilDataSayap.masterTingkatSayapId,
         masterStatusKeanggotaanId: +ambilDataSayap.masterStatusKeanggotaanId,
@@ -119,7 +137,8 @@ function SayapDewanPimpinanDaeraht2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -169,8 +188,7 @@ function SayapDewanPimpinanDaeraht2() {
               searchable
               onChange={(val) => {
                 setValue(val!);
-                formSayapPimpinanDaerah.values.data.masterProvinceId =
-                  val!;
+                formSayapPimpinanDaerah.values.data.masterProvinceId = val!;
               }}
             />
             <Select
@@ -203,6 +221,49 @@ function SayapDewanPimpinanDaeraht2() {
                 label: val.name,
               }))}
               searchable
+            />
+            <TextInput
+              {...formSayapPimpinanDaerah.getInputProps("data.alamatKantor")}
+              radius={"md"}
+              withAsterisk
+              placeholder="Alamat Kantor"
+              label="Alamat Kantor"
+              // onChange={() => {
+              //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
+              // }}
+            />
+            <TextInput
+              // {...formSayapPimpinanDaerah.getInputProps("data.waAdmin")}
+              description={
+                noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
+                  <Text></Text>
+                ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
+              onChange={(val) => {
+                if (val) {
+                  setNoHpSayapDaerah(val.currentTarget.value);
+                  formSayapPimpinanDaerah.values.data.waAdmin =
+                    val.currentTarget.value;
+                }
+              }}
+              radius={"md"}
+              withAsterisk
+              placeholder="Nomor WA Admin"
+              label="Nomor WA Admin"
+              type="number"
             />
             <Button
               mt={20}

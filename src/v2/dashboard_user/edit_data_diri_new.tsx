@@ -57,7 +57,7 @@ import { useForm } from "@mantine/form";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import _ from "lodash";
+import _, { isEmpty, isNull } from "lodash";
 import moment from "moment";
 import React, { useState } from "react";
 import toast from "react-simple-toasts";
@@ -123,6 +123,10 @@ function EditDataDiriNew({ thisClosed }: any) {
       masterKabKotId: listData?.MasterKabKot.id,
       masterKecamatanId: listData?.MasterKecamatan.id,
       masterDesaId: listData?.MasterDesa.id,
+      // masterProvinceId: selectProvinceDT.id,
+      // masterKabKotId: selectKabupatenDT.id,
+      // masterKecamatanId: selectKecamatanDT.id,
+      // masterDesaId: selectDesaDT.id,
       nik: listData?.nik,
       tempatLahir: listData?.tempatLahir,
       tanggalLahir: listData?.tanggalLahir,
@@ -361,6 +365,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               }}
               // {...editFormDataDiri.getInputProps("data.rtRw")}
             />
+            {/* {JSON.stringify(selectProvinceDT.name)} */}
             <Select
               label="Pilih Provinsi"
               mt={10}
@@ -370,11 +375,13 @@ function EditDataDiriNew({ thisClosed }: any) {
                 selectProvinceDT.id
                   ? selectProvinceDT.id
                   : listData.MasterProvince.name
+                  // : selectProvinceDT.name
               }
               placeholder={
                 selectProvinceDT.name
                   ? selectProvinceDT.name
                   : listData.MasterProvince.name
+                  // : selectProvinceDT.name
               }
               data={itProvinsi.map((e) => ({
                 value: e.id,
@@ -387,8 +394,10 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
                 setSelectProvinceDT(itProvinsi.find((e) => e.id == val));
                 _loadSelectKabkot(val, setItKabupaten, setSelectKabupatenDT);
+                setUbah(null)
               }}
             />
+            {/* {JSON.stringify(selectKabupatenDT.name)} */}
             <Select
               label="Pilih Kabupaten / Kota"
               mt={10}
@@ -398,11 +407,13 @@ function EditDataDiriNew({ thisClosed }: any) {
                 selectKabupatenDT.id
                   ? selectKabupatenDT.id
                   : listData.MasterKabKot.name
+                  // :selectKabupatenDT.name
               }
               placeholder={
                 selectKabupatenDT.name
                   ? selectKabupatenDT.name
                   : listData.MasterKabKot.name
+                  // :selectKabupatenDT.name
               }
               data={
                 _.isEmpty(itKabupaten)
@@ -418,9 +429,10 @@ function EditDataDiriNew({ thisClosed }: any) {
                 setUbah(perubahan);
                 setSelectKabupatenDT(itKabupaten.find((e) => e.id == val));
                 _loadSelectKecamatan(val, setItKecamatan, setSelectKecamatanDT);
+                setUbah(null)
               }}
             />
-
+{/* {JSON.stringify(selectKecamatanDT.name)} */}
             <Select
               label="Pilih Kecamatan"
               mt={10}
@@ -430,11 +442,13 @@ function EditDataDiriNew({ thisClosed }: any) {
                 selectKecamatanDT.id
                   ? selectKecamatanDT.id
                   : listData.MasterKecamatan.name
+                  // : selectKecamatanDT.name
               }
               placeholder={
                 selectKecamatanDT.name
                   ? selectKecamatanDT.name
                   : listData.MasterKecamatan.name
+                  // : selectKecamatanDT.name
               }
               data={
                 _.isEmpty(itKecamatan)
@@ -445,21 +459,26 @@ function EditDataDiriNew({ thisClosed }: any) {
                     }))
               }
               onChange={(val: any) => {
-                const data = _.clone(listData);
-                data.MasterKecamatan.id = val;
-                setUbah(data);
+                const perubahan = _.clone(listData);
+                perubahan.MasterKecamatan.id = val;
+                setUbah(perubahan);
                 setSelectKecamatanDT(itKecamatan.find((e) => e.id == val));
                 _loadSelectDesa(val, setItDesa, setSelectDesaDT);
                 // console.log(val)
+                setUbah(null)
               }}
             />
+            {/* {JSON.stringify(selectDesaDT.name)} */}
             <Select
               label="Plih Desa"
               searchable
               mt={10}
               radius={"md"}
               value={
-                selectDesaDT.id? selectDesaDT.id : listData.MasterDesa.name
+                selectDesaDT.id 
+                ? selectDesaDT.id 
+                // : selectDesaDT.name
+                : listData.MasterDesa.name
               }
               placeholder={
                 selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
@@ -473,10 +492,11 @@ function EditDataDiriNew({ thisClosed }: any) {
                     }))
               }
               onChange={(val: any) => {
-                const data = _.clone(listData);
-                data.MasterDesa.id = val;
-                setUbah(data);
+                const perubahan = _.clone(listData);
+                perubahan.MasterDesa.id = val;
+                setUbah(perubahan);
                 setSelectDesaDT(itDesa.find((e) => e.id == val));
+                setUbah(null)
               }}
             />
             <Button
@@ -486,7 +506,10 @@ function EditDataDiriNew({ thisClosed }: any) {
               color="orange.9"
               type="submit"
               mt={35}
-              onClick={onEdit}
+              onClick={() => {
+                onEdit()
+                setUbah(null)
+              }}
             >
               Simpan
             </Button>

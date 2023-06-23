@@ -42,6 +42,8 @@ const FormSignUp = () => {
       validate: {
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
+          username: (user: string) => 
+          /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.test(user) ? null : "Invalid Username"
       },
     },
   });
@@ -59,6 +61,20 @@ const FormSignUp = () => {
     ) {
       return toast("Invalid email");
     }
+
+    if( 
+      formRegister.values.validate.username(formRegister.values.data.username) != null
+    ) {
+      return toast("Username harus berupa huruf, angka, titik, dan garis bawah.") && toast("Garis bawah dan titik tidak boleh berada di akhir atau awal nama pengguna");
+    }
+
+    // if(formRegister.values.data.username.length <= 4)
+    // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
+    // if(formRegister.values.data.username.length >= 31)
+    // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
+
+    if (formRegister.values.data.password.length < 8)
+    return toast("Password Minimal 8 Karakter")
 
     if (formRegister.values.data.password != inputKonfirmasiPass) {
       return toast("Konfirmasi password salah");

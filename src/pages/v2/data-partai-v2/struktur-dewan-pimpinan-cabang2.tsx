@@ -51,6 +51,7 @@ function StrukturDewanPimpinanCabang2() {
   const [isLoading, setLoading] = useAtom(val_loading);
   const [opened, { open, close }] = useDisclosure(false);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
+  const [noHpStrukturCab, setNoHpStrukturCab] = useState<string | null>(null);
   const { classes } = useStyles();
   const [provinsi, setProvinsi] = useState<any[]>([]);
   const [kabupaten, setKabupaten] = useState<any[]>([]);
@@ -135,12 +136,24 @@ function StrukturDewanPimpinanCabang2() {
   const PimpinanCabang = async () => {
     // console.log(formStrukturDewanPimpinanCabang.values.data)
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
+
     if (
       Object.values(formStrukturDewanPimpinanCabang.values.data).includes("")
     ) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
+
+    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length <= 10){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length >= 16){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+
     fetch(api.apiSumberDayaPartaiPost, {
       method: "POST",
       headers: {
@@ -149,10 +162,13 @@ function StrukturDewanPimpinanCabang2() {
       body: JSON.stringify(formStrukturDewanPimpinanCabang.values.data),
     }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
+      } else {
         setLoading(false);
-        await new Promise((r) => setTimeout(r, 500));
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };
@@ -226,7 +242,7 @@ function StrukturDewanPimpinanCabang2() {
                 </Group>
               </UnstyledButton>
             </Box>
-            <ScrollArea h={{ sm: 405, base: 300 }} scrollbarSize={0}>
+            <ScrollArea h={{ sm: 430, base: 300 }} scrollbarSize={0}>
               <Select
                 onChange={(val) => {
                   if (val) {
@@ -301,9 +317,32 @@ function StrukturDewanPimpinanCabang2() {
                 mt={10}
               />
               <TextInput
-                {...formStrukturDewanPimpinanCabang.getInputProps(
-                  "data.waAdmin"
-                )}
+                // {...formStrukturDewanPimpinanCabang.getInputProps(
+                //   "data.waAdmin"
+                // )}
+                description={
+                  noHpStrukturCab && noHpStrukturCab.length < 11 ? (
+                    <Text></Text>
+                  ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
+                    <Text></Text>
+                  ) : (
+                    ""
+                  )
+                }
+                error={
+                  noHpStrukturCab && noHpStrukturCab.length < 11 ? (
+                    <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                  ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
+                    <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                  ) : (
+                    ""
+                  )
+                }
+                onChange={(val) => {
+                  setNoHpStrukturCab(val.currentTarget.value);
+                  formStrukturDewanPimpinanCabang.values.data.waAdmin =
+                    val.currentTarget.value;
+                }}
                 radius={"md"}
                 withAsterisk
                 placeholder="Nomor WA Admin"

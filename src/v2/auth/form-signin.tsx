@@ -67,7 +67,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
         const data = await res.json();
         localStorage.setItem("user_id", data.id);
         sUser.value = data;
-        toast("Success");
+        toast("Sukses");
         _postLogUser(data.id, "LOGIN", "User login");
       } else {
         setLoading(false);
@@ -87,7 +87,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
           height: "100vh",
         }}
       >
-        <Container size="30rem" px={0} pt={100}>
+        <Container size="30rem" px={0} pt={150}>
           <Paper withBorder shadow="xl" p={40} radius="md" bg={COLOR.orange}>
             <Center mb={10}>
               <Image src={"..//..//..//../../logo.png"} width={100} alt="a" />
@@ -126,7 +126,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
               icon={<FiLock size={17} />}
               {...formLogin.getInputProps("data.password")}
             />
-            <Group position="apart" mt="lg">
+            {/* <Group position="apart" mt="lg">
               <Checkbox label="Remember me" color="orange.9" />
               <Anchor
                 component="button"
@@ -136,7 +136,7 @@ const FormSignIn = ({ onSignUp }: { onSignUp: () => void }) => {
               >
                 Forgot password?
               </Anchor>
-            </Group>
+            </Group> */}
             <Button
               fullWidth
               mt="xl"

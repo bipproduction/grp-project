@@ -17,7 +17,10 @@ import {
 import React, { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 import { useDisclosure, useFullscreen, useShallowEffect } from "@mantine/hooks";
-import { IoArrowBackCircleSharp, IoArrowForwardCircleOutline } from "react-icons/io5";
+import {
+  IoArrowBackCircleSharp,
+  IoArrowForwardCircleOutline,
+} from "react-icons/io5";
 import { useRouter } from "next/router";
 import { useForm } from "@mantine/form";
 import toast from "react-simple-toasts";
@@ -53,12 +56,12 @@ function DewanPembina2() {
   const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
 
-
   const PimpinanDewanPembina = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
     // console.log(formStrukturDewanPembina.values.data);
     if (Object.values(formStrukturDewanPembina.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -67,12 +70,15 @@ function DewanPembina2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPembina.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+      } else {
+        setLoading(false);
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };
@@ -94,7 +100,6 @@ function DewanPembina2() {
 
   const [opened, { open, close }] = useDisclosure(false);
 
-
   function Afiliatif() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
   }
@@ -108,32 +113,43 @@ function DewanPembina2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
-          <ActionIcon onClick={Back} variant="transparent">
-            <IoArrowBackCircleSharp size="2rem"  color={COLOR.merah}/>
-          </ActionIcon>
-            <UnstyledButton className={classes.user} pr={20} pl={20} bg={"white"}>
+            <ActionIcon onClick={Back} variant="transparent">
+              <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
+            </ActionIcon>
+            <UnstyledButton
+              className={classes.user}
+              pr={20}
+              pl={20}
+              bg={"white"}
+            >
               <Group>
                 <div style={{ flex: 1 }}>
-                  <Text size={15}  color="dark">
+                  <Text size={15} color="dark">
                     Struktur Partai
                   </Text>
                 </div>
               </Group>
             </UnstyledButton>
             <Box pt={10}>
-            <UnstyledButton className={classes.user} pr={20} pl={20} bg={"white"}>
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15}   color="dark">
-                    Dewan Pembina
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
+              <UnstyledButton
+                className={classes.user}
+                pr={20}
+                pl={20}
+                bg={"white"}
+              >
+                <Group>
+                  <div style={{ flex: 1 }}>
+                    <Text size={15} color="dark">
+                      Dewan Pembina
+                    </Text>
+                  </div>
+                </Group>
+              </UnstyledButton>
             </Box>
             <Select
               label="Jabatan"

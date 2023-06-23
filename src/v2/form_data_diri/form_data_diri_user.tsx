@@ -75,7 +75,7 @@ const FormDataDiriUser = () => {
   });
 
   const [valNik, setValNik] = useState<string | null>(null);
-
+  const [noHP, setNoHP] = useState<string | null>(null);
   const [kecamatan, setKecamatan] = useState<any[]>([]);
   const [desa, setDesa] = useState<any[]>([]);
   const [pekerjaan, setPekerjaan] = useState<any | []>([]);
@@ -212,11 +212,6 @@ const FormDataDiriUser = () => {
     listData.find((val) => _.values(val).includes(""));
     // if (adaKosong) return toast("Lengkapi data diri");
 
-    if (formDataDiri.values.data.nik.length != 16)
-      return toast("nik harus 16 angka");
-
-    formDataDiri.values.data.nik = valNik!;
-
     // console.log(formDataDiri.values.data)
     // return
 
@@ -224,6 +219,18 @@ const FormDataDiriUser = () => {
       console.table(formDataDiri.values.data);
       return toast("Lengkapi Data Diri");
     }
+
+    if (formDataDiri.values.data.nik.length != 16)
+      return toast("NIK harus 16 angka");
+
+    formDataDiri.values.data.nik = valNik!;
+
+    if (formDataDiri.values.data.phoneNumber.length <= 10)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    if (formDataDiri.values.data.phoneNumber.length >= 16)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    formDataDiri.values.data.phoneNumber = noHP!;
+
     const pertama = await fetch(api.apiDataDiriPost, {
       method: "POST",
       headers: {
@@ -234,8 +241,6 @@ const FormDataDiriUser = () => {
       if (res.status === 201) {
         const data = await res.json();
         console.log(data);
-        setIsLoading(true);
-        await new Promise((r) => setTimeout(r, 500));
         return data;
       } else {
         res.status === 209;
@@ -247,6 +252,8 @@ const FormDataDiriUser = () => {
       await new Promise((r) => setTimeout(r, 500));
       return null;
     });
+    setIsLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
 
     console.log(pertama);
     if (!pertama) return toast("gagal");
@@ -265,11 +272,10 @@ const FormDataDiriUser = () => {
     // localStorage.setItem("user_id", pertama.id);
     // sUser.value = pertama;
     // console.log(sUser.value);
-    toast("succes");
+    toast("sukses");
     router.push("/v2/data-partai-v2");
     setIsLoading(false);
   };
-
 
   const formDataDiri = useForm({
     initialValues: {
@@ -362,14 +368,14 @@ const FormDataDiriUser = () => {
           >
             <TextInput
               value={`${valNik}`}
-              description={
+              description={valNik && valNik.length != 16 ? <Text></Text> : ""}
+              error={
                 valNik && valNik.length != 16 ? (
                   <Text>Panjang Nik Harus 16 Angka</Text>
                 ) : (
                   ""
                 )
               }
-              error={valNik && valNik.length != 16}
               placeholder="NIK"
               withAsterisk
               mt={10}
@@ -456,13 +462,38 @@ const FormDataDiriUser = () => {
               {...formDataDiri.getInputProps("data.masterJenisKelaminId")}
             />
             <TextInput
+              description={
+                noHP && noHP.length < 11 ? (
+                  <Text></Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHP && noHP.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
               placeholder="Nomor Handphone"
               withAsterisk
               label="Nomor Handphone"
               radius={"md"}
               mt={10}
               type="number"
-              {...formDataDiri.getInputProps("data.phoneNumber")}
+              onChange={(val) => {
+                if (val) {
+                  setNoHP(val.currentTarget.value);
+                  formDataDiri.values.data.phoneNumber =
+                    val.currentTarget.value;
+                }
+              }}
+              // {...formDataDiri.getInputProps("data.phoneNumber")}
             />
             {/* {JSON.stringify(sMediaSocial)} */}
             <TextInput

@@ -55,8 +55,9 @@ function KaderPartai2() {
   const KaderPartai = async () => {
     // console.log(formKaderPartai.values.data)
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
     if (Object.values(formKaderPartai.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -67,10 +68,13 @@ function KaderPartai2() {
       body: JSON.stringify(formKaderPartai.values.data),
     }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
+      } else {
         setLoading(false);
-        await new Promise((r) => setTimeout(r, 500));
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };

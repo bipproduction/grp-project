@@ -63,7 +63,8 @@ function LoadingProvicer({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <LoadingOverlay
-        h={"100vh"}
+        // h={"100vh"}
+        maw={"100%"}
         visible={isLoading}
         overlayBlur={2}
         transitionDuration={0}

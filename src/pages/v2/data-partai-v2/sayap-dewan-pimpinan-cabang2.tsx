@@ -55,6 +55,7 @@ function SayapDewanPimpinanCabang2() {
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoading, setLoading] = useAtom(val_loading);
   const { classes } = useStyles();
+  const [noHpSayapCab, setNoHpSayapCab] = useState<string | null>(null);
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
   const [provinsi, setProvinsi] = useState<any[]>([]);
@@ -143,10 +144,22 @@ function SayapDewanPimpinanCabang2() {
   const PimpinanCabang = async () => {
     // console.log(formSayapDewanPimpinanCabang.values.data)
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
+
     if (Object.values(formSayapDewanPimpinanCabang.values.data).includes("")) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
+
+    if(formSayapDewanPimpinanCabang.values.data.waAdmin.length <= 10){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+    if(formSayapDewanPimpinanCabang.values.data.waAdmin.length >= 16){
+      setLoading(false)
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+
     fetch(api.apiSumberDayaPartaiPost, {
       method: "POST",
       headers: {
@@ -155,10 +168,13 @@ function SayapDewanPimpinanCabang2() {
       body: JSON.stringify(formSayapDewanPimpinanCabang.values.data),
     }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
+      } else {
         setLoading(false);
-        await new Promise((r) => setTimeout(r, 500));
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };
@@ -263,7 +279,6 @@ function SayapDewanPimpinanCabang2() {
                   val!;
               }}
               radius={"md"}
-              // mt={10}
               placeholder={selectedProvince.name}
               value={selectedProvince.id}
               label="Provinsi"
@@ -286,7 +301,6 @@ function SayapDewanPimpinanCabang2() {
                 formSayapDewanPimpinanCabang.values.data.masterKabKotId = val!;
               }}
               radius={"md"}
-              // mt={10}
               placeholder={selectedKabupaten.name}
               value={selectedKabupaten.id}
               label="Kabupaten / Kota"
@@ -305,7 +319,6 @@ function SayapDewanPimpinanCabang2() {
               }))}
               label="Jabatan"
               withAsterisk
-              // mt={10}
               radius={"md"}
               placeholder="Jabatan"
               searchable
@@ -315,28 +328,43 @@ function SayapDewanPimpinanCabang2() {
                 "data.alamatKantor"
               )}
               radius={"md"}
-              // mt={10}
               withAsterisk
               placeholder="Alamat Kantor"
               label="Alamat Kantor"
             />
             <TextInput
-              {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
+              // {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
               radius={"md"}
-              // mt={10}
+              description={
+                noHpSayapCab && noHpSayapCab.length < 11 ? (
+                  <Text></Text>
+                ) : noHpSayapCab && noHpSayapCab.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHpSayapCab && noHpSayapCab.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : noHpSayapCab && noHpSayapCab.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
+              onChange={(val) => {
+                if (val) {
+                  setNoHpSayapCab(val.currentTarget.value);
+                  formSayapDewanPimpinanCabang.values.data.waAdmin =
+                    val.currentTarget.value;
+                }
+              }}
               withAsterisk
               placeholder="Nomor WA Admin"
               label="Nomor WA Admin"
               type="number"
             />
-            {/* <TextInput
-          {...formSayapDewanPimpinanCabang.getInputProps("data.medsos")}
-          radius={"md"}
-          mt={10}
-          withAsterisk
-          placeholder="Add Media Social"
-          label="Add Media Social"
-        /> */}
             <Button
               mt={20}
               fullWidth

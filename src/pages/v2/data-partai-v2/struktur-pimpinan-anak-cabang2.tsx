@@ -134,11 +134,12 @@ function StrukturPimpinanAnakCabang2() {
 
   const PimpinanAnakCabang = async () => {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
     // console.log(formStrukturPimpinanAnakCabang.values.data)
     if (
       Object.values(formStrukturPimpinanAnakCabang.values.data).includes("")
     ) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -149,10 +150,13 @@ function StrukturPimpinanAnakCabang2() {
       body: JSON.stringify(formStrukturPimpinanAnakCabang.values.data),
     }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
+      } else {
         setLoading(false);
-        await new Promise((r) => setTimeout(r, 500));
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };

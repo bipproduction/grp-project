@@ -50,6 +50,9 @@ const useStyles = createStyles((theme) => ({
 function StrukturDewanPimpinanDaerah2() {
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoading, setLoading] = useAtom(val_loading);
+  const [noHpStrukturDaerah, setNoHpStrukturDaerah] = useState<string | null>(
+    null
+  );
   const { classes } = useStyles();
   const router = useRouter();
   const [value, setValue] = useState("");
@@ -57,25 +60,40 @@ function StrukturDewanPimpinanDaerah2() {
 
   const PimpinanDaerah = async () => {
     // console.log(formStrukturDewanPimpinanDaerah.values.data)
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
+
     if (
       Object.values(formStrukturDewanPimpinanDaerah.values.data).includes("")
     ) {
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
+
+    if (formStrukturDewanPimpinanDaerah.values.data.waAdmin.length <= 10) {
+      setLoading(false);
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+    if (formStrukturDewanPimpinanDaerah.values.data.waAdmin.length >= 16) {
+      setLoading(false);
+      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
+
     fetch(api.apiSumberDayaPartaiPost, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formStrukturDewanPimpinanDaerah.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
-        setLoading(false)
-        await new Promise((r) => setTimeout(r, 500))
+      } else {
+        setLoading(false);
+        toast("Sukses");
+        router.push("/v2/home");
       }
     });
   };
@@ -112,7 +130,8 @@ function StrukturDewanPimpinanDaerah2() {
           <Box pl={40}></Box>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
+              Jika Termasuk Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={35}>
@@ -195,15 +214,35 @@ function StrukturDewanPimpinanDaerah2() {
               // }}
             />
             <TextInput
-              {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
+              // {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
+              description={
+                noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
+                  <Text></Text>
+                ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
+              onChange={(val) => {
+                setNoHpStrukturDaerah(val.currentTarget.value);
+                formStrukturDewanPimpinanDaerah.values.data.waAdmin =
+                  val.currentTarget.value;
+              }}
               radius={"md"}
               withAsterisk
               placeholder="Nomor WA Admin"
               label="Nomor WA Admin"
               type="number"
-              // onChange={() => {
-              //   setValue(formStrukturDewanPimpinanDaerah.values.data.waAdmin)
-              // }}
             />
             <Button
               mt={20}

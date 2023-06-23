@@ -59,11 +59,11 @@ function EditMediaSocial({ keluarMedia }: any) {
           body: JSON.stringify(body),
         });
         console.log(body);
-        setLoading(false)
         await new Promise((r) => setTimeout(r, 500))
         // router.reload();
       });
     }
+    setLoading(false)
     loadMediaEdit()
     keluarMedia(true);
     setOpenMediaSocial(false);
