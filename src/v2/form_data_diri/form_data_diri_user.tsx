@@ -214,6 +214,20 @@ const FormDataDiriUser = () => {
 
     // console.log(formDataDiri.values.data)
     // return
+    if (Object.values(formDataDiri.values.data.masterProvinceId).includes("")) {
+      return toast("lengkapi data Provinsi");
+    }
+    if (Object.values(formDataDiri.values.data.masterKabKotId).includes("")) {
+      return toast("lengkapi data kabupaten");
+    }
+    if (
+      Object.values(formDataDiri.values.data.masterKecamatanId).includes("")
+    ) {
+      return toast("lengkapi data kecamatan");
+    }
+    if (Object.values(formDataDiri.values.data.masterDesaId).includes("")) {
+      return toast("lengkapi data desa");
+    }
 
     if (Object.values(formDataDiri.values.data).includes("")) {
       console.table(formDataDiri.values.data);
@@ -288,13 +302,13 @@ const FormDataDiriUser = () => {
         phoneNumber: "",
         alamat: "",
         rtRw: "",
-        masterJenisKelaminId: new Number(),
-        masterAgamaId: new Number(),
-        masterPekerjaanId: new Number(),
-        masterProvinceId: new Number(),
-        masterKabKotId: new Number(),
-        masterKecamatanId: new Number(),
-        masterDesaId: new Number(),
+        masterJenisKelaminId: "",
+        masterAgamaId: "",
+        masterPekerjaanId: "",
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterKecamatanId: "",
+        masterDesaId: "",
       },
       validate: {
         email: (value: string) =>
@@ -340,17 +354,24 @@ const FormDataDiriUser = () => {
         phoneNumber: "082341908765",
         alamat: `Jalan Toh Pati no : ${Math.floor(Math.random() * 100)}`,
         rtRw: `${Math.floor(Math.random() * 100)}`,
-        masterJenisKelaminId: _.toNumber(
-          `${Math.floor(Math.random() * 2 - 0) + 1}`
-        ),
-        masterAgamaId: _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`),
-        masterPekerjaanId: toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`),
-        masterProvinceId: toNumber(`${Math.floor(Math.random() * 38 - 0) + 1}`),
-        masterKabKotId: toNumber(`${Math.floor(Math.random() * 500 - 0) + 1}`),
-        masterKecamatanId: toNumber(
-          `${Math.floor(Math.random() * 1000 - 0) + 1}`
-        ),
-        masterDesaId: toNumber(`${Math.floor(Math.random() * 3000 - 0) + 1}`),
+        // masterJenisKelaminId: _.toNumber(
+        //   `${Math.floor(Math.random() * 2 - 0) + 1}`
+        // ),
+        // masterAgamaId: _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`),
+        // masterPekerjaanId: toNumber(`${Math.floor(Math.random() * 3 - 0) + 1}`),
+        // masterProvinceId: toNumber(`${Math.floor(Math.random() * 38 - 0) + 1}`),
+        // masterKabKotId: toNumber(`${Math.floor(Math.random() * 500 - 0) + 1}`),
+        // masterKecamatanId: toNumber(
+        //   `${Math.floor(Math.random() * 1000 - 0) + 1}`
+        // ),
+        // masterDesaId: toNumber(`${Math.floor(Math.random() * 3000 - 0) + 1}`),
+        masterJenisKelaminId: "",
+        masterAgamaId: "",
+        masterPekerjaanId: "",
+        masterProvinceId: "",
+        masterKabKotId: "",
+        masterKecamatanId: "",
+        masterDesaId: "",
       },
     });
   }
@@ -604,7 +625,7 @@ const FormDataDiriUser = () => {
               mt={10}
               {...formDataDiri.getInputProps("data.alamat")}
             />
-            {/* {JSON.stringify(selectedProvince)} */}
+            {/* {JSON.stringify(selectedProvince.id)} */}
             <Select
               data={provinsi.map((pro) => ({
                 value: pro.id,
@@ -621,16 +642,14 @@ const FormDataDiriUser = () => {
                 if (val) {
                   setSelectedProvince(provinsi.find((v) => v.id == val));
                   loadKabupaten(val);
-                  
                 }
                 formDataDiri.values.data.masterProvinceId = val!;
-                selectedKabupaten.name=""
-                selectedKabupaten.id=""
+                formDataDiri.values.data.masterKabKotId = "";
               }}
 
               // onChange={selectedProvince}
             />
-            {/* {JSON.stringify(selectedKabupaten)} */}
+            {/* {JSON.stringify(selectedKabupaten.id)} */}
             <Select
               key={Math.random()}
               data={
@@ -653,11 +672,10 @@ const FormDataDiriUser = () => {
                 setSelectedKabupaten(kabupaten.find((v) => v.id == val));
                 loadKecamatan(val!);
                 formDataDiri.values.data.masterKabKotId = val!;
-                selectedKecamatan.name=""
-                selectedKecamatan.id=""
+                formDataDiri.values.data.masterKecamatanId = "";
               }}
             />
-            {/* {JSON.stringify(selectedKecamatan.name)} */}
+            {/* {JSON.stringify(selectedKecamatan.id)} */}
             <Select
               key={Math.random()}
               data={
@@ -682,11 +700,10 @@ const FormDataDiriUser = () => {
                 setSelectedKecamatan(kecamatan.find((v) => v.id == val));
                 loadDesa(val!);
                 formDataDiri.values.data.masterKecamatanId = val!;
-                selectedDesa.name=""
-                selectedDesa.id=""
+                formDataDiri.values.data.masterDesaId = "";
               }}
             />
-            {/* {JSON.stringify(selectedDesa.name)} */}
+            {/* {JSON.stringify(selectedDesa.id)} */}
             <Select
               key={Math.random()}
               data={
