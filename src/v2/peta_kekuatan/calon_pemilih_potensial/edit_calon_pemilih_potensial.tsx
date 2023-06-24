@@ -168,6 +168,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
       statusSosial: dataEdit?.statusSosial,
       pendidikan: dataEdit?.pendidikan,
     };
+
+    // console.table(body);
+
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -360,6 +363,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     setSelectProvince(dataProvinsi.find((e) => e.id == val));
                     const data: any = _.clone(dataEdit);
                     data.MasterProvince.id = val;
+                    data.MasterKabKot.id = "";
                     setDataEdit(data);
                     _loadSelectKabkot(
                       val as any,
@@ -368,9 +372,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    (selectProvinsi.name)
-                      ? (selectProvinsi.name)
-                      : dataEdit?.MasterProvince.name
+                    selectProvinsi.id as any
+                      ? selectProvinsi.id as any
+                      : dataEdit?.MasterProvince.id as any
                   }
                   placeholder={
                     selectProvinsi.name
@@ -392,8 +396,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   }
                   onChange={(val) => {
                     setSelectKabupaten(dataKabkot.find((e) => e.id === val));
-                    const data: any = _.clone(dataEdit);
-                    data.MasterKabKot.id = val;
+                    const data = _.clone(dataEdit);
+                    data.MasterKabKot.id = val as any;
+                    data.MasterKecamatan.id = "" as any;
                     setDataEdit(data);
                     _loadSelectKecamatan(
                       val as any,
@@ -402,13 +407,13 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    (selectKabkot.name)
-                      ? (selectKabkot.name)
-                      : dataEdit.MasterKabKot.name
+                    selectKabkot.id as any
+                      ? selectKabkot.id as any
+                      : dataEdit?.MasterKabKot.id
                   }
                   placeholder={
-                    selectKabkot.name
-                      ? selectKabkot.name
+                    selectProvinsi.name
+                      ? "Pilih Kabupaten / Kota"
                       : dataEdit?.MasterKabKot.name
                   }
                 />
@@ -427,17 +432,20 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                   }
                   onChange={(val) => {
                     setSelectKecamatan(dataKecamatan.find((e) => e.id == val));
-                    const data: any = _.clone(dataEdit);
-                    data.MasterKecamatan.id = val;
+                    const data = _.clone(dataEdit);
+                    data.MasterKecamatan.id = val as any;
+                    data.MasterDesa.id = "" as any;
                     setDataEdit(data);
                     _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
                   }}
-                  value={ selectKecamatan.name
-                    ? selectKecamatan.name
-                    : dataEdit?.MasterKecamatan.name}
+                  value={
+                    selectKecamatan.id as any
+                      ? selectKecamatan.id as any
+                      : dataEdit?.MasterKecamatan.id as any
+                  }
                   placeholder={
-                    selectKecamatan.name
-                      ? selectKecamatan.name
+                    selectKabkot.name
+                      ? "Pilih Kecamatan"
                       : dataEdit?.MasterKecamatan.name
                   }
                 />
@@ -459,12 +467,14 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     data.MasterDesa.id = val;
                     setDataEdit(data);
                   }}
-                  value={selectDesa.name
-                    ? selectDesa.name
-                    : dataEdit?.MasterDesa.name}
+                  value={
+                    selectDesa.id as any
+                      ? selectDesa.id as any
+                      : dataEdit?.MasterDesa.id as any
+                  }
                   placeholder={
-                    selectDesa.name
-                      ? selectDesa.name
+                    selectKecamatan.name
+                      ? "Pilih Desa"
                       : dataEdit?.MasterDesa.name
                   }
                 />
@@ -622,6 +632,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
               />
               <Select
                 label="Pendidikan"
+                withAsterisk
                 placeholder="Pendidikan terakhir"
                 data={["SD", "SMP", "SMA / SMK", "Perguruan Tinggi"]}
                 value={dataEdit.pendidikan}
@@ -634,6 +645,7 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
               />
               <Select
                 label="Status Sosial"
+                withAsterisk
                 placeholder="Pilih Status Sosial"
                 value={dataEdit.statusSosial}
                 data={["Menengah Kebawah", "Menengah Keatas", "Berkecukupan"]}

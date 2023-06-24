@@ -9,6 +9,9 @@ import {
   Group,
   Text,
   Loader,
+  Flex,
+  Grid,
+  Paper,
 } from "@mantine/core";
 import { useState } from "react";
 import COLOR from "../../../../../fun/WARNA";
@@ -159,8 +162,23 @@ export const TambahLampiranV2 = ({
       </Modal>
 
       <Box>
-        <TextInput disabled label="Nama Aset" value={dataAset.name}></TextInput>
+        {/* <TextInput disabled label="Nama Aset" value={dataAset.name}></TextInput> */}
+        <Paper bg={COLOR.abuabu} p={10}>
+        <Grid>
+          <Grid.Col span={12}>
+            <Text size={20} fw={"bold"}>
+              Tambah Lampiran Aset Partai
+            </Text>
+          </Grid.Col>
+        </Grid>
+      </Paper>
+        <Box pt={20}>
+        <Flex direction={"row"} fz={16} gap={"xs"}>
+          <Text fw={"bolder"}>Nama Aset :</Text>
+          <Text>{dataAset.name}</Text>
+        </Flex>
         <TextInput
+          withAsterisk
           label="Jenis Lampiran"
           placeholder="Contoh: STNK, Nota, Surat berharga, dll.."
           value={lampiran.name}
@@ -172,6 +190,7 @@ export const TambahLampiranV2 = ({
           }}
         />
         <Textarea
+          withAsterisk
           label="Deskripsi"
           placeholder="Deskripsi"
           onChange={(val) => {
@@ -183,13 +202,14 @@ export const TambahLampiranV2 = ({
         />
         {/* <TextInput
           placeholder={lampiranId.file ? lampiranId.file : "Pilih file"}
+          withAsterisk
           label="Lampiran"
           withAsterisk
           onClick={setOpen.open}
         /> */}
         <FileInput
-          label="Lampiran"
           withAsterisk
+          label="Lampiran"
           onClick={setOpen.open}
           placeholder={lampiranId.file ? lampiranId.file : "Pilih file"}
         />
@@ -205,6 +225,7 @@ export const TambahLampiranV2 = ({
         >
           Tambah
         </Button>
+        </Box>
       </Box>
     </>
   );
