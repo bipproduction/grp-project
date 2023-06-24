@@ -201,8 +201,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
    * - Kondisi usia dibawah 17 tahun
    */
   const onCreate = () => {
-    // console.log(dataKirim);
+    console.table(dataKirim);
     // Cek Kelengkapan form
+
     if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -353,9 +354,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               />
 
               <TextInput
+                label="NIK"
                 type="number"
                 placeholder={"NIK"}
-                label="NIK"
                 withAsterisk
                 description={
                   dataKirim.nik && dataKirim.nik.length != 16 ? (
@@ -364,7 +365,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                     ""
                   )
                 }
-                error={dataKirim.nik.length != 16}
+                // error={
+                //   dataKirim.nik.length
+                // }
                 value={dataKirim.nik}
                 onChange={(val) => {
                   setDataKirim({
@@ -417,6 +420,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   setDataKirim({
                     ...dataKirim,
                     masterProvinceId: val as any,
+                    masterKabKotId: "" as any,
                   });
                   _loadSelectKabkot(
                     val as any,
@@ -450,6 +454,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   setDataKirim({
                     ...dataKirim,
                     masterKabKotId: val as any,
+                    masterKecamatanId: "" as any,
                   });
                   _loadSelectKecamatan(
                     val as any,
@@ -486,6 +491,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
                   setDataKirim({
                     ...dataKirim,
                     masterKecamatanId: val as any,
+                    masterDesaId: "" as any,
                   });
                   _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
                 }}
@@ -631,6 +637,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               />
               <Select
                 label="Pendidikan"
+                withAsterisk
                 placeholder="Pendidikan terakhir"
                 data={["SD", "SMP", "SMA / SMK", "Perguruan Tinggi"]}
                 value={dataKirim.pendidikan}
@@ -643,6 +650,7 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
               />
               <Select
                 label="Status Sosial"
+                withAsterisk
                 placeholder="Pilih Status Sosial"
                 data={["Menengah Kebawah", "Menengah Keatas", "Berkecukupan"]}
                 value={dataKirim.statusSosial}

@@ -114,7 +114,7 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
   const onCreate = async () => {
     console.log(dataKirim);
     if (Object.values(dataKirim).includes("")) {
-      return toast("Lengkapi Data Diri");
+      return toast("Lengkapi Data ");
     }
 
     await fetch(api.apiAsetPartaiPost, {
