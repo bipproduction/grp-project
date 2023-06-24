@@ -137,7 +137,7 @@ function StrukturPimpinanRanting2() {
   const PimpinanRanting = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
-    // console.log(formStrukturPimpinanRanting.values.data)
+    console.table(formStrukturPimpinanRanting.values.data)
     if (Object.values(formStrukturPimpinanRanting.values.data).includes("")) {
       setLoading(false);
       return toast("Lengkapi Data Diri");
@@ -239,6 +239,8 @@ function StrukturPimpinanRanting2() {
                     loadKabupaten(val);
                     formStrukturPimpinanRanting.values.data.masterProvinceId =
                       val!;
+                    formStrukturPimpinanRanting.values.data.masterKabKotId =
+                      ""
                   }
                 }}
                 radius={"md"}
@@ -263,6 +265,7 @@ function StrukturPimpinanRanting2() {
                   setSelectedKabupaten(kabupaten.find((v) => v.id == val));
                   loadKecamatan(val!);
                   formStrukturPimpinanRanting.values.data.masterKabKotId = val!;
+                  formStrukturPimpinanRanting.values.data.masterKecamatanId = ""
                 }}
                 radius={"md"}
                 placeholder={selectedKabupaten.name}
@@ -287,6 +290,8 @@ function StrukturPimpinanRanting2() {
                   loadDesa(val!);
                   formStrukturPimpinanRanting.values.data.masterKecamatanId =
                     val!;
+                  formStrukturPimpinanRanting.values.data.masterDesaId =
+                    ""
                 }}
                 radius={"md"}
                 placeholder={selectedKecamatan.name}

@@ -142,7 +142,7 @@ function SayapDewanPimpinanCabang2() {
   const router = useRouter();
 
   const PimpinanCabang = async () => {
-    // console.log(formSayapDewanPimpinanCabang.values.data)
+    console.table(formSayapDewanPimpinanCabang.values.data)
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
 
@@ -277,6 +277,8 @@ function SayapDewanPimpinanCabang2() {
                 }
                 formSayapDewanPimpinanCabang.values.data.masterProvinceId =
                   val!;
+                formSayapDewanPimpinanCabang.values.data.masterKabKotId =
+                  ""
               }}
               radius={"md"}
               placeholder={selectedProvince.name}

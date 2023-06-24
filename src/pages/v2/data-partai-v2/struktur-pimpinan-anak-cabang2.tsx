@@ -135,7 +135,7 @@ function StrukturPimpinanAnakCabang2() {
   const PimpinanAnakCabang = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
-    // console.log(formStrukturPimpinanAnakCabang.values.data)
+    console.log(formStrukturPimpinanAnakCabang.values.data)
     if (
       Object.values(formStrukturPimpinanAnakCabang.values.data).includes("")
     ) {
@@ -240,6 +240,8 @@ function StrukturPimpinanAnakCabang2() {
                 }
                 formStrukturPimpinanAnakCabang.values.data.masterProvinceId =
                   val!;
+                formStrukturPimpinanAnakCabang.values.data.masterKabKotId =
+                  ""
               }}
               radius={"md"}
               placeholder={selectedProvince.name}
@@ -263,6 +265,8 @@ function StrukturPimpinanAnakCabang2() {
                 loadKecamatan(val!);
                 formStrukturPimpinanAnakCabang.values.data.masterKabKotId =
                   val!;
+                formStrukturPimpinanAnakCabang.values.data.masterKecamatanId =
+                  ""
               }}
               radius={"md"}
               placeholder={selectedKabupaten.name}

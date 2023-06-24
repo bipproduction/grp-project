@@ -134,7 +134,7 @@ function StrukturDewanPimpinanCabang2() {
   }, []);
 
   const PimpinanCabang = async () => {
-    // console.log(formStrukturDewanPimpinanCabang.values.data)
+    console.log(formStrukturDewanPimpinanCabang.values.data)
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
 
@@ -251,6 +251,8 @@ function StrukturDewanPimpinanCabang2() {
                   }
                   formStrukturDewanPimpinanCabang.values.data.masterProvinceId =
                     val!;
+                  formStrukturDewanPimpinanCabang.values.data.masterKabKotId =
+                    ""
                 }}
                 data={provinsi.map((pro) => ({
                   value: pro.id,
