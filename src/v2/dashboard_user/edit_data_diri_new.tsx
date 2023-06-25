@@ -92,7 +92,7 @@ function EditDataDiriNew({ thisClosed }: any) {
   const [noHP, setNoHP] = useState<string | null>(null);
   const [dataDiri, setDataDiri] = useAtom(_dataedit);
   // const [changeData, setChangeData] = useAtom(_listData);
-  const [ubah, setUbah] = useAtom(_listData);
+  // const [ubah, setUbah] = useAtom(_listData);
   const [selectJenisKelaminDT, setSelectJenisKelaminDT] = useAtom(
     _selectJenisKelaminDataDiri
   );
@@ -118,7 +118,6 @@ function EditDataDiriNew({ thisClosed }: any) {
   // const [mediaSocialGet, setMediaSocialGet] = useAtom(_MediaSocialGet);
 
   const onEdit = async () => {
-    // console.log(editFormDataDiri.values.data)
     thisClosed(true);
     setLoading(true);
     const body = {
@@ -138,16 +137,29 @@ function EditDataDiriNew({ thisClosed }: any) {
       rtRw: listData?.rtRw,
       name: listData?.name,
     };
-    console.log(body);
+    console.table(body);
 
     if (Object.values(body).includes("")) {
       setLoading(false);
       return toast("Lengkapi Data Diri");
     }
 
-    if (Object.values(body.nik).length != 16){
-      setLoading(false);
-      return toast("NIK harus 16 angka");
+    // if (Object.values(body.nik).length != 16){
+    //   setLoading(false);
+    //   return toast("NIK harus 16 angka");
+    // }
+
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+    if ((listData?.nik.length as any) < 16) {
+      setLoading(false)
+      return toast("NIK Kurang Dari 16 Digit");
+    } else {
+      if ((listData?.nik.length as any) > 16) {
+        
+        return toast("NIK Lebih Dari 16 Digit");
+      }
     }
 
     if(Object.values(body.phoneNumber).length <= 10 ) {
@@ -250,36 +262,36 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               value={listData.name}
               onChange={(val) => {
-                const perubahan = _.clone(listData);
-                listData.name = val.currentTarget.value;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.name = val.currentTarget.value;
+                setListData(data);
               }}
             />
             <TextInput
-              description={
-                valNik && valNik.length != 16 ? (
-                  <Text>Panjang Nik Harus 16 Angka</Text>
-                ) : (
-                  ""
-                )
-              }
-              error={valNik && valNik.length != 16}
+              // description={
+              //   valNik && valNik.length != 16 ? (
+              //     <Text>Panjang Nik Harus 16 Angka</Text>
+              //   ) : (
+              //     ""
+              //   )
+              // }
+              // error={valNik && valNik.length != 16}
               placeholder="NIK"
               withAsterisk
               mt={10}
-              minLength={16}
-              maxLength={16}
+              // minLength={16}
+              // maxLength={16}
               label="NIK"
               radius={"md"}
               type="number"
               value={listData?.nik}
               onChange={(val) => {
-                if (val) {
-                  setValNik(val.currentTarget.value);
-                }
-                const perubahan = _.clone(listData);
-                listData.nik = val.currentTarget.value;
-                setUbah(perubahan);
+                // if (val) {
+                //   setValNik(val.currentTarget.value);
+                // }
+                const data = _.clone(listData);
+                data.nik = val.currentTarget.value;
+                setListData(data);
               }}
             />
             <TextInput
@@ -290,9 +302,9 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               value={listData?.tempatLahir}
               onChange={(val) => {
-                const perubahan = _.clone(listData);
-                listData.tempatLahir = val.currentTarget.value;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.tempatLahir = val.currentTarget.value;
+                setListData(data);
               }}
             />
 
@@ -305,20 +317,35 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               value={new Date(listData.tanggalLahir)}
               onChange={(val) => {
+                // if (val) {
+                //   const tanggal = moment(new Date()).diff(val, "years");
+                //   if (tanggal < 17) {
+                //     const perubahan = _.clone(listData);
+                //     listData.tanggalLahir = listData.tanggalLahir;
+                //     setUbah(perubahan);
+                //     return toast(
+                //       "Anda tidak boleh mengisi data dengan usia kurang dari 17 tahun"
+                //     );
+                //   }
+
+                //   const perubahan = _.clone(listData);
+                //   listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
+                //   setUbah(perubahan);
+                // }
                 if (val) {
                   const tanggal = moment(new Date()).diff(val, "years");
                   if (tanggal < 17) {
-                    const perubahan = _.clone(listData);
-                    listData.tanggalLahir = listData.tanggalLahir;
-                    setUbah(perubahan);
+                    const data = _.clone(listData);
+                    data.tanggalLahir = listData.tanggalLahir;
+                    setListData(data);
                     return toast(
                       "Anda tidak boleh mengisi data dengan usia kurang dari 17 tahun"
                     );
                   }
 
-                  const perubahan = _.clone(listData);
-                  listData.tanggalLahir = moment(val).format("YYYY-MM-DD");
-                  setUbah(perubahan);
+                  const data = _.clone(listData);
+                  data.tanggalLahir = moment(val).format("YYYY-MM-DD");
+                  setListData(data);
                 }
               }}
               // onChange={(val: any) => {
@@ -330,24 +357,24 @@ function EditDataDiriNew({ thisClosed }: any) {
 
             <TextInput
               // placeholder="Nomor Handphone"
-              description={
-                noHP && noHP.length < 11 ? (
-                  <Text></Text>
-                ) : noHP && noHP.length > 15 ? (
-                  <Text></Text>
-                ) : (
-                  ""
-                )
-              }
-              error={
-                noHP && noHP.length < 11 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
-                ) : noHP && noHP.length > 15 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                ) : (
-                  ""
-                )
-              }
+              // description={
+              //   noHP && noHP.length < 11 ? (
+              //     <Text></Text>
+              //   ) : noHP && noHP.length > 15 ? (
+              //     <Text></Text>
+              //   ) : (
+              //     ""
+              //   )
+              // }
+              // error={
+              //   noHP && noHP.length < 11 ? (
+              //     <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+              //   ) : noHP && noHP.length > 15 ? (
+              //     <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              //   ) : (
+              //     ""
+              //   )
+              // }
               placeholder={listData?.phoneNumber}
               withAsterisk
               label="Nomor Handphone"
@@ -356,10 +383,10 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               value={listData?.phoneNumber}
               onChange={(val) => {
-                const perubahan = _.clone(listData);
-                setNoHP(val.currentTarget.value);
-                listData.phoneNumber = val.currentTarget.value;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                // setNoHP(val.currentTarget.value);
+                data.phoneNumber = val.currentTarget.value;
+                setListData(data);
               }}
               // {...editFormDataDiri.getInputProps("data.phoneNumber")}
             />
@@ -372,9 +399,9 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               value={listData?.alamat}
               onChange={(val) => {
-                const perubahan = _.clone(listData);
-                listData.alamat = val.currentTarget.value;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.alamat = val.currentTarget.value;
+                setListData(data);
               }}
               // {...editFormDataDiri.getInputProps("data.alamat")}
             />
@@ -399,9 +426,9 @@ function EditDataDiriNew({ thisClosed }: any) {
               type="number"
               value={listData?.rtRw}
               onChange={(val) => {
-                const perubahan = _.clone(listData);
-                listData.rtRw = val.currentTarget.value;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.rtRw = val.currentTarget.value;
+                setListData(data);
               }}
               // {...editFormDataDiri.getInputProps("data.rtRw")}
             />
@@ -412,8 +439,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectProvinceDT.id
-                  ? selectProvinceDT.id
+                selectProvinceDT.id as any
+                  ? selectProvinceDT.id as any
                   : (listData.MasterProvince.id as any)
                 // : selectProvinceDT.name
               }
@@ -428,15 +455,13 @@ function EditDataDiriNew({ thisClosed }: any) {
                 label: e.name,
               }))}
               onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                // perubahan.MasterProvince.name = val
-                perubahan.MasterProvince.id = val;
-                setUbah(perubahan);
+                const data: any = _.clone(listData);
+                // data.MasterProvince.name = val
+                data.MasterProvince.id = val;
+                data.MasterKabKot.id = ""
+                setListData(data);
                 setSelectProvinceDT(itProvinsi.find((e) => e.id == val));
                 _loadSelectKabkot(val, setItKabupaten, setSelectKabupatenDT);
-                // setUbah(null)
-                listData.MasterKabKot.name = "";
-                listData.MasterKabKot.id = 0;
               }}
             />
             {/* {JSON.stringify(selectKabupatenDT.name)} */}
@@ -446,15 +471,15 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKabupatenDT.id
-                  ? selectKabupatenDT.id
-                  : (listData.MasterKabKot.id as any)
+                selectKabupatenDT.id as any
+                  ? selectKabupatenDT.id as any
+                  : listData.MasterKabKot.id 
                 // :selectKabupatenDT.name
               }
               placeholder={
                 selectKabupatenDT.name
-                  ? selectKabupatenDT.name
-                  : listData.MasterKabKot.name
+                  ? "Pilih Kabupaten / Kota"
+                  :"Pilih Kabupaten / Kota"
                 // :selectKabupatenDT.name
               }
               data={
@@ -466,13 +491,12 @@ function EditDataDiriNew({ thisClosed }: any) {
                     }))
               }
               onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                perubahan.MasterKabKot.id = val;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.MasterKabKot.id = val as any
+                data.MasterKecamatan.id = "" as any
+                setListData(data);
                 setSelectKabupatenDT(itKabupaten.find((e) => e.id == val));
                 _loadSelectKecamatan(val, setItKecamatan, setSelectKecamatanDT);
-                listData.MasterKecamatan.name = "";
-                listData.MasterKecamatan.id = 0;
               }}
             />
             {/* {JSON.stringify(selectKecamatanDT.name)} */}
@@ -482,15 +506,15 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKecamatanDT.id
-                  ? selectKecamatanDT.id
-                  : (listData.MasterKecamatan.id as any)
+                selectKecamatanDT.id as any
+                  ? selectKecamatanDT.id as any
+                  : listData.MasterKecamatan.id as any
                 // : selectKecamatanDT.name
               }
               placeholder={
                 selectKecamatanDT.name
-                  ? selectKecamatanDT.name
-                  : listData.MasterKecamatan.name
+                  ?  "Pilih Kecamatan"
+                  : "Pilih Kecamatan"
                 // : selectKecamatanDT.name
               }
               data={
@@ -502,14 +526,13 @@ function EditDataDiriNew({ thisClosed }: any) {
                     }))
               }
               onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                perubahan.MasterKecamatan.id = val;
-                setUbah(perubahan);
+                const data = _.clone(listData);
+                data.MasterKecamatan.id = val as any
+                data.MasterDesa.id = "" as any
+                setListData(data);
                 setSelectKecamatanDT(itKecamatan.find((e) => e.id == val));
                 _loadSelectDesa(val, setItDesa, setSelectDesaDT);
                 // console.log(val)
-                listData.MasterDesa.name = "";
-                listData.MasterDesa.id = 0;
               }}
             />
             {/* {JSON.stringify(selectDesaDT.name)} */}
@@ -519,13 +542,13 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               radius={"md"}
               value={
-                selectDesaDT.id
-                  ? selectDesaDT.id
+                selectDesaDT.id as any
+                  ? selectDesaDT.id as any
                   : // : selectDesaDT.name
-                    (listData.MasterDesa.id as any)
+                    listData.MasterDesa.id as any
               }
               placeholder={
-                selectDesaDT.name ? selectDesaDT.name : listData.MasterDesa.name
+                selectDesaDT.name ? "Pilih Desa": "Pilih Desa"
               }
               data={
                 _.isEmpty(itDesa)
@@ -536,11 +559,10 @@ function EditDataDiriNew({ thisClosed }: any) {
                     }))
               }
               onChange={(val: any) => {
-                const perubahan = _.clone(listData);
-                perubahan.MasterDesa.id = val;
-                setUbah(perubahan);
+                const data: any = _.clone(listData);
+                data.MasterDesa.id = val;
+                setListData(data);
                 setSelectDesaDT(itDesa.find((e) => e.id == val));
-                setUbah(null);
               }}
             />
             <Button
@@ -550,10 +572,7 @@ function EditDataDiriNew({ thisClosed }: any) {
               color="orange.9"
               type="submit"
               mt={35}
-              onClick={() => {
-                onEdit();
-                setUbah(null);
-              }}
+              onClick={onEdit}
             >
               Simpan
             </Button>

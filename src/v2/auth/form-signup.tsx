@@ -31,6 +31,7 @@ const FormSignUp = () => {
   const [email, setEmail] = useState<string>();
   const [inputKonfirmasiPass, setInputKonfirmasiPass] = useState<string>();
   const [isLoading, setLoading] = useAtom(val_loading)
+  const [usernaemMax, setUsernameMax] = useState<string | null>(null)
   const router = useRouter();
   const formRegister = useForm({
     initialValues: {
@@ -50,8 +51,7 @@ const FormSignUp = () => {
 
 
   const onRegister = async () => {
-    // setLoading(true)
-    // await new Promise((r) => setTimeout(r, 50))
+
     if (Object.values(formRegister.values.data).includes("")) {
       return toast("Lengkapi Data diri");
     }
@@ -61,12 +61,15 @@ const FormSignUp = () => {
     ) {
       return toast("Invalid email");
     }
-
+    if(formRegister.values.data.username.length >= 31){
+      return toast('Username maksimal 30 karakter')
+    }
     if( 
       formRegister.values.validate.username(formRegister.values.data.username) != null
     ) {
       return toast("Username harus berupa huruf, angka, titik, dan garis bawah.") && toast("Garis bawah dan titik tidak boleh berada di akhir atau awal nama pengguna");
     }
+
 
     // if(formRegister.values.data.username.length <= 4)
     // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
@@ -90,7 +93,9 @@ const FormSignUp = () => {
       const data = await res.json();
       if (res.status === 201) {
         toast("Sukses. Silahkan lakukan login");
-        // setLoading(false)
+        setLoading(true)
+        await new Promise((r) => setTimeout(r, 900))
+        setLoading(false)
         router.reload();
         
       } else {
@@ -137,11 +142,31 @@ const FormSignUp = () => {
             </Box>
 
             <TextInput
+            description={
+              usernaemMax && usernaemMax.length > 30 ? (
+                <Text></Text>
+              ) : (
+                ""
+              )
+            }
+            error={
+              usernaemMax && usernaemMax.length > 30 ? (
+                <Text color={COLOR.coklat}>Username Maksimal 30 karakter</Text>
+              ) : (
+                ""
+              )
+            }
               placeholder="Username"
               required
               mt="lg"
               icon={<FiUser size={17} />}
-              {...formRegister.getInputProps("data.username")}
+              onChange={(val) => {
+                if (val) {
+                  setUsernameMax(val.currentTarget.value)
+                  formRegister.values.data.username = val.currentTarget.value
+                }
+              }}
+              // {...formRegister.getInputProps("data.username")}
             />
             <TextInput
               placeholder="Email"
