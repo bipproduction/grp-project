@@ -87,7 +87,7 @@ const FormDataDiriUser = () => {
   });
   const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
   const [selectJenisKelamin, setSelectJenisKelamin] = useAtom(_sJenisKelamin);
-  const [isLoading, setIsLoading] = useAtom(val_loading);
+  const [isLoading, setLoading] = useAtom(val_loading);
   const [hash, setHash] = useHash();
 
   useHotkeys([["mod+a", otomatis]]);
@@ -210,39 +210,48 @@ const FormDataDiriUser = () => {
   const onDatadiri = async () => {
     console.log(formDataDiri.values.data);
     listData.find((val) => _.values(val).includes(""));
-    // if (adaKosong) return toast("Lengkapi data diri");
-
-    // console.log(formDataDiri.values.data)
-    // return
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300))
     if (Object.values(formDataDiri.values.data.masterProvinceId).includes("")) {
+      setLoading(false)
       return toast("lengkapi data Provinsi");
     }
     if (Object.values(formDataDiri.values.data.masterKabKotId).includes("")) {
+      setLoading(false)
       return toast("lengkapi data kabupaten");
     }
     if (
       Object.values(formDataDiri.values.data.masterKecamatanId).includes("")
     ) {
+      setLoading(false)
       return toast("lengkapi data kecamatan");
     }
     if (Object.values(formDataDiri.values.data.masterDesaId).includes("")) {
+      setLoading(false)
       return toast("lengkapi data desa");
     }
 
     if (Object.values(formDataDiri.values.data).includes("")) {
       console.table(formDataDiri.values.data);
+      setLoading(false)
       return toast("Lengkapi Data Diri");
     }
 
-    if (formDataDiri.values.data.nik.length != 16)
+    if (formDataDiri.values.data.nik.length != 16){
+      setLoading(false)
       return toast("NIK harus 16 angka");
+    }
 
     formDataDiri.values.data.nik = valNik!;
 
-    if (formDataDiri.values.data.phoneNumber.length <= 10)
+    if (formDataDiri.values.data.phoneNumber.length <= 10){
+      setLoading(false)
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
-    if (formDataDiri.values.data.phoneNumber.length >= 16)
+    }
+    if (formDataDiri.values.data.phoneNumber.length >= 16){
+      setLoading(false)
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+    }
     formDataDiri.values.data.phoneNumber = noHP!;
 
     const pertama = await fetch(api.apiDataDiriPost, {
@@ -260,14 +269,15 @@ const FormDataDiriUser = () => {
         res.status === 209;
         const data = await res.json();
         console.log(data.message);
+        setLoading(false)
         toast(data.message);
       }
-      setIsLoading(false);
-      await new Promise((r) => setTimeout(r, 500));
+      // setLoading(false);
+      // await new Promise((r) => setTimeout(r, 500));
       return null;
     });
-    setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
+    // setLoading(true);
+    // await new Promise((r) => setTimeout(r, 500));
 
     console.log(pertama);
     if (!pertama) return toast("gagal");
@@ -288,7 +298,7 @@ const FormDataDiriUser = () => {
     // console.log(sUser.value);
     toast("sukses");
     router.push("/v2/data-partai-v2");
-    setIsLoading(false);
+    setLoading(false);
   };
 
   const formDataDiri = useForm({
@@ -327,11 +337,11 @@ const FormDataDiriUser = () => {
 
   // `````````````` HASH ``````````````//
   const onExCreate = (coba: any) => {
-    setIsLoading(true);
+    setLoading(true);
     console.log(formDataDiri.values.data);
     if (coba == 1) {
       router.push("/v2/use-hash");
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -392,7 +402,7 @@ const FormDataDiriUser = () => {
               description={valNik && valNik.length != 16 ? <Text></Text> : ""}
               error={
                 valNik && valNik.length != 16 ? (
-                  <Text>Panjang Nik Harus 16 Angka</Text>
+                  <Text>Panjang NIK Harus 16 Angka</Text>
                 ) : (
                   ""
                 )

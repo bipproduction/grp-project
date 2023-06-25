@@ -5,3 +5,7 @@ export const _datapartaiEditProfile = atomWithStorage<DataDiri | null>(
     "dataDiri",
     null
   );
+export const _datapartaiProfile = atomWithStorage<DataDiri[] | null>(
+    "dataDiri",
+    null
+  );
