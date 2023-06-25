@@ -477,9 +477,9 @@ function EditDataDiriNew({ thisClosed }: any) {
                 // :selectKabupatenDT.name
               }
               placeholder={
-                selectKabupatenDT.name
+                selectProvinceDT.name
                   ? "Pilih Kabupaten / Kota"
-                  :"Pilih Kabupaten / Kota"
+                  : listData.MasterKabKot.name
                 // :selectKabupatenDT.name
               }
               data={
@@ -512,9 +512,9 @@ function EditDataDiriNew({ thisClosed }: any) {
                 // : selectKecamatanDT.name
               }
               placeholder={
-                selectKecamatanDT.name
+                selectKabupatenDT.name
                   ?  "Pilih Kecamatan"
-                  : "Pilih Kecamatan"
+                  : listData.MasterKecamatan.name
                 // : selectKecamatanDT.name
               }
               data={
@@ -548,7 +548,7 @@ function EditDataDiriNew({ thisClosed }: any) {
                     listData.MasterDesa.id as any
               }
               placeholder={
-                selectDesaDT.name ? "Pilih Desa": "Pilih Desa"
+                selectKecamatanDT.name ? "Pilih Desa": listData.MasterDesa.name
               }
               data={
                 _.isEmpty(itDesa)
