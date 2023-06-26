@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
 
 const val_open_anggota = atomWithStorage("val_open_anggota", false);
 
-function AnggotaPartaiTsx() {
+function AnggotaPartaiTsx({keluarPusat}: any) {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const router = useRouter();
@@ -47,7 +47,7 @@ function AnggotaPartaiTsx() {
         // onClose={}
         centered
       >
-        <ModalAnggotaPartai />
+        <ModalAnggotaPartai keluarAnggota={() => setOpenAnggota(false)} />
       </Modal>
       <UnstyledButton
         className={classes.user}

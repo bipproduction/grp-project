@@ -33,12 +33,13 @@ import {
 import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
 import { _dataKeanggotaan } from "@/load_data/sayap_partai/load_sayap_partai";
 import EditStatusKeanggotaan from "./edit_status_keanggotaan/edit_status_keanggotaan";
+import { EditKeanggotaanNew } from "./edit_keanggotaan_new/edit_status";
 
 export const _keanggotaan_user = atomWithStorage<
   ModelSumberDayaPartai[] | null
 >("_list_database_Keaggotaan", null);
 
-const StatusKeanggotaanV2 = () => {
+const StatusKeanggotaanV2 = ({keluarPusat}: any) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [listDataKeanggotaan, setListDataKeanggotaan] =
     useAtom(_keanggotaan_user);
@@ -63,7 +64,7 @@ const StatusKeanggotaanV2 = () => {
     <>
       {/* <pre>{JSON.stringify(listDataKeanggotaan, null, 2)}</pre> */}
       <Modal  opened={opened} onClose={close}  size={"md"} centered>
-        <EditStatusKeanggotaan/>
+        {/* <EditStatusKeanggotaan keluarPusat={() => close}/> */}
       </Modal>
 
       <Paper
@@ -106,6 +107,8 @@ const StatusKeanggotaanV2 = () => {
               ))}
             </Box>
           {/* <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button> */}
+          {/* <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button> */}
+          <EditKeanggotaanNew/>
           </Group>
         </Box>
       </Box>

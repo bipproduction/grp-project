@@ -59,7 +59,7 @@ const useStyles = createStyles((theme) => ({
 const val_open_struktur = atomWithStorage("val_open_struktur", false);
 const val_open_sayap = atomWithStorage("val_open_sayap", false);
 
-function EditStatusKeanggotaan() {
+function EditStatusKeanggotaan({keluarPusat}: any) {
   const { classes } = useStyles();
   const router = useRouter();
   const [opened, { open, close }] = useDisclosure(false);
@@ -96,6 +96,7 @@ function EditStatusKeanggotaan() {
               });
               // StrukturPartai();
               setOpenStruktur(true);
+              keluarPusat(true)
             }}
           >
             <Group>
@@ -119,6 +120,7 @@ function EditStatusKeanggotaan() {
               });
               // SayapPartai()
               setOpenSayap(true);
+              keluarPusat(true)
             }}
           >
             <Group>
