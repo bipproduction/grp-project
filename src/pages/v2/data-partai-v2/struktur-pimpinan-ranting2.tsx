@@ -244,7 +244,7 @@ function StrukturPimpinanRanting2() {
                   }
                 }}
                 radius={"md"}
-                placeholder={selectedProvince.name}
+                placeholder={"Pilih Provinsi"}
                 value={selectedProvince.id}
                 label="Provinsi"
                 withAsterisk
@@ -268,7 +268,7 @@ function StrukturPimpinanRanting2() {
                   formStrukturPimpinanRanting.values.data.masterKecamatanId = ""
                 }}
                 radius={"md"}
-                placeholder={selectedKabupaten.name}
+                placeholder={"Pilih Kabupaten"}
                 value={selectedKabupaten.id}
                 label="Kabupaten / Kota"
                 withAsterisk
@@ -294,7 +294,7 @@ function StrukturPimpinanRanting2() {
                     ""
                 }}
                 radius={"md"}
-                placeholder={selectedKecamatan.name}
+                placeholder={"Pilih Kecamatan"}
                 value={selectedKecamatan.id}
                 label="Kecamatan"
                 withAsterisk
@@ -316,7 +316,7 @@ function StrukturPimpinanRanting2() {
                   formStrukturPimpinanRanting.values.data.masterDesaId = val!;
                 }}
                 radius={"md"}
-                placeholder={selectedDesa.name}
+                placeholder={"Pilih Desa"}
                 value={selectedDesa.id}
                 label="Desa / Kelurahan"
                 withAsterisk

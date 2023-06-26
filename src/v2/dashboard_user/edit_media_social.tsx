@@ -42,7 +42,7 @@ function EditMediaSocial({ keluarMedia }: any) {
   const onEditMediaSocial = async () => {
     // setLoadingMedia(true);
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
+    await new Promise((r) => setTimeout(r, 300))
     {
       getMediaSocial?.map(async(v) => {
         const body = {

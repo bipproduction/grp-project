@@ -244,7 +244,7 @@ function StrukturPimpinanAnakCabang2() {
                   ""
               }}
               radius={"md"}
-              placeholder={selectedProvince.name}
+              placeholder={"Pilih Provinsi"}
               value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
@@ -269,7 +269,7 @@ function StrukturPimpinanAnakCabang2() {
                   ""
               }}
               radius={"md"}
-              placeholder={selectedKabupaten.name}
+              placeholder={"Pilih Kabupaten"}
               value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
@@ -292,7 +292,7 @@ function StrukturPimpinanAnakCabang2() {
                   val!;
               }}
               radius={"md"}
-              placeholder={selectedKecamatan.name}
+              placeholder={"Pilih Kecamatan"}
               value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk

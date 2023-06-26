@@ -281,7 +281,7 @@ function SayapDewanPimpinanCabang2() {
                   ""
               }}
               radius={"md"}
-              placeholder={selectedProvince.name}
+              placeholder={"Pilih Provinsi"}
               value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
@@ -303,7 +303,7 @@ function SayapDewanPimpinanCabang2() {
                 formSayapDewanPimpinanCabang.values.data.masterKabKotId = val!;
               }}
               radius={"md"}
-              placeholder={selectedKabupaten.name}
+              placeholder={"Pilih Kabupaten"}
               value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk

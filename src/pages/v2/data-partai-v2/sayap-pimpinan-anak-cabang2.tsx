@@ -271,7 +271,7 @@ function SayapPimpinanAnakCabang2() {
               }}
               radius={"md"}
               mt={10}
-              placeholder={selectedProvince.name}
+              placeholder={"Pilih Provinsi"}
               value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
@@ -297,7 +297,7 @@ function SayapPimpinanAnakCabang2() {
               }}
               mt={10}
               radius={"md"}
-              placeholder={selectedKabupaten.name}
+              placeholder={"Pilih Kabupaten"}
               value={selectedKabupaten.id}
               label="Kabupaten / Kota"
               withAsterisk
@@ -321,7 +321,7 @@ function SayapPimpinanAnakCabang2() {
               }}
               mt={10}
               radius={"md"}
-              placeholder={selectedKecamatan.name}
+              placeholder={"Pilih Kecamatan"}
               value={selectedKecamatan.id}
               label="Kecamatan"
               withAsterisk
