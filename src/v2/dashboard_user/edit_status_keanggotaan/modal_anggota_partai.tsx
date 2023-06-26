@@ -8,7 +8,7 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import COLOR from "../../../../fun/WARNA";
 import { useAtom } from "jotai";
 import { ambil_data } from "@/xg_state.ts/g_selected_page";
@@ -45,25 +45,80 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: COLOR.merah,
   },
 }));
-export const _datapartai_userEdit =
-  atomWithStorage<ModelSumberDayaPartai | null>("sumberDaya", null);
+export const _keanggotaan_user_edit = atomWithStorage<
+  ModelSumberDayaPartai[] | null
+>("_list_database_Keaggotaan", null);
 
-export const _datakeanggotaan = atomWithStorage<ModelSumberDayaPartai | null>("_datakeanggotaan", null);
+export const _datakeanggotaan = atomWithStorage<ModelSumberDayaPartai | null>("", null);
 
-function ModalAnggotaPartai({ id }: any) {
+function ModalAnggotaPartai({ keluarAnggota }: any) {
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const { classes } = useStyles();
   const router = useRouter();
   const [opened, { open, close }] = useDisclosure(false);
-  const [dataEdit, seDataEdit] = useAtom(_datakeanggotaan);
+  const [dataEdit, setDataEdit] = useAtom(_keanggotaan_user_edit);
+  const [dataeditPartai, setDataEditPartai] = useState<any>({})
+  const [dataId, setDataId] = useState<string>("")
+
+  const loadData = () => {
+    fetch(api.apiSumberDayaPartaiGetOne + `?id=${localStorage.getItem("user_id")}`)
+    .then(async (val) => {
+      if (val.status == 200) {
+        const data = await val.json();
+        setDataEditPartai(data);
+        console.log(data)
+        return;
+      }
+    });
+  }
+
+  // const formAnggota = useForm({
+  //   initialValues: {
+  //     data: {
+  //       id: dataEdit,
+  //       userId: localStorage.getItem("user_id"),
+  //       masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+  //     },
+  //   },
+  // });
+
+  useShallowEffect(() => {
+    _loadStatusKeanggotaan();
+    loadEditKeanggotaan();
+    loadData()
+  }, []);
+
+  const dataIdPro = {
+    id: dataId
+  }
 
   const FormAnggotaPartai = async () => {
-    const body = {
-      id: dataEdit?.id,
-      userId: localStorage.getItem("user_id"),
-      masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+    dataEdit?.map( async(v) => {
+      const body = {
+        id: v.id,
+        userId: localStorage.getItem("user_id"),
+        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
+      }
+
+          if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data Diri");
     }
-    console.log(body);
+
+      fetch(api.apiSumberDayaPartaiUpdate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(async (v) => {
+      if (v.status === 201){
+        toast('Berhasil Memperbarui');
+      }
+    })
+    console.log(body)
+    })
+    keluarAnggota(true)
+    // console.log(body);
     // await new Promise((r) => setTimeout(r, 500));
     // if (Object.values(formAnggota.values.data).includes("")) {
     //   return toast("Lengkapi Data Diri");
@@ -83,27 +138,13 @@ function ModalAnggotaPartai({ id }: any) {
     // });
   };
 
-  const formAnggota = useForm({
-    initialValues: {
-      data: {
-        id: dataEdit,
-        userId: localStorage.getItem("user_id"),
-        masterStatusKeanggotaanId: +ambilData.masterStatusKeanggotaanId,
-      },
-    },
-  });
-
-  useShallowEffect(() => {
-    _loadStatusKeanggotaan();
-    loadEditKeanggotaan();
-  }, []);
-  async function loadEditKeanggotaan() {
+  const loadEditKeanggotaan = () => {
     fetch(
       api.apiSumberDayaPartaiGetOne + `?id=${localStorage.getItem("user_id")}`
     ).then(async (val) => {
       if (val.status == 200) {
         const data = await val.json();
-        seDataEdit(data);
+        setDataEdit(data);
         console.log(data)
         return;
       }
@@ -112,7 +153,12 @@ function ModalAnggotaPartai({ id }: any) {
 
   return (
     <>
-      <pre>{JSON.stringify(dataEdit, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(dataEdit, null, 2)}</pre> */}
+      {/* {dataEdit?.map((v, i) => (
+        <Box key={i}>
+          <Text>{v.id}</Text>
+        </Box>
+      ))} */}
       <Box
         p={20}
         pt={50}

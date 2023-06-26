@@ -643,7 +643,7 @@ const FormDataDiriUser = () => {
               }))}
               radius={"md"}
               mt={10}
-              placeholder={selectedProvince.name}
+              placeholder={"Pilih Provinsi"}
               value={selectedProvince.id}
               label="Provinsi"
               withAsterisk
@@ -671,7 +671,7 @@ const FormDataDiriUser = () => {
                     }))
               }
               // {...formDataDiri.getInputProps("data.kabkot")}
-              placeholder={selectedKabupaten.name}
+              placeholder={"Pilih Kabupaten"}
               value={selectedKabupaten.id}
               radius={"md"}
               mt={10}
@@ -698,7 +698,7 @@ const FormDataDiriUser = () => {
               }
               radius={"md"}
               mt={10}
-              placeholder={selectedKecamatan.name}
+              placeholder={"Pilih Kecamatan"}
               // {...formDataDiri.getInputProps(
               //   "data.kecamatan"
               // )}
@@ -726,7 +726,7 @@ const FormDataDiriUser = () => {
               }
               radius={"md"}
               mt={10}
-              placeholder={selectedDesa.name}
+              placeholder={"Pilih Desa"}
               // {...formDataDiri.getInputProps(
               //   "data.desa"
               // )}

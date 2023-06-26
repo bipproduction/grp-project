@@ -259,7 +259,7 @@ function StrukturDewanPimpinanCabang2() {
                   label: pro.name,
                 }))}
                 radius={"md"}
-                placeholder={selectedProvince.name}
+                placeholder={"Pilih Provinsi"}
                 value={selectedProvince.id}
                 label="Provinsi"
                 withAsterisk
@@ -277,7 +277,7 @@ function StrukturDewanPimpinanCabang2() {
                       }))
                 }
                 radius={"md"}
-                placeholder={selectedKabupaten.name}
+                placeholder={"Pilih Kabupaten"}
                 value={selectedKabupaten.id}
                 label="Kabupaten / Kota"
                 withAsterisk

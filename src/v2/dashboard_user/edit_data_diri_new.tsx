@@ -70,6 +70,7 @@ import { ModelUserMediaSosial } from "@/model/interface_media_social";
 import { buttonSimpan } from "../component/button-toast";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { _datapartaiEditProfile } from "@/load_data/sumber_daya_partai/load_edit_profile";
+import { data } from "jquery";
 moment.locale("id");
 export const _dataedit = atomWithStorage<DataDiriUser | null>("", null);
 // export const _MediaSocialGet = atomWithStorage<ModelUserMediaSosial | null>(
@@ -115,7 +116,18 @@ function EditDataDiriNew({ thisClosed }: any) {
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [valNik, setValNik] = useState<string | null>(null);
+  const[dataEdit, setDataEdit] = useState<any>({})
+  const [inputNIK, setInputNIK] = useState("")
+  const [inputPhone, setInputPhone] = useState("")
   // const [mediaSocialGet, setMediaSocialGet] = useAtom(_MediaSocialGet);
+
+  const loadData = () => {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+    .then((v) => v.json())
+    .then((v) => {
+      setDataEdit(v)
+    })
+  }
 
   const onEdit = async () => {
     thisClosed(true);
@@ -128,11 +140,11 @@ function EditDataDiriNew({ thisClosed }: any) {
       masterKabKotId: listData?.MasterKabKot.id,
       masterKecamatanId: listData?.MasterKecamatan.id,
       masterDesaId: listData?.MasterDesa.id,
-      nik: listData?.nik!,
+      nik: inputNIK ? inputNIK : dataEdit?.nik,
       tempatLahir: listData?.tempatLahir,
       tanggalLahir: listData?.tanggalLahir,
       masterJenisKelaminId: listData?.MasterJenisKelamin.id,
-      phoneNumber: listData?.phoneNumber!,
+      phoneNumber: inputPhone ? inputPhone : dataEdit.phoneNumber,
       alamat: listData?.alamat,
       rtRw: listData?.rtRw,
       name: listData?.name,
@@ -144,22 +156,13 @@ function EditDataDiriNew({ thisClosed }: any) {
       return toast("Lengkapi Data Diri");
     }
 
-    // if (Object.values(body.nik).length != 16){
-    //   setLoading(false);
-    //   return toast("NIK harus 16 angka");
-    // }
-
-    if (Object.values(body).includes("")) {
-      return toast("Lengkapi Data");
+    if (Object.values(body.nik).length != 16){
+      setLoading(false);
+      return toast("NIK harus 16 angka");
     }
-    if ((listData?.nik.length as any) < 16) {
-      setLoading(false)
-      return toast("NIK Kurang Dari 16 Digit");
-    } else {
-      if ((listData?.nik.length as any) > 16) {
-        
-        return toast("NIK Lebih Dari 16 Digit");
-      }
+    if (Object.values(body.nik).includes("")){
+      setLoading(false);
+      return toast("Lengkapi Data Diri");
     }
 
     if(Object.values(body.phoneNumber).length <= 10 ) {
@@ -177,7 +180,19 @@ function EditDataDiriNew({ thisClosed }: any) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    });
+    }).then(async (res) => {
+      if (res.status === 201) {
+        const data = await res.json()
+        console.log(data)
+        return data
+      } else {
+        res.status === 209
+        const data = await res.json()
+        console.log(data.message)
+        setLoading(false)
+        toast(data.message)
+      }
+    })
     buttonSimpan();
     loadDatadiri();
     setLoading(false);
@@ -191,6 +206,7 @@ function EditDataDiriNew({ thisClosed }: any) {
 
 
   useShallowEffect(() => {
+    loadData()
     loadDatadiri();
   }, []);
 
@@ -269,14 +285,15 @@ function EditDataDiriNew({ thisClosed }: any) {
             />
             <TextInput
               // description={
-              //   valNik && valNik.length != 16 ? (
-              //     <Text>Panjang Nik Harus 16 Angka</Text>
-              //   ) : (
-              //     ""
-              //   )
-              // }
-              // error={valNik && valNik.length != 16}
-              placeholder="NIK"
+                description={valNik && valNik.length != 16 ? <Text></Text> : ""}
+                error={
+                  valNik && valNik.length != 16 ? (
+                    <Text>Panjang NIK Harus 16 Angka</Text>
+                  ) : (
+                    ""
+                  )
+                }
+              placeholder={dataEdit?.nik}
               withAsterisk
               mt={10}
               // minLength={16}
@@ -284,14 +301,15 @@ function EditDataDiriNew({ thisClosed }: any) {
               label="NIK"
               radius={"md"}
               type="number"
-              value={listData?.nik}
+              value={`${dataEdit?.nik}`}
               onChange={(val) => {
-                // if (val) {
-                //   setValNik(val.currentTarget.value);
-                // }
-                const data = _.clone(listData);
-                data.nik = val.currentTarget.value;
-                setListData(data);
+                if (val) {
+                  setValNik(val.currentTarget.value)
+                  const data = _.clone(dataEdit)
+                  data.nik = val.currentTarget.value
+                  setDataEdit(data)
+                  setInputNIK(val.currentTarget.value)
+                }
               }}
             />
             <TextInput
@@ -356,39 +374,40 @@ function EditDataDiriNew({ thisClosed }: any) {
             />
 
             <TextInput
-              // placeholder="Nomor Handphone"
-              // description={
-              //   noHP && noHP.length < 11 ? (
-              //     <Text></Text>
-              //   ) : noHP && noHP.length > 15 ? (
-              //     <Text></Text>
-              //   ) : (
-              //     ""
-              //   )
-              // }
-              // error={
-              //   noHP && noHP.length < 11 ? (
-              //     <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
-              //   ) : noHP && noHP.length > 15 ? (
-              //     <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-              //   ) : (
-              //     ""
-              //   )
-              // }
-              placeholder={listData?.phoneNumber}
+              description={
+                noHP && noHP.length < 11 ? (
+                  <Text></Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text></Text>
+                ) : (
+                  ""
+                )
+              }
+              error={
+                noHP && noHP.length < 11 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+                ) : noHP && noHP.length > 15 ? (
+                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                ) : (
+                  ""
+                )
+              }
+              placeholder={dataEdit?.phoneNumber}
               withAsterisk
               label="Nomor Handphone"
               radius={"md"}
               type="number"
               mt={10}
-              value={listData?.phoneNumber}
+              value={`${dataEdit.phoneNumber}`}
               onChange={(val) => {
-                const data = _.clone(listData);
-                // setNoHP(val.currentTarget.value);
-                data.phoneNumber = val.currentTarget.value;
-                setListData(data);
+                if(val) {
+                  setNoHP(val.currentTarget.value)
+                  const data = _.clone(dataEdit)
+                  data.phoneNumber = val.currentTarget.value
+                  setDataEdit(data)
+                  setInputPhone(val.currentTarget.value)
+                }
               }}
-              // {...editFormDataDiri.getInputProps("data.phoneNumber")}
             />
             <TextInput
               // placeholder="Alamat"

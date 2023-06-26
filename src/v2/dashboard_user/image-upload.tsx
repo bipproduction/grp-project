@@ -126,7 +126,7 @@ function ImageUpload({ keluar }: any) {
                 listData.img = data.img
                 setImageUserGet(data.img)
 
-                toast("success");
+                toast("sukses");
                 //console.log(data);
                 // onUpload()
                 // router.reload()
