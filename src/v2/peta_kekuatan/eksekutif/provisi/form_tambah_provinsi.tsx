@@ -139,10 +139,10 @@ export const FormTambahEksekutifProvinsiV2 = ({
           {dataDiri && (
             <>
               <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataDiri.name} />
-              <TextInput placeholder="Email" label="*Email*" withAsterisk value={dataDiri.User.email} />
+              <TextInput placeholder="Email" label="Email" withAsterisk value={dataDiri.User.email} />
               <TextInput
                 placeholder="Alamat Tinggal / Domisili"
-                label="*Alamat Tinggal / Domisili*"
+                label="Alamat Tinggal / Domisili"
                 withAsterisk
                 value={dataDiri.alamat}
               />

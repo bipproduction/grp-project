@@ -99,15 +99,15 @@ export const FormTambahEksekutifNasionalV2 = ({
           {dataDiri && (
             <>
               <TextInput placeholder="Nama" label="Nama" withAsterisk value={dataDiri.name} />
-              <TextInput placeholder="Email" label="*Email*" withAsterisk value={dataDiri.User.email} />
+              <TextInput placeholder="Email" label="Email" withAsterisk value={dataDiri.User.email} />
               <TextInput
                 value={dataDiri.alamat}
                 placeholder="Alamat Tinggal / Domisili"
-                label="*Alamat Tinggal / Domisili*"
+                label="Alamat Tinggal / Domisili"
                 withAsterisk />
               <TextInput
                 placeholder="Alamat Kantor"
-                label="*Alamat Kantor*"
+                label="Alamat Kantor"
                 withAsterisk
                 onChange={(val) => { setInputAlamatKantor(val.target.value) }} />
               {/* <TextInput placeholder="Facebook" label="Facebook" />

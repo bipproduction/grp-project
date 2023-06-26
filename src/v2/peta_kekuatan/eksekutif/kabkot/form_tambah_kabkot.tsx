@@ -103,7 +103,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
 
   const onAdd = () => {
     if (isNull(body.partaiPengusung)) return toast("Lengkapi Data")
-    if (Object.values(body).includes("") || inputPartaiPengusung.length == 0) {
+    if (Object.values(body).includes("") || isNull(body.masterProvinceId) || isNull(body.masterKabKotId) || inputPartaiPengusung.length == 0 || isNull(body.masterJabatanEksekutifKabKotId) || (body.masterJabatanEksekutifKabKotId==1 && isNull(body.masterJabatanEksekutifKabupatenId)) || (body.masterJabatanEksekutifKabKotId==2 && isNull(body.masterJabatanEksekutifKotaId))) {
       return toast("Lengkapi Data");
     }
 
@@ -138,6 +138,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
           <Select
             label={"Pilih Jabatan Bupati / Walikota"}
             placeholder="Bupati / Walikota"
+            withAsterisk
             data={sJabatanEksekutifKabKot.value.map((e) => ({
               value: e.id,
               label: e.name,
@@ -145,6 +146,8 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
             onChange={(val) => {
               setInputJabatanKabKot(val);
               if (val == "2") {
+                //setInputJabatanKabupaten(null)
+                //setInputJabatanKota(1);
                 setValue(
                   <Select
                     data={sJabatanEksekutifKota.value.map((e) => ({
@@ -153,14 +156,17 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                     }))}
                     placeholder={"Pilih Jabatan Kota"}
                     label="Pilih Jabatan Kota"
+                    //value={inputJabatanKota?inputJabatanKota:1}
                     withAsterisk
-                    onChange={(val) => {
-                      setInputJabatanKota(val);
+                    onChange={(v) => {
+                      setInputJabatanKota(v);
                       setInputJabatanKabupaten(null);
                     }}
                   />
                 );
               } else {
+                //setInputJabatanKota(null)
+                setInputJabatanKabupaten(1)
                 setValue(
                   <Select
                     data={sJabatanEksekutifKabupaten.value.map((e) => ({
@@ -169,9 +175,10 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                     }))}
                     placeholder={"Pilih Jabatan Kabupaten"}
                     label="Pilih Jabatan Kabupaten"
+                    value={inputJabatanKabupaten?inputJabatanKabupaten:1}
                     withAsterisk
-                    onChange={(val) => {
-                      setInputJabatanKabupaten(val);
+                    onChange={(v) => {
+                      setInputJabatanKabupaten(v);
                       setInputJabatanKota(null);
                     }}
                   />
@@ -242,7 +249,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
               />
               <TextInput
                 placeholder="Alamat Kantor"
-                label="*Alamat Kantor"
+                label="Alamat Kantor"
                 withAsterisk
                 onChange={(val) => { setInputAlamatKantor(val.target.value) }}
               />

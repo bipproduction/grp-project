@@ -72,7 +72,7 @@ export const FormTambahLegislatifDprdKabkotV2 = ({
   }, []);
 
   const onAdd = () => {
-    if (Object.values(body).includes("")) {
+    if (Object.values(body).includes("") || Object.values(body).includes(null)) {
       return toast("Lengkapi Data");
     }
 
