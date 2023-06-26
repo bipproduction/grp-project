@@ -77,7 +77,7 @@ export function ButtonDeleteAksiGerindra({ setId, setKategori, setNama }: any) {
       fetch(api.apiRencanaKunjunganGerindraHapus + `?id=${setId}`).then(
         async (res) => {
           if (res.status === 200) {
-            toast("Success");
+            toast("Sukses");
             _loadDataRencanaKunjunganGerindra(
               inputSearchRencanaKunjungan,
               setListDataRencanaKunjungan,
@@ -98,7 +98,7 @@ export function ButtonDeleteAksiGerindra({ setId, setKategori, setNama }: any) {
       fetch(api.apiListundanganGerindraHapus + `?id=${setId}`).then(
         async (res) => {
           if (res.status === 200) {
-            toast("Success");
+            toast("Sukses");
             _loadDataListUndanganGerindra(
               inputSearchListUndangan,
               setListDataUndangan,

@@ -77,7 +77,7 @@ export function ButtonDeleteAksiPrabowo({ setId, setKategori, setNama }: any) {
       fetch(api.apiRencanaKunjunganPrabowoHapus + `?id=${setId}`).then(
         async (res) => {
           if (res.status === 200) {
-            toast("Success");
+            toast("Sukses");
             _loadDataRencanaKunjunganPrabowo(
               inputSearchRencanaKunjungan,
               setListDataRencanaKunjungan,
@@ -98,7 +98,7 @@ export function ButtonDeleteAksiPrabowo({ setId, setKategori, setNama }: any) {
       fetch(api.apiListUndanganPrabowoHapus + `?id=${setId}`).then(
         async (res) => {
           if (res.status === 200) {
-            toast("Success");
+            toast("Sukses");
             _loadDataListUndanganPrabowo(
               inputSearchListUndangan,
               setListDataUndangan,

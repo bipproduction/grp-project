@@ -77,7 +77,7 @@ export function ButtonDeleteLegislatif({ setId, setTingkat, setNama }: any) {
   const onDelete = () => {
     fetch(api.apiLegislatifHapus + `?id=${setId}`).then(async (res) => {
       if (res.status === 200) {
-        toast("Success");
+        toast("Sukses");
         let desk_log;
         if (setTingkat == 1) {
           _loadDataLegislatif(
