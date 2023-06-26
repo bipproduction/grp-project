@@ -88,15 +88,25 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
     masterPekerjaanId: new Number(),
   });
   const [dataProvinsi, setIsProvinsi] = useAtom(_provinsi_CalonPP);
-  const [selectProvinsi, setSelectProvince] = useAtom(_selectProvinsi_CalonPP);
+  const [selectProvinsi, setSelectProvince] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataKabkot, setIsKabupaten] = useAtom(_kabkot_CalonPP);
-  const [selectKabkot, setSelectKabupaten] = useAtom(_selectKabkot_CalonPP);
+  const [selectKabkot, setSelectKabupaten] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataKecamatan, setIsKecamatan] = useAtom(_kecamatan_CalonPP);
-  const [selectKecamatan, setSelectKecamatan] = useAtom(
-    _selectKecamatan_CalonPP
-  );
+  const [selectKecamatan, setSelectKecamatan] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataDesa, setIsDesa] = useAtom(_desa_CalonPP);
-  const [selectDesa, setSelectDesa] = useAtom(_selectDesa_CalonPP);
+  const [selectDesa, setSelectDesa] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [search, setSearch] = useState("");
   const [listDataCPP, setListDataCPP] = useAtom(
     _listData_CalonPemilihPotensial
@@ -201,9 +211,9 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
    * - Kondisi usia dibawah 17 tahun
    */
   const onCreate = () => {
-    console.table(dataKirim);
+    // console.table(dataKirim);
     // Cek Kelengkapan form
-
+    // return
     if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data");
     }
@@ -215,19 +225,33 @@ const TambahCPTV2 = ({ thisClosed }: any) => {
         return toast("NIK Lebih Dari 16 Digit");
       }
     }
+
     // Validasi Email
-    if (
-      dataKirim.email.indexOf("@") != -1 &&
-      dataKirim.email.indexOf(".") != -1
-    ) {
-      // toast("");
-    } else {
-      toast("Invalid email");
+    if (dataKirim.email && dataKirim.email.indexOf("@") == -1) {
+      return toast("Invalid email");
     }
+    if (
+      dataKirim.email &&
+      dataKirim.email.indexOf(".com") == -1 &&
+      dataKirim.email.indexOf(".co.id") == -1
+    ) {
+      return toast("Invalid email");
+    }
+
     // Validasi Usia
     if (cekUsia < 17) {
       return toast("Usia Anda Belum Cukup");
     }
+
+    // Validasi Nomor Telphone
+    if ( dataKirim.phoneNumber.length < 10) {
+      return toast("Nomor Handphone Minimal 10 Angka");
+    } else {
+      if (dataKirim.phoneNumber.length > 15) {
+        return toast("Nomor Handphone Maksimal 15 Angka");
+      }
+    }
+
     // console.log(dataKirim);
     // Kirim data ke server
     fetch(api.apiCPTPost, {

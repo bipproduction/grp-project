@@ -47,7 +47,7 @@ import { api } from "@/lib/api-backend";
 import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_partai";
 import _ from "lodash";
 import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
-import { new_state_refresh, refresh_page } from "../force_refresh";
+import { new_state_refresh, refresh_page } from "../../force_refresh";
 
 const TableSayapPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);

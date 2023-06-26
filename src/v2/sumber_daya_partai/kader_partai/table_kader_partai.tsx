@@ -51,8 +51,8 @@ import _ from "lodash";
 import { AiOutlineMenu } from "react-icons/ai";
 import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
-import { refresh_page } from "../force_refresh";
-import { new_state_refresh } from "../force_refresh";
+import { refresh_page } from "../../force_refresh";
+import { new_state_refresh } from "../../force_refresh";
 
 const TableKaderPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
