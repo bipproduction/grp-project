@@ -149,7 +149,7 @@ function EditDataDiriNew({ thisClosed }: any) {
       rtRw: listData?.rtRw,
       name: listData?.name,
     };
-    console.table(body);
+    // console.table(body);
 
     if (Object.values(body).includes("")) {
       setLoading(false);
@@ -183,12 +183,12 @@ function EditDataDiriNew({ thisClosed }: any) {
     }).then(async (res) => {
       if (res.status === 201) {
         const data = await res.json()
-        console.log(data)
+        // console.log(data)
         return data
       } else {
         res.status === 209
         const data = await res.json()
-        console.log(data.message)
+        // console.log(data.message)
         setLoading(false)
         toast(data.message)
       }

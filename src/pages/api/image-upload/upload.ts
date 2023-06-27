@@ -30,7 +30,7 @@ export default async function handler(req: any, res: any){
         resulve({fields, files})
       })
     }) 
-    console.log(data)
+    // console.log(data)
     res.status(201).json({success: true, img: img, id: id})
   } catch (e) {
     res.status(400).end()

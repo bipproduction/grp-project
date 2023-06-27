@@ -142,7 +142,7 @@ function SayapDewanPimpinanCabang2() {
   const router = useRouter();
 
   const PimpinanCabang = async () => {
-    console.table(formSayapDewanPimpinanCabang.values.data)
+    // console.table(formSayapDewanPimpinanCabang.values.data)
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
 

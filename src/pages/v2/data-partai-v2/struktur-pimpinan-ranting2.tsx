@@ -137,7 +137,7 @@ function StrukturPimpinanRanting2() {
   const PimpinanRanting = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
-    console.table(formStrukturPimpinanRanting.values.data)
+    // console.table(formStrukturPimpinanRanting.values.data)
     if (Object.values(formStrukturPimpinanRanting.values.data).includes("")) {
       setLoading(false);
       return toast("Lengkapi Data Diri");

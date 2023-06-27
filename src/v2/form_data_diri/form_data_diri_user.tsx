@@ -208,7 +208,7 @@ const FormDataDiriUser = () => {
   }
 
   const onDatadiri = async () => {
-    console.log(formDataDiri.values.data);
+    // console.log(formDataDiri.values.data);
     listData.find((val) => _.values(val).includes(""));
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300))
@@ -232,7 +232,7 @@ const FormDataDiriUser = () => {
     }
 
     if (Object.values(formDataDiri.values.data).includes("")) {
-      console.table(formDataDiri.values.data);
+      // console.table(formDataDiri.values.data);
       setLoading(false)
       return toast("Lengkapi Data Diri");
     }
@@ -263,12 +263,12 @@ const FormDataDiriUser = () => {
     }).then(async (res) => {
       if (res.status === 201) {
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         return data;
       } else {
         res.status === 209;
         const data = await res.json();
-        console.log(data.message);
+        // console.log(data.message);
         setLoading(false)
         toast(data.message);
       }
@@ -279,7 +279,7 @@ const FormDataDiriUser = () => {
     // setLoading(true);
     // await new Promise((r) => setTimeout(r, 500));
 
-    console.log(pertama);
+    // console.log(pertama);
     if (!pertama) return toast("gagal");
 
     for (let item of listData) {
@@ -335,15 +335,6 @@ const FormDataDiriUser = () => {
       .then(setListMediaSocial);
   }, []);
 
-  // `````````````` HASH ``````````````//
-  const onExCreate = (coba: any) => {
-    setLoading(true);
-    console.log(formDataDiri.values.data);
-    if (coba == 1) {
-      router.push("/v2/use-hash");
-      setLoading(false);
-    }
-  };
 
   // pengisian otomatis
   function otomatis() {
