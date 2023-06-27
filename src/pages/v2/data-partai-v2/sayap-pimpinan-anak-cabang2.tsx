@@ -140,7 +140,7 @@ function SayapPimpinanAnakCabang2() {
   const PimpinanAnakCabang = async () => {
     setLoading(true)
     await new Promise((r) => setTimeout(r, 300))
-    console.table(formSayapDewanPimpinanAnakCabang.values.data)
+    // console.table(formSayapDewanPimpinanAnakCabang.values.data)
     if (
       Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
     ) {

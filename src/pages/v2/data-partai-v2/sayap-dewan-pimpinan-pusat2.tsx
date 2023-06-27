@@ -59,7 +59,7 @@ function SayapDewanPimpinanPusat2() {
   const PimpinanPusat = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
-    console.log(formSayapPimpinanPusat.values.data);
+    // console.log(formSayapPimpinanPusat.values.data);
     if (Object.values(formSayapPimpinanPusat.values.data).includes("")) {
       setLoading(false);
       return toast("Lengkapi Data Diri");

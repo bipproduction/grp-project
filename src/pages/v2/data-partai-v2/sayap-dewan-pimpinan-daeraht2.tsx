@@ -68,7 +68,7 @@ function SayapDewanPimpinanDaeraht2() {
   const PimpinanDaerah = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 300));
-    console.log(formSayapPimpinanDaerah.values.data);
+    // console.log(formSayapPimpinanDaerah.values.data);
 
     if (Object.values(formSayapPimpinanDaerah.values.data).includes("")) {
       setLoading(false);

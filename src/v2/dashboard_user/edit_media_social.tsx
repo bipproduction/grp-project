@@ -58,7 +58,7 @@ function EditMediaSocial({ keluarMedia }: any) {
           },
           body: JSON.stringify(body),
         });
-        console.log(body);
+        // console.log(body);
         await new Promise((r) => setTimeout(r, 500))
         // router.reload();
       });

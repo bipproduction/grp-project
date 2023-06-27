@@ -62,7 +62,7 @@ const TableStruktutPartaiV2 = () => {
     masterUserRoleId: "2",
   };
   const onAktif = () => {
-    console.log(BodyAktif);
+    // console.log(BodyAktif);
     fetch(api.apiUserUpdateStatus, {
       method: "POST",
       headers: {
@@ -70,7 +70,7 @@ const TableStruktutPartaiV2 = () => {
       },
       body: JSON.stringify(BodyAktif),
     }).then(async (res) => {
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status === 201) {
         toast("Sukses Menjadi Admin");
         _postLogUser(
@@ -99,7 +99,7 @@ const TableStruktutPartaiV2 = () => {
     masterUserRoleId: "1",
   };
   const NonAktif = () => {
-    console.log(BodyNonAktif);
+    // console.log(BodyNonAktif);
     fetch(api.apiUserUpdateStatus, {
       method: "POST",
       headers: {
@@ -107,7 +107,7 @@ const TableStruktutPartaiV2 = () => {
       },
       body: JSON.stringify(BodyNonAktif),
     }).then(async (res) => {
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status === 201) {
         toast("Sukses Menjadi User");
         _postLogUser(

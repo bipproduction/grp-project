@@ -69,8 +69,8 @@ function EditStatus({ keluarGlobal }: any) {
             label={"Pilih Keanggotaan"}
             withAsterisk
             data={sStatusKeanggotaan.value.map((v) => ({
-              value: v.name,
               label: v.name,
+              value: v.name,
             }))}
             onChange={(val) => {
               console.log(val);
