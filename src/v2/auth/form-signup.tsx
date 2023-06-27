@@ -44,12 +44,13 @@ const FormSignUp = () => {
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
         username: (user: string) =>
-          /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.test(user)
+          /^[a-zA-Z0-9]+([a-zA-Z0-9][._]?)*$/.test(user)
             ? null
             : "Invalid Username",
       },
     },
   });
+  // (?=.{6,20}$)
 
   const onRegister = async () => {
     if (Object.values(formRegister.values.data).includes("")) {
@@ -64,23 +65,18 @@ const FormSignUp = () => {
     if (formRegister.values.data.username.length >= 31) {
       return toast("Username maksimal 30 karakter");
     }
+    if (formRegister.values.data.username.length <= 5) {
+      return toast("Username minimal 6 karakter");
+    }
     if (
       formRegister.values.validate.username(
         formRegister.values.data.username
       ) != null
     ) {
       return (
-        toast("Username harus berupa huruf, angka, titik, dan garis bawah.") &&
-        toast(
-          "Garis bawah dan titik tidak boleh berada di akhir atau awal nama pengguna"
-        )
+        toast("Username harus berupa huruf, angka, titik, dan garis bawah.")
       );
     }
-
-    // if(formRegister.values.data.username.length <= 4)
-    // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
-    // if(formRegister.values.data.username.length >= 31)
-    // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
 
     if (formRegister.values.data.password.length < 8)
       return toast("Password Minimal 8 Karakter");
@@ -148,10 +144,18 @@ const FormSignUp = () => {
 
             <TextInput
               description={
-                usernaemMax && usernaemMax.length > 30 ? <Text></Text> : ""
+                usernaemMax && usernaemMax.length < 6 ? (
+                  <Text></Text> 
+                ) : usernaemMax && usernaemMax.length > 30 ? (
+                  <Text></Text>
+                ): ""
               }
               error={
-                usernaemMax && usernaemMax.length > 30 ? (
+                usernaemMax && usernaemMax.length < 6 ? (
+                  <Text color={COLOR.coklat}>
+                    Username Minimal 6 karakter
+                  </Text>
+                ): usernaemMax && usernaemMax.length > 30 ? (
                   <Text color={COLOR.coklat}>
                     Username Maksimal 30 karakter
                   </Text>

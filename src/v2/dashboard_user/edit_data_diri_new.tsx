@@ -130,7 +130,7 @@ function EditDataDiriNew({ thisClosed }: any) {
   };
 
   const onEdit = async () => {
-    thisClosed(true);
+    // thisClosed(true);
     setLoading(true);
     const body = {
       id: listData?.id,
@@ -165,13 +165,13 @@ function EditDataDiriNew({ thisClosed }: any) {
       return toast("Lengkapi Data Diri");
     }
 
-    if (Object.values(body.phoneNumber).length <= 10) {
+    if (Object.values(body.phoneNumber).length <= 9) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Minimal 10 Karakter");
     }
     if (Object.values(body.phoneNumber).length >= 16) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Maksimal 15 Karakter");
     }
 
     await fetch("/api/form-data-diri/data-diri-update", {
@@ -184,6 +184,7 @@ function EditDataDiriNew({ thisClosed }: any) {
       if (res.status === 201) {
         const data = await res.json();
         // console.log(data)
+        thisClosed(true)
         return data;
       } else {
         res.status === 209;
@@ -383,10 +384,10 @@ function EditDataDiriNew({ thisClosed }: any) {
                 )
               }
               error={
-                noHP && noHP.length < 11 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+                noHP && noHP.length < 10 ? (
+                  <Text>Panjang Nomor Minimal 10 Karakter </Text>
                 ) : noHP && noHP.length > 15 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                  <Text>Panjang Nomor Maksimal 15 Karakter</Text>
                 ) : (
                   ""
                 )

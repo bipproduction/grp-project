@@ -75,13 +75,13 @@ function SayapDewanPimpinanDaeraht2() {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formSayapPimpinanDaerah.values.data.waAdmin.length <= 10) {
+    if (formSayapPimpinanDaerah.values.data.waAdmin.length <= 9) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Minimal 10 Karakter");
     }
     if (formSayapPimpinanDaerah.values.data.waAdmin.length >= 16) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Maksimal 15 Karakter");
     }
 
     fetch(api.apiSumberDayaPartaiPost, {
@@ -235,7 +235,7 @@ function SayapDewanPimpinanDaeraht2() {
         <TextInput
           // {...formSayapPimpinanDaerah.getInputProps("data.waAdmin")}
           description={
-            noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
+            noHpSayapDaerah && noHpSayapDaerah.length < 10 ? (
               <Text></Text>
             ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
               <Text></Text>
@@ -244,10 +244,10 @@ function SayapDewanPimpinanDaeraht2() {
             )
           }
           error={
-            noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
-              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            noHpSayapDaerah && noHpSayapDaerah.length < 10 ? (
+              <Text>Panjang Nomor Minimal 10 Karakter </Text>
             ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
-              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              <Text>Panjang Nomor Maksimal 15 Karakter</Text>
             ) : (
               ""
             )

@@ -244,13 +244,13 @@ const FormDataDiriUser = () => {
 
     formDataDiri.values.data.nik = valNik!;
 
-    if (formDataDiri.values.data.phoneNumber.length <= 10) {
+    if (formDataDiri.values.data.phoneNumber.length <= 9) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Minimal 10 Karakter");
     }
     if (formDataDiri.values.data.phoneNumber.length >= 16) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Maksimal 15 Karakter");
     }
     formDataDiri.values.data.phoneNumber = noHP!;
 
@@ -272,15 +272,12 @@ const FormDataDiriUser = () => {
         setLoading(false);
         toast(data.message);
       }
-      // setLoading(false);
-      // await new Promise((r) => setTimeout(r, 500));
+;
       return null;
     });
-    // setLoading(true);
-    // await new Promise((r) => setTimeout(r, 500));
 
     // console.log(pertama);
-    if (!pertama) return toast("gagal");
+    if (!pertama) return ;
 
     for (let item of listData) {
       await fetch(api.apiMediaSosialUserPost, {
@@ -484,7 +481,7 @@ const FormDataDiriUser = () => {
             />
             <TextInput
               description={
-                noHP && noHP.length < 11 ? (
+                noHP && noHP.length < 10 ? (
                   <Text></Text>
                 ) : noHP && noHP.length > 15 ? (
                   <Text></Text>
@@ -493,10 +490,10 @@ const FormDataDiriUser = () => {
                 )
               }
               error={
-                noHP && noHP.length < 11 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter </Text>
+                noHP && noHP.length < 10 ? (
+                  <Text>Panjang Nomor Minimal 10 Karakter </Text>
                 ) : noHP && noHP.length > 15 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                  <Text>Panjang Nomor Maksimal 15 Karakter</Text>
                 ) : (
                   ""
                 )

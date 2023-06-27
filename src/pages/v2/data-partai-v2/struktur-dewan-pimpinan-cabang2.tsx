@@ -145,13 +145,13 @@ function StrukturDewanPimpinanCabang2() {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length <= 10) {
+    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length <= 9) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Minimal 10 Karakter");
     }
     if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length >= 16) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Maksimal 15 Karakter");
     }
 
     fetch(api.apiSumberDayaPartaiPost, {
@@ -321,7 +321,7 @@ function StrukturDewanPimpinanCabang2() {
             //   "data.waAdmin"
             // )}
             description={
-              noHpStrukturCab && noHpStrukturCab.length < 11 ? (
+              noHpStrukturCab && noHpStrukturCab.length < 10 ? (
                 <Text></Text>
               ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
                 <Text></Text>
@@ -330,10 +330,10 @@ function StrukturDewanPimpinanCabang2() {
               )
             }
             error={
-              noHpStrukturCab && noHpStrukturCab.length < 11 ? (
-                <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              noHpStrukturCab && noHpStrukturCab.length < 10 ? (
+                <Text>Panjang Nomor Minimal 10 Karakter</Text>
               ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
-                <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+                <Text>Panjang Nomor Maksimal 15 Karakter</Text>
               ) : (
                 ""
               )
