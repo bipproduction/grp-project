@@ -27,19 +27,19 @@ import {
   _getAll_LampiranPartai_ById,
 } from "@/load_data/sumber_daya_partai/aset_partai/load_lampiran_aset";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { useHookstate } from "@hookstate/core";
+import {
+  val_modal_lampiiran,
+  val_modal_tmbh_lampiran,
+  value_id_aset,
+} from "../aset_state";
 
 // UPLOAD FILE DISINI
 export const _uploadFileLampiran = atom<any>({
   file: "",
 });
 
-export const TambahLampiranV2 = ({
-  dataAset,
-  closeModalTambah,
-}: {
-  dataAset: any;
-  closeModalTambah: any;
-}) => {
+export const TambahLampiranV2 = ({}: {}) => {
   const [lampiran, setLampiran] = useState({
     name: "",
     deskripsi: "",
@@ -48,6 +48,10 @@ export const TambahLampiranV2 = ({
   const [opened, setOpen] = useDisclosure(false);
   const [lampiranId, setLampiranId] = useAtom(_uploadFileLampiran);
   const [dataLampiran, setDataLampiran] = useAtom(_getAll_LampiranPartai_ById);
+  const valueId = useHookstate(value_id_aset);
+
+  const tampilanTmbhLampiran = useHookstate(val_modal_tmbh_lampiran);
+  const tampilanLampiran = useHookstate(val_modal_lampiiran);
 
   useShallowEffect(() => {
     setLampiranId({});
@@ -55,12 +59,19 @@ export const TambahLampiranV2 = ({
 
   const onCreate = (id: string) => {
     const body = {
-      asetPartaiId: dataAset.id,
+      asetPartaiId: valueId.value,
       name: lampiran.name,
       deskripsi: lampiran.deskripsi,
       file: id,
     };
     // console.log(body);
+
+    if (Object.values(body).includes("")) {
+      return toast("Lengkapi Data");
+    }
+
+    // return
+
     fetch(api.apiLampiranPost, {
       method: "POST",
       headers: {
@@ -71,8 +82,9 @@ export const TambahLampiranV2 = ({
       if (res.status == 201) {
         const data = await res.json();
         toast("Data Tersimpan");
-        closeModalTambah();
-        _loadLampiranPartai_ById(dataAset.id, setDataLampiran);
+        tampilanTmbhLampiran.set(false);
+        tampilanLampiran.set(true);
+        _loadLampiranPartai_ById(valueId.value, setDataLampiran);
         _postLogUser(
           localStorage.getItem(`user_id`),
           "TAMBAH",
@@ -85,7 +97,7 @@ export const TambahLampiranV2 = ({
     });
   };
 
-  if (!dataAset)
+  if (!valueId.value)
     return (
       <>
         <Loader />
@@ -164,67 +176,82 @@ export const TambahLampiranV2 = ({
       <Box>
         {/* <TextInput disabled label="Nama Aset" value={dataAset.name}></TextInput> */}
         <Paper bg={COLOR.abuabu} p={10}>
-        <Grid>
-          <Grid.Col span={12}>
-            <Text size={20} fw={"bold"}>
-              Tambah Lampiran Aset Partai
-            </Text>
-          </Grid.Col>
-        </Grid>
-      </Paper>
+          <Grid>
+            <Grid.Col span={12}>
+              <Text size={20} fw={"bold"}>
+                Tambah Lampiran Aset Partai
+              </Text>
+            </Grid.Col>
+          </Grid>
+        </Paper>
         <Box pt={20}>
-        <Flex direction={"row"} fz={16} gap={"xs"}>
+          {/* <Flex direction={"row"} fz={16} gap={"xs"}>
           <Text fw={"bolder"}>Nama Aset :</Text>
           <Text>{dataAset.name}</Text>
-        </Flex>
-        <TextInput
-          withAsterisk
-          label="Jenis Lampiran"
-          placeholder="Contoh: STNK, Nota, Surat berharga, dll.."
-          value={lampiran.name}
-          onChange={(val) => {
-            setLampiran({
-              ...lampiran,
-              name: val.target.value,
-            });
-          }}
-        />
-        <Textarea
-          withAsterisk
-          label="Deskripsi"
-          placeholder="Deskripsi"
-          onChange={(val) => {
-            setLampiran({
-              ...lampiran,
-              deskripsi: val.target.value,
-            });
-          }}
-        />
-        {/* <TextInput
+        </Flex> */}
+          <TextInput
+            withAsterisk
+            label="Jenis Lampiran"
+            placeholder="Contoh: STNK, Nota, Surat berharga, dll.."
+            value={lampiran.name}
+            onChange={(val) => {
+              setLampiran({
+                ...lampiran,
+                name: val.target.value,
+              });
+            }}
+          />
+          <Textarea
+            withAsterisk
+            label="Deskripsi"
+            placeholder="Deskripsi"
+            onChange={(val) => {
+              setLampiran({
+                ...lampiran,
+                deskripsi: val.target.value,
+              });
+            }}
+          />
+          {/* <TextInput
           placeholder={lampiranId.file ? lampiranId.file : "Pilih file"}
           withAsterisk
           label="Lampiran"
           withAsterisk
           onClick={setOpen.open}
         /> */}
-        <FileInput
-          withAsterisk
-          label="Lampiran"
-          onClick={setOpen.open}
-          placeholder={lampiranId.file ? lampiranId.file : "Pilih file"}
-        />
+          <FileInput
+            withAsterisk
+            label="Lampiran"
+            onClick={setOpen.open}
+            placeholder={lampiranId.file ? lampiranId.file : "Pilih file"}
+          />
 
-        <Button
+          <Flex gap={"xs"}>
+          <Button
+            my={10}
+            w={80}
+            bg={COLOR.ungu}
+            compact
+            radius={"lg"}
+            onClick={() => {
+              onCreate(lampiranId.file);
+            }}
+          >
+            Simpan
+          </Button>
+          <Button
           my={10}
-          bg={COLOR.ungu}
+          w={80}
+          bg={"red.9"}
+          color="red.7"
           compact
           radius={"lg"}
           onClick={() => {
-            onCreate(lampiranId.file);
+            tampilanTmbhLampiran.set(false);
+            tampilanLampiran.set(true);
           }}
-        >
-          Tambah
-        </Button>
+          >Batal</Button>
+          </Flex>
         </Box>
       </Box>
     </>

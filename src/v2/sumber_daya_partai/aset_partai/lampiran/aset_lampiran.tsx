@@ -46,13 +46,22 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { api } from "@/lib/api-backend";
 import { FiAlertCircle } from "react-icons/fi";
 import { _postLogUser } from "@/load_data/log_user/post_log_user";
+import { useHookstate } from "@hookstate/core";
+import {
+  val_modal_lampiiran,
+  val_modal_tmbh_lampiran,
+  value_id_aset,
+} from "../aset_state";
 
-export const AsetLampiranV2 = ({ dataAset }: { dataAset: any }) => {
+export const AsetLampiranV2 = () => {
   const [opened, setOpen] = useDisclosure(false);
   const [dataLampiran, setDataLampiran] = useAtom(_getAll_LampiranPartai_ById);
+  const valueId = useHookstate(value_id_aset);
+  const modalLampiran = useHookstate(val_modal_lampiiran);
+  const modalTmbhLampiran = useHookstate(val_modal_tmbh_lampiran);
 
   useShallowEffect(() => {
-    _loadLampiranPartai_ById(dataAset.id, setDataLampiran);
+    _loadLampiranPartai_ById(valueId.value as any, setDataLampiran);
   }, []);
 
   const tbHead = (
@@ -99,13 +108,18 @@ export const AsetLampiranV2 = ({ dataAset }: { dataAset: any }) => {
 
   return (
     <>
-      {/* {JSON.stringify(dataAset.id)} */}
-      <Modal opened={opened} onClose={setOpen.close} centered size={"md"}>
+      {/* {JSON.stringify(valueId.value)} */}
+      {/* <Modal
+        opened={modalTmbhLampiran.value}
+        onClose={() => modalTmbhLampiran.set(false)}
+        centered
+        size={"md"}
+      >
         <TambahLampiranV2
-          dataAset={dataAset}
+          dataAset={valueId.value}
           closeModalTambah={setOpen.close}
         />
-      </Modal>
+      </Modal> */}
       <Paper bg={COLOR.abuabu} p={10}>
         <Grid>
           <Grid.Col span={8}>
@@ -125,7 +139,8 @@ export const AsetLampiranV2 = ({ dataAset }: { dataAset: any }) => {
               m={5}
               bg={COLOR.orange}
               onClick={() => {
-                setOpen.open();
+                modalTmbhLampiran.set(true);
+                modalLampiran.set(false);
               }}
             >
               Tambah
