@@ -158,9 +158,10 @@ export const api = {
     "apiLampiranGetByAset": "/api/aset-partai/lampiran/lampiran-get-by-aset",
     "apiLampiranHapus": "/api/aset-partai/lampiran/lampiran-hapus",
     "apiLampiranGetFile": "/api/aset-partai/lampiran/lampiran-get-file",
-    
 
 
+    // DATA PEMILU
+    "apiPemiluGetData": "api/pemilu/pemilu-get-data",
 
 
 

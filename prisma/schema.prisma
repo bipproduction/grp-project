@@ -754,3 +754,49 @@ model LampiranAsetPartai {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @default(now()) @updatedAt
 }
+
+
+// DATA PEMILU
+model Prov {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  value1 String?
+  value2 String?
+  Kab    Kab[]
+  urut   Int?    @unique
+}
+
+model Kab {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  Prov   Prov?   @relation(fields: [provId], references: [id])
+  provId Int?
+  value1 String?
+  value2 String?
+  Kec    Kec[]
+  kabPro String? @unique
+  urut   Int?    @unique
+}
+
+model Kec {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  Kab    Kab?    @relation(fields: [kabId], references: [id])
+  kabId  Int?
+  value1 String?
+  value2 String?
+  Kel    Kel[]
+  kecKab String? @unique
+  urut   Int?    @unique
+}
+
+model Kel {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  Kec    Kec?    @relation(fields: [kecId], references: [id])
+  kecId  Int?
+  value1 String?
+  value2 String?
+  kelKec String? @unique
+  urut   Int?    @unique
+}

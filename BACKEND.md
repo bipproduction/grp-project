@@ -96,6 +96,8 @@
   - get by aset = api/aset-partai/lampiran/lampiran-get-by-aset?aset= (by aset partai id)
   - hapus = api/aset-partai/lampiran/lampiran-hapus?id= (by lampiran id) 
   - get file = api/aset-partai/lampiran/lampiran-get-file?id= (by lampiran id)
+- **Data Pemilu**
+  - get data = api/pemilu/pemilu-get-data?prov=&kab=&kec (semua parameter boleh kosong atau boleh ga pake parameter)
 
 
 
