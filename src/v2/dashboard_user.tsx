@@ -57,6 +57,7 @@ import { useAtom } from "jotai";
 import { api } from "@/lib/api-backend";
 import { _val_reload_image } from "./dashboard_user/image-upload";
 import { _dataImgNew } from "@/load_data/load_gambar_user";
+import { RiDashboardLine } from "react-icons/ri";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
@@ -123,6 +124,16 @@ const LayoutDashboardV2 = () => {
   function home() {
     router.push("/v2/home");
   }
+
+  let link_dashboard = "";
+  if (sUser.value.masterUserRoleId == "1") {
+    link_dashboard = "/v2/dashboard-user";
+  } else if (sUser.value.masterUserRoleId == "2") {
+    link_dashboard = "/v2/dashboard";
+  } else if (sUser.value.masterUserRoleId == "3") {
+    link_dashboard = "/v2/dashboard-super-admin";
+  }
+
   return (
     <>
       <Modal
@@ -304,6 +315,18 @@ const LayoutDashboardV2 = () => {
                           </Group>
                         </Stack>
                         {/* </Menu.Item> */}
+                        {sUser.value.masterUserRoleId == "2" && (
+                        <Menu.Item>
+                          <Group
+                            onClick={() => {
+                              router.push(link_dashboard);
+                            }}
+                          >
+                            <RiDashboardLine color="black" size="1.3rem" />
+                            <Text>Dashboard</Text>
+                          </Group>
+                        </Menu.Item>
+                      )}
                         <Menu.Item>
                           <Group
                             onClick={open}

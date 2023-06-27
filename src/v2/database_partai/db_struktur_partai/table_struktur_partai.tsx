@@ -9,6 +9,7 @@ import {
   Menu,
   Pagination,
   Paper,
+  ScrollArea,
   Stack,
   Table,
   Text,
@@ -188,6 +189,67 @@ const TableStruktutPartaiV2 = () => {
     </tr>
   );
 
+  const rows = dataStuktur.map((e, i) => (
+    <tr key={i}>
+      <td>{noPertamaStruktur++}</td>
+      <td>{e.User.DataDiri?.name}</td>
+      <td>{e.MasterTingkatPengurus?.name}</td>
+      <td>{e.User.DataDiri?.MasterProvince.name}</td>
+      <td>{e.User.DataDiri?.MasterKabKot.name}</td>
+      <td>{e.User.DataDiri?.MasterKecamatan.name}</td>
+      <td>{e.User.DataDiri?.MasterDesa.name}</td>
+      <td>
+        <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
+      </td>
+      <td>
+        <Menu withArrow offset={1}>
+          <Menu.Target>
+            <ActionIcon>
+              <FaUserEdit color={COLOR.coklat} size={20} />
+            </ActionIcon>
+          </Menu.Target>
+          <Menu.Dropdown bg={COLOR.coklat}>
+            <Group>
+              <Button
+                w={90}
+                onClick={() => {
+                  BodyAktif.id = e.User.id;
+                  onAktif();
+                }}
+                style={{ cursor: "pointer" }}
+                bg={COLOR.coklat}
+                color="orange.9"
+                mb={5}
+              >
+                <Text color="white" fw={700}>
+                  Admin
+                </Text>
+              </Button>
+            </Group>
+            <Divider />
+            <Group>
+              <Button
+                mt={5}
+                w={90}
+                onClick={() => {
+                  BodyNonAktif.id = e.User.id;
+                  NonAktif();
+                }}
+                style={{ cursor: "pointer" }}
+                bg={COLOR.coklat}
+                color="orange.9"
+              >
+                <Text color="white" fw={700}>
+                  User
+                </Text>
+              </Button>
+            </Group>
+          </Menu.Dropdown>
+        </Menu>
+      </td>
+    </tr>
+  ));
+
   return (
     <>
       <Box>
@@ -200,90 +262,32 @@ const TableStruktutPartaiV2 = () => {
             </Grid.Col>
           </Grid>
         </Paper>
-        <Grid>
-          <Grid.Col md={4} lg={4}>
-            <TextInput
-              mt={20}
-              icon={<AiOutlineSearch size={20} />}
-              placeholder="Search"
-              radius={"md"}
-              onChange={(val) => onSearch(val.currentTarget.value)}
-            />
-          </Grid.Col>
-        </Grid>
-        <Group>
-          <Box sx={{ overflow: "scroll" }} py={20}>
-            <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
-              <thead>{tbHead}</thead>
-              <tbody>
-                {dataStuktur.map((e, i) => (
-                  <tr key={i}>
-                    <td>{noPertamaStruktur++}</td>
-                    <td>{e.User.DataDiri?.name}</td>
-                    <td>{e.MasterTingkatPengurus?.name}</td>
-                    <td>{e.User.DataDiri?.MasterProvince.name}</td>
-                    <td>{e.User.DataDiri?.MasterKabKot.name}</td>
-                    <td>{e.User.DataDiri?.MasterKecamatan.name}</td>
-                    <td>{e.User.DataDiri?.MasterDesa.name}</td>
-                    <td>
-                      <Text fw={"bold"}>{e.User.MasterUserRole?.name}</Text>
-                    </td>
-                    <td>
-                      <Menu withArrow offset={1}>
-                        <Menu.Target>
-                          <ActionIcon>
-                            <FaUserEdit color={COLOR.coklat} size={20} />
-                          </ActionIcon>
-                        </Menu.Target>
-                        <Menu.Dropdown bg={COLOR.coklat}>
-                          <Group>
-                            <Button
-                              w={90}
-                              onClick={() => {
-                                BodyAktif.id = e.User.id;
-                                onAktif();
-                              }}
-                              style={{ cursor: "pointer" }}
-                              bg={COLOR.coklat}
-                              color="orange.9"
-                              mb={5}
-                            >
-                              <Text color="white" fw={700}>
-                                Admin
-                              </Text>
-                            </Button>
-                          </Group>
-                          <Divider />
-                          <Group>
-                            <Button
-                              mt={5}
-                              w={90}
-                              onClick={() => {
-                                BodyNonAktif.id = e.User.id;
-                                NonAktif();
-                              }}
-                              style={{ cursor: "pointer" }}
-                              bg={COLOR.coklat}
-                              color="orange.9"
-                            >
-                              <Text color="white" fw={700}>
-                                User
-                              </Text>
-                            </Button>
-                          </Group>
-                        </Menu.Dropdown>
-                      </Menu>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+        <Box pt={20}>
+          <Grid>
+            <Grid.Col md={4} lg={4}>
+              <TextInput
+                mt={20}
+                icon={<AiOutlineSearch size={20} />}
+                placeholder="Search"
+                radius={"md"}
+                onChange={(val) => onSearch(val.currentTarget.value)}
+              />
+            </Grid.Col>
+          </Grid>
+        </Box>
 
-            <Group position="right" py={10}>
+          <Box py={20}>
+            <ScrollArea>
+              <Table withBorder highlightOnHover horizontalSpacing={"lg"}>
+                <thead>{tbHead}</thead>
+                <tbody>{rows}</tbody>
+              </Table>
+            </ScrollArea>
+
+            <Group position="right" pt={10}>
               <Pagination
                 total={Number(inputTotalPage)}
                 color="orange"
-                my={10}
                 value={Number(pageInput)}
                 onChange={(val: any) => {
                   setPageInput(val);
@@ -298,7 +302,6 @@ const TableStruktutPartaiV2 = () => {
               />
             </Group>
           </Box>
-        </Group>
       </Box>
     </>
   );

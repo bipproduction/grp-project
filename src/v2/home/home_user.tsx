@@ -29,7 +29,7 @@ import {
   Stack,
   Divider,
 } from "@mantine/core";
-import { useDisclosure, useWindowScroll } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect, useWindowScroll } from "@mantine/hooks";
 import { MantineLogo } from "@mantine/ds";
 import COLOR from "../../../fun/WARNA";
 import { useForm } from "@mantine/form";
@@ -55,6 +55,7 @@ import { DataDiri } from "@/model/interface_sumber_daya_partai";
 import toast from "react-simple-toasts";
 import { BsPersonVcard } from "react-icons/bs";
 import { _dataImgNew } from "@/load_data/load_gambar_user";
+import { _datapartai_form, _datapartai_user } from "../dashboard_user/profile";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
@@ -480,7 +481,7 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
                       <Tooltip label="Profile">
                         <Group style={{ cursor: "pointer" }}>
                           <Avatar
-                            src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
+                            src={api.apiDataDiriGetGambar + `?id=${imgNew?.id}`}
                             alt="it's me"
                             radius={"xl"}
                             color="indigo"
@@ -716,7 +717,22 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
 
 export function ModalLogout({ thisClosed }: any) {
   const [openLogout, setOpenLogout] = useAtom(val_edit_modal);
-  const [image, setImage] = useAtom(_dataImages);
+  // const [image, setImage] = useAtom(_dataImages);
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
+  const [listData2, setListData2] = useAtom(_datapartai_user);
+  const [listData, setListData] = useAtom(_datapartai_form);
+  const [listData1, setListData1] = useAtom(_datapartai_form);
+
+  useShallowEffect(() => {
+    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
+      .then(async (val) => {
+        if (val.status == 200) {
+          const data = await val.json();
+          setImgNew(data);
+          return;
+        }
+      });
+  }, []);
 
   return (
     <>
@@ -726,6 +742,7 @@ export function ModalLogout({ thisClosed }: any) {
         centered
         withCloseButton={false}
       >
+        <Text ></Text>
         <Alert
           icon={<FiAlertCircle size="2rem" color="red" />}
           title="APAKAH ANDA YAKIN UNTUK LOGOUT?"
@@ -756,7 +773,10 @@ export function ModalLogout({ thisClosed }: any) {
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                   setOpenLogout(false);
-                  setImage(null);
+                  setImgNew(null)
+                  setListData(null);
+                  setListData2(null);
+                  setListData1(null);
                 }}
               >
                 YA

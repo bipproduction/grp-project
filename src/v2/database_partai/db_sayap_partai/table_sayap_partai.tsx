@@ -218,8 +218,7 @@ const TableSayapPartaiV2 = () => {
             />
           </Grid.Col>
         </Grid>
-        <Group>
-          <Box sx={{ overflow: "scroll" }} py={20}>
+          <Box  py={20}>
             <Table withBorder horizontalSpacing="xl" verticalSpacing="sm">
               <thead>{tbHead}</thead>
               <tbody>
@@ -285,7 +284,7 @@ const TableSayapPartaiV2 = () => {
                 ))}
               </tbody>
             </Table>
-            <Group position="right" py={10}>
+            <Group position="right" pt={10}>
               <Pagination
                 total={Number(inputTotalPage)}
                 color="orange"
@@ -304,7 +303,6 @@ const TableSayapPartaiV2 = () => {
               />
             </Group>
           </Box>
-        </Group>
       </Box>
     </>
   );

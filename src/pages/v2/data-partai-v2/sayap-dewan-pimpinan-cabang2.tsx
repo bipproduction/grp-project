@@ -151,13 +151,13 @@ function SayapDewanPimpinanCabang2() {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formSayapDewanPimpinanCabang.values.data.waAdmin.length <= 10) {
+    if (formSayapDewanPimpinanCabang.values.data.waAdmin.length <= 9) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Minimal 10 Karakter");
     }
     if (formSayapDewanPimpinanCabang.values.data.waAdmin.length >= 16) {
       setLoading(false);
-      return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
+      return toast("Panjang Nomor Maksimal 15 Karakter");
     }
 
     fetch(api.apiSumberDayaPartaiPost, {
@@ -333,7 +333,7 @@ function SayapDewanPimpinanCabang2() {
           // {...formSayapDewanPimpinanCabang.getInputProps("data.waAdmin")}
           radius={"md"}
           description={
-            noHpSayapCab && noHpSayapCab.length < 11 ? (
+            noHpSayapCab && noHpSayapCab.length < 10 ? (
               <Text></Text>
             ) : noHpSayapCab && noHpSayapCab.length > 15 ? (
               <Text></Text>
@@ -342,10 +342,10 @@ function SayapDewanPimpinanCabang2() {
             )
           }
           error={
-            noHpSayapCab && noHpSayapCab.length < 11 ? (
-              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            noHpSayapCab && noHpSayapCab.length < 10 ? (
+              <Text>Panjang Nomor Minimal 10 Karakter</Text>
             ) : noHpSayapCab && noHpSayapCab.length > 15 ? (
-              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              <Text>Panjang Nomor Maksimal 15 Karakter</Text>
             ) : (
               ""
             )

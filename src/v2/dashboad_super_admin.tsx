@@ -59,6 +59,7 @@ import { _postLogUser } from "@/load_data/log_user/post_log_user";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
+import { _dataImgNew } from "@/load_data/load_gambar_user";
 // import { sSelectedPage } from "@/xs_state/s_selected_page";
 
 export const _dataImagesNew = atomWithStorage<DataDiri | null>(
@@ -100,6 +101,8 @@ const LayoutDashboarSuperdAdminV2 = () => {
   const [openednya, setOpenedNya] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [image, setImage] = useAtom(_dataImagesNew);
+  const [imgNew, setImgNew] = useAtom(_dataImgNew);
+
 
   const [select, setSelect] = useState("Data Struktur Partai");
 
@@ -253,7 +256,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
                           <Group style={{ cursor: "pointer" }}>
                             <Avatar
                               radius="xl"
-                              src={`/api/form-data-diri/data-diri-get-gambar?id=${image?.id}`}
+                              src={`/api/form-data-diri/data-diri-get-gambar?id=${imgNew?.id}`}
                             />
                           </Group>
                         </Tooltip>
