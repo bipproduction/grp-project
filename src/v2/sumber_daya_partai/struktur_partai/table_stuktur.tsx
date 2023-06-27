@@ -45,7 +45,7 @@ import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_parta
 import { CiEdit } from "react-icons/ci";
 import { EditStrukturV2 } from "./edit_struktur";
 import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
-import { new_state_refresh, refresh_page } from "../force_refresh";
+import { new_state_refresh, refresh_page } from "../../force_refresh";
 
 export const TableStrukturV2 = () => {
   const [opened, setOpen] = useDisclosure(false);

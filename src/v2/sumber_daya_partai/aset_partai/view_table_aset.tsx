@@ -15,6 +15,7 @@ import {
   ScrollArea,
   Table,
   Text,
+  Title,
 } from "@mantine/core";
 import { useDisclosure, useShallowEffect } from "@mantine/hooks";
 import data_aset from "./data_aset.json";
@@ -48,6 +49,15 @@ import EditAsetPartaiV2 from "./edit_aset_partai";
 import { CiEdit } from "react-icons/ci";
 import { ViewLampiranAsetV2 } from "./lampiran/view_lampiran";
 import _ from "lodash";
+import { useHookstate } from "@hookstate/core";
+import {
+  val_modal_edit,
+  val_modal_lampiiran,
+  val_modal_tmbh_lampiran,
+  value_id_aset,
+} from "./aset_state";
+import { AsetLampiranV2 } from "./lampiran/aset_lampiran";
+import { TambahLampiranV2 } from "./lampiran/tambah_lampiran";
 
 const TableViewAsetV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -59,6 +69,13 @@ const TableViewAsetV2 = () => {
   const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai);
   let noUrut = (_.toNumber(inputPage) - 1) * 10 + 1;
+
+  // Modal Aset & Lampiran State
+  const tampilanEdit = useHookstate(val_modal_edit);
+  const tampilanLampiran = useHookstate(val_modal_lampiiran);
+  const tampilanTmbhLampiran = useHookstate(val_modal_tmbh_lampiran);
+
+  const valueId = useHookstate(value_id_aset);
 
   useShallowEffect(() => {
     _loadListDataAset(setDataAset);
@@ -74,7 +91,6 @@ const TableViewAsetV2 = () => {
           <AiOutlineMenu />
         </Center>
       </th>
-      {/* <th>Aset ID , delete soon</th> */}
       <th>Nama Aset</th>
       <th>Serial Number</th>
       <th>Status Aset</th>
@@ -99,26 +115,29 @@ const TableViewAsetV2 = () => {
             <ActionIcon
               color="green"
               onClick={() => {
-                open();
-                setIdValue(e.id);
+                // open();
+                tampilanEdit.set(true);
+                valueId.set(e.id);
               }}
             >
               <CiEdit />
             </ActionIcon>
-            <ViewLampiranAsetV2 dataAset={e} />
+            <ActionIcon
+              onClick={() => {
+                valueId.set(e.id);
+                tampilanLampiran.set(true);
+              }}
+            >
+              <GrAttachment />
+            </ActionIcon>
             <DeleteDataAset
               setId={e}
               search={search}
               setDataAset_Search={setDataAset_Search}
             />
           </Grid.Col>
-          {/* <Grid.Col>
-            </Grid.Col>
-            <Grid.Col>
-            </Grid.Col> */}
         </Grid>
       </td>
-      {/* <td>{e.id}</td> */}
       <td>{e.name}</td>
       <td>{e.serialNumber}</td>
       <td>{e.MasterStatusAset?.name}</td>
@@ -136,10 +155,11 @@ const TableViewAsetV2 = () => {
   return (
     <>
       {/* <pre>{JSON.stringify(dataAset_Search, null, 2)}</pre> */}
+      {/* EDIT ASET PARTAI */}
       <Modal
         key={reloadGambar.toString()}
-        opened={opened}
-        onClose={close}
+        opened={tampilanEdit.value}
+        onClose={() => tampilanEdit.set(false)}
         size="lg"
         centered
         // fullScreen
@@ -147,8 +167,29 @@ const TableViewAsetV2 = () => {
           opacity: 0.1,
         }}
       >
-        <EditAsetPartaiV2 thisClosed={close} idValue={idValue} />
+        <EditAsetPartaiV2 thisClosed={close}  />
       </Modal>
+      {/* LIST LAMPIRAN ASET */}
+      <Modal
+        opened={tampilanLampiran.value}
+        onClose={() => tampilanLampiran.set(false)}
+        centered
+        size={"lg"}
+      >
+        <AsetLampiranV2 />
+      </Modal>
+      {/* TAMBAH LAMPIRAN ASET */}
+      <Modal
+        opened={tampilanTmbhLampiran.value}
+        onClose={() => tampilanTmbhLampiran.set(false)}
+        centered
+        size={"md"}
+        withCloseButton={false}
+      >
+        <TambahLampiranV2 />
+      </Modal>
+
+      {/* TABLE HERE */}
       <Box>
         <Box py={20}>
           <ScrollArea>
@@ -178,6 +219,8 @@ const TableViewAsetV2 = () => {
     </>
   );
 };
+
+// DELETE BUTTON //
 export const _ModalDeleteAset = atom(false);
 function DeleteDataAset({
   setId,
@@ -221,17 +264,6 @@ function DeleteDataAset({
       >
         <RiDeleteBin5Line />
       </ActionIcon>
-      {/* <Button
-        variant={"outline"}
-        color={"red"}
-        radius={50}
-        w={100}
-        onClick={() => {
-          setOpen.open();
-        }}
-      >
-        Hapus
-      </Button> */}
 
       <Modal
         opened={opened}

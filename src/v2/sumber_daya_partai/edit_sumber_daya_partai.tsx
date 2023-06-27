@@ -82,7 +82,7 @@ import {
 import toast from "react-simple-toasts";
 import { api } from "@/lib/api-backend";
 import { _dataStrukturTable_ByStatusSearchSuper } from "@/load_data/super_admin/load_sumber_data_super_admin";
-import { refresh_page } from "./force_refresh";
+import { refresh_page } from "../force_refresh";
 let maxDropDownH = 150;
 
 function EditSumberDayaPartaiV2({

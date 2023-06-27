@@ -58,8 +58,8 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
     masterStatusAsetId: new Number(),
     keterangan: "",
     masterKategoriAsetId: new Number(),
+    img: "img-def.png",
     deskripsi: "",
-    img: "a",
   });
   const [search, setSearch] = useState("");
   const [dataAset_Search, setDataAset_Search] = useAtom(_listDataAset_BySearch);
@@ -74,8 +74,6 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
 
   // ```````` ````````Otomatis Value `````````````````//
   useHotkeys([["ctrl+a", otomatis]]);
-
-  
 
   function otomatis() {
     setValOtomatis(
@@ -105,14 +103,14 @@ const TambahAsetPartaiV2 = ({ thisClosed }: any) => {
       )
         ? _.toNumber(`${Math.floor(Math.random() * 5 - 0) + 1}`)
         : dataKirim.masterKategoriAsetId,
+      img: "img-def.png",
       deskripsi: "warna hitam",
-      img: "a",
     });
   }
-  // ```````` ````````Otomatis Value `````````````````//
+  // ```````` ````````Otomatis Value `````````````````\\
 
   const onCreate = async () => {
-    console.log(dataKirim);
+    // console.log(dataKirim);
     if (Object.values(dataKirim).includes("")) {
       return toast("Lengkapi Data ");
     }

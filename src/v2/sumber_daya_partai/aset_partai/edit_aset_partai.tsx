@@ -65,14 +65,10 @@ import {
   _loadLampiranPartai_ById,
   _getAll_LampiranPartai_ById,
 } from "@/load_data/sumber_daya_partai/aset_partai/load_lampiran_aset";
+import { val_modal_edit, value_id_aset } from "./aset_state";
+import { useHookstate } from "@hookstate/core";
 
-const EditAsetPartaiV2 = ({
-  thisClosed,
-  idValue,
-}: {
-  thisClosed: any;
-  idValue: any;
-}) => {
+const EditAsetPartaiV2 = ({ thisClosed }: { thisClosed: any }) => {
   const [targetEdit, setTargetEdit] = useAtom(_loadEdit_Aset);
   const [statusAset, setStatusAset] = useAtom(_statusAsetPartai);
   const [selectStatusAset, setSelectStatusAset] = useAtom(
@@ -90,8 +86,11 @@ const EditAsetPartaiV2 = ({
   const [inputPage, setInputPage] = useAtom(_dataPageAsetPartai);
   const [totalPage, setTotalPage] = useAtom(_dataTotalPageAsetPartai);
 
+  const tampilanEdit = useHookstate(val_modal_edit);
+  const valueId = useHookstate(value_id_aset);
+
   useShallowEffect(() => {
-    _loadEditAsetPartai_ById(idValue, setTargetEdit);
+    _loadEditAsetPartai_ById(valueId.value, setTargetEdit);
     _loadMaster_StatusAset(setStatusAset, setSelectStatusAset);
     _loadMaster_Kategori(setKategoriAset, setSelectKategoriAset);
     DataGambar(targetEdit?.id as any);
@@ -122,7 +121,7 @@ const EditAsetPartaiV2 = ({
       deskripsi: targetEdit?.deskripsi,
       img: imageId.img ? imageId.img : targetEdit?.img,
     };
-    console.log(body);
+    // console.log(body);
 
     if (Object.values(body).includes("")) {
       return toast("Lengkapi Semua Data");
@@ -138,7 +137,7 @@ const EditAsetPartaiV2 = ({
         if (res.status == 201) {
           const data = await res.json();
           if (data.success) {
-            thisClosed();
+            tampilanEdit.set(false);
             _loadDataAset_BySearch(
               inputSearch,
               setDataAset_Search,
@@ -208,10 +207,10 @@ const EditAsetPartaiV2 = ({
             <Grid.Col span={"auto"}>
               <Box pt={20}>
                 {/* <Paper bg={"gray.1"} p={10}> */}
-                  <Gambar />
-                  <Group position="center" pt={20}>
-                    <AsetImageUpload idVal={targetEdit.id} />
-                  </Group>
+                <Gambar />
+                <Group position="center" pt={20}>
+                  <AsetImageUpload idVal={targetEdit.id} />
+                </Group>
                 {/* </Paper> */}
               </Box>
             </Grid.Col>

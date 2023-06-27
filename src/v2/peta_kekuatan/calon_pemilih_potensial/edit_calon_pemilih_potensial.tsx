@@ -91,15 +91,25 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     _selectKategori_CalonPP
   );
   const [dataProvinsi, setIsProvinsi] = useAtom(_provinsi_CalonPP);
-  const [selectProvinsi, setSelectProvince] = useAtom(_selectProvinsi_CalonPP);
+  const [selectProvinsi, setSelectProvince] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataKabkot, setIsKabupaten] = useAtom(_kabkot_CalonPP);
-  const [selectKabkot, setSelectKabupaten] = useAtom(_selectKabkot_CalonPP);
+  const [selectKabkot, setSelectKabupaten] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataKecamatan, setIsKecamatan] = useAtom(_kecamatan_CalonPP);
-  const [selectKecamatan, setSelectKecamatan] = useAtom(
-    _selectKecamatan_CalonPP
-  );
+  const [selectKecamatan, setSelectKecamatan] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [dataDesa, setIsDesa] = useAtom(_desa_CalonPP);
-  const [selectDesa, setSelectDesa] = useAtom(_selectDesa_CalonPP);
+  const [selectDesa, setSelectDesa] = useState({
+    id: new Number(),
+    name: "",
+  });
   const [noTPS, setNoTPS] = useAtom(_listNoTps_CPP);
   const [selectNoTPS, setSelectNoTps] = useAtom(_selectNoTps_CPP);
   const [dataAgama, setAgama] = useAtom(_list_Agama);
@@ -179,6 +189,26 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
     } else {
       if ((dataEdit?.nik.length as any) > 16) {
         return toast("NIK Lebih Dari 16 Digit");
+      }
+    }
+
+    // Validasi Email
+    if (dataEdit?.email && dataEdit?.email.indexOf("@") == -1) {
+      return toast("Invalid email");
+    }
+    if (
+      dataEdit?.email &&
+      dataEdit?.email.indexOf(".com") == -1 &&
+      dataEdit?.email.indexOf(".co.id") == -1
+    ) {
+      return toast("Invalid email");
+    }
+
+    if (dataEdit?.phoneNumber && dataEdit?.phoneNumber.length < 10) {
+      return toast("Nomor Handphone Minimal 10 Angka");
+    } else {
+      if (dataEdit?.phoneNumber && dataEdit?.phoneNumber.length > 15) {
+        return toast("Nomor Handphone Maksimal 15 Angka");
       }
     }
 
@@ -372,9 +402,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    selectProvinsi.id as any
-                      ? selectProvinsi.id as any
-                      : dataEdit?.MasterProvince.id as any
+                    (selectProvinsi.id as any)
+                      ? (selectProvinsi.id as any)
+                      : (dataEdit?.MasterProvince.id as any)
                   }
                   placeholder={
                     selectProvinsi.name
@@ -407,8 +437,8 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     );
                   }}
                   value={
-                    selectKabkot.id as any
-                      ? selectKabkot.id as any
+                    (selectKabkot.id as any)
+                      ? (selectKabkot.id as any)
                       : dataEdit?.MasterKabKot.id
                   }
                   placeholder={
@@ -439,9 +469,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     _loadSelectDesa(val as any, setIsDesa, setSelectDesa);
                   }}
                   value={
-                    selectKecamatan.id as any
-                      ? selectKecamatan.id as any
-                      : dataEdit?.MasterKecamatan.id as any
+                    (selectKecamatan.id as any)
+                      ? (selectKecamatan.id as any)
+                      : (dataEdit?.MasterKecamatan.id as any)
                   }
                   placeholder={
                     selectKabkot.name
@@ -468,9 +498,9 @@ const EditCPTV2 = ({ thisClosed, idVal }: { thisClosed: any; idVal: any }) => {
                     setDataEdit(data);
                   }}
                   value={
-                    selectDesa.id as any
-                      ? selectDesa.id as any
-                      : dataEdit?.MasterDesa.id as any
+                    (selectDesa.id as any)
+                      ? (selectDesa.id as any)
+                      : (dataEdit?.MasterDesa.id as any)
                   }
                   placeholder={
                     selectKecamatan.name

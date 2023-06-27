@@ -47,8 +47,8 @@ import { ButtonDeleteData } from "@/v2/component/button_delete_sumber_daya_parta
 import _ from "lodash";
 import { ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
 import EditSumberDayaPartaiV2 from "../edit_sumber_daya_partai";
-import { refresh_page } from "../force_refresh";
-import { new_state_refresh } from "../force_refresh"; 
+import { refresh_page } from "../../force_refresh";
+import { new_state_refresh } from "../../force_refresh"; 
 
 const TableAnggotaPartaiV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
