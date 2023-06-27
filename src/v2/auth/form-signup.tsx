@@ -30,8 +30,8 @@ import { val_loading } from "@/xg_state.ts/val_loading";
 const FormSignUp = () => {
   const [email, setEmail] = useState<string>();
   const [inputKonfirmasiPass, setInputKonfirmasiPass] = useState<string>();
-  const [isLoading, setLoading] = useAtom(val_loading)
-  const [usernaemMax, setUsernameMax] = useState<string | null>(null)
+  const [isLoading, setLoading] = useAtom(val_loading);
+  const [usernaemMax, setUsernameMax] = useState<string | null>(null);
   const router = useRouter();
   const formRegister = useForm({
     initialValues: {
@@ -43,15 +43,15 @@ const FormSignUp = () => {
       validate: {
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
-          username: (user: string) => 
-          /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.test(user) ? null : "Invalid Username"
+        username: (user: string) =>
+          /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.test(user)
+            ? null
+            : "Invalid Username",
       },
     },
   });
 
-
   const onRegister = async () => {
-
     if (Object.values(formRegister.values.data).includes("")) {
       return toast("Lengkapi Data diri");
     }
@@ -61,15 +61,21 @@ const FormSignUp = () => {
     ) {
       return toast("Invalid email");
     }
-    if(formRegister.values.data.username.length >= 31){
-      return toast('Username maksimal 30 karakter')
+    if (formRegister.values.data.username.length >= 31) {
+      return toast("Username maksimal 30 karakter");
     }
-    if( 
-      formRegister.values.validate.username(formRegister.values.data.username) != null
+    if (
+      formRegister.values.validate.username(
+        formRegister.values.data.username
+      ) != null
     ) {
-      return toast("Username harus berupa huruf, angka, titik, dan garis bawah.") && toast("Garis bawah dan titik tidak boleh berada di akhir atau awal nama pengguna");
+      return (
+        toast("Username harus berupa huruf, angka, titik, dan garis bawah.") &&
+        toast(
+          "Garis bawah dan titik tidak boleh berada di akhir atau awal nama pengguna"
+        )
+      );
     }
-
 
     // if(formRegister.values.data.username.length <= 4)
     // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
@@ -77,7 +83,7 @@ const FormSignUp = () => {
     // return toast("Minimal 5 karakter dan Maksimal 30 karakter dan hanya boleh huruf, angka, titik, dan garis bawah")
 
     if (formRegister.values.data.password.length < 8)
-    return toast("Password Minimal 8 Karakter")
+      return toast("Password Minimal 8 Karakter");
 
     if (formRegister.values.data.password != inputKonfirmasiPass) {
       return toast("Konfirmasi password salah");
@@ -93,19 +99,18 @@ const FormSignUp = () => {
       const data = await res.json();
       if (res.status === 201) {
         toast("Sukses. Silahkan lakukan login");
-        setLoading(true)
-        await new Promise((r) => setTimeout(r, 900))
-        setLoading(false)
+        setLoading(true);
+        await new Promise((r) => setTimeout(r, 900));
+        setLoading(false);
         router.reload();
-        
       } else {
         toast(data.message);
       }
-      router.push("http://localhost:3000/")
+      router.push("http://localhost:3000/");
     });
   };
 
-  function home(){
+  function home() {
     router.push("/");
   }
   return (
@@ -142,28 +147,26 @@ const FormSignUp = () => {
             </Box>
 
             <TextInput
-            description={
-              usernaemMax && usernaemMax.length > 30 ? (
-                <Text></Text>
-              ) : (
-                ""
-              )
-            }
-            error={
-              usernaemMax && usernaemMax.length > 30 ? (
-                <Text color={COLOR.coklat}>Username Maksimal 30 karakter</Text>
-              ) : (
-                ""
-              )
-            }
+              description={
+                usernaemMax && usernaemMax.length > 30 ? <Text></Text> : ""
+              }
+              error={
+                usernaemMax && usernaemMax.length > 30 ? (
+                  <Text color={COLOR.coklat}>
+                    Username Maksimal 30 karakter
+                  </Text>
+                ) : (
+                  ""
+                )
+              }
               placeholder="Username"
               required
               mt="lg"
               icon={<FiUser size={17} />}
               onChange={(val) => {
                 if (val) {
-                  setUsernameMax(val.currentTarget.value)
-                  formRegister.values.data.username = val.currentTarget.value
+                  setUsernameMax(val.currentTarget.value);
+                  formRegister.values.data.username = val.currentTarget.value;
                 }
               }}
               // {...formRegister.getInputProps("data.username")}
@@ -197,20 +200,15 @@ const FormSignUp = () => {
               // component="a"
               // href="/"
               onClick={() => {
-                onRegister()
-                router.push("/")
+                onRegister();
+                router.push("/");
               }}
             >
               REGISTER
             </Button>
             <Text color={COLOR.coklat} size="sm" align="center" mt={20}>
               Sudah memiliki akun?{" "}
-              <Anchor
-                size="sm"
-                component="a"
-                color={COLOR.coklat}
-                href="/"
-              >
+              <Anchor size="sm" component="a" color={COLOR.coklat} href="/">
                 Login
               </Anchor>
             </Text>

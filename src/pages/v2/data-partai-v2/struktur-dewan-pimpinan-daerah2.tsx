@@ -134,128 +134,127 @@ function StrukturDewanPimpinanDaerah2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack  pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Struktur Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Daerah
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <Select
-              // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
-              data={sProvinsi.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              radius={"md"}
-              placeholder="Provinsi"
-              label="Provinsi"
-              withAsterisk
-              searchable
-              onChange={(val) => {
-                setValue(val!);
-                formStrukturDewanPimpinanDaerah.values.data.masterProvinceId =
-                  val!;
-              }}
-            />
-            <Select
-              label="Jabatan"
-              withAsterisk
-              radius={"md"}
-              placeholder="Jabatan"
-              data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              searchable
-              onChange={(val) => {
-                setValue(val!);
-                formStrukturDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
-                  val!;
-              }}
-            />
-            <TextInput
-              {...formStrukturDewanPimpinanDaerah.getInputProps(
-                "data.alamatKantor"
-              )}
-              radius={"md"}
-              withAsterisk
-              placeholder="Alamat Kantor"
-              label="Alamat Kantor"
-              // onChange={() => {
-              //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
-              // }}
-            />
-            <TextInput
-              // {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
-              description={
-                noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
-                  <Text></Text>
-                ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
-                  <Text></Text>
-                ) : (
-                  ""
-                )
-              }
-              error={
-                noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                ) : (
-                  ""
-                )
-              }
-              onChange={(val) => {
-                setNoHpStrukturDaerah(val.currentTarget.value);
-                formStrukturDewanPimpinanDaerah.values.data.waAdmin =
-                  val.currentTarget.value;
-              }}
-              radius={"md"}
-              withAsterisk
-              placeholder="Nomor WA Admin"
-              label="Nomor WA Admin"
-              type="number"
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanDaerah}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Struktur Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Daerah
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <Select
+          // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
+          data={sProvinsi.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          radius={"md"}
+          placeholder="Provinsi"
+          label="Provinsi"
+          withAsterisk
+          searchable
+          onChange={(val) => {
+            setValue(val!);
+            formStrukturDewanPimpinanDaerah.values.data.masterProvinceId = val!;
+          }}
+        />
+        <Select
+          label="Jabatan"
+          withAsterisk
+          radius={"md"}
+          placeholder="Jabatan"
+          data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          searchable
+          onChange={(val) => {
+            setValue(val!);
+            formStrukturDewanPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
+              val!;
+          }}
+        />
+        <TextInput
+          {...formStrukturDewanPimpinanDaerah.getInputProps(
+            "data.alamatKantor"
+          )}
+          radius={"md"}
+          withAsterisk
+          placeholder="Alamat Kantor"
+          label="Alamat Kantor"
+          // onChange={() => {
+          //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
+          // }}
+        />
+        <TextInput
+          // {...formStrukturDewanPimpinanDaerah.getInputProps("data.waAdmin")}
+          description={
+            noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
+              <Text></Text>
+            ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
+              <Text></Text>
+            ) : (
+              ""
+            )
+          }
+          error={
+            noHpStrukturDaerah && noHpStrukturDaerah.length < 11 ? (
+              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            ) : noHpStrukturDaerah && noHpStrukturDaerah.length > 15 ? (
+              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            ) : (
+              ""
+            )
+          }
+          onChange={(val) => {
+            setNoHpStrukturDaerah(val.currentTarget.value);
+            formStrukturDewanPimpinanDaerah.values.data.waAdmin =
+              val.currentTarget.value;
+          }}
+          radius={"md"}
+          withAsterisk
+          placeholder="Nomor WA Admin"
+          label="Nomor WA Admin"
+          type="number"
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PimpinanDaerah}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

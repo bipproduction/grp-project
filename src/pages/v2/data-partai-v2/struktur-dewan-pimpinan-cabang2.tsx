@@ -145,12 +145,12 @@ function StrukturDewanPimpinanCabang2() {
       return toast("Lengkapi Data Diri");
     }
 
-    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length <= 10){
-      setLoading(false)
+    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length <= 10) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
-    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length >= 16){
-      setLoading(false)
+    if (formStrukturDewanPimpinanCabang.values.data.waAdmin.length >= 16) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
 
@@ -208,163 +208,161 @@ function StrukturDewanPimpinanCabang2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Struktur Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Cabang
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <ScrollArea h={{ sm: 430, base: 300 }} scrollbarSize={0}>
-              <Select
-                onChange={(val) => {
-                  if (val) {
-                    setSelectedProvince(provinsi.find((v) => v.id == val));
-                    loadKabupaten(val);
-                  }
-                  formStrukturDewanPimpinanCabang.values.data.masterProvinceId =
-                    val!;
-                  formStrukturDewanPimpinanCabang.values.data.masterKabKotId =
-                    ""
-                }}
-                data={provinsi.map((pro) => ({
-                  value: pro.id,
-                  label: pro.name,
-                }))}
-                radius={"md"}
-                placeholder={"Pilih Provinsi"}
-                value={selectedProvince.id}
-                label="Provinsi"
-                withAsterisk
-                searchable
-                mt={1}
-              />
-              <Select
-                key={Math.random()}
-                data={
-                  _.isEmpty(kabupaten)
-                    ? []
-                    : kabupaten.map((v) => ({
-                        value: v.id,
-                        label: v.name,
-                      }))
-                }
-                radius={"md"}
-                placeholder={"Pilih Kabupaten"}
-                value={selectedKabupaten.id}
-                label="Kabupaten / Kota"
-                withAsterisk
-                searchable
-                mt={10}
-                onChange={(val) => {
-                  setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-                  loadKecamatan(val!);
-                  formStrukturDewanPimpinanCabang.values.data.masterKabKotId =
-                    val!;
-                }}
-              />
-              <Select
-                onChange={(val) => {
-                  setValue(val!);
-                  formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
-                    val!;
-                }}
-                data={sJabatanDewanPimpinanCabang.value.map((val) => ({
-                  value: val.id,
-                  label: val.name,
-                }))}
-                mt={10}
-                label="Jabatan"
-                withAsterisk
-                radius={"md"}
-                placeholder="Jabatan"
-                // data={jabatan}
-                searchable
-              />
-              <TextInput
-                {...formStrukturDewanPimpinanCabang.getInputProps(
-                  "data.alamatKantor"
-                )}
-                radius={"md"}
-                withAsterisk
-                placeholder="Alamat Kantor"
-                label="Alamat Kantor"
-                mt={10}
-              />
-              <TextInput
-                // {...formStrukturDewanPimpinanCabang.getInputProps(
-                //   "data.waAdmin"
-                // )}
-                description={
-                  noHpStrukturCab && noHpStrukturCab.length < 11 ? (
-                    <Text></Text>
-                  ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
-                    <Text></Text>
-                  ) : (
-                    ""
-                  )
-                }
-                error={
-                  noHpStrukturCab && noHpStrukturCab.length < 11 ? (
-                    <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                  ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
-                    <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                  ) : (
-                    ""
-                  )
-                }
-                onChange={(val) => {
-                  setNoHpStrukturCab(val.currentTarget.value);
-                  formStrukturDewanPimpinanCabang.values.data.waAdmin =
-                    val.currentTarget.value;
-                }}
-                radius={"md"}
-                withAsterisk
-                placeholder="Nomor WA Admin"
-                label="Nomor WA Admin"
-                type="number"
-                mt={10}
-              />
-              <Button
-                mt={20}
-                fullWidth
-                bg={COLOR.coklat}
-                color="red.9"
-                radius={"md"}
-                onClick={PimpinanCabang}
-              >
-                SIMPAN
-              </Button>
-            </ScrollArea>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Struktur Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Cabang
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <ScrollArea h={{ sm: 430, base: 300 }} scrollbarSize={0}>
+          <Select
+            onChange={(val) => {
+              if (val) {
+                setSelectedProvince(provinsi.find((v) => v.id == val));
+                loadKabupaten(val);
+              }
+              formStrukturDewanPimpinanCabang.values.data.masterProvinceId =
+                val!;
+              formStrukturDewanPimpinanCabang.values.data.masterKabKotId = "";
+            }}
+            data={provinsi.map((pro) => ({
+              value: pro.id,
+              label: pro.name,
+            }))}
+            radius={"md"}
+            placeholder={"Pilih Provinsi"}
+            value={selectedProvince.id}
+            label="Provinsi"
+            withAsterisk
+            searchable
+            mt={1}
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(kabupaten)
+                ? []
+                : kabupaten.map((v) => ({
+                    value: v.id,
+                    label: v.name,
+                  }))
+            }
+            radius={"md"}
+            placeholder={"Pilih Kabupaten"}
+            value={selectedKabupaten.id}
+            label="Kabupaten / Kota"
+            withAsterisk
+            searchable
+            mt={10}
+            onChange={(val) => {
+              setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+              loadKecamatan(val!);
+              formStrukturDewanPimpinanCabang.values.data.masterKabKotId = val!;
+            }}
+          />
+          <Select
+            onChange={(val) => {
+              setValue(val!);
+              formStrukturDewanPimpinanCabang.values.data.masterJabatanDewanPimpinanCabangId =
+                val!;
+            }}
+            data={sJabatanDewanPimpinanCabang.value.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))}
+            mt={10}
+            label="Jabatan"
+            withAsterisk
+            radius={"md"}
+            placeholder="Jabatan"
+            // data={jabatan}
+            searchable
+          />
+          <TextInput
+            {...formStrukturDewanPimpinanCabang.getInputProps(
+              "data.alamatKantor"
+            )}
+            radius={"md"}
+            withAsterisk
+            placeholder="Alamat Kantor"
+            label="Alamat Kantor"
+            mt={10}
+          />
+          <TextInput
+            // {...formStrukturDewanPimpinanCabang.getInputProps(
+            //   "data.waAdmin"
+            // )}
+            description={
+              noHpStrukturCab && noHpStrukturCab.length < 11 ? (
+                <Text></Text>
+              ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
+                <Text></Text>
+              ) : (
+                ""
+              )
+            }
+            error={
+              noHpStrukturCab && noHpStrukturCab.length < 11 ? (
+                <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              ) : noHpStrukturCab && noHpStrukturCab.length > 15 ? (
+                <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+              ) : (
+                ""
+              )
+            }
+            onChange={(val) => {
+              setNoHpStrukturCab(val.currentTarget.value);
+              formStrukturDewanPimpinanCabang.values.data.waAdmin =
+                val.currentTarget.value;
+            }}
+            radius={"md"}
+            withAsterisk
+            placeholder="Nomor WA Admin"
+            label="Nomor WA Admin"
+            type="number"
+            mt={10}
+          />
+          <Button
+            mt={20}
+            fullWidth
+            bg={COLOR.coklat}
+            color="red.9"
+            radius={"md"}
+            onClick={PimpinanCabang}
+          >
+            SIMPAN
+          </Button>
+        </ScrollArea>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

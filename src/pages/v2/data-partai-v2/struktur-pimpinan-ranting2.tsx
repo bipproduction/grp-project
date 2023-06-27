@@ -193,166 +193,162 @@ function StrukturPimpinanRanting2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Struktur Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Pimpinan Ranting
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <ScrollArea h={{ sm: 405, base: 300 }} scrollbarSize={0}>
-              <Select
-                data={provinsi.map((val) => ({
-                  value: val.id,
-                  label: val.name,
-                }))}
-                onChange={(val) => {
-                  if (val) {
-                    setSelectedProvince(provinsi.find((v) => v.id == val));
-                    loadKabupaten(val);
-                    formStrukturPimpinanRanting.values.data.masterProvinceId =
-                      val!;
-                    formStrukturPimpinanRanting.values.data.masterKabKotId =
-                      ""
-                  }
-                }}
-                radius={"md"}
-                placeholder={"Pilih Provinsi"}
-                value={selectedProvince.id}
-                label="Provinsi"
-                withAsterisk
-                searchable
-                mt={1}
-              />
-              <Select
-                key={Math.random()}
-                data={
-                  _.isEmpty(kabupaten)
-                    ? []
-                    : kabupaten.map((val) => ({
-                        value: val.id,
-                        label: val.name,
-                      }))
-                }
-                onChange={(val) => {
-                  setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-                  loadKecamatan(val!);
-                  formStrukturPimpinanRanting.values.data.masterKabKotId = val!;
-                  formStrukturPimpinanRanting.values.data.masterKecamatanId = ""
-                }}
-                radius={"md"}
-                placeholder={"Pilih Kabupaten"}
-                value={selectedKabupaten.id}
-                label="Kabupaten / Kota"
-                withAsterisk
-                searchable
-                mt={10}
-              />
-              <Select
-                key={Math.random()}
-                data={
-                  _.isEmpty(kecamatan)
-                    ? []
-                    : kecamatan.map((val) => ({
-                        value: val.id,
-                        label: val.name,
-                      }))
-                }
-                onChange={(val) => {
-                  setSelectedKecamatan(kecamatan.find((v) => v.id == val));
-                  loadDesa(val!);
-                  formStrukturPimpinanRanting.values.data.masterKecamatanId =
-                    val!;
-                  formStrukturPimpinanRanting.values.data.masterDesaId =
-                    ""
-                }}
-                radius={"md"}
-                placeholder={"Pilih Kecamatan"}
-                value={selectedKecamatan.id}
-                label="Kecamatan"
-                withAsterisk
-                searchable
-                mt={10}
-              />
-              <Select
-                key={Math.random()}
-                data={
-                  _.isEmpty(desa)
-                    ? []
-                    : desa.map((val) => ({
-                        value: val.id,
-                        label: val.name,
-                      }))
-                }
-                onChange={(val) => {
-                  setSelectedDesa(desa.find((v) => v.id == val));
-                  formStrukturPimpinanRanting.values.data.masterDesaId = val!;
-                }}
-                radius={"md"}
-                placeholder={"Pilih Desa"}
-                value={selectedDesa.id}
-                label="Desa / Kelurahan"
-                withAsterisk
-                searchable
-                mt={10}
-              />
-              <Select
-                onChange={(val) => {
-                  setValue(val!);
-                  formStrukturPimpinanRanting.values.data.masterJabatanPimpinanRantingId =
-                    val!;
-                }}
-                mt={10}
-                label="Jabatan"
-                withAsterisk
-                radius={"md"}
-                placeholder="Jabatan"
-                data={sJabatanPimpinanRanting.value.map((val) => ({
-                  value: val.id,
-                  label: val.name,
-                }))}
-                searchable
-              />
-              <Button
-                mt={20}
-                fullWidth
-                bg={COLOR.coklat}
-                color="red.9"
-                radius={"md"}
-                onClick={PimpinanRanting}
-              >
-                SIMPAN
-              </Button>
-            </ScrollArea>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Struktur Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Pimpinan Ranting
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <ScrollArea h={{ sm: 405, base: 300 }} scrollbarSize={0}>
+          <Select
+            data={provinsi.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))}
+            onChange={(val) => {
+              if (val) {
+                setSelectedProvince(provinsi.find((v) => v.id == val));
+                loadKabupaten(val);
+                formStrukturPimpinanRanting.values.data.masterProvinceId = val!;
+                formStrukturPimpinanRanting.values.data.masterKabKotId = "";
+              }
+            }}
+            radius={"md"}
+            placeholder={"Pilih Provinsi"}
+            value={selectedProvince.id}
+            label="Provinsi"
+            withAsterisk
+            searchable
+            mt={1}
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(kabupaten)
+                ? []
+                : kabupaten.map((val) => ({
+                    value: val.id,
+                    label: val.name,
+                  }))
+            }
+            onChange={(val) => {
+              setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+              loadKecamatan(val!);
+              formStrukturPimpinanRanting.values.data.masterKabKotId = val!;
+              formStrukturPimpinanRanting.values.data.masterKecamatanId = "";
+            }}
+            radius={"md"}
+            placeholder={"Pilih Kabupaten"}
+            value={selectedKabupaten.id}
+            label="Kabupaten / Kota"
+            withAsterisk
+            searchable
+            mt={10}
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(kecamatan)
+                ? []
+                : kecamatan.map((val) => ({
+                    value: val.id,
+                    label: val.name,
+                  }))
+            }
+            onChange={(val) => {
+              setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+              loadDesa(val!);
+              formStrukturPimpinanRanting.values.data.masterKecamatanId = val!;
+              formStrukturPimpinanRanting.values.data.masterDesaId = "";
+            }}
+            radius={"md"}
+            placeholder={"Pilih Kecamatan"}
+            value={selectedKecamatan.id}
+            label="Kecamatan"
+            withAsterisk
+            searchable
+            mt={10}
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(desa)
+                ? []
+                : desa.map((val) => ({
+                    value: val.id,
+                    label: val.name,
+                  }))
+            }
+            onChange={(val) => {
+              setSelectedDesa(desa.find((v) => v.id == val));
+              formStrukturPimpinanRanting.values.data.masterDesaId = val!;
+            }}
+            radius={"md"}
+            placeholder={"Pilih Desa"}
+            value={selectedDesa.id}
+            label="Desa / Kelurahan"
+            withAsterisk
+            searchable
+            mt={10}
+          />
+          <Select
+            onChange={(val) => {
+              setValue(val!);
+              formStrukturPimpinanRanting.values.data.masterJabatanPimpinanRantingId =
+                val!;
+            }}
+            mt={10}
+            label="Jabatan"
+            withAsterisk
+            radius={"md"}
+            placeholder="Jabatan"
+            data={sJabatanPimpinanRanting.value.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))}
+            searchable
+          />
+          <Button
+            mt={20}
+            fullWidth
+            bg={COLOR.coklat}
+            color="red.9"
+            radius={"md"}
+            onClick={PimpinanRanting}
+          >
+            SIMPAN
+          </Button>
+        </ScrollArea>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

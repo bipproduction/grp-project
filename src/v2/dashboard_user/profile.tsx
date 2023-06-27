@@ -203,7 +203,7 @@ const DataProfileV2 = () => {
                 <Stack>
                   <Center p={10}>
                     <Image
-                    key={reloadImage.toString()}
+                      key={reloadImage.toString()}
                       // src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
                       src={`/api/form-data-diri/data-diri-get-gambar?id=${imgNew?.id}`}
                       width={170}

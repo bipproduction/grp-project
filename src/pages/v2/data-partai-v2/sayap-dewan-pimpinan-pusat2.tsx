@@ -117,85 +117,85 @@ function SayapDewanPimpinanPusat2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Sayap Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Pusat
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
-              }}
-              data={sSayapPartai.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              label="Pilih Sayap Partai"
-              mt={10}
-              radius={"md"}
-              withAsterisk
-              placeholder="Pilih Sayap Partai"
-              searchable
-            />
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
-                  val!;
-              }}
-              label="Jabatan"
-              withAsterisk
-              mt={10}
-              radius={"md"}
-              placeholder="Jabatan"
-              data={sJabatanDewanPimpinanPusat.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              searchable
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanPusat}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Sayap Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Pusat
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formSayapPimpinanPusat.values.data.masterSayapPartaiId = val!;
+          }}
+          data={sSayapPartai.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          label="Pilih Sayap Partai"
+          mt={10}
+          radius={"md"}
+          withAsterisk
+          placeholder="Pilih Sayap Partai"
+          searchable
+        />
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formSayapPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
+              val!;
+          }}
+          label="Jabatan"
+          withAsterisk
+          mt={10}
+          radius={"md"}
+          placeholder="Jabatan"
+          data={sJabatanDewanPimpinanPusat.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          searchable
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PimpinanPusat}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

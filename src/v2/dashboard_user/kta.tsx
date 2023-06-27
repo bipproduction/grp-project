@@ -57,8 +57,8 @@ const KTAV2 = () => {
           const data = await val.json();
           setListData1(data);
           return;
-        }else{
-          setListData1(null)
+        } else {
+          setListData1(null);
         }
       });
   }
@@ -125,8 +125,7 @@ const KTAV2 = () => {
                           pl={20}
                           pt={25}
                         >
-
-                           <Image
+                          <Image
                             src={api.apiDataDiriGetGambar + `?id=${image?.id}`}
                             width={130}
                             height={152}
@@ -134,7 +133,6 @@ const KTAV2 = () => {
                             // height={152}
                             alt="img"
                             radius={5}
-
                           />
                         </Flex>
                       </Grid.Col>

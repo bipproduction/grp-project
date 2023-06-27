@@ -138,13 +138,13 @@ function SayapPimpinanAnakCabang2() {
   }, []);
 
   const PimpinanAnakCabang = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 300))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
     // console.table(formSayapDewanPimpinanAnakCabang.values.data)
     if (
       Object.values(formSayapDewanPimpinanAnakCabang.values.data).includes("")
     ) {
-      setLoading(false)
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -153,9 +153,9 @@ function SayapPimpinanAnakCabang2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formSayapDewanPimpinanAnakCabang.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
-        setLoading(false)
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
       } else {
@@ -164,7 +164,6 @@ function SayapPimpinanAnakCabang2() {
         router.push("/v2/home");
       }
     });
-    
   };
 
   const [value, setValue] = useState("");
@@ -199,166 +198,164 @@ function SayapPimpinanAnakCabang2() {
               Jika Termasuk Organisasi Afiliatif, <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Sayap Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Anak Cabang
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <ScrollArea h={{sm: 405, base: 300}} scrollbarSize={0}>
-
-            <Select
-              // {...formStrukturPartai.getInputProps("sayapPartai")}
-              onChange={(val) => {
-                setValue(val!);
-                formSayapDewanPimpinanAnakCabang.values.data.masterSayapPartaiId =
-                  val!;
-              }}
-              data={sSayapPartai.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              label="Pilih Sayap Partai"
-              radius={"md"}
-              withAsterisk
-              mt={1}
-              placeholder="Pilih Sayap Partai"
-              // data={sayap}
-              searchable
-            />
-            <Select
-              data={provinsi.map((pro) => ({
-                value: pro.id,
-                label: pro.name,
-              }))}
-              onChange={(val) => {
-                if (val) {
-                  setSelectedProvince(provinsi.find((v) => v.id == val));
-                  loadKabupaten(val);
-                }
-                formSayapDewanPimpinanAnakCabang.values.data.masterProvinceId =
-                  val!;
-                formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId =
-                  ""
-              }}
-              radius={"md"}
-              mt={10}
-              placeholder={"Pilih Provinsi"}
-              value={selectedProvince.id}
-              label="Provinsi"
-              withAsterisk
-              searchable
-            />
-            <Select
-              key={Math.random()}
-              data={
-                _.isEmpty(kabupaten)
-                  ? []
-                  : kabupaten.map((v) => ({
-                      value: v.id,
-                      label: v.name,
-                    }))
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Sayap Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Anak Cabang
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <ScrollArea h={{ sm: 405, base: 300 }} scrollbarSize={0}>
+          <Select
+            // {...formStrukturPartai.getInputProps("sayapPartai")}
+            onChange={(val) => {
+              setValue(val!);
+              formSayapDewanPimpinanAnakCabang.values.data.masterSayapPartaiId =
+                val!;
+            }}
+            data={sSayapPartai.value.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))}
+            label="Pilih Sayap Partai"
+            radius={"md"}
+            withAsterisk
+            mt={1}
+            placeholder="Pilih Sayap Partai"
+            // data={sayap}
+            searchable
+          />
+          <Select
+            data={provinsi.map((pro) => ({
+              value: pro.id,
+              label: pro.name,
+            }))}
+            onChange={(val) => {
+              if (val) {
+                setSelectedProvince(provinsi.find((v) => v.id == val));
+                loadKabupaten(val);
               }
-              onChange={(val) => {
-                setSelectedKabupaten(kabupaten.find((v) => v.id == val));
-                loadKecamatan(val!);
-                formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId =
-                  val!;
-                formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
-                  ""
-              }}
-              mt={10}
-              radius={"md"}
-              placeholder={"Pilih Kabupaten"}
-              value={selectedKabupaten.id}
-              label="Kabupaten / Kota"
-              withAsterisk
-              searchable
-            />
-            <Select
-              key={Math.random()}
-              data={
-                _.isEmpty(kecamatan)
-                  ? []
-                  : kecamatan.map((val) => ({
-                      value: val.id,
-                      label: val.name,
-                    }))
-              }
-              onChange={(val) => {
-                setSelectedKecamatan(kecamatan.find((v) => v.id == val));
-                loadDesa(val!);
-                formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
-                  val!;
-              }}
-              mt={10}
-              radius={"md"}
-              placeholder={"Pilih Kecamatan"}
-              value={selectedKecamatan.id}
-              label="Kecamatan"
-              withAsterisk
-              searchable
-            />
-            <Select
-              // {...formStrukturPartai.getInputProps("jabatan")}
-              onChange={(val) => {
-                setValue(val!);
-                formSayapDewanPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId =
-                  val!;
-              }}
-              data={sJabatanPimpinanAnakCabang.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              mt={10}
-              label="Jabatan"
-              withAsterisk
-              radius={"md"}
-              placeholder="Jabatan"
-              // data={jabatan}
-              searchable
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanAnakCabang}
-            >
-              SIMPAN
-            </Button>
-            </ScrollArea>
-          </Stack>
-        {/* </Box>
+              formSayapDewanPimpinanAnakCabang.values.data.masterProvinceId =
+                val!;
+              formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId = "";
+            }}
+            radius={"md"}
+            mt={10}
+            placeholder={"Pilih Provinsi"}
+            value={selectedProvince.id}
+            label="Provinsi"
+            withAsterisk
+            searchable
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(kabupaten)
+                ? []
+                : kabupaten.map((v) => ({
+                    value: v.id,
+                    label: v.name,
+                  }))
+            }
+            onChange={(val) => {
+              setSelectedKabupaten(kabupaten.find((v) => v.id == val));
+              loadKecamatan(val!);
+              formSayapDewanPimpinanAnakCabang.values.data.masterKabKotId =
+                val!;
+              formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
+                "";
+            }}
+            mt={10}
+            radius={"md"}
+            placeholder={"Pilih Kabupaten"}
+            value={selectedKabupaten.id}
+            label="Kabupaten / Kota"
+            withAsterisk
+            searchable
+          />
+          <Select
+            key={Math.random()}
+            data={
+              _.isEmpty(kecamatan)
+                ? []
+                : kecamatan.map((val) => ({
+                    value: val.id,
+                    label: val.name,
+                  }))
+            }
+            onChange={(val) => {
+              setSelectedKecamatan(kecamatan.find((v) => v.id == val));
+              loadDesa(val!);
+              formSayapDewanPimpinanAnakCabang.values.data.masterKecamatanId =
+                val!;
+            }}
+            mt={10}
+            radius={"md"}
+            placeholder={"Pilih Kecamatan"}
+            value={selectedKecamatan.id}
+            label="Kecamatan"
+            withAsterisk
+            searchable
+          />
+          <Select
+            // {...formStrukturPartai.getInputProps("jabatan")}
+            onChange={(val) => {
+              setValue(val!);
+              formSayapDewanPimpinanAnakCabang.values.data.masterJabatanPimpinanAnakCabangId =
+                val!;
+            }}
+            data={sJabatanPimpinanAnakCabang.value.map((val) => ({
+              value: val.id,
+              label: val.name,
+            }))}
+            mt={10}
+            label="Jabatan"
+            withAsterisk
+            radius={"md"}
+            placeholder="Jabatan"
+            // data={jabatan}
+            searchable
+          />
+          <Button
+            mt={20}
+            fullWidth
+            bg={COLOR.coklat}
+            color="red.9"
+            radius={"md"}
+            onClick={PimpinanAnakCabang}
+          >
+            SIMPAN
+          </Button>
+        </ScrollArea>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

@@ -58,7 +58,7 @@ function PimpinanAnakCabang() {
         onClose={() => setOpenSayapAnakCab(false)}
         size={490}
       >
-        <SayapPimpinanAnakCabang2/>
+        <SayapPimpinanAnakCabang2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -69,7 +69,7 @@ function PimpinanAnakCabang() {
             ...ambilDataSayap,
             masterTingkatSayapId: "4",
           });
-          setOpenSayapAnakCab(true)
+          setOpenSayapAnakCab(true);
           // router.push("/v2/data-partai-v2/sayap-pimpinan-anak-cabang2");
         }}
       >

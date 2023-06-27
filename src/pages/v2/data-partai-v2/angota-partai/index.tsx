@@ -71,7 +71,7 @@ function AngotaPartaiV2() {
         onClose={() => setOpenAnggota(false)}
         size={490}
       >
-        <AngotaPartai2/>
+        <AngotaPartai2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -82,7 +82,7 @@ function AngotaPartaiV2() {
             ...ambilData,
             masterStatusKeanggotaanId: "4",
           });
-          setOpenAnggota(true)
+          setOpenAnggota(true);
           // router.push("/v2/data-partai-v2/anggota-partai2");
         }}
       >

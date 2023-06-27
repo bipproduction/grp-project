@@ -41,14 +41,14 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const val_open_sayap_cabang = atomWithStorage("val_open_sayap_cabang", false)
+const val_open_sayap_cabang = atomWithStorage("val_open_sayap_cabang", false);
 
 function PimpinanCabang() {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const [ambilData, setAmbilData] = useAtom(ambil_data);
   const [ambilDataSayap, setAmbilDataSayap] = useAtom(ambil_data_sayap);
-  const [openSayapCab, setOpenSayapCabang] = useAtom(val_open_sayap_cabang)
+  const [openSayapCab, setOpenSayapCabang] = useAtom(val_open_sayap_cabang);
 
   return (
     <>
@@ -57,7 +57,7 @@ function PimpinanCabang() {
         onClose={() => setOpenSayapCabang(false)}
         size={490}
       >
-        <SayapDewanPimpinanCabang2/>
+        <SayapDewanPimpinanCabang2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -68,7 +68,7 @@ function PimpinanCabang() {
             ...ambilDataSayap,
             masterTingkatSayapId: "3",
           });
-          setOpenSayapCabang(true)
+          setOpenSayapCabang(true);
           // router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-cabang2")
         }}
       >

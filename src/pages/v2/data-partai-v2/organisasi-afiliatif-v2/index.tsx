@@ -57,14 +57,14 @@ function OrganisasiAfiliatifV2() {
   }
 
   useShallowEffect(() => {
-    _loadOrganisasiAfiliatif()
-  },[])
+    _loadOrganisasiAfiliatif();
+  }, []);
 
   const onDataAfiliatif = async () => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 300))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
     if (Object.values(formAnggotaAfiliatif.values.data).includes("")) {
-      setLoading(false)
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiAnggotaAfiliatifPost, {
@@ -73,9 +73,9 @@ function OrganisasiAfiliatifV2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formAnggotaAfiliatif.values.data),
-    }).then(async(v) => {
+    }).then(async (v) => {
       if (v.status === 201) {
-        setLoading(false)
+        setLoading(false);
         toast("Sukses");
         router.push("/v2/home");
       } else {
@@ -84,17 +84,16 @@ function OrganisasiAfiliatifV2() {
         router.push("/v2/home");
       }
     });
-    
   };
 
   const formAnggotaAfiliatif = useForm({
     initialValues: {
       data: {
         userId: localStorage.getItem("user_id"),
-        masterOrganisasiAfiliatifId: ""
-      }
-    }
-  })
+        masterOrganisasiAfiliatifId: "",
+      },
+    },
+  });
 
   return (
     <>
@@ -102,7 +101,8 @@ function OrganisasiAfiliatifV2() {
         <Box h={"100%"}>
           <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
-              Jika Bukan Organisasi Afiliatif, <strong style={{cursor: "pointer"}}>Klik disini !</strong>
+              Jika Bukan Organisasi Afiliatif,{" "}
+              <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box>
           <Stack p={30} pt={50}>
@@ -127,8 +127,13 @@ function OrganisasiAfiliatifV2() {
                 placeholder="Pilih Nama Organisasi Afilliatif"
                 withAsterisk
               />
-              <Button mt={20} fullWidth bg={COLOR.coklat} color="red.9" radius={"md"}
-              onClick={onDataAfiliatif}
+              <Button
+                mt={20}
+                fullWidth
+                bg={COLOR.coklat}
+                color="red.9"
+                radius={"md"}
+                onClick={onDataAfiliatif}
               >
                 SIMPAN
               </Button>

@@ -1,6 +1,10 @@
 import { api } from "@/lib/api-backend";
 import { Box, Button, Center, Flex, Modal } from "@mantine/core";
-import { useDisclosure, useForceUpdate, useShallowEffect } from "@mantine/hooks";
+import {
+  useDisclosure,
+  useForceUpdate,
+  useShallowEffect,
+} from "@mantine/hooks";
 import React from "react";
 import toast from "react-simple-toasts";
 import COLOR from "../../../fun/WARNA";
@@ -11,14 +15,10 @@ import { useAtom } from "jotai";
 import { DataDiri } from "@/model/interface_sumber_daya_partai";
 const val_modal_img = atomWithStorage("val_modal_img", false);
 
-
-
-
 function EditFoto() {
   const [openImg, setOpenImg] = useAtom(val_modal_img);
   const [reloadImage, setReloadImage] = useAtom(_val_reload_image);
   const forceUpdate = useForceUpdate();
-
 
   return (
     <>
@@ -33,7 +33,7 @@ function EditFoto() {
         }}
         onClick={forceUpdate}
       >
-        <ImageUpload keluar={() => setOpenImg(false)}/>
+        <ImageUpload keluar={() => setOpenImg(false)} />
       </Modal>
       <Center>
         <Flex gap="md" pt={20} pb={10}>

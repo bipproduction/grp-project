@@ -74,7 +74,6 @@ export const _loadDataSDP_ByStatus_BySeach = async (
   page: any,
   setTotalPage: any
 ) => {
-  
   await fetch(
     api.apiSumberDayaPartaiSearch +
       `?status=${status}&search=${search}&page=${page}`
@@ -117,6 +116,22 @@ export const _loadUserSumberDayaPartai_ById = async (
     if (val.status == 200) {
       const data = await val.json();
       setDatKeanggotan(data);
+      return;
+    }
+  });
+};
+
+export const _loadStatusKeanggotaanEdit = async (
+  setListDataKeanggotaan: any,
+  id: any
+) => {
+  await fetch(
+    api.apiSumberDayaPartaiGetByUser +
+      `?user=${id}`
+  ).then(async (val) => {
+    if (val.status == 200) {
+      const data = await val.json();
+      setListDataKeanggotaan(data);
       return;
     }
   });

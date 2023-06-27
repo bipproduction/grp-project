@@ -37,14 +37,14 @@ function EditMediaSocial({ keluarMedia }: any) {
   const [openMediaSocial, setOpenMediaSocial] = useAtom(val_media_social_edit);
   // const [isLoading, setLoadingMedia] = useAtom(val_loadingMedia);
   const router = useRouter();
-  const [isLoading, setLoading] = useAtom(val_loading) 
+  const [isLoading, setLoading] = useAtom(val_loading);
 
   const onEditMediaSocial = async () => {
     // setLoadingMedia(true);
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 300))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
     {
-      getMediaSocial?.map(async(v) => {
+      getMediaSocial?.map(async (v) => {
         const body = {
           id: v.id,
           MasterMediaSocial: v.MasterMediaSocial,
@@ -59,12 +59,12 @@ function EditMediaSocial({ keluarMedia }: any) {
           body: JSON.stringify(body),
         });
         // console.log(body);
-        await new Promise((r) => setTimeout(r, 500))
+        await new Promise((r) => setTimeout(r, 500));
         // router.reload();
       });
     }
-    setLoading(false)
-    loadMediaEdit()
+    setLoading(false);
+    loadMediaEdit();
     keluarMedia(true);
     setOpenMediaSocial(false);
     buttonSimpan();
@@ -80,17 +80,19 @@ function EditMediaSocial({ keluarMedia }: any) {
   };
 
   useShallowEffect(() => {
-    loadMediaEdit()
-  },[])
+    loadMediaEdit();
+  }, []);
   async function loadMediaEdit() {
-    fetch(api.apiMediaSosialUserGetByUser + `?user=${localStorage.getItem("user_id")}`)
-    .then(async (val) => {
+    fetch(
+      api.apiMediaSosialUserGetByUser +
+        `?user=${localStorage.getItem("user_id")}`
+    ).then(async (val) => {
       if (val.status == 200) {
-        const data = await val.json()
-        setGetMediaSocial(data)
-        return
+        const data = await val.json();
+        setGetMediaSocial(data);
+        return;
       }
-    })
+    });
   }
 
   return (

@@ -41,7 +41,10 @@ import { useHookstate } from "@hookstate/core";
 import { sUser } from "@/s_state/s_user";
 import { useRouter } from "next/router";
 import KTAV2 from "./dashboard_user/kta";
-import DataProfileV2, { _datapartai_form, _datapartai_user } from "./dashboard_user/profile";
+import DataProfileV2, {
+  _datapartai_form,
+  _datapartai_user,
+} from "./dashboard_user/profile";
 import StatusKeanggotaanV2 from "./dashboard_user/status_keanggotaan";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
@@ -122,8 +125,12 @@ const LayoutDashboardV2 = () => {
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered 
-      key={reloadImage.toString()}
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        centered
+        key={reloadImage.toString()}
       >
         <Alert
           icon={<FiAlertCircle size="2rem" color="red" />}
@@ -142,12 +149,16 @@ const LayoutDashboardV2 = () => {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
-                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout");
+                  _postLogUser(
+                    localStorage.getItem("user_id"),
+                    "LOGOUT",
+                    "User logout"
+                  );
                   localStorage.removeItem("user_id");
                   sUser.value = {};
-                  setListData(null)
-                  setListData2(null)
-                  setListData1(null)
+                  setListData(null);
+                  setListData2(null);
+                  setListData1(null);
                 }}
               >
                 YA
@@ -262,7 +273,14 @@ const LayoutDashboardV2 = () => {
                       <Menu.Target>
                         <Tooltip label="Profile">
                           <Group style={{ cursor: "pointer" }}>
-                          <Avatar src={api.apiDataDiriGetGambar + `?id=${imgNew?.id}`} alt="it's me" radius={"xl"} color="indigo" />
+                            <Avatar
+                              src={
+                                api.apiDataDiriGetGambar + `?id=${imgNew?.id}`
+                              }
+                              alt="it's me"
+                              radius={"xl"}
+                              color="indigo"
+                            />
                           </Group>
                         </Tooltip>
                       </Menu.Target>
@@ -280,7 +298,9 @@ const LayoutDashboardV2 = () => {
                           {/* <Menu.Item> */}
                           <Group spacing={0}>
                             <MdAlternateEmail color="white" size="1.3rem" />
-                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                            <Text c={"white"} pl={10}>
+                              {sUser.value?.email}
+                            </Text>
                           </Group>
                         </Stack>
                         {/* </Menu.Item> */}

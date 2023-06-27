@@ -104,56 +104,56 @@ function KaderPartai2() {
       {/* <LayoutDataPartaiV2>
         <Box h={"100%"}>
           <Box pl={40}></Box> */}
-          {/* <Box pl={40}>
+      {/* <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
               Jika Termasuk Organisasi Afiliatif,{" "}
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack  pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Kader Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Select
-              label="Pilih Tingkat Pengurus"
-              placeholder="Pilih Tingkat Pengurus"
-              withAsterisk
-              radius={"md"}
-              data={sKaderPartai.value.map((v) => ({
-                value: v.id,
-                label: v.name,
-              }))}
-              onChange={(val) => {
-                setValue(val!);
-                formKaderPartai.values.data.masterKaderPartaiId = val!;
-              }}
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={KaderPartai}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Kader Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Select
+          label="Pilih Tingkat Pengurus"
+          placeholder="Pilih Tingkat Pengurus"
+          withAsterisk
+          radius={"md"}
+          data={sKaderPartai.value.map((v) => ({
+            value: v.id,
+            label: v.name,
+          }))}
+          onChange={(val) => {
+            setValue(val!);
+            formKaderPartai.values.data.masterKaderPartaiId = val!;
+          }}
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={KaderPartai}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

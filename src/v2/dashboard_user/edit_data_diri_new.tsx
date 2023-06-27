@@ -116,18 +116,18 @@ function EditDataDiriNew({ thisClosed }: any) {
   const [openModal, setOpenModal] = useAtom(val_edit_modal);
   const [openKta, setOpenKta] = useAtom(val_open_edit_kta);
   const [valNik, setValNik] = useState<string | null>(null);
-  const[dataEdit, setDataEdit] = useState<any>({})
-  const [inputNIK, setInputNIK] = useState("")
-  const [inputPhone, setInputPhone] = useState("")
+  const [dataEdit, setDataEdit] = useState<any>({});
+  const [inputNIK, setInputNIK] = useState("");
+  const [inputPhone, setInputPhone] = useState("");
   // const [mediaSocialGet, setMediaSocialGet] = useAtom(_MediaSocialGet);
 
   const loadData = () => {
     fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-    .then((v) => v.json())
-    .then((v) => {
-      setDataEdit(v)
-    })
-  }
+      .then((v) => v.json())
+      .then((v) => {
+        setDataEdit(v);
+      });
+  };
 
   const onEdit = async () => {
     thisClosed(true);
@@ -156,20 +156,20 @@ function EditDataDiriNew({ thisClosed }: any) {
       return toast("Lengkapi Data Diri");
     }
 
-    if (Object.values(body.nik).length != 16){
+    if (Object.values(body.nik).length != 16) {
       setLoading(false);
       return toast("NIK harus 16 angka");
     }
-    if (Object.values(body.nik).includes("")){
+    if (Object.values(body.nik).includes("")) {
       setLoading(false);
       return toast("Lengkapi Data Diri");
     }
 
-    if(Object.values(body.phoneNumber).length <= 10 ) {
+    if (Object.values(body.phoneNumber).length <= 10) {
       setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
-    if(Object.values(body.phoneNumber).length >= 16 ) {
+    if (Object.values(body.phoneNumber).length >= 16) {
       setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
@@ -182,17 +182,17 @@ function EditDataDiriNew({ thisClosed }: any) {
       body: JSON.stringify(body),
     }).then(async (res) => {
       if (res.status === 201) {
-        const data = await res.json()
+        const data = await res.json();
         // console.log(data)
-        return data
+        return data;
       } else {
-        res.status === 209
-        const data = await res.json()
+        res.status === 209;
+        const data = await res.json();
         // console.log(data.message)
-        setLoading(false)
-        toast(data.message)
+        setLoading(false);
+        toast(data.message);
       }
-    })
+    });
     buttonSimpan();
     loadDatadiri();
     setLoading(false);
@@ -204,9 +204,8 @@ function EditDataDiriNew({ thisClosed }: any) {
     );
   };
 
-
   useShallowEffect(() => {
-    loadData()
+    loadData();
     loadDatadiri();
   }, []);
 
@@ -285,14 +284,14 @@ function EditDataDiriNew({ thisClosed }: any) {
             />
             <TextInput
               // description={
-                description={valNik && valNik.length != 16 ? <Text></Text> : ""}
-                error={
-                  valNik && valNik.length != 16 ? (
-                    <Text>Panjang NIK Harus 16 Angka</Text>
-                  ) : (
-                    ""
-                  )
-                }
+              description={valNik && valNik.length != 16 ? <Text></Text> : ""}
+              error={
+                valNik && valNik.length != 16 ? (
+                  <Text>Panjang NIK Harus 16 Angka</Text>
+                ) : (
+                  ""
+                )
+              }
               placeholder={dataEdit?.nik}
               withAsterisk
               mt={10}
@@ -304,11 +303,11 @@ function EditDataDiriNew({ thisClosed }: any) {
               value={`${dataEdit?.nik}`}
               onChange={(val) => {
                 if (val) {
-                  setValNik(val.currentTarget.value)
-                  const data = _.clone(dataEdit)
-                  data.nik = val.currentTarget.value
-                  setDataEdit(data)
-                  setInputNIK(val.currentTarget.value)
+                  setValNik(val.currentTarget.value);
+                  const data = _.clone(dataEdit);
+                  data.nik = val.currentTarget.value;
+                  setDataEdit(data);
+                  setInputNIK(val.currentTarget.value);
                 }
               }}
             />
@@ -400,12 +399,12 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               value={`${dataEdit.phoneNumber}`}
               onChange={(val) => {
-                if(val) {
-                  setNoHP(val.currentTarget.value)
-                  const data = _.clone(dataEdit)
-                  data.phoneNumber = val.currentTarget.value
-                  setDataEdit(data)
-                  setInputPhone(val.currentTarget.value)
+                if (val) {
+                  setNoHP(val.currentTarget.value);
+                  const data = _.clone(dataEdit);
+                  data.phoneNumber = val.currentTarget.value;
+                  setDataEdit(data);
+                  setInputPhone(val.currentTarget.value);
                 }
               }}
             />
@@ -458,8 +457,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectProvinceDT.id as any
-                  ? selectProvinceDT.id as any
+                (selectProvinceDT.id as any)
+                  ? (selectProvinceDT.id as any)
                   : (listData.MasterProvince.id as any)
                 // : selectProvinceDT.name
               }
@@ -477,7 +476,7 @@ function EditDataDiriNew({ thisClosed }: any) {
                 const data: any = _.clone(listData);
                 // data.MasterProvince.name = val
                 data.MasterProvince.id = val;
-                data.MasterKabKot.id = ""
+                data.MasterKabKot.id = "";
                 setListData(data);
                 setSelectProvinceDT(itProvinsi.find((e) => e.id == val));
                 _loadSelectKabkot(val, setItKabupaten, setSelectKabupatenDT);
@@ -490,9 +489,9 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKabupatenDT.id as any
-                  ? selectKabupatenDT.id as any
-                  : listData.MasterKabKot.id 
+                (selectKabupatenDT.id as any)
+                  ? (selectKabupatenDT.id as any)
+                  : listData.MasterKabKot.id
                 // :selectKabupatenDT.name
               }
               placeholder={
@@ -511,8 +510,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               }
               onChange={(val: any) => {
                 const data = _.clone(listData);
-                data.MasterKabKot.id = val as any
-                data.MasterKecamatan.id = "" as any
+                data.MasterKabKot.id = val as any;
+                data.MasterKecamatan.id = "" as any;
                 setListData(data);
                 setSelectKabupatenDT(itKabupaten.find((e) => e.id == val));
                 _loadSelectKecamatan(val, setItKecamatan, setSelectKecamatanDT);
@@ -525,14 +524,14 @@ function EditDataDiriNew({ thisClosed }: any) {
               radius={"md"}
               searchable
               value={
-                selectKecamatanDT.id as any
-                  ? selectKecamatanDT.id as any
-                  : listData.MasterKecamatan.id as any
+                (selectKecamatanDT.id as any)
+                  ? (selectKecamatanDT.id as any)
+                  : (listData.MasterKecamatan.id as any)
                 // : selectKecamatanDT.name
               }
               placeholder={
                 selectKabupatenDT.name
-                  ?  "Pilih Kecamatan"
+                  ? "Pilih Kecamatan"
                   : listData.MasterKecamatan.name
                 // : selectKecamatanDT.name
               }
@@ -546,8 +545,8 @@ function EditDataDiriNew({ thisClosed }: any) {
               }
               onChange={(val: any) => {
                 const data = _.clone(listData);
-                data.MasterKecamatan.id = val as any
-                data.MasterDesa.id = "" as any
+                data.MasterKecamatan.id = val as any;
+                data.MasterDesa.id = "" as any;
                 setListData(data);
                 setSelectKecamatanDT(itKecamatan.find((e) => e.id == val));
                 _loadSelectDesa(val, setItDesa, setSelectDesaDT);
@@ -561,13 +560,13 @@ function EditDataDiriNew({ thisClosed }: any) {
               mt={10}
               radius={"md"}
               value={
-                selectDesaDT.id as any
-                  ? selectDesaDT.id as any
+                (selectDesaDT.id as any)
+                  ? (selectDesaDT.id as any)
                   : // : selectDesaDT.name
-                    listData.MasterDesa.id as any
+                    (listData.MasterDesa.id as any)
               }
               placeholder={
-                selectKecamatanDT.name ? "Pilih Desa": listData.MasterDesa.name
+                selectKecamatanDT.name ? "Pilih Desa" : listData.MasterDesa.name
               }
               data={
                 _.isEmpty(itDesa)

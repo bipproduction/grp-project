@@ -1,4 +1,3 @@
-
 import { useShallowEffect } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import React, { useRef, useState } from "react";
@@ -7,15 +6,14 @@ function CobaAja() {
   const ref = useRef();
   const [gambar, setGambar] = useState<any>();
 
-
   useShallowEffect(() => {
-    apa()
-  })
+    apa();
+  });
   async function apa() {
-    const ini =await import("react-component-export-image")
-      // .exportComponentAsPNG;
+    const ini = await import("react-component-export-image");
+    // .exportComponentAsPNG;
 
-      setGambar(ini as any)
+    setGambar(ini as any);
   }
 
   return (

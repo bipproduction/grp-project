@@ -66,26 +66,28 @@ function DataPartaiV2() {
     router.push("/v2/data-partai-v2/organisasi-afiliatif-v2");
   }
 
-
-  const [ada, setAda] = useState<boolean | null>(null)
+  const [ada, setAda] = useState<boolean | null>(null);
   useShallowEffect(() => {
-    loadData()
-  }, [])
+    loadData();
+  }, []);
 
   async function loadData() {
-    const dataUserPartai = await fetch(api.apiSumberDayaPartaiGetByUser + `?user=${localStorage.getItem("user_id")}`)
+    const dataUserPartai = await fetch(
+      api.apiSumberDayaPartaiGetByUser +
+        `?user=${localStorage.getItem("user_id")}`
+    );
 
     if (dataUserPartai.status == 200) {
-      setAda(true)
-      router.push("/v2/home")
+      setAda(true);
+      router.push("/v2/home");
     } else {
-      setAda(false)
+      setAda(false);
     }
   }
 
   // console.log(ada);
 
-  if (ada == null || ada == true) return <></>
+  if (ada == null || ada == true) return <></>;
   return (
     <>
       <LayoutDataPartaiV2>
@@ -130,8 +132,8 @@ function DataPartaiV2() {
                   ...ambilDataSayap,
                   masterStatusKeanggotaanId: "2",
                   // strukturpartaiId: ""
-                })
-                SayapPartai()
+                });
+                SayapPartai();
               }}
             >
               <Group>
@@ -154,7 +156,6 @@ function DataPartaiV2() {
           </Stack>
         </Box>
       </LayoutDataPartaiV2>
-
     </>
   );
 }
