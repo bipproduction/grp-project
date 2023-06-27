@@ -68,15 +68,16 @@ function ImageUpload({ keluar }: any) {
   //   });
   // }
   useShallowEffect(() => {
-    fetch(api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`)
-      .then(async (val) => {
-        if (val.status == 200) {
-          const data = await val.json();
-          setImageUserGet(data);
-          setImgNew(data);
-          return;
-        }
-      });
+    fetch(
+      api.apiDataDiriGetOne + `?id=${localStorage.getItem("user_id")}`
+    ).then(async (val) => {
+      if (val.status == 200) {
+        const data = await val.json();
+        setImageUserGet(data);
+        setImgNew(data);
+        return;
+      }
+    });
   }, []);
 
   const onUpload = async () => {
@@ -102,7 +103,7 @@ function ImageUpload({ keluar }: any) {
       }
     });
     // loadImageEdit();
-    router.reload()
+    router.reload();
     keluar(true);
   };
 
@@ -123,8 +124,8 @@ function ImageUpload({ keluar }: any) {
                 const data = await v.json();
                 // setListData(data.img);
                 // listData.img! = data.img;
-                listData.img = data.img
-                setImageUserGet(data.img)
+                listData.img = data.img;
+                setImageUserGet(data.img);
 
                 toast("sukses");
                 //console.log(data);

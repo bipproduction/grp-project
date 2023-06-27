@@ -101,8 +101,6 @@ const LayoutDashboarSuperdAdminV2 = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [image, setImage] = useAtom(_dataImagesNew);
 
-
-
   const [select, setSelect] = useState("Data Struktur Partai");
 
   const lSelectedPage = useHookstate(gSelectedPage);
@@ -133,7 +131,11 @@ const LayoutDashboarSuperdAdminV2 = () => {
                 color="green.9"
                 bg={COLOR.hijautua}
                 onClick={() => {
-                  _postLogUser(localStorage.getItem("user_id"), "LOGOUT", "User logout")
+                  _postLogUser(
+                    localStorage.getItem("user_id"),
+                    "LOGOUT",
+                    "User logout"
+                  );
                   localStorage.removeItem("user_id");
                   sUser.value = {};
                 }}
@@ -209,7 +211,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
         }
         header={
           <Header height={{ base: 70, md: 70 }} p="md" bg={COLOR.merah}>
-             <div
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -227,7 +229,7 @@ const LayoutDashboarSuperdAdminV2 = () => {
                 />
               </MediaQuery>
               <Box w={"100%"}>
-              <Group position="apart" sx={{ height: "100%" }}>
+                <Group position="apart" sx={{ height: "100%" }}>
                   <Flex
                     justify="flex-start"
                     align="flex-start"
@@ -249,7 +251,10 @@ const LayoutDashboarSuperdAdminV2 = () => {
                       <Menu.Target>
                         <Tooltip label="Profile">
                           <Group style={{ cursor: "pointer" }}>
-                            <Avatar radius="xl" src={`/api/form-data-diri/data-diri-get-gambar?id=${image?.id}`} />
+                            <Avatar
+                              radius="xl"
+                              src={`/api/form-data-diri/data-diri-get-gambar?id=${image?.id}`}
+                            />
                           </Group>
                         </Tooltip>
                       </Menu.Target>
@@ -267,13 +272,15 @@ const LayoutDashboarSuperdAdminV2 = () => {
                           {/* <Menu.Item> */}
                           <Group spacing={0}>
                             <MdAlternateEmail color="white" size="1.3rem" />
-                            <Text c={"white"} pl={10}>{sUser.value?.email}</Text>
+                            <Text c={"white"} pl={10}>
+                              {sUser.value?.email}
+                            </Text>
                           </Group>
                         </Stack>
                         {/* </Menu.Item> */}
                         <Menu.Item>
                           <Group
-                          onClick={open}
+                            onClick={open}
                             // onClick={() => {
                             //   localStorage.removeItem("user_id");
                             //   sUser.value = {};

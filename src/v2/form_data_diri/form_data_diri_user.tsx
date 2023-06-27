@@ -211,45 +211,45 @@ const FormDataDiriUser = () => {
     // console.log(formDataDiri.values.data);
     listData.find((val) => _.values(val).includes(""));
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 300))
+    await new Promise((r) => setTimeout(r, 300));
     if (Object.values(formDataDiri.values.data.masterProvinceId).includes("")) {
-      setLoading(false)
+      setLoading(false);
       return toast("lengkapi data Provinsi");
     }
     if (Object.values(formDataDiri.values.data.masterKabKotId).includes("")) {
-      setLoading(false)
+      setLoading(false);
       return toast("lengkapi data kabupaten");
     }
     if (
       Object.values(formDataDiri.values.data.masterKecamatanId).includes("")
     ) {
-      setLoading(false)
+      setLoading(false);
       return toast("lengkapi data kecamatan");
     }
     if (Object.values(formDataDiri.values.data.masterDesaId).includes("")) {
-      setLoading(false)
+      setLoading(false);
       return toast("lengkapi data desa");
     }
 
     if (Object.values(formDataDiri.values.data).includes("")) {
       // console.table(formDataDiri.values.data);
-      setLoading(false)
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
 
-    if (formDataDiri.values.data.nik.length != 16){
-      setLoading(false)
+    if (formDataDiri.values.data.nik.length != 16) {
+      setLoading(false);
       return toast("NIK harus 16 angka");
     }
 
     formDataDiri.values.data.nik = valNik!;
 
-    if (formDataDiri.values.data.phoneNumber.length <= 10){
-      setLoading(false)
+    if (formDataDiri.values.data.phoneNumber.length <= 10) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
-    if (formDataDiri.values.data.phoneNumber.length >= 16){
-      setLoading(false)
+    if (formDataDiri.values.data.phoneNumber.length >= 16) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
     formDataDiri.values.data.phoneNumber = noHP!;
@@ -269,7 +269,7 @@ const FormDataDiriUser = () => {
         res.status === 209;
         const data = await res.json();
         // console.log(data.message);
-        setLoading(false)
+        setLoading(false);
         toast(data.message);
       }
       // setLoading(false);
@@ -334,7 +334,6 @@ const FormDataDiriUser = () => {
       .then((val) => val.json())
       .then(setListMediaSocial);
   }, []);
-
 
   // pengisian otomatis
   function otomatis() {

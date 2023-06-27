@@ -61,7 +61,7 @@ function DewanPimpinanDaerah() {
         onClose={() => setOpenSayapDaerah(false)}
         size={490}
       >
-        <SayapDewanPimpinanDaeraht2/>
+        <SayapDewanPimpinanDaeraht2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -72,7 +72,7 @@ function DewanPimpinanDaerah() {
             ...ambilDataSayap,
             masterTingkatSayapId: "2",
           });
-          setOpenSayapDaerah(true)
+          setOpenSayapDaerah(true);
           // router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-daeraht2");
         }}
       >

@@ -26,7 +26,10 @@ import {
   _selected_Kecamatan,
   _selected_Provinisi,
 } from "@/s_state/wilayah/select_wilayah";
-import { DataDiri, ModelSumberDayaPartai } from "@/model/interface_sumber_daya_partai";
+import {
+  DataDiri,
+  ModelSumberDayaPartai,
+} from "@/model/interface_sumber_daya_partai";
 import { useShallowEffect } from "@mantine/hooks";
 import { _loadAgama } from "@/load_data/load_agama";
 import { _loadListPekerjaan } from "@/load_data/load_list_pekerjaan";
@@ -37,7 +40,7 @@ import { apiGetMaster } from "@/lib/api-get-master";
 import { api } from "@/lib/api-backend";
 import toast from "react-simple-toasts";
 import _ from "lodash";
-import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai"; 
+import { _editDataStruktur } from "@/load_data/sumber_daya_partai/load_sumber_daya_partai";
 import { _datapartai_form, _datapartai_user } from "./profile";
 import { _sJenisKelamin, _selectJenisKelamin } from "@/s_state/s_jenis_kelamin";
 
@@ -58,8 +61,9 @@ const EditKTAV2 = () => {
   const [targetDataPartai2, setTargetDataPartai2] = useAtom(_datapartai_user);
   const [listData, setListData] = useAtom(_listData);
   const [listDat2, setListData2] = useAtom(_listData2);
-  const [isJenisKelamin, setIsJenisKelamin] =useAtom(_sJenisKelamin)
-  const [selectJenisKelamin, setSelectJenisKelamin] =useAtom(_selectJenisKelamin)
+  const [isJenisKelamin, setIsJenisKelamin] = useAtom(_sJenisKelamin);
+  const [selectJenisKelamin, setSelectJenisKelamin] =
+    useAtom(_selectJenisKelamin);
 
   const [mediaListData, setMediaListData] = useState([
     {
@@ -128,7 +132,7 @@ const EditKTAV2 = () => {
   });
 
   const onDataUpdatepartai = async () => {
-    console.log(formUpdateDataDiri.values.data)
+    console.log(formUpdateDataDiri.values.data);
     // const dataKosong = mediaListData.find((val) => _.values(val).includes(""));
     // if (dataKosong) return toast("Lengkapi data diri");
 
@@ -217,151 +221,144 @@ const EditKTAV2 = () => {
           </Group>
         </Box>
       </Box>
-          <ScrollArea h={450}>
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="NIK"
-              label="NIK"
-              value={targetDataPartai?.nik}
-            />
-            <TextInput radius={"md"} mt={10} placeholder="Nama" label="Nama"
-            {...formUpdateDataDiri.getInputProps("data.name")}
-            value={targetDataPartai?.name}
-            // onChange={() => {
-            //   const data = _.clone(targetDataPartai)
-            //   data?.name 
-            //   setListData(data)
-            // }}
-            />
-            <TextInput radius={"md"} mt={10} placeholder="Email" label="Email"
-            value={targetDataPartai2?.User.email}
-            onChange={() => {
-              const data = _.clone(targetDataPartai2)
-              data?.User.email 
-              setListData2(data)
-            }}
-            />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="Tempat Lahir"
-              label="Tempat Lahir"
-              value={targetDataPartai?.tempatLahir}
-              onChange={() => {
-                const data = _.clone(targetDataPartai)
-                data?.tempatLahir
-                setListData(data)
-              }}
-            />
-            <DateInput
-              radius={"md"}
-              mt={10}
-              placeholder="Tanggal Lahir"
-              label="**"
-            />
-            <Select
-              radius={"md"}
-              data={[
-                { value: "laki", label: "Laki-Laki" },
-                { value: "perempuan", label: "Perempuan" },
-              ]}
-              mt={10}
-              placeholder="Jenis Kelamin"
-              label="**"
-            />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="Nomor Handphone"
-              label="**"
-            />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="Instargram"
-              label="**"
-            />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="Facebook"
-              label="**"
-            />
-            <TextInput radius={"md"} mt={10} placeholder="TikTok" label="**" />
-            <TextInput radius={"md"} mt={10} placeholder="Twitter" label="**" />
-            <Select
-              data={[
-                { value: "islam", label: "Islam" },
-                { value: "Protestan", label: "Protestan" },
-                { value: "Katolik", label: "Katolik" },
-                { value: "Hindu", label: "Hindu" },
-                { value: "Buddha", label: "Buddha" },
-                { value: "Khonghucu", label: "Khonghucu" },
-              ]}
-              radius={"md"}
-              mt={10}
-              placeholder="Agama"
-              label="**"
-            />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="Pekerjaan"
-              label="**"
-            />
-            <TextInput radius={"md"} mt={10} placeholder="Alamat" label="**" />
-            <Select
-              data={[
-                { value: "Bali", label: "Bali" },
-                { value: "Jawa timur", label: "Jawa Timur" },
-              ]}
-              radius={"md"}
-              mt={10}
-              placeholder="Provinsi"
-              label="**"
-            />
-            <Select
-              data={[
-                { value: "Banyuwangi", label: "Banyuwangi" },
-                { value: "Malang", label: "Malang" },
-              ]}
-              radius={"md"}
-              mt={10}
-              placeholder="Kabupaten / Kota"
-              label="**"
-            />
-            <Select
-              data={[
-                { value: "Geteng", label: "Genteng" },
-                { value: "Glenmore", label: "Glenmore" },
-              ]}
-              radius={"md"}
-              mt={10}
-              placeholder="Kecamatan"
-              label="**"
-            />
-            <TextInput radius={"md"} mt={10} placeholder="Desa" label="**" />
-            <TextInput
-              radius={"md"}
-              mt={10}
-              placeholder="RT - __, RW - __"
-              label="**"
-            />
-            <Flex gap="md" pt={20}>
-              <Box w={150}>
-                <Button
-                  fullWidth
-                  color="orange.9"
-                  bg={COLOR.orange}
-                  radius={"xl"}
-                  onClick={onDataUpdatepartai}
-                >
-                  Simpan
-                </Button>
-              </Box>
-            </Flex>
-          </ScrollArea>
+      <ScrollArea h={450}>
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="NIK"
+          label="NIK"
+          value={targetDataPartai?.nik}
+        />
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="Nama"
+          label="Nama"
+          {...formUpdateDataDiri.getInputProps("data.name")}
+          value={targetDataPartai?.name}
+          // onChange={() => {
+          //   const data = _.clone(targetDataPartai)
+          //   data?.name
+          //   setListData(data)
+          // }}
+        />
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="Email"
+          label="Email"
+          value={targetDataPartai2?.User.email}
+          onChange={() => {
+            const data = _.clone(targetDataPartai2);
+            data?.User.email;
+            setListData2(data);
+          }}
+        />
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="Tempat Lahir"
+          label="Tempat Lahir"
+          value={targetDataPartai?.tempatLahir}
+          onChange={() => {
+            const data = _.clone(targetDataPartai);
+            data?.tempatLahir;
+            setListData(data);
+          }}
+        />
+        <DateInput
+          radius={"md"}
+          mt={10}
+          placeholder="Tanggal Lahir"
+          label="**"
+        />
+        <Select
+          radius={"md"}
+          data={[
+            { value: "laki", label: "Laki-Laki" },
+            { value: "perempuan", label: "Perempuan" },
+          ]}
+          mt={10}
+          placeholder="Jenis Kelamin"
+          label="**"
+        />
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="Nomor Handphone"
+          label="**"
+        />
+        <TextInput radius={"md"} mt={10} placeholder="Instargram" label="**" />
+        <TextInput radius={"md"} mt={10} placeholder="Facebook" label="**" />
+        <TextInput radius={"md"} mt={10} placeholder="TikTok" label="**" />
+        <TextInput radius={"md"} mt={10} placeholder="Twitter" label="**" />
+        <Select
+          data={[
+            { value: "islam", label: "Islam" },
+            { value: "Protestan", label: "Protestan" },
+            { value: "Katolik", label: "Katolik" },
+            { value: "Hindu", label: "Hindu" },
+            { value: "Buddha", label: "Buddha" },
+            { value: "Khonghucu", label: "Khonghucu" },
+          ]}
+          radius={"md"}
+          mt={10}
+          placeholder="Agama"
+          label="**"
+        />
+        <TextInput radius={"md"} mt={10} placeholder="Pekerjaan" label="**" />
+        <TextInput radius={"md"} mt={10} placeholder="Alamat" label="**" />
+        <Select
+          data={[
+            { value: "Bali", label: "Bali" },
+            { value: "Jawa timur", label: "Jawa Timur" },
+          ]}
+          radius={"md"}
+          mt={10}
+          placeholder="Provinsi"
+          label="**"
+        />
+        <Select
+          data={[
+            { value: "Banyuwangi", label: "Banyuwangi" },
+            { value: "Malang", label: "Malang" },
+          ]}
+          radius={"md"}
+          mt={10}
+          placeholder="Kabupaten / Kota"
+          label="**"
+        />
+        <Select
+          data={[
+            { value: "Geteng", label: "Genteng" },
+            { value: "Glenmore", label: "Glenmore" },
+          ]}
+          radius={"md"}
+          mt={10}
+          placeholder="Kecamatan"
+          label="**"
+        />
+        <TextInput radius={"md"} mt={10} placeholder="Desa" label="**" />
+        <TextInput
+          radius={"md"}
+          mt={10}
+          placeholder="RT - __, RW - __"
+          label="**"
+        />
+        <Flex gap="md" pt={20}>
+          <Box w={150}>
+            <Button
+              fullWidth
+              color="orange.9"
+              bg={COLOR.orange}
+              radius={"xl"}
+              onClick={onDataUpdatepartai}
+            >
+              Simpan
+            </Button>
+          </Box>
+        </Flex>
+      </ScrollArea>
     </>
   );
 };

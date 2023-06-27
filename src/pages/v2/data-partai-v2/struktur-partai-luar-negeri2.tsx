@@ -63,7 +63,7 @@ function StrukturPartaiLuarNegeri2() {
     await new Promise((r) => setTimeout(r, 300));
     // console.log(formPerwakilanLuarNegeri.values.data)
     if (Object.values(formPerwakilanLuarNegeri.values.data).includes("")) {
-      setLoading(false)
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -83,7 +83,6 @@ function StrukturPartaiLuarNegeri2() {
         router.push("/v2/home");
       }
     });
-    
   };
 
   const formPerwakilanLuarNegeri = useForm({
@@ -120,85 +119,85 @@ function StrukturPartaiLuarNegeri2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack  pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Struktur Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Perwakilan Partai di Luar Negeri
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formPerwakilanLuarNegeri.values.data.masterNegaraId = val!;
-              }}
-              data={sNegara.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              radius={"md"}
-              mt={10}
-              placeholder="Negara"
-              label="Negara"
-              withAsterisk
-              searchable
-            />
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formPerwakilanLuarNegeri.values.data.masterJabatanPerwakilanPartaiDiLuarNegeriId =
-                  val!;
-              }}
-              label="Jabatan"
-              withAsterisk
-              mt={10}
-              radius={"md"}
-              placeholder="Jabatan"
-              data={sJabatanPerwakilanLuarNegeri.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              searchable
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PerwakilanLuarNegeri}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Struktur Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Perwakilan Partai di Luar Negeri
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formPerwakilanLuarNegeri.values.data.masterNegaraId = val!;
+          }}
+          data={sNegara.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          radius={"md"}
+          mt={10}
+          placeholder="Negara"
+          label="Negara"
+          withAsterisk
+          searchable
+        />
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formPerwakilanLuarNegeri.values.data.masterJabatanPerwakilanPartaiDiLuarNegeriId =
+              val!;
+          }}
+          label="Jabatan"
+          withAsterisk
+          mt={10}
+          radius={"md"}
+          placeholder="Jabatan"
+          data={sJabatanPerwakilanLuarNegeri.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          searchable
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PerwakilanLuarNegeri}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

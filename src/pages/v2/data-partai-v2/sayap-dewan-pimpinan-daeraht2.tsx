@@ -75,12 +75,12 @@ function SayapDewanPimpinanDaeraht2() {
       return toast("Lengkapi Data Diri");
     }
 
-    if(formSayapPimpinanDaerah.values.data.waAdmin.length <= 10){
-      setLoading(false)
+    if (formSayapPimpinanDaerah.values.data.waAdmin.length <= 10) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
-    if(formSayapPimpinanDaerah.values.data.waAdmin.length >= 16){
-      setLoading(false)
+    if (formSayapPimpinanDaerah.values.data.waAdmin.length >= 16) {
+      setLoading(false);
       return toast("Panjang Nomor Maksimal 11 sampai 15  Karakter");
     }
 
@@ -141,142 +141,142 @@ function SayapDewanPimpinanDaeraht2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Sayap Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Daerah
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <Select
-              // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
-              data={sProvinsi.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              radius={"md"}
-              placeholder="Provinsi"
-              label="Provinsi"
-              withAsterisk
-              searchable
-              onChange={(val) => {
-                setValue(val!);
-                formSayapPimpinanDaerah.values.data.masterProvinceId = val!;
-              }}
-            />
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formSayapPimpinanDaerah.values.data.masterSayapPartaiId = val!;
-              }}
-              data={sSayapPartai.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              label="Pilih Sayap Partai"
-              radius={"md"}
-              withAsterisk
-              placeholder="Pilih Sayap Partai"
-              searchable
-            />
-            <Select
-              onChange={(val) => {
-                setValue(val!);
-                formSayapPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
-                  val!;
-              }}
-              label="Jabatan"
-              withAsterisk
-              radius={"md"}
-              placeholder="Jabatan"
-              data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              searchable
-            />
-            <TextInput
-              {...formSayapPimpinanDaerah.getInputProps("data.alamatKantor")}
-              radius={"md"}
-              withAsterisk
-              placeholder="Alamat Kantor"
-              label="Alamat Kantor"
-              // onChange={() => {
-              //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
-              // }}
-            />
-            <TextInput
-              // {...formSayapPimpinanDaerah.getInputProps("data.waAdmin")}
-              description={
-                noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
-                  <Text></Text>
-                ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
-                  <Text></Text>
-                ) : (
-                  ""
-                )
-              }
-              error={
-                noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
-                  <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
-                ) : (
-                  ""
-                )
-              }
-              onChange={(val) => {
-                if (val) {
-                  setNoHpSayapDaerah(val.currentTarget.value);
-                  formSayapPimpinanDaerah.values.data.waAdmin =
-                    val.currentTarget.value;
-                }
-              }}
-              radius={"md"}
-              withAsterisk
-              placeholder="Nomor WA Admin"
-              label="Nomor WA Admin"
-              type="number"
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanDaerah}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Sayap Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Daerah
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <Select
+          // {...formStrukturDewanPimpinanDaerah.getInputProps("data.provinsi")}
+          data={sProvinsi.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          radius={"md"}
+          placeholder="Provinsi"
+          label="Provinsi"
+          withAsterisk
+          searchable
+          onChange={(val) => {
+            setValue(val!);
+            formSayapPimpinanDaerah.values.data.masterProvinceId = val!;
+          }}
+        />
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formSayapPimpinanDaerah.values.data.masterSayapPartaiId = val!;
+          }}
+          data={sSayapPartai.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          label="Pilih Sayap Partai"
+          radius={"md"}
+          withAsterisk
+          placeholder="Pilih Sayap Partai"
+          searchable
+        />
+        <Select
+          onChange={(val) => {
+            setValue(val!);
+            formSayapPimpinanDaerah.values.data.masterJabatanDewanPimpinanDaerahId =
+              val!;
+          }}
+          label="Jabatan"
+          withAsterisk
+          radius={"md"}
+          placeholder="Jabatan"
+          data={sJabatanDewanPimpinanDaerah.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          searchable
+        />
+        <TextInput
+          {...formSayapPimpinanDaerah.getInputProps("data.alamatKantor")}
+          radius={"md"}
+          withAsterisk
+          placeholder="Alamat Kantor"
+          label="Alamat Kantor"
+          // onChange={() => {
+          //   setValue(formStrukturDewanPimpinanDaerah.values.data.alamatKantor)
+          // }}
+        />
+        <TextInput
+          // {...formSayapPimpinanDaerah.getInputProps("data.waAdmin")}
+          description={
+            noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
+              <Text></Text>
+            ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
+              <Text></Text>
+            ) : (
+              ""
+            )
+          }
+          error={
+            noHpSayapDaerah && noHpSayapDaerah.length < 11 ? (
+              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            ) : noHpSayapDaerah && noHpSayapDaerah.length > 15 ? (
+              <Text>Panjang Nomor Maksimal 11 sampai 15 Karakter</Text>
+            ) : (
+              ""
+            )
+          }
+          onChange={(val) => {
+            if (val) {
+              setNoHpSayapDaerah(val.currentTarget.value);
+              formSayapPimpinanDaerah.values.data.waAdmin =
+                val.currentTarget.value;
+            }
+          }}
+          radius={"md"}
+          withAsterisk
+          placeholder="Nomor WA Admin"
+          label="Nomor WA Admin"
+          type="number"
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PimpinanDaerah}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

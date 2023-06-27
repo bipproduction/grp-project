@@ -53,12 +53,8 @@ function DewanPimpinanPusat() {
 
   return (
     <>
-      <Drawer
-        opened={openSayap}
-        onClose={() => setOpenSayap(false)}
-        size={490}
-      >
-        <SayapDewanPimpinanPusat2/>
+      <Drawer opened={openSayap} onClose={() => setOpenSayap(false)} size={490}>
+        <SayapDewanPimpinanPusat2 />
       </Drawer>
       <UnstyledButton
         className={classes.user}
@@ -69,7 +65,7 @@ function DewanPimpinanPusat() {
             ...ambilDataSayap,
             masterTingkatSayapId: "1",
           });
-          setOpenSayap(true)
+          setOpenSayap(true);
           // router.push("/v2/data-partai-v2/sayap-dewan-pimpinan-pusat2");
         }}
       >

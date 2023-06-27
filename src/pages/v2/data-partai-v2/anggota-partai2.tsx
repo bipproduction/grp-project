@@ -79,7 +79,6 @@ function AngotaPartai2() {
     });
   };
 
-
   const formAnggota = useForm({
     initialValues: {
       data: {
@@ -102,44 +101,44 @@ function AngotaPartai2() {
   return (
     <>
       {/* <LayoutDataPartaiV2> */}
-        {/* <Box h={"100%"}>
+      {/* <Box h={"100%"}>
           <Box pl={40}></Box> */}
-          {/* <Box pl={40}>
+      {/* <Box pl={40}>
             <Text fz={12} onClick={Afiliatif}>
               Jika Termasuk Organisasi Afiliatif,{" "}
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack  pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Anggota Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              radius={"md"}
-              color="red.9"
-              onClick={FormAnggotaPartai}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box> */}
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Anggota Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          radius={"md"}
+          color="red.9"
+          onClick={FormAnggotaPartai}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box> */}
       {/* </LayoutDataPartaiV2> */}
     </>
   );

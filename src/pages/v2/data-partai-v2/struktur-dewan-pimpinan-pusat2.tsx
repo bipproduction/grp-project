@@ -60,7 +60,7 @@ function DewanPimpinanPusat2() {
     if (
       Object.values(formStrukturDewanPimpinanPusat.values.data).includes("")
     ) {
-      setLoading(false)
+      setLoading(false);
       return toast("Lengkapi Data Diri");
     }
     fetch(api.apiSumberDayaPartaiPost, {
@@ -80,7 +80,6 @@ function DewanPimpinanPusat2() {
         router.push("/v2/home");
       }
     });
-    
   };
 
   const formStrukturDewanPimpinanPusat = useForm({
@@ -115,68 +114,68 @@ function DewanPimpinanPusat2() {
               <strong style={{ cursor: "pointer" }}>Klik disini !</strong>
             </Text>
           </Box> */}
-          <Stack  pt={35}>
-            {/* <ActionIcon onClick={Back} variant="transparent">
+      <Stack pt={35}>
+        {/* <ActionIcon onClick={Back} variant="transparent">
               <IoArrowBackCircleSharp size="2rem" color={COLOR.merah} />
             </ActionIcon> */}
-            <UnstyledButton
-              className={classes.user}
-              pr={20}
-              pl={20}
-              bg={COLOR.abuabu}
-            >
-              <Group>
-                <div style={{ flex: 1 }}>
-                  <Text size={15} color="dark">
-                    Struktur Partai
-                  </Text>
-                </div>
-              </Group>
-            </UnstyledButton>
-            <Box pt={10}>
-              <UnstyledButton
-                className={classes.user}
-                pr={20}
-                pl={20}
-                bg={COLOR.abuabu}
-              >
-                <Group>
-                  <div style={{ flex: 1 }}>
-                    <Text size={15} color="dark">
-                      Dewan Pimpinan Pusat
-                    </Text>
-                  </div>
-                </Group>
-              </UnstyledButton>
-            </Box>
-            <Select
-              label="Jabatan"
-              withAsterisk
-              radius={"md"}
-              placeholder="Jabatan"
-              searchable
-              data={sJabatanDewanPimpinanPusat.value.map((val) => ({
-                value: val.id,
-                label: val.name,
-              }))}
-              onChange={(val) => {
-                setValue(val!);
-                formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
-                  val!;
-              }}
-            />
-            <Button
-              mt={20}
-              fullWidth
-              bg={COLOR.coklat}
-              color="red.9"
-              radius={"md"}
-              onClick={PimpinanPusat}
-            >
-              SIMPAN
-            </Button>
-          </Stack>
-        {/* </Box>
+        <UnstyledButton
+          className={classes.user}
+          pr={20}
+          pl={20}
+          bg={COLOR.abuabu}
+        >
+          <Group>
+            <div style={{ flex: 1 }}>
+              <Text size={15} color="dark">
+                Struktur Partai
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
+        <Box pt={10}>
+          <UnstyledButton
+            className={classes.user}
+            pr={20}
+            pl={20}
+            bg={COLOR.abuabu}
+          >
+            <Group>
+              <div style={{ flex: 1 }}>
+                <Text size={15} color="dark">
+                  Dewan Pimpinan Pusat
+                </Text>
+              </div>
+            </Group>
+          </UnstyledButton>
+        </Box>
+        <Select
+          label="Jabatan"
+          withAsterisk
+          radius={"md"}
+          placeholder="Jabatan"
+          searchable
+          data={sJabatanDewanPimpinanPusat.value.map((val) => ({
+            value: val.id,
+            label: val.name,
+          }))}
+          onChange={(val) => {
+            setValue(val!);
+            formStrukturDewanPimpinanPusat.values.data.masterJabatanDewanPimpinanPusatId =
+              val!;
+          }}
+        />
+        <Button
+          mt={20}
+          fullWidth
+          bg={COLOR.coklat}
+          color="red.9"
+          radius={"md"}
+          onClick={PimpinanPusat}
+        >
+          SIMPAN
+        </Button>
+      </Stack>
+      {/* </Box>
       </LayoutDataPartaiV2> */}
     </>
   );

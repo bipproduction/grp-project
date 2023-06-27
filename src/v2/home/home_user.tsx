@@ -58,7 +58,6 @@ import { _dataImgNew } from "@/load_data/load_gambar_user";
 
 export const _dataImages = atomWithStorage<DataDiri | null>("dataDiri", null);
 
-
 const HEADER_HEIGHT = rem(80);
 
 const useStyles = createStyles((theme) => ({
@@ -124,43 +123,47 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
   const [image, setImage] = useAtom(_dataImages);
   const [imgNew, setImgNew] = useAtom(_dataImgNew);
 
-
   const mockdata = [
     {
       tittle:
         "Arahan Prabowo, DPC Partai Gerindra Aceh Tengah Bantu Korban Kebakaran di Dua Lokasi",
       image: "/../foto1.png",
-      berita: "Diantaranya Kampung Simpang Empat Rejewali Kecamatan Ketol dan Kampung Paya Kolak Kecamatan Celala Kabupaten Aceh Tengah. Diketahui dalam satu pekan terakhir telah terjadi musibah kebakaran di dua lokasi diantaranya tujuh unit rumah hangus terbakar di Kampung Simpang Empat Rejewali Kecamatan Ketol Kabupaten Aceh."
+      berita:
+        "Diantaranya Kampung Simpang Empat Rejewali Kecamatan Ketol dan Kampung Paya Kolak Kecamatan Celala Kabupaten Aceh Tengah. Diketahui dalam satu pekan terakhir telah terjadi musibah kebakaran di dua lokasi diantaranya tujuh unit rumah hangus terbakar di Kampung Simpang Empat Rejewali Kecamatan Ketol Kabupaten Aceh.",
     },
     {
       tittle:
         "Sufmi Dasco Pimpin Langsung Rombongan Anggota DPR RI Cek Proyek Meikarta",
       image: "/../foto2.png",
-      berita: "Wakil Ketua DPR RI Sufmi Dasco Ahmad memimpin rombongan anggota DPR lintas komisi dalam kunjungan ke kawasan pembangunan Apartemen Meikarta di Cikarang, Kabupaten Bekasi, Jawa Barat. Kunjungan ini merupakan tindak lanjut dari upaya mencari penyelesaian yang dialami oleh para konsumen Meikarta, yang telah berulang kali mengadukan persoalannya ke DPR."
+      berita:
+        "Wakil Ketua DPR RI Sufmi Dasco Ahmad memimpin rombongan anggota DPR lintas komisi dalam kunjungan ke kawasan pembangunan Apartemen Meikarta di Cikarang, Kabupaten Bekasi, Jawa Barat. Kunjungan ini merupakan tindak lanjut dari upaya mencari penyelesaian yang dialami oleh para konsumen Meikarta, yang telah berulang kali mengadukan persoalannya ke DPR.",
     },
     {
       tittle:
         "Bantu Kesejahteraan Nelayan, Seno Aji Serahkan Ratusan Mesin Kapal Ke Kelompok Nelayan Se-Kukar",
       image: "/../foto3.png",
-      berita: "Jalankan misi peningkatan kesejahteraan para nelayan, Wakil Ketua DPRD Provinsi Kalimantan Timur, Ir. Seno Aji serahkan bantuan mesin kapal untuk ratusan masyarakat nelayan di wilayah Kabupaten Kutai Kartanegara. Penyerahan bantuan mesin kapal berkapasitas 30 PK lengkap tersebut di mulai dari kelompok nelayan di Kecamatan Muara Jawa."
+      berita:
+        "Jalankan misi peningkatan kesejahteraan para nelayan, Wakil Ketua DPRD Provinsi Kalimantan Timur, Ir. Seno Aji serahkan bantuan mesin kapal untuk ratusan masyarakat nelayan di wilayah Kabupaten Kutai Kartanegara. Penyerahan bantuan mesin kapal berkapasitas 30 PK lengkap tersebut di mulai dari kelompok nelayan di Kecamatan Muara Jawa.",
     },
     {
       tittle:
         "Berikan Bantuan Korban Banjir Jateng, Muzani: Ini Wujud Simpati dan Empati Partai Gerindra",
       image: "/../foto4.png",
-      berita: "Sekretaris Jenderal DPP Partai Gerindra Ahmad Muzani menyalurkan bantuan kebutuhan pokok untuk warga di sejumlah lokasi terdampak banjir di Jawa Tengah, Minggu (8/1). Bantuan sembako itu antara lain disalurkan di Desa Trimulyo, Kecamatan Genuk, Kota Semarang, Desa Prampelan, Kecamatan Sayung, Kabupaten Demak, dan Desa Tanjungkarang, Kecamatan Jati, Kabupaten Kudus, serta Desa Gadudero, Kecamatan Sukolilo, Kabupaten Pati."
+      berita:
+        "Sekretaris Jenderal DPP Partai Gerindra Ahmad Muzani menyalurkan bantuan kebutuhan pokok untuk warga di sejumlah lokasi terdampak banjir di Jawa Tengah, Minggu (8/1). Bantuan sembako itu antara lain disalurkan di Desa Trimulyo, Kecamatan Genuk, Kota Semarang, Desa Prampelan, Kecamatan Sayung, Kabupaten Demak, dan Desa Tanjungkarang, Kecamatan Jati, Kabupaten Kudus, serta Desa Gadudero, Kecamatan Sukolilo, Kabupaten Pati.",
     },
     {
       tittle:
         "Peduli Banjir DPC Gerindra Kudus Beri Bantuan Logistik untuk Warga Terdampak Banjir",
       image: "/../foto5.png",
-      berita: "Ketua DPC Gerindra Kudus, Sulistiyo Utomo memberikan bantuan sembako dan makanan siap saji kepada warga yang terdampak bencana banjir di sejumlah wilayah di Kudus(1/1/2023). Lokasi pertama yang dikunjungi di desa Jetis kapuan dilanjutkan desa jati Wetan kec. Jati kab. Kudus. Bencana banjir di Kudus disebabkan intensitas hujan yang tinggi sejak sepekan ini, ditambah aliran sungai wulan yang meluap."
+      berita:
+        "Ketua DPC Gerindra Kudus, Sulistiyo Utomo memberikan bantuan sembako dan makanan siap saji kepada warga yang terdampak bencana banjir di sejumlah wilayah di Kudus(1/1/2023). Lokasi pertama yang dikunjungi di desa Jetis kapuan dilanjutkan desa jati Wetan kec. Jati kab. Kudus. Bencana banjir di Kudus disebabkan intensitas hujan yang tinggi sejak sepekan ini, ditambah aliran sungai wulan yang meluap.",
     },
     {
-      tittle:
-        "Fraksi Gerindra Malang Raya Kompak Bantu Korban Gempa",
+      tittle: "Fraksi Gerindra Malang Raya Kompak Bantu Korban Gempa",
       image: "/../foto6.png",
-      berita: "Fraksi Partai Gerakan Indonesia Raya (Gerindra) Malang Raya meliputi Kabupaten Malang, Kota Malang dan Kota Batu kompak membantu korban gempa yang yang terjadi, Sabtu 10 April 2021 yang lalu dengan kekuatan gempa 6,1 skala richter. Anggota Dewan Perwakilan Rakyat Daerah (DPRD) Fraksi Gerindra pun turun langsung ke lokasi terdampak gempa untuk memberikan sumbangan bantuan berupa paket sembako dan keperluan lainnya yang dibutuhkan oleh warga."
+      berita:
+        "Fraksi Partai Gerakan Indonesia Raya (Gerindra) Malang Raya meliputi Kabupaten Malang, Kota Malang dan Kota Batu kompak membantu korban gempa yang yang terjadi, Sabtu 10 April 2021 yang lalu dengan kekuatan gempa 6,1 skala richter. Anggota Dewan Perwakilan Rakyat Daerah (DPRD) Fraksi Gerindra pun turun langsung ke lokasi terdampak gempa untuk memberikan sumbangan bantuan berupa paket sembako dan keperluan lainnya yang dibutuhkan oleh warga.",
     },
   ];
   const { classes } = useStyles();
@@ -176,12 +179,26 @@ const HomeUserNewV2 = ({ thisClosed }: any) => {
       className={classes.card}
     >
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.image} alt="a"  />
+        <Image src={article.image} alt="a" />
       </AspectRatio>
-      <Text pt={10} fw={700} color="white" fz={15} className={classes.title} mt={5}>
+      <Text
+        pt={10}
+        fw={700}
+        color="white"
+        fz={15}
+        className={classes.title}
+        mt={5}
+      >
         {article.tittle}
       </Text>
-      <Text pt={10} fw={700} color="white" fz={10} className={classes.title} mt={5}>
+      <Text
+        pt={10}
+        fw={700}
+        color="white"
+        fz={10}
+        className={classes.title}
+        mt={5}
+      >
         {article.berita}
       </Text>
     </Card>
