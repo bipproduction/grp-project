@@ -166,7 +166,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                 );
               } else {
                 //setInputJabatanKota(null)
-                setInputJabatanKabupaten(1)
+                //setInputJabatanKabupaten(1)
                 setValue(
                   <Select
                     data={sJabatanEksekutifKabupaten.value.map((e) => ({
@@ -175,7 +175,7 @@ export const FormTambahEksekutifKabKotV2 = ({ tutupModal, setNilai }: any) => {
                     }))}
                     placeholder={"Pilih Jabatan Kabupaten"}
                     label="Pilih Jabatan Kabupaten"
-                    value={inputJabatanKabupaten?inputJabatanKabupaten:1}
+                    //value={inputJabatanKabupaten?inputJabatanKabupaten:1}
                     withAsterisk
                     onChange={(v) => {
                       setInputJabatanKabupaten(v);
