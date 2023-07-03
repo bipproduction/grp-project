@@ -44,7 +44,7 @@ const FormSignUp = () => {
         email: (value: string) =>
           /^\S+@\S+$/.test(value) ? null : "Invalid email",
         username: (user: string) =>
-          /^[a-zA-Z0-9]+([a-zA-Z0-9][._]?)*$/.test(user)
+          /^([a-zA-Z0-9])+([a-zA-Z0-9][._]?)*$/.test(user)
             ? null
             : "Invalid Username",
       },
@@ -117,7 +117,8 @@ const FormSignUp = () => {
           height: "100vh",
         }}
       >
-        <Container size="30rem" px={0} pt={100}>
+        <Box m={20}>
+        <Container size="30rem" px={0} pt={50}>
           <Paper withBorder shadow="md" p={40} radius="md" bg={COLOR.orange}>
             <Center mb={10}>
               <Image src={"..//..//..//../../logo.png"} width={100} alt="a" />
@@ -218,6 +219,7 @@ const FormSignUp = () => {
             </Text>
           </Paper>
         </Container>
+        </Box>
       </Box>
     </>
   );
