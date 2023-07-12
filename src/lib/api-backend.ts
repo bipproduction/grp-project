@@ -161,7 +161,7 @@ export const api = {
 
 
     // DATA PEMILU
-    "apiPemiluGetData": "api/pemilu/pemilu-get-data",
+    "apiPemiluGetData": "/api/pemilu/pemilu-get-data",
 
 
 
