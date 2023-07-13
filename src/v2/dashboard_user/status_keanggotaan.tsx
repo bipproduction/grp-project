@@ -108,7 +108,7 @@ const StatusKeanggotaanV2 = ({ keluarPusat }: any) => {
             </Box>
             {/* <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button> */}
             {/* <Button color="orange.9" bg={COLOR.orange} radius={20} onClick={open}>Edit Status</Button> */}
-            {/* <EditKeanggotaanNew /> */}
+            <EditKeanggotaanNew />
           </Group>
         </Box>
       </Box>
