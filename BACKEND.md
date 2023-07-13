@@ -36,6 +36,7 @@
   - update = api/peta-kekuatan/tps-dpt/tps-dpt-update
   - get one = api/peta-kekuatan/tps-dpt/tps-dpt-get-one?id=
   - get all = api/peta-kekuatan/tps-dpt/tps-dpt-get-all
+  - get data (yg terbaru, ini yg dipakai) = api/peta-kekuatan/tps-dpt/tps-dpt-get-data?idProv=&search= (parameter boleh kosong atau boleh ga pake parameter)
 - **Rencana Kunjungan Prabowo**
   - tambah = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-post
   - update = api/aksi-nyata/rencana-kunjungan-prabowo/rencana-kunjungan-prabowo-update
