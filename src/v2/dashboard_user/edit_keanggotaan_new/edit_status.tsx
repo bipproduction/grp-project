@@ -79,8 +79,6 @@ const EditStatus = ({ keluarGlobal, valId }: any) => {
 
   return (
     <>
-     {/* <pre>{JSON.stringify(dataEdit?.find((r) => r.id), null, 2)}</pre> */}
-
      {dataEdit?.map((v,i) => {
       <Box key={i}>
         <TextInput placeholder={v.id}/>

@@ -755,7 +755,6 @@ model LampiranAsetPartai {
   updatedAt    DateTime   @default(now()) @updatedAt
 }
 
-
 // DATA PEMILU
 model Prov {
   id     Int     @id @default(autoincrement())
@@ -799,4 +798,19 @@ model Kel {
   value2 String?
   kelKec String? @unique
   urut   Int?    @unique
+}
+
+model TpsDptNew {
+  id            Int    @id @default(autoincrement())
+  idProv        Int
+  namaProv      String
+  idKab         Int
+  namaKab       String
+  jumlahKec     Int
+  jumlahKel     Int
+  jumlahTps     Int
+  jumlahTpsDptb Int
+  lakilaki      Int
+  perempuan     Int
+  jumlah        Int
 }
