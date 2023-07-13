@@ -128,6 +128,7 @@ export const api = {
     "apiTpsDptPost": "/api/peta-kekuatan/tps-dpt/tps-dpt-post",
     "apiTpsDptUpdate": "/api/peta-kekuatan/tps-dpt/tps-dpt-update",
     "apiTpsDptProvinsiSearch": "/api/peta-kekuatan/tps-dpt/wilayah/tps-dpt-provinsi-search",
+    "apiTpsDptGetData": "/api/peta-kekuatan/tps-dpt/tps-dpt-get-data",
 
 
     // SUMBER DAYA PARTAI (SDP)
